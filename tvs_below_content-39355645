@@ -1,0 +1,70 @@
+a:5:{s:2:"id";s:8:"39355645";s:4:"info";a:4:{s:6:"Title:";s:17:"tvs_below_content";s:7:"Author:";s:17:"Everett Griffiths";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:32:"[revolution20:tvs_below_content]";}s:6:"parent";s:8:"18678127";s:6:"source";s:393:"\\
+
+h2. tvs_below_content
+
+*Name*: TVs Below Content
+*Type*: Yes/No
+*Default*: No
+
+This controls whether Template Variables show up on their own tab or below resource content. 
+
+
+h3. Yes
+
+All TVs appear below the Resource content, just like they did for MODX Evolution.
+
+!TVs Below Content.jpg|border=1!
+
+h3. No
+
+TVs appear on their own tab.
+
+!TVS not Below Content.jpg|border=1!
+
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"39355645";s:3:"ver";s:1:"2";s:4:"code";s:393:"\\
+
+h2. tvs_below_content
+
+*Name*: TVs Below Content
+*Type*: Yes/No
+*Default*: No
+
+This controls whether Template Variables show up on their own tab or below resource content. 
+
+
+h3. Yes
+
+All TVs appear below the Resource content, just like they did for MODX Evolution.
+
+!TVs Below Content.jpg|border=1!
+
+h3. No
+
+TVs appear on their own tab.
+
+!TVS not Below Content.jpg|border=1!
+
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"39355647";s:3:"ver";s:1:"1";s:4:"code";s:281:"\\
+
+h2. tvs_below_content
+
+*Name*: TVs Below Content
+*Type*: Yes/No
+*Default*: No
+
+This controls whether Template Variables show up on their own tab or below resource content. 
+
+
+h3. Yes
+
+!TVs Below Content.jpg|border=1!
+
+h3. No
+
+
+!TVS not Below Content.jpg|border=1!
+
+
+{scrollbar}";}}}

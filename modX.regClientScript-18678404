@@ -1,0 +1,65 @@
+a:5:{s:2:"id";s:8:"18678404";s:4:"info";a:4:{s:6:"Title:";s:20:"modX.regClientScript";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:35:"[revolution20:modX.regClientScript]";}s:6:"parent";s:8:"18678405";s:6:"source";s:606:"\\
+
+h2. modX::regClientScript
+
+Register JavaScript to be injected before the closing BODY tag.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#regClientScript
+
+{code}
+void regClientScript (string $src, [boolean $plaintext = false])
+{code}
+
+h2. Example
+
+Add some JS to the end of the page.
+{code}
+$modx-&gt;regClientScript(&#39;assets/js/footer.js&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.regClientCSS]
+* [modX.regClientHTMLBlock]
+* [modX.regClientStartupHTMLBlock]
+* [modX.regClientStartupScript]
+* [modX.getRegisteredClientScripts]
+* [modX.getRegisteredClientStartupScripts]
+
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678404";s:3:"ver";s:1:"1";s:4:"code";s:606:"\\
+
+h2. modX::regClientScript
+
+Register JavaScript to be injected before the closing BODY tag.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#regClientScript
+
+{code}
+void regClientScript (string $src, [boolean $plaintext = false])
+{code}
+
+h2. Example
+
+Add some JS to the end of the page.
+{code}
+$modx-&gt;regClientScript(&#39;assets/js/footer.js&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.regClientCSS]
+* [modX.regClientHTMLBlock]
+* [modX.regClientStartupHTMLBlock]
+* [modX.regClientStartupScript]
+* [modX.getRegisteredClientScripts]
+* [modX.getRegisteredClientStartupScripts]
+
+
+{scrollbar}";}}}

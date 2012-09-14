@@ -1,0 +1,444 @@
+a:5:{s:2:"id";s:8:"36634938";s:4:"info";a:4:{s:6:"Title:";s:42:"CMP Development FAQs &amp; Troubleshooting";s:7:"Author:";s:12:"Mark Hamstra";s:16:"Last Changed by:";s:15:"Romain Tripault";s:12:"Wiki Markup:";s:57:"[revolution20:CMP Development FAQs &amp; Troubleshooting]";}s:6:"parent";s:8:"36634926";s:6:"source";s:4799:"This page deals with Custom Manager Pages FAQs &amp; Troubleshooting tips.
+
+The question numbering represents nothing but that - a number to indicate what question you&#39;re looking at to help scanning through.&amp;nbsp;
+{note}
+This is a documentation stub, and could use your help to complete\! If you don&#39;t have access to edit this page,&amp;nbsp;[please post anything you would want to see added or updated in this topic on the forums|http://forums.modx.com/thread/72123/faqs-troubleshooting-on-the-rtfm].{note}
+{note}
+This document will always be a work in progress as new features are added / changed, and it could use your help in keeping it structured and up to date\!
+
+If you do not have access to editing this document,&amp;nbsp;[please post anything you would want to see added or updated in this topic on the forums|http://forums.modx.com/thread/72123/faqs-troubleshooting-on-the-rtfm].
+
+_To Editors:_
+* _Please use the right headings (heading 2 for categories, heading 3 for questions) to make sure the table of contents et al are properly generated and make sense.&amp;nbsp;_
+* _Big subjects can be created as a subpage to this page its parent, and if other pages already exist on these docs please link to it in the first section.&amp;nbsp;_
+* _Please make sure the numbering is correct when you add a question to allow easier scanning of the page.&amp;nbsp;_
+* _Make sure you link generously to further reading on the subject._
+
+_Thanks\!\!_{note}
+
+h2. Table of Contents
+
+{toc}
+
+Other Resources:
+
+* [ExtJS 3.4.0 Documentation|http://docs.sencha.com/ext-js/3-4/]
+* [revolution20:Custom Manager Pages]
+* [revolution20:Custom Manager Pages Tutorial]
+* [revolution20:Developing an Extra in MODX Revolution] (Specifically [part 2|revolution20:Developing an Extra in MODX Revolution, Part II])
+
+h2. 1. General
+
+
+h3. 1.1. What are connectors and processors? And what is a controller?
+
+A connector is a web-accessible php file which acts as the target point for back-end AJAX requests. It takes in a POST request, and routes that to the right processor (as indicated by the &quot;action&quot; post or url parameter), which is a file that does the actual work of processing the post (which has been added to the $scriptProperties variable by the connector) and returning a JSON array with the results of the request.
+
+A controller is the file which returns the actual markup (html) and inserts javascript and css onto a back-end page.&amp;nbsp;
+
+Typical locations within a component are:
+
+* Connector: assets/components/mycomponent/connector.php or&amp;nbsp;assets/components/mycomponent/mgr/connector.php
+* Processor: core/components/mycomponent/processors/mgr/processorname.php
+* Controller: core/components/mycomponent/controllers/controllername.php
+
+h3. 1.2. Why do I need all those different parts in my manager page? Can&#39;t I just echo some values in my controller and build stuff from there?
+
+Sure - you can do that too if you want.
+
+Using the different parts however is advised to make sure you can easily deploy to other installations (as they all expect files at that specific location). It also allows users to move the core folder out of the web accessible root, improving security of the system.&amp;nbsp;
+
+h3. 1.3. What version of ExtJS does MODX Revolution use? When will MODX Revolution update to ExtJS 4.0?
+
+|| MODX Version || ExtJS version ||
+| 2.1.2-pl | 3.4.0 |
+| 2.1.0-rc1 | 3.3.1 |
+| 2.0.4-pl | 3.3.0 |
+| 2.0.0-rc2 | 3.2.1 |
+
+It is unlikely that MODX will start using ExtJS 4 until 2.3/2.4 or 3.0. If you insist on using ExtJS 4.0, you can always get your hands dirty and start the migration process of the manager/assets/modext/ folder.&amp;nbsp;
+
+h3. 1.4. Can I use ExtJS widgets that MODX uses in the Manager in my own CMP as well?
+
+Yes - that saves code, too.
+
+Make sure you test your code on various releases as core code is subject to changes that could break your implementation of it.
+
+h2. 2. ExtJS / modExt Troubleshooting
+
+
+h3. 2.1. Error: Syntax Error: Unexpected Token &#39;&lt;&#39; on ext-all.js Line 7
+
+When received after initiating an AJAX request to a connector/processor, this error usually means the response that came back is not valid.
+
+Often this is caused by a PHP Fatal Error in the processor code. Inspect the outgoing request using Firebug or Developer Tools to see what it returns and where the error in the PHP side of things is.
+
+h3. 2.2. Why does my [grid|revolution20:MODx.grid.Grid] send out two requests when I refresh it / changePage / filter?
+
+This was caused by a legacy bug fixed for MODX 2.2-rc1. If you are still experiencing a number of requests that are not needed, make sure you don&#39;t have listeners calling another refresh/load, changePage(0) and refresh() or in another way are explicitely calling a request twice.";s:8:"versions";a:6:{i:0;a:3:{s:2:"id";s:8:"36634938";s:3:"ver";s:1:"6";s:4:"code";s:4799:"This page deals with Custom Manager Pages FAQs &amp; Troubleshooting tips.
+
+The question numbering represents nothing but that - a number to indicate what question you&#39;re looking at to help scanning through.&amp;nbsp;
+{note}
+This is a documentation stub, and could use your help to complete\! If you don&#39;t have access to edit this page,&amp;nbsp;[please post anything you would want to see added or updated in this topic on the forums|http://forums.modx.com/thread/72123/faqs-troubleshooting-on-the-rtfm].{note}
+{note}
+This document will always be a work in progress as new features are added / changed, and it could use your help in keeping it structured and up to date\!
+
+If you do not have access to editing this document,&amp;nbsp;[please post anything you would want to see added or updated in this topic on the forums|http://forums.modx.com/thread/72123/faqs-troubleshooting-on-the-rtfm].
+
+_To Editors:_
+* _Please use the right headings (heading 2 for categories, heading 3 for questions) to make sure the table of contents et al are properly generated and make sense.&amp;nbsp;_
+* _Big subjects can be created as a subpage to this page its parent, and if other pages already exist on these docs please link to it in the first section.&amp;nbsp;_
+* _Please make sure the numbering is correct when you add a question to allow easier scanning of the page.&amp;nbsp;_
+* _Make sure you link generously to further reading on the subject._
+
+_Thanks\!\!_{note}
+
+h2. Table of Contents
+
+{toc}
+
+Other Resources:
+
+* [ExtJS 3.4.0 Documentation|http://docs.sencha.com/ext-js/3-4/]
+* [revolution20:Custom Manager Pages]
+* [revolution20:Custom Manager Pages Tutorial]
+* [revolution20:Developing an Extra in MODX Revolution] (Specifically [part 2|revolution20:Developing an Extra in MODX Revolution, Part II])
+
+h2. 1. General
+
+
+h3. 1.1. What are connectors and processors? And what is a controller?
+
+A connector is a web-accessible php file which acts as the target point for back-end AJAX requests. It takes in a POST request, and routes that to the right processor (as indicated by the &quot;action&quot; post or url parameter), which is a file that does the actual work of processing the post (which has been added to the $scriptProperties variable by the connector) and returning a JSON array with the results of the request.
+
+A controller is the file which returns the actual markup (html) and inserts javascript and css onto a back-end page.&amp;nbsp;
+
+Typical locations within a component are:
+
+* Connector: assets/components/mycomponent/connector.php or&amp;nbsp;assets/components/mycomponent/mgr/connector.php
+* Processor: core/components/mycomponent/processors/mgr/processorname.php
+* Controller: core/components/mycomponent/controllers/controllername.php
+
+h3. 1.2. Why do I need all those different parts in my manager page? Can&#39;t I just echo some values in my controller and build stuff from there?
+
+Sure - you can do that too if you want.
+
+Using the different parts however is advised to make sure you can easily deploy to other installations (as they all expect files at that specific location). It also allows users to move the core folder out of the web accessible root, improving security of the system.&amp;nbsp;
+
+h3. 1.3. What version of ExtJS does MODX Revolution use? When will MODX Revolution update to ExtJS 4.0?
+
+|| MODX Version || ExtJS version ||
+| 2.1.2-pl | 3.4.0 |
+| 2.1.0-rc1 | 3.3.1 |
+| 2.0.4-pl | 3.3.0 |
+| 2.0.0-rc2 | 3.2.1 |
+
+It is unlikely that MODX will start using ExtJS 4 until 2.3/2.4 or 3.0. If you insist on using ExtJS 4.0, you can always get your hands dirty and start the migration process of the manager/assets/modext/ folder.&amp;nbsp;
+
+h3. 1.4. Can I use ExtJS widgets that MODX uses in the Manager in my own CMP as well?
+
+Yes - that saves code, too.
+
+Make sure you test your code on various releases as core code is subject to changes that could break your implementation of it.
+
+h2. 2. ExtJS / modExt Troubleshooting
+
+
+h3. 2.1. Error: Syntax Error: Unexpected Token &#39;&lt;&#39; on ext-all.js Line 7
+
+When received after initiating an AJAX request to a connector/processor, this error usually means the response that came back is not valid.
+
+Often this is caused by a PHP Fatal Error in the processor code. Inspect the outgoing request using Firebug or Developer Tools to see what it returns and where the error in the PHP side of things is.
+
+h3. 2.2. Why does my [grid|revolution20:MODx.grid.Grid] send out two requests when I refresh it / changePage / filter?
+
+This was caused by a legacy bug fixed for MODX 2.2-rc1. If you are still experiencing a number of requests that are not needed, make sure you don&#39;t have listeners calling another refresh/load, changePage(0) and refresh() or in another way are explicitely calling a request twice.";}i:1;a:3:{s:2:"id";s:8:"37683595";s:3:"ver";s:1:"5";s:4:"code";s:4807:"This page deals with Custom Manager Pages FAQs &amp; Troubleshooting tips.
+
+The question numbering represents nothing but that - a number to indicate what question you&#39;re looking at to help scanning through.&amp;nbsp;
+{note}
+This is a documentation stub, and could use your help to complete\! If you don&#39;t have access to edit this page,&amp;nbsp;[please post anything you would want to see added or updated in this topic on the forums|http://forums.modx.com/thread/72123/faqs-troubleshooting-on-the-rtfm].{note}
+{note}
+This document will always be a work in progress as new features are added / changed, and it could use your help in keeping it structured and up to date\!
+
+If you do not have access to editing this document,&amp;nbsp;[please post anything you would want to see added or updated in this topic on the forums|http://forums.modx.com/thread/72123/faqs-troubleshooting-on-the-rtfm].
+
+_To Editors:_
+* _Please use the right headings (heading 2 for categories, heading 3 for questions) to make sure the table of contents et al are properly generated and make sense.&amp;nbsp;_
+* _Big subjects can be created as a subpage to this page its parent, and if other pages already exist on these docs please link to it in the first section.&amp;nbsp;_
+* _Please make sure the numbering is correct when you add a question to allow easier scanning of the page.&amp;nbsp;_
+* _Make sure you link generously to further reading on the subject._
+
+_Thanks\!\!_{note}
+
+h2. Table of Contents
+
+{toc}
+
+Other Resources:
+
+* [ExtJS 3.3.0 Documentation|http://www.ajax-js.com/ext/docs/index.html]
+* [revolution20:Custom Manager Pages]
+* [revolution20:Custom Manager Pages Tutorial]
+* [revolution20:Developing an Extra in MODX Revolution] (Specifically [part 2|revolution20:Developing an Extra in MODX Revolution, Part II])
+
+h2. 1. General
+
+
+h3. 1.1. What are connectors and processors? And what is a controller?
+
+A connector is a web-accessible php file which acts as the target point for back-end AJAX requests. It takes in a POST request, and routes that to the right processor (as indicated by the &quot;action&quot; post or url parameter), which is a file that does the actual work of processing the post (which has been added to the $scriptProperties variable by the connector) and returning a JSON array with the results of the request.
+
+A controller is the file which returns the actual markup (html) and inserts javascript and css onto a back-end page.&amp;nbsp;
+
+Typical locations within a component are:
+
+* Connector: assets/components/mycomponent/connector.php or&amp;nbsp;assets/components/mycomponent/mgr/connector.php
+* Processor: core/components/mycomponent/processors/mgr/processorname.php
+* Controller: core/components/mycomponent/controllers/controllername.php
+
+h3. 1.2. Why do I need all those different parts in my manager page? Can&#39;t I just echo some values in my controller and build stuff from there?
+
+Sure - you can do that too if you want.
+
+Using the different parts however is advised to make sure you can easily deploy to other installations (as they all expect files at that specific location). It also allows users to move the core folder out of the web accessible root, improving security of the system.&amp;nbsp;
+
+h3. 1.3. What version of ExtJS does MODX Revolution use? When will MODX Revolution update to ExtJS 4.0?
+
+|| MODX Version || ExtJS version ||
+| 2.1.2-pl | 3.4.0 |
+| 2.1.0-rc1 | 3.3.1 |
+| 2.0.4-pl | 3.3.0 |
+| 2.0.0-rc2 | 3.2.1 |
+
+It is unlikely that MODX will start using ExtJS 4 until 2.3/2.4 or 3.0. If you insist on using ExtJS 4.0, you can always get your hands dirty and start the migration process of the manager/assets/modext/ folder.&amp;nbsp;
+
+h3. 1.4. Can I use ExtJS widgets that MODX uses in the Manager in my own CMP as well?
+
+Yes - that saves code, too.
+
+Make sure you test your code on various releases as core code is subject to changes that could break your implementation of it.
+
+h2. 2. ExtJS / modExt Troubleshooting
+
+
+h3. 2.1. Error: Syntax Error: Unexpected Token &#39;&lt;&#39; on ext-all.js Line 7
+
+When received after initiating an AJAX request to a connector/processor, this error usually means the response that came back is not valid.
+
+Often this is caused by a PHP Fatal Error in the processor code. Inspect the outgoing request using Firebug or Developer Tools to see what it returns and where the error in the PHP side of things is.
+
+h3. 2.2. Why does my [grid|revolution20:MODx.grid.Grid] send out two requests when I refresh it / changePage / filter?
+
+This was caused by a legacy bug fixed for MODX 2.2-rc1. If you are still experiencing a number of requests that are not needed, make sure you don&#39;t have listeners calling another refresh/load, changePage(0) and refresh() or in another way are explicitely calling a request twice.";}i:2;a:3:{s:2:"id";s:8:"37683593";s:3:"ver";s:1:"4";s:4:"code";s:4666:"This page deals with Custom Manager Pages FAQs &amp; Troubleshooting tips.
+
+The question numbering represents nothing but that - a number to indicate what question you&#39;re looking at to help scanning through.&amp;nbsp;
+{note}
+This is a documentation stub, and could use your help to complete\! If you don&#39;t have access to edit this page,&amp;nbsp;[please post anything you would want to see added or updated in this topic on the forums|http://forums.modx.com/thread/72123/faqs-troubleshooting-on-the-rtfm].{note}
+{note}
+This document will always be a work in progress as new features are added / changed, and it could use your help in keeping it structured and up to date\!
+
+If you do not have access to editing this document,&amp;nbsp;[please post anything you would want to see added or updated in this topic on the forums|http://forums.modx.com/thread/72123/faqs-troubleshooting-on-the-rtfm].
+
+_To Editors:_
+* _Please use the right headings (heading 2 for categories, heading 3 for questions) to make sure the table of contents et al are properly generated and make sense.&amp;nbsp;_
+* _Big subjects can be created as a subpage to this page its parent, and if other pages already exist on these docs please link to it in the first section.&amp;nbsp;_
+* _Please make sure the numbering is correct when you add a question to allow easier scanning of the page.&amp;nbsp;_
+* _Make sure you link generously to further reading on the subject._
+
+_Thanks\!\!_{note}
+
+h2. Table of Contents
+
+{toc}
+
+Other Resources:
+
+* [ExtJS 3.3.0 Documentation|http://www.ajax-js.com/ext/docs/index.html]
+* [revolution20:Custom Manager Pages]
+* [revolution20:Custom Manager Pages Tutorial]
+
+h2. 1. General
+
+
+h3. 1.1. What are connectors and processors? And what is a controller?
+
+A connector is a web-accessible php file which acts as the target point for back-end AJAX requests. It takes in a POST request, and routes that to the right processor (as indicated by the &quot;action&quot; post or url parameter), which is a file that does the actual work of processing the post (which has been added to the $scriptProperties variable by the connector) and returning a JSON array with the results of the request.
+
+A controller is the file which returns the actual markup (html) and inserts javascript and css onto a back-end page.&amp;nbsp;
+
+Typical locations within a component are:
+
+* Connector: assets/components/mycomponent/connector.php or&amp;nbsp;assets/components/mycomponent/mgr/connector.php
+* Processor: core/components/mycomponent/processors/mgr/processorname.php
+* Controller: core/components/mycomponent/controllers/controllername.php
+
+h3. 1.2. Why do I need all those different parts in my manager page? Can&#39;t I just echo some values in my controller and build stuff from there?
+
+Sure - you can do that too if you want.
+
+Using the different parts however is advised to make sure you can easily deploy to other installations (as they all expect files at that specific location). It also allows users to move the core folder out of the web accessible root, improving security of the system.&amp;nbsp;
+
+h3. 1.3. What version of ExtJS does MODX Revolution use? When will MODX Revolution update to ExtJS 4.0?
+
+|| MODX Version || ExtJS version ||
+| 2.1.2-pl | 3.4.0 |
+| 2.1.0-rc1 | 3.3.1 |
+| 2.0.4-pl | 3.3.0 |
+| 2.0.0-rc2 | 3.2.1 |
+
+It is unlikely that MODX will start using ExtJS 4 until 2.3/2.4 or 3.0. If you insist on using ExtJS 4.0, you can always get your hands dirty and start the migration process of the manager/assets/modext/ folder.&amp;nbsp;
+
+h3. 1.4. Can I use ExtJS widgets that MODX uses in the Manager in my own CMP as well?
+
+Yes - that saves code, too.
+
+Make sure you test your code on various releases as core code is subject to changes that could break your implementation of it.
+
+h2. 2. ExtJS / modExt Troubleshooting
+
+
+h3. 2.1. Error: Syntax Error: Unexpected Token &#39;&lt;&#39; on ext-all.js Line 7
+
+When received after initiating an AJAX request to a connector/processor, this error usually means the response that came back is not valid.
+
+Often this is caused by a PHP Fatal Error in the processor code. Inspect the outgoing request using Firebug or Developer Tools to see what it returns and where the error in the PHP side of things is.
+
+h3. 2.2. Why does my [grid|revolution20:MODx.grid.Grid] send out two requests when I refresh it / changePage / filter?
+
+This was caused by a legacy bug fixed for MODX 2.2-rc1. If you are still experiencing a number of requests that are not needed, make sure you don&#39;t have listeners calling another refresh/load, changePage(0) and refresh() or in another way are explicitely calling a request twice.";}i:3;a:3:{s:2:"id";s:8:"36634942";s:3:"ver";s:1:"3";s:4:"code";s:3547:"This page deals with Custom Manager Pages FAQs &amp; Troubleshooting tips.
+
+The question numbering represents nothing but that - a number to indicate what question you&#39;re looking at to help scanning through.&amp;nbsp;
+{note}
+This is a documentation stub, and could use your help to complete\! If you don&#39;t have access to edit this page,&amp;nbsp;[please post anything you would want to see added or updated in this topic on the forums|http://forums.modx.com/thread/72123/faqs-troubleshooting-on-the-rtfm].{note}
+{note}
+This document will always be a work in progress as new features are added / changed, and it could use your help in keeping it structured and up to date\!
+
+If you do not have access to editing this document,&amp;nbsp;[please post anything you would want to see added or updated in this topic on the forums|http://forums.modx.com/thread/72123/faqs-troubleshooting-on-the-rtfm].
+
+_To Editors:_
+* _Please use the right headings (heading 2 for categories, heading 3 for questions) to make sure the table of contents et al are properly generated and make sense.&amp;nbsp;_
+* _Big subjects can be created as a subpage to this page, and if other pages already exist on these docs please link to it in the first section.&amp;nbsp;_
+* _Please make sure the numbering is correct when you add a question to allow easier scanning of the page.&amp;nbsp;_
+* _Make sure you link generously to further reading on the subject._
+
+_Thanks\!\!_{note}
+
+h2. Table of Contents
+
+{toc}
+
+Other Resources:
+
+* [ExtJS Documentation|http://www.ajax-js.com/ext/docs/index.html]
+* [revolution20:Custom Manager Pages]
+* [revolution20:Custom Manager Pages Tutorial]
+
+h2. 1. General
+
+
+h3. 1.1 What are connectors and processors? And what is a controller?
+
+A connector is a web-accessible php file which acts as the target point for back-end AJAX requests. It takes in a POST request, and routes that to the right processor (as indicated by the &quot;action&quot; post or url parameter), which is a file that does the actual work of processing the post (which has been added to the $scriptProperties variable by the connector) and returning a JSON array with the results of the request.
+
+A controller is the file which returns the actual markup (html) and inserts javascript and css onto a back-end page.&amp;nbsp;
+
+Typical locations within a component are:
+
+* Connector: assets/components/mycomponent/connector.php or&amp;nbsp;assets/components/mycomponent/mgr/connector.php
+* Processor: core/components/mycomponent/processors/mgr/processorname.php
+* Controller: core/components/mycomponent/controllers/controllername.php
+
+h3. 1.2. Why do I need all those different parts in my manager page? Can&#39;t I just echo some values in my controller and build stuff from there?
+
+Sure - you can do that too if you want.
+
+Using the different parts however is advised to make sure you can easily deploy to other installations (as they all expect files at that specific location). It also allows users to move the core folder out of the web accessible root, improving security of the system.&amp;nbsp;
+
+h2. 2. ExtJS / modExt Troubleshooting
+
+
+h3. 2.1. Error: Syntax Error: Unexpected Token &#39;&lt;&#39; on ext-all.js Line 7
+
+When received after initiating an AJAX request to a connector/processor, this error usually means the response that came back is not valid.
+
+Often this is caused by a PHP Fatal Error in the processor code. Inspect the outgoing request using Firebug or Developer Tools to see what it returns and where the error in the PHP side of things is.";}i:4;a:3:{s:2:"id";s:8:"36634940";s:3:"ver";s:1:"2";s:4:"code";s:2165:"This page deals with Custom Manager Pages FAQs &amp; Troubleshooting tips.
+
+h2. Table of Contents
+
+{toc}
+
+Other Resources:
+
+* [ExtJS Documentation|http://www.ajax-js.com/ext/docs/index.html]
+* [revolution20:Custom Manager Pages]
+* [revolution20:Custom Manager Pages Tutorial]
+
+h2. 1. General
+
+
+h3. 1.1 What are connectors and processors? And what is a controller?
+
+A connector is a web-accessible php file which acts as the target point for back-end AJAX requests. It takes in a POST request, and routes that to the right processor (as indicated by the &quot;action&quot; post or url parameter), which is a file that does the actual work of processing the post (which has been added to the $scriptProperties variable by the connector) and returning a JSON array with the results of the request.
+
+A controller is the file which returns the actual markup (html) and inserts javascript and css onto a back-end page.&amp;nbsp;
+
+Typical locations within a component are:
+
+* Connector: assets/components/mycomponent/connector.php or&amp;nbsp;assets/components/mycomponent/mgr/connector.php
+* Processor: core/components/mycomponent/processors/mgr/processorname.php
+* Controller: core/components/mycomponent/controllers/controllername.php
+
+h3. 1.2. Why do I need all those different parts in my manager page? Can&#39;t I just echo some values in my controller and build stuff from there?
+
+Sure - you can do that too if you want.
+
+Using the different parts however is advised to make sure you can easily deploy to other installations (as they all expect files at that specific location). It also allows users to move the core folder out of the web accessible root, improving security of the system.&amp;nbsp;
+
+h2. 2. ExtJS / modExt Troubleshooting
+
+
+h3. 2.1. Error: Syntax Error: Unexpected Token &#39;&lt;&#39; on ext-all.js Line 7
+
+When received after initiating an AJAX request to a connector/processor, this error usually means the response that came back is not valid.
+
+Often this is caused by a PHP Fatal Error in the processor code. Inspect the outgoing request using Firebug or Developer Tools to see what it returns and where the error in the PHP side of things is.";}i:5;a:3:{s:2:"id";s:8:"36634939";s:3:"ver";s:1:"1";s:4:"code";s:2165:"This page deals with Custom Manager Pages FAQs &amp; Troubleshooting tips.
+
+h2. Table of Contents
+
+{toc}
+
+Other Resources:
+
+* [ExtJS Documentation|http://www.ajax-js.com/ext/docs/index.html]
+* [revolution20:Custom Manager Pages]
+* [revolution20:Custom Manager Pages Tutorial]
+
+h2. 1. General
+
+
+h3. 1.1 What are connectors and processors? And what is a controller?
+
+A connector is a web-accessible php file which acts as the target point for back-end AJAX requests. It takes in a POST request, and routes that to the right processor (as indicated by the &quot;action&quot; post or url parameter), which is a file that does the actual work of processing the post (which has been added to the $scriptProperties variable by the connector) and returning a JSON array with the results of the request.
+
+A controller is the file which returns the actual markup (html) and inserts javascript and css onto a back-end page.&amp;nbsp;
+
+Typical locations within a component are:
+
+* Connector: assets/components/mycomponent/connector.php or&amp;nbsp;assets/components/mycomponent/mgr/connector.php
+* Processor: core/components/mycomponent/processors/mgr/processorname.php
+* Controller: core/components/mycomponent/controllers/controllername.php
+
+h3. 1.2. Why do I need all those different parts in my manager page? Can&#39;t I just echo some values in my controller and build stuff from there?
+
+Sure - you can do that too if you want.
+
+Using the different parts however is advised to make sure you can easily deploy to other installations (as they all expect files at that specific location). It also allows users to move the core folder out of the web accessible root, improving security of the system.&amp;nbsp;
+
+h2. 2. ExtJS / modExt Troubleshooting
+
+
+h3. 2.1. Error: Syntax Error: Unexpected Token &#39;&lt;&#39; on ext-all.js Line 7
+
+When received after initiating an AJAX request to a connector/processor, this error usually means the response that came back is not valid.
+
+Often this is caused by a PHP Fatal Error in the processor code. Inspect the outgoing request using Firebug or Developer Tools to see what it returns and where the error in the PHP side of things is.";}}}

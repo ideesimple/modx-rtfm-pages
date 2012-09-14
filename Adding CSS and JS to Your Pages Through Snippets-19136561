@@ -1,0 +1,341 @@
+a:5:{s:2:"id";s:8:"19136561";s:4:"info";a:4:{s:6:"Title:";s:48:"Adding CSS and JS to Your Pages Through Snippets";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:63:"[revolution20:Adding CSS and JS to Your Pages Through Snippets]";}s:6:"parent";s:8:"18678225";s:6:"source";s:3058:"\\
+
+h2. Learning How to Register CSS and JS
+
+So, you&#39;ve got a Snippet that you&#39;ve been writing and want to add CSS and/or JavaScript to your pages, but don&#39;t want to have to setup a custom Template Variable and edit it on every Resource your Snippet is used on. You want the Snippet to do it, dagnabbit\! Well, it&#39;s pretty easy, actually, using some MODx API methods.
+
+{info:title=Other CMSs}
+This is a common need in any CMS, so if you&#39;re coming from another platform, here are some of the related functions.
+* *WordPress* -- uses its _wp_enqueue_script_, _wp_register_script_, _wp_enqueue_style_, _wp_register_style_ functions.
+{info}
+
+h2. Adding to the HEAD
+
+There are a few methods that automatically add CSS and/or JavaScript to the HEAD of the current page. They will run in the order that they&#39;re added, so if you need them in a certain order, make sure you execute the methods in that order as well.
+
+h3. regClientCSS
+
+This function lets you register any CSS file to the HEAD of the content by providing the URL in the method:
+
+{code}$modx-&gt;regClientCSS(&#39;assets/css/my-custom.css&#39;);{code}
+
+Or, more correctly, you would use the *MODX_ASSETS_URL* constant so your Snippet or plugin would work even on a site that was configured to use a non-standard assets location.
+
+{code}$modx-&gt;regClientCSS(MODX_ASSETS_URL.&#39;css/my-custom.css&#39;);{code}
+
+
+h3. regClientStartupScript
+
+This function lets you register any custom JavaScript to the HEAD of the document:
+
+{code}$modx-&gt;regClientStartupScript(&#39;assets/js/site.js&#39;);{code}
+
+h3. regClientStartupHTMLBlock
+
+This function is useful if you need to set some JS variables, or output some HTML into the HEAD:
+
+{code}
+$modx-&gt;regClientStartupHTMLBlock(&#39;
+&lt;meta tag=&quot;here&quot; /&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+var myCustomJSVar = 123;
+&lt;/script&gt;&#39;);{code}
+
+h2. Adding Before the BODY End
+
+There are also methods that can be used to insert Javascript or HTML at the end of every page, right before the BODY tag closes. They are often useful for custom analytics scripts, or JS that needs to be run at the body-level rather than in the HEAD.
+
+h3. regClientScript
+
+Similar to [#regClientStartupScript] except that it runs before the closing BODY tag:
+
+{code}$modx-&gt;regClientScript(&#39;assets/js/footer.js&#39;);{code}
+
+h3. regClientHTMLBlock
+
+Similar to [#regClientStartupHTMLBlock] except that it runs before the closing BODY tag:
+
+
+{code}
+$modx-&gt;regClientHTMLBlock(&#39;
+&lt;div&gt;custom stuff here&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+runAnalytics();
+&lt;/script&gt;&#39;);{code}
+
+h2. Conclusion
+
+MODx offers Extras developers many options on how to insert custom CSS/JS into their pages at the Snippet level. However, MODx also recommends in any Extras you are distributing, to make sure inserting CSS or JS into a page is a toggleable option, so that the user can customize the content or javascript framework should they so choose.
+
+h2. See Also
+
+{pagetree:root=Snippets}
+{scrollbar}";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"19136561";s:3:"ver";s:1:"4";s:4:"code";s:3058:"\\
+
+h2. Learning How to Register CSS and JS
+
+So, you&#39;ve got a Snippet that you&#39;ve been writing and want to add CSS and/or JavaScript to your pages, but don&#39;t want to have to setup a custom Template Variable and edit it on every Resource your Snippet is used on. You want the Snippet to do it, dagnabbit\! Well, it&#39;s pretty easy, actually, using some MODx API methods.
+
+{info:title=Other CMSs}
+This is a common need in any CMS, so if you&#39;re coming from another platform, here are some of the related functions.
+* *WordPress* -- uses its _wp_enqueue_script_, _wp_register_script_, _wp_enqueue_style_, _wp_register_style_ functions.
+{info}
+
+h2. Adding to the HEAD
+
+There are a few methods that automatically add CSS and/or JavaScript to the HEAD of the current page. They will run in the order that they&#39;re added, so if you need them in a certain order, make sure you execute the methods in that order as well.
+
+h3. regClientCSS
+
+This function lets you register any CSS file to the HEAD of the content by providing the URL in the method:
+
+{code}$modx-&gt;regClientCSS(&#39;assets/css/my-custom.css&#39;);{code}
+
+Or, more correctly, you would use the *MODX_ASSETS_URL* constant so your Snippet or plugin would work even on a site that was configured to use a non-standard assets location.
+
+{code}$modx-&gt;regClientCSS(MODX_ASSETS_URL.&#39;css/my-custom.css&#39;);{code}
+
+
+h3. regClientStartupScript
+
+This function lets you register any custom JavaScript to the HEAD of the document:
+
+{code}$modx-&gt;regClientStartupScript(&#39;assets/js/site.js&#39;);{code}
+
+h3. regClientStartupHTMLBlock
+
+This function is useful if you need to set some JS variables, or output some HTML into the HEAD:
+
+{code}
+$modx-&gt;regClientStartupHTMLBlock(&#39;
+&lt;meta tag=&quot;here&quot; /&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+var myCustomJSVar = 123;
+&lt;/script&gt;&#39;);{code}
+
+h2. Adding Before the BODY End
+
+There are also methods that can be used to insert Javascript or HTML at the end of every page, right before the BODY tag closes. They are often useful for custom analytics scripts, or JS that needs to be run at the body-level rather than in the HEAD.
+
+h3. regClientScript
+
+Similar to [#regClientStartupScript] except that it runs before the closing BODY tag:
+
+{code}$modx-&gt;regClientScript(&#39;assets/js/footer.js&#39;);{code}
+
+h3. regClientHTMLBlock
+
+Similar to [#regClientStartupHTMLBlock] except that it runs before the closing BODY tag:
+
+
+{code}
+$modx-&gt;regClientHTMLBlock(&#39;
+&lt;div&gt;custom stuff here&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+runAnalytics();
+&lt;/script&gt;&#39;);{code}
+
+h2. Conclusion
+
+MODx offers Extras developers many options on how to insert custom CSS/JS into their pages at the Snippet level. However, MODx also recommends in any Extras you are distributing, to make sure inserting CSS or JS into a page is a toggleable option, so that the user can customize the content or javascript framework should they so choose.
+
+h2. See Also
+
+{pagetree:root=Snippets}
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"36634803";s:3:"ver";s:1:"3";s:4:"code";s:2798:"\\
+
+h2. Learning How to Register CSS and JS
+
+So, you&#39;ve got a Snippet that you&#39;ve been writing and want to add CSS and/or JavaScript to your pages, but don&#39;t want to have to setup a custom Template Variable and edit it on every Resource your Snippet is used on. You want the Snippet to do it, dagnabbit\! Well, it&#39;s pretty easy, actually, using some MODx API methods.
+
+{info:title=Other CMSs}
+This is a common need in any CMS, so if you&#39;re coming from another platform, here are some of the related functions.
+* *WordPress* -- uses its _wp_enqueue_script_, _wp_register_script_, _wp_enqueue_style_, _wp_register_style_ functions.
+{info}
+
+h2. Adding to the HEAD
+
+There are a few methods that automatically add CSS and/or JavaScript to the HEAD of the current page. They will run in the order that they&#39;re added, so if you need them in a certain order, make sure you execute the methods in that order as well.
+
+h3. regClientCSS
+
+This function lets you register any CSS file to the HEAD of the content by providing the URL in the method:
+
+{code}$modx-&gt;regClientCSS(&#39;assets/css/my-custom.css&#39;);{code}
+
+h3. regClientStartupScript
+
+This function lets you register any custom JavaScript to the HEAD of the document:
+
+{code}$modx-&gt;regClientStartupScript(&#39;assets/js/site.js&#39;);{code}
+
+h3. regClientStartupHTMLBlock
+
+This function is useful if you need to set some JS variables, or output some HTML into the HEAD:
+
+{code}
+$modx-&gt;regClientStartupHTMLBlock(&#39;
+&lt;meta tag=&quot;here&quot; /&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+var myCustomJSVar = 123;
+&lt;/script&gt;&#39;);{code}
+
+h2. Adding Before the BODY End
+
+There are also methods that can be used to insert Javascript or HTML at the end of every page, right before the BODY tag closes. They are often useful for custom analytics scripts, or JS that needs to be run at the body-level rather than in the HEAD.
+
+h3. regClientScript
+
+Similar to [#regClientStartupScript] except that it runs before the closing BODY tag:
+
+{code}$modx-&gt;regClientScript(&#39;assets/js/footer.js&#39;);{code}
+
+h3. regClientHTMLBlock
+
+Similar to [#regClientStartupHTMLBlock] except that it runs before the closing BODY tag:
+
+
+{code}
+$modx-&gt;regClientHTMLBlock(&#39;
+&lt;div&gt;custom stuff here&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+runAnalytics();
+&lt;/script&gt;&#39;);{code}
+
+h2. Conclusion
+
+MODx offers Extras developers many options on how to insert custom CSS/JS into their pages at the Snippet level. However, MODx also recommends in any Extras you are distributing, to make sure inserting CSS or JS into a page is a toggleable option, so that the user can customize the content or javascript framework should they so choose.
+
+h2. See Also
+
+{pagetree:root=Snippets}
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35095275";s:3:"ver";s:1:"2";s:4:"code";s:2806:"\\
+
+h2. Learning How to Register CSS and JS
+
+So, you&#39;ve got a Snippet that you&#39;ve been writing and want to add CSS and/or JavaScript to your pages, but don&#39;t want to have to setup a custom Template Variable and edit it on every Resource your Snippet is used on. You want the Snippet to do it, dagnabbit\! Well, it&#39;s pretty easy, actually, using some MODx API methods.
+
+{info:title=Other CMSs}
+This is a common need in any CMS, so if you&#39;re coming from another platform, here are some of the related functions.
+* *WordPress* -- uses its _wp_enqueue_script_, _wp_register_script_, _wp_enqueue_style_,  _wp_register_style_ functions.
+{info}
+
+h2. Adding to the HEAD
+
+There are a few methods that automatically add CSS and/or JavaScript to the HEAD of the current page. They will run in the order that they&#39;re added, so if you need them in a certain order, make sure you execute the methods in that order as well.
+
+h3. regClientCSS
+
+This function lets you register any CSS file to the HEAD of the content by providing the URL in the method:
+
+{code}$modx-&gt;regClientCSS(&#39;assets/css/my-custom.css&#39;);{code}
+
+h3. regClientStartupScript
+
+This function lets you register any custom JavaScript to the HEAD of the document:
+
+{code}$modx-&gt;regClientStartupScript(&#39;assets/js/site.js&#39;);{code}
+
+h3. regClientStartupHTMLBlock
+
+This function is useful if you need to set some JS variables, or output some HTML into the HEAD:
+
+{code}
+$modx-&gt;regClientStartupHTMLBlock(&#39;
+&lt;meta tag=&quot;here&quot; /&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+var myCustomJSVar = 123;
+&lt;/script&gt;&#39;);{code}
+
+h2. Adding Before the BODY End
+
+There are also methods that can be used to insert Javascript or HTML at the end of every page, right before the BODY tag closes. They are often useful for custom analytics scripts, or JS that needs to be run at the body-level rather than in the HEAD.
+
+h3. regClientScript
+
+Similar to [#regClientStartupScript] except that it runs before the closing BODY tag:
+
+{code}$modx-&gt;regClientScript(&#39;assets/js/footer.js&#39;);{code}
+
+h3. regClientHTMLBlock
+
+Similar to [#regClientStartupHTMLBlock] except that it runs before the closing BODY tag:
+
+
+{code}
+$modx-&gt;regClientStartupHTMLBlock(&#39;
+&lt;div&gt;custom stuff here&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+runAnalytics();
+&lt;/script&gt;&#39;);{code}
+
+h2. Conclusion
+
+MODx offers Extras developers many options on how to insert custom CSS/JS into their pages at the Snippet level. However, MODx also recommends in any Extras you are distributing, to make sure inserting CSS or JS into a page is a toggleable option, so that the user can customize the content or javascript framework should they so choose.
+
+h2. See Also
+
+{pagetree:root=Snippets}
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"33226969";s:3:"ver";s:1:"1";s:4:"code";s:2532:"\\
+
+h2. Learning How to Register CSS and JS
+
+So, you&#39;ve got a Snippet that you&#39;ve been writing and want to add CSS and/or JavaScript to your pages, but don&#39;t want to have to setup a custom Template Variable and edit it on every Resource your Snippet is used on. You want the Snippet to do it, dagnabbit! Well, it&#39;s pretty easy, actually, using some MODx API methods.
+
+h2. Adding to the HEAD
+
+There are a few methods that automatically add CSS and/or JavaScript to the HEAD of the current page. They will run in the order that they&#39;re added, so if you need them in a certain order, make sure you execute the methods in that order as well.
+
+h3. regClientCSS
+
+This function lets you register any CSS file to the HEAD of the content by providing the URL in the method:
+
+{code}$modx-&gt;regClientCSS(&#39;assets/css/my-custom.css&#39;);{code}
+
+h3. regClientStartupScript
+
+This function lets you register any custom JavaScript to the HEAD of the document:
+
+{code}$modx-&gt;regClientStartupScript(&#39;assets/js/site.js&#39;);{code}
+
+h3. regClientStartupHTMLBlock
+
+This function is useful if you need to set some JS variables, or output some HTML into the HEAD:
+
+{code}
+$modx-&gt;regClientStartupHTMLBlock(&#39;
+&lt;meta tag=&quot;here&quot; /&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+var myCustomJSVar = 123;
+&lt;/script&gt;&#39;);{code}
+
+h2. Adding Before the BODY End 
+
+There are also methods that can be used to insert Javascript or HTML at the end of every page, right before the BODY tag closes. They are often useful for custom analytics scripts, or JS that needs to be run at the body-level rather than in the HEAD.
+
+h3. regClientScript
+
+Similar to [#regClientStartupScript] except that it runs before the closing BODY tag:
+
+{code}$modx-&gt;regClientScript(&#39;assets/js/footer.js&#39;);{code}
+
+h3. regClientHTMLBlock
+
+Similar to [#regClientStartupHTMLBlock] except that it runs before the closing BODY tag:
+
+
+{code}
+$modx-&gt;regClientStartupHTMLBlock(&#39;
+&lt;div&gt;custom stuff here&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+runAnalytics();
+&lt;/script&gt;&#39;);{code}
+
+h2. Conclusion
+
+MODx offers Extras developers many options on how to insert custom CSS/JS into their pages at the Snippet level. However, MODx also recommends in any Extras you are distributing, to make sure inserting CSS or JS into a page is a toggleable option, so that the user can customize the content or javascript framework should they so choose.
+
+h2. See Also
+
+{pagetree:root=Snippets}
+{scrollbar}";}}}

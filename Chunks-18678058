@@ -1,0 +1,171 @@
+a:5:{s:2:"id";s:8:"18678058";s:4:"info";a:4:{s:6:"Title:";s:6:"Chunks";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:21:"[revolution20:Chunks]";}s:6:"parent";s:8:"18678206";s:6:"source";s:3496:"\\
+
+{toc}
+Chunks are bits of static text which you can reuse across your site, similar in function to include files or &quot;blocks&quot; in other content management systems.  Common examples of Chunks might be your contact information or a copyright notice. Although Chunks cannot contain any logic directly, they can however contain calls to [Snippets], which are executable bits of PHP code which produce dynamic output.
+
+h2. Create
+Before you can use a Chunk, you must first create and name one by pasting text into the MODx manager (Elements --&gt; Chunks --&gt; New Chunk):
+!revo chunk.jpg!
+
+h2. Usage
+To use the Chunk, you reference it by name in your templates or in your page content.
+{code}[[$chunkName]]
+{code}
+That reference is then replaced with the contents of the Chunk.
+
+You can also pass properties to a Chunk. Say you had a chunk named &#39;intro&#39; with the contents:
+
+{quote}Hello, \[\[+name\]\]. You have \[\[+messageCount\]\] messages.{quote}
+
+You could fill those values with:
+
+{code}[[$intro? &amp;name=`George` &amp;messageCount=`12`]]{code}
+
+Which would output:
+
+{quote}Hello, George. You have 12 messages.{quote}
+
+You could even take it one step further, by adding a [Template Variable|Template Variables] that allows the user to specify their name per Resource:
+
+{code}[[!$intro? &amp;name=`[[*usersName]]` &amp;messageCount=`[[*messageCount]]`]]{code}
+
+or in the Chunk itself:
+
+{code}Hello, [[*usersName]]. You have [[*messageCount]] messages.{code}
+
+h2. Processing Chunk via the API
+
+Chunks are also frequently used to format the output of Snippets.  A Chunk can be processed from a Snippet using the process() function; for example, given the following Chunk named &#39;rowTpl&#39;:
+
+{code}&lt;tr class=&quot;[[+rowCls]]&quot; id=&quot;row[[+id]]&quot;&gt;
+&lt;td&gt;[[+pagetitle]]&lt;/td&gt;
+&lt;td&gt;[[+introtext]]&lt;/td&gt;
+&lt;/tr&gt;
+{code}
+
+the following Snippet code retrieves it and processes it with an array of properties for all published Resources, and returns formatted results as a table, setting the class to &quot;alt&quot; if for even rows:
+
+{code}$resources = $modx-&gt;getCollection(&#39;modResource&#39;,array(&#39;published&#39; =&gt; true));
+$i = 0;
+$output = &#39;&#39;;
+foreach ($resources as $resource) {
+  $properties = $resource-&gt;toArray();
+  $properties[&#39;rowCls&#39;] = $i % 2 ? &#39;&#39; : &#39;alt&#39;;
+
+  $output .= $modx-&gt;getChunk(&#39;rowTpl&#39;,$properties);
+  $i++;
+}
+return &#39;&lt;table&gt;&lt;tbody&gt;&#39;.$output.&#39;&lt;/tbody&gt;&lt;/table&gt;&#39;;
+{code}
+h3. Modifying a Chunk Via the API
+
+Chunks can also be manipulated by the MODx API:
+{code}&lt;?php
+/* create a new chunk, give it some content and save it to the database */
+$chunk = $modx-&gt;newObject(&#39;modChunk&#39;);
+$chunk-&gt;set(&#39;name&#39;,&#39;NewChunkName&#39;);
+$chunk-&gt;setContent(&#39;&lt;p&gt;This is my new chunk!&lt;/p&gt;&#39;);
+$chunk-&gt;save();
+
+/* get an existing chunk, modify the content and save changes to the database */
+$chunk = $modx-&gt;getObject(&#39;modChunk&#39;, array(&#39;name&#39; =&gt; &#39;MyExistingChunk&#39;));
+if ($chunk) {
+    $chunk-&gt;setContent(&#39;&lt;p&gt;This is my existing chunks new content!&lt;/p&gt;&#39;);
+    $chunk-&gt;save();
+}
+
+/* get an existing chunk and delete it from the database */
+$chunk = $modx-&gt;getObject(&#39;modChunk&#39;, array(&#39;name&#39; =&gt; &#39;MyObsoleteChunk&#39;));
+if ($chunk) $chunk-&gt;remove();
+?&gt;
+{code}
+h2. See Also
+
+* [modChunk]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678058";s:3:"ver";s:1:"1";s:4:"code";s:3496:"\\
+
+{toc}
+Chunks are bits of static text which you can reuse across your site, similar in function to include files or &quot;blocks&quot; in other content management systems.  Common examples of Chunks might be your contact information or a copyright notice. Although Chunks cannot contain any logic directly, they can however contain calls to [Snippets], which are executable bits of PHP code which produce dynamic output.
+
+h2. Create
+Before you can use a Chunk, you must first create and name one by pasting text into the MODx manager (Elements --&gt; Chunks --&gt; New Chunk):
+!revo chunk.jpg!
+
+h2. Usage
+To use the Chunk, you reference it by name in your templates or in your page content.
+{code}[[$chunkName]]
+{code}
+That reference is then replaced with the contents of the Chunk.
+
+You can also pass properties to a Chunk. Say you had a chunk named &#39;intro&#39; with the contents:
+
+{quote}Hello, \[\[+name\]\]. You have \[\[+messageCount\]\] messages.{quote}
+
+You could fill those values with:
+
+{code}[[$intro? &amp;name=`George` &amp;messageCount=`12`]]{code}
+
+Which would output:
+
+{quote}Hello, George. You have 12 messages.{quote}
+
+You could even take it one step further, by adding a [Template Variable|Template Variables] that allows the user to specify their name per Resource:
+
+{code}[[!$intro? &amp;name=`[[*usersName]]` &amp;messageCount=`[[*messageCount]]`]]{code}
+
+or in the Chunk itself:
+
+{code}Hello, [[*usersName]]. You have [[*messageCount]] messages.{code}
+
+h2. Processing Chunk via the API
+
+Chunks are also frequently used to format the output of Snippets.  A Chunk can be processed from a Snippet using the process() function; for example, given the following Chunk named &#39;rowTpl&#39;:
+
+{code}&lt;tr class=&quot;[[+rowCls]]&quot; id=&quot;row[[+id]]&quot;&gt;
+&lt;td&gt;[[+pagetitle]]&lt;/td&gt;
+&lt;td&gt;[[+introtext]]&lt;/td&gt;
+&lt;/tr&gt;
+{code}
+
+the following Snippet code retrieves it and processes it with an array of properties for all published Resources, and returns formatted results as a table, setting the class to &quot;alt&quot; if for even rows:
+
+{code}$resources = $modx-&gt;getCollection(&#39;modResource&#39;,array(&#39;published&#39; =&gt; true));
+$i = 0;
+$output = &#39;&#39;;
+foreach ($resources as $resource) {
+  $properties = $resource-&gt;toArray();
+  $properties[&#39;rowCls&#39;] = $i % 2 ? &#39;&#39; : &#39;alt&#39;;
+
+  $output .= $modx-&gt;getChunk(&#39;rowTpl&#39;,$properties);
+  $i++;
+}
+return &#39;&lt;table&gt;&lt;tbody&gt;&#39;.$output.&#39;&lt;/tbody&gt;&lt;/table&gt;&#39;;
+{code}
+h3. Modifying a Chunk Via the API
+
+Chunks can also be manipulated by the MODx API:
+{code}&lt;?php
+/* create a new chunk, give it some content and save it to the database */
+$chunk = $modx-&gt;newObject(&#39;modChunk&#39;);
+$chunk-&gt;set(&#39;name&#39;,&#39;NewChunkName&#39;);
+$chunk-&gt;setContent(&#39;&lt;p&gt;This is my new chunk!&lt;/p&gt;&#39;);
+$chunk-&gt;save();
+
+/* get an existing chunk, modify the content and save changes to the database */
+$chunk = $modx-&gt;getObject(&#39;modChunk&#39;, array(&#39;name&#39; =&gt; &#39;MyExistingChunk&#39;));
+if ($chunk) {
+    $chunk-&gt;setContent(&#39;&lt;p&gt;This is my existing chunks new content!&lt;/p&gt;&#39;);
+    $chunk-&gt;save();
+}
+
+/* get an existing chunk and delete it from the database */
+$chunk = $modx-&gt;getObject(&#39;modChunk&#39;, array(&#39;name&#39; =&gt; &#39;MyObsoleteChunk&#39;));
+if ($chunk) $chunk-&gt;remove();
+?&gt;
+{code}
+h2. See Also
+
+* [modChunk]
+
+{scrollbar}";}}}

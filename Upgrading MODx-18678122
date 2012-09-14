@@ -1,0 +1,1193 @@
+a:5:{s:2:"id";s:8:"18678122";s:4:"info";a:4:{s:6:"Title:";s:14:"Upgrading MODx";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:29:"[revolution20:Upgrading MODx]";}s:6:"parent";s:8:"28672014";s:6:"source";s:4999:"\\
+
+{toc}
+
+{info}This document is for Upgrading MODx 2.x. If you are looking to upgrade from Evolution (1.x), this is not officially supported at this time, but resources to help you in this process can be [found here|http://rtfm.modx.com/display/revolution20/Upgrading+from+MODx+Evolution].{info}
+
+h2. Upgrading MODx Revolution 2.x
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+\\
+
+{warning}
+When you are updating from MODX Revolution 2.0.x to 2.1.x it is VERY important to realize a lot of functions have been deprecated. Most addons will have been updated to use the new methods, however you may not always be running the latest version. So, BEFORE starting the upgrade process make sure all your packages are up to date, and working properly in 2.0.x. If you don&#39;t, you may end up being locked in some kind of limbo where the manager can not be accessed due to fatal PHP errors. While this can often be fixed by manually removing or updating the offending files, in certain server setups you may not have access to php generated files (such as files created by the package manager on install) requiring a lot more work to fix.
+{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+The trick here is to get an FTP client that supports *directory merging*.  You don&#39;t want to indiscriminately *overwrite* directories: you want to insert the updated files into place inside the directories.  A self-extracting MODX update mechanism is still a couple releases away, so until then, it is *extremely* handy to have an FTP program that supports directory merging.
+
+On OS X, you can purchase one of the following:
+
+* [Coda|http://panic.com/coda/]
+* [Transmit|http://panic.com/transmit/]
+
+{warning:title=Do Not Overwrite Directories!}
+Make sure your FTP program _merges_ directories and does not overwrite them!
+{warning}
+-----
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read the [Troubleshooting Installation] and the [Troubleshooting Upgrades] pages.{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+Your config.inc.php file should have CHMOD 644 permission.
+
+{info}
+It&#39;s a good idea to clear your browser cache after upgrading. Browsers often cache JS and CSS, and you want to make sure you&#39;re getting the newest files in your browser&amp;nbsp;after the upgrade.{info}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrading to 2.2|revolution20:Upgrading to 2.2.x]
+* [For Upgrading From 2.0.x to 2.1.x|revolution20:Upgrading from 2.0.x to 2.1.x]&amp;nbsp;*\!important*
+* [For Upgrades Coming From Prior to 2.0.5|Upgrading from Versions Earlier than 2.0.5]
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.1.0-pl /www/public_html/modx/{code}
+
+The effect is the same if you use the humble *cp* command:
+
+{code}\cp -fr modx-2.2.0-pl/* /www/public_html/modx{code}
+
+The &quot;-fr&quot; bit forces a recursive copy (i.e. a directory merge).  Using a backslash before the &quot;cp&quot; command lets you avoid all the prompts asking &quot;Are you sure?&quot; to every overwrite operation.
+
+See the not above about FTP clients that support directory merging.
+
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";s:8:"versions";a:21:{i:0;a:3:{s:2:"id";s:8:"18678122";s:3:"ver";s:1:"2";s:4:"code";s:4999:"\\
+
+{toc}
+
+{info}This document is for Upgrading MODx 2.x. If you are looking to upgrade from Evolution (1.x), this is not officially supported at this time, but resources to help you in this process can be [found here|http://rtfm.modx.com/display/revolution20/Upgrading+from+MODx+Evolution].{info}
+
+h2. Upgrading MODx Revolution 2.x
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+\\
+
+{warning}
+When you are updating from MODX Revolution 2.0.x to 2.1.x it is VERY important to realize a lot of functions have been deprecated. Most addons will have been updated to use the new methods, however you may not always be running the latest version. So, BEFORE starting the upgrade process make sure all your packages are up to date, and working properly in 2.0.x. If you don&#39;t, you may end up being locked in some kind of limbo where the manager can not be accessed due to fatal PHP errors. While this can often be fixed by manually removing or updating the offending files, in certain server setups you may not have access to php generated files (such as files created by the package manager on install) requiring a lot more work to fix.
+{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+The trick here is to get an FTP client that supports *directory merging*.  You don&#39;t want to indiscriminately *overwrite* directories: you want to insert the updated files into place inside the directories.  A self-extracting MODX update mechanism is still a couple releases away, so until then, it is *extremely* handy to have an FTP program that supports directory merging.
+
+On OS X, you can purchase one of the following:
+
+* [Coda|http://panic.com/coda/]
+* [Transmit|http://panic.com/transmit/]
+
+{warning:title=Do Not Overwrite Directories!}
+Make sure your FTP program _merges_ directories and does not overwrite them!
+{warning}
+-----
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read the [Troubleshooting Installation] and the [Troubleshooting Upgrades] pages.{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+Your config.inc.php file should have CHMOD 644 permission.
+
+{info}
+It&#39;s a good idea to clear your browser cache after upgrading. Browsers often cache JS and CSS, and you want to make sure you&#39;re getting the newest files in your browser&amp;nbsp;after the upgrade.{info}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrading to 2.2|revolution20:Upgrading to 2.2.x]
+* [For Upgrading From 2.0.x to 2.1.x|revolution20:Upgrading from 2.0.x to 2.1.x]&amp;nbsp;*\!important*
+* [For Upgrades Coming From Prior to 2.0.5|Upgrading from Versions Earlier than 2.0.5]
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.1.0-pl /www/public_html/modx/{code}
+
+The effect is the same if you use the humble *cp* command:
+
+{code}\cp -fr modx-2.2.0-pl/* /www/public_html/modx{code}
+
+The &quot;-fr&quot; bit forces a recursive copy (i.e. a directory merge).  Using a backslash before the &quot;cp&quot; command lets you avoid all the prompts asking &quot;Are you sure?&quot; to every overwrite operation.
+
+See the not above about FTP clients that support directory merging.
+
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"37683245";s:3:"ver";s:1:"2";s:4:"code";s:3945:"\\
+
+{toc}
+
+{info}This document is for Upgrading MODx 2.x. If you are looking to upgrade from Evolution (1.x), this is not officially supported at this time, but resources to help you in this process can be [found here|http://rtfm.modx.com/display/revolution20/Upgrading+from+MODx+Evolution].{info}
+
+h2. Upgrading MODx Revolution 2.x
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+\\
+
+{warning}
+When you are updating from MODX Revolution 2.0.x to 2.1.x it is VERY important to realize a lot of functions have been deprecated. Most addons will have been updated to use the new methods, however you may not always be running the latest version. So, BEFORE starting the upgrade process make sure all your packages are up to date, and working properly in 2.0.x. If you don&#39;t, you may end up being locked in some kind of limbo where the manager can not be accessed due to fatal PHP errors. While this can often be fixed by manually removing or updating the offending files, in certain server setups you may not have access to php generated files (such as files created by the package manager on install) requiring a lot more work to fix.
+{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read the [Troubleshooting Installation] and the [Troubleshooting Upgrades] pages.{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+Your config.inc.php file should have CHMOD 644 permission.
+
+{info}
+It&#39;s a good idea to clear your browser cache after upgrading. Browsers often cache JS and CSS, and you want to make sure you&#39;re getting the newest files in your browser&amp;nbsp;after the upgrade.{info}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrading to 2.2|revolution20:Upgrading to 2.2.x]
+* [For Upgrading From 2.0.x to 2.1.x|revolution20:Upgrading from 2.0.x to 2.1.x]&amp;nbsp;*\!important*
+* [For Upgrades Coming From Prior to 2.0.5|Upgrading from Versions Earlier than 2.0.5]
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.1.0-pl /www/public_html/modx/{code}
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"36634805";s:3:"ver";s:1:"1";s:4:"code";s:3888:"\\
+
+{toc}
+
+{info}This document is for Upgrading MODx 2.x. If you are looking to upgrade from Evolution (1.x), this is not officially supported at this time, but resources to help you in this process can be [found here|http://rtfm.modx.com/display/revolution20/Upgrading+from+MODx+Evolution].{info}
+
+h2. Upgrading MODx Revolution 2.x
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+\\
+
+{warning}
+When you are updating from MODX Revolution 2.0.x to 2.1.x it is VERY important to realize a lot of functions have been deprecated. Most addons will have been updated to use the new methods, however you may not always be running the latest version. So, BEFORE starting the upgrade process make sure all your packages are up to date, and working properly in 2.0.x. If you don&#39;t, you may end up being locked in some kind of limbo where the manager can not be accessed due to fatal PHP errors. While this can often be fixed by manually removing or updating the offending files, in certain server setups you may not have access to php generated files (such as files created by the package manager on install) requiring a lot more work to fix.
+{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read the [Troubleshooting Installation] and the [Troubleshooting Upgrades] pages.{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+Your config.inc.php file should have CHMOD 644 permission.
+
+{info}
+It&#39;s a good idea to clear your browser cache after upgrading. Browsers often cache JS and CSS, and you want to make sure you&#39;re getting the newest files in your browser&amp;nbsp;after the upgrade.{info}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrading From 2.0.x to 2.1.x|revolution20:Upgrading from 2.0.x to 2.1.x]&amp;nbsp;*\!important*
+* [For Upgrades Coming From Prior to 2.0.5|Upgrading from Versions Earlier than 2.0.5]
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.1.0-pl /www/public_html/modx/{code}
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"35586236";s:3:"ver";s:1:"1";s:4:"code";s:3829:"\\
+
+{toc}
+
+{info}This document is for Upgrading MODx 2.x. If you are looking to upgrade from Evolution (1.x), this is not officially supported at this time, but resources to help you in this process can be [found here|http://rtfm.modx.com/display/revolution20/Upgrading+from+MODx+Evolution].{info}
+
+h2. Upgrading MODx Revolution 2.x
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+\\
+
+{warning}
+When you are updating from MODX Revolution 2.0.x to 2.1.x it is VERY important to realize a lot of functions have been deprecated. Most addons will have been updated to use the new methods, however you may not always be running the latest version. So, BEFORE starting the upgrade process make sure all your packages are up to date, and working properly in 2.0.x. If you don&#39;t, you may end up being locked in some kind of limbo where the manager can not be accessed due to fatal PHP errors. While this can often be fixed by manually removing or updating the offending files, in certain server setups you may not have access to php generated files (such as files created by the package manager on install) requiring a lot more work to fix.
+
+{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read the [Troubleshooting Installation] and the [Troubleshooting Upgrades] pages.{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+{info}
+It&#39;s a good idea to clear your browser cache after upgrading. Browsers often cache JS and CSS, and you want to make sure you&#39;re getting the newest files in your browser&amp;nbsp;after the upgrade.{info}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrading From 2.0.x to 2.1.x|revolution20:Upgrading from 2.0.x to 2.1.x]&amp;nbsp;*\!important*
+* [For Upgrades Coming From Prior to 2.0.5|Upgrading from Versions Earlier than 2.0.5]
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.1.0-pl /www/public_html/modx/{code}
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"35095351";s:3:"ver";s:1:"1";s:4:"code";s:3062:"\\
+
+{toc}
+
+{info}This document is for Upgrading MODx 2.x. If you are looking to upgrade from Evolution (1.x), this is not officially supported at this time, but resources to help you in this process can be [found here|http://rtfm.modx.com/display/revolution20/Upgrading+from+MODx+Evolution].{info}
+
+h2. Upgrading MODx Revolution 2.x
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read the [Troubleshooting Installation] and the [Troubleshooting Upgrades] pages.{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+{info}
+It&#39;s a good idea to clear your browser cache after upgrading. Browsers often cache JS and CSS, and you want to make sure you&#39;re getting the newest files in your browser&amp;nbsp;after the upgrade.{info}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrading From 2.0.x to 2.1.x|revolution20:Upgrading from 2.0.x to 2.1.x]&amp;nbsp;*\!important*
+* [For Upgrades Coming From Prior to 2.0.5|Upgrading from Versions Earlier than 2.0.5]
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.1.0-pl /www/public_html/modx/{code}
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"35095216";s:3:"ver";s:1:"1";s:4:"code";s:3055:"\\
+
+{toc}
+
+{info}This document is for Upgrading MODx 2.x. If you are looking to upgrade from Evolution (1.x), this is not officially supported at this time, but resources to help you in this process can be [found here|http://rtfm.modx.com/display/revolution20/Upgrading+from+MODx+Evolution].{info}
+
+h2. Upgrading MODx Revolution 2.x
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read the [Troubleshooting Installation] and the [Troubleshooting Upgrades] pages.{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+{info}
+It&#39;s a good idea to clear your browser cache after upgrading. Browsers often cache JS and CSS, and you want to make sure you&#39;re getting the newest files in your browser&amp;nbsp;after the upgrade.{info}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrading From 2.0.x to 2.1.x|revolution20:Upgrading from 2.0.x to 2.1.x] \*\!important\*
+* [For Upgrades Coming From Prior to 2.0.5|Upgrading from Versions Earlier than 2.0.5]
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.1.0-pl /www/public_html/modx/{code}
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"35095215";s:3:"ver";s:1:"1";s:4:"code";s:2958:"\\
+
+{toc}
+
+{info}This document is for Upgrading MODx 2.x. If you are looking to upgrade from Evolution (1.x), this is not officially supported at this time, but resources to help you in this process can be [found here|http://rtfm.modx.com/display/revolution20/Upgrading+from+MODx+Evolution].{info}
+
+h2. Upgrading MODx Revolution 2.x
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read the [Troubleshooting Installation] and the [Troubleshooting Upgrades] pages.{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+{info}
+It&#39;s a good idea to clear your browser cache after upgrading. Browsers often cache JS and CSS, and you want to make sure you&#39;re getting the newest files in your browser&amp;nbsp;after the upgrade.{info}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrades Coming From Prior to 2.0.5|Upgrading from Versions Earlier than 2.0.5]
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.1.0-pl /www/public_html/modx/{code}
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"35095209";s:3:"ver";s:1:"1";s:4:"code";s:3141:"\\
+
+{toc}
+
+{info}This document is for Upgrading MODx 2.x. If you are looking to upgrade from Evolution (1.x), this is not officially supported at this time, but resources to help you in this process can be [found here|http://rtfm.modx.com/display/revolution20/Upgrading+from+MODx+Evolution].{info}
+
+h2. Upgrading MODx Revolution 2.x
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read the [Troubleshooting Installation] and the [Troubleshooting Upgrades] pages.{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+{warning}Always make sure to clear your browser cache after upgrading MODx, as browsers cache the CSS and JS in the manager, and this might make it so you&#39;re using old JS on a new manager.{warning}
+
+{info}Make sure to clear your browser cache after upgrading. Browsers often cache JS and CSS, and you&#39;ll need to clear their caches to see the new files after the upgrade in your browser.{info}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrades Coming From Prior to 2.0.5|Upgrading from Versions Earlier than 2.0.5]
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.1.0-pl /www/public_html/modx/{code}
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:8;a:3:{s:2:"id";s:8:"35095205";s:3:"ver";s:1:"1";s:4:"code";s:3141:"\\
+
+{toc}
+
+{info}This document is for Upgrading MODx 2.x. If you are looking to upgrade from Evolution (1.x), this is not officially supported at this time, but resources to help you in this process can be [found here|http://rtfm.modx.com/display/revolution20/Upgrading+from+MODx+Evolution].{info}
+
+h2. Upgrading MODx Revolution 2.0
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read the [Troubleshooting Installation] and the [Troubleshooting Upgrades] pages.{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+{warning}Always make sure to clear your browser cache after upgrading MODx, as browsers cache the CSS and JS in the manager, and this might make it so you&#39;re using old JS on a new manager.{warning}
+
+{info}Make sure to clear your browser cache after upgrading. Browsers often cache JS and CSS, and you&#39;ll need to clear their caches to see the new files after the upgrade in your browser.{info}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrades Coming From Prior to 2.0.5|Upgrading from Versions Earlier than 2.0.5]
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.0.1-pl /www/public_html/modx/{code}
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:9;a:3:{s:2:"id";s:8:"33587266";s:3:"ver";s:1:"1";s:4:"code";s:3131:"\\
+
+{toc}
+
+{info}This document is for Upgrading MODx 2.x. If you are looking to upgrade from Evolution (1.x), this is not officially supported at this time, but resources to help you in this process can be [found here|http://rtfm.modx.com/display/revolution20/Upgrading+from+MODx+Evolution].{info}
+
+h2. Upgrading MODx Revolution 2.0
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read the [Troubleshooting Installation] and the [Troubleshooting Upgrades] pages.{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+{warning}Always make sure to clear your browser cache after upgrading MODx, as browsers cache the CSS and JS in the manager, and this might make it so you&#39;re using old JS on a new manager.{warning}
+
+{info}Make sure to clear your browser cache after upgrading. Browsers often cache JS and CSS, and you&#39;ll need to clear their caches to see the new files after the upgrade in your browser.{info}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [Upgrading to Revolution 2.0.5|Upgrading from Versions Earlier than 2.0.5]
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.0.1-pl /www/public_html/modx/{code}
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:10;a:3:{s:2:"id";s:8:"33587263";s:3:"ver";s:1:"1";s:4:"code";s:3118:"\\
+
+{toc}
+
+{info}This document is for Upgrading MODx 2.x. If you are looking to upgrade from Evolution (1.x), this is not officially supported at this time, but resources to help you in this process can be [found here|http://rtfm.modx.com/display/revolution20/Upgrading+from+MODx+Evolution].{info}
+
+h2. Upgrading MODx Revolution 2.0
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read the [Troubleshooting Installation] and the [Troubleshooting Upgrades] pages.{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+{warning}Always make sure to clear your browser cache after upgrading MODx, as browsers cache the CSS and JS in the manager, and this might make it so you&#39;re using old JS on a new manager.{warning}
+
+{info}Make sure to clear your browser cache after upgrading. Browsers often cache JS and CSS, and you&#39;ll need to clear their caches to see the new files after the upgrade in your browser.{info}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [Upgrading to Revolution 2.0.5|Upgrading to Revolution 2.0.5]
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.0.1-pl /www/public_html/modx/{code}
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:11;a:3:{s:2:"id";s:8:"33587221";s:3:"ver";s:1:"1";s:4:"code";s:3054:"\\
+
+{toc}
+
+{info}This document is for Upgrading MODx 2.x. If you are looking to upgrade from Evolution (1.x), this is not officially supported at this time, but resources to help you in this process can be [found here|http://rtfm.modx.com/display/revolution20/Upgrading+from+MODx+Evolution].{info}
+
+h2. Upgrading MODx Revolution 2.0
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read the [Troubleshooting Installation] and the [Troubleshooting Upgrades] pages.{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+{warning}Always make sure to clear your browser cache after upgrading MODx, as browsers cache the CSS and JS in the manager, and this might make it so you&#39;re using old JS on a new manager.{warning}
+
+{info}Make sure to clear your browser cache after upgrading. Browsers often cache JS and CSS, and you&#39;ll need to clear their caches to see the new files after the upgrade in your browser.{info}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.0.1-pl /www/public_html/modx/{code}
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:12;a:3:{s:2:"id";s:8:"31096834";s:3:"ver";s:1:"9";s:4:"code";s:2766:"\\
+
+{toc}
+
+h2. Upgrading MODx Revolution 2.0
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read the [Troubleshooting Installation] and the [Troubleshooting Upgrades] pages.{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+{warning}Always make sure to clear your browser cache after upgrading MODx, as browsers cache the CSS and JS in the manager, and this might make it so you&#39;re using old JS on a new manager.{warning}
+
+{info}Make sure to clear your browser cache after upgrading. Browsers often cache JS and CSS, and you&#39;ll need to clear their caches to see the new files after the upgrade in your browser.{info}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.0.1-pl /www/public_html/modx/{code}
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:13;a:3:{s:2:"id";s:8:"28672012";s:3:"ver";s:1:"8";s:4:"code";s:2793:"\\
+
+{toc}
+
+h2. Upgrading MODx Revolution 2.0
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read [Troubleshooting Installation].{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+{warning}Always make sure to clear your browser cache after upgrading MODx, as browsers cache the CSS and JS in the manager, and this might make it so you&#39;re using old JS on a new manager.{warning}
+
+{info}Make sure to clear your browser cache after upgrading. Browsers often cache JS and CSS, and you&#39;ll need to clear their caches to see the new files after the upgrade in your browser.{info}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. Troubleshooting Upgrades
+
+See the [Troubleshooting Upgrades] page.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.0.1-pl /www/public_html/modx/{code}
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:14;a:3:{s:2:"id";s:8:"28672011";s:3:"ver";s:1:"7";s:4:"code";s:2714:"\\
+
+h2. Upgrading MODx Revolution 2.0
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read [Troubleshooting Installation].{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+{warning}Always make sure to clear your browser cache after upgrading MODx, as browsers cache the CSS and JS in the manager, and this might make it so you&#39;re using old JS on a new manager.{warning}
+
+{info}Make sure to clear your browser cache after upgrading. Browsers often cache JS and CSS, and you&#39;ll need to clear their caches to see the new files after the upgrade in your browser.{info}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.0.1-pl /www/public_html/modx/{code}
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:15;a:3:{s:2:"id";s:8:"28672009";s:3:"ver";s:1:"6";s:4:"code";s:2515:"\\
+
+h2. Upgrading MODx Revolution 2.0
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read [Troubleshooting Installation].{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+{warning}Always make sure to clear your browser cache after upgrading MODx, as browsers cache the CSS and JS in the manager, and this might make it so you&#39;re using old JS on a new manager.{warning}
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.0.1-pl /www/public_html/modx/{code}
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:16;a:3:{s:2:"id";s:8:"28475394";s:3:"ver";s:1:"5";s:4:"code";s:2312:"\\
+
+h2. Upgrading MODx Revolution 2.0
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+{warning}Always make sure to backup your files and database before upgrading. Upgrades should go smoothly, but it is *always* a safe and smart practice to backup.{warning}
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories. With the advanced, you&#39;ll need to make sure the manager and connectors directories and files are writable.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable. Also, don&#39;t overwrite or erase the core/components/ directory.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read [Troubleshooting Installation].{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+h3. Mac OS X Users
+
+If you&#39;re copying the extracted folder in Mac OS X, be careful, as OS X will &quot;replace&quot; folders when you drag and drop them over each other. Make sure that you use the &quot;ditto&quot; command from the command line, rather than drag/dropping from Finder, otherwise your core/config/config.inc.php file will be erased. A sample ditto command after you&#39;ve extracted the zip could be:
+
+{code}ditto modx-2.0.1-pl /www/public_html/modx/{code}
+
+h3. Related Articles
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:17;a:3:{s:2:"id";s:8:"27918355";s:3:"ver";s:1:"4";s:4:"code";s:1463:"\\
+
+h2. Upgrading MODx Revolution 2.0
+
+This document assumes you are upgrading from a standard install. For Git users, please see [Git Installation].
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read [Troubleshooting Installation].{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:18;a:3:{s:2:"id";s:8:"23330819";s:3:"ver";s:1:"3";s:4:"code";s:1477:"\\
+
+h2. Upgrading MODx Revolution 2.0
+
+This document assumes you are upgrading from a standard install. For SVN users, please see [Using MODx Revolution From SVN].
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read [Troubleshooting Installation].{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:19;a:3:{s:2:"id";s:8:"18678515";s:3:"ver";s:1:"2";s:4:"code";s:1472:"\\
+
+h2. Upgrading MODx Revolution 2.0
+
+This document assumes you are upgrading from a standard install. For SVN users, please see [Using MODx Revolution From SVN].
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read [Troubleshooting Installation].{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+{pagetree:root=Upgrading}
+
+{scrollbar}";}i:20;a:3:{s:2:"id";s:8:"18678514";s:3:"ver";s:1:"1";s:4:"code";s:1474:"\\
+
+h2. Upgrading MODx Revolution 2.0.0
+
+This document assumes you are upgrading from a standard install. For SVN users, please see [Using MODx Revolution From SVN].
+
+h2. Uploading the Files
+
+For traditional distribution users, simply upload the files over the existing ones, and then run setup. For the advanced distribution, do the same, but you&#39;ll only need to do so for the core/ and setup/ directories.
+
+{note}Make sure that you don&#39;t overwrite core/config/config.inc.php, and that it&#39;s writable.{note}
+
+h2. Beginning Setup
+
+Simply follow the upgrade process, selecting whichever upgrade you want to perform (normal or database).
+
+If you are upgrading using the *Advanced* distribution, make sure you have the &quot;Core Package has been manually unpacked&quot; and &quot;Files in-place&quot; checkboxes unchecked, and that the core/, manager/ and connectors/ directories are writable.
+
+{note}If you get errors during setup, please read [Troubleshooting Installation].{note}
+
+h2. After Setup
+
+Make sure to remove the setup/ directory via the last option after setup has completed, so that no one can run setup after you and possibly break your site.
+
+
+h2. Version-Specific Changes
+
+For changes relating to specific versions, please see the following pages:
+
+* [For Upgrades Coming From Prior to 2.0.0-rc2|Upgrading to Revolution 2.0.0-rc-2]
+
+Upgrades after 2.0.0-rc-2 should run smoothly without issues.
+
+h2. See Also
+
+{pagetree:root=Upgrading}
+
+{scrollbar}";}}}

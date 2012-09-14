@@ -1,0 +1,21 @@
+a:5:{s:2:"id";s:8:"35095110";s:4:"info";a:4:{s:6:"Title:";s:26:"global_duplicate_uri_check";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:41:"[revolution20:global_duplicate_uri_check]";}s:6:"parent";s:8:"18678127";s:6:"source";s:317:"h2. global_duplicate_uri_check
+
+*Name*: Check for Duplicate URIs Across All Contexts
+*Type*: Yes/No
+*Default*: No
+*Available In*: Revolution 2.1+
+
+Select &#39;Yes&#39; to make duplicate URI checks include all Contexts in the search. Otherwise, only the Context the Resource is being saved in is checked.
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095110";s:3:"ver";s:1:"1";s:4:"code";s:317:"h2. global_duplicate_uri_check
+
+*Name*: Check for Duplicate URIs Across All Contexts
+*Type*: Yes/No
+*Default*: No
+*Available In*: Revolution 2.1+
+
+Select &#39;Yes&#39; to make duplicate URI checks include all Contexts in the search. Otherwise, only the Context the Resource is being saved in is checked.
+
+{scrollbar}
+";}}}

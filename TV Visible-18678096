@@ -1,0 +1,33 @@
+a:5:{s:2:"id";s:8:"18678096";s:4:"info";a:4:{s:6:"Title:";s:10:"TV Visible";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:25:"[revolution20:TV Visible]";}s:6:"parent";s:8:"18678090";s:6:"source";s:276:"\\
+
+h2. The TV Visible Rule
+
+The TV Visible Rule, if set to 0, will hide a TV from a User.
+
+h2. Examples
+
+An example Rule of hiding the a TV with ID of 1 for all [Users] would look like this:
+
+!rule-tvVisible.png!
+
+h2. See Also
+
+{pagetree:root=Form Customization}
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678096";s:3:"ver";s:1:"1";s:4:"code";s:276:"\\
+
+h2. The TV Visible Rule
+
+The TV Visible Rule, if set to 0, will hide a TV from a User.
+
+h2. Examples
+
+An example Rule of hiding the a TV with ID of 1 for all [Users] would look like this:
+
+!rule-tvVisible.png!
+
+h2. See Also
+
+{pagetree:root=Form Customization}
+
+{scrollbar}";}}}

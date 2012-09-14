@@ -1,0 +1,35 @@
+a:5:{s:2:"id";s:8:"18678195";s:4:"info";a:4:{s:6:"Title:";s:12:"which_editor";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:27:"[revolution20:which_editor]";}s:6:"parent";s:8:"18678127";s:6:"source";s:244:"h2. which_editor
+
+*Name*: RichText Editor to Use
+*Type*: Richtext Combo
+*Default*: 
+
+Selects which rich text editor to use when editing Resources. You can download and install additional Rich Text editors from [Package Management].
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678195";s:3:"ver";s:1:"3";s:4:"code";s:244:"h2. which_editor
+
+*Name*: RichText Editor to Use
+*Type*: Richtext Combo
+*Default*: 
+
+Selects which rich text editor to use when editing Resources. You can download and install additional Rich Text editors from [Package Management].
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119752";s:3:"ver";s:1:"2";s:4:"code";s:221:"h2. which_editor
+
+*Name*: RichText Editor to Use
+*Type*: Richtext Combo
+*Default*: 
+
+Selects which rich text editor to use. You can download and install additional Rich Text editors from [Package Management].
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"20119751";s:3:"ver";s:1:"1";s:4:"code";s:375:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Editor To Use{zone-data}
+{zone-data:key}which_editor{zone-data}
+{zone-data:type}dropdown{zone-data}
+{zone-data:default}None{zone-data}
+{zone-data:desc}Selects which rich text editor to use. You can download and install additional Rich Text editors from the MODx download page.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

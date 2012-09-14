@@ -1,0 +1,295 @@
+a:5:{s:2:"id";s:8:"18678353";s:4:"info";a:4:{s:6:"Title:";s:36:"PHP Coding in MODx Revolution, Pt. I";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:51:"[revolution20:PHP Coding in MODx Revolution, Pt. I]";}s:6:"parent";s:8:"18678106";s:6:"source";s:6263:"\\
+
+{toc}
+
+So, a lot of people have been asking about the new codebase. Is it coder-friendly? Will it be a big deviation from 0.9.6/Evolution? Does it support OOP projects? Is it faster? Will it be easy to learn?
+
+In these tutorials, we plan to answer those questions with YES.
+
+The codebase in Revolution has switched to [xPDO|http://www.xpdo.org/|xPDO Homepage], an object relational bridge modeling tool built by Jason Coward. In layman&#39;s terms, this means that all the database tables are now represented by PHP objects (as is common with any ORM). Chunks are represented by &#39;modChunk&#39; objects, snippets by &#39;modSnippet&#39; objects and so on.
+
+h2. The Simple How
+
+So, how does one actually get an object in the new modx? Well, you used to have to rely on a handful of different functions:
+{code}
+// The old way of doing things in MODx 1.x and earlier
+$doc = $modx-&gt;getDocument(23);
+$doc = $modx-&gt;getDocument(45,&#39;pagetitle,introtext&#39;);
+$chunk = $modx-&gt;getChunk(&#39;chunkName&#39;);
+
+// or even more convoluted
+$res = $modx-&gt;db-&gt;select(&#39;id,username&#39;,$table_prefix.&#39;.modx_manager_users&#39;);
+$users = array();
+if ($modx-&gt;db-&gt;getRecordCount($res))
+{
+   while ($row = $modx-&gt;db-&gt;getRow($res)) {
+       array_push($users,$row);
+   }
+}
+return $users;
+{code}
+Not anymore. Things are much simpler, and there&#39;s really only a few functions you&#39;ll need. Lets look at some examples:
+{code}
+// getting a chunk with ID 43
+$chunk = $modx-&gt;getObject(&#39;modChunk&#39;,43);
+
+// getting a chunk with name &#39;TestChunk&#39;
+$chunk = $modx-&gt;getObject(&#39;modChunk&#39;,array(
+    &#39;name&#39; =&gt; &#39;TestChunk&#39;
+));
+
+// getting a collection of chunk objects, then outputting their names
+$chunks = $modx-&gt;getCollection(&#39;modChunk&#39;);
+foreach ($chunks as $chunk) {
+    echo $chunk-&gt;get(&#39;name&#39;).&quot;&lt;br /&gt;\n&quot;;
+}
+
+// getting a resource (i.e. a page) that is published, with a alias of &#39;test&#39;
+$document = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;alias&#39; =&gt; &#39;test&#39;,
+));
+{code}
+
+h2. The Model
+
+So, you&#39;re probably asking, Where is the list of table names to object names map? It can be found in &quot;core/model/schema/modx.mysql.schema.xml&quot;. (You&#39;ll note the &#39;mysql&#39; - yes, this means that MODx will in the near future support other databases) From there you can view an XML representation of all the MODx DB tables.
+
+For example, modChunk:
+{code}
+&lt;object class=&quot;modChunk&quot; table=&quot;site_htmlsnippets&quot; extends=&quot;modElement&quot;&gt;
+    &lt;field key=&quot;name&quot; dbtype=&quot;varchar&quot; precision=&quot;50&quot; phptype=&quot;string&quot; null=&quot;false&quot; default=&quot;&quot; index=&quot;unique&quot; /&gt;
+    &lt;field key=&quot;description&quot; dbtype=&quot;varchar&quot; precision=&quot;255&quot; phptype=&quot;string&quot; null=&quot;false&quot; default=&quot;Chunk&quot; /&gt;
+    &lt;field key=&quot;editor_type&quot; dbtype=&quot;int&quot; precision=&quot;11&quot; phptype=&quot;integer&quot; null=&quot;false&quot; default=&quot;0&quot; /&gt;
+    &lt;field key=&quot;category&quot; dbtype=&quot;int&quot; precision=&quot;11&quot; phptype=&quot;integer&quot; null=&quot;false&quot; default=&quot;0&quot; /&gt;
+    &lt;field key=&quot;cache_type&quot; dbtype=&quot;tinyint&quot; precision=&quot;1&quot; phptype=&quot;integer&quot; null=&quot;false&quot; default=&quot;0&quot; /&gt;
+    &lt;field key=&quot;snippet&quot; dbtype=&quot;mediumtext&quot; phptype=&quot;string&quot; /&gt;
+    &lt;field key=&quot;locked&quot; dbtype=&quot;tinyint&quot; precision=&quot;1&quot; attributes=&quot;unsigned&quot; phptype=&quot;boolean&quot; null=&quot;false&quot; default=&quot;0&quot; /&gt;
+    &lt;aggregate alias=&quot;Category&quot; class=&quot;modCategory&quot; key=&quot;id&quot; local=&quot;category&quot; foreign=&quot;id&quot; cardinality=&quot;one&quot; owner=&quot;foreign&quot; /&gt;
+&lt;/object&gt;
+{code}
+You can also define your own schemas for your own components and add them as packages - more on that in a future article. Lets go into the schema:
+{code}
+&lt;object class=&quot;modChunk&quot; table=&quot;site_htmlsnippets&quot; extends=&quot;modElement&quot;&gt;
+{code}
+The _class_ property tells you what the name of the class will be. The _table_ property shows the actual MySQL table, and _extends_ shows what object it extends. modElement is a base class for all Elements in MODx - snippets, modules, chunks, templates, etc.
+{code}
+&lt;field key=&quot;name&quot; dbtype=&quot;varchar&quot; precision=&quot;50&quot; phptype=&quot;string&quot; null=&quot;false&quot; default=&quot;&quot; index=&quot;unique&quot; /&gt;
+{code}
+This tag represents a column in the database. Most of these attributes are pretty straightforward.
+{code}
+&lt;aggregate alias=&quot;modCategory&quot; class=&quot;modCategory&quot; key=&quot;id&quot; local=&quot;category&quot; foreign=&quot;id&quot; cardinality=&quot;one&quot; owner=&quot;foreign&quot; /&gt;
+{code}
+Okay, this is where we get into DB relationships. An *Aggregate* relationship is a relationship where, in laymans terms, if you were to delete this chunk, it wouldn&#39;t delete the Category that it&#39;s related to. If it were a *Composite* relationship, it would. There is &quot;dependence&quot; in the Composite relationship that is related to the other object. For an example, let&#39;s get all the modContextSettings for a modContext:
+{code}
+$context = $modx-&gt;getObject(&#39;modContext&#39;,&#39;web&#39;);
+$settings = $context-&gt;getMany(&#39;ContextSettings&#39;);
+foreach ($settings as $setting) {
+    echo &#39;Setting name: &#39;.$setting-&gt;get(&#39;key&#39;).&#39; &lt;br /&gt;&#39;;
+    echo &#39;Setting value: &#39;.$setting-&gt;get(&#39;value&#39;).&#39; &lt;br /&gt;&#39;;
+}
+{code}
+Pretty easy, huh? We&#39;ll get into creating and removing objects, as well as more complex queries, such as inner joins, limits, sorting and others, in the [next article|revolution:PHP Coding in MODx Revolution, Pt. II].
+
+h2. See Also
+
+* [xPDO: Defining a Schema|XPDO20:Defining a Schema]
+* [xPDO: Related Objects|XPDO20:Working with Related Objects]
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678353";s:3:"ver";s:1:"2";s:4:"code";s:6263:"\\
+
+{toc}
+
+So, a lot of people have been asking about the new codebase. Is it coder-friendly? Will it be a big deviation from 0.9.6/Evolution? Does it support OOP projects? Is it faster? Will it be easy to learn?
+
+In these tutorials, we plan to answer those questions with YES.
+
+The codebase in Revolution has switched to [xPDO|http://www.xpdo.org/|xPDO Homepage], an object relational bridge modeling tool built by Jason Coward. In layman&#39;s terms, this means that all the database tables are now represented by PHP objects (as is common with any ORM). Chunks are represented by &#39;modChunk&#39; objects, snippets by &#39;modSnippet&#39; objects and so on.
+
+h2. The Simple How
+
+So, how does one actually get an object in the new modx? Well, you used to have to rely on a handful of different functions:
+{code}
+// The old way of doing things in MODx 1.x and earlier
+$doc = $modx-&gt;getDocument(23);
+$doc = $modx-&gt;getDocument(45,&#39;pagetitle,introtext&#39;);
+$chunk = $modx-&gt;getChunk(&#39;chunkName&#39;);
+
+// or even more convoluted
+$res = $modx-&gt;db-&gt;select(&#39;id,username&#39;,$table_prefix.&#39;.modx_manager_users&#39;);
+$users = array();
+if ($modx-&gt;db-&gt;getRecordCount($res))
+{
+   while ($row = $modx-&gt;db-&gt;getRow($res)) {
+       array_push($users,$row);
+   }
+}
+return $users;
+{code}
+Not anymore. Things are much simpler, and there&#39;s really only a few functions you&#39;ll need. Lets look at some examples:
+{code}
+// getting a chunk with ID 43
+$chunk = $modx-&gt;getObject(&#39;modChunk&#39;,43);
+
+// getting a chunk with name &#39;TestChunk&#39;
+$chunk = $modx-&gt;getObject(&#39;modChunk&#39;,array(
+    &#39;name&#39; =&gt; &#39;TestChunk&#39;
+));
+
+// getting a collection of chunk objects, then outputting their names
+$chunks = $modx-&gt;getCollection(&#39;modChunk&#39;);
+foreach ($chunks as $chunk) {
+    echo $chunk-&gt;get(&#39;name&#39;).&quot;&lt;br /&gt;\n&quot;;
+}
+
+// getting a resource (i.e. a page) that is published, with a alias of &#39;test&#39;
+$document = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;alias&#39; =&gt; &#39;test&#39;,
+));
+{code}
+
+h2. The Model
+
+So, you&#39;re probably asking, Where is the list of table names to object names map? It can be found in &quot;core/model/schema/modx.mysql.schema.xml&quot;. (You&#39;ll note the &#39;mysql&#39; - yes, this means that MODx will in the near future support other databases) From there you can view an XML representation of all the MODx DB tables.
+
+For example, modChunk:
+{code}
+&lt;object class=&quot;modChunk&quot; table=&quot;site_htmlsnippets&quot; extends=&quot;modElement&quot;&gt;
+    &lt;field key=&quot;name&quot; dbtype=&quot;varchar&quot; precision=&quot;50&quot; phptype=&quot;string&quot; null=&quot;false&quot; default=&quot;&quot; index=&quot;unique&quot; /&gt;
+    &lt;field key=&quot;description&quot; dbtype=&quot;varchar&quot; precision=&quot;255&quot; phptype=&quot;string&quot; null=&quot;false&quot; default=&quot;Chunk&quot; /&gt;
+    &lt;field key=&quot;editor_type&quot; dbtype=&quot;int&quot; precision=&quot;11&quot; phptype=&quot;integer&quot; null=&quot;false&quot; default=&quot;0&quot; /&gt;
+    &lt;field key=&quot;category&quot; dbtype=&quot;int&quot; precision=&quot;11&quot; phptype=&quot;integer&quot; null=&quot;false&quot; default=&quot;0&quot; /&gt;
+    &lt;field key=&quot;cache_type&quot; dbtype=&quot;tinyint&quot; precision=&quot;1&quot; phptype=&quot;integer&quot; null=&quot;false&quot; default=&quot;0&quot; /&gt;
+    &lt;field key=&quot;snippet&quot; dbtype=&quot;mediumtext&quot; phptype=&quot;string&quot; /&gt;
+    &lt;field key=&quot;locked&quot; dbtype=&quot;tinyint&quot; precision=&quot;1&quot; attributes=&quot;unsigned&quot; phptype=&quot;boolean&quot; null=&quot;false&quot; default=&quot;0&quot; /&gt;
+    &lt;aggregate alias=&quot;Category&quot; class=&quot;modCategory&quot; key=&quot;id&quot; local=&quot;category&quot; foreign=&quot;id&quot; cardinality=&quot;one&quot; owner=&quot;foreign&quot; /&gt;
+&lt;/object&gt;
+{code}
+You can also define your own schemas for your own components and add them as packages - more on that in a future article. Lets go into the schema:
+{code}
+&lt;object class=&quot;modChunk&quot; table=&quot;site_htmlsnippets&quot; extends=&quot;modElement&quot;&gt;
+{code}
+The _class_ property tells you what the name of the class will be. The _table_ property shows the actual MySQL table, and _extends_ shows what object it extends. modElement is a base class for all Elements in MODx - snippets, modules, chunks, templates, etc.
+{code}
+&lt;field key=&quot;name&quot; dbtype=&quot;varchar&quot; precision=&quot;50&quot; phptype=&quot;string&quot; null=&quot;false&quot; default=&quot;&quot; index=&quot;unique&quot; /&gt;
+{code}
+This tag represents a column in the database. Most of these attributes are pretty straightforward.
+{code}
+&lt;aggregate alias=&quot;modCategory&quot; class=&quot;modCategory&quot; key=&quot;id&quot; local=&quot;category&quot; foreign=&quot;id&quot; cardinality=&quot;one&quot; owner=&quot;foreign&quot; /&gt;
+{code}
+Okay, this is where we get into DB relationships. An *Aggregate* relationship is a relationship where, in laymans terms, if you were to delete this chunk, it wouldn&#39;t delete the Category that it&#39;s related to. If it were a *Composite* relationship, it would. There is &quot;dependence&quot; in the Composite relationship that is related to the other object. For an example, let&#39;s get all the modContextSettings for a modContext:
+{code}
+$context = $modx-&gt;getObject(&#39;modContext&#39;,&#39;web&#39;);
+$settings = $context-&gt;getMany(&#39;ContextSettings&#39;);
+foreach ($settings as $setting) {
+    echo &#39;Setting name: &#39;.$setting-&gt;get(&#39;key&#39;).&#39; &lt;br /&gt;&#39;;
+    echo &#39;Setting value: &#39;.$setting-&gt;get(&#39;value&#39;).&#39; &lt;br /&gt;&#39;;
+}
+{code}
+Pretty easy, huh? We&#39;ll get into creating and removing objects, as well as more complex queries, such as inner joins, limits, sorting and others, in the [next article|revolution:PHP Coding in MODx Revolution, Pt. II].
+
+h2. See Also
+
+* [xPDO: Defining a Schema|XPDO20:Defining a Schema]
+* [xPDO: Related Objects|XPDO20:Working with Related Objects]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33226891";s:3:"ver";s:1:"1";s:4:"code";s:6306:"\\
+
+{toc}
+
+So, a lot of people have been asking about the new codebase. Is it coder-friendly? Will it be a big deviation from 0.9.6/Evolution? Does it support OOP projects? Is it faster? Will it be easy to learn?
+
+In these tutorials, we plan to answer those questions with a resounding, &quot;yes.&quot;
+
+The codebase in Revolution has switched to [xPDO|http://www.xpdo.org/|xPDO Homepage], an object relational bridge modeling tool built by Jason Coward. In layman&#39;s terms, this means that all the database tables are now represented by PHP objects (which you&#39;d expect with any ORM). Chunks are represented by &#39;modChunk&#39; objects, snippets by &#39;modSnippet&#39; objects and so on.
+
+h2. The Simple How
+
+So, how does one actually get an object in the new modx? Well, used to, you had to do and remember a myriad of different functions:
+{code}
+// The old way of doing things in MODx 1.x and earlier
+$doc = $modx-&gt;getDocument(23);
+$doc = $modx-&gt;getDocument(45,&#39;pagetitle,introtext&#39;);
+$chunk = $modx-&gt;getChunk(&#39;chunkName&#39;);
+
+// or even more convoluted
+$res = $modx-&gt;db-&gt;select(&#39;id,username&#39;,$table_prefix.&#39;.modx_manager_users&#39;);
+$users = array();
+if ($modx-&gt;db-&gt;getRecordCount($res))
+{
+   while ($row = $modx-&gt;db-&gt;getRow($res)) {
+       array_push($users,$row);
+   }
+}
+return $users;
+{code}
+Not anymore. Things are much simpler, and there&#39;s really only a few functions you&#39;ll need. Lets look at some examples:
+{code}
+// getting a chunk with ID 43
+$chunk = $modx-&gt;getObject(&#39;modChunk&#39;,43);
+
+// getting a chunk with name &#39;TestChunk&#39;
+$chunk = $modx-&gt;getObject(&#39;modChunk&#39;,array(
+    &#39;name&#39; =&gt; &#39;TestChunk&#39;
+));
+
+// getting a collection of chunk objects, then outputting their names
+$chunks = $modx-&gt;getCollection(&#39;modChunk&#39;);
+foreach ($chunks as $chunk) {
+    echo $chunk-&gt;get(&#39;name&#39;).&quot;&lt;br /&gt;\n&quot;;
+}
+
+// getting a resource (i.e. a page) that is published, with a alias of &#39;test&#39;
+$document = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;alias&#39; =&gt; &#39;test&#39;,
+));
+{code}
+
+h2. The Model
+
+So, you&#39;re probably asking, Where is the list of table names to object names map? It can be found in &quot;core/model/schema/modx.mysql.schema.xml&quot;. (You&#39;ll note the &#39;mysql&#39; - yes, this means that MODx will in the near future support other databases) From there you can view an XML representation of all the MODx DB tables.
+
+For example, modChunk:
+{code}
+&lt;object class=&quot;modChunk&quot; table=&quot;site_htmlsnippets&quot; extends=&quot;modElement&quot;&gt;
+    &lt;field key=&quot;name&quot; dbtype=&quot;varchar&quot; precision=&quot;50&quot; phptype=&quot;string&quot; null=&quot;false&quot; default=&quot;&quot; index=&quot;unique&quot; /&gt;
+    &lt;field key=&quot;description&quot; dbtype=&quot;varchar&quot; precision=&quot;255&quot; phptype=&quot;string&quot; null=&quot;false&quot; default=&quot;Chunk&quot; /&gt;
+    &lt;field key=&quot;editor_type&quot; dbtype=&quot;int&quot; precision=&quot;11&quot; phptype=&quot;integer&quot; null=&quot;false&quot; default=&quot;0&quot; /&gt;
+    &lt;field key=&quot;category&quot; dbtype=&quot;int&quot; precision=&quot;11&quot; phptype=&quot;integer&quot; null=&quot;false&quot; default=&quot;0&quot; /&gt;
+    &lt;field key=&quot;cache_type&quot; dbtype=&quot;tinyint&quot; precision=&quot;1&quot; phptype=&quot;integer&quot; null=&quot;false&quot; default=&quot;0&quot; /&gt;
+    &lt;field key=&quot;snippet&quot; dbtype=&quot;mediumtext&quot; phptype=&quot;string&quot; /&gt;
+    &lt;field key=&quot;locked&quot; dbtype=&quot;tinyint&quot; precision=&quot;1&quot; attributes=&quot;unsigned&quot; phptype=&quot;boolean&quot; null=&quot;false&quot; default=&quot;0&quot; /&gt;
+    &lt;aggregate alias=&quot;Category&quot; class=&quot;modCategory&quot; key=&quot;id&quot; local=&quot;category&quot; foreign=&quot;id&quot; cardinality=&quot;one&quot; owner=&quot;foreign&quot; /&gt;
+&lt;/object&gt;
+{code}
+You can also define your own schemas for your own components and add them as packages - more on that in a future article. Lets go into the schema:
+{code}
+&lt;object class=&quot;modChunk&quot; table=&quot;site_htmlsnippets&quot; extends=&quot;modElement&quot;&gt;
+{code}
+The _class_ property tells you what the name of the class will be. The _table_ property shows the actual MySQL table, and _extends_ shows what object it extends. modElement is a base class for all Elements in MODx - snippets, modules, chunks, templates, etc.
+{code}
+&lt;field key=&quot;name&quot; dbtype=&quot;varchar&quot; precision=&quot;50&quot; phptype=&quot;string&quot; null=&quot;false&quot; default=&quot;&quot; index=&quot;unique&quot; /&gt;
+{code}
+This tag represents a column in the database. Most of these attributes are pretty straightforward.
+{code}
+&lt;aggregate alias=&quot;modCategory&quot; class=&quot;modCategory&quot; key=&quot;id&quot; local=&quot;category&quot; foreign=&quot;id&quot; cardinality=&quot;one&quot; owner=&quot;foreign&quot; /&gt;
+{code}
+Okay, this is where we get into DB relationships. An *Aggregate* relationship is a relationship where, in laymans terms, if you were to delete this chunk, it wouldn&#39;t delete the Category that it&#39;s related to. If it were a *Composite* relationship, it would. There is &quot;dependence&quot; in the Composite relationship that is related to the other object. For an example, let&#39;s get all the modContextSettings for a modContext:
+{code}
+$context = $modx-&gt;getObject(&#39;modContext&#39;,&#39;web&#39;);
+$settings = $context-&gt;getMany(&#39;ContextSettings&#39;);
+foreach ($settings as $setting) {
+    echo &#39;Setting name: &#39;.$setting-&gt;get(&#39;key&#39;).&#39; &lt;br /&gt;&#39;;
+    echo &#39;Setting value: &#39;.$setting-&gt;get(&#39;value&#39;).&#39; &lt;br /&gt;&#39;;
+}
+{code}
+Pretty easy, huh? We&#39;ll get into creating and removing objects, as well as more complex queries, such as inner joins, limits, sorting and others, in the [next article|revolution:PHP Coding in MODx Revolution, Pt. II].
+
+h2. See Also
+
+* [xPDO: Defining a Schema|XPDO20:Defining a Schema]
+* [xPDO: Related Objects|XPDO20:Working with Related Objects]
+
+{scrollbar}";}}}

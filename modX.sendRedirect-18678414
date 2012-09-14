@@ -1,0 +1,149 @@
+a:5:{s:2:"id";s:8:"18678414";s:4:"info";a:4:{s:6:"Title:";s:17:"modX.sendRedirect";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:32:"[revolution20:modX.sendRedirect]";}s:6:"parent";s:8:"18678415";s:6:"source";s:2138:"\\
+
+h2. modX::sendRedirect
+
+Sends a redirect to the specified URL using the specified method.
+
+h2. {color:#000000}{*}Syntax{*}{color}
+
+API Doc: [http://api.modxcms.com/modx/modX.html#sendRedirect]
+
+{code}
+void sendRedirect (string $url, [array $options = false], [string $type = &#39;&#39;], [string $responseCode])
+{code}
+
+Please note that the $type and $responseCode have been deprecated and will likely be removed in an upcoming release. *Do not rely on those*.
+
+$url needs to be a proper url, which could be generated using modX::makeUrl, to redirect to.&amp;nbsp;
+
+$options accepts an array with one or more of the following key/value pairs:
+
+* type, one of the following (REDIRECT_HEADER is the default):
+** *REDIRECT_REFRESH*&amp;nbsp;\- Uses the header refresh method
+** *REDIRECT_META*&amp;nbsp;\- Sends a a META HTTP-EQUIV=&quot;Refresh&quot; tag to the output
+** *REDIRECT_HEADER*&amp;nbsp;\- Uses the header location method
+* responseCode which needs to be the proper HTTP response, so not just &quot;301&quot; or &quot;302&quot;. It defaults to HTTP/1.1 302 Moved Temporarily, but you could set it to &quot;HTTP/1.1 301 Moved Permanently&quot; for a 301-style redirect.
+* count_attempts indicates the number of attempts to redirect before halting.&amp;nbsp;
+
+$type, which is deprecated and should not be used, is the same as the type $options array key.
+$responseCode, which is deprecated and should not be used, is the same as the responseCode $options array key.
+
+h2. Examples
+
+Send a redirection request to the Resource with ID 54.
+{code}
+$url = $modx-&gt;makeUrl(54);
+$modx-&gt;sendRedirect($url);
+{code}
+
+Send a redirect to modx.com. Do so via the META HTTP-EQUIV refresh tag.
+{code}
+$modx-&gt;sendRedirect(&#39;http://modx.com&#39;,array(&#39;type&#39; =&gt; &#39;REDIRECT_META&#39;));
+{code}
+
+Send a 301 Moved Permanently response code instead of the default 302 Moved Temporarily response code.
+{code}
+$modx-&gt;sendRedirect(&#39;http://modx.com&#39;,array(&#39;responseCode&#39; =&gt; &#39;HTTP/1.1 301 Moved Permanently&#39;));
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.sendForward]
+* [modX.sendErrorPage]
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678414";s:3:"ver";s:1:"2";s:4:"code";s:2138:"\\
+
+h2. modX::sendRedirect
+
+Sends a redirect to the specified URL using the specified method.
+
+h2. {color:#000000}{*}Syntax{*}{color}
+
+API Doc: [http://api.modxcms.com/modx/modX.html#sendRedirect]
+
+{code}
+void sendRedirect (string $url, [array $options = false], [string $type = &#39;&#39;], [string $responseCode])
+{code}
+
+Please note that the $type and $responseCode have been deprecated and will likely be removed in an upcoming release. *Do not rely on those*.
+
+$url needs to be a proper url, which could be generated using modX::makeUrl, to redirect to.&amp;nbsp;
+
+$options accepts an array with one or more of the following key/value pairs:
+
+* type, one of the following (REDIRECT_HEADER is the default):
+** *REDIRECT_REFRESH*&amp;nbsp;\- Uses the header refresh method
+** *REDIRECT_META*&amp;nbsp;\- Sends a a META HTTP-EQUIV=&quot;Refresh&quot; tag to the output
+** *REDIRECT_HEADER*&amp;nbsp;\- Uses the header location method
+* responseCode which needs to be the proper HTTP response, so not just &quot;301&quot; or &quot;302&quot;. It defaults to HTTP/1.1 302 Moved Temporarily, but you could set it to &quot;HTTP/1.1 301 Moved Permanently&quot; for a 301-style redirect.
+* count_attempts indicates the number of attempts to redirect before halting.&amp;nbsp;
+
+$type, which is deprecated and should not be used, is the same as the type $options array key.
+$responseCode, which is deprecated and should not be used, is the same as the responseCode $options array key.
+
+h2. Examples
+
+Send a redirection request to the Resource with ID 54.
+{code}
+$url = $modx-&gt;makeUrl(54);
+$modx-&gt;sendRedirect($url);
+{code}
+
+Send a redirect to modx.com. Do so via the META HTTP-EQUIV refresh tag.
+{code}
+$modx-&gt;sendRedirect(&#39;http://modx.com&#39;,array(&#39;type&#39; =&gt; &#39;REDIRECT_META&#39;));
+{code}
+
+Send a 301 Moved Permanently response code instead of the default 302 Moved Temporarily response code.
+{code}
+$modx-&gt;sendRedirect(&#39;http://modx.com&#39;,array(&#39;responseCode&#39; =&gt; &#39;HTTP/1.1 301 Moved Permanently&#39;));
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.sendForward]
+* [modX.sendErrorPage]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"36634794";s:3:"ver";s:1:"1";s:4:"code";s:924:"\\
+
+h2. modX::sendRedirect
+
+Sends a redirect to the specified URL using the specified method.
+
+Valid $type values include: 
+* *REDIRECT_REFRESH* - Uses the header refresh method
+* *REDIRECT_META* - Sends a a META HTTP-EQUIV=&quot;Refresh&quot; tag to the output
+* *REDIRECT_HEADER* - Uses the header location method
+
+REDIRECT_HEADER is the default.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#sendRedirect
+
+{code}
+void sendRedirect (string $url, [integer $count_attempts = 0], [string $type = &#39;&#39;])
+{code}
+
+h2. Examples
+
+Send a redirection request to the Resource with ID 54.
+{code}
+$url = $modx-&gt;makeUrl(54);
+$modx-&gt;sendRedirect($url);
+{code}
+
+Send a redirection request to modxcms.com. Do so via the META HTTP-EQUIV refresh tag.
+{code}
+$modx-&gt;sendRedirect(&#39;http://modxcms.com&#39;,0,REDIRECT_META);
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.sendForward]
+* [modX.sendErrorPage]
+
+{scrollbar}";}}}

@@ -1,0 +1,124 @@
+a:5:{s:2:"id";s:8:"35586546";s:4:"info";a:4:{s:6:"Title:";s:22:"Media Source Type - S3";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:37:"[revolution20:Media Source Type - S3]";}s:6:"parent";s:8:"35586544";s:6:"source";s:1165:"{toc}
+
+h2. The Amazon S3 Media Source Type
+
+This media source type allows you to connect to an Amazon S3 bucket.
+
+h3. Available Properties
+
+{table-plus}
+
+
+|| Name || Description || Default Value ||
+| url | Required. The URL to the Amazon S3 instance. Often [http://myaccount.s3.amazonaws.com/]&amp;nbsp;or&amp;nbsp;[https://s3.amazonaws.com/myaccount/]. If you&#39;re having issues seeing thumbnails but it works properly, make sure the url ends with a slash. | |
+| bucket | Required. The bucket to connect the source to. | |
+| key | Required. The Amazon key used for authentication to the bucket. |
+| secret_key | Required. The Amazon secret key for authentication to the bucket. |
+| imageExtensions | A list of file extensions that can be made into thumbnails. | jpg,jpeg,png,gif |
+| thumbnailType | When a thumbnail is displayed, the type of image it will be rendered as. | png |
+| thumbnailQuality | The quality of the rendered thumbnail, on a scale from 0-100 | 90 |
+| skipFiles | A comma-separated list of filenames to skip when browsing the source. | .svn,.git,_notes,nbproject,.idea,.DS_Store |
+{table-plus}
+
+h2. See Also
+
+{pagetree:root=Media Source Types}";s:8:"versions";a:5:{i:0;a:3:{s:2:"id";s:8:"35586546";s:3:"ver";s:1:"5";s:4:"code";s:1165:"{toc}
+
+h2. The Amazon S3 Media Source Type
+
+This media source type allows you to connect to an Amazon S3 bucket.
+
+h3. Available Properties
+
+{table-plus}
+
+
+|| Name || Description || Default Value ||
+| url | Required. The URL to the Amazon S3 instance. Often [http://myaccount.s3.amazonaws.com/]&amp;nbsp;or&amp;nbsp;[https://s3.amazonaws.com/myaccount/]. If you&#39;re having issues seeing thumbnails but it works properly, make sure the url ends with a slash. | |
+| bucket | Required. The bucket to connect the source to. | |
+| key | Required. The Amazon key used for authentication to the bucket. |
+| secret_key | Required. The Amazon secret key for authentication to the bucket. |
+| imageExtensions | A list of file extensions that can be made into thumbnails. | jpg,jpeg,png,gif |
+| thumbnailType | When a thumbnail is displayed, the type of image it will be rendered as. | png |
+| thumbnailQuality | The quality of the rendered thumbnail, on a scale from 0-100 | 90 |
+| skipFiles | A comma-separated list of filenames to skip when browsing the source. | .svn,.git,_notes,nbproject,.idea,.DS_Store |
+{table-plus}
+
+h2. See Also
+
+{pagetree:root=Media Source Types}";}i:1;a:3:{s:2:"id";s:8:"37683711";s:3:"ver";s:1:"4";s:4:"code";s:1162:"{toc}
+
+h2. The Amazon S3 Media Source Type
+
+This media source type allows you to connect to an Amazon S3 bucket.
+
+h3. Available Properties
+
+{table-plus}
+
+|| Name || Description || Default Value ||
+| url | Required. The URL to the Amazon S3 instance. Often [http://myaccount.s3.amazonaws.com/]&amp;nbsp;or&amp;nbsp;https://s3.amazonaws.com/myaccount/. If you&#39;re having issues seeing thumbnails but it works properly, make sure the url ends with a slash. | |
+| bucket | Required. The bucket to connect the source to. | |
+| key | Required. The Amazon key used for authentication to the bucket. |
+| secret_key | Required. The Amazon secret key for authentication to the bucket. |
+| imageExtensions | A list of file extensions that can be made into thumbnails. | jpg,jpeg,png,gif |
+| thumbnailType | When a thumbnail is displayed, the type of image it will be rendered as. | png |
+| thumbnailQuality | The quality of the rendered thumbnail, on a scale from 0-100 | 90 |
+| skipFiles | A comma-separated list of filenames to skip when browsing the source. | .svn,.git,_notes,nbproject,.idea,.DS_Store |
+{table-plus}
+
+h2. See Also
+
+{pagetree:root=Media Source Types}";}i:2;a:3:{s:2:"id";s:8:"37683710";s:3:"ver";s:1:"3";s:4:"code";s:950:"{toc}
+
+h2. The Amazon S3 Media Source Type
+
+This media source type allows you to connect to an Amazon S3 bucket. 
+
+h3. Available Properties
+
+{table-plus}
+||Name||Description||Default Value||
+|url|Required. The URL to the Amazon S3 instance. Often http://myaccount.s3.amazonaws.com/| |
+|bucket|Required. The bucket to connect the source to.| |
+|key|Required. The Amazon key used for authentication to the bucket.|
+|secret_key|Required. The Amazon secret key for authentication to the bucket.|
+|imageExtensions|A list of file extensions that can be made into thumbnails.|jpg,jpeg,png,gif|
+|thumbnailType|When a thumbnail is displayed, the type of image it will be rendered as.|png|
+|thumbnailQuality|The quality of the rendered thumbnail, on a scale from 0-100|90|
+|skipFiles|A comma-separated list of filenames to skip when browsing the source.|.svn,.git,_notes,nbproject,.idea,.DS_Store|
+{table-plus}
+
+h2. See Also
+
+{pagetree:root=Media Source Types}";}i:3;a:3:{s:2:"id";s:8:"37126157";s:3:"ver";s:1:"2";s:4:"code";s:910:"{toc}
+
+h2. The Amazon S3 Media Source Type
+
+This media source type allows you to connect to an Amazon S3 bucket. 
+
+h3. Available Properties
+
+{table-plus}
+||Name||Description||Default Value||
+|url|The URL to the Amazon S3 instance. Often http://myaccount.s3.amazonaws.com/| |
+|bucket|The bucket to connect the source to.| |
+|key|The Amazon key used for authentication to the bucket.|
+|secret_key|The Amazon secret key for authentication to the bucket.|
+|imageExtensions|A list of file extensions that can be made into thumbnails.|jpg,jpeg,png,gif|
+|thumbnailType|When a thumbnail is displayed, the type of image it will be rendered as.|png|
+|thumbnailQuality|The quality of the rendered thumbnail, on a scale from 0-100|90|
+|skipFiles|A comma-separated list of filenames to skip when browsing the source.|.svn,.git,_notes,nbproject,.idea,.DS_Store|
+{table-plus}
+
+h2. See Also
+
+{pagetree:root=Media Source Types}";}i:4;a:3:{s:2:"id";s:8:"35586550";s:3:"ver";s:1:"1";s:4:"code";s:124:"{toc}
+
+h2. The Amazon S3 Media Source Type
+
+{note}Under construction{note}
+
+h2. See Also
+
+{pagetree:root=Media Source Types}";}}}

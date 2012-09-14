@@ -1,0 +1,55 @@
+a:5:{s:2:"id";s:8:"18678095";s:4:"info";a:4:{s:6:"Title:";s:9:"Tab Title";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:24:"[revolution20:Tab Title]";}s:6:"parent";s:8:"18678090";s:6:"source";s:611:"\\
+
+h2. The Tab Title Rule
+
+The Tab Title Rule will change the title of any Tab.
+
+h2. Usage
+
+The values for the Rule should be as follows:
+
+* *Name*: The ID of the tab to change.
+* *Containing Panel*: The ID of the tabpanel to change.
+* *Rule*: Tab Title
+* *Value*: The new text to change the tab title to.
+
+For a list of tabs available for each page, see [Form Customization Pages].
+
+h2. Examples
+
+An example Rule of changing the title for the Page Settings tab for all [Users] to &quot;Custom Fields&quot; would look like this:
+
+!fc-tabTitle.png!
+
+h2. See Also
+
+{pagetree:root=Form Customization}
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678095";s:3:"ver";s:1:"1";s:4:"code";s:611:"\\
+
+h2. The Tab Title Rule
+
+The Tab Title Rule will change the title of any Tab.
+
+h2. Usage
+
+The values for the Rule should be as follows:
+
+* *Name*: The ID of the tab to change.
+* *Containing Panel*: The ID of the tabpanel to change.
+* *Rule*: Tab Title
+* *Value*: The new text to change the tab title to.
+
+For a list of tabs available for each page, see [Form Customization Pages].
+
+h2. Examples
+
+An example Rule of changing the title for the Page Settings tab for all [Users] to &quot;Custom Fields&quot; would look like this:
+
+!fc-tabTitle.png!
+
+h2. See Also
+
+{pagetree:root=Form Customization}
+
+{scrollbar}";}}}

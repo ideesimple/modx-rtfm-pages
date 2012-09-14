@@ -1,0 +1,83 @@
+a:5:{s:2:"id";s:8:"18678069";s:4:"info";a:4:{s:6:"Title:";s:14:"Using Snippets";s:7:"Author:";s:13:"Susan Ottwell";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:29:"[revolution20:Using Snippets]";}s:6:"parent";s:8:"18678460";s:6:"source";s:1715:"\\
+{toc}
+
+[Snippets] are MODx&#39;s answer to inline PHP code. They provide customizable dynamic content, such as menus, blog or news listings, search and other form-based functionality and anything else that your site needs to generate on-demand.
+
+h2. Using a Snippet
+
+Once you have a Snippet installed, you can use it simply by putting its tags in your template, a chunk or TV, or a document&#39;s content wherever you want the Snippet&#39;s output to be displayed.
+
+{code}[[MySnippet]]{code}
+
+If you expect the snippet code to be dynamic for different users, you can also call a snippet uncached:
+
+{code}[[!MySnippet]]{code}
+
+h2. Snippet Properties
+
+Snippets can have [Properties|Properties and Property Sets], which can be passed in the Snippet call, like so:
+
+{code}[[!Wayfinder? &amp;startId=`0` &amp;level=`1`]]{code}
+
+You can also aggregate these Properties into a [Property Set|Properties and Property Sets], which is a dynamic collection of properties that can be attached to any Snippet (or Element for that matter). This allows you to share common property configs in a snippet call in one place.
+
+Say you had a Property Set called &#39;Menu&#39; with `startId` set to 0 and `level` set to 1:
+
+{code}[[!Wayfinder@Menu]]{code}
+
+would then load those properties automatically into the Snippet. And even those properties can be overridden:
+
+{code}[[!Wayfinder@Menu? &amp;level=`2`]]{code}
+
+which would override the set&#39;s value on `level` of 1, setting it instead to 2.
+
+h2. Installing Snippets
+
+You can also download and install Snippets via [Package Management]. See the tutorial on [installing a Package|Installing a Package] for more information.
+
+h2. See Also
+
+* [Installing a Package]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678069";s:3:"ver";s:1:"1";s:4:"code";s:1715:"\\
+{toc}
+
+[Snippets] are MODx&#39;s answer to inline PHP code. They provide customizable dynamic content, such as menus, blog or news listings, search and other form-based functionality and anything else that your site needs to generate on-demand.
+
+h2. Using a Snippet
+
+Once you have a Snippet installed, you can use it simply by putting its tags in your template, a chunk or TV, or a document&#39;s content wherever you want the Snippet&#39;s output to be displayed.
+
+{code}[[MySnippet]]{code}
+
+If you expect the snippet code to be dynamic for different users, you can also call a snippet uncached:
+
+{code}[[!MySnippet]]{code}
+
+h2. Snippet Properties
+
+Snippets can have [Properties|Properties and Property Sets], which can be passed in the Snippet call, like so:
+
+{code}[[!Wayfinder? &amp;startId=`0` &amp;level=`1`]]{code}
+
+You can also aggregate these Properties into a [Property Set|Properties and Property Sets], which is a dynamic collection of properties that can be attached to any Snippet (or Element for that matter). This allows you to share common property configs in a snippet call in one place.
+
+Say you had a Property Set called &#39;Menu&#39; with `startId` set to 0 and `level` set to 1:
+
+{code}[[!Wayfinder@Menu]]{code}
+
+would then load those properties automatically into the Snippet. And even those properties can be overridden:
+
+{code}[[!Wayfinder@Menu? &amp;level=`2`]]{code}
+
+which would override the set&#39;s value on `level` of 1, setting it instead to 2.
+
+h2. Installing Snippets
+
+You can also download and install Snippets via [Package Management]. See the tutorial on [installing a Package|Installing a Package] for more information.
+
+h2. See Also
+
+* [Installing a Package]
+
+{scrollbar}";}}}

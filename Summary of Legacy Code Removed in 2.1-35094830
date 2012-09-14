@@ -1,0 +1,954 @@
+a:5:{s:2:"id";s:8:"35094830";s:4:"info";a:4:{s:6:"Title:";s:37:"Summary of Legacy Code Removed in 2.1";s:7:"Author:";s:11:"Mike Schell";s:16:"Last Changed by:";s:12:"Jason Coward";s:12:"Wiki Markup:";s:52:"[revolution20:Summary of Legacy Code Removed in 2.1]";}s:6:"parent";s:8:"18678468";s:6:"source";s:8629:"{toc}
+{note:title=In progress}{note}
+
+h2. Functionality
+
+h3. TV Input Types
+
+The following input types were removed:
+
+* htmlarea, dropdown (use listbox), textareamini
+
+h2. Methods, Constants and Variables
+
+Many constants, variables and api methods have been long deprecated, marked for removal in 2.0 or 2.1 and are now finally removed from the MODX Revolution 2.1 codebase.
+
+|| Item Removed || Notes on Replacement or Potential Workaround ||
+| IN_PARSER_MODE | check context is not mgr |
+| IN_MANAGER_MODE | check context is mgr |
+| IN_MANAGER_MODE | check context is mgr |
+| |
+| {noformat}$_SESSION[&quot;mgrValidated&quot;]{noformat} | modX-&gt;user-&gt;isAuthenticated(&#39;mgr&#39;) |
+| {noformat}$_SESSION[&quot;webValidated&quot;]{noformat} | modX-&gt;user-&gt;isAuthenticated(&#39;web&#39;) |
+| {noformat}$_SESSION[&quot;mgrInternalKey&quot;]{noformat} | modX-&gt;user-&gt;get(&#39;id&#39;) when modX-&gt;user-&gt;isAuthenticated(&#39;mgr&#39;) |
+| {noformat}$_SESSION[&quot;webInternalKey&quot;]{noformat} | modX-&gt;user-&gt;get(&#39;id&#39;) when modX-&gt;user-&gt;isAuthenticated(&#39;web&#39;) |
+| {noformat}$_SESSION[&quot;mgrShortname&quot;]{noformat} | modX-&gt;user-&gt;get(&#39;username&#39;) when modX-&gt;user-&gt;isAuthenticated(&#39;mgr&#39;) |
+| {noformat}$_SESSION[&quot;webShortname&quot;]{noformat} | modX-&gt;user-&gt;get(&#39;username&#39;) when modX-&gt;user-&gt;isAuthenticated(&#39;web&#39;) |
+| |
+| DBAPI: modX-&gt;db |
+| modX-&gt;db-&gt;config | [modX-&gt;getOption() |xPDO20:getOption] |
+| modX-&gt;db-&gt;connect() | modX automatically connects to MODX database. If you&#39;re looking to set up another connection, you could instantiate xPDO again. |
+| modX-&gt;db-&gt;disconnect() |
+| modX-&gt;db-&gt;escape($s) | modX-&gt;quote() |
+| modX-&gt;db-&gt;query($sql) | modX-&gt;query() or modX-&gt;execute($criteria) see manual for PDO query |
+| modX-&gt;db-&gt;delete($from, $where= &quot;&quot;,$fields=&#39;&#39;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;select($fields= &quot;*&quot;, $from= &quot;&quot;, $where= &quot;&quot;, $orderby= &quot;&quot;, $limit= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;update($fields, $table, $where= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;insert($fields, $intotable, $fromfields= &quot;*&quot;, $fromtable= &quot;&quot;, $where= &quot;&quot;, $limit= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;exec($sql) | see modX-&gt;execute($criteria) |
+| modX-&gt;db-&gt;getInsertId() | see modX-&gt;lastInsertId() |
+| modX-&gt;db-&gt;getAffectedRows() | see modX-&gt;getCount() or xPDOCriteria-&gt;stmt-&gt;rowCount() |
+| modX-&gt;db-&gt;getLastError() | see xPDOCriteria-&gt;stmt-&gt;errorCode or xPDOCriteria-&gt;stmt-&gt;errorInfo |
+| modX-&gt;db-&gt;getRecordCount($ds) | modX-&gt;getCount($className, $criteria= null) |
+| modX-&gt;db-&gt;getRow($ds, $mode= &#39;assoc&#39;) | see xPDOCriteria-&gt;stmt-&gt;fetch() |
+| modX-&gt;db-&gt;getColumn($name, $dsq) | see xPDOCriteria-&gt;stmt-&gt;fetchColumn() |
+| modX-&gt;db-&gt;getColumnNames($dsq) | see modX-&gt;getFields($className) (note: not exactly the same .. gives you column names for a specific class) |
+| modX-&gt;db-&gt;getValue($dsq) | see xPDOCriteria-&gt;stmt-&gt;fetchColumn() |
+| modX-&gt;db-&gt;getXML($dsq) | no direct analog |
+| modX-&gt;db-&gt;getTableMetaData($table) | modX-&gt;map property |
+| modX-&gt;db-&gt;prepareDate($timestamp, $fieldType= &#39;DATETIME&#39;) | php to sql conversion of datetypes are handled automatically in the modX model (or a custom xPDO model) |
+| modX-&gt;db-&gt;getHTMLGrid($dsq, $params) | no direct analog |
+| modX-&gt;db-&gt;makeArray($rs= &#39;&#39;) | see xPDOCriteria-&gt;stmt-&gt;fetch() |
+| modX-&gt;getFullTableName() | modX-&gt;getTableName($className, $includeDb=false) \\
+or modX-&gt;escape($customTableName) |
+| modX-&gt;dbConfig | modX-&gt;getOption() (NOTE: some of the configuration keys are different, i.e. dbuser = username, dbpass = password, dbase = dbname) |
+| |
+| modX-&gt;putChunk() | modX-&gt;getChunk() |
+| modX-&gt;isFrontend() | modX-&gt;context-&gt;get(&#39;key&#39;) == &#39;web&#39; or other front-end context |
+| modX-&gt;isBackend() | modX-&gt;context-&gt;get(&#39;key&#39;) == &#39;mgr&#39; |
+| modX-&gt;getSettings() | modX-&gt;config after $modx-&gt;getConfig() |
+| modX-&gt;getDocumentObject($method, $identifier) | not public API method; no replacement (see modRequest-&gt;getResource()) |
+| modX-&gt;isMemberOfWebGroup() | modX-&gt;user-&gt;isMember or modUser-&gt;isMember |
+| modX-&gt;getDocument | modX-&gt;getObject(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getDocuments | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) \\
+or modX-&gt;getIterator(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getAllChildren() | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where condition &#39;parent&#39; = $id |
+| modX-&gt;getActiveChildren() | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where conditions &#39;parent&#39; = $id, &#39;published&#39; = 1, &#39;deleted&#39; = 0 |
+| modX-&gt;getDocumentChildren() | as above, modX-&gt;getCollection(&#39;modResource&#39;, $criteria) with specific criteria |
+| modX-&gt;getDocumentChildrenTVars() | * to get document child resources and their TVs all at once:
+* modResource-&gt;getMany(&#39;Children&#39;) and iterate the children and you can modResource-&gt;getTVValue()
+* or to get TVs of any modResource object, modResource-&gt;getTemplateVars()
+* or get a modTemplateVar with modX-&gt;getObject(&#39;modTemplateVar&#39;, array(&#39;name&#39; =&gt; $tvName)) and then modTemplateVar-&gt;getValue($resourceId)/renderOutput($resourceId) |
+| modX-&gt;getTemplateVar() | modX-&gt;getObject(&#39;modTemplateVar&#39;, $criteria) |
+| modX-&gt;getTemplateVars() | modX-&gt;getCollection(&#39;modTemplateVar&#39;, $criteria) |
+| modX-&gt;getTemplateVarOutput() | use modTemplateVar-&gt;renderOutput() on a collection of modTemplateVar objects |
+| modX-&gt;getParent() | modX-&gt;getObject(&#39;modResource&#39;, $modx-&gt;resource-&gt;get(&#39;parent&#39;)) or pass in additional criteria as needed |
+| modX-&gt;getPageInfo() | modX-&gt;getObject(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getUserInfo() | $user= $this-&gt;getObjectGraph(&#39;modUser&#39;, &#39;{&quot;Profile&quot;:{}}&#39;, $uid, true) \\
+access fields of modUser and fields of related modUserProfile |
+| modX-&gt;getWebUserInfo() | as above |
+| modX-&gt;changeWebUserPassword() | modUser-&gt;changePassword() |
+| modX-&gt;changePassword() | modUser-&gt;changePassword() |
+| modX-&gt;cleanDocumentIdentifier() | modRequest-&gt;_cleanResourceIdentifier(), but is not a public API method (DO NOT USE) |
+| modX-&gt;getDocumentIdentifier() | modRequest-&gt;getResourceIdentifier() |
+| modX-&gt;getDocumentMethod() | modRequest-&gt;getResourceMethod() |
+| modX-&gt;checkPreview() | not valid anymore, removing for 2.1.0-rc1 |
+| modX-&gt;getManagerPath() | Use modX-&gt;getOption(&#39;manager_url&#39;, null, MODX_MANAGER_URL) |
+| modX-&gt;mergeDocumentContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergeSettingsContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergeChunkContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergePlaceholderContent() | see modParser-&gt;processElementTags() |
+| |
+| modX-&gt;documentObject | access via modX-&gt;resource-&gt;get($field) or modX-&gt;resource-&gt;$field directly for raw data |
+| modX-&gt;documentIdentifier | modX-&gt;resourceIdentifier |
+| modX-&gt;documentMethod | modX-&gt;resourceMethod |
+| modX-&gt;documentContent | modX-&gt;resource-&gt;getContent() |
+| modX-&gt;documentGenerated | modX-&gt;resourceGenerated |
+| modX-&gt;dumpSQL | see xPDOQuery-&gt;toSQL() (after xPDOQuery-&gt;prepare()) |
+| |
+| modKeyword classes and related code | gone from framework, to be implemented more efficiently as developer sees fit |
+| modMetatag classes and related code | gone from framework, to be implemented more efficiently as developer sees fit |
+| |
+| modElement-&gt;toPlaceholders() | modX-&gt;toPlaceholders() |
+| |
+| modManagerUser and related classes and code | see modUser |
+| modUserRole class and related code | see Revo abac permissions |
+| modWebUser and related classes and code | see modUser |
+| |
+| modEventLog class and modX-&gt;logEvent() | see modX-&gt;log() |
+| modLexiconFocus/Topic/Language and related classes and code | see modLexicon and modLexiconEntry |
+| |
+| modX-&gt;executeProcessor() | see modX-&gt;runProcessor() |
+| |
+| modTemplate-&gt;getTVs() | modTemplate-&gt;getTemplateVars() |";s:8:"versions";a:10:{i:0;a:3:{s:2:"id";s:8:"35094830";s:3:"ver";s:1:"1";s:4:"code";s:8629:"{toc}
+{note:title=In progress}{note}
+
+h2. Functionality
+
+h3. TV Input Types
+
+The following input types were removed:
+
+* htmlarea, dropdown (use listbox), textareamini
+
+h2. Methods, Constants and Variables
+
+Many constants, variables and api methods have been long deprecated, marked for removal in 2.0 or 2.1 and are now finally removed from the MODX Revolution 2.1 codebase.
+
+|| Item Removed || Notes on Replacement or Potential Workaround ||
+| IN_PARSER_MODE | check context is not mgr |
+| IN_MANAGER_MODE | check context is mgr |
+| IN_MANAGER_MODE | check context is mgr |
+| |
+| {noformat}$_SESSION[&quot;mgrValidated&quot;]{noformat} | modX-&gt;user-&gt;isAuthenticated(&#39;mgr&#39;) |
+| {noformat}$_SESSION[&quot;webValidated&quot;]{noformat} | modX-&gt;user-&gt;isAuthenticated(&#39;web&#39;) |
+| {noformat}$_SESSION[&quot;mgrInternalKey&quot;]{noformat} | modX-&gt;user-&gt;get(&#39;id&#39;) when modX-&gt;user-&gt;isAuthenticated(&#39;mgr&#39;) |
+| {noformat}$_SESSION[&quot;webInternalKey&quot;]{noformat} | modX-&gt;user-&gt;get(&#39;id&#39;) when modX-&gt;user-&gt;isAuthenticated(&#39;web&#39;) |
+| {noformat}$_SESSION[&quot;mgrShortname&quot;]{noformat} | modX-&gt;user-&gt;get(&#39;username&#39;) when modX-&gt;user-&gt;isAuthenticated(&#39;mgr&#39;) |
+| {noformat}$_SESSION[&quot;webShortname&quot;]{noformat} | modX-&gt;user-&gt;get(&#39;username&#39;) when modX-&gt;user-&gt;isAuthenticated(&#39;web&#39;) |
+| |
+| DBAPI: modX-&gt;db |
+| modX-&gt;db-&gt;config | [modX-&gt;getOption() |xPDO20:getOption] |
+| modX-&gt;db-&gt;connect() | modX automatically connects to MODX database. If you&#39;re looking to set up another connection, you could instantiate xPDO again. |
+| modX-&gt;db-&gt;disconnect() |
+| modX-&gt;db-&gt;escape($s) | modX-&gt;quote() |
+| modX-&gt;db-&gt;query($sql) | modX-&gt;query() or modX-&gt;execute($criteria) see manual for PDO query |
+| modX-&gt;db-&gt;delete($from, $where= &quot;&quot;,$fields=&#39;&#39;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;select($fields= &quot;*&quot;, $from= &quot;&quot;, $where= &quot;&quot;, $orderby= &quot;&quot;, $limit= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;update($fields, $table, $where= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;insert($fields, $intotable, $fromfields= &quot;*&quot;, $fromtable= &quot;&quot;, $where= &quot;&quot;, $limit= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;exec($sql) | see modX-&gt;execute($criteria) |
+| modX-&gt;db-&gt;getInsertId() | see modX-&gt;lastInsertId() |
+| modX-&gt;db-&gt;getAffectedRows() | see modX-&gt;getCount() or xPDOCriteria-&gt;stmt-&gt;rowCount() |
+| modX-&gt;db-&gt;getLastError() | see xPDOCriteria-&gt;stmt-&gt;errorCode or xPDOCriteria-&gt;stmt-&gt;errorInfo |
+| modX-&gt;db-&gt;getRecordCount($ds) | modX-&gt;getCount($className, $criteria= null) |
+| modX-&gt;db-&gt;getRow($ds, $mode= &#39;assoc&#39;) | see xPDOCriteria-&gt;stmt-&gt;fetch() |
+| modX-&gt;db-&gt;getColumn($name, $dsq) | see xPDOCriteria-&gt;stmt-&gt;fetchColumn() |
+| modX-&gt;db-&gt;getColumnNames($dsq) | see modX-&gt;getFields($className) (note: not exactly the same .. gives you column names for a specific class) |
+| modX-&gt;db-&gt;getValue($dsq) | see xPDOCriteria-&gt;stmt-&gt;fetchColumn() |
+| modX-&gt;db-&gt;getXML($dsq) | no direct analog |
+| modX-&gt;db-&gt;getTableMetaData($table) | modX-&gt;map property |
+| modX-&gt;db-&gt;prepareDate($timestamp, $fieldType= &#39;DATETIME&#39;) | php to sql conversion of datetypes are handled automatically in the modX model (or a custom xPDO model) |
+| modX-&gt;db-&gt;getHTMLGrid($dsq, $params) | no direct analog |
+| modX-&gt;db-&gt;makeArray($rs= &#39;&#39;) | see xPDOCriteria-&gt;stmt-&gt;fetch() |
+| modX-&gt;getFullTableName() | modX-&gt;getTableName($className, $includeDb=false) \\
+or modX-&gt;escape($customTableName) |
+| modX-&gt;dbConfig | modX-&gt;getOption() (NOTE: some of the configuration keys are different, i.e. dbuser = username, dbpass = password, dbase = dbname) |
+| |
+| modX-&gt;putChunk() | modX-&gt;getChunk() |
+| modX-&gt;isFrontend() | modX-&gt;context-&gt;get(&#39;key&#39;) == &#39;web&#39; or other front-end context |
+| modX-&gt;isBackend() | modX-&gt;context-&gt;get(&#39;key&#39;) == &#39;mgr&#39; |
+| modX-&gt;getSettings() | modX-&gt;config after $modx-&gt;getConfig() |
+| modX-&gt;getDocumentObject($method, $identifier) | not public API method; no replacement (see modRequest-&gt;getResource()) |
+| modX-&gt;isMemberOfWebGroup() | modX-&gt;user-&gt;isMember or modUser-&gt;isMember |
+| modX-&gt;getDocument | modX-&gt;getObject(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getDocuments | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) \\
+or modX-&gt;getIterator(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getAllChildren() | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where condition &#39;parent&#39; = $id |
+| modX-&gt;getActiveChildren() | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where conditions &#39;parent&#39; = $id, &#39;published&#39; = 1, &#39;deleted&#39; = 0 |
+| modX-&gt;getDocumentChildren() | as above, modX-&gt;getCollection(&#39;modResource&#39;, $criteria) with specific criteria |
+| modX-&gt;getDocumentChildrenTVars() | * to get document child resources and their TVs all at once:
+* modResource-&gt;getMany(&#39;Children&#39;) and iterate the children and you can modResource-&gt;getTVValue()
+* or to get TVs of any modResource object, modResource-&gt;getTemplateVars()
+* or get a modTemplateVar with modX-&gt;getObject(&#39;modTemplateVar&#39;, array(&#39;name&#39; =&gt; $tvName)) and then modTemplateVar-&gt;getValue($resourceId)/renderOutput($resourceId) |
+| modX-&gt;getTemplateVar() | modX-&gt;getObject(&#39;modTemplateVar&#39;, $criteria) |
+| modX-&gt;getTemplateVars() | modX-&gt;getCollection(&#39;modTemplateVar&#39;, $criteria) |
+| modX-&gt;getTemplateVarOutput() | use modTemplateVar-&gt;renderOutput() on a collection of modTemplateVar objects |
+| modX-&gt;getParent() | modX-&gt;getObject(&#39;modResource&#39;, $modx-&gt;resource-&gt;get(&#39;parent&#39;)) or pass in additional criteria as needed |
+| modX-&gt;getPageInfo() | modX-&gt;getObject(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getUserInfo() | $user= $this-&gt;getObjectGraph(&#39;modUser&#39;, &#39;{&quot;Profile&quot;:{}}&#39;, $uid, true) \\
+access fields of modUser and fields of related modUserProfile |
+| modX-&gt;getWebUserInfo() | as above |
+| modX-&gt;changeWebUserPassword() | modUser-&gt;changePassword() |
+| modX-&gt;changePassword() | modUser-&gt;changePassword() |
+| modX-&gt;cleanDocumentIdentifier() | modRequest-&gt;_cleanResourceIdentifier(), but is not a public API method (DO NOT USE) |
+| modX-&gt;getDocumentIdentifier() | modRequest-&gt;getResourceIdentifier() |
+| modX-&gt;getDocumentMethod() | modRequest-&gt;getResourceMethod() |
+| modX-&gt;checkPreview() | not valid anymore, removing for 2.1.0-rc1 |
+| modX-&gt;getManagerPath() | Use modX-&gt;getOption(&#39;manager_url&#39;, null, MODX_MANAGER_URL) |
+| modX-&gt;mergeDocumentContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergeSettingsContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergeChunkContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergePlaceholderContent() | see modParser-&gt;processElementTags() |
+| |
+| modX-&gt;documentObject | access via modX-&gt;resource-&gt;get($field) or modX-&gt;resource-&gt;$field directly for raw data |
+| modX-&gt;documentIdentifier | modX-&gt;resourceIdentifier |
+| modX-&gt;documentMethod | modX-&gt;resourceMethod |
+| modX-&gt;documentContent | modX-&gt;resource-&gt;getContent() |
+| modX-&gt;documentGenerated | modX-&gt;resourceGenerated |
+| modX-&gt;dumpSQL | see xPDOQuery-&gt;toSQL() (after xPDOQuery-&gt;prepare()) |
+| |
+| modKeyword classes and related code | gone from framework, to be implemented more efficiently as developer sees fit |
+| modMetatag classes and related code | gone from framework, to be implemented more efficiently as developer sees fit |
+| |
+| modElement-&gt;toPlaceholders() | modX-&gt;toPlaceholders() |
+| |
+| modManagerUser and related classes and code | see modUser |
+| modUserRole class and related code | see Revo abac permissions |
+| modWebUser and related classes and code | see modUser |
+| |
+| modEventLog class and modX-&gt;logEvent() | see modX-&gt;log() |
+| modLexiconFocus/Topic/Language and related classes and code | see modLexicon and modLexiconEntry |
+| |
+| modX-&gt;executeProcessor() | see modX-&gt;runProcessor() |
+| |
+| modTemplate-&gt;getTVs() | modTemplate-&gt;getTemplateVars() |";}i:1;a:3:{s:2:"id";s:8:"35586611";s:3:"ver";s:1:"9";s:4:"code";s:8629:"{toc}
+{note:title=In progress}{note}
+
+h2. Functionality
+
+h3. TV Input Types
+
+The following input types were removed:
+
+* htmlarea, dropdown (use listbox), textareamini
+
+h2. Methods, Constants and Variables
+
+Many constants, variables and api methods have been long deprecated, marked for removal in 2.0 or 2.1 and are now finally removed from the MODX Revolution 2.1 codebase.
+
+|| Item Removed || Notes on Replacement or Potential Workaround ||
+| IN_PARSER_MODE | check context is not mgr |
+| IN_MANAGER_MODE | check context is mgr |
+| IN_MANAGER_MODE | check context is mgr |
+| |
+| {noformat}$_SESSION[&quot;mgrValidated&quot;]{noformat} | modx-&gt;user-&gt;isAuthenticated(&#39;mgr&#39;) |
+| {noformat}$_SESSION[&quot;webValidated&quot;]{noformat} | modx-&gt;user-&gt;isAuthenticated(&#39;web&#39;) |
+| {noformat}$_SESSION[&quot;mgrInternalKey&quot;]{noformat} | modx-&gt;user-&gt;get(&#39;id&#39;) when modx-&gt;user-&gt;isAuthenticated(&#39;mgr&#39;) |
+| {noformat}$_SESSION[&quot;webInternalKey&quot;]{noformat} | modx-&gt;user-&gt;get(&#39;id&#39;) when modx-&gt;user-&gt;isAuthenticated(&#39;web&#39;) |
+| {noformat}$_SESSION[&quot;mgrShortname&quot;]{noformat} | modx-&gt;user-&gt;get(&#39;username&#39;) when modx-&gt;user-&gt;isAuthenticated(&#39;mgr&#39;) |
+| {noformat}$_SESSION[&quot;webShortname&quot;]{noformat} | modx-&gt;user-&gt;get(&#39;username&#39;) when modx-&gt;user-&gt;isAuthenticated(&#39;web&#39;) |
+| |
+| DBAPI: modx-&gt;db |
+| modx-&gt;db-&gt;config | [modx-&gt;getOption() |xPDO20:getOption] |
+| modx-&gt;db-&gt;connect() | modX automatically connects to MODX database. If you&#39;re looking to set up another connection, you could instantiate xPDO again. |
+| modx-&gt;db-&gt;disconnect() |
+| modx-&gt;db-&gt;escape($s) | modx-&gt;quote() |
+| modx-&gt;db-&gt;query($sql) | modx-&gt;query() or modx-&gt;execute($criteria) see manual for PDO query |
+| modx-&gt;db-&gt;delete($from, $where= &quot;&quot;,$fields=&#39;&#39;) | see modx-&gt;query() |
+| modx-&gt;db-&gt;select($fields= &quot;*&quot;, $from= &quot;&quot;, $where= &quot;&quot;, $orderby= &quot;&quot;, $limit= &quot;&quot;) | see modx-&gt;query() |
+| modx-&gt;db-&gt;update($fields, $table, $where= &quot;&quot;) | see modx-&gt;query() |
+| modx-&gt;db-&gt;insert($fields, $intotable, $fromfields= &quot;*&quot;, $fromtable= &quot;&quot;, $where= &quot;&quot;, $limit= &quot;&quot;) | see modx-&gt;query() |
+| modx-&gt;db-&gt;exec($sql) | see modx-&gt;execute($criteria) |
+| modx-&gt;db-&gt;getInsertId() | see modx-&gt;lastInsertId() |
+| modx-&gt;db-&gt;getAffectedRows() | see modx-&gt;getCount() or xPDOCriteria-&gt;stmt-&gt;rowCount() |
+| modx-&gt;db-&gt;getLastError() | see xPDOCriteria-&gt;stmt-&gt;errorCode or xPDOCriteria-&gt;stmt-&gt;errorInfo |
+| modx-&gt;db-&gt;getRecordCount($ds) | modx-&gt;getCount($className, $criteria= null) |
+| modx-&gt;db-&gt;getRow($ds, $mode= &#39;assoc&#39;) | see xPDOCriteria-&gt;stmt-&gt;fetch() |
+| modx-&gt;db-&gt;getColumn($name, $dsq) | see xPDOCriteria-&gt;stmt-&gt;fetchColumn() |
+| modx-&gt;db-&gt;getColumnNames($dsq) | see modx-&gt;getFields($className) (note: not exactly the same .. gives you column names for a specific class) |
+| modx-&gt;db-&gt;getValue($dsq) | see xPDOCriteria-&gt;stmt-&gt;fetchColumn() |
+| modx-&gt;db-&gt;getXML($dsq) | no direct analog |
+| modx-&gt;db-&gt;getTableMetaData($table) | modx-&gt;map property |
+| modx-&gt;db-&gt;prepareDate($timestamp, $fieldType= &#39;DATETIME&#39;) | php to sql conversion of datetypes are handled automatically in the modX model (or a custom xPDO model) |
+| modx-&gt;db-&gt;getHTMLGrid($dsq, $params) | no direct analog |
+| modx-&gt;db-&gt;makeArray($rs= &#39;&#39;) | see xPDOCriteria-&gt;stmt-&gt;fetch() |
+| modx-&gt;getFullTableName() | modx-&gt;getTableName($className, $includeDb=false) \\
+or modx-&gt;escape($customTableName) |
+| modx-&gt;dbConfig | modx-&gt;getOption() (NOTE: some of the configuration keys are different, i.e. dbuser = username, dbpass = password, dbase = dbname) |
+| |
+| modx-&gt;putChunk() | modx-&gt;getChunk() |
+| modx-&gt;isFrontend() | modx-&gt;context-&gt;get(&#39;key&#39;) == &#39;web&#39; or other front-end context |
+| modx-&gt;isBackend() | modx-&gt;context-&gt;get(&#39;key&#39;) == &#39;mgr&#39; |
+| modx-&gt;getSettings() | modx-&gt;config after $modx-&gt;getConfig() |
+| modx-&gt;getDocumentObject($method, $identifier) | not public API method; no replacement (see modRequest-&gt;getResource()) |
+| modx-&gt;isMemberOfWebGroup() | modx-&gt;user-&gt;isMember or modUser-&gt;isMember |
+| modx-&gt;getDocument | modx-&gt;getObject(&#39;modResource&#39;, $criteria) |
+| modx-&gt;getDocuments | modx-&gt;getCollection(&#39;modResource&#39;, $criteria) \\
+or modx-&gt;getIterator(&#39;modResource&#39;, $criteria) |
+| modx-&gt;getAllChildren() | modx-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where condition &#39;parent&#39; = $id |
+| modx-&gt;getActiveChildren() | modx-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where conditions &#39;parent&#39; = $id, &#39;published&#39; = 1, &#39;deleted&#39; = 0 |
+| modx-&gt;getDocumentChildren() | as above, modx-&gt;getCollection(&#39;modResource&#39;, $criteria) with specific criteria |
+| modx-&gt;getDocumentChildrenTVars() | * to get document child resources and their TVs all at once:
+* modResource-&gt;getMany(&#39;Children&#39;) and iterate the children and you can modResource-&gt;getTVValue()
+* or to get TVs of any modResource object, modResource-&gt;getTemplateVars()
+* or get a modTemplateVar with modx-&gt;getObject(&#39;modTemplateVar&#39;, array(&#39;name&#39; =&gt; $tvName)) and then modTemplateVar-&gt;getValue($resourceId)/renderOutput($resourceId) |
+| modx-&gt;getTemplateVar() | modx-&gt;getObject(&#39;modTemplateVar&#39;, $criteria) |
+| modx-&gt;getTemplateVars() | modx-&gt;getCollection(&#39;modTemplateVar&#39;, $criteria) |
+| modx-&gt;getTemplateVarOutput() | use modTemplateVar-&gt;renderOutput() on a collection of modTemplateVar objects |
+| modx-&gt;getParent() | modx-&gt;getObject(&#39;modResource&#39;, $modx-&gt;resource-&gt;get(&#39;parent&#39;)) or pass in additional criteria as needed |
+| modx-&gt;getPageInfo() | modx-&gt;getObject(&#39;modResource&#39;, $criteria) |
+| modx-&gt;getUserInfo() | $user= $this-&gt;getObjectGraph(&#39;modUser&#39;, &#39;{&quot;Profile&quot;:{}}&#39;, $uid, true) \\
+access fields of modUser and fields of related modUserProfile |
+| modx-&gt;getWebUserInfo() | as above |
+| modx-&gt;changeWebUserPassword() | modUser-&gt;changePassword() |
+| modx-&gt;changePassword() | modUser-&gt;changePassword() |
+| modx-&gt;cleanDocumentIdentifier() | modRequest-&gt;_cleanResourceIdentifier(), but is not a public API method (DO NOT USE) |
+| modx-&gt;getDocumentIdentifier() | modRequest-&gt;getResourceIdentifier() |
+| modx-&gt;getDocumentMethod() | modRequest-&gt;getResourceMethod() |
+| modx-&gt;checkPreview() | not valid anymore, removing for 2.1.0-rc1 |
+| modx-&gt;getManagerPath() | Use modx-&gt;getOption(&#39;manager_url&#39;, null, MODX_MANAGER_URL) |
+| modx-&gt;mergeDocumentContent() | see modParser-&gt;processElementTags() |
+| modx-&gt;mergeSettingsContent() | see modParser-&gt;processElementTags() |
+| modx-&gt;mergeChunkContent() | see modParser-&gt;processElementTags() |
+| modx-&gt;mergePlaceholderContent() | see modParser-&gt;processElementTags() |
+| |
+| modx-&gt;documentObject | access via modx-&gt;resource-&gt;get($field) or modx-&gt;resource-&gt;$field directly for raw data |
+| modx-&gt;documentIdentifier | modx-&gt;resourceIdentifier |
+| modx-&gt;documentMethod | modx-&gt;resourceMethod |
+| modx-&gt;documentContent | modx-&gt;resource-&gt;getContent() |
+| modx-&gt;documentGenerated | modx-&gt;resourceGenerated |
+| modx-&gt;dumpSQL | see xPDOQuery-&gt;toSQL() (after xPDOQuery-&gt;prepare()) |
+| |
+| modKeyword classes and related code | gone from framework, to be implemented more efficiently as developer sees fit |
+| modMetatag classes and related code | gone from framework, to be implemented more efficiently as developer sees fit |
+| |
+| modElement-&gt;toPlaceholders() | modx-&gt;toPlaceholders() |
+| |
+| modManagerUser and related classes and code | see modUser |
+| modUserRole class and related code | see Revo abac permissions |
+| modWebUser and related classes and code | see modUser |
+| |
+| modEventLog class and modx-&gt;logEvent() | see modx-&gt;log() |
+| modLexiconFocus/Topic/Language and related classes and code | see modLexicon and modLexiconEntry |
+| |
+| modx-&gt;executeProcessor() | see modx-&gt;runProcessor() |
+| |
+| modTemplate-&gt;getTVs() | modTemplate-&gt;getTemplateVars() |";}i:2;a:3:{s:2:"id";s:8:"35586608";s:3:"ver";s:1:"8";s:4:"code";s:8629:"{toc}
+{note:title=In progress}{note}
+
+h2. Functionality
+
+h3. TV Input Types
+
+The following input types were removed:
+
+* htmlarea, dropdown (use listbox), textareamini
+
+h2. Methods, Constants and Variables
+
+Many constants, variables and api methods have been long deprecated, marked for removal in 2.0 or 2.1 and are now finally removed from the MODX Revolution 2.1 codebase.
+
+|| Item Removed || Notes on Replacement or Potential Workaround ||
+| IN_PARSER_MODE | check context is not mgr |
+| IN_MANAGER_MODE | check context is mgr |
+| IN_MANAGER_MODE | check context is mgr |
+| |
+| {noformat}$_SESSION[&quot;mgrValidated&quot;]{noformat} | modX-&gt;user-&gt;isAuthenticated(&#39;mgr&#39;) |
+| {noformat}$_SESSION[&quot;webValidated&quot;]{noformat} | modX-&gt;user-&gt;isAuthenticated(&#39;web&#39;) |
+| {noformat}$_SESSION[&quot;mgrInternalKey&quot;]{noformat} | modX-&gt;user-&gt;get(&#39;id&#39;) when modX-&gt;user-&gt;isAuthenticated(&#39;mgr&#39;) |
+| {noformat}$_SESSION[&quot;webInternalKey&quot;]{noformat} | modX-&gt;user-&gt;get(&#39;id&#39;) when modX-&gt;user-&gt;isAuthenticated(&#39;web&#39;) |
+| {noformat}$_SESSION[&quot;mgrShortname&quot;]{noformat} | modX-&gt;user-&gt;get(&#39;username&#39;) when modX-&gt;user-&gt;isAuthenticated(&#39;mgr&#39;) |
+| {noformat}$_SESSION[&quot;webShortname&quot;]{noformat} | modX-&gt;user-&gt;get(&#39;username&#39;) when modX-&gt;user-&gt;isAuthenticated(&#39;web&#39;) |
+| |
+| DBAPI: modX-&gt;db |
+| modX-&gt;db-&gt;config | [modX-&gt;getOption() |xPDO20:getOption] |
+| modX-&gt;db-&gt;connect() | modX automatically connects to MODX database. If you&#39;re looking to set up another connection, you could instantiate xPDO again. |
+| modX-&gt;db-&gt;disconnect() |
+| modX-&gt;db-&gt;escape($s) | modX-&gt;quote() |
+| modX-&gt;db-&gt;query($sql) | modX-&gt;query() or modX-&gt;execute($criteria) see manual for PDO query |
+| modX-&gt;db-&gt;delete($from, $where= &quot;&quot;,$fields=&#39;&#39;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;select($fields= &quot;*&quot;, $from= &quot;&quot;, $where= &quot;&quot;, $orderby= &quot;&quot;, $limit= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;update($fields, $table, $where= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;insert($fields, $intotable, $fromfields= &quot;*&quot;, $fromtable= &quot;&quot;, $where= &quot;&quot;, $limit= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;exec($sql) | see modX-&gt;execute($criteria) |
+| modX-&gt;db-&gt;getInsertId() | see modX-&gt;lastInsertId() |
+| modX-&gt;db-&gt;getAffectedRows() | see modX-&gt;getCount() or xPDOCriteria-&gt;stmt-&gt;rowCount() |
+| modX-&gt;db-&gt;getLastError() | see xPDOCriteria-&gt;stmt-&gt;errorCode or xPDOCriteria-&gt;stmt-&gt;errorInfo |
+| modX-&gt;db-&gt;getRecordCount($ds) | modX-&gt;getCount($className, $criteria= null) |
+| modX-&gt;db-&gt;getRow($ds, $mode= &#39;assoc&#39;) | see xPDOCriteria-&gt;stmt-&gt;fetch() |
+| modX-&gt;db-&gt;getColumn($name, $dsq) | see xPDOCriteria-&gt;stmt-&gt;fetchColumn() |
+| modX-&gt;db-&gt;getColumnNames($dsq) | see modX-&gt;getFields($className) (note: not exactly the same .. gives you column names for a specific class) |
+| modX-&gt;db-&gt;getValue($dsq) | see xPDOCriteria-&gt;stmt-&gt;fetchColumn() |
+| modX-&gt;db-&gt;getXML($dsq) | no direct analog |
+| modX-&gt;db-&gt;getTableMetaData($table) | modX-&gt;map property |
+| modX-&gt;db-&gt;prepareDate($timestamp, $fieldType= &#39;DATETIME&#39;) | php to sql conversion of datetypes are handled automatically in the modX model (or a custom xPDO model) |
+| modX-&gt;db-&gt;getHTMLGrid($dsq, $params) | no direct analog |
+| modX-&gt;db-&gt;makeArray($rs= &#39;&#39;) | see xPDOCriteria-&gt;stmt-&gt;fetch() |
+| modX-&gt;getFullTableName() | modX-&gt;getTableName($className, $includeDb=false) \\
+or modX-&gt;escape($customTableName) |
+| modX-&gt;dbConfig | modX-&gt;getOption() (NOTE: some of the configuration keys are different, i.e. dbuser = username, dbpass = password, dbase = dbname) |
+| |
+| modX-&gt;putChunk() | modX-&gt;getChunk() |
+| modX-&gt;isFrontend() | modX-&gt;context-&gt;get(&#39;key&#39;) == &#39;web&#39; or other front-end context |
+| modX-&gt;isBackend() | modX-&gt;context-&gt;get(&#39;key&#39;) == &#39;mgr&#39; |
+| modX-&gt;getSettings() | modX-&gt;config after $modx-&gt;getConfig() |
+| modX-&gt;getDocumentObject($method, $identifier) | not public API method; no replacement (see modRequest-&gt;getResource()) |
+| modX-&gt;isMemberOfWebGroup() | modX-&gt;user-&gt;isMember or modUser-&gt;isMember |
+| modX-&gt;getDocument | modX-&gt;getObject(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getDocuments | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) \\
+or modX-&gt;getIterator(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getAllChildren() | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where condition &#39;parent&#39; = $id |
+| modX-&gt;getActiveChildren() | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where conditions &#39;parent&#39; = $id, &#39;published&#39; = 1, &#39;deleted&#39; = 0 |
+| modX-&gt;getDocumentChildren() | as above, modX-&gt;getCollection(&#39;modResource&#39;, $criteria) with specific criteria |
+| modX-&gt;getDocumentChildrenTVars() | * to get document child resources and their TVs all at once:
+* modResource-&gt;getMany(&#39;Children&#39;) and iterate the children and you can modResource-&gt;getTVValue()
+* or to get TVs of any modResource object, modResource-&gt;getTemplateVars()
+* or get a modTemplateVar with modX-&gt;getObject(&#39;modTemplateVar&#39;, array(&#39;name&#39; =&gt; $tvName)) and then modTemplateVar-&gt;getValue($resourceId)/renderOutput($resourceId) |
+| modX-&gt;getTemplateVar() | modX-&gt;getObject(&#39;modTemplateVar&#39;, $criteria) |
+| modX-&gt;getTemplateVars() | modX-&gt;getCollection(&#39;modTemplateVar&#39;, $criteria) |
+| modX-&gt;getTemplateVarOutput() | use modTemplateVar-&gt;renderOutput() on a collection of modTemplateVar objects |
+| modX-&gt;getParent() | modX-&gt;getObject(&#39;modResource&#39;, $modx-&gt;resource-&gt;get(&#39;parent&#39;)) or pass in additional criteria as needed |
+| modX-&gt;getPageInfo() | modX-&gt;getObject(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getUserInfo() | $user= $this-&gt;getObjectGraph(&#39;modUser&#39;, &#39;{&quot;Profile&quot;:{}}&#39;, $uid, true) \\
+access fields of modUser and fields of related modUserProfile |
+| modX-&gt;getWebUserInfo() | as above |
+| modX-&gt;changeWebUserPassword() | modUser-&gt;changePassword() |
+| modX-&gt;changePassword() | modUser-&gt;changePassword() |
+| modX-&gt;cleanDocumentIdentifier() | modRequest-&gt;_cleanResourceIdentifier(), but is not a public API method (DO NOT USE) |
+| modX-&gt;getDocumentIdentifier() | modRequest-&gt;getResourceIdentifier() |
+| modX-&gt;getDocumentMethod() | modRequest-&gt;getResourceMethod() |
+| modX-&gt;checkPreview() | not valid anymore, removing for 2.1.0-rc1 |
+| modX-&gt;getManagerPath() | Use modX-&gt;getOption(&#39;manager_url&#39;, null, MODX_MANAGER_URL) |
+| modX-&gt;mergeDocumentContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergeSettingsContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergeChunkContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergePlaceholderContent() | see modParser-&gt;processElementTags() |
+| |
+| modX-&gt;documentObject | access via modX-&gt;resource-&gt;get($field) or modX-&gt;resource-&gt;$field directly for raw data |
+| modX-&gt;documentIdentifier | modX-&gt;resourceIdentifier |
+| modX-&gt;documentMethod | modX-&gt;resourceMethod |
+| modX-&gt;documentContent | modX-&gt;resource-&gt;getContent() |
+| modX-&gt;documentGenerated | modX-&gt;resourceGenerated |
+| modX-&gt;dumpSQL | see xPDOQuery-&gt;toSQL() (after xPDOQuery-&gt;prepare()) |
+| |
+| modKeyword classes and related code | gone from framework, to be implemented more efficiently as developer sees fit |
+| modMetatag classes and related code | gone from framework, to be implemented more efficiently as developer sees fit |
+| |
+| modElement-&gt;toPlaceholders() | modX-&gt;toPlaceholders() |
+| |
+| modManagerUser and related classes and code | see modUser |
+| modUserRole class and related code | see Revo abac permissions |
+| modWebUser and related classes and code | see modUser |
+| |
+| modEventLog class and modX-&gt;logEvent() | see modX-&gt;log() |
+| modLexiconFocus/Topic/Language and related classes and code | see modLexicon and modLexiconEntry |
+| |
+| modX-&gt;executeProcessor() | see modX-&gt;runProcessor() |
+| |
+| modTemplate-&gt;getTVs() | modTemplate-&gt;getTemplateVars() |";}i:3;a:3:{s:2:"id";s:8:"35586504";s:3:"ver";s:1:"7";s:4:"code";s:8522:"{toc}
+{note:title=In progress}{note}
+
+h2. Functionality
+
+h3. TV Input Types
+
+The following input types were removed:
+
+* htmlarea, dropdown (use listbox), textareamini
+
+h2. Methods, Constants and Variables
+
+Many constants, variables and api methods have been long deprecated, marked for removal in 2.0 or 2.1 and are now finally removed from the MODX Revolution 2.1 codebase.
+
+|| Item Removed || Notes on Replacement or Potential Workaround ||
+| IN_PARSER_MODE | check context is not mgr |
+| IN_MANAGER_MODE | check context is mgr |
+| IN_MANAGER_MODE | check context is mgr |
+| |
+| {noformat}$_SESSION[&quot;mgrValidated&quot;]{noformat} | modX-&gt;user-&gt;isAuthenticated(&#39;mgr&#39;) |
+| {noformat}$_SESSION[&quot;webValidated&quot;]{noformat} | modX-&gt;user-&gt;isAuthenticated(&#39;web&#39;) |
+| {noformat}$_SESSION[&quot;mgrInternalKey&quot;]{noformat} | modX-&gt;user-&gt;get(&#39;id&#39;) when modX-&gt;user-&gt;isAuthenticated(&#39;mgr&#39;) |
+| {noformat}$_SESSION[&quot;webInternalKey&quot;]{noformat} | modX-&gt;user-&gt;get(&#39;id&#39;) when modX-&gt;user-&gt;isAuthenticated(&#39;web&#39;) |
+| {noformat}$_SESSION[&quot;mgrShortname&quot;]{noformat} | modX-&gt;user-&gt;get(&#39;username&#39;) when modX-&gt;user-&gt;isAuthenticated(&#39;mgr&#39;) |
+| {noformat}$_SESSION[&quot;webShortname&quot;]{noformat} | modX-&gt;user-&gt;get(&#39;username&#39;) when modX-&gt;user-&gt;isAuthenticated(&#39;web&#39;) |
+| |
+| DBAPI: modX-&gt;db |
+| modX-&gt;db-&gt;config | modX-&gt;getOption() |
+| modX-&gt;db-&gt;connect() | modX automatically connects to MODX database |
+| modX-&gt;db-&gt;disconnect() |
+| modX-&gt;db-&gt;escape($s) | modX-&gt;quote() |
+| modX-&gt;db-&gt;query($sql) | modX-&gt;query() or modX-&gt;execute($criteria) see manual for PDO query |
+| modX-&gt;db-&gt;delete($from, $where= &quot;&quot;,$fields=&#39;&#39;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;select($fields= &quot;*&quot;, $from= &quot;&quot;, $where= &quot;&quot;, $orderby= &quot;&quot;, $limit= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;update($fields, $table, $where= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;insert($fields, $intotable, $fromfields= &quot;*&quot;, $fromtable= &quot;&quot;, $where= &quot;&quot;, $limit= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;exec($sql) | see modX-&gt;execute($criteria) |
+| modX-&gt;db-&gt;getInsertId() | see modX-&gt;lastInsertId() |
+| modX-&gt;db-&gt;getAffectedRows() | see modX-&gt;getCount() or xPDOCriteria-&gt;stmt-&gt;rowCount() |
+| modX-&gt;db-&gt;getLastError() | see xPDOCriteria-&gt;stmt-&gt;errorCode or xPDOCriteria-&gt;stmt-&gt;errorInfo |
+| modX-&gt;db-&gt;getRecordCount($ds) | modX-&gt;getCount($className, $criteria= null) |
+| modX-&gt;db-&gt;getRow($ds, $mode= &#39;assoc&#39;) | see xPDOCriteria-&gt;stmt-&gt;fetch() |
+| modX-&gt;db-&gt;getColumn($name, $dsq) | see xPDOCriteria-&gt;stmt-&gt;fetchColumn() |
+| modX-&gt;db-&gt;getColumnNames($dsq) | see modX-&gt;getFields($className) (note: not exactly the same .. gives you column names for a specific class) |
+| modX-&gt;db-&gt;getValue($dsq) | see xPDOCriteria-&gt;stmt-&gt;fetchColumn() |
+| modX-&gt;db-&gt;getXML($dsq) | no direct analog |
+| modX-&gt;db-&gt;getTableMetaData($table) | modX-&gt;map property |
+| modX-&gt;db-&gt;prepareDate($timestamp, $fieldType= &#39;DATETIME&#39;) | php to sql conversion of datetypes are handled automatically in the modX model (or a custom xPDO model) |
+| modX-&gt;db-&gt;getHTMLGrid($dsq, $params) | no direct analog |
+| modX-&gt;db-&gt;makeArray($rs= &#39;&#39;) | see xPDOCriteria-&gt;stmt-&gt;fetch() |
+| modX-&gt;getFullTableName() | modX-&gt;getTableName($className, $includeDb=false) \\
+or modX-&gt;escape($customTableName) |
+| modX-&gt;dbConfig | modX-&gt;getOption() (NOTE: some of the configuration keys are different, i.e. dbuser = username, dbpass = password, dbase = dbname) |
+| |
+| modX-&gt;putChunk() | modX-&gt;getChunk() |
+| modX-&gt;isFrontend() | modX-&gt;context-&gt;get(&#39;key&#39;) == &#39;web&#39; or other front-end context |
+| modX-&gt;isBackend() | modX-&gt;context-&gt;get(&#39;key&#39;) == &#39;mgr&#39; |
+| modX-&gt;getSettings() | modX-&gt;config after $modx-&gt;getConfig() |
+| modX-&gt;getDocumentObject($method, $identifier) | not public API method; no replacement (see modRequest-&gt;getResource()) |
+| modX-&gt;isMemberOfWebGroup() | modX-&gt;user-&gt;isMember or modUser-&gt;isMember |
+| modX-&gt;getDocument | modX-&gt;getObject(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getDocuments | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) \\
+or modX-&gt;getIterator(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getAllChildren() | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where condition &#39;parent&#39; = $id |
+| modX-&gt;getActiveChildren() | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where conditions &#39;parent&#39; = $id, &#39;published&#39; = 1, &#39;deleted&#39; = 0 |
+| modX-&gt;getDocumentChildren() | as above, modX-&gt;getCollection(&#39;modResource&#39;, $criteria) with specific criteria |
+| modX-&gt;getDocumentChildrenTVars() | * to get document child resources and their TVs all at once:
+* modResource-&gt;getMany(&#39;Children&#39;) and iterate the children and you can modResource-&gt;getTVValue()
+* or to get TVs of any modResource object, modResource-&gt;getTemplateVars()
+* or get a modTemplateVar with modX-&gt;getObject(&#39;modTemplateVar&#39;, array(&#39;name&#39; =&gt; $tvName)) and then modTemplateVar-&gt;getValue($resourceId)/renderOutput($resourceId) |
+| modX-&gt;getTemplateVar() | modX-&gt;getObject(&#39;modTemplateVar&#39;, $criteria) |
+| modX-&gt;getTemplateVars() | modX-&gt;getCollection(&#39;modTemplateVar&#39;, $criteria) |
+| modX-&gt;getTemplateVarOutput() | use modTemplateVar-&gt;renderOutput() on a collection of modTemplateVar objects |
+| modX-&gt;getParent() | modX-&gt;getObject(&#39;modResource&#39;, $modx-&gt;resource-&gt;get(&#39;parent&#39;)) or pass in additional criteria as needed |
+| modX-&gt;getPageInfo() | modX-&gt;getObject(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getUserInfo() | $user= $this-&gt;getObjectGraph(&#39;modUser&#39;, &#39;{&quot;Profile&quot;:{}}&#39;, $uid, true) \\
+access fields of modUser and fields of related modUserProfile |
+| modX-&gt;getWebUserInfo() | as above |
+| modX-&gt;changeWebUserPassword() | modUser-&gt;changePassword() |
+| modX-&gt;changePassword() | modUser-&gt;changePassword() |
+| modX-&gt;cleanDocumentIdentifier() | modRequest-&gt;_cleanResourceIdentifier(), but is not a public API method (DO NOT USE) |
+| modX-&gt;getDocumentIdentifier() | modRequest-&gt;getResourceIdentifier() |
+| modX-&gt;getDocumentMethod() | modRequest-&gt;getResourceMethod() |
+| modX-&gt;checkPreview() | not valid anymore, removing for 2.1.0-rc1 |
+| modX-&gt;getManagerPath() | Use modX-&gt;getOption(&#39;manager_url&#39;, null, MODX_MANAGER_URL) |
+| modX-&gt;mergeDocumentContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergeSettingsContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergeChunkContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergePlaceholderContent() | see modParser-&gt;processElementTags() |
+| |
+| modX-&gt;documentObject | access via modX-&gt;resource-&gt;get($field) or modX-&gt;resource-&gt;$field directly for raw data |
+| modX-&gt;documentIdentifier | modX-&gt;resourceIdentifier |
+| modX-&gt;documentMethod | modX-&gt;resourceMethod |
+| modX-&gt;documentContent | modX-&gt;resource-&gt;getContent() |
+| modX-&gt;documentGenerated | modX-&gt;resourceGenerated |
+| modX-&gt;dumpSQL | see xPDOQuery-&gt;toSQL() (after xPDOQuery-&gt;prepare()) |
+| |
+| modKeyword classes and related code | gone from framework, to be implemented more efficiently as developer sees fit |
+| modMetatag classes and related code | gone from framework, to be implemented more efficiently as developer sees fit |
+| |
+| modElement-&gt;toPlaceholders() | modX-&gt;toPlaceholders() |
+| |
+| modManagerUser and related classes and code | see modUser |
+| modUserRole class and related code | see Revo abac permissions |
+| modWebUser and related classes and code | see modUser |
+| |
+| modEventLog class and modX-&gt;logEvent() | see modX-&gt;log() |
+| modLexiconFocus/Topic/Language and related classes and code | see modLexicon and modLexiconEntry |
+| |
+| modX-&gt;executeProcessor() | see modX-&gt;runProcessor() |
+| |
+| modTemplate-&gt;getTVs() | modTemplate-&gt;getTemplateVars() |";}i:4;a:3:{s:2:"id";s:8:"35586267";s:3:"ver";s:1:"6";s:4:"code";s:7648:"{toc}
+{note:title=In progress}{note}
+
+h2. Functionality
+
+h3. TV Input Types
+
+The following input types were removed:
+
+* htmlarea, dropdown (use listbox), textareamini
+
+h2. Methods
+
+Many constants, properties and api methods have been long deprecated, marked for removal in 2.0 or 2.1 and are now finally removed from the MODX Revolution 2.1 codebase.
+
+|| Item Removed || Notes on Replacement or Potential Workaround ||
+| IN_PARSER_MODE | check context is not mgr |
+| IN_MANAGER_MODE | check context is mgr |
+| IN_MANAGER_MODE | check context is mgr |
+| |
+| DBAPI: modX-&gt;db |
+| modX-&gt;db-&gt;config | modX-&gt;getOption() |
+| modX-&gt;db-&gt;connect() | modX automatically connects to MODX database |
+| modX-&gt;db-&gt;disconnect() |
+| modX-&gt;db-&gt;escape($s) | modX-&gt;quote() |
+| modX-&gt;db-&gt;query($sql) | modX-&gt;query() or modX-&gt;execute($criteria) see manual for PDO query |
+| modX-&gt;db-&gt;delete($from, $where= &quot;&quot;,$fields=&#39;&#39;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;select($fields= &quot;*&quot;, $from= &quot;&quot;, $where= &quot;&quot;, $orderby= &quot;&quot;, $limit= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;update($fields, $table, $where= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;insert($fields, $intotable, $fromfields= &quot;*&quot;, $fromtable= &quot;&quot;, $where= &quot;&quot;, $limit= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;exec($sql) | see modX-&gt;execute($criteria) |
+| modX-&gt;db-&gt;getInsertId() | see modX-&gt;lastInsertId() |
+| modX-&gt;db-&gt;getAffectedRows() | see modX-&gt;getCount() or xPDOCriteria-&gt;stmt-&gt;rowCount() |
+| modX-&gt;db-&gt;getLastError() | see xPDOCriteria-&gt;stmt-&gt;errorCode or xPDOCriteria-&gt;stmt-&gt;errorInfo |
+| modX-&gt;db-&gt;getRecordCount($ds) | modX-&gt;getCount($className, $criteria= null) |
+| modX-&gt;db-&gt;getRow($ds, $mode= &#39;assoc&#39;) | see xPDOCriteria-&gt;stmt-&gt;fetch() |
+| modX-&gt;db-&gt;getColumn($name, $dsq) | see xPDOCriteria-&gt;stmt-&gt;fetchColumn() |
+| modX-&gt;db-&gt;getColumnNames($dsq) | see modX-&gt;getFields($className) (note: not exactly the same .. gives you column names for a specific class) |
+| modX-&gt;db-&gt;getValue($dsq) | see xPDOCriteria-&gt;stmt-&gt;fetchColumn() |
+| modX-&gt;db-&gt;getXML($dsq) | no direct analog |
+| modX-&gt;db-&gt;getTableMetaData($table) | modX-&gt;map property |
+| modX-&gt;db-&gt;prepareDate($timestamp, $fieldType= &#39;DATETIME&#39;) | php to sql conversion of datetypes are handled automatically in the modX model (or a custom xPDO model) |
+| modX-&gt;db-&gt;getHTMLGrid($dsq, $params) | no direct analog |
+| modX-&gt;db-&gt;makeArray($rs= &#39;&#39;) | see xPDOCriteria-&gt;stmt-&gt;fetch() |
+| modX-&gt;getFullTableName() | modX-&gt;getTableName($className, $includeDb=false) \\
+or modX-&gt;escape($customTableName) |
+| modX-&gt;dbConfig | modX-&gt;getOption() (NOTE: some of the configuration keys are different, i.e. dbuser = username, dbpass = password, dbase = dbname) |
+| |
+| modX-&gt;putChunk() | modX-&gt;getChunk() |
+| modX-&gt;isFrontend() | modX-&gt;context-&gt;get(&#39;key&#39;) == &#39;web&#39; or other front-end context |
+| modX-&gt;isBackend() | modX-&gt;context-&gt;get(&#39;key&#39;) == &#39;mgr&#39; |
+| modX-&gt;getSettings() | modX-&gt;config after $modx-&gt;getConfig() |
+| modX-&gt;getDocumentObject($method, $identifier) | not public API method; no replacement (see modRequest-&gt;getResource()) |
+| modX-&gt;isMemberOfWebGroup() | modX-&gt;user-&gt;isMember or modUser-&gt;isMember |
+| modX-&gt;getDocument | modX-&gt;getObject(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getDocuments | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) \\
+or modX-&gt;getIterator(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getAllChildren() | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where condition &#39;parent&#39; = $id |
+| modX-&gt;getActiveChildren() | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where conditions &#39;parent&#39; = $id, &#39;published&#39; = 1, &#39;deleted&#39; = 0 |
+| modX-&gt;getDocumentChildren() | as above, modX-&gt;getCollection(&#39;modResource&#39;, $criteria) with specific criteria |
+| modX-&gt;getDocumentChildrenTVars() | * to get document child resources and their TVs all at once:
+* modResource-&gt;getMany(&#39;Children&#39;) and iterate the children and you can modResource-&gt;getTVValue()
+* or to get TVs of any modResource object, modResource-&gt;getTemplateVars()
+* or get a modTemplateVar with modX-&gt;getObject(&#39;modTemplateVar&#39;, array(&#39;name&#39; =&gt; $tvName)) and then modTemplateVar-&gt;getValue($resourceId)/renderOutput($resourceId) |
+| modX-&gt;getTemplateVar() | modX-&gt;getObject(&#39;modTemplateVar&#39;, $criteria) |
+| modX-&gt;getTemplateVars() | modX-&gt;getCollection(&#39;modTemplateVar&#39;, $criteria) |
+| modX-&gt;getTemplateVarOutput() | use modTemplateVar-&gt;renderOutput() on a collection of modTemplateVar objects |
+| modX-&gt;getParent() | modX-&gt;getObject(&#39;modResource&#39;, $modx-&gt;resource-&gt;get(&#39;parent&#39;)) or pass in additional criteria as needed |
+| modX-&gt;getPageInfo() | modX-&gt;getObject(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getUserInfo() | $user= $this-&gt;getObjectGraph(&#39;modUser&#39;, &#39;{&quot;Profile&quot;:{}}&#39;, $uid, true) \\
+access fields of modUser and fields of related modUserProfile |
+| modX-&gt;getWebUserInfo() | as above |
+| modX-&gt;changeWebUserPassword() | modUser-&gt;changePassword() |
+| modX-&gt;changePassword() | modUser-&gt;changePassword() |
+| modX-&gt;cleanDocumentIdentifier() | modRequest-&gt;_cleanResourceIdentifier(), but is not a public API method (DO NOT USE) |
+| modX-&gt;getDocumentIdentifier() | modRequest-&gt;getResourceIdentifier() |
+| modX-&gt;getDocumentMethod() | modRequest-&gt;getResourceMethod() |
+| modX-&gt;checkPreview() | not valid anymore, removing for 2.1.0-rc1 |
+| modX-&gt;getManagerPath() | Use modX-&gt;getOption(&#39;manager_url&#39;, null, MODX_MANAGER_URL) |
+| modX-&gt;mergeDocumentContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergeSettingsContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergeChunkContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergePlaceholderContent() | see modParser-&gt;processElementTags() |
+| |
+| modX-&gt;documentObject | access via modX-&gt;resource-&gt;get($field) or modX-&gt;resource-&gt;$field directly for raw data |
+| modX-&gt;documentIdentifier | modX-&gt;resourceIdentifier |
+| modX-&gt;documentMethod | modX-&gt;resourceMethod |
+| modX-&gt;documentContent | modX-&gt;resource-&gt;getContent() |
+| modX-&gt;documentGenerated | modX-&gt;resourceGenerated |
+| modX-&gt;dumpSQL | see xPDOQuery-&gt;toSQL() (after xPDOQuery-&gt;prepare()) |
+| |
+| modKeyword classes and related code | gone from framework, to be implemented more efficiently as developer sees fit |
+| modMetatag classes and related code | gone from framework, to be implemented more efficiently as developer sees fit |
+| |
+| modElement-&gt;toPlaceholders() | modX-&gt;toPlaceholders() |
+| |
+| modManagerUser and related classes and code | see modUser |
+| modUserRole class and related code | see Revo abac permissions |
+| modWebUser and related classes and code | see modUser |
+| |
+| modEventLog class and modX-&gt;logEvent() | see modX-&gt;log() |
+| modLexiconFocus/Topic/Language and related classes and code | see modLexicon and modLexiconEntry |
+| |
+| modX-&gt;executeProcessor() | see modX-&gt;runProcessor() |
+| |
+| modTemplate-&gt;getTVs() | modTemplate-&gt;getTemplateVars() |";}i:5;a:3:{s:2:"id";s:8:"35095202";s:3:"ver";s:1:"5";s:4:"code";s:7500:"{note:title=In progress}
+{note}
+Many constants, properties and api methods have been long deprecated, marked for removal in 2.0 or 2.1 and are now finally removed from the MODX Revolution 2.1 codebase.
+
+
+|| Item Removed || Notes on Replacement or Potential Workaround ||
+| IN_PARSER_MODE | check context is not mgr |
+| IN_MANAGER_MODE | check context is mgr |
+| IN_MANAGER_MODE | check context is mgr |
+| |
+| DBAPI: modX-&gt;db |
+| modX-&gt;db-&gt;config | modX-&gt;getOption() |
+| modX-&gt;db-&gt;connect() | modX automatically connects to MODX database |
+| modX-&gt;db-&gt;disconnect() |
+| modX-&gt;db-&gt;escape($s) | modX-&gt;quote() |
+| modX-&gt;db-&gt;query($sql) | modX-&gt;query() or modX-&gt;execute($criteria) see manual for PDO query |
+| modX-&gt;db-&gt;delete($from, $where= &quot;&quot;,$fields=&#39;&#39;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;select($fields= &quot;*&quot;, $from= &quot;&quot;, $where= &quot;&quot;, $orderby= &quot;&quot;, $limit= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;update($fields, $table, $where= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;insert($fields, $intotable, $fromfields= &quot;*&quot;, $fromtable= &quot;&quot;, $where= &quot;&quot;, $limit= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;exec($sql) | see modX-&gt;execute($criteria) |
+| modX-&gt;db-&gt;getInsertId() | see modX-&gt;lastInsertId() |
+| modX-&gt;db-&gt;getAffectedRows() | see modX-&gt;getCount() or xPDOCriteria-&gt;stmt-&gt;rowCount() |
+| modX-&gt;db-&gt;getLastError() | see xPDOCriteria-&gt;stmt-&gt;errorCode or xPDOCriteria-&gt;stmt-&gt;errorInfo |
+| modX-&gt;db-&gt;getRecordCount($ds) | modX-&gt;getCount($className, $criteria= null) |
+| modX-&gt;db-&gt;getRow($ds, $mode= &#39;assoc&#39;) | see xPDOCriteria-&gt;stmt-&gt;fetch() |
+| modX-&gt;db-&gt;getColumn($name, $dsq) | see xPDOCriteria-&gt;stmt-&gt;fetchColumn() |
+| modX-&gt;db-&gt;getColumnNames($dsq) | see modX-&gt;getFields($className) (note: not exactly the same .. gives you column names for a specific class) |
+| modX-&gt;db-&gt;getValue($dsq) | see xPDOCriteria-&gt;stmt-&gt;fetchColumn() |
+| modX-&gt;db-&gt;getXML($dsq) | no direct analog |
+| modX-&gt;db-&gt;getTableMetaData($table) | modX-&gt;map property |
+| modX-&gt;db-&gt;prepareDate($timestamp, $fieldType= &#39;DATETIME&#39;) | php to sql conversion of datetypes are handled automatically in the modX model (or a custom xPDO model) |
+| modX-&gt;db-&gt;getHTMLGrid($dsq, $params) | no direct analog |
+| modX-&gt;db-&gt;makeArray($rs= &#39;&#39;) | see xPDOCriteria-&gt;stmt-&gt;fetch() |
+| modX-&gt;getFullTableName() | modX-&gt;getTableName($className, $includeDb=false) \\
+or modX-&gt;escape($customTableName) |
+| modX-&gt;dbConfig | modX-&gt;getOption() (NOTE: some of the configuration keys are different, i.e. dbuser = username, dbpass = password, dbase = dbname) |
+| |
+| modX-&gt;putChunk() | modX-&gt;getChunk() |
+| modX-&gt;isFrontend() | modX-&gt;context-&gt;get(&#39;key&#39;) == &#39;web&#39; or other front-end context |
+| modX-&gt;isBackend() | modX-&gt;context-&gt;get(&#39;key&#39;) == &#39;mgr&#39; |
+| modX-&gt;getSettings() | modX-&gt;config after $modx-&gt;getConfig() |
+| modX-&gt;getDocumentObject($method, $identifier) | not public API method; no replacement (see modRequest-&gt;getResource()) |
+| modX-&gt;isMemberOfWebGroup() | modX-&gt;user-&gt;isMember or modUser-&gt;isMember |
+| modX-&gt;getDocument | modX-&gt;getObject(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getDocuments | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) \\
+or modX-&gt;getIterator(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getAllChildren() | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where condition &#39;parent&#39; = $id |
+| modX-&gt;getActiveChildren() | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where conditions &#39;parent&#39; = $id, &#39;published&#39; = 1, &#39;deleted&#39; = 0 |
+| modX-&gt;getDocumentChildren() | as above, modX-&gt;getCollection(&#39;modResource&#39;, $criteria) with specific criteria |
+| modX-&gt;getDocumentChildrenTVars() | * to get document child resources and their TVs all at once:
+* modResource-&gt;getMany(&#39;Children&#39;) and iterate the children and you can modResource-&gt;getTVValue()
+* or to get TVs of any modResource object, modResource-&gt;getTemplateVars()
+* or get a modTemplateVar with modX-&gt;getObject(&#39;modTemplateVar&#39;, array(&#39;name&#39; =&gt; $tvName)) and then modTemplateVar-&gt;getValue($resourceId)/renderOutput($resourceId) |
+| modX-&gt;getTemplateVar() | modX-&gt;getObject(&#39;modTemplateVar&#39;, $criteria) |
+| modX-&gt;getTemplateVars() | modX-&gt;getCollection(&#39;modTemplateVar&#39;, $criteria) |
+| modX-&gt;getTemplateVarOutput() | use modTemplateVar-&gt;renderOutput() on a collection of modTemplateVar objects |
+| modX-&gt;getParent() | modX-&gt;getObject(&#39;modResource&#39;, $modx-&gt;resource-&gt;get(&#39;parent&#39;)) or pass in additional criteria as needed |
+| modX-&gt;getPageInfo() | modX-&gt;getObject(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getUserInfo() | $user= $this-&gt;getObjectGraph(&#39;modUser&#39;, &#39;{&quot;Profile&quot;:{}}&#39;, $uid, true) \\
+access fields of modUser and fields of related modUserProfile |
+| modX-&gt;getWebUserInfo() | as above |
+| modX-&gt;changeWebUserPassword() | modUser-&gt;changePassword() |
+| modX-&gt;changePassword() | modUser-&gt;changePassword() |
+| modX-&gt;cleanDocumentIdentifier() | modRequest-&gt;_cleanResourceIdentifier(), but is not a public API method (DO NOT USE) |
+| modX-&gt;getDocumentIdentifier() | modRequest-&gt;getResourceIdentifier() |
+| modX-&gt;getDocumentMethod() | modRequest-&gt;getResourceMethod() |
+| modX-&gt;checkPreview() | not valid anymore, removing for 2.1.0-rc1 |
+| modX-&gt;getManagerPath() | Use modX-&gt;getOption(&#39;manager_url&#39;, null, MODX_MANAGER_URL) |
+| modX-&gt;mergeDocumentContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergeSettingsContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergeChunkContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergePlaceholderContent() | see modParser-&gt;processElementTags() |
+| |
+| modX-&gt;documentObject | access via modX-&gt;resource-&gt;get($field) or modX-&gt;resource-&gt;$field directly for raw data |
+| modX-&gt;documentIdentifier | modX-&gt;resourceIdentifier |
+| modX-&gt;documentMethod | modX-&gt;resourceMethod |
+| modX-&gt;documentContent | modX-&gt;resource-&gt;getContent() |
+| modX-&gt;documentGenerated | modX-&gt;resourceGenerated |
+| modX-&gt;dumpSQL | see xPDOQuery-&gt;toSQL() (after xPDOQuery-&gt;prepare()) |
+| |
+| modKeyword classes and related code | gone from framework, to be implemented more efficiently as developer sees fit |
+| modMetatag classes and related code | gone from framework, to be implemented more efficiently as developer sees fit |
+| |
+| modElement-&gt;toPlaceholders() | modX-&gt;toPlaceholders() |
+| |
+| modManagerUser and related classes and code | see modUser |
+| modUserRole class and related code | see Revo abac permissions |
+| modWebUser and related classes and code | see modUser |
+| |
+| modEventLog class and modX-&gt;logEvent() | see modX-&gt;log() |
+| modLexiconFocus/Topic/Language and related classes and code | see modLexicon and modLexiconEntry |
+| |
+| modX-&gt;executeProcessor() | see modX-&gt;runProcessor() |
+| |
+| modTemplate-&gt;getTVs() | modTemplate-&gt;getTemplateVars() |";}i:6;a:3:{s:2:"id";s:8:"35094837";s:3:"ver";s:1:"4";s:4:"code";s:7669:"{note:title=In progress}
+This page will contain a chart summarizing constants, properties and api methods that have been long deprecated, marked for removal in 2.1 and now actually removed from the MODX Revolution 2.1 codebase. It will also contain notes on how you might replace the legacy code with the more current methodologies and make better use of the API.
+{note}
+
+
+|| Item Removed || Notes on Replacement or Potential Workaround ||
+| IN_PARSER_MODE | check context is not mgr |
+| IN_MANAGER_MODE | check context is mgr |
+| IN_MANAGER_MODE | check context is mgr |
+| |
+| DBAPI: modX-&gt;db |
+| modX-&gt;db-&gt;config | modX-&gt;getOption() |
+| modX-&gt;db-&gt;connect() | modX automatically connects to MODX database |
+| modX-&gt;db-&gt;disconnect() |
+| modX-&gt;db-&gt;escape($s) | modX-&gt;quote() |
+| modX-&gt;db-&gt;query($sql) | modX-&gt;query() or modX-&gt;execute($criteria) see manual for PDO query |
+| modX-&gt;db-&gt;delete($from, $where= &quot;&quot;,$fields=&#39;&#39;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;select($fields= &quot;*&quot;, $from= &quot;&quot;, $where= &quot;&quot;, $orderby= &quot;&quot;, $limit= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;update($fields, $table, $where= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;insert($fields, $intotable, $fromfields= &quot;*&quot;, $fromtable= &quot;&quot;, $where= &quot;&quot;, $limit= &quot;&quot;) | see modX-&gt;query() |
+| modX-&gt;db-&gt;exec($sql) | see modX-&gt;execute($criteria) |
+| modX-&gt;db-&gt;getInsertId() | see modX-&gt;lastInsertId() |
+| modX-&gt;db-&gt;getAffectedRows() | see modX-&gt;getCount() or xPDOCriteria-&gt;stmt-&gt;rowCount() |
+| modX-&gt;db-&gt;getLastError() | see xPDOCriteria-&gt;stmt-&gt;errorCode or xPDOCriteria-&gt;stmt-&gt;errorInfo |
+| modX-&gt;db-&gt;getRecordCount($ds) | modX-&gt;getCount($className, $criteria= null) |
+| modX-&gt;db-&gt;getRow($ds, $mode= &#39;assoc&#39;) | see xPDOCriteria-&gt;stmt-&gt;fetch() |
+| modX-&gt;db-&gt;getColumn($name, $dsq) | see xPDOCriteria-&gt;stmt-&gt;fetchColumn() |
+| modX-&gt;db-&gt;getColumnNames($dsq) | see modX-&gt;getFields($className) (note: not exactly the same .. gives you column names for a specific class) |
+| modX-&gt;db-&gt;getValue($dsq) | see xPDOCriteria-&gt;stmt-&gt;fetchColumn() |
+| modX-&gt;db-&gt;getXML($dsq) | no direct analog |
+| modX-&gt;db-&gt;getTableMetaData($table) | modX-&gt;map property |
+| modX-&gt;db-&gt;prepareDate($timestamp, $fieldType= &#39;DATETIME&#39;) | php to sql conversion of datetypes are handled automatically in the modX model (or a custom xPDO model) |
+| modX-&gt;db-&gt;getHTMLGrid($dsq, $params) | no direct analog |
+| modX-&gt;db-&gt;makeArray($rs= &#39;&#39;) | see xPDOCriteria-&gt;stmt-&gt;fetch() |
+| modX-&gt;getFullTableName() | modX-&gt;getTableName($className, $includeDb=false)\\
+ or modX-&gt;escape($customTableName) |
+| modX-&gt;dbConfig | modX-&gt;getOption() (NOTE: some of the configuration keys are different, i.e. dbuser = username, dbpass = password, dbase = dbname) |
+| |
+| modX-&gt;putChunk() | modX-&gt;getChunk() |
+| modX-&gt;isFrontend() | modX-&gt;context-&gt;get(&#39;key&#39;) == &#39;web&#39; or other front-end context |
+| modX-&gt;isBackend() | modX-&gt;context-&gt;get(&#39;key&#39;) == &#39;mgr&#39; |
+| modX-&gt;getSettings() | modX-&gt;config after $modx-&gt;getConfig() |
+| modX-&gt;getDocumentObject($method, $identifier) | not public API method; no replacement (see modRequest-&gt;getResource()) |
+| modX-&gt;isMemberOfWebGroup() | modX-&gt;user-&gt;isMember or modUser-&gt;isMember |
+| modX-&gt;getDocument | modX-&gt;getObject(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getDocuments | modX-&gt;getCollection(&#39;modResource&#39;, $criteria)\\
+ or modX-&gt;getIterator(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getAllChildren() | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where condition &#39;parent&#39; = $id |
+| modX-&gt;getActiveChildren() | modX-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where conditions &#39;parent&#39; = $id, &#39;published&#39; = 1, &#39;deleted&#39; = 0 |
+| modX-&gt;getDocumentChildren() | as above, modX-&gt;getCollection(&#39;modResource&#39;, $criteria) with specific criteria |
+| modX-&gt;getDocumentChildrenTVars() | * to get document child resources and their TVs all at once:
+* modResource-&gt;getMany(&#39;Children&#39;) and iterate the children and you can modResource-&gt;getTVValue()
+* or to get TVs of any modResource object, modResource-&gt;getTemplateVars()
+* or get a modTemplateVar with modX-&gt;getObject(&#39;modTemplateVar&#39;, array(&#39;name&#39; =&gt; $tvName)) and then modTemplateVar-&gt;getValue($resourceId)/renderOutput($resourceId) |
+| modX-&gt;getTemplateVar() | modX-&gt;getObject(&#39;modTemplateVar&#39;, $criteria) |
+| modX-&gt;getTemplateVars() | modX-&gt;getCollection(&#39;modTemplateVar&#39;, $criteria) |
+| modX-&gt;getTemplateVarOutput() | use modTemplateVar-&gt;renderOutput() on a collection of modTemplateVar objects |
+| modX-&gt;getParent() | modX-&gt;getObject(&#39;modResource&#39;, $modx-&gt;resource-&gt;get(&#39;parent&#39;)) or pass in additional criteria as needed |
+| modX-&gt;getPageInfo() | modX-&gt;getObject(&#39;modResource&#39;, $criteria) |
+| modX-&gt;getUserInfo() | $user= $this-&gt;getObjectGraph(&#39;modUser&#39;, &#39;{&quot;Profile&quot;:{}}&#39;, $uid, true)\\
+ access fields of modUser and fields of related modUserProfile |
+| modX-&gt;getWebUserInfo() | as above |
+| modX-&gt;changeWebUserPassword() | modUser-&gt;changePassword() |
+| modX-&gt;changePassword() | modUser-&gt;changePassword() |
+| modX-&gt;cleanDocumentIdentifier() | modRequest-&gt;_cleanResourceIdentifier(), but is not a public API method (DO NOT USE) |
+| modX-&gt;getDocumentIdentifier() | modRequest-&gt;getResourceIdentifier() |
+| modX-&gt;getDocumentMethod() | modRequest-&gt;getResourceMethod() |
+| modX-&gt;checkPreview() | not valid anymore, removing for 2.1.0-rc1 |
+| modX-&gt;getManagerPath() | Use modX-&gt;getOption(&#39;manager_url&#39;, null, MODX_MANAGER_URL) |
+| modX-&gt;mergeDocumentContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergeSettingsContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergeChunkContent() | see modParser-&gt;processElementTags() |
+| modX-&gt;mergePlaceholderContent() | see modParser-&gt;processElementTags() |
+| |
+| modX-&gt;documentObject | access via modX-&gt;resource-&gt;get($field) or modX-&gt;resource-&gt;$field directly for raw data |
+| modX-&gt;documentIdentifier | modX-&gt;resourceIdentifier |
+| modX-&gt;documentMethod | modX-&gt;resourceMethod |
+| modX-&gt;documentContent | modX-&gt;resource-&gt;getContent() |
+| modX-&gt;documentGenerated | modX-&gt;resourceGenerated |
+| modX-&gt;dumpSQL | see xPDOQuery-&gt;toSQL() (after xPDOQuery-&gt;prepare()) |
+| |
+| modKeyword classes and related code | gone from framework, to be implemented more efficiently as developer sees fit |
+| modMetatag classes and related code | gone from framework, to be implemented more efficiently as developer sees fit |
+| |
+| modElement-&gt;toPlaceholders() | modX-&gt;toPlaceholders() |
+| |
+| modManagerUser and related classes and code | see modUser |
+| modUserRole class and related code | see Revo abac permissions |
+| modWebUser and related classes and code | see modUser |
+| |
+| modEventLog class and modX-&gt;logEvent() | see modX-&gt;log() |
+| modLexiconFocus/Topic/Language and related classes and code | see modLexicon and modLexiconEntry |
+| |
+| modX-&gt;executeProcessor() | see modX-&gt;runProcessor() |
+| |
+| modTemplate-&gt;getTVs() | modTemplate-&gt;getTemplateVars() |";}i:7;a:3:{s:2:"id";s:8:"35094835";s:3:"ver";s:1:"3";s:4:"code";s:7357:"{note:title=In progress}
+This page will contain a chart summarizing constants, properties and api methods that have been long deprecated, marked for removal in 2.1 and now actually removed from the MODX Revolution 2.1 codebase. It will also contain notes on how you might replace the legacy code with the more current methodologies and make better use of the API.
+{note}
+
+
+||Item deprecated||replacement or potential workaround||
+|IN_PARSER_MODE|check context is not mgr|
+|IN_MANAGER_MODE|check context is mgr|
+|IN_MANAGER_MODE|check context is mgr|
+|||
+|DBAPI: modX-&gt;db||
+|modX-&gt;db-&gt;config|modX-&gt;getOption()|
+|modX-&gt;db-&gt;connect()|modX automatically connects to MODX database|
+|modX-&gt;db-&gt;disconnect()||
+|modX-&gt;db-&gt;escape($s)|modX-&gt;quote()|
+|modX-&gt;db-&gt;query($sql)|modX-&gt;query() or modX-&gt;execute($criteria) see manual for PDO query|
+|modX-&gt;db-&gt;delete($from, $where= &quot;&quot;,$fields=&#39;&#39;)|see modX-&gt;query()|
+|modX-&gt;db-&gt;select($fields= &quot;*&quot;, $from= &quot;&quot;, $where= &quot;&quot;, $orderby= &quot;&quot;, $limit= &quot;&quot;)|see modX-&gt;query()|
+|modX-&gt;db-&gt;update($fields, $table, $where= &quot;&quot;)|see modX-&gt;query()|
+|modX-&gt;db-&gt;insert($fields, $intotable, $fromfields= &quot;*&quot;, $fromtable= &quot;&quot;, $where= &quot;&quot;, $limit= &quot;&quot;)|see modX-&gt;query()|
+|modX-&gt;db-&gt;exec($sql)|see modX-&gt;execute($criteria)|
+|modX-&gt;db-&gt;getInsertId()|see modX-&gt;lastInsertId()|
+|modX-&gt;db-&gt;getAffectedRows()|see modX-&gt;getCount() or xPDOCriteria-&gt;stmt-&gt;rowCount()|
+|modX-&gt;db-&gt;getLastError()|see xPDOCriteria-&gt;stmt-&gt;errorCode or xPDOCriteria-&gt;stmt-&gt;errorInfo|
+|modX-&gt;db-&gt;getRecordCount($ds)|modX-&gt;getCount($className, $criteria= null)|
+|modX-&gt;db-&gt;getRow($ds, $mode= &#39;assoc&#39;)|see xPDOCriteria-&gt;stmt-&gt;fetch()|
+|modX-&gt;db-&gt;getColumn($name, $dsq)|see xPDOCriteria-&gt;stmt-&gt;fetchColumn()|
+|modX-&gt;db-&gt;getColumnNames($dsq)|see modX-&gt;getFields($className) (note: not exactly the same .. gives you column names for a specific class)|
+|modX-&gt;db-&gt;getValue($dsq)|see xPDOCriteria-&gt;stmt-&gt;fetchColumn()|
+|modX-&gt;db-&gt;getXML($dsq)|no direct analog|
+|modX-&gt;db-&gt;getTableMetaData($table)|modX-&gt;map property|
+|modX-&gt;db-&gt;prepareDate($timestamp, $fieldType= &#39;DATETIME&#39;)|php to sql conversion of datetypes are handled automatically in the modX model (or a custom xPDO model)|
+|modX-&gt;db-&gt;getHTMLGrid($dsq, $params)|no direct analog|
+|modX-&gt;db-&gt;makeArray($rs= &#39;&#39;)|see xPDOCriteria-&gt;stmt-&gt;fetch()|
+|modX-&gt;getFullTableName()|modX-&gt;getTableName($className, $includeDb=false)
+or modX-&gt;escape($customTableName)|
+|modX-&gt;dbConfig|modX-&gt;getOption() (NOTE: some of the configuration keys are different, i.e. dbuser = username, dbpass = password, dbase = dbname)|
+|||
+|modX-&gt;putChunk()|modX-&gt;getChunk()|
+|modX-&gt;isFrontend()|modX-&gt;context-&gt;get(&#39;key&#39;) == &#39;web&#39; or other front-end context|
+|modX-&gt;isBackend()|modX-&gt;context-&gt;get(&#39;key&#39;) == &#39;mgr&#39;|
+|modX-&gt;getSettings()|modX-&gt;config after $modx-&gt;getConfig()|
+|modX-&gt;getDocumentObject($method, $identifier)|not public API method; no replacement (see modRequest-&gt;getResource())|
+|modX-&gt;isMemberOfWebGroup()|modX-&gt;user-&gt;isMember or modUser-&gt;isMember|
+|modX-&gt;getDocument|modX-&gt;getObject(&#39;modResource&#39;, $criteria)|
+|modX-&gt;getDocuments|modX-&gt;getCollection(&#39;modResource&#39;, $criteria)
+or modX-&gt;getIterator(&#39;modResource&#39;, $criteria)|
+|modX-&gt;getAllChildren()|modX-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where condition &#39;parent&#39; = $id|
+|modX-&gt;getActiveChildren()|modX-&gt;getCollection(&#39;modResource&#39;, $criteria) , $criteria having where conditions &#39;parent&#39; = $id, &#39;published&#39; = 1, &#39;deleted&#39; = 0|
+|modX-&gt;getDocumentChildren()|as above, modX-&gt;getCollection(&#39;modResource&#39;, $criteria) with specific criteria|
+|modX-&gt;getDocumentChildrenTVars()|* to get document child resources and their TVs all at once:
+* modResource-&gt;getMany(&#39;Children&#39;) and iterate the children and you can modResource-&gt;getTVValue()
+* or to get TVs of any modResource object, modResource-&gt;getTemplateVars()
+* or get a modTemplateVar with modX-&gt;getObject(&#39;modTemplateVar&#39;, array(&#39;name&#39; =&gt; $tvName)) and then modTemplateVar-&gt;getValue($resourceId)/renderOutput($resourceId)|
+|modX-&gt;getTemplateVar()|modX-&gt;getObject(&#39;modTemplateVar&#39;, $criteria)|
+|modX-&gt;getTemplateVars()|modX-&gt;getCollection(&#39;modTemplateVar&#39;, $criteria)|
+|modX-&gt;getTemplateVarOutput()|use modTemplateVar-&gt;renderOutput() on a collection of modTemplateVar objects|
+|modX-&gt;getParent()|modX-&gt;getObject(&#39;modResource&#39;, $modx-&gt;resource-&gt;get(&#39;parent&#39;)) or pass in additional criteria as needed|
+|modX-&gt;getPageInfo()|modX-&gt;getObject(&#39;modResource&#39;, $criteria)|
+|modX-&gt;getUserInfo()|$user= $this-&gt;getObjectGraph(&#39;modUser&#39;, &#39;{&quot;Profile&quot;:{}}&#39;, $uid, true)
+access fields of modUser and fields of related modUserProfile|
+|modX-&gt;getWebUserInfo()|as above|
+|modX-&gt;changeWebUserPassword()|modUser-&gt;changePassword()|
+|modX-&gt;changePassword()|modUser-&gt;changePassword()|
+|modX-&gt;cleanDocumentIdentifier()|modRequest-&gt;_cleanResourceIdentifier(), but is not a public API method (DO NOT USE)|
+|modX-&gt;getDocumentIdentifier()|modRequest-&gt;getResourceIdentifier()|
+|modX-&gt;getDocumentMethod()|modRequest-&gt;getResourceMethod()|
+|modX-&gt;checkPreview()|not valid anymore, removing for 2.1.0-rc1|
+|modX-&gt;getManagerPath()|Use modX-&gt;getOption(&#39;manager_url&#39;, null, MODX_MANAGER_URL)|
+|modX-&gt;mergeDocumentContent()|see modParser-&gt;processElementTags()|
+|modX-&gt;mergeSettingsContent()|see modParser-&gt;processElementTags()|
+|modX-&gt;mergeChunkContent()|see modParser-&gt;processElementTags()|
+|modX-&gt;mergePlaceholderContent()|see modParser-&gt;processElementTags()|
+|||
+|modX-&gt;documentObject|access via modX-&gt;resource-&gt;get($field) or modX-&gt;resource-&gt;$field directly for raw data|
+|modX-&gt;documentIdentifier|modX-&gt;resourceIdentifier|
+|modX-&gt;documentMethod|modX-&gt;resourceMethod|
+|modX-&gt;documentContent|modX-&gt;resource-&gt;getContent()|
+|modX-&gt;documentGenerated|modX-&gt;resourceGenerated|
+|modX-&gt;dumpSQL|see xPDOQuery-&gt;toSQL() (after xPDOQuery-&gt;prepare())|
+|||
+|modKeyword classes and related code|gone from framework, to be implemented more efficiently as developer sees fit|
+|modMetatag classes and related code|gone from framework, to be implemented more efficiently as developer sees fit|
+|||
+|modElement-&gt;toPlaceholders()|modX-&gt;toPlaceholders()|
+|||
+|modManagerUser and related classes and code|see modUser|
+|modUserRole class and related code|see Revo abac permissions|
+|modWebUser and related classes and code|see modUser|
+|||
+|modEventLog class and modX-&gt;logEvent()|see modX-&gt;log()|
+|modLexiconFocus/Topic/Language and related classes and code|see modLexicon and modLexiconEntry|
+|||
+|modX-&gt;executeProcessor()|see modX-&gt;runProcessor()|
+|||
+|modTemplate-&gt;getTVs()|modTemplate-&gt;getTemplateVars()|
+";}i:8;a:3:{s:2:"id";s:8:"35094834";s:3:"ver";s:1:"2";s:4:"code";s:370:"{note:title=In progress}
+This page will contain a chart summarizing constants, properties and api methods that have been long deprecated, marked for removal in 2.1 and now actually removed from the MODX Revolution 2.1 codebase. It will also contain notes on how you might replace the legacy code with the more current methodologies and make better use of the API.
+{note}";}i:9;a:3:{s:2:"id";s:8:"35094832";s:3:"ver";s:1:"1";s:4:"code";s:0:"";}}}

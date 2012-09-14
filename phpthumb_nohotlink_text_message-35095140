@@ -1,0 +1,28 @@
+a:5:{s:2:"id";s:8:"35095140";s:4:"info";a:4:{s:6:"Title:";s:31:"phpthumb_nohotlink_text_message";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:46:"[revolution20:phpthumb_nohotlink_text_message]";}s:6:"parent";s:8:"18678127";s:6:"source";s:281:"h2. phpthumb_nohotlink_text_message
+
+*Name*: phpThumb Hotlinking Not Allowed Message
+*Type*: Textfield
+*Default*: Off-server thumbnailing is not allowed
+*Available In:* 2.0.8\+
+
+A message that is rendered instead of the thumbnail when a hotlinking attempt is rejected.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"35095140";s:3:"ver";s:1:"2";s:4:"code";s:281:"h2. phpthumb_nohotlink_text_message
+
+*Name*: phpThumb Hotlinking Not Allowed Message
+*Type*: Textfield
+*Default*: Off-server thumbnailing is not allowed
+*Available In:* 2.0.8\+
+
+A message that is rendered instead of the thumbnail when a hotlinking attempt is rejected.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35095141";s:3:"ver";s:1:"1";s:4:"code";s:256:"h2. phpthumb_nohotlink_text_message
+
+*Name*: phpThumb Hotlinking Not Allowed Message
+*Type*: Textfield
+*Default*: \{http_host\}
+*Available In:* 2.0.8\+
+
+A message that is rendered instead of the thumbnail when a hotlinking attempt is rejected.
+
+{scrollbar}";}}}

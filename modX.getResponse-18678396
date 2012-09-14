@@ -1,0 +1,76 @@
+a:5:{s:2:"id";s:8:"18678396";s:4:"info";a:4:{s:6:"Title:";s:16:"modX.getResponse";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:14:"James Rotering";s:12:"Wiki Markup:";s:31:"[revolution20:modX.getResponse]";}s:6:"parent";s:8:"18678361";s:6:"source";s:539:"\\
+
+h2. modX::getResponse
+
+Attempt to load the response handler class, if not already loaded. Defaults to modResponse.
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/modx/modX.html#getResponse]
+
+{code}
+boolean getResponse ([$string $class = &#39;modResponse&#39;], [$path $path = &#39;&#39;])
+{code}
+
+h2. Example
+
+Load a custom Response handler class called &#39;myResponse&#39; from &#39;/path/to/myresponse.class.php&#39;:
+{code}
+$modx-&gt;getResponse(&#39;myResponse&#39;,&#39;/path/to/&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678396";s:3:"ver";s:1:"2";s:4:"code";s:539:"\\
+
+h2. modX::getResponse
+
+Attempt to load the response handler class, if not already loaded. Defaults to modResponse.
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/modx/modX.html#getResponse]
+
+{code}
+boolean getResponse ([$string $class = &#39;modResponse&#39;], [$path $path = &#39;&#39;])
+{code}
+
+h2. Example
+
+Load a custom Response handler class called &#39;myResponse&#39; from &#39;/path/to/myresponse.class.php&#39;:
+{code}
+$modx-&gt;getResponse(&#39;myResponse&#39;,&#39;/path/to/&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33948229";s:3:"ver";s:1:"1";s:4:"code";s:536:"\\
+
+h2. modX::getResponse
+
+Attempt to load the response handler class, if not already loaded. Defaults to modResponse.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getResponse
+
+{code}
+boolean getResponse ([$string $class = &#39;modResponse&#39;], [$path $path = &#39;&#39;])
+{code}
+
+h2. Example
+
+Load a custom Response handler class called &#39;myResponse&#39; from &#39;/path/to/myresponse.class.php&#39;:
+{code}
+$modx-&gt;getRequest(&#39;myResponse&#39;,&#39;/path/to/&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";}}}

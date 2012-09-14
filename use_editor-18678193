@@ -1,0 +1,29 @@
+a:5:{s:2:"id";s:8:"18678193";s:4:"info";a:4:{s:6:"Title:";s:10:"use_editor";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:25:"[revolution20:use_editor]";}s:6:"parent";s:8:"18678127";s:6:"source";s:157:"h2. use_editor
+
+*Name*: Enable RichText Editor
+*Type*: Yes/No
+*Default*: Yes
+
+If Yes, will enable any installed Rich Text Editor in the manager.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678193";s:3:"ver";s:1:"2";s:4:"code";s:157:"h2. use_editor
+
+*Name*: Enable RichText Editor
+*Type*: Yes/No
+*Default*: Yes
+
+If Yes, will enable any installed Rich Text Editor in the manager.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119749";s:3:"ver";s:1:"1";s:4:"code";s:454:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Enable Editor{zone-data}
+{zone-data:key}use_editor{zone-data}
+{zone-data:type}boolean{zone-data}
+{zone-data:default}true{zone-data}
+{zone-data:desc}Do you want to enable the rich text editor? If you&#39;re more comfortable writing HTML, then you can turn the editor off using this setting.
+
+{note}This setting applies to all documents and all users!{note}{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

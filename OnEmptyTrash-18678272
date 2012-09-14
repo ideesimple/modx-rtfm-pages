@@ -1,0 +1,37 @@
+a:5:{s:2:"id";s:8:"18678272";s:4:"info";a:4:{s:6:"Title:";s:12:"OnEmptyTrash";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:27:"[revolution20:OnEmptyTrash]";}s:6:"parent";s:8:"18678228";s:6:"source";s:352:"\\
+
+h2. Event: OnEmptyTrash
+
+Fires after the trash is emptied for the site.
+
+Service: 1 - Parser Service Events
+Group: Documents
+
+h2. Event Parameters
+
+||Name||Description||
+|ids|An array of Resource IDs that were attempted to be permanently deleted.|
+|num_deleted|The number of Resources actually deleted.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678272";s:3:"ver";s:1:"1";s:4:"code";s:352:"\\
+
+h2. Event: OnEmptyTrash
+
+Fires after the trash is emptied for the site.
+
+Service: 1 - Parser Service Events
+Group: Documents
+
+h2. Event Parameters
+
+||Name||Description||
+|ids|An array of Resource IDs that were attempted to be permanently deleted.|
+|num_deleted|The number of Resources actually deleted.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

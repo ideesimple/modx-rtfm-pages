@@ -1,0 +1,51 @@
+a:5:{s:2:"id";s:8:"35095082";s:4:"info";a:4:{s:6:"Title:";s:18:"forgot_login_email";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:33:"[revolution20:forgot_login_email]";}s:6:"parent";s:8:"18678127";s:6:"source";s:984:"h2. forgot_login_email
+
+*Name*: Forgot Login Email
+*Type*: textarea
+*Default*: (see below)
+*Available In*: Revolution 2.0.0+
+
+The template for the email that is sent when a user has forgotten their MODX username and/or password.
+
+The default is:
+
+{code}&lt;p&gt;Hello [[+username]],&lt;/p&gt;
+&lt;p&gt;A request for a password reset has been issued for your MODX user. If you sent this, you may follow this link and use this password to login. If you did not send this request, please ignore this email.&lt;/p&gt;
+
+&lt;p&gt;
+    &lt;strong&gt;Activation Link:&lt;/strong&gt; [[+url_scheme]][[+http_host]][[+manager_url]]?modahsh=[[+hash]]&lt;br /&gt;
+    &lt;strong&gt;Username:&lt;/strong&gt; [[+username]]&lt;br /&gt;
+    &lt;strong&gt;Password:&lt;/strong&gt; [[+password]]&lt;br /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;After you log into the MODX Manager, you can change your password again, if you wish.&lt;/p&gt;
+
+&lt;p&gt;Regards,&lt;br /&gt;Site Administrator&lt;/p&gt;{code}
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095082";s:3:"ver";s:1:"1";s:4:"code";s:984:"h2. forgot_login_email
+
+*Name*: Forgot Login Email
+*Type*: textarea
+*Default*: (see below)
+*Available In*: Revolution 2.0.0+
+
+The template for the email that is sent when a user has forgotten their MODX username and/or password.
+
+The default is:
+
+{code}&lt;p&gt;Hello [[+username]],&lt;/p&gt;
+&lt;p&gt;A request for a password reset has been issued for your MODX user. If you sent this, you may follow this link and use this password to login. If you did not send this request, please ignore this email.&lt;/p&gt;
+
+&lt;p&gt;
+    &lt;strong&gt;Activation Link:&lt;/strong&gt; [[+url_scheme]][[+http_host]][[+manager_url]]?modahsh=[[+hash]]&lt;br /&gt;
+    &lt;strong&gt;Username:&lt;/strong&gt; [[+username]]&lt;br /&gt;
+    &lt;strong&gt;Password:&lt;/strong&gt; [[+password]]&lt;br /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;After you log into the MODX Manager, you can change your password again, if you wish.&lt;/p&gt;
+
+&lt;p&gt;Regards,&lt;br /&gt;Site Administrator&lt;/p&gt;{code}
+
+{scrollbar}
+";}}}

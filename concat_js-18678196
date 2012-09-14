@@ -1,0 +1,38 @@
+a:5:{s:2:"id";s:8:"18678196";s:4:"info";a:4:{s:6:"Title:";s:9:"concat_js";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:24:"[revolution20:concat_js]";}s:6:"parent";s:8:"18678127";s:6:"source";s:404:"h2. concat_js
+
+*Name*: Use Concatenated Javascript Libraries
+*Type*: Yes/No
+*Default*: Yes
+
+When this is enabled, MODx will use a concatenated version of its custom core JavaScript libraries. This greatly reduces load and execution time. Disable only if you are modifying core elements.
+
+{note}This setting will not work in Git deployments of Revolution. Leave set to &#39;No&#39;.{note}
+
+\\
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678196";s:3:"ver";s:1:"2";s:4:"code";s:404:"h2. concat_js
+
+*Name*: Use Concatenated Javascript Libraries
+*Type*: Yes/No
+*Default*: Yes
+
+When this is enabled, MODx will use a concatenated version of its custom core JavaScript libraries. This greatly reduces load and execution time. Disable only if you are modifying core elements.
+
+{note}This setting will not work in Git deployments of Revolution. Leave set to &#39;No&#39;.{note}
+
+\\
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119663";s:3:"ver";s:1:"1";s:4:"code";s:540:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Use Concatenated Javascript Libraries{zone-data}
+{zone-data:key}concat_js{zone-data}
+{zone-data:type}boolean{zone-data}
+{zone-data:default}false{zone-data}
+{zone-data:desc}When this is enabled, MODx will use a concatenated version of its custom core JavaScript libraries. This greatly reduces load and execution time. Disable only if you are modifying core elements.
+
+{note}This setting will not work in SVN deployments of Revolution.{note}
+{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

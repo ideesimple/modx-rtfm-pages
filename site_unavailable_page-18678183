@@ -1,0 +1,55 @@
+a:5:{s:2:"id";s:8:"18678183";s:4:"info";a:4:{s:6:"Title:";s:21:"site_unavailable_page";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:36:"[revolution20:site_unavailable_page]";}s:6:"parent";s:8:"18678188";s:6:"source";s:298:"h2. site_unavailable_page
+
+*Name*: Unavailable Page
+*Type*: Number
+*Default*: 1
+
+Enter the ID of the Resource you want to use as an offline page here.
+
+{note}Make sure this ID you enter belongs to an existing resource that has been published\!{note}
+
+h2. See Also
+
+[unauthorized_page]
+
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678183";s:3:"ver";s:1:"3";s:4:"code";s:298:"h2. site_unavailable_page
+
+*Name*: Unavailable Page
+*Type*: Number
+*Default*: 1
+
+Enter the ID of the Resource you want to use as an offline page here.
+
+{note}Make sure this ID you enter belongs to an existing resource that has been published\!{note}
+
+h2. See Also
+
+[unauthorized_page]
+
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33947696";s:3:"ver";s:1:"2";s:4:"code";s:265:"h2. site_unavailable_page
+
+*Name*: Unavailable Page
+*Type*: Number
+*Default*: 1
+
+Enter the ID of the Resource you want to use as an offline page here.
+
+{note}Make sure this ID you enter belongs to an existing resource that has been published!{note}
+
+\\
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"20119735";s:3:"ver";s:1:"1";s:4:"code";s:419:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Unavailable Page{zone-data}
+{zone-data:key}unavailable_page{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}1{zone-data}
+{zone-data:desc}Enter the ID of the document you want to use as an offline page here.
+
+{note}Make sure this ID you enter belongs to an existing resource that has been published!{note}{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"20119857";s:4:"info";a:4:{s:6:"Title:";s:35:"auto_check_pkg_updates_cache_expire";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:50:"[revolution20:auto_check_pkg_updates_cache_expire]";}s:6:"parent";s:8:"18678127";s:6:"source";s:256:"h2. auto_check_pkg_updates_cache_expire
+
+*Name*: Cache Expiration Time for Automatic Package Updates Check
+*Type*: Number
+*Default*: 15
+
+The number of minutes that [Package Management] will cache the results when checking for package updates.
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"20119857";s:3:"ver";s:1:"1";s:4:"code";s:256:"h2. auto_check_pkg_updates_cache_expire
+
+*Name*: Cache Expiration Time for Automatic Package Updates Check
+*Type*: Number
+*Default*: 15
+
+The number of minutes that [Package Management] will cache the results when checking for package updates.
+
+{scrollbar}
+";}}}

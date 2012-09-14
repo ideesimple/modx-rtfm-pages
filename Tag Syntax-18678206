@@ -1,0 +1,2292 @@
+a:5:{s:2:"id";s:8:"18678206";s:4:"info";a:4:{s:6:"Title:";s:10:"Tag Syntax";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:14:"Nick Crossland";s:12:"Wiki Markup:";s:25:"[revolution20:Tag Syntax]";}s:6:"parent";s:8:"36634926";s:6:"source";s:6418:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || || Revolution (New) || Example for Revolution \\ ||
+| [revolution20:Templates] | no tag representation | | no tag representation | |
+| Resource Fields | \[\*_field_\*\] | | \[\[*field\]\] \\ | \[\[*pagetitle\]\] |
+| [revolution20:Template Variables] | \[\*_templatevar_\*\] | | \[\[\*_templatevar_\]\] | \[\[*tags\]\] \\ |
+| [revolution20:Chunks] | \{\{_chunk_ \}\} \\ | | \[\[$_chunk_\]\] | \[\[$header\]\] \\ |
+| [revolution20:Snippets] | \[\[_snippet_\]\] | | \[\[_snippet_\]\] | \[\[getResources\]\] \\ |
+| [revolution20:Plugins] | no tag representation | | no tag representation | |
+| [Evo1:Modules] | no tag representation | | does not exist in Revolution, use [CMPs|revolution20:Custom Manager Pages] | |
+| *{_}Content Tags{_}* | | | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | | \[\[\+_placeholder_\]\] | \[\[+modx.user.id\]\] \\ |
+| [Links|revolution20:Resources] | \[\~_link_\~\] | | \[\[\~_link_\]\] | \[\[~\[\[*id\]\]? &amp;scheme=`full`\]\] \\ |
+| [System Settings |revolution20:System Settings] | \[(_system_setting_)\] | | \[\[+\+_system_setting_\]\] | \[\[++site_start\]\] \\ |
+| [Language|revolution20:Internationalization] | no tag representation | | \[\[%_language_string_key_\]\] | |
+| Comment (see note below) \\ | | | \[\[-this is a comment\]\] \\ | |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h3. Comment tags
+
+[This discussion on the forums|http://modxcms.com/forums/index.php/topic,49368.0.html] shows that some people feel the need for a comments tag. The default behavior when encountering a tag that represents an element that does not exist, is to silently discard the tag completely. Utilizing this behavior you can add comments throughout your templates, chunks and content and none of it would be visible on the front-end.
+
+As of MODX Revolution 2.2 any tag found that starts with a dash \(-) is ignored by the parser, and any tags it includes will be silently discarded. Before that, you can use the same however any tags within the commend would be parsed and it would be a tad more resource intensive to do so.
+
+
+
+
+{code}
+ [[- This is a comment, and will be removed from the output. ]]
+{code}
+
+
+
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In Evolution, you would need to do this with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\!snippet\!\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.
+
+?
+{info}If you have some kind of advanced setup in which the site_url setting is being set per request, but your \[\[~\[\[*id\]\]\]\] links are not being generated properly, remember that any tag can be called uncached, including the link or anchor tag:
+
+\[\[\!~\[\[*id\]\]\]\]
+
+However, you will only need that when the site_url is set dynamically and can differ per request. Any normal usage can be cached.
+{info}
+
+h3. Parsing Order
+
+If you call an uncached Snippet, it will be executed last in the parsing order.
+
+If you have cached placeholders below that, they will be evaluated before that Snippet is executed - meaning they&#39;ll get the last value that was stored in the cache by that Snippet previously (or empty, if not set yet).
+
+If you want to call a Snippet uncached that sets placeholders, you need to make sure the placeholders are set to uncached as well:
+
+{code}
+[[!Profile]]
+Hello [[!+username]],
+{code}
+
+h3. Additional Help
+
+Because the tag syntax is problematic for many newcomers, there are tools available to help highlight problems.  Check out the [SyntaxChecker|http://modx.com/extras/package/syntaxchecker] plugin.
+
+
+{scrollbar}";s:8:"versions";a:25:{i:0;a:3:{s:2:"id";s:8:"18678206";s:3:"ver";s:1:"2";s:4:"code";s:6418:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || || Revolution (New) || Example for Revolution \\ ||
+| [revolution20:Templates] | no tag representation | | no tag representation | |
+| Resource Fields | \[\*_field_\*\] | | \[\[*field\]\] \\ | \[\[*pagetitle\]\] |
+| [revolution20:Template Variables] | \[\*_templatevar_\*\] | | \[\[\*_templatevar_\]\] | \[\[*tags\]\] \\ |
+| [revolution20:Chunks] | \{\{_chunk_ \}\} \\ | | \[\[$_chunk_\]\] | \[\[$header\]\] \\ |
+| [revolution20:Snippets] | \[\[_snippet_\]\] | | \[\[_snippet_\]\] | \[\[getResources\]\] \\ |
+| [revolution20:Plugins] | no tag representation | | no tag representation | |
+| [Evo1:Modules] | no tag representation | | does not exist in Revolution, use [CMPs|revolution20:Custom Manager Pages] | |
+| *{_}Content Tags{_}* | | | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | | \[\[\+_placeholder_\]\] | \[\[+modx.user.id\]\] \\ |
+| [Links|revolution20:Resources] | \[\~_link_\~\] | | \[\[\~_link_\]\] | \[\[~\[\[*id\]\]? &amp;scheme=`full`\]\] \\ |
+| [System Settings |revolution20:System Settings] | \[(_system_setting_)\] | | \[\[+\+_system_setting_\]\] | \[\[++site_start\]\] \\ |
+| [Language|revolution20:Internationalization] | no tag representation | | \[\[%_language_string_key_\]\] | |
+| Comment (see note below) \\ | | | \[\[-this is a comment\]\] \\ | |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h3. Comment tags
+
+[This discussion on the forums|http://modxcms.com/forums/index.php/topic,49368.0.html] shows that some people feel the need for a comments tag. The default behavior when encountering a tag that represents an element that does not exist, is to silently discard the tag completely. Utilizing this behavior you can add comments throughout your templates, chunks and content and none of it would be visible on the front-end.
+
+As of MODX Revolution 2.2 any tag found that starts with a dash \(-) is ignored by the parser, and any tags it includes will be silently discarded. Before that, you can use the same however any tags within the commend would be parsed and it would be a tad more resource intensive to do so.
+
+
+
+
+{code}
+ [[- This is a comment, and will be removed from the output. ]]
+{code}
+
+
+
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In Evolution, you would need to do this with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\!snippet\!\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.
+
+?
+{info}If you have some kind of advanced setup in which the site_url setting is being set per request, but your \[\[~\[\[*id\]\]\]\] links are not being generated properly, remember that any tag can be called uncached, including the link or anchor tag:
+
+\[\[\!~\[\[*id\]\]\]\]
+
+However, you will only need that when the site_url is set dynamically and can differ per request. Any normal usage can be cached.
+{info}
+
+h3. Parsing Order
+
+If you call an uncached Snippet, it will be executed last in the parsing order.
+
+If you have cached placeholders below that, they will be evaluated before that Snippet is executed - meaning they&#39;ll get the last value that was stored in the cache by that Snippet previously (or empty, if not set yet).
+
+If you want to call a Snippet uncached that sets placeholders, you need to make sure the placeholders are set to uncached as well:
+
+{code}
+[[!Profile]]
+Hello [[!+username]],
+{code}
+
+h3. Additional Help
+
+Because the tag syntax is problematic for many newcomers, there are tools available to help highlight problems.  Check out the [SyntaxChecker|http://modx.com/extras/package/syntaxchecker] plugin.
+
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"37683609";s:3:"ver";s:1:"2";s:4:"code";s:6454:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || || Revolution (New) || Example for Revolution \\ ||
+| [revolution20:Templates] | no tag representation | | no tag representation | |
+| Resource Fields | \[\*_field_\*\] | | \[\[*field\]\] \\ | \[\[*pagetitle\]\] |
+| [revolution20:Template Variables] | \[\*_templatevar_\*\] | | \[\[\*_templatevar_\]\] | \[\[*tags\]\] \\ |
+| [revolution20:Chunks] | \{\{_chunk_ \}\} \\ | | \[\[$_chunk_\]\] | \[\[$header\]\] \\ |
+| [revolution20:Snippets] | \[\[_snippet_\]\] | | \[\[_snippet_\]\] | \[\[getResources\]\] \\ |
+| [revolution20:Plugins] | no tag representation | | no tag representation | |
+| [Evo1:Modules] | no tag representation | | does not exist in Revolution, use [CMPs|revolution20:Custom Manager Pages] | |
+| *{_}Content Tags{_}* | | | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | | \[\[\+_placeholder_\]\] | \[\[+modx.user.id\]\] \\ |
+| [Links|revolution20:Resources] | \[\~_link_\~\] | | \[\[\~_link_\]\] | \[\[~\[\[*id\]\]? &amp;scheme=`full`\]\] \\ |
+| [System Settings |revolution20:System Settings] | \[(_system_setting_)\] | | \[\[+\+_system_setting_\]\] | \[\[++site_start\]\] \\ |
+| [Language|revolution20:Internationalization] | no tag representation | | \[\[%_language_string_key_\]\] | |
+| Comment (see note below) \\ | | | \[\[-this is a comment\]\] \\ | |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h3. Comment tags
+
+[This discussion on the forums|http://modxcms.com/forums/index.php/topic,49368.0.html] shows that some people feel the need for a comments tag. The default behavior when encountering a tag that represents an element that does not exist, is to silently discard the tag completely. Utilizing this behavior you can add comments throughout your templates, chunks and content and none of it would be visible on the front-end.
+
+As of MODX Revolution 2.2 (at time of writing in development) any tag found that starts with a dash \(-) is ignored by the parser, and any tags it includes will be silently discarded. Before that, you can use the same however any tags within the commend would be parsed and it would be a tad more resource intensive to do so.
+
+
+
+
+{code}
+ [[- This is a comment, and will be removed from the output. ]]
+{code}
+
+
+
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In Evolution, you would need to do this with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\!snippet\!\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.
+
+?
+{info}If you have some kind of advanced setup in which the site_url setting is being set per request, but your \[\[~\[\[*id\]\]\]\] links are not being generated properly, remember that any tag can be called uncached, including the link or anchor tag:
+
+\[\[\!~\[\[*id\]\]\]\]
+
+However, you will only need that when the site_url is set dynamically and can differ per request. Any normal usage can be cached.
+{info}
+
+h3. Parsing Order
+
+If you call an uncached Snippet, it will be executed last in the parsing order.
+
+If you have cached placeholders below that, they will be evaluated before that Snippet is executed - meaning they&#39;ll get the last value that was stored in the cache by that Snippet previously (or empty, if not set yet).
+
+If you want to call a Snippet uncached that sets placeholders, you need to make sure the placeholders are set to uncached as well:
+
+{code}
+[[!Profile]]
+Hello [[!+username]],
+{code}
+
+h3. Additional Help
+
+Because the tag syntax is problematic for many newcomers, there are tools available to help highlight problems.  Check out the [SyntaxChecker|http://modx.com/extras/package/syntaxchecker] plugin.
+
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"37683285";s:3:"ver";s:1:"2";s:4:"code";s:6236:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || || Revolution (New) || Example for Revolution \\ ||
+| [revolution20:Templates] | no tag representation | | no tag representation | |
+| Resource Fields | \[\*_field_\*\] | | \[\[*field\]\] \\ | \[\[*pagetitle\]\] |
+| [revolution20:Template Variables] | \[\*_templatevar_\*\] | | \[\[\*_templatevar_\]\] | \[\[*tags\]\] \\ |
+| [revolution20:Chunks] | \{\{_chunk_ \}\} \\ | | \[\[$_chunk_\]\] | \[\[$header\]\] \\ |
+| [revolution20:Snippets] | \[\[_snippet_\]\] | | \[\[_snippet_\]\] | \[\[getResources\]\] \\ |
+| [revolution20:Plugins] | no tag representation | | no tag representation | |
+| [Evo1:Modules] | no tag representation | | does not exist in Revolution, use [CMPs|revolution20:Custom Manager Pages] | |
+| *{_}Content Tags{_}* | | | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | | \[\[\+_placeholder_\]\] | \[\[+modx.user.id\]\] \\ |
+| [Links|revolution20:Resources] | \[\~_link_\~\] | | \[\[\~_link_\]\] | \[\[~\[\[*id\]\]? &amp;scheme=`full`\]\] \\ |
+| [System Settings |revolution20:System Settings] | \[(_system_setting_)\] | | \[\[+\+_system_setting_\]\] | \[\[++site_start\]\] \\ |
+| [Language|revolution20:Internationalization] | no tag representation | | \[\[%_language_string_key_\]\] | |
+| Comment (see note below) \\ | | | \[\[-this is a comment\]\] \\ | |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h3. Comment tags
+
+[This discussion on the forums|http://modxcms.com/forums/index.php/topic,49368.0.html] shows that some people feel the need for a comments tag. The default behavior when encountering a tag that represents an element that does not exist, is to silently discard the tag completely. Utilizing this behavior you can add comments throughout your templates, chunks and content and none of it would be visible on the front-end.
+
+As of MODX Revolution 2.2 (at time of writing in development) any tag found that starts with a dash \(-) is ignored by the parser, and any tags it includes will be silently discarded. Before that, you can use the same however any tags within the commend would be parsed and it would be a tad more resource intensive to do so.
+
+
+
+
+{code}
+ [[- This is a comment, and will be removed from the output. ]]
+{code}
+
+
+
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In Evolution, you would need to do this with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\!snippet\!\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.
+
+?
+{info}If you have some kind of advanced setup in which the site_url setting is being set per request, but your \[\[~\[\[*id\]\]\]\] links are not being generated properly, remember that any tag can be called uncached, including the link or anchor tag:
+
+\[\[\!~\[\[*id\]\]\]\]
+
+However, you will only need that when the site_url is set dynamically and can differ per request. Any normal usage can be cached.
+{info}
+
+h3. Parsing Order
+
+If you call an uncached Snippet, it will be executed last in the parsing order.
+
+If you have cached placeholders below that, they will be evaluated before that Snippet is executed - meaning they&#39;ll get the last value that was stored in the cache by that Snippet previously (or empty, if not set yet).
+
+If you want to call a Snippet uncached that sets placeholders, you need to make sure the placeholders are set to uncached as well:
+
+{code}
+[[!Profile]]
+Hello [[!+username]],
+{code}
+
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"36634906";s:3:"ver";s:1:"2";s:4:"code";s:6209:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || || Revolution (New) || Example for Revolution \\ ||
+| [revolution20:Templates] | no tag representation | | no tag representation | |
+| Resource Fields | \[\*_field_\*\] | | \[\[*field\]\] \\ | \[\[*pagetitle\]\] |
+| [revolution20:Template Variables] | \[\*_templatevar_\*\] | | \[\[\*_templatevar_\]\] | \[\[*tags\]\] \\ |
+| [revolution20:Chunks] | \{\{_chunk_ \}\} \\ | | \[\[$_chunk_\]\] | \[\[$header\]\] \\ |
+| [revolution20:Snippets] | \[\[_snippet_\]\] | | \[\[_snippet_\]\] | \[\[getResources\]\] \\ |
+| [revolution20:Plugins] | no tag representation | | no tag representation | |
+| [Evo1:Modules] | no tag representation | | does not exist in Revolution, use [CMPs|revolution20:Custom Manager Pages] | |
+| *{_}Content Tags{_}* | | | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | | \[\[\+_placeholder_\]\] | \[\[+modx.user.id\]\] \\ |
+| Links | \[\~_link_\~\] | | \[\[\~_link_\]\] | \[\[~\[\[*id\]\]? &amp;scheme=`full`\]\] \\ |
+| [System Settings |revolution20:System Settings] | \[(_system_setting_)\] | | \[\[+\+_system_setting_\]\] | \[\[++site_start\]\] \\ |
+| [Language|revolution20:Internationalization] | no tag representation | | \[\[%_language_string_key_\]\] | |
+| Comment (see note below)\\ | | | \[\[-this is a comment\]\]\\ | |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h3. Comment tags
+
+[This discussion on the forums|http://modxcms.com/forums/index.php/topic,49368.0.html] shows that some people feel the need for a comments tag. The default behavior when encountering a tag that represents an element that does not exist, is to silently discard the tag completely. Utilizing this behavior you can add comments throughout your templates, chunks and content and none of it would be visible on the front-end.
+
+As of MODX Revolution 2.2 (at time of writing in development) any tag found that starts with a dash \(-) is ignored by the parser, and any tags it includes will be silently discarded. Before that, you can use the same however any tags within the commend would be parsed and it would be a tad more resource intensive to do so.
+
+
+
+
+{code}
+ [[- This is a comment, and will be removed from the output. ]]
+{code}
+
+
+
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In Evolution, you would need to do this with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\!snippet\!\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.
+
+?
+{info}If you have some kind of advanced setup in which the site_url setting is being set per request, but your \[\[~\[\[*id\]\]\]\] links are not being generated properly, remember that any tag can be called uncached, including the link or anchor tag:
+
+\[\[\!~\[\[*id\]\]\]\]
+
+However, you will only need that when the site_url is set dynamically and can differ per request. Any normal usage can be cached.
+{info}
+
+h3. Parsing Order
+
+If you call an uncached Snippet, it will be executed last in the parsing order.
+
+If you have cached placeholders below that, they will be evaluated before that Snippet is executed - meaning they&#39;ll get the last value that was stored in the cache by that Snippet previously (or empty, if not set yet).
+
+If you want to call a Snippet uncached that sets placeholders, you need to make sure the placeholders are set to uncached as well:
+
+{code}
+[[!Profile]]
+Hello [[!+username]],
+{code}
+
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"35586432";s:3:"ver";s:1:"2";s:4:"code";s:6393:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || || Revolution (New) || Example for Revolution \\ ||
+| [revolution20:Templates] | no tag representation | | no tag representation | |
+| Resource Fields | \[\*_field_\*\] | | \[\[*field\]\] \\ | \[\[*pagetitle\]\] |
+| [revolution20:Template Variables] | \[\*_templatevar_\*\] | | \[\[\*_templatevar_\]\] | \[\[*tags\]\] \\ |
+| [revolution20:Chunks] | \{\{_chunk_ \}\} \\ | | \[\[$_chunk_\]\] | \[\[$header\]\] \\ |
+| [revolution20:Snippets] | \[\[_snippet_\]\] | | \[\[_snippet_\]\] | \[\[getResources\]\] \\ |
+| [revolution20:Plugins] | no tag representation | | no tag representation | |
+| [Evo1:Modules] | no tag representation | | does not exist in Revolution, use [CMPs|revolution20:Custom Manager Pages] | |
+| *{_}Content Tags{_}* | | | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | | \[\[\+_placeholder_\]\] | \[\[+modx.user.id\]\] \\ |
+| Links | \[\~_link_\~\] | | \[\[\~_link_\]\] | \[\[~\[\[*id\]\]? &amp;scheme=`full`\]\] \\ |
+| [System Settings |revolution20:System Settings] | \[(_system_setting_)\] | | \[\[+\+_system_setting_\]\] | \[\[++site_start\]\] \\ |
+| [Language|revolution20:Internationalization] | no tag representation | | \[\[%_language_string_key_\]\] | |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h3. Comment tags
+
+[This discussion on the forums|http://modxcms.com/forums/index.php/topic,49368.0.html] shows that some people feel the need for a comments tag. The default behavior when encountering a tag that represents an element that does not exist, is to silently discard the tag completely. Utilizing this behavior you can add comments throughout your templates, chunks and content and none of it would be visible on the front-end.
+
+As the thread shows, there are no official tags for this. A workaround would be utilizing the behavior of skipping anything it can&#39;t find, and create comments like such:
+
+{code}
+ [[- This is a comment, and will be removed from the output. ]]
+{code}
+This will search for a snippet, which doesn&#39;t exist and MODX will silently discard the tag from the output.
+
+
+An official comment tag has been requested in [Bug #4790|http://bugs.modx.com/issues/4790].
+
+_This documentation would mention \[\[#comment\]\] as suggested_ _tag before, however it was brought to attention that # is actually reserved for editable resource fields within Evolution.&amp;nbsp;_
+
+
+
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In Evolution, you would need to do this with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\!snippet\!\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.
+
+?
+{info}If you have some kind of advanced setup in which the site_url setting is being set per request, but your \[\[~\[\[*id\]\]\]\] links are not being generated properly, remember that any tag can be called uncached, including the link or anchor tag:
+
+\[\[\!~\[\[*id\]\]\]\]
+
+However, you will only need that when the site_url is set dynamically and can differ per request. Any normal usage can be cached.
+{info}
+
+h3. Parsing Order
+
+If you call an uncached Snippet, it will be executed last in the parsing order.
+
+If you have cached placeholders below that, they will be evaluated before that Snippet is executed - meaning they&#39;ll get the last value that was stored in the cache by that Snippet previously (or empty, if not set yet).
+
+If you want to call a Snippet uncached that sets placeholders, you need to make sure the placeholders are set to uncached as well:
+
+{code}
+[[!Profile]]
+Hello [[!+username]],
+{code}
+
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"35586428";s:3:"ver";s:1:"2";s:4:"code";s:6158:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || || Revolution (New) || Example for Revolution \\ ||
+| [revolution20:Templates] | no tag representation | | no tag representation | |
+| Resource Fields | \[\*_field_\*\] | | \[\[*field\]\] \\ | \[\[*pagetitle\]\] |
+| [revolution20:Template Variables] | \[\*_templatevar_\*\] | | \[\[\*_templatevar_\]\] | \[\[*tags\]\] \\ |
+| [revolution20:Chunks] | \{\{_chunk_ \}\} \\ | | \[\[$_chunk_\]\] | \[\[$header\]\] \\ |
+| [revolution20:Snippets] | \[\[_snippet_\]\] | | \[\[_snippet_\]\] | \[\[getResources\]\] \\ |
+| [revolution20:Plugins] | no tag representation | | no tag representation | |
+| [Evo1:Modules] | no tag representation | | does not exist in Revolution, use [CMPs|revolution20:Custom Manager Pages] | |
+| *{_}Content Tags{_}* | | | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | | \[\[\+_placeholder_\]\] | \[\[+modx.user.id\]\] \\ |
+| Links | \[\~_link_\~\] | | \[\[\~_link_\]\] | \[\[~\[\[*id\]\]? &amp;scheme=`full`\]\] \\ |
+| [System Settings |revolution20:System Settings] | \[(_system_setting_)\] | | \[\[+\+_system_setting_\]\] | \[\[++site_start\]\] \\ |
+| [Language|revolution20:Internationalization] | no tag representation | | \[\[%_language_string_key_\]\] | |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h3. Comment tags
+
+[This discussion on the forums|http://modxcms.com/forums/index.php/topic,49368.0.html] shows that some people feel the need for a comments tag. The default behavior when encountering a tag that represents an element that does not exist, is to silently discard the tag completely. Utilizing this behavior you can add comments throughout your templates, chunks and content and none of it would be visible on the front-end.
+
+As the thread shows, there are no official tags for this. A workaround would be utilizing the above behavior, and create comments like such:
+
+{code}
+ [[# This is a comment, and will be removed from the output. ]]
+{code}
+This will search for a snippet, which doesn&#39;t exist and MODX will silently discard the tag from the output.
+
+
+An official comment tag has been requested in [Bug #4790|http://bugs.modx.com/issues/4790].
+
+
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In Evolution, you would need to do this with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\!snippet\!\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.
+
+?
+{info}If you have some kind of advanced setup in which the site_url setting is being set per request, but your \[\[~\[\[*id\]\]\]\] links are not being generated properly, remember that any tag can be called uncached, including the link or anchor tag:
+
+\[\[\!~\[\[*id\]\]\]\]
+
+However, you will only need that when the site_url is set dynamically and can differ per request. Any normal usage can be cached.
+{info}
+
+h3. Parsing Order
+
+If you call an uncached Snippet, it will be executed last in the parsing order.
+
+If you have cached placeholders below that, they will be evaluated before that Snippet is executed - meaning they&#39;ll get the last value that was stored in the cache by that Snippet previously (or empty, if not set yet).
+
+If you want to call a Snippet uncached that sets placeholders, you need to make sure the placeholders are set to uncached as well:
+
+{code}
+[[!Profile]]
+Hello [[!+username]],
+{code}
+
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"35586094";s:3:"ver";s:1:"1";s:4:"code";s:6155:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || || Revolution (New) || Example for Revolution \\ ||
+| [revolution20:Templates] | no tag representation | | no tag representation | |
+| Resource Fields | \[*field*\]\\ | | \[\[*field\]\]\\ | \[\[*pagetitle\]\] |
+| [revolution20:Template Variables] | \[\*_templatevar_\*\] | | \[\[\*_templatevar_\]\] | \[\[*tags\]\] \\ |
+| [revolution20:Chunks] | \{\{_chunk_ \}\} \\ | | \[\[$_chunk_\]\] | \[\[$header\]\] \\ |
+| [revolution20:Snippets] | \[\[_snippet_\]\] | | \[\[_snippet_\]\] | \[\[getResources\]\] \\ |
+| [revolution20:Plugins] | no tag representation | | no tag representation | |
+| [Evo1:Modules] | no tag representation | | does not exist in Revolution, use [CMPs|revolution20:Custom Manager Pages] | |
+| *{_}Content Tags{_}* | | | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | | \[\[\+_placeholder_\]\] | \[\[+modx.user.id\]\] \\ |
+| Links | \[\~_link_\~\] | | \[\[\~_link_\]\] | \[\[~\[\[*id\]\]? &amp;scheme=`full`\]\] \\ |
+| [System Settings |revolution20:System Settings] | \[(_system_setting_)\] | | \[\[+\+_system_setting_\]\] | \[\[++site_start\]\] \\ |
+| [Language|revolution20:Internationalization] | no tag representation | | \[\[%_language_string_key_\]\] | |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h3. Comment tags
+
+[This discussion on the forums|http://modxcms.com/forums/index.php/topic,49368.0.html] shows that some people feel the need for a comments tag. The default behavior when encountering a tag that represents an element that does not exist, is to silently discard the tag completely. Utilizing this behavior you can add comments throughout your templates, chunks and content and none of it would be visible on the front-end.
+
+As the thread shows, there are no official tags for this. A workaround would be utilizing the above behavior, and create comments like such:
+
+{code}
+ [[# This is a comment, and will be removed from the output. ]]
+{code}
+This will search for a snippet, which doesn&#39;t exist and MODX will silently discard the tag from the output.
+
+
+An official comment tag has been requested in [Bug #4790|http://bugs.modx.com/issues/4790].
+
+
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In Evolution, you would need to do this with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\!snippet\!\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.
+
+?
+{info}If you have some kind of advanced setup in which the site_url setting is being set per request, but your \[\[~\[\[*id\]\]\]\] links are not being generated properly, remember that any tag can be called uncached, including the link or anchor tag:
+
+\[\[\!~\[\[*id\]\]\]\]
+
+However, you will only need that when the site_url is set dynamically and can differ per request. Any normal usage can be cached.
+{info}
+
+h3. Parsing Order
+
+If you call an uncached Snippet, it will be executed last in the parsing order.
+
+If you have cached placeholders below that, they will be evaluated before that Snippet is executed - meaning they&#39;ll get the last value that was stored in the cache by that Snippet previously (or empty, if not set yet).
+
+If you want to call a Snippet uncached that sets placeholders, you need to make sure the placeholders are set to uncached as well:
+
+{code}
+[[!Profile]]
+Hello [[!+username]],
+{code}
+
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"35586092";s:3:"ver";s:1:"1";s:4:"code";s:6075:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || || Revolution (New) || Example for Revolution\\ ||
+| [revolution20:Templates] | no tag representation | | no tag representation | |
+| [revolution20:Template Variables] | \[\*_templatevar_\*\] | | \[\[\*_templatevar_\]\] | \[\[*pagetitle\]\]\\ |
+| [revolution20:Chunks] | \{\{_chunk_ \}\} \\ | | \[\[$_chunk_\]\] | \[\[$header\]\]\\ |
+| [revolution20:Snippets] | \[\[_snippet_\]\] | | \[\[_snippet_\]\] | \[\[getResources\]\]\\ |
+| [revolution20:Plugins] | no tag representation | | no tag representation | |
+| [Evo1:Modules] | no tag representation | | does not exist in Revolution, use [CMPs|revolution20:Custom Manager Pages] | |
+| *{_}Content Tags{_}* | | | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | | \[\[\+_placeholder_\]\] | \[\[+modx.user.id\]\]\\ |
+| Links | \[\~_link_\~\] | | \[\[\~_link_\]\] | \[\[~\[\[*id\]\]? &amp;scheme=`full`\]\]\\ |
+| [System Settings |revolution20:System Settings] | \[(_system_setting_)\] | | \[\[+\+_system_setting_\]\] | \[\[++site_start\]\]\\ |
+| [Language|revolution20:Internationalization] | no tag representation | | \[\[%_language_string_key_\]\] | |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h3. Comment tags
+
+[This discussion on the forums|http://modxcms.com/forums/index.php/topic,49368.0.html] shows that some people feel the need for a comments tag. The default behavior when encountering a tag that represents an element that does not exist, is to silently discard the tag completely. Utilizing this behavior you can add comments throughout your templates, chunks and content and none of it would be visible on the front-end.
+
+As the thread shows, there are no official tags for this. A workaround would be utilizing the above behavior, and create comments like such:
+
+{code}
+ [[# This is a comment, and will be removed from the output. ]]
+{code}
+This will search for a snippet, which doesn&#39;t exist and MODX will silently discard the tag from the output.
+
+
+An official comment tag has been requested in [Bug #4790|http://bugs.modx.com/issues/4790].
+
+
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In Evolution, you would need to do this with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\!snippet\!\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.
+
+?
+{info}If you have some kind of advanced setup in which the site_url setting is being set per request, but your \[\[~\[\[*id\]\]\]\] links are not being generated properly, remember that any tag can be called uncached, including the link or anchor tag:
+
+\[\[\!~\[\[*id\]\]\]\]
+
+However, you will only need that when the site_url is set dynamically and can differ per request. Any normal usage can be cached.
+{info}
+
+h3. Parsing Order
+
+If you call an uncached Snippet, it will be executed last in the parsing order.
+
+If you have cached placeholders below that, they will be evaluated before that Snippet is executed - meaning they&#39;ll get the last value that was stored in the cache by that Snippet previously (or empty, if not set yet).
+
+If you want to call a Snippet uncached that sets placeholders, you need to make sure the placeholders are set to uncached as well:
+
+{code}
+[[!Profile]]
+Hello [[!+username]],
+{code}
+
+
+{scrollbar}";}i:8;a:3:{s:2:"id";s:8:"35095287";s:3:"ver";s:1:"1";s:4:"code";s:5850:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || Revolution (New) ||
+| [revolution20:Templates] | no tag representation | no tag representation |
+| [revolution20:Template Variables] | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| [revolution20:Chunks] | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| [revolution20:Snippets] | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| [revolution20:Plugins] | no tag representation | no tag representation |
+| [Evo1:Modules] | no tag representation | does not exist in Revolution, use [CMPs|revolution20:Custom Manager Pages] |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| [System Settings |revolution20:System Settings] | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| [Language|revolution20:Internationalization] | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h3. Comment tags
+
+[This discussion on the forums|http://modxcms.com/forums/index.php/topic,49368.0.html] shows that some people feel the need for a comments tag. The default behavior when encountering a tag that represents an element that does not exist, is to silently discard the tag completely. Utilizing this behavior you can add comments throughout your templates, chunks and content and none of it would be visible on the front-end.
+
+As the thread shows, there are no official tags for this. A workaround would be utilizing the above behavior, and create comments like such:
+
+{code}
+ [[# This is a comment, and will be removed from the output. ]]
+{code}
+This will search for a snippet, which doesn&#39;t exist and MODX will silently discard the tag from the output.
+
+
+An official comment tag has been requested in [Bug #4790|http://bugs.modx.com/issues/4790].
+
+
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In Evolution, you would need to do this with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\!snippet\!\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.
+
+?
+{info}If you have some kind of advanced setup in which the site_url setting is being set per request, but your \[\[~\[\[*id\]\]\]\] links are not being generated properly, remember that *any* tag can be called uncached, including the link or anchor tag:
+
+\[\[\!~\[\[*id\]\]\]\]
+
+However, you will only need that when the site_url is set dynamically and can differ per request. Any normal usage can be cached.
+{info}
+
+h3. Parsing Order
+
+If you call an uncached Snippet, it will be executed last in the parsing order.
+
+If you have cached placeholders below that, they will be evaluated before that Snippet is executed - meaning they&#39;ll get the last value that was stored in the cache by that Snippet previously (or empty, if not set yet).
+
+If you want to call a Snippet uncached that sets placeholders, you need to make sure the placeholders are set to uncached as well:
+
+{code}
+[[!Profile]]
+Hello [[!+username]],
+{code}
+
+
+{scrollbar}";}i:9;a:3:{s:2:"id";s:8:"35095285";s:3:"ver";s:1:"1";s:4:"code";s:5412:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || Revolution (New) ||
+| [revolution20:Templates] | no tag representation | no tag representation |
+| [revolution20:Template Variables] | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| [revolution20:Chunks] | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| [revolution20:Snippets] | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| [revolution20:Plugins] | no tag representation | no tag representation |
+| [Evo1:Modules] | no tag representation | does not exist in Revolution, use [CMPs|revolution20:Custom Manager Pages] |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| [System Settings |revolution20:System Settings] | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| [Language|revolution20:Internationalization] | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h3. Comment tags
+
+[This discussion on the forums|http://modxcms.com/forums/index.php/topic,49368.0.html] shows that some people feel the need for a comments tag. The default behavior when encountering a tag that represents an element that does not exist, is to silently discard the tag completely. Utilizing this behavior you can add comments throughout your templates, chunks and content and none of it would be visible on the front-end.
+
+As the thread shows, there are no official tags for this. A workaround would be utilizing the above behavior, and create comments like such:
+
+{code}
+ [[# This is a comment, and will be removed from the output. ]]
+{code}
+This will search for a snippet, which doesn&#39;t exist and MODX will discard the tag.
+
+An official comment tag has been requested in [Bug #4790|http://bugs.modx.com/issues/4790].
+
+
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In 096, this was required to be done with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\!snippet\!\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.&amp;nbsp;
+
+h3. Parsing Order
+
+If you call an uncached Snippet, it will be executed last in the parsing order.
+
+If you have cached placeholders below that, they will be evaluated before that Snippet is executed - meaning they&#39;ll get the last value that was stored in the cache by that Snippet previously (or empty, if not set yet).
+
+If you want to call a Snippet uncached that sets placeholders, you need to make sure the placeholders are set to uncached as well:
+
+{code}
+[[!Profile]]
+Hello [[!+username]],
+{code}
+
+
+{scrollbar}";}i:10;a:3:{s:2:"id";s:8:"35095049";s:3:"ver";s:1:"1";s:4:"code";s:4570:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || Revolution (New) ||
+| [revolution20:Templates] | no tag representation | no tag representation |
+| [revolution20:Template Variables] | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| [revolution20:Chunks] | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| [revolution20:Snippets] | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| [revolution20:Plugins] | no tag representation | no tag representation |
+| [Evo1:Modules] | no tag representation | does not exist in Revolution, use [CMPs|revolution20:Custom Manager Pages] |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| [System Settings |revolution20:System Settings] | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| [Language|revolution20:Internationalization] | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In 096, this was required to be done with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\!snippet\!\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.&amp;nbsp;
+
+h3. Parsing Order
+
+If you call an uncached Snippet, it will be executed last in the parsing order.
+
+If you have cached placeholders below that, they will be evaluated before that Snippet is executed - meaning they&#39;ll get the last value that was stored in the cache by that Snippet previously (or empty, if not set yet).
+
+If you want to call a Snippet uncached that sets placeholders, you need to make sure the placeholders are set to uncached as well:
+
+{code}
+[[!Profile]]
+Hello [[!+username]],
+{code}
+
+
+{scrollbar}";}i:11;a:3:{s:2:"id";s:8:"35094756";s:3:"ver";s:1:"1";s:4:"code";s:4376:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || Revolution (New) ||
+| Templates | no tag representation | no tag representation |
+| Template Variables | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| Chunks | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| Snippets | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| Plugins | no tag representation | no tag representation |
+| Modules | no tag representation | does not exist in Revolution |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| System Settings | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| Language | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In 096, this was required to be done with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\[\!snippet\]\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.&amp;nbsp;
+
+h3. Parsing Order
+
+If you call an uncached Snippet, it will be executed last in the parsing order.
+
+If you have cached placeholders below that, they will be evaluated before that Snippet is executed - meaning they&#39;ll get the last value that was stored in the cache by that Snippet previously (or empty, if not set yet).
+
+If you want to call a Snippet uncached that sets placeholders, you need to make sure the placeholders are set to uncached as well:
+
+{code}
+[[!Profile]]
+Hello [[!+username]],
+{code}
+
+
+{scrollbar}";}i:12;a:3:{s:2:"id";s:8:"33227072";s:3:"ver";s:1:"1";s:4:"code";s:3868:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || Revolution (New) ||
+| Templates | no tag representation | no tag representation |
+| Template Variables | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| Chunks | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| Snippets | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| Plugins | no tag representation | no tag representation |
+| Modules | no tag representation | does not exist in Revolution |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| System Settings | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| Language | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In 096, this was required to be done with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\[\!snippet\]\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.&amp;nbsp;
+
+{scrollbar}";}i:13;a:3:{s:2:"id";s:8:"33226844";s:3:"ver";s:1:"1";s:4:"code";s:5279:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || Revolution (New) ||
+| Templates | no tag representation | no tag representation |
+| Template Variables | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| Chunks | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| Snippets | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| Plugins | no tag representation | no tag representation |
+| Modules | no tag representation | does not exist in Revolution |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| System Settings | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| Language | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h2. Default Template Variable Tags
+
+In MODx Revolution, each page will always have the following variables that you can use when constructing your templates:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the ID of the page. | _Often used in conjunction with the \[\[\~link\]\] syntax, e.g._ {{&lt;a href=&quot;\[\[\~\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the long title | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*description\]\]* | the description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the introductory text (a.k.a. the summary). | _Often used by Snippets to summarize posts, e.g._ _[ADDON:Ditto]_ {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any) | _Often used in conjunction with the \[\[\~link\]\] syntax, e.g._ {{&lt;a href=&quot;\[\[\~\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the title used when this page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In 096, this was required to be done with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\[\!snippet\]\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.&amp;nbsp;
+
+{scrollbar}";}i:14;a:3:{s:2:"id";s:8:"33226842";s:3:"ver";s:1:"1";s:4:"code";s:5275:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || Revolution (New) ||
+| Templates | no tag representation | no tag representation |
+| Template Variables | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| Chunks | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| Snippets | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| Plugins | no tag representation | no tag representation |
+| Modules | no tag representation | does not exist in Revolution |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| System Settings | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| Language | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h2. Default Template Variable Tags
+
+In MODx Revolution, each page will always have the following variables that you can use when constructing your templates:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the ID of the page. | _Often used in conjunction with the \[\[~link\]\] syntax, e.g._ {{&lt;a href=&quot;\[\[~\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the long title | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*description\]\]* | the description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the introductory text (a.k.a. the summary). | _Often used by Snippets to summarize posts, e.g._ _[ADDON:Ditto]_ {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any) | _Often used in conjunction with the \[\[~link\]\] syntax, e.g._ {{&lt;a href=&quot;\[\[~\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the title used when this page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In 096, this was required to be done with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\[\!snippet\]\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.&amp;nbsp;
+
+{scrollbar}";}i:15;a:3:{s:2:"id";s:8:"33226840";s:3:"ver";s:1:"1";s:4:"code";s:5228:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+|| *{_}Content Elements{_}* || Evolution (Old) || Revolution (New) ||
+| Templates | no tag representation | no tag representation |
+| Template Variables | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| Chunks | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| Snippets | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| Plugins | no tag representation | no tag representation |
+| Modules | no tag representation | does not exist in Revolution |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| System Settings | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| Language | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h2. Default Template Variable Tags
+
+In MODx Revolution, each page will always have the following variables that you can use when constructing your templates:
+
+|| Tag || Description || Example Usage||
+|*\[\[\*id\]\]*|the ID of the page.|_Often used in conjunction with the \[\[\~link\]\] syntax, e.g._ {{&lt;a href=&quot;\[\[\~\[\[\*id\]\]\]\]&quot;&gt;Bookmark this page!&lt;/a&gt;}}|
+|*\[\[\*pagetitle\]\]*|the title of the page.|{{&lt;title&gt;\[\[\*pagetitle\]\]&lt;/title&gt;}}|
+|*\[\[\*longtitle\]\]*|the long title|{{&lt;h1&gt;\[\[\*longtitle\]\]&lt;/h1&gt;}}|
+|*\[\[\*description\]\]*|the description|{{&lt;meta name=&quot;description&quot; content=&quot;\[\[\*description\]\]&quot;/&gt;}}|
+|*\[\[\*introtext\]\]*|the introductory text (a.k.a. the summary).|_Often used by Snippets to summarize posts, e.g. [Ditto]_ {{&lt;div id=&quot;summary&quot;&gt;\[\[\*introtext\]\]&lt;/div&gt;}}|
+|*\[\[\*parent\]\]*|the ID of the parent page (if any)|_Often used in conjunction with the \[\[\~link\]\] syntax, e.g._ {{&lt;a href=&quot;\[\[\~\[\[\*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}}|
+|*\[\[\*menutitle\]\]*|the title used when this page appears in menus.|_Most frequently used by Snippets such as [Wayfinder] when dynamically constructing menus_|
+|*\[\[\*content\]\]*|the content of the page.|{{&lt;body&gt;\[\[\*content\]\]&lt;/body&gt;}}|
+  
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*\!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, \*=resource field/tv, \+=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In 096, this was required to be done with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\[\!snippet\]\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.&amp;nbsp;
+
+{scrollbar}";}i:16;a:3:{s:2:"id";s:8:"33226838";s:3:"ver";s:1:"9";s:4:"code";s:3860:"\\
+
+{toc}
+
+To simplify parsing logic, improve parsing performance and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+| *{_}Content Elements{_}* | Evolution (Old) | Revolution (New) |
+| Templates | no tag representation | no tag representation |
+| Template Variables | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| Chunks | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| Snippets | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| Plugins | no tag representation | no tag representation |
+| Modules | no tag representation | does not exist in Revolution |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| System Settings | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| Language | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, *=resource field/tv, +=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In 096, this was required to be done with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\[\!snippet\]\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.&amp;nbsp;
+
+{scrollbar}";}i:17;a:3:{s:2:"id";s:8:"33226763";s:3:"ver";s:1:"8";s:4:"code";s:3861:"\\
+
+To simplify parsing logic, improve parsing performance     and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set     of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+| *{_}Content Elements{_}* | Evolution (Old) | Revolution (New) |
+| Templates | no tag representation | no tag representation |
+| Template Variables | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| Chunks | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| Snippets | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| Plugins | no tag representation | no tag representation |
+| Modules | no tag representation | does not exist in Revolution |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| System Settings | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| Language | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h2. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, *=resource field/tv, +=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In 096, this was required to be done with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+h2. Caching
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\[\!snippet\]\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.&amp;nbsp;
+
+{scrollbar}";}i:18;a:3:{s:2:"id";s:8:"33226762";s:3:"ver";s:1:"7";s:4:"code";s:3889:"\\
+
+To simplify parsing logic, improve parsing performance     and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set     of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+| *{_}Content Elements{_}* | Evolution (Old) | Revolution (New) |
+| Templates | no tag representation | no tag representation |
+| Template Variables | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| Chunks | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| Snippets | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| Plugins | no tag representation | no tag representation |
+| Modules | no tag representation | does not exist in Revolution |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| System Settings | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| Language | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h2. {color:#000000}{*}Caching{*}{color}
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\[\!snippet\]\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.&amp;nbsp;
+
+h3. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, *=resource field/tv, +=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+{code}
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In 096, this was required to be done with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+{scrollbar}";}i:19;a:3:{s:2:"id";s:8:"33226761";s:3:"ver";s:1:"6";s:4:"code";s:3882:"\\
+
+To simplify parsing logic, improve parsing performance     and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set     of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+| *{_}Content Elements{_}* | Evolution (Old) | Revolution (New) |
+| Templates | no tag representation | no tag representation |
+| Template Variables | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| Chunks | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| Snippets | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| Plugins | no tag representation | no tag representation |
+| Modules | no tag representation | does not exist in Revolution |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| System Settings | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| Language | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h2. {color:#000000}{*}Caching{*}{color}
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\[\!snippet\]\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.&amp;nbsp;
+
+h3. Structure of a Tag
+
+A tag can contain many sub-parts within it. Below is illustrated on multiple lines a tag broken down into each part and explained:
+
+*\[\[* _(opening tags)_
+*!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, *=resource field/tv, +=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+Note that tags can occur either on one line, or spread out across many lines. Both of these are acceptable:
+
+{code}
+[[!getResources? &amp;parents=`123` &amp;limit=`5`]]
+
+[[!getResources?
+  &amp;parents=`123`
+  &amp;limit=`5`
+]]
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In 096, this was required to be done with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+{scrollbar}";}i:20;a:3:{s:2:"id";s:8:"33226760";s:3:"ver";s:1:"5";s:4:"code";s:3558:"\\
+
+To simplify parsing logic, improve parsing performance     and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set     of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+| *{_}Content Elements{_}* | Evolution (Old) | Revolution (New) |
+| Templates | no tag representation | no tag representation |
+| Template Variables | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| Chunks | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| Snippets | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| Plugins | no tag representation | no tag representation |
+| Modules | no tag representation | does not exist in Revolution |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| System Settings | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| Language | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h2. {color:#000000}{*}Caching{*}{color}
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\[\!snippet\]\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.&amp;nbsp;
+
+h3. Structure of a Tag
+
+The basic structure of a tag is so:
+
+*\[\[* _(opening tags)_
+*!* _(optional non-cacheable flag)_
+*elementToken* _(optional token identifying the element type if it&#39;s not a snippet, $=chunk, *=resource field/tv, +=placeholder, etc.)_
+*elementName*
+*@propertyset* _(optional PropertySet identifier)_
+*:filterName=`modifier`*:... _(optional one or more output filters)_
+*?* _(optional; indicates beginning of property string)_
+*&amp;propertyName=`propertyValue`* &amp;... _(optional; any additional properties separated by &amp;)_
+*\]\]* _(closing tags)_
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In 096, this was required to be done with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+{scrollbar}";}i:21;a:3:{s:2:"id";s:8:"33226758";s:3:"ver";s:1:"4";s:4:"code";s:3536:"\\
+
+To simplify parsing logic, improve parsing performance     and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set     of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+| *{_}Content Elements{_}* | Evolution (Old) | Revolution (New) |
+| Templates | no tag representation | no tag representation |
+| Template Variables | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| Chunks | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| Snippets | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| Plugins | no tag representation | no tag representation |
+| Modules | no tag representation | does not exist in Revolution |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| System Settings | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| Language | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h2. {color:#000000}{*}Caching{*}{color}
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\[\!snippet\]\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.&amp;nbsp;
+
+h3. Structure of a Tag
+
+The basic structure of a tag is so:
+
+\[\[ (opening tags)
+*!* (optional non-cacheable flag)
+*elementToken* (optional token identifying the element type if it&#39;s not a snippet, $=chunk, *=resource field/tv, +=placeholder, etc.)
+*elementName*
+*@propertyset* (optional PropertySet identifier)
+*:filterName=`modifier`*:... (optional one or more output filters)
+? (optional; indicates beginning of property string)
+*&amp;propertyName=`propertyValue`* &amp;... (optional; any additional properties separated by &amp;)
+\]\] (closing tags)
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In 096, this was required to be done with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+{scrollbar}";}i:22;a:3:{s:2:"id";s:8:"33226756";s:3:"ver";s:1:"3";s:4:"code";s:2977:"\\
+
+To simplify parsing logic, improve parsing performance     and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set     of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+| *{_}Content Elements{_}* | Evolution (Old) | Revolution (New) |
+| Templates | no tag representation | no tag representation |
+| Template Variables | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| Chunks | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| Snippets | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| Plugins | no tag representation | no tag representation |
+| Modules | no tag representation | does not exist in Revolution |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| System Settings | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| Language | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h2. {color:#000000}{*}Caching{*}{color}
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\[\!snippet\]\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!+placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.&amp;nbsp;
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In 096, this was required to be done with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+{scrollbar}";}i:23;a:3:{s:2:"id";s:8:"25985027";s:3:"ver";s:1:"2";s:4:"code";s:2978:"\\
+
+To simplify parsing logic, improve parsing performance     and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set     of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+| *{_}Content Elements{_}* | Evolution (Old) | Revolution (New) |
+| Templates | no tag representation | no tag representation |
+| Template Variables | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| Chunks | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| Snippets | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| Plugins | no tag representation | no tag representation |
+| Modules | no tag representation | does not exist in Revolution |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| System Settings | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| Language | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h2. {color:#000000}{*}Caching{*}{color}
+
+In Evolution, Snippets that need to be processed with each request should be on an uncached page or the Snippet itself should be called uncached: \[\[\!snippet\]\]
+
+In Revolution, any tag can be called uncached by inserting an exclamation point immediately after the double-bracket: \[\[\!snippet\]\],&amp;nbsp;\[\[\!$chunk\]\],&amp;nbsp;\[\[\!++placeholder\]\], \[\[\!*template_var\]\],&amp;nbsp;etc.&amp;nbsp;
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In 096, this was required to be done with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+{scrollbar}";}i:24;a:3:{s:2:"id";s:8:"25985026";s:3:"ver";s:1:"1";s:4:"code";s:2524:"\\
+
+To simplify parsing logic, improve parsing performance     and avoid confusion with many new adopters, all tags are now of a single format, differentiated by a token or a set     of tokens which appear before a string which identifies the Content Element or Content Tag to be processed; e.g. \[\[_tokenIdentifier_\]\].
+
+h2. Tag Format Changes for Content Elements and Content Tags
+
+| *{_}Content Elements{_}* | Evolution (Old) | Revolution (New) |
+| Templates | no tag representation | no tag representation |
+| Template Variables | \[\*_templatevar_\*\] | \[\[\*_templatevar_\]\] |
+| Chunks | \{\{_chunk_ \}\} \\ | \[\[$_chunk_\]\] |
+| Snippets | \[\[_snippet_\]\] | \[\[_snippet_\]\] |
+| Plugins | no tag representation | no tag representation |
+| Modules | no tag representation | does not exist in Revolution |
+| *{_}Content Tags{_}* | | |
+| Placeholders | \[\+_placeholder_\+\] \\ | \[\[\+_placeholder_\]\] |
+| Links | \[\~_link_\~\] | \[\[\~_link_\]\] |
+| System Settings | \[(_system_setting_)\] | \[\[+\+_system_setting_\]\] |
+| Language | no tag representation | \[\[%_language_string_key_\]\] |
+\\
+
+Adopting this simplified format allows the new parser to be fully-recursive, following a source-order mechanism that does not depend on regular expressions.
+
+Previously, each tag set was parsed independently in a specific order, one level at a time, with any embedded tags delayed until the next pass.&amp;nbsp; Now tags are parsed as they are encountered regardless of the element types they represent, and embedded tags are parsed before the outer tag to allow much more complex tags to be composed.&amp;nbsp; Combined with the ability to use the previously reserved ? &amp; and = symbols in tag strings (when escaped by the infamous backtick, e.g. {{&amp;param=`?=&amp;is ok now, wow\!?&amp;=`}}), MODx Content Tags offer a powerful new set of capabilities for mashing up your content.
+
+h2. Properties
+
+All tags - no longer just Snippets - now accept properties, as well, that can be used. For example, let&#39;s say we had a Chunk named &#39;Hello&#39; with the content:
+{code}
+Hello [[+name]]!
+{code}
+You&#39;ll note the new placeholder syntax. So, we&#39;ll definitely want to parse that Chunk&#39;s property. In 096, this was required to be done with a Snippet; no longer. You can simply pass a property for the Chunk:
+{code}
+[[$Hello?name=`George`]]
+{code}
+This would output:
+{code}
+Hello George!
+{code}
+The syntax for properties follows the same syntax as 096/Evolution snippet properties.
+
+{scrollbar}";}}}

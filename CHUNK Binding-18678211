@@ -1,0 +1,49 @@
+a:5:{s:2:"id";s:8:"18678211";s:4:"info";a:4:{s:6:"Title:";s:13:"CHUNK Binding";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:28:"[revolution20:CHUNK Binding]";}s:6:"parent";s:8:"18678208";s:6:"source";s:556:"\\
+
+h2. What is the @CHUNK Binding?
+
+The @CHUNK Binding returns the parsed content of any specified Chunk.
+
+h2. Syntax
+
+{code}@CHUNK chunk_name{code}
+
+Binds the variable to a document. Where chunk_name is the name of the chunk. The returned value is a string containing the content of the chunk.
+
+{info}This binding is very similar to the [@RESOURCE binding|RESOURCE Binding] with the exception that it will bind the TV to a [Chunk|Chunks].{info}
+
+h2. Usage
+
+{code}@CHUNK MycontactForm{code}
+
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678211";s:3:"ver";s:1:"1";s:4:"code";s:556:"\\
+
+h2. What is the @CHUNK Binding?
+
+The @CHUNK Binding returns the parsed content of any specified Chunk.
+
+h2. Syntax
+
+{code}@CHUNK chunk_name{code}
+
+Binds the variable to a document. Where chunk_name is the name of the chunk. The returned value is a string containing the content of the chunk.
+
+{info}This binding is very similar to the [@RESOURCE binding|RESOURCE Binding] with the exception that it will bind the TV to a [Chunk|Chunks].{info}
+
+h2. Usage
+
+{code}@CHUNK MycontactForm{code}
+
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";}}}

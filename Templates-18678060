@@ -1,0 +1,777 @@
+a:5:{s:2:"id";s:8:"18678060";s:4:"info";a:4:{s:6:"Title:";s:9:"Templates";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:10:"AMDbuilder";s:12:"Wiki Markup:";s:24:"[revolution20:Templates]";}s:6:"parent";s:8:"18678089";s:6:"source";s:4907:"\\
+
+h2. What are Templates?
+
+Templates typically contain the HTML markup tags that determine the layout and appearance of your site. When a document is requested, MODx loads the document and its template, and MODx finds all the special placeholders in the template and replaces them with the corresponding values from the document before sending the finished page off to the user&#39;s browser.
+
+Think of a Template like a house. Your [Resource&#39;s|Resources] content, then, is a person. A person can have many different houses, but only live in one house at a time.
+
+!template-info1.jpg!
+
+[Resources] can only use one Template at a time, however, a Resource can switch Templates at any time, just as a person can move from house to house at any time. The Template, just like a house, also changes the main way a page is displayed. A Template usually contains the header and footer of a page - and/or a sidebar, navigation bar, etc.
+
+h2. Usage
+
+To create a Template \-\- Expand the &quot;Elements&quot; part of the tree and right click on Templates. Select &quot;Create a New Template&quot; then paste your HTML into the &quot;Template Code&quot; textarea; you can copy and paste the text below to get started with a very simple template:
+
+{code}
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;[[*pagetitle]]&lt;/title&gt;
+    &lt;meta name=&quot;description&quot; content=&quot;[[*description]]&quot;/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;[[*longtitle]]&lt;/h1&gt;
+
+Page ID: [[*id]]&lt;br/&gt;
+IntroText (Summary): [[*introtext]]&lt;br/&gt;
+MenuTitle: [[*menutitle]]
+
+&lt;hr/&gt;
+
+[[*content]]
+
+&lt;/body&gt;
+&lt;/html&gt;
+{code}
+
+Note the important \[\[*content\]\] tag; this tag tells MODx where to put the Resource&#39;s content.
+
+{note}MODX defaults to storing templates in its database, if you are using a version prior to 2.2.x this is your only option.&amp;nbsp; In MODX 2.2.x and newer you have the option of storing templates as static files using Media Sources.
+{note}
+
+Remember that simply _creating_ a template doesn&#39;t mean that it is automatically put to use: you have to edit each [Resources] and specify which Template it uses.  This is different from some content management systems where each template has one or many pages. Each MODx page has a single Template that it uses to format output.
+
+After you&#39;ve created one or more Templates, you can edit any Resource and choose a Template for it by selecting one from the &quot;Uses Template&quot; drop-down list.
+
+Templates can contain any tags, including [Template Variables], [Chunks], [Snippets], and others.
+
+
+h3. Using Resource Fields in the Template
+
+As you noticed from our Template sample code above, the fields of a Resource can be referenced using the \[\[*fieldName\]\] syntax. A list of available Resource Fields can be [found here|Resources#Resource-Fields]. For example, if we wanted to show the current Resource&#39;s pagetitle in our &lt;title&gt; tag, we would simply do this:
+
+{code}&lt;title&gt;[[*pagetitle]]&lt;/title&gt;{code}
+
+You can also place the content of the current Resource using the &quot;content&quot; tag:
+
+{code}&lt;body&gt;
+[[*content]]
+&lt;/body&gt;{code}
+
+These tags are like normal MODx tags, in that they can have [output filters|Input and Output Filters (Output Modifiers)] applied to them. For example, say we wanted to display the &quot;introtext&quot; field on a right navbar, but strip any HTML tags from it, and only display the first 400 characters - and if longer, add an ellipsis (...):
+
+{code}&lt;div id=&quot;rightbar&quot;&gt;
+[[*introtext:stripTags:ellipsis=`400`]]
+&lt;/div&gt;{code}
+
+h3. Template Variables in Templates
+
+If Templates are like a house, think of [Template Variables] (TVs) like rooms in that house. You can have an infinite number of TVs in a Template; just think of it like adding new rooms to the house.
+
+Template Variables allow you to have custom fields for any Resource with the specified Template. Say you want a &#39;photo&#39; field on your Resources in your &quot;BiographyPages&quot; Template. Simple - just create a TV, call it &quot;bioPhoto&quot;, give it an input and output type of &quot;image&quot;, and assign it to your &quot;BiographyPages&quot; Template. You&#39;ll then see the TV in any Resource that&#39;s using that Template.
+
+You can then reference your &quot;bioPhoto&quot; TV in your content with the same tag syntax as a Resource Field:
+
+{code}&lt;div class=&quot;photo&quot;&gt;
+[[*bioPhoto]]
+&lt;/div&gt;{code}
+
+Again, it&#39;s important to note that [Template Variables] must be explicitly assigned to the Template to be used. Once assigned to the Template, a TV&#39;s value for that Resource will be able to be edited when editing the Resource. If you&#39;re not seeing a newly created TV in your Resources, make sure you&#39;ve assigned that TV to the Template.
+
+
+h2. See Also
+
+* [Tag Syntax]
+* [Template Variables]
+
+{scrollbar}";s:8:"versions";a:8:{i:0;a:3:{s:2:"id";s:8:"18678060";s:3:"ver";s:1:"8";s:4:"code";s:4907:"\\
+
+h2. What are Templates?
+
+Templates typically contain the HTML markup tags that determine the layout and appearance of your site. When a document is requested, MODx loads the document and its template, and MODx finds all the special placeholders in the template and replaces them with the corresponding values from the document before sending the finished page off to the user&#39;s browser.
+
+Think of a Template like a house. Your [Resource&#39;s|Resources] content, then, is a person. A person can have many different houses, but only live in one house at a time.
+
+!template-info1.jpg!
+
+[Resources] can only use one Template at a time, however, a Resource can switch Templates at any time, just as a person can move from house to house at any time. The Template, just like a house, also changes the main way a page is displayed. A Template usually contains the header and footer of a page - and/or a sidebar, navigation bar, etc.
+
+h2. Usage
+
+To create a Template \-\- Expand the &quot;Elements&quot; part of the tree and right click on Templates. Select &quot;Create a New Template&quot; then paste your HTML into the &quot;Template Code&quot; textarea; you can copy and paste the text below to get started with a very simple template:
+
+{code}
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;[[*pagetitle]]&lt;/title&gt;
+    &lt;meta name=&quot;description&quot; content=&quot;[[*description]]&quot;/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;[[*longtitle]]&lt;/h1&gt;
+
+Page ID: [[*id]]&lt;br/&gt;
+IntroText (Summary): [[*introtext]]&lt;br/&gt;
+MenuTitle: [[*menutitle]]
+
+&lt;hr/&gt;
+
+[[*content]]
+
+&lt;/body&gt;
+&lt;/html&gt;
+{code}
+
+Note the important \[\[*content\]\] tag; this tag tells MODx where to put the Resource&#39;s content.
+
+{note}MODX defaults to storing templates in its database, if you are using a version prior to 2.2.x this is your only option.&amp;nbsp; In MODX 2.2.x and newer you have the option of storing templates as static files using Media Sources.
+{note}
+
+Remember that simply _creating_ a template doesn&#39;t mean that it is automatically put to use: you have to edit each [Resources] and specify which Template it uses.  This is different from some content management systems where each template has one or many pages. Each MODx page has a single Template that it uses to format output.
+
+After you&#39;ve created one or more Templates, you can edit any Resource and choose a Template for it by selecting one from the &quot;Uses Template&quot; drop-down list.
+
+Templates can contain any tags, including [Template Variables], [Chunks], [Snippets], and others.
+
+
+h3. Using Resource Fields in the Template
+
+As you noticed from our Template sample code above, the fields of a Resource can be referenced using the \[\[*fieldName\]\] syntax. A list of available Resource Fields can be [found here|Resources#Resource-Fields]. For example, if we wanted to show the current Resource&#39;s pagetitle in our &lt;title&gt; tag, we would simply do this:
+
+{code}&lt;title&gt;[[*pagetitle]]&lt;/title&gt;{code}
+
+You can also place the content of the current Resource using the &quot;content&quot; tag:
+
+{code}&lt;body&gt;
+[[*content]]
+&lt;/body&gt;{code}
+
+These tags are like normal MODx tags, in that they can have [output filters|Input and Output Filters (Output Modifiers)] applied to them. For example, say we wanted to display the &quot;introtext&quot; field on a right navbar, but strip any HTML tags from it, and only display the first 400 characters - and if longer, add an ellipsis (...):
+
+{code}&lt;div id=&quot;rightbar&quot;&gt;
+[[*introtext:stripTags:ellipsis=`400`]]
+&lt;/div&gt;{code}
+
+h3. Template Variables in Templates
+
+If Templates are like a house, think of [Template Variables] (TVs) like rooms in that house. You can have an infinite number of TVs in a Template; just think of it like adding new rooms to the house.
+
+Template Variables allow you to have custom fields for any Resource with the specified Template. Say you want a &#39;photo&#39; field on your Resources in your &quot;BiographyPages&quot; Template. Simple - just create a TV, call it &quot;bioPhoto&quot;, give it an input and output type of &quot;image&quot;, and assign it to your &quot;BiographyPages&quot; Template. You&#39;ll then see the TV in any Resource that&#39;s using that Template.
+
+You can then reference your &quot;bioPhoto&quot; TV in your content with the same tag syntax as a Resource Field:
+
+{code}&lt;div class=&quot;photo&quot;&gt;
+[[*bioPhoto]]
+&lt;/div&gt;{code}
+
+Again, it&#39;s important to note that [Template Variables] must be explicitly assigned to the Template to be used. Once assigned to the Template, a TV&#39;s value for that Resource will be able to be edited when editing the Resource. If you&#39;re not seeing a newly created TV in your Resources, make sure you&#39;ve assigned that TV to the Template.
+
+
+h2. See Also
+
+* [Tag Syntax]
+* [Template Variables]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"37683578";s:3:"ver";s:1:"7";s:4:"code";s:4838:"\\
+
+h2. What are Templates?
+
+Templates typically contain the HTML markup tags that determine the layout and appearance of your site. When a document is requested, MODx loads the document and its template, and MODx finds all the special placeholders in the template and replaces them with the corresponding values from the document before sending the finished page off to the user&#39;s browser.
+
+Think of a Template like a house. Your [Resource&#39;s|Resources] content, then, is a person. A person can have many different houses, but only live in one house at a time.
+
+!template-info1.jpg!
+
+[Resources] can only use one Template at a time, however, a Resource can switch Templates at any time, just as a person can move from house to house at any time. The Template, just like a house, also changes the main way a page is displayed. A Template usually contains the header and footer of a page - and/or a sidebar, navigation bar, etc.
+
+h2. Usage
+
+To create a Template \-\- Expand the &quot;Elements&quot; part of the tree and right click on Templates. Select &quot;Create a New Template&quot; then paste your HTML into the &quot;Template Code&quot; textarea; you can copy and paste the text below to get started with a very simple template:  
+ 
+{code}
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;[[*pagetitle]]&lt;/title&gt;
+    &lt;meta name=&quot;description&quot; content=&quot;[[*description]]&quot;/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;[[*longtitle]]&lt;/h1&gt;
+
+Page ID: [[*id]]&lt;br/&gt;
+IntroText (Summary): [[*introtext]]&lt;br/&gt;
+MenuTitle: [[*menutitle]]
+
+&lt;hr/&gt;
+
+[[*content]]
+
+&lt;/body&gt;
+&lt;/html&gt;
+{code}
+
+Note the important \[\[*content\]\] tag; this tag tells MODx where to put the Resource&#39;s content.
+
+{note}MODx stores template data in its database; you cannot create a template by uploading a file to the filesystem, you *must* create a template using the manager.{note}
+
+Remember that simply _creating_ a template doesn&#39;t mean that it is automatically put to use: you have to edit each [Resources] and specify which Template it uses.  This is different from some content management systems where each template has one or many pages. Each MODx page has a single Template that it uses to format output.
+
+After you&#39;ve created one or more Templates, you can edit any Resource and choose a Template for it by selecting one from the &quot;Uses Template&quot; drop-down list.  
+
+Templates can contain any tags, including [Template Variables], [Chunks], [Snippets], and others.
+
+
+h3. Using Resource Fields in the Template
+
+As you noticed from our Template sample code above, the fields of a Resource can be referenced using the \[\[*fieldName\]\] syntax. A list of available Resource Fields can be [found here|Resources#Resource-Fields]. For example, if we wanted to show the current Resource&#39;s pagetitle in our &lt;title&gt; tag, we would simply do this:
+
+{code}&lt;title&gt;[[*pagetitle]]&lt;/title&gt;{code}
+
+You can also place the content of the current Resource using the &quot;content&quot; tag:
+
+{code}&lt;body&gt;
+[[*content]]
+&lt;/body&gt;{code}
+
+These tags are like normal MODx tags, in that they can have [output filters|Input and Output Filters (Output Modifiers)] applied to them. For example, say we wanted to display the &quot;introtext&quot; field on a right navbar, but strip any HTML tags from it, and only display the first 400 characters - and if longer, add an ellipsis (...):
+
+{code}&lt;div id=&quot;rightbar&quot;&gt;
+[[*introtext:stripTags:ellipsis=`400`]]
+&lt;/div&gt;{code}
+
+h3. Template Variables in Templates
+
+If Templates are like a house, think of [Template Variables] (TVs) like rooms in that house. You can have an infinite number of TVs in a Template; just think of it like adding new rooms to the house.
+
+Template Variables allow you to have custom fields for any Resource with the specified Template. Say you want a &#39;photo&#39; field on your Resources in your &quot;BiographyPages&quot; Template. Simple - just create a TV, call it &quot;bioPhoto&quot;, give it an input and output type of &quot;image&quot;, and assign it to your &quot;BiographyPages&quot; Template. You&#39;ll then see the TV in any Resource that&#39;s using that Template.
+
+You can then reference your &quot;bioPhoto&quot; TV in your content with the same tag syntax as a Resource Field:
+
+{code}&lt;div class=&quot;photo&quot;&gt;
+[[*bioPhoto]]
+&lt;/div&gt;{code}
+
+Again, it&#39;s important to note that [Template Variables] must be explicitly assigned to the Template to be used. Once assigned to the Template, a TV&#39;s value for that Resource will be able to be edited when editing the Resource. If you&#39;re not seeing a newly created TV in your Resources, make sure you&#39;ve assigned that TV to the Template.
+
+
+h2. See Also
+
+* [Tag Syntax]
+* [Template Variables]
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35586531";s:3:"ver";s:1:"6";s:4:"code";s:4831:"\\
+
+h2. What are Templates?
+
+Templates typically contain the HTML markup tags that determine the layout and appearance of your site. When a document is requested, MODx loads the document and its template, and MODx finds all the special placeholders in the template and replaces them with the corresponding values from the document before sending the finished page off to the user&#39;s browser.
+
+Think of a Template like a house. Your [Resource&#39;s|Resources] content, then, is a person. A person can have many different houses, but only live in one house at a time.
+
+!template-info1.jpg!
+
+[Resources] can only use one Template at a time - however, it can switch Templates at any time, just as a person can move from house to house at any time. The Template, just like a house, also changes the main way a page is displayed. A Template usually contains the header and footer of a page - and/or a sidebar, navigation bar, etc.
+
+h2. Usage
+
+To create a Template \-\- Expand the &quot;Elements&quot; part of the tree and right click on Templates. Select &quot;Create a New Template&quot; then paste your HTML into the &quot;Template Code&quot; textarea; you can copy and paste the text below to get started with a very simple template:  
+ 
+{code}
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;[[*pagetitle]]&lt;/title&gt;
+    &lt;meta name=&quot;description&quot; content=&quot;[[*description]]&quot;/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;[[*longtitle]]&lt;/h1&gt;
+
+Page ID: [[*id]]&lt;br/&gt;
+IntroText (Summary): [[*introtext]]&lt;br/&gt;
+MenuTitle: [[*menutitle]]
+
+&lt;hr/&gt;
+
+[[*content]]
+
+&lt;/body&gt;
+&lt;/html&gt;
+{code}
+
+Note the important \[\[*content\]\] tag; this tag tells MODx where to put the Resource&#39;s content.
+
+{note}MODx stores template data in its database; you cannot create a template by uploading a file to the filesystem, you *must* create a template using the manager.{note}
+
+Remember that simply _creating_ a template doesn&#39;t mean that it is automatically put to use: you have to edit each [Resources] and specify which Template it uses.  This is different from some content management systems where each template has one or many pages. Each MODx page has a single Template that it uses to format output.
+
+After you&#39;ve created one or more Templates, you can edit any Resource and choose a Template for it by selecting one from the &quot;Uses Template&quot; drop-down list.  
+
+Templates can contain any tags, including [Template Variables], [Chunks], [Snippets], and others.
+
+
+h3. Using Resource Fields in the Template
+
+As you noticed from our Template sample code above, the fields of a Resource can be referenced using the \[\[*fieldName\]\] syntax. A list of available Resource Fields can be [found here|Resources#Resource-Fields]. For example, if we wanted to show the current Resource&#39;s pagetitle in our &lt;title&gt; tag, we would simply do this:
+
+{code}&lt;title&gt;[[*pagetitle]]&lt;/title&gt;{code}
+
+You can also place the content of the current Resource using the &quot;content&quot; tag:
+
+{code}&lt;body&gt;
+[[*content]]
+&lt;/body&gt;{code}
+
+These tags are like normal MODx tags, in that they can have [output filters|Input and Output Filters (Output Modifiers)] applied to them. For example, say we wanted to display the &quot;introtext&quot; field on a right navbar, but strip any HTML tags from it, and only display the first 400 characters - and if longer, add an ellipsis (...):
+
+{code}&lt;div id=&quot;rightbar&quot;&gt;
+[[*introtext:stripTags:ellipsis=`400`]]
+&lt;/div&gt;{code}
+
+h3. Template Variables in Templates
+
+If Templates are like a house, think of [Template Variables] (TVs) like rooms in that house. You can have an infinite number of TVs in a Template; just think of it like adding new rooms to the house.
+
+Template Variables allow you to have custom fields for any Resource with the specified Template. Say you want a &#39;photo&#39; field on your Resources in your &quot;BiographyPages&quot; Template. Simple - just create a TV, call it &quot;bioPhoto&quot;, give it an input and output type of &quot;image&quot;, and assign it to your &quot;BiographyPages&quot; Template. You&#39;ll then see the TV in any Resource that&#39;s using that Template.
+
+You can then reference your &quot;bioPhoto&quot; TV in your content with the same tag syntax as a Resource Field:
+
+{code}&lt;div class=&quot;photo&quot;&gt;
+[[*bioPhoto]]
+&lt;/div&gt;{code}
+
+Again, it&#39;s important to note that [Template Variables] must be explicitly assigned to the Template to be used. Once assigned to the Template, a TV&#39;s value for that Resource will be able to be edited when editing the Resource. If you&#39;re not seeing a newly created TV in your Resources, make sure you&#39;ve assigned that TV to the Template.
+
+
+h2. See Also
+
+* [Tag Syntax]
+* [Template Variables]
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"35586529";s:3:"ver";s:1:"5";s:4:"code";s:4828:"\\
+
+h2. What are Templates?
+
+Templates typically contain the HTML markup tags that determine the layout and appearance of your site. When a document is requested, MODx loads the document and its template, and MODx finds all the special placeholders in the template and replaces them with the corresponding values from the document before sending the finished page off to the user&#39;s browser.
+
+Think of a Template like a house. Your [Resource&#39;s|Resources] content, then, is a person. A person can have many different houses, but only live in one house at a time.
+
+!template-info1.jpg!
+
+A [Resources] can only be using one Template - however, it can switch Templates at any time, just as a person can move from house to house at any time. The Template, just like a house, also changes the main way a page is displayed. A Template usually contains the header and footer of a page - and/or a sidebar, navigation bar, etc.
+
+h2. Usage
+
+To create a Template \-\- Expand the &quot;Elements&quot; part of the tree and right click on Templates. Select &quot;Create a New Template&quot; then paste your HTML into the &quot;Template Code&quot; textarea; you can copy and paste the text below to get started with a very simple template:  
+ 
+{code}
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;[[*pagetitle]]&lt;/title&gt;
+    &lt;meta name=&quot;description&quot; content=&quot;[[*description]]&quot;/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;[[*longtitle]]&lt;/h1&gt;
+
+Page ID: [[*id]]&lt;br/&gt;
+IntroText (Summary): [[*introtext]]&lt;br/&gt;
+MenuTitle: [[*menutitle]]
+
+&lt;hr/&gt;
+
+[[*content]]
+
+&lt;/body&gt;
+&lt;/html&gt;
+{code}
+
+Note the important \[\[*content\]\] tag; this tag tells MODx where to put the Resource&#39;s content.
+
+{note}MODx stores template data in its database; you cannot create a template by uploading a file to the filesystem, you *must* create a template using the manager.{note}
+
+Remember that simply _creating_ a template doesn&#39;t mean that it is automatically put to use: you have to edit each [Resources] and specify which Template it uses.  This is different from some content management systems where each template has one or many pages. Each MODx page has a single Template that it uses to format output.
+
+After you&#39;ve created one or more Templates, you can edit any Resource and choose a Template for it by selecting one from the &quot;Uses Template&quot; drop-down list.  
+
+Templates can contain any tags, including [Template Variables], [Chunks], [Snippets], and others.
+
+
+h3. Using Resource Fields in the Template
+
+As you noticed from our Template sample code above, the fields of a Resource can be referenced using the \[\[*fieldName\]\] syntax. A list of available Resource Fields can be [found here|Resources#Resource-Fields]. For example, if we wanted to show the current Resource&#39;s pagetitle in our &lt;title&gt; tag, we would simply do this:
+
+{code}&lt;title&gt;[[*pagetitle]]&lt;/title&gt;{code}
+
+You can also place the content of the current Resource using the &quot;content&quot; tag:
+
+{code}&lt;body&gt;
+[[*content]]
+&lt;/body&gt;{code}
+
+These tags are like normal MODx tags, in that they can have [output filters|Input and Output Filters (Output Modifiers)] applied to them. For example, say we wanted to display the &quot;introtext&quot; field on a right navbar, but strip any HTML tags from it, and only display the first 400 characters - and if longer, add an ellipsis (...):
+
+{code}&lt;div id=&quot;rightbar&quot;&gt;
+[[*introtext:stripTags:ellipsis=`400`]]
+&lt;/div&gt;{code}
+
+h3. Template Variables in Templates
+
+If Templates are like a house, think of [Template Variables] (TVs) like rooms in that house. You can have an infinite number of TVs in a Template; just think of it like adding new rooms to the house.
+
+Template Variables allow you to have custom fields for any Resource with the specified Template. Say you want a &#39;photo&#39; field on your Resources in your &quot;BiographyPages&quot; Template. Simple - just create a TV, call it &quot;bioPhoto&quot;, give it an input and output type of &quot;image&quot;, and assign it to your &quot;BiographyPages&quot; Template. You&#39;ll then see the TV in any Resource that&#39;s using that Template.
+
+You can then reference your &quot;bioPhoto&quot; TV in your content with the same tag syntax as a Resource Field:
+
+{code}&lt;div class=&quot;photo&quot;&gt;
+[[*bioPhoto]]
+&lt;/div&gt;{code}
+
+Again, it&#39;s important to note that [Template Variables] must be explicitly assigned to the Template to be used. Once assigned to the Template, a TV&#39;s value for that Resource will be able to be edited when editing the Resource. If you&#39;re not seeing a newly created TV in your Resources, make sure you&#39;ve assigned that TV to the Template.
+
+
+h2. See Also
+
+* [Tag Syntax]
+* [Template Variables]
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"35586526";s:3:"ver";s:1:"4";s:4:"code";s:4823:"\\
+
+h2. What are Templates?
+
+Templates typically contain the HTML markup tags that determine the layout and appearance of your site. When a document is requested, MODx loads the document and its template, and MODx finds all the special placeholders in the template and replaces them with the corresponding values from the document before sending the finished page off to the user&#39;s browser.
+
+Think of a Template like a house. Your [Resource&#39;s|Resources] content, then, is a person. A person can live in many different houses, but only one house at a time.
+
+!template-info1.jpg!
+
+A [Resources] can only be using one Template - however, it can switch Templates at any time, just as a person can move from house to house at any time. The Template, just like a house, also changes the main way a page is displayed. A Template usually contains the header and footer of a page - and/or a sidebar, navigation bar, etc.
+
+h2. Usage
+
+To create a Template \-\- Expand the &quot;Elements&quot; part of the tree and right click on Templates. Select &quot;Create a New Template&quot; then paste your HTML into the &quot;Template Code&quot; textarea; you can copy and paste the text below to get started with a very simple template:  
+ 
+{code}
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;[[*pagetitle]]&lt;/title&gt;
+    &lt;meta name=&quot;description&quot; content=&quot;[[*description]]&quot;/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;[[*longtitle]]&lt;/h1&gt;
+
+Page ID: [[*id]]&lt;br/&gt;
+IntroText (Summary): [[*introtext]]&lt;br/&gt;
+MenuTitle: [[*menutitle]]
+
+&lt;hr/&gt;
+
+[[*content]]
+
+&lt;/body&gt;
+&lt;/html&gt;
+{code}
+
+Note the important \[\[*content\]\] tag; this tag tells MODx where to put the Resource&#39;s content.
+
+{note}MODx stores template data in its database; you cannot create a template by uploading a file to the filesystem, you *must* create a template using the manager.{note}
+
+Remember that simply _creating_ a template doesn&#39;t mean that it is automatically put to use: you have to edit each [Resources] and specify which Template it uses.  This is different from some content management systems where each template has one or many pages. Each MODx page has a single Template that it uses to format output.
+
+After you&#39;ve created one or more Templates, you can edit any Resource and choose a Template for it by selecting one from the &quot;Uses Template&quot; drop-down list.  
+
+Templates can contain any tags, including [Template Variables], [Chunks], [Snippets], and others.
+
+
+h3. Using Resource Fields in the Template
+
+As you noticed from our Template sample code above, the fields of a Resource can be referenced using the \[\[*fieldName\]\] syntax. A list of available Resource Fields can be [found here|Resources#Resource-Fields]. For example, if we wanted to show the current Resource&#39;s pagetitle in our &lt;title&gt; tag, we would simply do this:
+
+{code}&lt;title&gt;[[*pagetitle]]&lt;/title&gt;{code}
+
+You can also place the content of the current Resource using the &quot;content&quot; tag:
+
+{code}&lt;body&gt;
+[[*content]]
+&lt;/body&gt;{code}
+
+These tags are like normal MODx tags, in that they can have [output filters|Input and Output Filters (Output Modifiers)] applied to them. For example, say we wanted to display the &quot;introtext&quot; field on a right navbar, but strip any HTML tags from it, and only display the first 400 characters - and if longer, add an ellipsis (...):
+
+{code}&lt;div id=&quot;rightbar&quot;&gt;
+[[*introtext:stripTags:ellipsis=`400`]]
+&lt;/div&gt;{code}
+
+h3. Template Variables in Templates
+
+If Templates are like a house, think of [Template Variables] (TVs) like rooms in that house. You can have an infinite number of TVs in a Template; just think of it like adding new rooms to the house.
+
+Template Variables allow you to have custom fields for any Resource with the specified Template. Say you want a &#39;photo&#39; field on your Resources in your &quot;BiographyPages&quot; Template. Simple - just create a TV, call it &quot;bioPhoto&quot;, give it an input and output type of &quot;image&quot;, and assign it to your &quot;BiographyPages&quot; Template. You&#39;ll then see the TV in any Resource that&#39;s using that Template.
+
+You can then reference your &quot;bioPhoto&quot; TV in your content with the same tag syntax as a Resource Field:
+
+{code}&lt;div class=&quot;photo&quot;&gt;
+[[*bioPhoto]]
+&lt;/div&gt;{code}
+
+Again, it&#39;s important to note that [Template Variables] must be explicitly assigned to the Template to be used. Once assigned to the Template, a TV&#39;s value for that Resource will be able to be edited when editing the Resource. If you&#39;re not seeing a newly created TV in your Resources, make sure you&#39;ve assigned that TV to the Template.
+
+
+h2. See Also
+
+* [Tag Syntax]
+* [Template Variables]
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"35586525";s:3:"ver";s:1:"3";s:4:"code";s:4813:"\\
+
+h2. What are Templates?
+
+Templates typically contain the HTML markup tags that determine the layout and appearance of your site. When a document is requested, MODx loads the document and its template, and MODx finds all the special placeholders in the template and replaces them with the corresponding values from the document before sending the finished page off to the user&#39;s browser.
+
+Think of a Template like a house. Your [Resource&#39;s|Resources] content, then, is a person. A person can live in many different houses, but only one house.
+
+!template-info1.jpg!
+
+A [Resources] can only be using one Template - however, it can switch Templates at any time, just as a person can move from house to house at any time. The Template, just like a house, also changes the main way a page is displayed. A Template usually contains the header and footer of a page - and/or a sidebar, navigation bar, etc.
+
+h2. Usage
+
+To create a Template \-\- Expand the &quot;Elements&quot; part of the tree and right click on Templates. Select &quot;Create a New Template&quot; then paste your HTML into the &quot;Template Code&quot; textarea; you can copy and paste the text below to get started with a very simple template:  
+ 
+{code}
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;[[*pagetitle]]&lt;/title&gt;
+    &lt;meta name=&quot;description&quot; content=&quot;[[*description]]&quot;/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;[[*longtitle]]&lt;/h1&gt;
+
+Page ID: [[*id]]&lt;br/&gt;
+IntroText (Summary): [[*introtext]]&lt;br/&gt;
+MenuTitle: [[*menutitle]]
+
+&lt;hr/&gt;
+
+[[*content]]
+
+&lt;/body&gt;
+&lt;/html&gt;
+{code}
+
+Note the important \[\[*content\]\] tag; this tag tells MODx where to put the Resource&#39;s content.
+
+{note}MODx stores template data in its database; you cannot create a template by uploading a file to the filesystem, you *must* create a template using the manager.{note}
+
+Remember that simply _creating_ a template doesn&#39;t mean that it is automatically put to use: you have to edit each [Resources] and specify which Template it uses.  This is different from some content management systems where each template has one or many pages. Each MODx page has a single Template that it uses to format output.
+
+After you&#39;ve created one or more Templates, you can edit any Resource and choose a Template for it by selecting one from the &quot;Uses Template&quot; drop-down list.  
+
+Templates can contain any tags, including [Template Variables], [Chunks], [Snippets], and others.
+
+
+h3. Using Resource Fields in the Template
+
+As you noticed from our Template sample code above, the fields of a Resource can be referenced using the \[\[*fieldName\]\] syntax. A list of available Resource Fields can be [found here|Resources#Resource-Fields]. For example, if we wanted to show the current Resource&#39;s pagetitle in our &lt;title&gt; tag, we would simply do this:
+
+{code}&lt;title&gt;[[*pagetitle]]&lt;/title&gt;{code}
+
+You can also place the content of the current Resource using the &quot;content&quot; tag:
+
+{code}&lt;body&gt;
+[[*content]]
+&lt;/body&gt;{code}
+
+These tags are like normal MODx tags, in that they can have [output filters|Input and Output Filters (Output Modifiers)] applied to them. For example, say we wanted to display the &quot;introtext&quot; field on a right navbar, but strip any HTML tags from it, and only display the first 400 characters - and if longer, add an ellipsis (...):
+
+{code}&lt;div id=&quot;rightbar&quot;&gt;
+[[*introtext:stripTags:ellipsis=`400`]]
+&lt;/div&gt;{code}
+
+h3. Template Variables in Templates
+
+If Templates are like a house, think of [Template Variables] (TVs) like rooms in that house. You can have an infinite number of TVs in a Template; just think of it like adding new rooms to the house.
+
+Template Variables allow you to have custom fields for any Resource with the specified Template. Say you want a &#39;photo&#39; field on your Resources in your &quot;BiographyPages&quot; Template. Simple - just create a TV, call it &quot;bioPhoto&quot;, give it an input and output type of &quot;image&quot;, and assign it to your &quot;BiographyPages&quot; Template. You&#39;ll then see the TV in any Resource that&#39;s using that Template.
+
+You can then reference your &quot;bioPhoto&quot; TV in your content with the same tag syntax as a Resource Field:
+
+{code}&lt;div class=&quot;photo&quot;&gt;
+[[*bioPhoto]]
+&lt;/div&gt;{code}
+
+Again, it&#39;s important to note that [Template Variables] must be explicitly assigned to the Template to be used. Once assigned to the Template, a TV&#39;s value for that Resource will be able to be edited when editing the Resource. If you&#39;re not seeing a newly created TV in your Resources, make sure you&#39;ve assigned that TV to the Template.
+
+
+h2. See Also
+
+* [Tag Syntax]
+* [Template Variables]
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"33948022";s:3:"ver";s:1:"2";s:4:"code";s:4794:"\\
+
+h2. What are Templates?
+
+Templates typically contain the HTML markup tags that determine the layout and appearance of your site. When a document is requested, MODx loads the document and its template, and MODx finds all the special placeholders in the template and replaces them with the corresponding values from the document before sending the finished page off to the user&#39;s browser.
+
+Think of a Template like a house. Your [Resource&#39;s|Resources] content, then, is a person. A person can live in many different houses, but only one house.
+
+!template-info1.jpg!
+
+A [Resources] can only be using one Template - however, it can switch Templates at any time, just as a person can move from house to house at any time. The Template, just like a house, also changes the main way a page is displayed. A Template usually contains the header and footer of a page - and/or a sidebar, navigation bar, etc.
+
+h2. Usage
+
+To create a Template \-\- Expand the &quot;Elements&quot; part of the tree and right click on Templates. Select &quot;Create a New Template&quot; then paste your HTML into the &quot;Template Code&quot; textarea; you can copy and paste the text below to get started with a very simple template:  
+ 
+{code}
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;[[*pagetitle]]&lt;/title&gt;
+    &lt;meta name=&quot;description&quot; content=&quot;[[*description]]&quot;/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;[[*longtitle]]&lt;/h1&gt;
+
+Page ID: [[*id]]&lt;br/&gt;
+IntroText (Summary): [[*introtext]]&lt;br/&gt;
+MenuTitle: [[*menutitle]]
+
+&lt;hr/&gt;
+
+[[*content]]
+
+&lt;/body&gt;
+&lt;/html&gt;
+{code}
+
+Note the important \[\[*content\]\] tag; this tag tells MODx where to put the Resource&#39;s content.
+
+{note}MODx stores template data in its database; you cannot create a template by uploading a file to the filesystem, you *must* create a template using the manager.{note}
+
+Remember that simply _creating_ a template doesn&#39;t mean that it is automatically put to use: you have to edit each [Resources] and specify which Template it uses.  This is different from some content management systems where each template has one or many pages. Each MODx page has a single Template that it uses to format output.
+
+After you&#39;ve created one or more Templates, you can edit any Resource and choose a Template for it by selecting one from the &quot;Uses Template&quot; drop-down list.  
+
+Templates can contain any tags, including [Template Variables], [Chunks], [Snippets], and others.
+
+
+h3. Using Resource Fields in the Template
+
+As you noticed from our Template sample code above, the fields of a Resource can be referenced using the \[\[*fieldName\]\] syntax. A list of available Resource Fields can be [found here|Resources#Resource-Fields]. For example, if we wanted to show the current Resource&#39;s pagetitle in our &lt;title&gt; tag, we would simply do this:
+
+{code}&lt;title&gt;[[*pagetitle]]&lt;/title&gt;{code}
+
+You can also place the content of the current Resource using the &quot;content&quot; tag:
+
+{code}&lt;body&gt;
+[[*content]]
+&lt;/body&gt;{code}
+
+These tags are like normal MODx tags, in that they can have [output filters|Input and Output Filters] applied to them. For example, say we wanted to display the &quot;introtext&quot; field on a right navbar, but strip any HTML tags from it, and only display the first 400 characters - and if longer, add an ellipsis (...):
+
+{code}&lt;div id=&quot;rightbar&quot;&gt;
+[[*introtext:stripTags:ellipsis=`400`]]
+&lt;/div&gt;{code}
+
+h3. Template Variables in Templates
+
+If Templates are like a house, think of [Template Variables] (TVs) like rooms in that house. You can have an infinite number of TVs in a Template; just think of it like adding new rooms to the house.
+
+Template Variables allow you to have custom fields for any Resource with the specified Template. Say you want a &#39;photo&#39; field on your Resources in your &quot;BiographyPages&quot; Template. Simple - just create a TV, call it &quot;bioPhoto&quot;, give it an input and output type of &quot;image&quot;, and assign it to your &quot;BiographyPages&quot; Template. You&#39;ll then see the TV in any Resource that&#39;s using that Template.
+
+You can then reference your &quot;bioPhoto&quot; TV in your content with the same tag syntax as a Resource Field:
+
+{code}&lt;div class=&quot;photo&quot;&gt;
+[[*bioPhoto]]
+&lt;/div&gt;{code}
+
+Again, it&#39;s important to note that [Template Variables] must be explicitly assigned to the Template to be used. Once assigned to the Template, a TV&#39;s value for that Resource will be able to be edited when editing the Resource. If you&#39;re not seeing a newly created TV in your Resources, make sure you&#39;ve assigned that TV to the Template.
+
+
+h2. See Also
+
+* [Tag Syntax]
+* [Template Variables]
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"18678516";s:3:"ver";s:1:"1";s:4:"code";s:4790:"\\
+
+h2. What are Templates?
+
+Templates typically contain the HTML markup tags that determine the layout and appearance of your site. When a document is requested, MODx loads the document and its template, and MODx finds all the special placeholders in the template and replaces them with the corresponding values from the document before sending the finished page off to the user&#39;s browser.
+
+Think of a Template like a house. Your [Resource&#39;s|Resource] content, then, is a person. A person can live in many different houses, but only one house.
+
+!template-info1.jpg!
+
+A [Resource] can only be using one Template - however, it can switch Templates at any time, just as a person can move from house to house at any time. The Template, just like a house, also changes the main way a page is displayed. A Template usually contains the header and footer of a page - and/or a sidebar, navigation bar, etc.
+
+h2. Usage
+
+To create a Template \-\- Expand the &quot;Elements&quot; part of the tree and right click on Templates. Select &quot;Create a New Template&quot; then paste your HTML into the &quot;Template Code&quot; textarea; you can copy and paste the text below to get started with a very simple template:  
+ 
+{code}
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;[[*pagetitle]]&lt;/title&gt;
+    &lt;meta name=&quot;description&quot; content=&quot;[[*description]]&quot;/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;[[*longtitle]]&lt;/h1&gt;
+
+Page ID: [[*id]]&lt;br/&gt;
+IntroText (Summary): [[*introtext]]&lt;br/&gt;
+MenuTitle: [[*menutitle]]
+
+&lt;hr/&gt;
+
+[[*content]]
+
+&lt;/body&gt;
+&lt;/html&gt;
+{code}
+
+Note the important \[\[*content\]\] tag; this tag tells MODx where to put the Resource&#39;s content.
+
+{note}MODx stores template data in its database; you cannot create a template by uploading a file to the filesystem, you *must* create a template using the manager.{note}
+
+Remember that simply _creating_ a template doesn&#39;t mean that it is automatically put to use: you have to edit each [Resource] and specify which Template it uses.  This is different from some content management systems where each template has one or many pages. Each MODx page has a single Template that it uses to format output.
+
+After you&#39;ve created one or more Templates, you can edit any Resource and choose a Template for it by selecting one from the &quot;Uses Template&quot; drop-down list.  
+
+Templates can contain any tags, including [Template Variables], [Chunks], [Snippets], and others.
+
+
+h3. Using Resource Fields in the Template
+
+As you noticed from our Template sample code above, the fields of a Resource can be referenced using the \[\[*fieldName\]\] syntax. A list of available Resource Fields can be [found here|Resource#Resource-Fields]. For example, if we wanted to show the current Resource&#39;s pagetitle in our &lt;title&gt; tag, we would simply do this:
+
+{code}&lt;title&gt;[[*pagetitle]]&lt;/title&gt;{code}
+
+You can also place the content of the current Resource using the &quot;content&quot; tag:
+
+{code}&lt;body&gt;
+[[*content]]
+&lt;/body&gt;{code}
+
+These tags are like normal MODx tags, in that they can have [output filters|Input and Output Filters] applied to them. For example, say we wanted to display the &quot;introtext&quot; field on a right navbar, but strip any HTML tags from it, and only display the first 400 characters - and if longer, add an ellipsis (...):
+
+{code}&lt;div id=&quot;rightbar&quot;&gt;
+[[*introtext:stripTags:ellipsis=`400`]]
+&lt;/div&gt;{code}
+
+h3. Template Variables in Templates
+
+If Templates are like a house, think of [Template Variables] (TVs) like rooms in that house. You can have an infinite number of TVs in a Template; just think of it like adding new rooms to the house.
+
+Template Variables allow you to have custom fields for any Resource with the specified Template. Say you want a &#39;photo&#39; field on your Resources in your &quot;BiographyPages&quot; Template. Simple - just create a TV, call it &quot;bioPhoto&quot;, give it an input and output type of &quot;image&quot;, and assign it to your &quot;BiographyPages&quot; Template. You&#39;ll then see the TV in any Resource that&#39;s using that Template.
+
+You can then reference your &quot;bioPhoto&quot; TV in your content with the same tag syntax as a Resource Field:
+
+{code}&lt;div class=&quot;photo&quot;&gt;
+[[*bioPhoto]]
+&lt;/div&gt;{code}
+
+Again, it&#39;s important to note that [Template Variables] must be explicitly assigned to the Template to be used. Once assigned to the Template, a TV&#39;s value for that Resource will be able to be edited when editing the Resource. If you&#39;re not seeing a newly created TV in your Resources, make sure you&#39;ve assigned that TV to the Template.
+
+
+h2. See Also
+
+* [Tag Syntax]
+* [Template Variables]
+
+{scrollbar}";}}}

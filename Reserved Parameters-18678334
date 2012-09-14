@@ -1,0 +1,118 @@
+a:5:{s:2:"id";s:8:"18678334";s:4:"info";a:4:{s:6:"Title:";s:19:"Reserved Parameters";s:7:"Author:";s:17:"Everett Griffiths";s:16:"Last Changed by:";s:12:"Jason Coward";s:12:"Wiki Markup:";s:34:"[revolution20:Reserved Parameters]";}s:6:"parent";s:8:"18678076";s:6:"source";s:866:"h2. Reserved GET Parameters Inside the MODx Manager
+
+The following is a list (currently incomplete) of GET parameters used by the MODx manager.  You should avoid using any of these parameters in [Custom Manager Pages]:
+
+* *a* -- used to define an action
+* *context_key* -- specifies one of your contexts (e.g. &quot;web&quot; or &quot;mgr&quot;)
+* *class_key* -- specifies a class name, e.g. when creating a Weblink or static resource
+* *id*&amp;nbsp;-\- specifies a page_id
+
+h2. Reserved $_SESSION variables (2.1.1-pl and later)
+
+* cultureKey
+* and anything prefixed with modx.\*
+
+h2. Reserved $_SESSION variables (before 2.1.1-pl)
+
+{note}$_SESSION vars in italics were removed in 2.1.1-pl{note}
+
+* _webValidated_
+* _mgrValidated_
+* _webInternalKey_
+* _mgrInternalKey_
+* _webShortname_
+* _mgrShortname_
+* cultureKey
+* and anything prefixed with modx.\*
+
+{scrollbar}";s:8:"versions";a:5:{i:0;a:3:{s:2:"id";s:8:"18678334";s:3:"ver";s:1:"5";s:4:"code";s:866:"h2. Reserved GET Parameters Inside the MODx Manager
+
+The following is a list (currently incomplete) of GET parameters used by the MODx manager.  You should avoid using any of these parameters in [Custom Manager Pages]:
+
+* *a* -- used to define an action
+* *context_key* -- specifies one of your contexts (e.g. &quot;web&quot; or &quot;mgr&quot;)
+* *class_key* -- specifies a class name, e.g. when creating a Weblink or static resource
+* *id*&amp;nbsp;-\- specifies a page_id
+
+h2. Reserved $_SESSION variables (2.1.1-pl and later)
+
+* cultureKey
+* and anything prefixed with modx.\*
+
+h2. Reserved $_SESSION variables (before 2.1.1-pl)
+
+{note}$_SESSION vars in italics were removed in 2.1.1-pl{note}
+
+* _webValidated_
+* _mgrValidated_
+* _webInternalKey_
+* _mgrInternalKey_
+* _webShortname_
+* _mgrShortname_
+* cultureKey
+* and anything prefixed with modx.\*
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35586265";s:3:"ver";s:1:"4";s:4:"code";s:684:"h2. Reserved GET Parameters Inside the MODx Manager
+
+The following is a list (currently incomplete) of GET parameters used by the MODx manager.  You should avoid using any of these parameters in [Custom Manager Pages]:
+
+* *a* -- used to define an action
+* *context_key* -- specifies one of your contexts (e.g. &quot;web&quot; or &quot;mgr&quot;)
+* *class_key* -- specifies a class name, e.g. when creating a Weblink or static resource
+* *id*&amp;nbsp;-\- specifies a page_id
+
+h2. Reserved $_SESSION variables (front-/back-end)
+
+* webValidated
+* mgrValidated
+* webInternalKey
+* mgrInternalKey
+* webShortname
+* mgrShortname
+* cultureKey
+* and anything prefixed with modx.\*
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35095297";s:3:"ver";s:1:"3";s:4:"code";s:688:"\\
+
+h1. Reserved GET Parameters Inside the MODx Manager
+
+The following is a list (currently incomplete) of GET parameters used by the MODx manager.  You should avoid using any of these parameters in [Custom Manager Pages]:
+
+* *a* -- used to define an action
+* *context_key* -- specifies one of your contexts (e.g. &quot;web&quot; or &quot;mgr&quot;)
+* *class_key* -- specifies a class name, e.g. when creating a Weblink or static resource
+* *id*&amp;nbsp;-\- specifies a page_id
+
+h2. Reserved $_SESSION variables (front-/back-end)
+
+* webValidated
+* mgrValidated
+* webInternalKey
+* mgrInternalKey
+* webShortname
+* mgrShortname
+* cultureKey
+* and anything prefixed with modx.\*
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"35095295";s:3:"ver";s:1:"2";s:4:"code";s:490:"\\
+
+h1. Reserved GET Parameters Inside the MODx Manager
+
+The following is a list (currently incomplete) of GET parameters used by the MODx manager.  You should avoid using any of these parameters in [Custom Manager Pages]:
+
+* *a* -- used to define an action
+* *context_key* -- specifies one of your contexts (e.g. &quot;web&quot; or &quot;mgr&quot;)
+* *class_key* -- specifies a class name, e.g. when creating a Weblink or static resource
+* *id*&amp;nbsp;-- specifies a page_id
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"24969220";s:3:"ver";s:1:"1";s:4:"code";s:451:"\\
+
+h1. Reserved GET Parameters Inside the MODx Manager
+
+The following is a list (currently incomplete) of GET parameters used by the MODx manager.  You should avoid using any of these parameters in [Custom Manager Pages]:
+
+* *a* -- used to define an action
+* *context_key* -- specifies one of your contexts (e.g. &quot;web&quot; or &quot;mgr&quot;)
+* *class_key* -- specifies a class name, e.g. when creating a Weblink or static resource
+
+{scrollbar}";}}}

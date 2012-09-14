@@ -1,0 +1,69 @@
+a:5:{s:2:"id";s:8:"18678398";s:4:"info";a:4:{s:6:"Title:";s:19:"modX.getVersionData";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:34:"[revolution20:modX.getVersionData]";}s:6:"parent";s:8:"18678361";s:6:"source";s:922:"\\
+
+h2. modX::getVersionData
+
+Gets the modX core version data. The array contains the following keys (examples for version &quot;MODx Revolution 2.0.0-beta-3&quot;):
+
+* *version* - The current version number, eg: 2
+* *major_version* - The current major version number, eg: 0
+* *minor_version* - The current minor version number, eg: 0
+* *patch_level* - The current release level, eg: &#39;beta-3&#39;
+* *code_name* - The code name for the product, eg: &#39;Revolution&#39;
+* *full_version* - A compiled full version name, eg: &#39;2.0.0-beta-3&#39;
+* *full_appname* - The entire version name, eg: &#39;MODx Revolution 2.0.0-beta-3&#39;
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getVersionData
+
+{code}
+array getVersionData ()
+{code}
+
+h2. Example
+
+Print out the current full version:
+{code}
+$vers = $modx-&gt;getVersionData();
+echo $vers[&#39;full_version&#39;];
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678398";s:3:"ver";s:1:"1";s:4:"code";s:922:"\\
+
+h2. modX::getVersionData
+
+Gets the modX core version data. The array contains the following keys (examples for version &quot;MODx Revolution 2.0.0-beta-3&quot;):
+
+* *version* - The current version number, eg: 2
+* *major_version* - The current major version number, eg: 0
+* *minor_version* - The current minor version number, eg: 0
+* *patch_level* - The current release level, eg: &#39;beta-3&#39;
+* *code_name* - The code name for the product, eg: &#39;Revolution&#39;
+* *full_version* - A compiled full version name, eg: &#39;2.0.0-beta-3&#39;
+* *full_appname* - The entire version name, eg: &#39;MODx Revolution 2.0.0-beta-3&#39;
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getVersionData
+
+{code}
+array getVersionData ()
+{code}
+
+h2. Example
+
+Print out the current full version:
+{code}
+$vers = $modx-&gt;getVersionData();
+echo $vers[&#39;full_version&#39;];
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";}}}

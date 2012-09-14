@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"35095155";s:4:"info";a:4:{s:6:"Title:";s:23:"resource_tree_node_name";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:38:"[revolution20:resource_tree_node_name]";}s:6:"parent";s:8:"18678127";s:6:"source";s:325:"h2. resource_tree_node_name
+
+*Name*: Resource Tree Node Field
+*Type*: Textfield
+*Default*: pagetitle
+*Available In:* 2.0.8\+
+
+Specify the Resource field to use when rendering the nodes in the Resource Tree. Defaults to pagetitle, although any Resource field can be used, such as menutitle, alias, longtitle, etc.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095155";s:3:"ver";s:1:"1";s:4:"code";s:325:"h2. resource_tree_node_name
+
+*Name*: Resource Tree Node Field
+*Type*: Textfield
+*Default*: pagetitle
+*Available In:* 2.0.8\+
+
+Specify the Resource field to use when rendering the nodes in the Resource Tree. Defaults to pagetitle, although any Resource field can be used, such as menutitle, alias, longtitle, etc.
+
+{scrollbar}";}}}

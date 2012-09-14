@@ -1,0 +1,21 @@
+a:5:{s:2:"id";s:8:"35095089";s:4:"info";a:4:{s:6:"Title:";s:25:"friendly_alias_max_length";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:40:"[revolution20:friendly_alias_max_length]";}s:6:"parent";s:8:"18678127";s:6:"source";s:253:"h2. friendly_alias_max_length
+
+*Name*: AFURL Alias Maximum Length
+*Type*: Textfield
+*Default*: 0
+*Available In*: Revolution 2.0.8+
+
+If greater than zero, the maximum number of characters to allow in a Resource alias. Zero equals unlimited.
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095089";s:3:"ver";s:1:"1";s:4:"code";s:253:"h2. friendly_alias_max_length
+
+*Name*: AFURL Alias Maximum Length
+*Type*: Textfield
+*Default*: 0
+*Available In*: Revolution 2.0.8+
+
+If greater than zero, the maximum number of characters to allow in a Resource alias. Zero equals unlimited.
+
+{scrollbar}
+";}}}

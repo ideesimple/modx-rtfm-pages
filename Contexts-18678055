@@ -1,0 +1,231 @@
+a:5:{s:2:"id";s:8:"18678055";s:4:"info";a:4:{s:6:"Title:";s:8:"Contexts";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:23:"[revolution20:Contexts]";}s:6:"parent";s:8:"18678342";s:6:"source";s:2169:"\\
+
+Contexts allow MODx configuration settings to be overridden,     extended, isolated, or shared across domains, sub-domains, sub-sites, multi-sites, cultural-specific sections,     specific web applications, etc.
+
+You can easily create a context from the Contexts menu under Tools. The context will then show up in your resource tree. Resources can easily be dragged between contexts to move them from one context to another.
+{note}Note: there&#39;s nothing fundamentally _different_ about resources in different contexts, except that they now inherit the configuration settings of the context they are in. So, if you create a new context, you&#39;ll have to override the context settings in the context for any real, distinguishable change to appear.
+{note}
+
+h2. Creating a Context
+
+First, go to the Contexts page, via System \-&gt; Contexts. Then, click on &quot;Create New&quot; in the grid. This will prompt you for a key and description. From there, right-click on your newly-created context, and click &quot;Update Context&quot;.
+
+This will bring you to a screen displaying the Context, and an empty grid of settings. From here you can add Context-specific settings that will override any System Settings. Your new context will be completely empty, requiring you to include any and all settings you will be using.
+
+Note that new contexts don&#39;t automatically get &quot;load&quot; permission for Anonymous users in 2.2+ - you&#39;ll need to add that in manually.
+
+{note}
+
+When you create a new context besides the default &quot;web&quot; context, you may need to apply context settings to the web context as well.
+
+{note}
+
+
+h2. Context Settings
+
+You can create settings for any defined context by clicking on *System \-&gt; Contexts*, then right-click any context and select &quot;Update Context&quot;.
+
+Each context can have its own settings that override or extend the [System Settings].  Contextual settings can in turn be overridden or extended by [User Settings|Users#Users-UserSettings].  The hierarchy to remember is this:
+
+{panel}
+System Setting \-&gt; Context Setting \-&gt; User Setting
+{panel}
+
+
+h2. See Also
+
+{pagetree:root=Contexts}
+
+{scrollbar}";s:8:"versions";a:8:{i:0;a:3:{s:2:"id";s:8:"18678055";s:3:"ver";s:1:"8";s:4:"code";s:2169:"\\
+
+Contexts allow MODx configuration settings to be overridden,     extended, isolated, or shared across domains, sub-domains, sub-sites, multi-sites, cultural-specific sections,     specific web applications, etc.
+
+You can easily create a context from the Contexts menu under Tools. The context will then show up in your resource tree. Resources can easily be dragged between contexts to move them from one context to another.
+{note}Note: there&#39;s nothing fundamentally _different_ about resources in different contexts, except that they now inherit the configuration settings of the context they are in. So, if you create a new context, you&#39;ll have to override the context settings in the context for any real, distinguishable change to appear.
+{note}
+
+h2. Creating a Context
+
+First, go to the Contexts page, via System \-&gt; Contexts. Then, click on &quot;Create New&quot; in the grid. This will prompt you for a key and description. From there, right-click on your newly-created context, and click &quot;Update Context&quot;.
+
+This will bring you to a screen displaying the Context, and an empty grid of settings. From here you can add Context-specific settings that will override any System Settings. Your new context will be completely empty, requiring you to include any and all settings you will be using.
+
+Note that new contexts don&#39;t automatically get &quot;load&quot; permission for Anonymous users in 2.2+ - you&#39;ll need to add that in manually.
+
+{note}
+
+When you create a new context besides the default &quot;web&quot; context, you may need to apply context settings to the web context as well.
+
+{note}
+
+
+h2. Context Settings
+
+You can create settings for any defined context by clicking on *System \-&gt; Contexts*, then right-click any context and select &quot;Update Context&quot;.
+
+Each context can have its own settings that override or extend the [System Settings].  Contextual settings can in turn be overridden or extended by [User Settings|Users#Users-UserSettings].  The hierarchy to remember is this:
+
+{panel}
+System Setting \-&gt; Context Setting \-&gt; User Setting
+{panel}
+
+
+h2. See Also
+
+{pagetree:root=Contexts}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"37683256";s:3:"ver";s:1:"7";s:4:"code";s:2018:"\\
+
+Contexts allow MODx configuration settings to be overridden,     extended, isolated, or shared across domains, sub-domains, sub-sites, multi-sites, cultural-specific sections,     specific web applications, etc.
+
+You can easily create a context from the Contexts menu under Tools. The context will then show up in your resource tree. Resources can easily be dragged between contexts to move them from one context to another.
+{note}Note: there&#39;s nothing fundamentally _different_ about resources in different contexts, except that they now inherit the configuration settings of the context they are in. So, if you create a new context, you&#39;ll have to override the context settings in the context for any real, distinguishable change to appear.
+{note}
+
+h2. Creating a Context
+
+First, go to the Contexts page, via System \-&gt; Contexts. Then, click on &quot;Create New&quot; in the grid. This will prompt you for a key and description. From there, right-click on your newly-created context, and click &quot;Update Context&quot;.
+
+This will bring you to a screen displaying the Context, and an empty grid of settings. From here you can add Context-specific settings that will override any System Settings. Your new context will be completely empty, requiring you to include any and all settings you will be using.
+
+{note}
+
+When you create a new context besides the default &quot;web&quot; context, you may need to apply context settings to the web context as well.
+
+{note}
+
+
+h2. Context Settings
+
+You can create settings for any defined context by clicking on *System \-&gt; Contexts*, then right-click any context and select &quot;Update Context&quot;.
+
+Each context can have its own settings that override or extend the [System Settings].  Contextual settings can in turn be overridden or extended by [User Settings|Users#Users-UserSettings].  The hierarchy to remember is this:
+
+{panel}
+System Setting \-&gt; Context Setting \-&gt; User Setting
+{panel}
+
+
+h2. See Also
+
+{pagetree:root=Contexts}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"37126183";s:3:"ver";s:1:"6";s:4:"code";s:1536:"\\
+
+Contexts allow MODx configuration settings to be overridden,     extended, isolated, or shared across domains, sub-domains, sub-sites, multi-sites, cultural-specific sections,     specific web applications, etc.
+
+You can easily create a context from the Contexts menu under Tools. The context will then show up in your resource tree. Resources can easily be dragged between contexts to move them from one context to another.
+{note}Note: there&#39;s nothing fundamentally _different_ about resources in different contexts, except that they now inherit the configuration settings of the context they are in. So, if you create a new context, you&#39;ll have to override the context settings in the context for any real, distinguishable change to appear.
+{note}
+
+h2. Creating a Context
+
+First, go to the Contexts page, via System \-&gt; Contexts. Then, click on &quot;Create New&quot; in the grid. This will prompt you for a key and description. From there, right-click on your newly-created context, and click &quot;Update Context&quot;.
+
+This will bring you to a screen displaying the Context, and an empty grid of settings. From here you can add Context-specific settings that will override any System Settings. Your new context will be completely empty, requiring you to include any and all settings you will be using.
+
+{note}
+
+When you create a new context besides the default &quot;web&quot; context, you may need to apply context settings to the web context as well.
+
+{note}
+
+
+
+h2. See Also
+
+{pagetree:root=Contexts}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"33948008";s:3:"ver";s:1:"5";s:4:"code";s:1376:"\\
+
+Contexts allow MODx configuration settings to be overridden,     extended, isolated, or shared across domains, sub-domains, sub-sites, multi-sites, cultural-specific sections,     specific web applications, etc.
+
+You can easily create a context from the Contexts menu under Tools. The context will then show up in your resource tree. Resources can easily be dragged between contexts to move them from one context to another.
+{note}Note: there&#39;s nothing fundamentally _different_ about resources in different contexts, except that they now inherit the configuration settings of the context they are in. So, if you create a new context, you&#39;ll have to override the context settings in the context for any real, distinguishable change to appear.
+{note}
+
+h2. Creating a Context
+
+First, go to the Contexts page, via System \-&gt; Contexts. Then, click on &quot;Create New&quot; in the grid. This will prompt you for a key and description. From there, right-click on your newly-created context, and click &quot;Update Context&quot;.
+
+This will bring you to a screen displaying the Context, and an empty grid of settings. From here you can add Context-specific settings that will override any System Settings. Your new context will be completely empty, requiring you to include any and all settings you will be using.
+
+
+h2. See Also
+
+{pagetree:root=Contexts}
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"20578318";s:3:"ver";s:1:"4";s:4:"code";s:1378:"\\
+
+Contexts allow MODx configuration settings to be overridden,     extended, isolated, or shared across domains, sub-domains, sub-sites, multi-sites, cultural-specific sections,     specific web applications, etc.
+
+You can easily create a context from the Contexts menu under Tools. The context will then show up in your resource tree. Resources can easily be dragged between contexts to move them from one context to another.
+{note}Note: there&#39;s nothing fundamentally _different_ about resources in different contexts, except that they now inherit the configuration settings of the context they are in. So, if you create a new context, you&#39;ll have to override the context settings in the context for any real, distinguishable change to appear.
+{note}
+
+h2. Creating a Context
+
+First, go to the Contexts page, via System \-&gt; Contexts. Then, click on &quot;Create New&quot; in the grid. This will prompt you for a key and description. From there, right-click on your newly-created context, and click &quot;Update Context&quot;.
+
+This will bring you to a screen displaying the Context, and an empty grid of settings. From here you can add Context-specific settings that will override any System Settings. Your new context will be completely empty, requiring you to including any and all settings you will be using.
+
+
+h2. See Also
+
+{pagetree:root=Contexts}
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"20578317";s:3:"ver";s:1:"3";s:4:"code";s:1266:"\\
+
+Contexts allow MODx configuration settings to be overridden,     extended, isolated, or shared across domains, sub-domains, sub-sites, multi-sites, cultural-specific sections,     specific web applications, etc.
+
+You can easily create a context from the Contexts menu under Tools. The context will then show up in your resource tree. Resources can easily be dragged between contexts to move them from one context to another.
+{note}Note: there&#39;s nothing fundamentally _different_ about resources in different contexts, except that they now inherit the configuration settings of the context they are in. So, if you create a new context, you&#39;ll have to override the context settings in the context for any real, distinguishable change to appear.
+{note}
+
+h2. Creating a Context
+
+First, go to the Contexts page, via System -&gt; Contexts. Then, click on &quot;Create New&quot; in the grid. This will prompt you for a key and description. From there, right-click on your newly-created context, and click &quot;Update Context&quot;.
+
+This will bring you to a screen displaying the Context, and an empty grid of settings. From here you can add Context-specific settings that will override any System Settings.
+
+h2. See Also
+
+{pagetree:root=Contexts}
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"20119582";s:3:"ver";s:1:"2";s:4:"code";s:1276:"\\
+
+Contexts allow MODx configuration settings to be overridden,     extended, isolated, or shared across domains, sub-domains, sub-sites, multi-sites, cultural-specific sections,     specific web applications, etc.
+
+You&amp;nbsp; can easily create a context from the Contexts menu under Tools. The context will then show up in your resource tree. Resources can easily be dragged between contexts to move them from one context to another.
+{note}Note: there&#39;s nothing fundamentally _different_ about resources in different contexts, except that they now inherit the configuration settings of the context they are in. So, if you create a new context, you&#39;ll have to override the context settings in the context for any real, distinguishable change to appear.
+{note}
+
+h2. Creating a Context
+
+First, go to the Contexts page, via System -&gt; Contexts. Then, click on &quot;Create New&quot; in the grid. This will prompt you for a key and description. From there, right-click on your newly-created context, and click &quot;Update Context&quot;.
+
+This will bring you to a screen displaying the Context, and an empty grid of settings. From here you can add Context-specific settings that will override any System Settings.
+
+h2. See Also
+
+{pagetree:root=Contexts}
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"20119580";s:3:"ver";s:1:"1";s:4:"code";s:1276:"\\
+
+Contexts allow MODx configuration settings to be overridden,     extended, isolated, or shared across domains, sub-domains, sub-sites, multi-sites, cultural-specific sections,     specific web applications, etc.
+
+You&amp;nbsp; can easily create a context from the Contexts menu under Tools. The context will then show up in your resource tree. Resources can easily be dragged between contexts to move them from one context to another.
+{note}Note: there&#39;s nothing fundamentally _different_ about resources in different contexts, except that they now inherit the configuration settings of the context they are in. So, if you create a new context, you&#39;ll have to override the context settings in the context for any real, distinguishable change to appear.
+{note}
+
+h2. Creating a Context
+
+First, go to the Contexts page, via System -&gt; Contexts. Then, click on &quot;Create New&quot; in the grid. This will prompt you for a key and description. From there, right-click on your newly-created context, and click &quot;Update Context&quot;.
+
+This will bring you to a screen displaying the Context, and an empty grid of settings. From here you can add Context-specific settings that will override any System Settings.
+
+h2. See Also
+
+{pagetree:root=Contexts}
+
+{scrollbar}";}}}

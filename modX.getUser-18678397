@@ -1,0 +1,53 @@
+a:5:{s:2:"id";s:8:"18678397";s:4:"info";a:4:{s:6:"Title:";s:12:"modX.getUser";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:27:"[revolution20:modX.getUser]";}s:6:"parent";s:8:"18678361";s:6:"source";s:424:"\\
+
+h2. modX::getUser
+
+Get the current authenticated User and assigns it to the modX instance.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getUser
+
+{code}
+modUser getUser ([string $contextKey = &#39;&#39;])
+{code}
+
+h2. Example
+
+Get the current auth&#39;ed user and print out its username.
+{code}
+$user = $modx-&gt;getUser();
+echo $user-&gt;get(&#39;username&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678397";s:3:"ver";s:1:"1";s:4:"code";s:424:"\\
+
+h2. modX::getUser
+
+Get the current authenticated User and assigns it to the modX instance.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getUser
+
+{code}
+modUser getUser ([string $contextKey = &#39;&#39;])
+{code}
+
+h2. Example
+
+Get the current auth&#39;ed user and print out its username.
+{code}
+$user = $modx-&gt;getUser();
+echo $user-&gt;get(&#39;username&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";}}}

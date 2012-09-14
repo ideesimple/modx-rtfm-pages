@@ -1,0 +1,165 @@
+a:5:{s:2:"id";s:8:"35586541";s:4:"info";a:4:{s:6:"Title:";s:23:"Securing a Media Source";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:38:"[revolution20:Securing a Media Source]";}s:6:"parent";s:8:"35586538";s:6:"source";s:2951:"{toc}
+
+This article describes how to secure a Media Source to certain User Groups. It is recommended to read the [Adding a Media Source] article before reading this one. Before getting started, create a &quot;Content Editors&quot; user group, if you don&#39;t already have one.
+
+{note}Those installing new installs of MODX 2.2.0-pl will need to add the string &quot;sources.modAccessMediaSource&quot; (no quotes) to the comma-separated list of values in the &quot;principal_targets&quot; System Setting. This is due to [this bug here|http://bugs.modx.com/issues/6470]&amp;nbsp;which has been fixed in 2.2.0-pl2.{note}
+
+h2. Locking Down our Source to Admins
+
+Media Sources use the common ACLs that the [MODX Security System|Security] uses. You can attach policies to them via User Groups, that allow you to restrict basic actions on them, such as saving, loading, and listing.
+
+Go ahead and edit our &quot;My New Source&quot; source that we created in the [Adding a Media Source] article. From there, click on the &quot;Access Permissions&quot; tab. You&#39;ll see an empty grid. Sources that have no User Groups assigned to them are &quot;public&quot; - in the sense that any user can use, edit and see them.
+
+We&#39;re going to first lock down our new source so that it can only be seen and edited by Administrators. Click on the &quot;Add User Group&quot; button above the grid. This should pop up a window:
+
+!20110907-jje3b536kann962u778as3gxj5.jpeg!
+
+Fill it out as shown above, noting that there are two available [Access Policies|Policies]. The &quot;Media Source Admin&quot; policy is what we want - it allows full access to the media source, including viewing, editing, removing and listing. The other - Media Source User - only allows viewing and listing of the source (basically a read-only policy). Since we&#39;re assigning this to our Administrator group, we want them to have full access.
+
+Save your Source. Flush Sessions (Security \-&gt; Flush Sessions) and then re-login to the manager. This will make it viewable now to only Administrators.
+
+{info}If a non-administrator attempts to view or edit a TV in a Resource using your now-protected Source, they will only see the value - and not be able to edit it. This allows you to keep secure Sources in TVs protected.{info}
+h2. Restricting to Content Editors
+
+Now that you&#39;ve added an ACL for the Admins, let&#39;s also add one for our Content Editors group. Add another ACL:
+
+!Screen shot 2011-09-07 at 3.54.11 PM.png!
+
+Add it to the grid, and save your Source. This will allow all the Users in your Content Editors User Group to be able to see and use your Source, but not alter the Source. They&#39;ll be able to add it to TVs, view it in the Files tree, and browse the Source - but not edit the Source itself, nor remove it.
+
+That&#39;s the end of basic Media Source usage. Feel free to learn about the different [Media Source Types].
+
+h2. See Also
+
+{pagetree:root=Media Sources}";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"35586541";s:3:"ver";s:1:"4";s:4:"code";s:2951:"{toc}
+
+This article describes how to secure a Media Source to certain User Groups. It is recommended to read the [Adding a Media Source] article before reading this one. Before getting started, create a &quot;Content Editors&quot; user group, if you don&#39;t already have one.
+
+{note}Those installing new installs of MODX 2.2.0-pl will need to add the string &quot;sources.modAccessMediaSource&quot; (no quotes) to the comma-separated list of values in the &quot;principal_targets&quot; System Setting. This is due to [this bug here|http://bugs.modx.com/issues/6470]&amp;nbsp;which has been fixed in 2.2.0-pl2.{note}
+
+h2. Locking Down our Source to Admins
+
+Media Sources use the common ACLs that the [MODX Security System|Security] uses. You can attach policies to them via User Groups, that allow you to restrict basic actions on them, such as saving, loading, and listing.
+
+Go ahead and edit our &quot;My New Source&quot; source that we created in the [Adding a Media Source] article. From there, click on the &quot;Access Permissions&quot; tab. You&#39;ll see an empty grid. Sources that have no User Groups assigned to them are &quot;public&quot; - in the sense that any user can use, edit and see them.
+
+We&#39;re going to first lock down our new source so that it can only be seen and edited by Administrators. Click on the &quot;Add User Group&quot; button above the grid. This should pop up a window:
+
+!20110907-jje3b536kann962u778as3gxj5.jpeg!
+
+Fill it out as shown above, noting that there are two available [Access Policies|Policies]. The &quot;Media Source Admin&quot; policy is what we want - it allows full access to the media source, including viewing, editing, removing and listing. The other - Media Source User - only allows viewing and listing of the source (basically a read-only policy). Since we&#39;re assigning this to our Administrator group, we want them to have full access.
+
+Save your Source. Flush Sessions (Security \-&gt; Flush Sessions) and then re-login to the manager. This will make it viewable now to only Administrators.
+
+{info}If a non-administrator attempts to view or edit a TV in a Resource using your now-protected Source, they will only see the value - and not be able to edit it. This allows you to keep secure Sources in TVs protected.{info}
+h2. Restricting to Content Editors
+
+Now that you&#39;ve added an ACL for the Admins, let&#39;s also add one for our Content Editors group. Add another ACL:
+
+!Screen shot 2011-09-07 at 3.54.11 PM.png!
+
+Add it to the grid, and save your Source. This will allow all the Users in your Content Editors User Group to be able to see and use your Source, but not alter the Source. They&#39;ll be able to add it to TVs, view it in the Files tree, and browse the Source - but not edit the Source itself, nor remove it.
+
+That&#39;s the end of basic Media Source usage. Feel free to learn about the different [Media Source Types].
+
+h2. See Also
+
+{pagetree:root=Media Sources}";}i:1;a:3:{s:2:"id";s:8:"37683572";s:3:"ver";s:1:"3";s:4:"code";s:2910:"{toc}
+
+This article describes how to secure a Media Source to certain User Groups. It is recommended to read the [Adding a Media Source] article before reading this one. Before getting started, create a &quot;Content Editors&quot; user group, if you don&#39;t already have one.
+
+{note}Those installing new installs of MODX 2.2.0-pl will need to add the string &quot;sources.modAccessMediaSource&quot; (no quotes) to the comma-separated list of values in the &quot;principal_targets&quot; System Setting. This is due to [this bug here|http://bugs.modx.com/issues/6470].{note}
+
+h2. Locking Down our Source to Admins
+
+Media Sources use the common ACLs that the [MODX Security System|Security] uses. You can attach policies to them via User Groups, that allow you to restrict basic actions on them, such as saving, loading, and listing.
+
+Go ahead and edit our &quot;My New Source&quot; source that we created in the [Adding a Media Source] article. From there, click on the &quot;Access Permissions&quot; tab. You&#39;ll see an empty grid. Sources that have no User Groups assigned to them are &quot;public&quot; - in the sense that any user can use, edit and see them.
+
+We&#39;re going to first lock down our new source so that it can only be seen and edited by Administrators. Click on the &quot;Add User Group&quot; button above the grid. This should pop up a window:
+
+!20110907-jje3b536kann962u778as3gxj5.jpeg!
+
+Fill it out as shown above, noting that there are two available [Access Policies|Policies]. The &quot;Media Source Admin&quot; policy is what we want - it allows full access to the media source, including viewing, editing, removing and listing. The other - Media Source User - only allows viewing and listing of the source (basically a read-only policy). Since we&#39;re assigning this to our Administrator group, we want them to have full access. 
+
+Save your Source. Flush Sessions (Security -&gt; Flush Sessions) and then re-login to the manager. This will make it viewable now to only Administrators.
+
+{info}If a non-administrator attempts to view or edit a TV in a Resource using your now-protected Source, they will only see the value - and not be able to edit it. This allows you to keep secure Sources in TVs protected.{info} 
+
+h2. Restricting to Content Editors
+
+Now that you&#39;ve added an ACL for the Admins, let&#39;s also add one for our Content Editors group. Add another ACL:
+
+!Screen shot 2011-09-07 at 3.54.11 PM.png!
+
+Add it to the grid, and save your Source. This will allow all the Users in your Content Editors User Group to be able to see and use your Source, but not alter the Source. They&#39;ll be able to add it to TVs, view it in the Files tree, and browse the Source - but not edit the Source itself, nor remove it.
+
+That&#39;s the end of basic Media Source usage. Feel free to learn about the different [Media Source Types].
+
+h2. See Also
+
+{pagetree:root=Media Sources}";}i:2;a:3:{s:2:"id";s:8:"37683281";s:3:"ver";s:1:"2";s:4:"code";s:2613:"{toc}
+
+This article describes how to secure a Media Source to certain User Groups. It is recommended to read the [Adding a Media Source] article before reading this one. Before getting started, create a &quot;Content Editors&quot; user group, if you don&#39;t already have one.
+
+h2. Locking Down our Source to Admins
+
+Media Sources use the common ACLs that the [MODX Security System|Security] uses. You can attach policies to them via User Groups, that allow you to restrict basic actions on them, such as saving, loading, and listing.
+
+Go ahead and edit our &quot;My New Source&quot; source that we created in the [Adding a Media Source] article. From there, click on the &quot;Access Permissions&quot; tab. You&#39;ll see an empty grid. Sources that have no User Groups assigned to them are &quot;public&quot; - in the sense that any user can use, edit and see them.
+
+We&#39;re going to first lock down our new source so that it can only be seen and edited by Administrators. Click on the &quot;Add User Group&quot; button above the grid. This should pop up a window:
+
+!20110907-jje3b536kann962u778as3gxj5.jpeg!
+
+Fill it out as shown above, noting that there are two available [Access Policies|Policies]. The &quot;Media Source Admin&quot; policy is what we want - it allows full access to the media source, including viewing, editing, removing and listing. The other - Media Source User - only allows viewing and listing of the source (basically a read-only policy). Since we&#39;re assigning this to our Administrator group, we want them to have full access. 
+
+Save your Source. Flush Sessions (Security -&gt; Flush Sessions) and then re-login to the manager. This will make it viewable now to only Administrators.
+
+{info}If a non-administrator attempts to view or edit a TV in a Resource using your now-protected Source, they will only see the value - and not be able to edit it. This allows you to keep secure Sources in TVs protected.{info} 
+
+h2. Restricting to Content Editors
+
+Now that you&#39;ve added an ACL for the Admins, let&#39;s also add one for our Content Editors group. Add another ACL:
+
+!Screen shot 2011-09-07 at 3.54.11 PM.png!
+
+Add it to the grid, and save your Source. This will allow all the Users in your Content Editors User Group to be able to see and use your Source, but not alter the Source. They&#39;ll be able to add it to TVs, view it in the Files tree, and browse the Source - but not edit the Source itself, nor remove it.
+
+That&#39;s the end of basic Media Source usage. Feel free to learn about the different [Media Source Types].
+
+h2. See Also
+
+{pagetree:root=Media Sources}";}i:3;a:3:{s:2:"id";s:8:"37683225";s:3:"ver";s:1:"1";s:4:"code";s:2523:"{toc}
+
+This article describes how to secure a Media Source to certain User Groups. It is recommended to read the [Adding a Media Source] article before reading this one. Before getting started, create a &quot;Content Editors&quot; user group, if you don&#39;t already have one.
+
+h2. Locking Down our Source to Admins
+
+Media Sources use the common ACLs that the [MODX Security System|Security] uses. You can attach policies to them via User Groups, that allow you to restrict basic actions on them, such as saving, loading, and listing.
+
+Go ahead and edit our &quot;My New Source&quot; source that we created in the [Adding a Media Source] article. From there, click on the &quot;Access Permissions&quot; tab. You&#39;ll see an empty grid. Sources that have no User Groups assigned to them are &quot;public&quot; - in the sense that any user can use, edit and see them.
+
+We&#39;re going to first lock down our new source so that it can only be seen and edited by Administrators. Click on the &quot;Add User Group&quot; button above the grid. This should pop up a window:
+
+!20110907-jje3b536kann962u778as3gxj5.jpeg!
+
+Fill it out as shown above, noting that there are two available [Access Policies]. The &quot;Media Source Admin&quot; policy is what we want - it allows full access to the media source, including viewing, editing, removing and listing. The other - Media Source User - only allows viewing and listing of the source (basically a read-only policy). Since we&#39;re assigning this to our Administrator group, we want them to have full access. 
+
+Save your Source. This will make it viewable now to only Administrators.
+
+{info}If a non-administrator attempts to view or edit a TV in a Resource using your now-protected Source, they will only see the value - and not be able to edit it. This allows you to keep secure Sources in TVs protected.{info} 
+
+h2. Restricting to Content Editors
+
+Now that you&#39;ve added an ACL for the Admins, let&#39;s also add one for our Content Editors group. Add another ACL:
+
+!Screen shot 2011-09-07 at 3.54.11 PM.png!
+
+Add it to the grid, and save your Source. This will allow all the Users in your Content Editors User Group to be able to see and use your Source, but not alter the Source. They&#39;ll be able to add it to TVs, view it in the Files tree, and browse the Source - but not edit the Source itself, nor remove it.
+
+That&#39;s the end of basic Media Source usage. Feel free to learn about the different [Media Source Types].
+
+h2. See Also
+
+{pagetree:root=Media Sources}";}}}

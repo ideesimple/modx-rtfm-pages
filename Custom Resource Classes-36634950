@@ -1,0 +1,143 @@
+a:5:{s:2:"id";s:8:"36634950";s:4:"info";a:4:{s:6:"Title:";s:23:"Custom Resource Classes";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:38:"[revolution20:Custom Resource Classes]";}s:6:"parent";s:8:"18678466";s:6:"source";s:2821:"{note}Custom Resource Classes are available in MODX 2.2 and later only.{note}
+
+{toc}
+
+h2. What is a Custom Resource Class?
+
+A Custom Resource Class (CRC) is a class that extends the modResource class, allowing custom Resource types that can represent various types of data or applications. The MODX core packages in four different types of Resource Classes - Documents, WebLinks, SymLinks, and Static Resources. Other types of CRCs could be a Blog type, a Forum type, a Gallery Album type, a RSS Feed type, etc.
+
+They are created by extending the modResource class in PHP and loading it into the MODX system via Extension Packages. They store their data in the same table as normal Resources, but can behave differently in their rendering our management interface.
+
+h3. When to Use and When Not to Use
+
+CRCs are useful for creating &quot;embedded applications&quot; into MODX, such as a Blog type (such as [modBlog|ADDON:Articles]) that lets you place a blog into your already existing MODX site. Since they take development and coding to create, they&#39;re mainly used for more complex applications that still want to store data in the main MODX content table and have their data take advantage of being able to be manipulated and displayed via other Resource listing and viewing Extras.
+
+They are not recommended to use when you are just wanting to add a few extra fields to a Resource, or alter the presentation of a Resource on the front-end. Those situations are best dealt with by using [Templates] and [Template Variables].
+
+Also remember that CRCs cannot be overridden themselves - meaning you can&#39;t extend a CRC. So, apply this principle when making CRCs: if it can be done much easier using a [Snippet|Snippets] or [Template Variables], it&#39;s probably best to do it that way.
+
+h2. Usage
+
+CRCs look like normal Resources in the tree. The CRC class can also hook into the context menus on the Resource tree to add options for creating a CRC type, such as  &quot;Create a Blog Here&quot;, etc. They can use the default Resource editing panels, or can provide an entirely separate user interface for managing their content. Some CRCs might even have other sub-classes (such as modBlogPost when using the modBlog CRC) that are completely hidden from the main Resource tree. This is useful when dealing with lots of Resources that do not scale well in a tree UI.
+
+CRCs can have their Controllers, Processors and main rendering functionality extended and overridden. You can, for example, automatically append text to the output of any CRC&#39;s content by overriding the process() or getContent() method of the CRC in the PHP class. Any method in the modResource class is available to be overridden when using CRCs. 
+
+h2. Creating a CRC
+
+Please follow the tutorial on [Creating a Resource Class].
+
+{scrollbar}";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"36634950";s:3:"ver";s:1:"4";s:4:"code";s:2821:"{note}Custom Resource Classes are available in MODX 2.2 and later only.{note}
+
+{toc}
+
+h2. What is a Custom Resource Class?
+
+A Custom Resource Class (CRC) is a class that extends the modResource class, allowing custom Resource types that can represent various types of data or applications. The MODX core packages in four different types of Resource Classes - Documents, WebLinks, SymLinks, and Static Resources. Other types of CRCs could be a Blog type, a Forum type, a Gallery Album type, a RSS Feed type, etc.
+
+They are created by extending the modResource class in PHP and loading it into the MODX system via Extension Packages. They store their data in the same table as normal Resources, but can behave differently in their rendering our management interface.
+
+h3. When to Use and When Not to Use
+
+CRCs are useful for creating &quot;embedded applications&quot; into MODX, such as a Blog type (such as [modBlog|ADDON:Articles]) that lets you place a blog into your already existing MODX site. Since they take development and coding to create, they&#39;re mainly used for more complex applications that still want to store data in the main MODX content table and have their data take advantage of being able to be manipulated and displayed via other Resource listing and viewing Extras.
+
+They are not recommended to use when you are just wanting to add a few extra fields to a Resource, or alter the presentation of a Resource on the front-end. Those situations are best dealt with by using [Templates] and [Template Variables].
+
+Also remember that CRCs cannot be overridden themselves - meaning you can&#39;t extend a CRC. So, apply this principle when making CRCs: if it can be done much easier using a [Snippet|Snippets] or [Template Variables], it&#39;s probably best to do it that way.
+
+h2. Usage
+
+CRCs look like normal Resources in the tree. The CRC class can also hook into the context menus on the Resource tree to add options for creating a CRC type, such as  &quot;Create a Blog Here&quot;, etc. They can use the default Resource editing panels, or can provide an entirely separate user interface for managing their content. Some CRCs might even have other sub-classes (such as modBlogPost when using the modBlog CRC) that are completely hidden from the main Resource tree. This is useful when dealing with lots of Resources that do not scale well in a tree UI.
+
+CRCs can have their Controllers, Processors and main rendering functionality extended and overridden. You can, for example, automatically append text to the output of any CRC&#39;s content by overriding the process() or getContent() method of the CRC in the PHP class. Any method in the modResource class is available to be overridden when using CRCs. 
+
+h2. Creating a CRC
+
+Please follow the tutorial on [Creating a Resource Class].
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"36635011";s:3:"ver";s:1:"3";s:4:"code";s:2820:"{note}Custom Resource Classes are available in MODX 2.2 and later only.{note}
+
+{toc}
+
+h2. What is a Custom Resource Class?
+
+A Custom Resource Class (CRC) is a class that extends the modResource class, allowing custom Resource types that can represent various types of data or applications. The MODX core packages in four different types of Resource Classes - Documents, WebLinks, SymLinks, and Static Resources. Other types of CRCs could be a Blog type, a Forum type, a Gallery Album type, a RSS Feed type, etc.
+
+They are created by extending the modResource class in PHP and loading it into the MODX system via Extension Packages. They store their data in the same table as normal Resources, but can behave differently in their rendering our management interface.
+
+h3. When to Use and When Not to Use
+
+CRCs are useful for creating &quot;embedded applications&quot; into MODX, such as a Blog type (such as [modBlog|ADDON:modBlog]) that lets you place a blog into your already existing MODX site. Since they take development and coding to create, they&#39;re mainly used for more complex applications that still want to store data in the main MODX content table and have their data take advantage of being able to be manipulated and displayed via other Resource listing and viewing Extras.
+
+They are not recommended to use when you are just wanting to add a few extra fields to a Resource, or alter the presentation of a Resource on the front-end. Those situations are best dealt with by using [Templates] and [Template Variables].
+
+Also remember that CRCs cannot be overridden themselves - meaning you can&#39;t extend a CRC. So, apply this principle when making CRCs: if it can be done much easier using a [Snippet|Snippets] or [Template Variables], it&#39;s probably best to do it that way.
+
+h2. Usage
+
+CRCs look like normal Resources in the tree. The CRC class can also hook into the context menus on the Resource tree to add options for creating a CRC type, such as  &quot;Create a Blog Here&quot;, etc. They can use the default Resource editing panels, or can provide an entirely separate user interface for managing their content. Some CRCs might even have other sub-classes (such as modBlogPost when using the modBlog CRC) that are completely hidden from the main Resource tree. This is useful when dealing with lots of Resources that do not scale well in a tree UI.
+
+CRCs can have their Controllers, Processors and main rendering functionality extended and overridden. You can, for example, automatically append text to the output of any CRC&#39;s content by overriding the process() or getContent() method of the CRC in the PHP class. Any method in the modResource class is available to be overridden when using CRCs. 
+
+h2. Creating a CRC
+
+Please follow the tutorial on [Creating a Resource Class].
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"36634982";s:3:"ver";s:1:"2";s:4:"code";s:2868:"{note}Custom Resource Classes are available in MODX 2.2 and later only.{note}
+
+{toc}
+
+h2. What is a Custom Resource Class?
+
+A Custom Resource Class (CRC) is a class that extends the modResource class, allowing custom Resource types that can represent various types of data or applications. The MODX core packages in four different types of Resource Classes - Documents, WebLinks, SymLinks, and Static Resources. Other types of CRCs could be a Blog type, a Forum type, a Gallery Album type, a RSS Feed type, etc.
+
+They are created by extending the modResource class in PHP and loading it into the MODX system via Extension Packages. They store their data in the same table as normal Resources, but can behave differently in their rendering our management interface.
+
+h3. When to Use and When Not to Use
+
+CRCs are useful for creating &quot;embedded applications&quot; into MODX, such as a Blog type (such as [modBlog|ADDON:modBlog]) that lets you place a blog into your already existing MODX site. Since they take development and coding to create, they&#39;re mainly used for more complex applications that still want to store data in the main MODX content table and have their data take advantage of being able to be manipulated and displayed via other Resource listing and viewing Extras.
+
+They are not recommended to use when you are just wanting to add a few extra fields to a Resource, or alter the presentation of a Resource on the front-end. Those situations are best dealt with by using [Templates] and [Template Variables].
+
+Also remember that CRCs cannot be overridden themselves - meaning you can&#39;t extend a CRC. So, apply this principle when making CRCs: if it can be done much easier using a [Snippet|Snippets] or [Template Variables], it&#39;s probably best to do it that way.
+
+h2. Usage
+
+CRCs look like normal Resources in the tree. The CRC class can also hook into the context menus on the Resource tree to add options for creating a CRC type, such as  &quot;Create a Blog Here&quot;, etc. They can use the default Resource editing panels, or can provide an entirely separate user interface for managing their content. Some CRCs might even have other sub-classes (such as modBlogPost when using the modBlog CRC) that are completely hidden from the main Resource tree. This is useful when dealing with lots of Resources that do not scale well in a tree UI.
+
+CRCs can have their Controllers, Processors and main rendering functionality extended and overridden. You can, for example, automatically append text to the output of any CRC&#39;s content by overriding the process() or getContent() method of the CRC in the PHP class. Any method in the modResource class is available to be overridden when using CRCs. 
+
+h2. Creating a CRC
+
+Below are the pages for the Creating a Resource Class tutorial:
+
+{pagetree:root=Creating a Resource Class}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"36634981";s:3:"ver";s:1:"1";s:4:"code";s:2606:"{note}Custom Resource Classes are available in MODX 2.2 and later only.{note}
+
+{toc}
+
+h2. What is a Custom Resource Class?
+
+A Custom Resource Class (CRC) is a class that extends the modResource class, allowing custom Resource types that can represent various types of data or applications. The MODX core packages in four different types of Resource Classes - Documents, WebLinks, SymLinks, and Static Resources. Other types of CRCs could be a Blog type, a Forum type, a Gallery Album type, a RSS Feed type, etc.
+
+They are created by extending the modResource class in PHP and loading it into the MODX system via Extension Packages. They store their data in the same table as normal Resources, but can behave differently in their rendering our management interface.
+
+h3. When to Use and When Not to Use
+
+CRCs are useful for creating &quot;embedded applications&quot; into MODX, such as a Blog type (such as [modBlog|ADDON:modBlog]) that lets you place a blog into your already existing MODX site. Since they take development and coding to create, they&#39;re mainly used for more complex applications that still want to store data in the main MODX content table and have their data take advantage of being able to be manipulated and displayed via other Resource listing and viewing Extras.
+
+They are not recommended to use when you are just wanting to add a few extra fields to a Resource, or alter the presentation of a Resource on the front-end. Those situations are best dealt with by using [Templates] and [Template Variables].
+
+h2. Usage
+
+CRCs look like normal Resources in the tree. The CRC class can also hook into the context menus on the Resource tree to add options for creating a CRC type, such as  &quot;Create a Blog Here&quot;, etc. They can use the default Resource editing panels, or can provide an entirely separate user interface for managing their content. Some CRCs might even have other sub-classes (such as modBlogPost when using the modBlog CRC) that are completely hidden from the main Resource tree. This is useful when dealing with lots of Resources that do not scale well in a tree UI.
+
+CRCs can have their Controllers, Processors and main rendering functionality extended and overridden. You can, for example, automatically append text to the output of any CRC&#39;s content by overriding the process() or getContent() method of the CRC in the PHP class. Any method in the modResource class is available to be overridden when using CRCs. 
+
+h2. Creating a CRC
+
+Below are the pages for the Creating a Resource Class tutorial:
+
+{pagetree:root=Creating a Resource Class}
+
+{scrollbar}";}}}

@@ -1,0 +1,2348 @@
+a:5:{s:2:"id";s:8:"18678053";s:4:"info";a:4:{s:6:"Title:";s:18:"Basic Installation";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:11:"Mike Schell";s:12:"Wiki Markup:";s:33:"[revolution20:Basic Installation]";}s:6:"parent";s:8:"18678541";s:6:"source";s:7035:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Installation] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ and core/config/ directories are writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+
+&amp;nbsp; !setup-db-1.png!
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;.
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check to make sure your database username and password are correct. Also, if your user does not have access to create a database, you might need to do that manually.
+{info:title=MySQL Notes}
+{color:#333333}If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.{color}
+
+{color:#333333}If you are running your MySQL server with networking disabled, you can specify the socket name like this: &quot;;unix_socket=MySQL&quot;.{color}{info}
+{color:#333333}&amp;nbsp;{color}
+{info:title=Microsoft SQL Server Notes}
+{color:#333333}Support for Microsoft SQL Server was introduced in MODX Revolution 2.1{color}
+
+{color:#333333}Depending on your SQL Server&#39;s network configuration, there are different ways you may specify your host.{color}
+* Named pipe: (local)/SQLEXPRESS&amp;nbsp;
+* Tcp/ip: 127.0.0.1,2301 (IP, port)
+
+Due to the way that the PDO driver for SqlSrv works, you may not get an error message or a response back after clicking&amp;nbsp;&#39;Test database server connection and view collations&#39;. If this happens, it is an indication that there is a problem connecting to the database, authenticating or selecting the database itself. After verifying your settings, click the Back button to go to the previous page, and then Next to get back to the Database Options page.{info}
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+{info:title=Microsoft SQL Server Notes}
+
+MODX has only been tested with SQL Server&#39;s Latin1 character set.
+
+{info}
+
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+{note}If you get a blank screen or cannot proceed after clicking &#39;Install&#39;, verify these steps:
+
+# Make sure the directories &quot;/core/packages&quot;,&quot;/core/cache&quot;, &quot;/core/import&quot;, and &quot;/core/export&quot; are writable.
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl\! Just make it a blank file\!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+h2. Post-Installation Summary
+
+MODx will then let you know if any errors occurred during install, and prompt you to attempt reinstallation should any of those errors have occurred.
+
+When install is successful, click &#39;Next&#39; to proceed, and you&#39;ll be presented with one final option:
+
+!setup-cleanup1.png!
+
+MODx recommends that you make sure to remove the setup/ directory after installing, to safeguard your site from anyone else trying to run setup on your site. You can do this by clicking the &#39;Check this to DELETE the setup directory from the filesystem.&#39; checkbox.
+
+When ready, click &#39;Login&#39; to be presented with the Login form for the manager interface. You&#39;re finished\!
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here: [http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617] will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h3. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+
+h3. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";s:8:"versions";a:22:{i:0;a:3:{s:2:"id";s:8:"18678053";s:3:"ver";s:1:"2";s:4:"code";s:7035:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Installation] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ and core/config/ directories are writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+
+&amp;nbsp; !setup-db-1.png!
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;.
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check to make sure your database username and password are correct. Also, if your user does not have access to create a database, you might need to do that manually.
+{info:title=MySQL Notes}
+{color:#333333}If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.{color}
+
+{color:#333333}If you are running your MySQL server with networking disabled, you can specify the socket name like this: &quot;;unix_socket=MySQL&quot;.{color}{info}
+{color:#333333}&amp;nbsp;{color}
+{info:title=Microsoft SQL Server Notes}
+{color:#333333}Support for Microsoft SQL Server was introduced in MODX Revolution 2.1{color}
+
+{color:#333333}Depending on your SQL Server&#39;s network configuration, there are different ways you may specify your host.{color}
+* Named pipe: (local)/SQLEXPRESS&amp;nbsp;
+* Tcp/ip: 127.0.0.1,2301 (IP, port)
+
+Due to the way that the PDO driver for SqlSrv works, you may not get an error message or a response back after clicking&amp;nbsp;&#39;Test database server connection and view collations&#39;. If this happens, it is an indication that there is a problem connecting to the database, authenticating or selecting the database itself. After verifying your settings, click the Back button to go to the previous page, and then Next to get back to the Database Options page.{info}
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+{info:title=Microsoft SQL Server Notes}
+
+MODX has only been tested with SQL Server&#39;s Latin1 character set.
+
+{info}
+
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+{note}If you get a blank screen or cannot proceed after clicking &#39;Install&#39;, verify these steps:
+
+# Make sure the directories &quot;/core/packages&quot;,&quot;/core/cache&quot;, &quot;/core/import&quot;, and &quot;/core/export&quot; are writable.
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl\! Just make it a blank file\!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+h2. Post-Installation Summary
+
+MODx will then let you know if any errors occurred during install, and prompt you to attempt reinstallation should any of those errors have occurred.
+
+When install is successful, click &#39;Next&#39; to proceed, and you&#39;ll be presented with one final option:
+
+!setup-cleanup1.png!
+
+MODx recommends that you make sure to remove the setup/ directory after installing, to safeguard your site from anyone else trying to run setup on your site. You can do this by clicking the &#39;Check this to DELETE the setup directory from the filesystem.&#39; checkbox.
+
+When ready, click &#39;Login&#39; to be presented with the Login form for the manager interface. You&#39;re finished\!
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here: [http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617] will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h3. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+
+h3. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35095238";s:3:"ver";s:1:"2";s:4:"code";s:6985:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Installation] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ and core/config/ directories are writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+
+&amp;nbsp; !setup-db-1.png!
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;.
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check to make sure your database username and password are correct. Also, if your user does not have access to create a database, you might need to do that manually.
+{info:title=MySQL Notes}
+{color:#333333}If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.{color}
+
+{color:#333333}If you are running your MySQL server with networking disabled, you can specify the socket name like this: &quot;;unix_socket=MySQL&quot;.{color}{info}
+{color:#333333}&amp;nbsp;{color}
+{info:title=Microsoft SQL Server Notes}
+{color:#333333}Support for Microsoft SQL Server was introduced in MODX Revolution 2.1{color}
+
+{color:#333333}Depending on your SQL Server&#39;s network configuration, there are different ways you may specify your host.{color}
+* Named pipe: (local)/SQLEXPRESS&amp;nbsp;
+* Tcp/ip: 127.0.0.1,2301 (IP, port)
+
+Due to the way that the PDO driver for SqlSrv works, you may not get an error message or a response back after clicking&amp;nbsp;&#39;Test database server connection and view collations&#39;. If this happens, it is an indication that there is a problem connecting to the database, authenticating or selecting the database itself. After verifying your settings, click the Back button to go to the previous page, and then Next to get back to the Database Options page.
+
+MODX has only been tested with SQL Server&#39;s Latin1 character set.{info}
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+{note}If you get a blank screen or cannot proceed after clicking &#39;Install&#39;, verify these steps:
+
+# Make sure the directories &quot;/core/packages&quot;,&quot;/core/cache&quot;, &quot;/core/import&quot;, and &quot;/core/export&quot; are writable.
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl\! Just make it a blank file\!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+h2. Post-Installation Summary
+
+MODx will then let you know if any errors occurred during install, and prompt you to attempt reinstallation should any of those errors have occurred.
+
+When install is successful, click &#39;Next&#39; to proceed, and you&#39;ll be presented with one final option:
+
+!setup-cleanup1.png!
+
+MODx recommends that you make sure to remove the setup/ directory after installing, to safeguard your site from anyone else trying to run setup on your site. You can do this by clicking the &#39;Check this to DELETE the setup directory from the filesystem.&#39; checkbox.
+
+When ready, click &#39;Login&#39; to be presented with the Login form for the manager interface. You&#39;re finished\!
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here: [http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617] will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h3. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+
+h3. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35095236";s:3:"ver";s:1:"2";s:4:"code";s:6320:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Installation] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ and core/config/ directories are writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+
+&amp;nbsp; !setup-db-1.png!
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;.
+
+{info:title=MySQL}If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.
+
+If you are running your MySQL server with networking disabled, you can specify the socket name like this: &quot;;unix_socket=MySQL&quot;.
+{info}
+\\
+
+{info:title=Microsoft SQL Server}
+Support for Microsoft SQL Server was introduced in MODX Revolution 2.1
+
+Depending on your SQL Server&#39;s network configuration, there are different ways you may specify your host.
+
+* Named pipe: (local)/SQLEXPRESS&amp;nbsp;
+* Tcp/ip: 127.0.0.1,2301 (IP, port)
+{info}
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check to make sure your database username and password are correct. Also, if your user does not have access to create a database, you might need to do that manually.
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+{note}If you get a blank screen or cannot proceed after clicking &#39;Install&#39;, verify these steps:
+
+# Make sure the directories &quot;/core/packages&quot;,&quot;/core/cache&quot;, &quot;/core/import&quot;, and &quot;/core/export&quot; are writable.
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl\! Just make it a blank file\!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+h2. Post-Installation Summary
+
+MODx will then let you know if any errors occurred during install, and prompt you to attempt reinstallation should any of those errors have occurred.
+
+When install is successful, click &#39;Next&#39; to proceed, and you&#39;ll be presented with one final option:
+
+!setup-cleanup1.png!
+
+MODx recommends that you make sure to remove the setup/ directory after installing, to safeguard your site from anyone else trying to run setup on your site. You can do this by clicking the &#39;Check this to DELETE the setup directory from the filesystem.&#39; checkbox.
+
+When ready, click &#39;Login&#39; to be presented with the Login form for the manager interface. You&#39;re finished\!
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here: [http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617] will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h3. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+
+h3. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"35095234";s:3:"ver";s:1:"1";s:4:"code";s:6316:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Installation] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ and core/config/ directories are writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+
+&amp;nbsp; !setup-db-1.png!
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;.
+
+{info:title=MySQL}If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.{info}
+
+If you are running your MySQL server with networking disabled, you can specify the socket name like this: &quot;;unix_socket=MySQL&quot;.
+
+{info:title=Microsoft SQL Server}
+Support for Microsoft SQL Server was introduced in MODX Revolution 2.1
+
+Depending on your SQL Server&#39;s network configuration, there are different ways you may specify your host.
+
+* Named pipe: (local)/SQLEXPRESS&amp;nbsp;
+* Tcp/ip: 127.0.0.1,2301 (IP, port)
+{info}
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check to make sure your database username and password are correct. Also, if your user does not have access to create a database, you might need to do that manually.
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+{note}If you get a blank screen or cannot proceed after clicking &#39;Install&#39;, verify these steps:
+
+# Make sure the directories &quot;/core/packages&quot;,&quot;/core/cache&quot;, &quot;/core/import&quot;, and &quot;/core/export&quot; are writable.
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl\! Just make it a blank file\!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+h2. Post-Installation Summary
+
+MODx will then let you know if any errors occurred during install, and prompt you to attempt reinstallation should any of those errors have occurred.
+
+When install is successful, click &#39;Next&#39; to proceed, and you&#39;ll be presented with one final option:
+
+!setup-cleanup1.png!
+
+MODx recommends that you make sure to remove the setup/ directory after installing, to safeguard your site from anyone else trying to run setup on your site. You can do this by clicking the &#39;Check this to DELETE the setup directory from the filesystem.&#39; checkbox.
+
+When ready, click &#39;Login&#39; to be presented with the Login form for the manager interface. You&#39;re finished\!
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here: [http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617] will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h3. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+
+h3. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"35095233";s:3:"ver";s:1:"1";s:4:"code";s:6351:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Installation] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ and core/config/ directories are writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+
+&amp;nbsp; !setup-db-1.png!
+
+h3. Database Type
+
+{note}Support for Microsoft SQL Server was introduced in MODX Revolution 2.1{note}
+
+h3. Hostname
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;.
+
+h4. MySQL
+
+If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.
+
+If you are running your MySQL server with networking disabled, you can specify the socket name like this: &quot;;unix_socket=MySQL&quot;.
+
+h4. Microsoft SQL Server
+
+Depending on your SQL Server&#39;s network configuration, there are different ways you may specify your host.
+
+* Named pipe: (local)/SQLEXPRESS&amp;nbsp;
+* Tcp/ip: 127.0.0.1,2301 (IP, port)
+
+h3. Table Prefix
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check to make sure your database username and password are correct. Also, if your user does not have access to create a database, you might need to do that manually.
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+{note}If you get a blank screen or cannot proceed after clicking &#39;Install&#39;, verify these steps:
+
+# Make sure the directories &quot;/core/packages&quot;,&quot;/core/cache&quot;, &quot;/core/import&quot;, and &quot;/core/export&quot; are writable.
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl\! Just make it a blank file\!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+h2. Post-Installation Summary
+
+MODx will then let you know if any errors occurred during install, and prompt you to attempt reinstallation should any of those errors have occurred.
+
+When install is successful, click &#39;Next&#39; to proceed, and you&#39;ll be presented with one final option:
+
+!setup-cleanup1.png!
+
+MODx recommends that you make sure to remove the setup/ directory after installing, to safeguard your site from anyone else trying to run setup on your site. You can do this by clicking the &#39;Check this to DELETE the setup directory from the filesystem.&#39; checkbox.
+
+When ready, click &#39;Login&#39; to be presented with the Login form for the manager interface. You&#39;re finished\!
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here: [http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617] will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h3. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+
+h3. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"35095231";s:3:"ver";s:1:"1";s:4:"code";s:6350:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Installation] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ and core/config/ directories are writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+&amp;nbsp; !setup-db-1.png!
+
+h3. Database Type
+
+{note}Support for Microsoft SQL Server was introduced in MODX Revolution 2.1{note}
+
+h3. Hostname
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;.
+
+h4. MySQL
+
+If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.
+
+If you are running your MySQL server with networking disabled, you can specify the socket name like this: &quot;;unix_socket=MySQL&quot;.
+
+h4. Microsoft SQL Server
+
+Depending on your SQL Server&#39;s network configuration, there are different ways you may specify your host.
+
+* Named pipe: (local)/SQLEXPRESS&amp;nbsp;
+* Tcp/ip: 127.0.0.1,2301 (IP, port)
+
+h3. Table Prefix
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check to make sure your database username and password are correct. Also, if your user does not have access to create a database, you might need to do that manually.
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+{note}If you get a blank screen or cannot proceed after clicking &#39;Install&#39;, verify these steps:
+
+# Make sure the directories &quot;/core/packages&quot;,&quot;/core/cache&quot;, &quot;/core/import&quot;, and &quot;/core/export&quot; are writable.
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl\! Just make it a blank file\!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+h2. Post-Installation Summary
+
+MODx will then let you know if any errors occurred during install, and prompt you to attempt reinstallation should any of those errors have occurred.
+
+When install is successful, click &#39;Next&#39; to proceed, and you&#39;ll be presented with one final option:
+
+!setup-cleanup1.png!
+
+MODx recommends that you make sure to remove the setup/ directory after installing, to safeguard your site from anyone else trying to run setup on your site. You can do this by clicking the &#39;Check this to DELETE the setup directory from the filesystem.&#39; checkbox.
+
+When ready, click &#39;Login&#39; to be presented with the Login form for the manager interface. You&#39;re finished\!
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here: [http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617] will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h3. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+
+h3. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"35095230";s:3:"ver";s:1:"1";s:4:"code";s:6372:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Installation] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ and core/config/ directories are writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information: !setup-db-1.png!
+
+h3. Database Type
+
+{note}MODX Revolution 2.0.x works with MySQL alone. The &#39;Database type&#39; field was introduced in 2.1.0{note}
+
+h3. Hostname
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;.
+
+h4. MySQL
+
+If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.
+
+If you are running your MySQL server with networking disabled, you can specify the socket name like this: &quot;;unix_socket=MySQL&quot;.
+
+h4. Microsoft SQL Server
+
+Depending on your SQL Server&#39;s network configuration, there are different ways you may specify your host.
+
+* Named pipe: (local)/SQLEXPRESS&amp;nbsp;
+* Tcp/ip: 127.0.0.1,2301 (IP, port)
+
+h3. Table Prefix
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check to make sure your database username and password are correct. Also, if your user does not have access to create a database, you might need to do that manually.
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+{note}If you get a blank screen or cannot proceed after clicking &#39;Install&#39;, verify these steps:
+
+# Make sure the directories &quot;/core/packages&quot;,&quot;/core/cache&quot;, &quot;/core/import&quot;, and &quot;/core/export&quot; are writable.
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl\! Just make it a blank file\!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+h2. Post-Installation Summary
+
+MODx will then let you know if any errors occurred during install, and prompt you to attempt reinstallation should any of those errors have occurred.
+
+When install is successful, click &#39;Next&#39; to proceed, and you&#39;ll be presented with one final option:
+
+!setup-cleanup1.png!
+
+MODx recommends that you make sure to remove the setup/ directory after installing, to safeguard your site from anyone else trying to run setup on your site. You can do this by clicking the &#39;Check this to DELETE the setup directory from the filesystem.&#39; checkbox.
+
+When ready, click &#39;Login&#39; to be presented with the Login form for the manager interface. You&#39;re finished\!
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here: [http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617] will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h3. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+
+h3. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"35095228";s:3:"ver";s:1:"1";s:4:"code";s:5833:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Installation] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ and core/config/ directories are writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+
+!setup-db1.png!
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;. If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check to make sure your database username and password are correct. Also, if your user does not have access to create a database, you might need to do that manually.
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+{note}If you get a blank screen or cannot proceed after clicking &#39;Install&#39;, verify these steps:
+
+# Make sure the directories &quot;/core/packages&quot;,&quot;/core/cache&quot;, &quot;/core/import&quot;, and &quot;/core/export&quot; are writable.
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl! Just make it a blank file!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+h2. Post-Installation Summary
+
+MODx will then let you know if any errors occurred during install, and prompt you to attempt reinstallation should any of those errors have occurred.
+
+When install is successful, click &#39;Next&#39; to proceed, and you&#39;ll be presented with one final option:
+
+!setup-cleanup1.png!
+
+MODx recommends that you make sure to remove the setup/ directory after installing, to safeguard your site from anyone else trying to run setup on your site. You can do this by clicking the &#39;Check this to DELETE the setup directory from the filesystem.&#39; checkbox.
+
+When ready, click &#39;Login&#39; to be presented with the Login form for the manager interface. You&#39;re finished!
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here: [http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617] will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h3. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+
+h3. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:8;a:3:{s:2:"id";s:8:"33227131";s:3:"ver";s:1:"1";s:4:"code";s:5832:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Installation] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ and core/config/ directories are writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+
+!setup-db1.png!
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;. If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check to make sure your database username and password are correct. Also, if your user does not have access to create a database, you might need to do that manually.
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+{note}If you get a blank screen or cannot proceed after clicking &#39;Install&#39;, verify these steps:
+
+# Make sure the directories &quot;/core/cache&quot;, &quot;/core/packages&quot;,&quot;/core/cache&quot;, and &quot;/core/export&quot; are writable.
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl! Just make it a blank file!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+h2. Post-Installation Summary
+
+MODx will then let you know if any errors occurred during install, and prompt you to attempt reinstallation should any of those errors have occurred.
+
+When install is successful, click &#39;Next&#39; to proceed, and you&#39;ll be presented with one final option:
+
+!setup-cleanup1.png!
+
+MODx recommends that you make sure to remove the setup/ directory after installing, to safeguard your site from anyone else trying to run setup on your site. You can do this by clicking the &#39;Check this to DELETE the setup directory from the filesystem.&#39; checkbox.
+
+When ready, click &#39;Login&#39; to be presented with the Login form for the manager interface. You&#39;re finished!
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here: [http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617] will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h3. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+
+h3. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:9;a:3:{s:2:"id";s:8:"33227130";s:3:"ver";s:1:"1";s:4:"code";s:5889:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Installation] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ and core/config/ directories are writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+
+!setup-db1.png!
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;. If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check to make sure your database username and password are correct. Also, if your user does not have access to create a database, you might need to do that manually.
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+{note}If you get a blank screen or cannot proceed after clicking &#39;Install&#39;, verify these steps:
+
+# Make sure the directories &quot;/\[root\]&quot;, &quot;/core/packages&quot;,&quot;/core/cache&quot;, and &quot;/core/export&quot; are writable. (root will be the actual directory you are installing to.)
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl! Just make it a blank file!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+h2. Post-Installation Summary
+
+MODx will then let you know if any errors occurred during install, and prompt you to attempt reinstallation should any of those errors have occurred.
+
+When install is successful, click &#39;Next&#39; to proceed, and you&#39;ll be presented with one final option:
+
+!setup-cleanup1.png!
+
+MODx recommends that you make sure to remove the setup/ directory after installing, to safeguard your site from anyone else trying to run setup on your site. You can do this by clicking the &#39;Check this to DELETE the setup directory from the filesystem.&#39; checkbox.
+
+When ready, click &#39;Login&#39; to be presented with the Login form for the manager interface. You&#39;re finished!
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here: [http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617] will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h3. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+
+h3. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:10;a:3:{s:2:"id";s:8:"20938757";s:3:"ver";s:1:"1";s:4:"code";s:5888:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Installation] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ and core/config directories are writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+
+!setup-db1.png!
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;. If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check to make sure your database username and password are correct. Also, if your user does not have access to create a database, you might need to do that manually.
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+{note}If you get a blank screen or cannot proceed after clicking &#39;Install&#39;, verify these steps:
+
+# Make sure the directories &quot;/\[root\]&quot;, &quot;/core/packages&quot;,&quot;/core/cache&quot;, and &quot;/core/export&quot; are writable. (root will be the actual directory you are installing to.)
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl! Just make it a blank file!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+h2. Post-Installation Summary
+
+MODx will then let you know if any errors occurred during install, and prompt you to attempt reinstallation should any of those errors have occurred.
+
+When install is successful, click &#39;Next&#39; to proceed, and you&#39;ll be presented with one final option:
+
+!setup-cleanup1.png!
+
+MODx recommends that you make sure to remove the setup/ directory after installing, to safeguard your site from anyone else trying to run setup on your site. You can do this by clicking the &#39;Check this to DELETE the setup directory from the filesystem.&#39; checkbox.
+
+When ready, click &#39;Login&#39; to be presented with the Login form for the manager interface. You&#39;re finished!
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here: [http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617] will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h3. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+
+h3. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:11;a:3:{s:2:"id";s:8:"20938756";s:3:"ver";s:1:"1";s:4:"code";s:5869:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Installation] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ directory is writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+
+!setup-db1.png!
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;. If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check to make sure your database username and password are correct. Also, if your user does not have access to create a database, you might need to do that manually.
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+{note}If you get a blank screen or cannot proceed after clicking &#39;Install&#39;, verify these steps:
+
+# Make sure the directories &quot;/\[root\]&quot;, &quot;/core/packages&quot;,&quot;/core/cache&quot;, and &quot;/core/export&quot; are writable. (root will be the actual directory you are installing to.)
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl! Just make it a blank file!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+h2. Post-Installation Summary
+
+MODx will then let you know if any errors occurred during install, and prompt you to attempt reinstallation should any of those errors have occurred.
+
+When install is successful, click &#39;Next&#39; to proceed, and you&#39;ll be presented with one final option:
+
+!setup-cleanup1.png!
+
+MODx recommends that you make sure to remove the setup/ directory after installing, to safeguard your site from anyone else trying to run setup on your site. You can do this by clicking the &#39;Check this to DELETE the setup directory from the filesystem.&#39; checkbox.
+
+When ready, click &#39;Login&#39; to be presented with the Login form for the manager interface. You&#39;re finished!
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here: [http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617] will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h3. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+
+h3. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:12;a:3:{s:2:"id";s:8:"18678587";s:3:"ver";s:1:"1";s:4:"code";s:5868:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Downloading] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ directory is writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+
+!setup-db1.png!
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;. If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check to make sure your database username and password are correct. Also, if your user does not have access to create a database, you might need to do that manually.
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+{note}If you get a blank screen or cannot proceed after clicking &#39;Install&#39;, verify these steps:
+
+# Make sure the directories &quot;/\[root\]&quot;, &quot;/core/packages&quot;,&quot;/core/cache&quot;, and &quot;/core/export&quot; are writable. (root will be the actual directory you are installing to.)
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl! Just make it a blank file!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+h2. Post-Installation Summary
+
+MODx will then let you know if any errors occurred during install, and prompt you to attempt reinstallation should any of those errors have occurred.
+
+When install is successful, click &#39;Next&#39; to proceed, and you&#39;ll be presented with one final option:
+
+!setup-cleanup1.png!
+
+MODx recommends that you make sure to remove the setup/ directory after installing, to safeguard your site from anyone else trying to run setup on your site. You can do this by clicking the &#39;Check this to DELETE the setup directory from the filesystem.&#39; checkbox.
+
+When ready, click &#39;Login&#39; to be presented with the Login form for the manager interface. You&#39;re finished!
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here: [http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617] will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h3. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+
+h3. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:13;a:3:{s:2:"id";s:8:"18678570";s:3:"ver";s:1:"9";s:4:"code";s:5713:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Downloading] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ directory is writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+
+!setup-db1.png!
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;. If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check the 
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+{note}If you get a blank screen or cannot proceed after clicking &#39;Install&#39;, verify these steps:
+
+# Make sure the directories &quot;/\[root\]&quot;, &quot;/core/packages&quot;,&quot;/core/cache&quot;, and &quot;/core/export&quot; are writable. (root will be the actual directory you are installing to.)
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl! Just make it a blank file!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+h2. Post-Installation Summary
+
+MODx will then let you know if any errors occurred during install, and prompt you to attempt reinstallation should any of those errors have occurred.
+
+When install is successful, click &#39;Next&#39; to proceed, and you&#39;ll be presented with one final option:
+
+!setup-cleanup1.png!
+
+MODx recommends that you make sure to remove the setup/ directory after installing, to safeguard your site from anyone else trying to run setup on your site. You can do this by clicking the &#39;Check this to DELETE the setup directory from the filesystem.&#39; checkbox.
+
+When ready, click &#39;Login&#39; to be presented with the Login form for the manager interface. You&#39;re finished!
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here: [http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617] will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h3. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+
+h3. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:14;a:3:{s:2:"id";s:8:"18678538";s:3:"ver";s:1:"8";s:4:"code";s:5715:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Downloading] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ directory is writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+
+!setup-db1.png!
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;. If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check the 
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+{note}If you get a blank screen or cannot proceed after clicking &#39;Install&#39;, verify these steps:
+
+# Make sure the directories &quot;/\[root\]&quot;, &quot;/core/packages&quot;,&quot;/core/cache&quot;, and &quot;/core/export&quot; are writable. (root will be the actual directory you are installing to.)
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl! Just make it a blank file!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+h2. Post-Installation Summary
+
+MODx will then let you know if any errors occurred during install, and prompt you to attempt reinstallation should any of those errors have occurred.
+
+When install is successful, click &#39;Next&#39; to proceed, and you&#39;ll be presented with one final option:
+
+!setup-cleanup1.png!
+
+MODx recommends that you make sure to remove the setup/ directory after installing, to safeguard your site from anyone else trying to run setup on your site. You can do this by clicking the &#39;Check this to DELETE the setup directory from the filesystem.&#39; checkbox.
+
+When ready, click &#39;Login&#39; to be presented with the Login form for the manager interface. You&#39;re finished!
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here:
+
+[http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617]
+
+will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h3. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+
+h3. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:15;a:3:{s:2:"id";s:8:"18678537";s:3:"ver";s:1:"7";s:4:"code";s:5264:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Downloading] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}Before running setup, make sure your core/cache/ directory is writable by PHP.{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+
+!setup-db1.png!
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;. If you have your MySQL server on a different port, specify it like so: &quot;my.database.com;port=3307&quot;, with the ;port= appending the IP/hostname.
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check the 
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+MODx will then proceed with a list of checks to verify that your system is ready for installing. If any of these fail, you&#39;ll need to proceed with the directions that it suggests to make sure your environment meets the [Server Requirements] and has the correct directories writable.
+
+Once you&#39;re ready, and all the checks pass, click &#39;Install&#39; to proceed.
+
+h2. Post-Installation Summary
+
+
+
+h2. Database Considerations
+
+If your database is running on a separate port, specify the hostname like so:
+
+
+
+{warning}It&#39;s a good idea to make sure to remove the setup/ directory after installing, to safeguard your site.{warning}
+
+{note}
+If you get a blank screen or cannot proceed in the installer, verify these steps:
+# Make sure the directories &quot;/\[root\]&quot;, &quot;/core/packages&quot;,&quot;/core/cache&quot;, and &quot;/core/export&quot; are writable. (root will be the actual directory you are installing to.)
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl! Just make it a blank file!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+
+
+h2. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+\\
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here:
+
+[http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617]
+
+will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h2. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:16;a:3:{s:2:"id";s:8:"18678535";s:3:"ver";s:1:"6";s:4:"code";s:4792:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+After you&#39;ve [downloaded|Downloading] MODx Revolution, start the install process by loading your web browser and running the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}
+If you get a blank screen or cannot proceed in the installer, verify these steps:
+# Make sure the directories &quot;/\[root\]&quot;, &quot;/core/packages&quot;,&quot;/core/cache&quot;, and &quot;/core/export&quot; are writable. (root will be the actual directory you are installing to.)
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl! Just make it a blank file!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+From there you will be asked to choose a language, and be presented with a welcome screen. Click Next when you&#39;re ready.
+
+h2. Install Options
+
+After this, you&#39;ll be presented with a screen with some Install Options:
+
+!setup-opt1.png!
+
+The New Installation option should be the only available option for you to choose. If you need to adjust the file permissions for your webserver, you can do so in the textfields below. Most servers will be fine with the default values.
+
+When you&#39;re finished, click Next to proceed.
+
+h2. Database Options
+
+From here, you will get a form asking you for your database information:
+
+!setup-db1.png!
+
+Add in your database hostname, which is the URL at which your database is located. For most users, this will be &#39;localhost&#39;. If you have your MySQL server on a different port, specify it like so: &quot;123.45.67.89;port=123&quot;, with the ;port= appending the IP.
+
+Also, if you want, you can specify a different table prefix here. This tells MODx to prefix the tables with this value - this is useful should you want to make multiple MODx installations on one database.
+
+When finished, click the &#39;Test database server connection and view collations&#39; link. Should you have any errors, they will show below. If you do have errors, check the 
+
+h3. Collations and Charsets
+
+This will then popup another form for setting your database charset and collation:
+
+!setup-db2.png!
+
+For most users you can leave these values at what they are. However, if you need to change them, *make sure* the collation matches the charset. Click the &#39;Create or test selection of your database.&#39; after you&#39;ve finished.
+
+h3. Creating an Administrator User
+
+!setup-db3.png!
+
+This form will now present you with a few fields for setting up your administrator user. Specify a username that you want to be the administrator username.
+
+{note}MODx recommends *not* using &#39;admin&#39;, as this is a common administrator username and is often the first username hackers check.{note}
+
+From there, put in your email (or the email of your administrator) and specify a password. Click next when you&#39;re finished.
+
+
+h2. Pre-Installation Checks
+
+h2. Database Considerations
+
+If your database is running on a separate port, specify the hostname like so:
+
+{quote}my.database.com;port=3307{quote}
+
+{warning}It&#39;s a good idea to make sure to remove the setup/ directory after installing, to safeguard your site.{warning}
+
+
+
+h2. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+\\
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here:
+
+[http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617]
+
+will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h2. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:17;a:3:{s:2:"id";s:8:"18678533";s:3:"ver";s:1:"5";s:4:"code";s:3513:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+To start installation of MODx Revolution, start your web browser and run the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}
+If you get a blank screen or cannot proceed in the installer, verify these steps:
+# Make sure the directories &quot;/\[root\]&quot;, &quot;/core/packages&quot;,&quot;/core/cache&quot;, and &quot;/core/export&quot; are writable. (root will be the actual directory you are installing to.)
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl! Just make it a blank file!*
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+From there you will be asked to choose a language and agree to licensing. After this, you&#39;ll be presented with some options:
+
+* *New Installation*: Choose this if you&#39;re wanting to create a fresh install of MODx. Note that this may completely wipe any existing data you have in your database.
+
+* *Upgrade Installation*: Choose this if you&#39;re wanting to upgrade from a prior Revolution installation. Currently Revolution 2.0 does not support upgrading from MODx Evolution (1.0) sites fully - the database tables will be upgraded; however, the component (snippet/chunk/etc) tags will not be, and you&#39;ll have to do that yourself should you choose to upgrade. You&#39;ll also need to upgrade any custom snippets/modules/etc you might have.
+
+* *Advanced Upgrade Install*: Choose this if you&#39;re moving the install to a different server, or wanting to change the database information.
+
+
+From this point on, the installation proceeds as normal.
+
+h3. Database Considerations
+
+If your database is running on a separate port, specify the hostname like so:
+
+{quote}my.database.com;port=3307{quote}
+
+{warning}It&#39;s a good idea to make sure to remove the setup/ directory after installing, to safeguard your site.{warning}
+
+h2. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+\\
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here:
+
+[http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617]
+
+will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h2. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:18;a:3:{s:2:"id";s:8:"18678530";s:3:"ver";s:1:"4";s:4:"code";s:3664:"\\
+
+{toc}
+
+h2. Beginning Setup
+
+To start installation of MODx Revolution, start your web browser and run the setup script by navigating to the *setup/* folder.
+
+{info}You might want to check the [Server Requirements] page first. If you&#39;re still having issues installing, please read the [Troubleshooting Installation] page.{info}
+
+{note}
+If you get a blank screen or cannot proceed in the installer, verify these steps:
+# Make sure the directories &quot;/\[root\]&quot;, &quot;/core/packages&quot;,&quot;/core/cache&quot;, and &quot;/core/export&quot; are writable. (root will be the actual directory you are installing to.)
+# Make sure &quot;/manager&quot;, &quot;/connectors&quot; are writable.
+# Make sure your php.ini setting sets memory_limit to 128M, and max_execution_time to 120
+# Create a blank file &quot;/core/config/config.inc.php&quot; and make it writable. *DO NOT COPY config.inc.tpl! Just make it a blank file!*
+# Try downloading the traditional Revolution download instead of the advanced.
+# Post a message in the [Revolution forum|http://modxcms.com/forums/index.php/board,280.0.html] regarding your issue. State your server setup and installation info, and we&#39;ll try and help you find a solution.
+{note}
+
+From there you will be asked to choose a language and agree to licensing. After this, you&#39;ll be presented with some options:
+
+* *New Installation*: Choose this if you&#39;re wanting to create a fresh install of MODx. Note that this may completely wipe any existing data you have in your database.
+
+* *Upgrade Installation*: Choose this if you&#39;re wanting to upgrade from a prior Revolution installation. Currently Revolution 2.0 does not support upgrading from MODx Evolution (1.0) sites fully - the database tables will be upgraded; however, the component (snippet/chunk/etc) tags will not be, and you&#39;ll have to do that yourself should you choose to upgrade. You&#39;ll also need to upgrade any custom snippets/modules/etc you might have.
+
+* *Advanced Upgrade Install*: Choose this if you&#39;re moving the install to a different server, or wanting to change the database information.
+
+
+From this point on, the installation proceeds as normal.
+
+h3. Database Considerations
+
+If your database is running on a separate port, specify the hostname like so:
+
+{quote}my.database.com;port=3307{quote}
+
+{warning}It&#39;s a good idea to make sure to remove the setup/ directory after installing, to safeguard your site.{warning}
+
+h2. Installing Packages
+
+For information on installing 3rd-party packages, see the [How to Install Packages|Package Management] article.
+\\
+
+h2. Additional Info
+
+Some other special cases:
+
+h3. WAMPServer 2.0i
+
+Please see this article: [Problems with WAMPServer 2.0i]
+
+h3. MAMP on MacOSX
+
+MAMP (including latest 1.8.4) works fine with MODx Revolution, with one exception. You cannot use eAccelerator as the caching system, as the drivers compiled with MAMP are faulty with regards to PDO and will cause Apache kernel errors. Select the &#39;xCache&#39; caching drivers to remedy this.
+
+h3. Debian
+
+Debian uses outdated MySQL drivers for its PHP build that will need to be updated; please see the [MODx Revolution on Debian] article for more information.
+
+h3. Vista and XAMPP
+
+There have been reported problems with installing Revolution on 64-bit Vista with XAMPP. We cannot guarantee a working solution on that OS and setup at this time.
+
+{note}Some users have reported that applying a fix found here:
+
+[http://www.apachefriends.org/f/viewtopic.php?f=16&amp;t=32617]
+
+will fix Apache crashing errors with PDO support in XAMPP.{note}
+
+h2. See Also
+
+{pagetree:root=Basic Installation}
+
+\\
+
+{scrollbar}";}i:19;a:3:{s:2:"id";s:8:"18678529";s:3:"ver";s:1:"3";s:4:"code";s:78:"\\
+
+{pagetree:root=Basic Installation|startDepth=4|sort=position}
+
+{scrollbar}";}i:20;a:3:{s:2:"id";s:8:"18678473";s:3:"ver";s:1:"2";s:4:"code";s:72:"\\
+
+{pagetree:root=Installation|startDepth=4|sort=position}
+
+{scrollbar}";}i:21;a:3:{s:2:"id";s:8:"18678472";s:3:"ver";s:1:"1";s:4:"code";s:72:"\\
+
+{pagetree:root=Installation|startDepth=4|sort=position}
+
+{scrollbar}";}}}

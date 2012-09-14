@@ -1,0 +1,119 @@
+a:5:{s:2:"id";s:8:"35586535";s:4:"info";a:4:{s:6:"Title:";s:21:"Adding a Media Source";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:36:"[revolution20:Adding a Media Source]";}s:6:"parent";s:8:"35586532";s:6:"source";s:2444:"{toc}
+
+This article describes how to add a [Media Source|Media Sources] to your MODX installation.
+
+h2. Creating the Media Source
+
+First find your way to the Media Sources page, often located under &quot;Tools&quot;. From here, you will see a grid of your currently available media sources:
+
+!20110907-8gp9xhgh2dphmhbnwsihtxaeya.jpeg!
+
+Before we proceed, it is important to note the difference between a &quot;Media Source&quot; and a &quot;Media Source Type&quot; - a source type is a classification of a Source, such as a S3 Source Type, or a Filesystem Source Type. These types point the Source to different media storage systems.
+
+For now, go ahead and create a Media Source by clicking on the &quot;Create New Media Source&quot; button above the grid. This should pop up a window with a basic form for the source:
+
+!20110907-bmtk5qd8b27w8rfhyn4xftw2wj.jpeg!
+
+Go ahead and choose the Filesystem source type for now, and give it a nice name. For information on creating an S3 Media Source, [click here|Media Source Type - S3]. Once that&#39;s done, you&#39;ll see your Media Source in the grid. Right-click on it, and click &quot;Update Media Source&quot;.
+
+h2. Editing your new Media Source
+
+This screen will show your new media source&#39;s basic information, a grid with type-specific properties for the source that you can change, and an &quot;Access Permissions&quot; tab that will let you restrict access to the source.
+
+For now, go ahead and set the &#39;basePath&#39; property to &quot;assets/&quot;, and then the &#39;baseUrl&#39; property to &quot;assets/&quot; as well. Save the source.
+
+{note:title=Right-Click Only}
+All properties are available only after you have created the Media Source and then right-click it to edit it.
+{note}
+
+The other available properties include the following:
+
+* basePath
+* basePathRelative (yes|no)
+* baseUrl
+* baseUrlRelative (yes|no)
+* allowedFileTypes
+* imageExtensions
+* thumbnailType
+* thumbnailQuality
+* skipFiles
+
+
+h2. Using Your Source
+
+After you&#39;ve created it, you should be able to see the source in the dropdown in the left-hand tree under the Files tab. If you select that source, you should now only be able to see the contents of the &#39;assets/&#39; directory in your MODX installation! (If you have not yet created an assets/ directory in your install, do so now.)
+
+Furthermore, you can attach this Source to a TV. Read the [Assigning Media Sources to TVs] article to learn how.";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"35586535";s:3:"ver";s:1:"2";s:4:"code";s:2444:"{toc}
+
+This article describes how to add a [Media Source|Media Sources] to your MODX installation.
+
+h2. Creating the Media Source
+
+First find your way to the Media Sources page, often located under &quot;Tools&quot;. From here, you will see a grid of your currently available media sources:
+
+!20110907-8gp9xhgh2dphmhbnwsihtxaeya.jpeg!
+
+Before we proceed, it is important to note the difference between a &quot;Media Source&quot; and a &quot;Media Source Type&quot; - a source type is a classification of a Source, such as a S3 Source Type, or a Filesystem Source Type. These types point the Source to different media storage systems.
+
+For now, go ahead and create a Media Source by clicking on the &quot;Create New Media Source&quot; button above the grid. This should pop up a window with a basic form for the source:
+
+!20110907-bmtk5qd8b27w8rfhyn4xftw2wj.jpeg!
+
+Go ahead and choose the Filesystem source type for now, and give it a nice name. For information on creating an S3 Media Source, [click here|Media Source Type - S3]. Once that&#39;s done, you&#39;ll see your Media Source in the grid. Right-click on it, and click &quot;Update Media Source&quot;.
+
+h2. Editing your new Media Source
+
+This screen will show your new media source&#39;s basic information, a grid with type-specific properties for the source that you can change, and an &quot;Access Permissions&quot; tab that will let you restrict access to the source.
+
+For now, go ahead and set the &#39;basePath&#39; property to &quot;assets/&quot;, and then the &#39;baseUrl&#39; property to &quot;assets/&quot; as well. Save the source.
+
+{note:title=Right-Click Only}
+All properties are available only after you have created the Media Source and then right-click it to edit it.
+{note}
+
+The other available properties include the following:
+
+* basePath
+* basePathRelative (yes|no)
+* baseUrl
+* baseUrlRelative (yes|no)
+* allowedFileTypes
+* imageExtensions
+* thumbnailType
+* thumbnailQuality
+* skipFiles
+
+
+h2. Using Your Source
+
+After you&#39;ve created it, you should be able to see the source in the dropdown in the left-hand tree under the Files tab. If you select that source, you should now only be able to see the contents of the &#39;assets/&#39; directory in your MODX installation! (If you have not yet created an assets/ directory in your install, do so now.)
+
+Furthermore, you can attach this Source to a TV. Read the [Assigning Media Sources to TVs] article to learn how.";}i:1;a:3:{s:2:"id";s:8:"38633480";s:3:"ver";s:1:"1";s:4:"code";s:2079:"{toc}
+
+This article describes how to add a [Media Source|Media Sources] to your MODX installation.
+
+h2. Creating the Media Source
+
+First find your way to the Media Sources page, often located under &quot;Tools&quot;. From here, you will see a grid of your currently available media sources:
+
+!20110907-8gp9xhgh2dphmhbnwsihtxaeya.jpeg!
+
+Before we proceed, it is important to note the difference between a &quot;Media Source&quot; and a &quot;Media Source Type&quot; - a source type is a classification of a Source, such as a S3 Source Type, or a Filesystem Source Type. These types point the Source to different media storage systems.
+
+For now, go ahead and create a Media Source by clicking on the &quot;Create New Media Source&quot; button above the grid. This should pop up a window with a basic form for the source:
+
+!20110907-bmtk5qd8b27w8rfhyn4xftw2wj.jpeg!
+
+Go ahead and choose the Filesystem source type for now, and give it a nice name. For information on creating an S3 Media Source, [click here|Media Source Type - S3]. Once that&#39;s done, you&#39;ll see your Media Source in the grid. Right-click on it, and click &quot;Update Media Source&quot;.
+
+h2. Editing your new Media Source
+
+This screen will show your new media source&#39;s basic information, a grid with type-specific properties for the source that you can change, and an &quot;Access Permissions&quot; tab that will let you restrict access to the source.
+
+For now, go ahead and set the &#39;basePath&#39; property to &quot;assets/&quot;, and then the &#39;baseUrl&#39; property to &quot;assets/&quot; as well. Save the source.
+
+h2. Using Your Source
+
+After you&#39;ve created it, you should be able to see the source in the dropdown in the left-hand tree under the Files tab. If you select that source, you should now only be able to see the contents of the &#39;assets/&#39; directory in your MODX installation! (If you have not yet created an assets/ directory in your install, do so now.)
+
+Furthermore, you can attach this Source to a TV. Read the [Assigning Media Sources to TVs] article to learn how.";}}}

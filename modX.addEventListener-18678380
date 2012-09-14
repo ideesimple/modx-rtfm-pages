@@ -1,0 +1,53 @@
+a:5:{s:2:"id";s:8:"18678380";s:4:"info";a:4:{s:6:"Title:";s:21:"modX.addEventListener";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:36:"[revolution20:modX.addEventListener]";}s:6:"parent";s:8:"18678361";s:6:"source";s:448:"\\
+
+h2. modX::addEventListener
+
+Add a plugin to the eventMap within the current execution cycle.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#addEventListener
+
+{code}
+boolean addEventListener (string $event, integer $pluginId)
+{code}
+
+h2. Example
+
+Add a Plugin with ID 2 to the Event &#39;OnChunkPrerender&#39;:
+{code}
+$modx-&gt;addEventListener(&#39;OnChunkPrerender&#39;,12);
+{code}
+
+h2. See Also
+
+* [modX]
+* [Plugins]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678380";s:3:"ver";s:1:"1";s:4:"code";s:448:"\\
+
+h2. modX::addEventListener
+
+Add a plugin to the eventMap within the current execution cycle.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#addEventListener
+
+{code}
+boolean addEventListener (string $event, integer $pluginId)
+{code}
+
+h2. Example
+
+Add a Plugin with ID 2 to the Event &#39;OnChunkPrerender&#39;:
+{code}
+$modx-&gt;addEventListener(&#39;OnChunkPrerender&#39;,12);
+{code}
+
+h2. See Also
+
+* [modX]
+* [Plugins]
+
+{scrollbar}";}}}

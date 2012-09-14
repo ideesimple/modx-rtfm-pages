@@ -1,0 +1,91 @@
+a:5:{s:2:"id";s:8:"18678086";s:4:"info";a:4:{s:6:"Title:";s:5:"Roles";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:20:"[revolution20:Roles]";}s:6:"parent";s:8:"18678342";s:6:"source";s:2414:"\\
+
+h2. What is a Role?
+
+A role is a position or status held within a certain situation. In MODx, it can be used to group Users into a position or status within a User Group, e.g. &quot;Editor&quot; or &quot;Front-end Read Only&quot;.  
+
+Roles in MODx use an integer value called &quot;Authority&quot;. *Lower numbers represent a stronger authority.*   E.g. a Role with Authority 10 will inherit any and all Group Policies assigned to itself and to any roles defined with Authority 11, but a user Role with Authority 11 does NOT inherit any of the Group Policies from Role 10.  
+
+Be sure you clarify your language when talking about Authority because this inverse relationship can lead to some confusing sentences. 
+
+{note}It helps to think of &quot;Authority&quot; as ordinal numbers: first, second, third, etc.  *Authority=1* is the first authority and trumps *Authority=2* (i.e. the second authority).{note}
+
+You should generally avoid duplicate authority numbers.
+
+h2. Usage
+
+One common example is to create Roles that mimic a basic employee position structure. Let&#39;s say we create the following Roles and Authority levels:
+
+* Administrator - 0
+* Director - 1
+* Coordinator - 2
+* Supervisor - 3
+* Employee - 9999
+
+!roles-grid.png!
+
+We can then create a User Group called &quot;HR Department&quot;. Within that User Group, we&#39;ll assign Users to those Roles (you can have multiple Users per Role, as well).
+
+Now, let&#39;s say John has a Role of Coordinator. Mark has a Role of Supervisor. We&#39;re going to give Mark&#39;s &quot;HR Deparment&quot; User Group an Access Policy (which is a set of Permissions) called &quot;AccountPolicy&quot; that has the following Access Permissions in it:
+
+* view_accounts
+* save_accounts
+
+We&#39;ve assigned this Policy to the &quot;web&quot; context for our User Group &quot;HR Department&quot;. We then set its Minimum Role value to &quot;Supervisor&quot;:
+
+!ug-ctx-grid1.png!
+
+This means that Mark has these Permissions, since he&#39;s in the User Group, and has at least the Role of &quot;Supervisor&quot; (which is the Role he has, specifically).
+
+But this *also* means that John has these Permissions as well, since he is a &quot;Coordinator&quot; which has a stronger Authority level than &quot;Supervisor&quot;. So, John as Coordinator has &quot;inherited&quot; the Permissions than Mark had as Supervisor.
+
+h2. See Also
+
+{pagetree:root=Security}
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678086";s:3:"ver";s:1:"1";s:4:"code";s:2414:"\\
+
+h2. What is a Role?
+
+A role is a position or status held within a certain situation. In MODx, it can be used to group Users into a position or status within a User Group, e.g. &quot;Editor&quot; or &quot;Front-end Read Only&quot;.  
+
+Roles in MODx use an integer value called &quot;Authority&quot;. *Lower numbers represent a stronger authority.*   E.g. a Role with Authority 10 will inherit any and all Group Policies assigned to itself and to any roles defined with Authority 11, but a user Role with Authority 11 does NOT inherit any of the Group Policies from Role 10.  
+
+Be sure you clarify your language when talking about Authority because this inverse relationship can lead to some confusing sentences. 
+
+{note}It helps to think of &quot;Authority&quot; as ordinal numbers: first, second, third, etc.  *Authority=1* is the first authority and trumps *Authority=2* (i.e. the second authority).{note}
+
+You should generally avoid duplicate authority numbers.
+
+h2. Usage
+
+One common example is to create Roles that mimic a basic employee position structure. Let&#39;s say we create the following Roles and Authority levels:
+
+* Administrator - 0
+* Director - 1
+* Coordinator - 2
+* Supervisor - 3
+* Employee - 9999
+
+!roles-grid.png!
+
+We can then create a User Group called &quot;HR Department&quot;. Within that User Group, we&#39;ll assign Users to those Roles (you can have multiple Users per Role, as well).
+
+Now, let&#39;s say John has a Role of Coordinator. Mark has a Role of Supervisor. We&#39;re going to give Mark&#39;s &quot;HR Deparment&quot; User Group an Access Policy (which is a set of Permissions) called &quot;AccountPolicy&quot; that has the following Access Permissions in it:
+
+* view_accounts
+* save_accounts
+
+We&#39;ve assigned this Policy to the &quot;web&quot; context for our User Group &quot;HR Department&quot;. We then set its Minimum Role value to &quot;Supervisor&quot;:
+
+!ug-ctx-grid1.png!
+
+This means that Mark has these Permissions, since he&#39;s in the User Group, and has at least the Role of &quot;Supervisor&quot; (which is the Role he has, specifically).
+
+But this *also* means that John has these Permissions as well, since he is a &quot;Coordinator&quot; which has a stronger Authority level than &quot;Supervisor&quot;. So, John as Coordinator has &quot;inherited&quot; the Permissions than Mark had as Supervisor.
+
+h2. See Also
+
+{pagetree:root=Security}
+
+{scrollbar}";}}}

@@ -1,0 +1,175 @@
+a:5:{s:2:"id";s:8:"35586532";s:4:"info";a:4:{s:6:"Title:";s:13:"Media Sources";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:28:"[revolution20:Media Sources]";}s:6:"parent";s:8:"35586761";s:6:"source";s:961:"{note}Media Sources are only available in MODX Revolution 2.2 or later.{note}
+
+h2. What are Media Sources?
+
+Media Sources are a feature in MODX Revolution, where one can specify the &quot;source&quot; of media in their MODX installation. This is visualized in many ways - the most common being in the left-hand Files tree, the MODx.Browser window, and file and image TVs.
+
+!sources-tree2.png!
+
+A source can be many types - from the file system itself, to an Amazon S3 bucket, to a Flickr album. MODX provides two source types with the core installation: the file system and Amazon S3 bucket integration. Other sources can be made by creating Media Source Drivers, or by downloading them from [Package Management].
+
+h2. Using Media Sources
+
+The following articles describe basic usage of media sources.
+
+* [Adding a Media Source]
+* [Assigning Media Sources to TVs]
+* [Securing a Media Source]
+* [Media Source Types]
+
+h2. See Also
+
+{pagetree:root=Media Sources}
+
+";s:8:"versions";a:7:{i:0;a:3:{s:2:"id";s:8:"35586532";s:3:"ver";s:1:"7";s:4:"code";s:961:"{note}Media Sources are only available in MODX Revolution 2.2 or later.{note}
+
+h2. What are Media Sources?
+
+Media Sources are a feature in MODX Revolution, where one can specify the &quot;source&quot; of media in their MODX installation. This is visualized in many ways - the most common being in the left-hand Files tree, the MODx.Browser window, and file and image TVs.
+
+!sources-tree2.png!
+
+A source can be many types - from the file system itself, to an Amazon S3 bucket, to a Flickr album. MODX provides two source types with the core installation: the file system and Amazon S3 bucket integration. Other sources can be made by creating Media Source Drivers, or by downloading them from [Package Management].
+
+h2. Using Media Sources
+
+The following articles describe basic usage of media sources.
+
+* [Adding a Media Source]
+* [Assigning Media Sources to TVs]
+* [Securing a Media Source]
+* [Media Source Types]
+
+h2. See Also
+
+{pagetree:root=Media Sources}
+
+";}i:1;a:3:{s:2:"id";s:8:"37683255";s:3:"ver";s:1:"6";s:4:"code";s:960:"{note}Media Sources are only available in MODX Revolution 2.2 or later.{note}
+
+h2. What are Media Sources?
+
+Media Sources are a feature in MODX Revolution, where one can specify the &quot;source&quot; of media in their MODX installation. This is visualized in many ways - the most common being in the left-hand Files tree, the MODx.Browser window, and file and image TVs.
+
+!sources-tree.png!
+
+A source can be many types - from the file system itself, to an Amazon S3 bucket, to a Flickr album. MODX provides two source types with the core installation: the file system and Amazon S3 bucket integration. Other sources can be made by creating Media Source Drivers, or by downloading them from [Package Management].
+
+h2. Using Media Sources
+
+The following articles describe basic usage of media sources.
+
+* [Adding a Media Source]
+* [Assigning Media Sources to TVs]
+* [Securing a Media Source]
+* [Media Source Types]
+
+h2. See Also
+
+{pagetree:root=Media Sources}
+
+";}i:2;a:3:{s:2:"id";s:8:"35586563";s:3:"ver";s:1:"5";s:4:"code";s:940:"{note}Media Sources are only available in MODX Revolution 2.2 or later.{note}
+
+h2. What are Media Sources?
+
+Media Sources are a feature in MODX Revolution, where one can specify the &quot;source&quot; of media in their MODX installation. This is visualized in many ways - the most common being in the left-hand Files tree, the MODx.Browser window, and file and image TVs.
+
+A source can be many types - from the file system itself, to an Amazon S3 bucket, to a Flickr album. MODX provides two source types with the core installation: the file system and Amazon S3 bucket integration. Other sources can be made by creating Media Source Drivers, or by downloading them from [Package Management].
+
+h2. Using Media Sources
+
+The following articles describe basic usage of media sources.
+
+* [Adding a Media Source]
+* [Assigning Media Sources to TVs]
+* [Securing a Media Source]
+* [Media Source Types]
+
+h2. See Also
+
+{pagetree:root=Media Sources}
+
+";}i:3;a:3:{s:2:"id";s:8:"35586553";s:3:"ver";s:1:"4";s:4:"code";s:1013:"{note}Media Sources are only available in MODX Revolution 2.2 or later. Since 2.2 has not been released yet, this section is under construction.{note}
+
+h2. What are Media Sources?
+
+Media Sources are a feature in MODX Revolution, where one can specify the &quot;source&quot; of media in their MODX installation. This is visualized in many ways - the most common being in the left-hand Files tree, the MODx.Browser window, and file and image TVs.
+
+A source can be many types - from the file system itself, to an Amazon S3 bucket, to a Flickr album. MODX provides two source types with the core installation: the file system and Amazon S3 bucket integration. Other sources can be made by creating Media Source Drivers, or by downloading them from [Package Management].
+
+h2. Using Media Sources
+
+The following articles describe basic usage of media sources.
+
+* [Adding a Media Source]
+* [Assigning Media Sources to TVs]
+* [Securing a Media Source]
+* [Media Source Types]
+
+h2. See Also
+
+{pagetree:root=Media Sources}
+
+";}i:4;a:3:{s:2:"id";s:8:"35586542";s:3:"ver";s:1:"3";s:4:"code";s:1009:"{note}Media Sources are only available in MODX Revolution 2.2 or later. Since 2.2 has not been released yet, this section is under construction.{note}
+
+h2. What are Media Sources?
+
+Media Sources are a feature in MODX Revolution, where one can specify the &quot;source&quot; of media in their MODX installation. This is visualized in many ways - the most common being in the left-hand Files tree, the MODx.Browser window, and file and image TVs.
+
+A source can be many types - from the file system itself, to an Amazon S3 bucket, to a Flickr album. MODX provides two source types with the core installation: the file system and Amazon S3 bucket integration. Other sources can be made by creating Media Source Drivers, or by downloading them from [Package Management].
+
+h2. Using Media Sources
+
+The following articles describe basic usage of media sources.
+
+* [Adding a Media Source]
+* [Assigning Media Sources to TVs]
+* Securing a Media Source
+* Media Source Types
+
+h2. See Also
+
+{pagetree:root=Media Sources}
+
+";}i:5;a:3:{s:2:"id";s:8:"35586536";s:3:"ver";s:1:"2";s:4:"code";s:1007:"{note}Media Sources are only available in MODX Revolution 2.2 or later. Since 2.2 has not been released yet, this section is under construction.{note}
+
+h2. What are Media Sources?
+
+Media Sources are a feature in MODX Revolution, where one can specify the &quot;source&quot; of media in their MODX installation. This is visualized in many ways - the most common being in the left-hand Files tree, the MODx.Browser window, and file and image TVs.
+
+A source can be many types - from the file system itself, to an Amazon S3 bucket, to a Flickr album. MODX provides two source types with the core installation: the file system and Amazon S3 bucket integration. Other sources can be made by creating Media Source Drivers, or by downloading them from [Package Management].
+
+h2. Using Media Sources
+
+The following articles describe basic usage of media sources.
+
+* [Adding a Media Source]
+* Assigning Media Sources to TVs
+* Securing a Media Source
+* Media Source Types
+
+h2. See Also
+
+{pagetree:root=Media Sources}
+
+";}i:6;a:3:{s:2:"id";s:8:"35586533";s:3:"ver";s:1:"1";s:4:"code";s:1005:"{note}Media Sources are only available in MODX Revolution 2.2 or later. Since 2.2 has not been released yet, this section is under construction.{note}
+
+h2. What are Media Sources?
+
+Media Sources are a feature in MODX Revolution, where one can specify the &quot;source&quot; of media in their MODX installation. This is visualized in many ways - the most common being in the left-hand Files tree, the MODx.Browser window, and file and image TVs.
+
+A source can be many types - from the file system itself, to an Amazon S3 bucket, to a Flickr album. MODX provides two source types with the core installation: the file system and Amazon S3 bucket integration. Other sources can be made by creating Media Source Drivers, or by downloading them from [Package Management].
+
+h2. Using Media Sources
+
+The following articles describe basic usage of media sources.
+
+* Adding a Media Source
+* Assigning Media Sources to TVs
+* Securing a Media Source
+* Media Source Types
+
+h2. See Also
+
+{pagetree:root=Media Sources}
+
+";}}}

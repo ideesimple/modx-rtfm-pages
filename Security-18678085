@@ -1,0 +1,223 @@
+a:5:{s:2:"id";s:8:"18678085";s:4:"info";a:4:{s:6:"Title:";s:8:"Security";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:23:"[revolution20:Security]";}s:6:"parent";s:8:"18678112";s:6:"source";s:2272:"\\
+
+h2. Security in MODx Revolution
+
+Security in MODx Revolution is primarily driven by an Attribute-Based Access Control (ABAC) paradigm.
+
+Each user in MODx has a [User|Users] object, which can be assigned to any number of [User Groups]. Each User Group then has attributes assigned to it via [Access Control Lists|ACLs] (ACLs). These ACLs take a variety of names depending on how they are applied, but all share one common principle - they contain a list of [Permissions]. These Permissions allow access to different areas or actions within MODx.
+
+ACLs usually have the following:
+
+* *Principal* - The object that is getting the access permissions. This is in MODx, by default, a User Group.
+* *Target* - The object they apply to, for example, a Context or Resource Group.
+* *Access Policy* - The list of Permissions that is gained by this ACL.
+* *Authority* - The minimum Authority level required to use this ACL (see [Roles]).
+
+
+{note}Access is *allow/deny* in MODx, meaning that access is &quot;open&quot; by default. Once an ACL is applied to an object, such as a Context or Resource Group, those Contexts or Resource Groups will now only be accessible to the objects with appropriate Permissions.{note}
+
+h3. Security Tutorial Video
+
+{widget:url=http://vimeo.com/13856994|width=780|height=500}
+
+Demonstrates by applying concepts to the MODx Sample Site to:
+* Restrict RSS feed to Directors and up
+* Restrict Blog to Staff only
+* Create a &#39;secure&#39; context for Directors and up only
+* Restrict some element categories to administrators only
+
+
+!http://assets.modx.com/docs/understanding-revo-acls.jpg!
+
+
+h3. Example: Context Access
+
+A good example is creating a Context named &#39;test&#39;, and assigning an ACL to it. This can be done by editing the Context, and going to the &#39;Access Permissions&#39; tab. From here, you can give a User Group (say, &#39;HR Dept&#39;) explicit access to this Context by selecting the User Group, the &#39;Administrator&#39; Access Policy, and specifying a required Authority (say, 9999 for &#39;Member&#39;) to have:
+
+!sec-ugctx1.png!
+
+This will restrict the &#39;test&#39; Context to users who are a Member (or [Role|Roles] with more authority) of the &#39;HR Dept&#39; User Group.
+
+h2. See Also
+
+{pagetree:root=Security}";s:8:"versions";a:6:{i:0;a:3:{s:2:"id";s:8:"18678085";s:3:"ver";s:1:"6";s:4:"code";s:2272:"\\
+
+h2. Security in MODx Revolution
+
+Security in MODx Revolution is primarily driven by an Attribute-Based Access Control (ABAC) paradigm.
+
+Each user in MODx has a [User|Users] object, which can be assigned to any number of [User Groups]. Each User Group then has attributes assigned to it via [Access Control Lists|ACLs] (ACLs). These ACLs take a variety of names depending on how they are applied, but all share one common principle - they contain a list of [Permissions]. These Permissions allow access to different areas or actions within MODx.
+
+ACLs usually have the following:
+
+* *Principal* - The object that is getting the access permissions. This is in MODx, by default, a User Group.
+* *Target* - The object they apply to, for example, a Context or Resource Group.
+* *Access Policy* - The list of Permissions that is gained by this ACL.
+* *Authority* - The minimum Authority level required to use this ACL (see [Roles]).
+
+
+{note}Access is *allow/deny* in MODx, meaning that access is &quot;open&quot; by default. Once an ACL is applied to an object, such as a Context or Resource Group, those Contexts or Resource Groups will now only be accessible to the objects with appropriate Permissions.{note}
+
+h3. Security Tutorial Video
+
+{widget:url=http://vimeo.com/13856994|width=780|height=500}
+
+Demonstrates by applying concepts to the MODx Sample Site to:
+* Restrict RSS feed to Directors and up
+* Restrict Blog to Staff only
+* Create a &#39;secure&#39; context for Directors and up only
+* Restrict some element categories to administrators only
+
+
+!http://assets.modx.com/docs/understanding-revo-acls.jpg!
+
+
+h3. Example: Context Access
+
+A good example is creating a Context named &#39;test&#39;, and assigning an ACL to it. This can be done by editing the Context, and going to the &#39;Access Permissions&#39; tab. From here, you can give a User Group (say, &#39;HR Dept&#39;) explicit access to this Context by selecting the User Group, the &#39;Administrator&#39; Access Policy, and specifying a required Authority (say, 9999 for &#39;Member&#39;) to have:
+
+!sec-ugctx1.png!
+
+This will restrict the &#39;test&#39; Context to users who are a Member (or [Role|Roles] with more authority) of the &#39;HR Dept&#39; User Group.
+
+h2. See Also
+
+{pagetree:root=Security}";}i:1;a:3:{s:2:"id";s:8:"35586693";s:3:"ver";s:1:"5";s:4:"code";s:2211:"\\
+
+h2. Security in MODx Revolution
+
+Security in MODx Revolution is primarily driven by an Attribute-Based Access Control (ABAC) paradigm.
+
+Each user in MODx has a [User|Users] object, which can be assigned to any number of [User Groups]. Each User Group then has attributes assigned to it via [Access Control Lists|ACLs] (ACLs). These ACLs take a variety of names depending on how they are applied, but all share one common principle - they contain a list of [Permissions]. These Permissions allow access to different areas or actions within MODx.
+
+ACLs usually have the following:
+
+* *Principal* - The object that is getting the access permissions. This is in MODx, by default, a User Group.
+* *Target* - The object they apply to, for example, a Context or Resource Group.
+* *Access Policy* - The list of Permissions that is gained by this ACL.
+* *Authority* - The minimum Authority level required to use this ACL (see [Roles]).
+
+
+{note}Access is *allow/deny* in MODx, meaning that access is &quot;open&quot; by default. Once an ACL is applied to an object, such as a Context or Resource Group, those Contexts or Resource Groups will now only be accessible to the objects with appropriate Permissions.{note}
+
+h3. Security Tutorial Video
+
+{widget:url=http://vimeo.com/13856994|width=780|height=500}
+
+Demonstrates by applying concepts to the MODx Sample Site to:
+* Restrict RSS feed to Directors and up
+* Restrict Blog to Staff only
+* Create a &#39;secure&#39; context for Directors and up only
+* Restrict some element categories to administrators only
+
+h3. Example: Context Access
+
+A good example is creating a Context named &#39;test&#39;, and assigning an ACL to it. This can be done by editing the Context, and going to the &#39;Access Permissions&#39; tab. From here, you can give a User Group (say, &#39;HR Dept&#39;) explicit access to this Context by selecting the User Group, the &#39;Administrator&#39; Access Policy, and specifying a required Authority (say, 9999 for &#39;Member&#39;) to have:
+
+!sec-ugctx1.png!
+
+This will restrict the &#39;test&#39; Context to users who are a Member (or [Role|Roles] with more authority) of the &#39;HR Dept&#39; User Group.
+
+h2. See Also
+
+{pagetree:root=Security}";}i:2;a:3:{s:2:"id";s:8:"20119579";s:3:"ver";s:1:"4";s:4:"code";s:2190:"\\
+
+h2. Security in MODx Revolution
+
+Security in MODx Revolution is primarily driven by an Attribute-Based Access Control (ABAC) paradigm.
+
+Each user in MODx has a [User|Users] object, which can be assigned to any number of [User Groups]. Each User Group then has attributes assigned to it via [Access Control Lists|ACLs] (ACLs). These ACLs take a variety of names depending on how they are applied, but all share one common principle - they contain a list of [Permissions]. These Permissions allow access to different areas or actions within MODx.
+
+ACLs usually have the following:
+
+* *Principal* - The object that is getting the access permissions. This is in MODx, by default, a User Group.
+* *Target* - The object they apply to, for example, a Context or Resource Group.
+* *Access Policy* - The list of Permissions that is gained by this ACL.
+* *Authority* - The minimum Authority level required to use this ACL (see [Roles]).
+
+
+{note}Access is *allow/deny* in MODx, meaning that access is &quot;open&quot; by default. Once an ACL is applied to an object, such as a Context or Resource Group, those Contexts or Resource Groups will now only be accessible to the objects with appropriate Permissions.{note}
+
+h3. Security Tutorial Video
+
+{widget:url=http://vimeo.com/13856994}
+
+Demonstrates by applying concepts to the MODx Sample Site to:
+* Restrict RSS feed to Directors and up
+* Restrict Blog to Staff only
+* Create a &#39;secure&#39; context for Directors and up only
+* Restrict some element categories to administrators only
+
+h3. Example: Context Access
+
+A good example is creating a Context named &#39;test&#39;, and assigning an ACL to it. This can be done by editing the Context, and going to the &#39;Access Permissions&#39; tab. From here, you can give a User Group (say, &#39;HR Dept&#39;) explicit access to this Context by selecting the User Group, the &#39;Administrator&#39; Access Policy, and specifying a required Authority (say, 9999 for &#39;Member&#39;) to have:
+
+!sec-ugctx1.png!
+
+This will restrict the &#39;test&#39; Context to users who are a Member (or [Role|Roles] with more authority) of the &#39;HR Dept&#39; User Group.
+
+h2. See Also
+
+{pagetree:root=Security}";}i:3;a:3:{s:2:"id";s:8:"20119578";s:3:"ver";s:1:"3";s:4:"code";s:1868:"\\
+
+h2. Security in MODx Revolution
+
+Security in MODx Revolution is primarily driven by an Attribute-Based Access Control (ABAC) paradigm.
+
+Each user in MODx has a [User|Users] object, which can be assigned to any number of [User Groups]. Each User Group then has attributes assigned to it via [Access Control Lists|ACLs] (ACLs). These ACLs take a variety of names depending on how they are applied, but all share one common principle - they contain a list of [Permissions]. These Permissions allow access to different areas or actions within MODx.
+
+ACLs usually have the following:
+
+* *Principal* - The object that is getting the access permissions. This is in MODx, by default, a User Group.
+* *Target* - The object they apply to, for example, a Context or Resource Group.
+* *Access Policy* - The list of Permissions that is gained by this ACL.
+* *Authority* - The minimum Authority level required to use this ACL (see [Roles]).
+
+
+{note}Access is *allow/deny* in MODx, meaning that access is &quot;open&quot; by default. Once an ACL is applied to an object, such as a Context or Resource Group, those Contexts or Resource Groups will now only be accessible to the objects with appropriate Permissions.{note}
+
+h3. Example: Context Access
+
+A good example is creating a Context named &#39;test&#39;, and assigning an ACL to it. This can be done by editing the Context, and going to the &#39;Access Permissions&#39; tab. From here, you can give a User Group (say, &#39;HR Dept&#39;) explicit access to this Context by selecting the User Group, the &#39;Administrator&#39; Access Policy, and specifying a required Authority (say, 9999 for &#39;Member&#39;) to have:
+
+!sec-ugctx1.png!
+
+This will restrict the &#39;test&#39; Context to users who are a Member (or [Role|Roles] with more authority) of the &#39;HR Dept&#39; User Group.
+
+h2. See Also
+
+{pagetree:root=Security}";}i:4;a:3:{s:2:"id";s:8:"18678511";s:3:"ver";s:1:"2";s:4:"code";s:1860:"\\
+
+h2. Security in MODx Revolution
+
+Security in MODx Revolution is primarily driven by an Attribute-Based Access Control (ABAC) paradigm.
+
+Each user in MODx has a User object, which can be assigned to any number of [User Groups]. Each User Group then has attributes assigned to it via [Access Control Lists|ACLs] (ACLs). These ACLs take a variety of names depending on how they are applied, but all share one common principle - they contain a list of [Permissions]. These Permissions allow access to different areas or actions within MODx.
+
+ACLs usually have the following:
+
+* *Principal* - The object that is getting the access permissions. This is in MODx, by default, a User Group.
+* *Target* - The object they apply to, for example, a Context or Resource Group.
+* *Access Policy* - The list of Permissions that is gained by this ACL.
+* *Authority* - The minimum Authority level required to use this ACL (see [Roles]).
+
+
+{note}Access is *allow/deny* in MODx, meaning that access is &quot;open&quot; by default. Once an ACL is applied to an object, such as a Context or Resource Group, those Contexts or Resource Groups will now only be accessible to the objects with appropriate Permissions.{note}
+
+h3. Example: Context Access
+
+A good example is creating a Context named &#39;test&#39;, and assigning an ACL to it. This can be done by editing the Context, and going to the &#39;Access Permissions&#39; tab. From here, you can give a User Group (say, &#39;HR Dept&#39;) explicit access to this Context by selecting the User Group, the &#39;Administrator&#39; Access Policy, and specifying a required Authority (say, 9999 for &#39;Member&#39;) to have:
+
+!sec-ugctx1.png!
+
+This will restrict the &#39;test&#39; Context to users who are a Member (or [Role|Roles] with more authority) of the &#39;HR Dept&#39; User Group.
+
+h2. See Also
+
+{pagetree:root=Security}";}i:5;a:3:{s:2:"id";s:8:"18678510";s:3:"ver";s:1:"1";s:4:"code";s:324:"h2.MODx Revolution Permissions
+\\
+
+MODx Revolution uses an ABAC (Attribute-Based Access Control) approach to security.
+{pagetree:root=Security|sort=position}
+{note}The Security section of the wiki is currently under development. There should be a plethora of more documentation on this coming very shortly.{note}
+{scrollbar}";}}}

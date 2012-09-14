@@ -1,0 +1,145 @@
+a:5:{s:2:"id";s:8:"35586538";s:4:"info";a:4:{s:6:"Title:";s:30:"Assigning Media Sources to TVs";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:45:"[revolution20:Assigning Media Sources to TVs]";}s:6:"parent";s:8:"35586532";s:6:"source";s:2478:"{toc}
+
+This article describes how to assign a Media Source to a TV. It is recommended to read the [Adding a Media Source] article before reading this one.
+
+{info}Only &quot;image&quot; and &quot;file&quot; type TVs use Sources at this time.{info}
+
+h2. Creating the TV
+
+First we will start by creating a TV that we will attach a media source to. Go ahead and create a TV called &quot;TestSourceTV&quot;, and save it. Notice then you&#39;ll see a new tab on your TV, a &quot;Media Sources&quot; tab. This will have a grid of [Contexts] that are available, and the Sources that are associated with those Contexts.
+
+This means that TVs can use different Sources per Context. This will take effect when editing a TV in a Resource from that Context, as well as when that TV is rendered in that Context.
+
+For now, go ahead and assign all contexts to the Source &quot;My New Source&quot;, which we created in the [Adding a Media Source] article. Set your TV&#39;s input type, under the &quot;Input Options&quot; tab, to &quot;image&quot;. Assign it to a Template. Save your TV.
+
+h2. Limiting the Source to Specific Folders
+
+Often, you&#39;ll want users to select files from a specific folder when selecting a value for a TV.  You can set up this restriction when you define your Media Source.  
+
+1. First, create your Media Source under *Tools \-&gt; Media Sources*
+2. After you&#39;ve created the Media Source, right-click it and select &quot;Update Media Source&quot;
+3. Scroll down and edit the following properties:
+
+* *basePath* - set to something like &quot;assets/images/&quot;  
+* *baseUrl* - set to something like &quot;assets/images/&quot;  
+
+Leave *basePathRelative* and *baseUrlRelative* set to &quot;Yes&quot;.  That&#39;s the most common way to set this up.
+
+{note}*basePath* and *baseUrl* should start _without_ a slash, but they should end with a trailing slash.{note}
+
+h2. Editing the TV
+
+Now, when you edit that TV in a Resource, you&#39;ll notice that it uses the Source we created earlier:
+
+!20110907-pd72jtn9bhdbn5q5qb7wadku5a.jpeg!
+
+Clicking the dropdown will load the MODx.Browser window using the Source that we specified - note that our source here only loads the contents of the assets/ directory.
+
+Now we&#39;ll probably want to consider restricting access to this Source, so that our Content Editors can&#39;t accidentally edit it and mess it up. Read the [next article|Securing a Media Source] to find out how.
+
+h2. See Also
+
+{pagetree:root=Media Sources}
+
+";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"35586538";s:3:"ver";s:1:"3";s:4:"code";s:2478:"{toc}
+
+This article describes how to assign a Media Source to a TV. It is recommended to read the [Adding a Media Source] article before reading this one.
+
+{info}Only &quot;image&quot; and &quot;file&quot; type TVs use Sources at this time.{info}
+
+h2. Creating the TV
+
+First we will start by creating a TV that we will attach a media source to. Go ahead and create a TV called &quot;TestSourceTV&quot;, and save it. Notice then you&#39;ll see a new tab on your TV, a &quot;Media Sources&quot; tab. This will have a grid of [Contexts] that are available, and the Sources that are associated with those Contexts.
+
+This means that TVs can use different Sources per Context. This will take effect when editing a TV in a Resource from that Context, as well as when that TV is rendered in that Context.
+
+For now, go ahead and assign all contexts to the Source &quot;My New Source&quot;, which we created in the [Adding a Media Source] article. Set your TV&#39;s input type, under the &quot;Input Options&quot; tab, to &quot;image&quot;. Assign it to a Template. Save your TV.
+
+h2. Limiting the Source to Specific Folders
+
+Often, you&#39;ll want users to select files from a specific folder when selecting a value for a TV.  You can set up this restriction when you define your Media Source.  
+
+1. First, create your Media Source under *Tools \-&gt; Media Sources*
+2. After you&#39;ve created the Media Source, right-click it and select &quot;Update Media Source&quot;
+3. Scroll down and edit the following properties:
+
+* *basePath* - set to something like &quot;assets/images/&quot;  
+* *baseUrl* - set to something like &quot;assets/images/&quot;  
+
+Leave *basePathRelative* and *baseUrlRelative* set to &quot;Yes&quot;.  That&#39;s the most common way to set this up.
+
+{note}*basePath* and *baseUrl* should start _without_ a slash, but they should end with a trailing slash.{note}
+
+h2. Editing the TV
+
+Now, when you edit that TV in a Resource, you&#39;ll notice that it uses the Source we created earlier:
+
+!20110907-pd72jtn9bhdbn5q5qb7wadku5a.jpeg!
+
+Clicking the dropdown will load the MODx.Browser window using the Source that we specified - note that our source here only loads the contents of the assets/ directory.
+
+Now we&#39;ll probably want to consider restricting access to this Source, so that our Content Editors can&#39;t accidentally edit it and mess it up. Read the [next article|Securing a Media Source] to find out how.
+
+h2. See Also
+
+{pagetree:root=Media Sources}
+
+";}i:1;a:3:{s:2:"id";s:8:"39355748";s:3:"ver";s:1:"2";s:4:"code";s:1672:"{toc}
+
+This article describes how to assign a Media Source to a TV. It is recommended to read the [Adding a Media Source] article before reading this one.
+
+{info}Only &quot;image&quot; and &quot;file&quot; type TVs use Sources at this time.{info}
+
+h2. Creating the TV
+
+First we will start by creating a TV that we will attach a media source to. Go ahead and create a TV called &quot;TestSourceTV&quot;, and save it. Notice then you&#39;ll see a new tab on your TV, a &quot;Media Sources&quot; tab. This will have a grid of [Contexts] that are available, and the Sources that are associated with those Contexts.
+
+This means that TVs can use different Sources per Context. This will take effect when editing a TV in a Resource from that Context, as well as when that TV is rendered in that Context.
+
+For now, go ahead and assign all contexts to the Source &quot;My New Source&quot;, which we created in the [Adding a Media Source] article. Set your TV&#39;s input type, under the &quot;Input Options&quot; tab, to &quot;image&quot;. Assign it to a Template. Save your TV.
+
+h2. Editing the TV
+
+Now, when you edit that TV in a Resource, you&#39;ll notice that it uses the Source we created earlier:
+
+!20110907-pd72jtn9bhdbn5q5qb7wadku5a.jpeg!
+
+Clicking the dropdown will load the MODx.Browser window using the Source that we specified - note that our source here only loads the contents of the assets/ directory.
+
+Now we&#39;ll probably want to consider restricting access to this Source, so that our Content Editors can&#39;t accidentally edit it and mess it up. Read the [next article|Securing a Media Source] to find out how.
+
+h2. See Also
+
+{pagetree:root=Media Sources}
+
+
+";}i:2;a:3:{s:2:"id";s:8:"35586539";s:3:"ver";s:1:"1";s:4:"code";s:1681:"{toc}
+
+This article describes how to assign a Media Source to a TV. It is recommended to read the [Adding a Media Source] article before reading this one.
+
+{info}Only &quot;image&quot; and &quot;file&quot; type TVs use Sources at this time.{info}
+
+h2. Creating the TV
+
+First we will start by creating a TV that we will attach a media source to. Go ahead and create a TV called &quot;TestSourceTV&quot;, and save it. Notice then you&#39;ll see a new tab on your TV, a &quot;Media Sources&quot; tab. This will have a grid of [Contexts] that are available, and the Sources that are associated with those Contexts.
+
+This means that TVs can use different Sources per Context. This will take effect when editing a TV in a Resource from that Context, as well as when that TV is rendered in that Context.
+
+For now, go ahead and assign all contexts to the Source &quot;My New Source&quot;, which we created in the [Adding a Media Source] article. Set your TV&#39;s input type, under the &quot;Input Options&quot; tab, to &quot;image&quot;. Assign it to a Template. Save your TV.
+
+h2. Editing the TV
+
+Now, when you edit that TV in a Resource, you&#39;ll notice that it uses the Source we created earlier:
+
+!20110907-pd72jtn9bhdbn5q5qb7wadku5a.jpeg|border=1!
+
+Clicking the dropdown will load the MODx.Browser window using the Source that we specified - note that our source here only loads the contents of the assets/ directory.
+
+Now we&#39;ll probably want to consider restricting access to this Source, so that our Content Editors can&#39;t accidentally edit it and mess it up. Read the [next article|Securing a Media Source] to find out how.
+
+h2. See Also
+
+{pagetree:root=Media Sources}
+
+
+";}}}

@@ -1,0 +1,751 @@
+a:5:{s:2:"id";s:8:"36634908";s:4:"info";a:4:{s:6:"Title:";s:11:"Action List";s:7:"Author:";s:17:"Everett Griffiths";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:26:"[revolution20:Action List]";}s:6:"parent";s:8:"18678331";s:6:"source";s:4555:"MODX Revolution uses the *a* parameter in the $_GET array to define actions in the manager.  Each action has its own integer number, defined in the file:
+
+{code}
+core/model/modx/processors/system/actionlist.inc.php
+{code}
+
+When you need to reference or direct a user to a specific Action from a custom manager page (in JavaScript), you should use the [MODx.action variable|revolution20:MODExt MODx Object] which holds a list of all the actions and their IDs, just in case they have changed in a specific installation. You can also access your custom Actions using that variable (note that as of 2.2, they are prefixed with &quot;namespace:&quot; to avoid collision).
+
+{note}This list is deprecated and a remnant of MODX Evolution, and is not used in MODX Revolution.{note}
+
+h2. MODX Manager Actions by Number
+
+* *1* -- Loading a frame(set)
+* *2* -- Viewing home page/ online users
+* *3* -- Viewing data for document $itemid
+* *4* -- Creating a document
+* *5* -- Saving document $itemid
+* *6* -- Deleting document $itemid
+* *7* -- Waiting while MODX cleans up
+* *8* -- Logged out
+* *9* -- Viewing help
+* *10* -- Viewing/ composing messages
+* *11* -- Creating a user
+* *12* -- Editing user $itemid
+* *13* -- Viewing logging
+* *14* -- Editing a parser
+* *15* -- Saving a parser
+* *16* -- Editing template $itemid
+* *17* -- Editing settings
+* *18* -- Viewing Credits :-)
+* *19* -- Creating a new template
+* *20* -- Saving template $itemid
+* *21* -- Deleting template $itemid
+* *22* -- Editing Snippet $itemid
+* *23* -- Creating a new Snippet
+* *24* -- Saving Snippet $itemid
+* *25* -- Deleting Snippet $itemid
+* *26* -- Refreshing site
+* *27* -- Editing document $itemid
+* *28* -- Changing password
+* *29* -- Error
+* *30* -- Saving settings
+* *31* -- Using file manager
+* *32* -- Saving user $itemid
+* *33* -- Deleting user $itemid
+* *34* -- Saving new password
+* *35* -- Editing role $itemid
+* *36* -- Saving role $itemid
+* *37* -- Deleting role $itemid
+* *38* -- Creating new role
+* *40* -- Editing Access Permissions
+* *41* -- Editing Access Permissions
+* *42* -- Editing Access Permissions
+* *43* -- Editing Access Permissions
+* *44* -- Editing Access Permissions
+* *45* -- Idle
+* *46* -- Editing Access Permissions
+* *47* -- Editing Access Permissions
+* *48* -- Editing Access Permissions
+* *49* -- Editing Access Permissions
+* *50* -- Editing Access Permissions
+* *51* -- Moving document $itemid
+* *52* -- Moved document $itemid
+* *53* -- Viewing system info
+* *54* -- Optimizing a table
+* *55* -- Empty logs
+* *56* -- Refresh document tree
+* *57* -- Refresh menu
+* *58* -- Logged in
+* *59* -- About MODX
+* *60* -- Emptying Recycle Bin
+* *61* -- Publishing a document
+* *62* -- Un-publishing a document
+* *63* -- Un-deleting a document
+* *64* -- Removing deleted content
+* *65* -- Deleting a message
+* *66* -- Sending a message
+* *67* -- Removing locks
+* *68* -- Viewing site logging
+* *69* -- Viewing online visitors
+* *70* -- Viewing site schedule
+* *71* -- Searching
+* *72* -- Adding a weblink
+* *73* -- Editing a weblink
+* *75* -- User/ role management
+* *76* -- Resource management
+* *77* -- Creating a new Chunk (HTML Snippet)
+* *78* -- Editing Chunk (HTML Snippet) $itemid
+* *79* -- Saving Chunk (HTML Snippet) $itemid
+* *80* -- Deleting Chunk (HTML Snippet) $itemid
+* *83* -- Exporting a document to HTML
+* *84* -- Load Resource Selector
+* *85* -- Create Folder
+* *86* -- Role management
+* *87* -- Create new web user
+* *88* -- Editing web user $itemid
+* *89* -- Saving web user $itemid
+* *90* -- Deleting web user $itemid
+* *91* -- Editing Web Access Permissions
+* *92* -- Editing Access Permissions
+* *93* -- Backup Manager
+* *94* -- Duplicate Document $itemid
+* *95* -- Importing documents from HTML
+* *96* -- Duplicate Template $itemid
+* *97* -- Duplicate Chunk (HTML Snippet) $itemid
+* *98* -- Duplicate Snippet $itemid
+* *99* -- Manage Web Users
+* *100* -- Previewing document $itemid
+* *101* -- Create new plugin $itemid
+* *102* -- Edit plugin $itemid
+* *103* -- Saving plugin $itemid
+* *104* -- Delete plugin $itemid
+* *105* -- Duplicate plugin $itemid
+* *114* -- View event log
+* *115* -- View event log details $itemid
+* *116* -- Delete event log $itemid
+* *300* -- Create Template Variable
+* *301* -- Edit Template Variable
+* *302* -- Save Template Variable
+* *303* -- Delete Template Variable
+* *304* -- Duplicate Template Variable $itemid
+* *200* -- Viewing phpInfo()
+* *998* -- Viewing web page $itemid
+* *999* -- Viewing test page
+
+
+When a user creates a Custom Manager Page, a new integer is reserved to identify that controller.";s:8:"versions";a:5:{i:0;a:3:{s:2:"id";s:8:"36634908";s:3:"ver";s:1:"5";s:4:"code";s:4555:"MODX Revolution uses the *a* parameter in the $_GET array to define actions in the manager.  Each action has its own integer number, defined in the file:
+
+{code}
+core/model/modx/processors/system/actionlist.inc.php
+{code}
+
+When you need to reference or direct a user to a specific Action from a custom manager page (in JavaScript), you should use the [MODx.action variable|revolution20:MODExt MODx Object] which holds a list of all the actions and their IDs, just in case they have changed in a specific installation. You can also access your custom Actions using that variable (note that as of 2.2, they are prefixed with &quot;namespace:&quot; to avoid collision).
+
+{note}This list is deprecated and a remnant of MODX Evolution, and is not used in MODX Revolution.{note}
+
+h2. MODX Manager Actions by Number
+
+* *1* -- Loading a frame(set)
+* *2* -- Viewing home page/ online users
+* *3* -- Viewing data for document $itemid
+* *4* -- Creating a document
+* *5* -- Saving document $itemid
+* *6* -- Deleting document $itemid
+* *7* -- Waiting while MODX cleans up
+* *8* -- Logged out
+* *9* -- Viewing help
+* *10* -- Viewing/ composing messages
+* *11* -- Creating a user
+* *12* -- Editing user $itemid
+* *13* -- Viewing logging
+* *14* -- Editing a parser
+* *15* -- Saving a parser
+* *16* -- Editing template $itemid
+* *17* -- Editing settings
+* *18* -- Viewing Credits :-)
+* *19* -- Creating a new template
+* *20* -- Saving template $itemid
+* *21* -- Deleting template $itemid
+* *22* -- Editing Snippet $itemid
+* *23* -- Creating a new Snippet
+* *24* -- Saving Snippet $itemid
+* *25* -- Deleting Snippet $itemid
+* *26* -- Refreshing site
+* *27* -- Editing document $itemid
+* *28* -- Changing password
+* *29* -- Error
+* *30* -- Saving settings
+* *31* -- Using file manager
+* *32* -- Saving user $itemid
+* *33* -- Deleting user $itemid
+* *34* -- Saving new password
+* *35* -- Editing role $itemid
+* *36* -- Saving role $itemid
+* *37* -- Deleting role $itemid
+* *38* -- Creating new role
+* *40* -- Editing Access Permissions
+* *41* -- Editing Access Permissions
+* *42* -- Editing Access Permissions
+* *43* -- Editing Access Permissions
+* *44* -- Editing Access Permissions
+* *45* -- Idle
+* *46* -- Editing Access Permissions
+* *47* -- Editing Access Permissions
+* *48* -- Editing Access Permissions
+* *49* -- Editing Access Permissions
+* *50* -- Editing Access Permissions
+* *51* -- Moving document $itemid
+* *52* -- Moved document $itemid
+* *53* -- Viewing system info
+* *54* -- Optimizing a table
+* *55* -- Empty logs
+* *56* -- Refresh document tree
+* *57* -- Refresh menu
+* *58* -- Logged in
+* *59* -- About MODX
+* *60* -- Emptying Recycle Bin
+* *61* -- Publishing a document
+* *62* -- Un-publishing a document
+* *63* -- Un-deleting a document
+* *64* -- Removing deleted content
+* *65* -- Deleting a message
+* *66* -- Sending a message
+* *67* -- Removing locks
+* *68* -- Viewing site logging
+* *69* -- Viewing online visitors
+* *70* -- Viewing site schedule
+* *71* -- Searching
+* *72* -- Adding a weblink
+* *73* -- Editing a weblink
+* *75* -- User/ role management
+* *76* -- Resource management
+* *77* -- Creating a new Chunk (HTML Snippet)
+* *78* -- Editing Chunk (HTML Snippet) $itemid
+* *79* -- Saving Chunk (HTML Snippet) $itemid
+* *80* -- Deleting Chunk (HTML Snippet) $itemid
+* *83* -- Exporting a document to HTML
+* *84* -- Load Resource Selector
+* *85* -- Create Folder
+* *86* -- Role management
+* *87* -- Create new web user
+* *88* -- Editing web user $itemid
+* *89* -- Saving web user $itemid
+* *90* -- Deleting web user $itemid
+* *91* -- Editing Web Access Permissions
+* *92* -- Editing Access Permissions
+* *93* -- Backup Manager
+* *94* -- Duplicate Document $itemid
+* *95* -- Importing documents from HTML
+* *96* -- Duplicate Template $itemid
+* *97* -- Duplicate Chunk (HTML Snippet) $itemid
+* *98* -- Duplicate Snippet $itemid
+* *99* -- Manage Web Users
+* *100* -- Previewing document $itemid
+* *101* -- Create new plugin $itemid
+* *102* -- Edit plugin $itemid
+* *103* -- Saving plugin $itemid
+* *104* -- Delete plugin $itemid
+* *105* -- Duplicate plugin $itemid
+* *114* -- View event log
+* *115* -- View event log details $itemid
+* *116* -- Delete event log $itemid
+* *300* -- Create Template Variable
+* *301* -- Edit Template Variable
+* *302* -- Save Template Variable
+* *303* -- Delete Template Variable
+* *304* -- Duplicate Template Variable $itemid
+* *200* -- Viewing phpInfo()
+* *998* -- Viewing web page $itemid
+* *999* -- Viewing test page
+
+
+When a user creates a Custom Manager Page, a new integer is reserved to identify that controller.";}i:1;a:3:{s:2:"id";s:8:"39355729";s:3:"ver";s:1:"4";s:4:"code";s:4555:"MODX Revolution uses the *a* parameter in the $_GET array to define actions in the manager.  Each action has its own integer number, defined in the file:
+
+{code}
+core/model/modx/processors/system/actionlist.inc.php
+{code}
+
+When you need to reference or direct a user to a specific Action from a custom manager page (in JavaScript), you should use the [MODx.action variable|revolution20:MODExt MODx Object] which holds a list of all the actions and their IDs, just in case they have changed in a specific installation. You can also access your custom Actions using that variable (note that as of 2.2, they are prefixed with &quot;namespace:&quot; to avoid collision).
+
+{note}This list is deprecated and a remnant of MODX Evolution, and is not used in MODX Revolution.{code}
+
+h2. MODX Manager Actions by Number
+
+* *1* -- Loading a frame(set)
+* *2* -- Viewing home page/ online users
+* *3* -- Viewing data for document $itemid
+* *4* -- Creating a document
+* *5* -- Saving document $itemid
+* *6* -- Deleting document $itemid
+* *7* -- Waiting while MODX cleans up
+* *8* -- Logged out
+* *9* -- Viewing help
+* *10* -- Viewing/ composing messages
+* *11* -- Creating a user
+* *12* -- Editing user $itemid
+* *13* -- Viewing logging
+* *14* -- Editing a parser
+* *15* -- Saving a parser
+* *16* -- Editing template $itemid
+* *17* -- Editing settings
+* *18* -- Viewing Credits :-)
+* *19* -- Creating a new template
+* *20* -- Saving template $itemid
+* *21* -- Deleting template $itemid
+* *22* -- Editing Snippet $itemid
+* *23* -- Creating a new Snippet
+* *24* -- Saving Snippet $itemid
+* *25* -- Deleting Snippet $itemid
+* *26* -- Refreshing site
+* *27* -- Editing document $itemid
+* *28* -- Changing password
+* *29* -- Error
+* *30* -- Saving settings
+* *31* -- Using file manager
+* *32* -- Saving user $itemid
+* *33* -- Deleting user $itemid
+* *34* -- Saving new password
+* *35* -- Editing role $itemid
+* *36* -- Saving role $itemid
+* *37* -- Deleting role $itemid
+* *38* -- Creating new role
+* *40* -- Editing Access Permissions
+* *41* -- Editing Access Permissions
+* *42* -- Editing Access Permissions
+* *43* -- Editing Access Permissions
+* *44* -- Editing Access Permissions
+* *45* -- Idle
+* *46* -- Editing Access Permissions
+* *47* -- Editing Access Permissions
+* *48* -- Editing Access Permissions
+* *49* -- Editing Access Permissions
+* *50* -- Editing Access Permissions
+* *51* -- Moving document $itemid
+* *52* -- Moved document $itemid
+* *53* -- Viewing system info
+* *54* -- Optimizing a table
+* *55* -- Empty logs
+* *56* -- Refresh document tree
+* *57* -- Refresh menu
+* *58* -- Logged in
+* *59* -- About MODX
+* *60* -- Emptying Recycle Bin
+* *61* -- Publishing a document
+* *62* -- Un-publishing a document
+* *63* -- Un-deleting a document
+* *64* -- Removing deleted content
+* *65* -- Deleting a message
+* *66* -- Sending a message
+* *67* -- Removing locks
+* *68* -- Viewing site logging
+* *69* -- Viewing online visitors
+* *70* -- Viewing site schedule
+* *71* -- Searching
+* *72* -- Adding a weblink
+* *73* -- Editing a weblink
+* *75* -- User/ role management
+* *76* -- Resource management
+* *77* -- Creating a new Chunk (HTML Snippet)
+* *78* -- Editing Chunk (HTML Snippet) $itemid
+* *79* -- Saving Chunk (HTML Snippet) $itemid
+* *80* -- Deleting Chunk (HTML Snippet) $itemid
+* *83* -- Exporting a document to HTML
+* *84* -- Load Resource Selector
+* *85* -- Create Folder
+* *86* -- Role management
+* *87* -- Create new web user
+* *88* -- Editing web user $itemid
+* *89* -- Saving web user $itemid
+* *90* -- Deleting web user $itemid
+* *91* -- Editing Web Access Permissions
+* *92* -- Editing Access Permissions
+* *93* -- Backup Manager
+* *94* -- Duplicate Document $itemid
+* *95* -- Importing documents from HTML
+* *96* -- Duplicate Template $itemid
+* *97* -- Duplicate Chunk (HTML Snippet) $itemid
+* *98* -- Duplicate Snippet $itemid
+* *99* -- Manage Web Users
+* *100* -- Previewing document $itemid
+* *101* -- Create new plugin $itemid
+* *102* -- Edit plugin $itemid
+* *103* -- Saving plugin $itemid
+* *104* -- Delete plugin $itemid
+* *105* -- Duplicate plugin $itemid
+* *114* -- View event log
+* *115* -- View event log details $itemid
+* *116* -- Delete event log $itemid
+* *300* -- Create Template Variable
+* *301* -- Edit Template Variable
+* *302* -- Save Template Variable
+* *303* -- Delete Template Variable
+* *304* -- Duplicate Template Variable $itemid
+* *200* -- Viewing phpInfo()
+* *998* -- Viewing web page $itemid
+* *999* -- Viewing test page
+
+
+When a user creates a Custom Manager Page, a new integer is reserved to identify that controller.";}i:2;a:3:{s:2:"id";s:8:"39355728";s:3:"ver";s:1:"3";s:4:"code";s:4450:"MODX Revolution uses the *a* parameter in the $_GET array to define actions in the manager.  Each action has its own integer number, defined in the file:
+
+{code}
+core/model/modx/processors/system/actionlist.inc.php
+{code}
+
+When you need to reference or direct a user to a specific Action from a custom manager page (in JavaScript), you should use the [MODx.action variable|revolution20:MODExt MODx Object] which holds a list of all the actions and their IDs, just in case they have changed in a specific installation. You can also access your custom Actions using that variable (note that as of 2.2, they are prefixed with &quot;namespace:&quot; to avoid collision).
+
+
+h2. MODX Manager Actions by Number
+
+* *1* -- Loading a frame(set)
+* *2* -- Viewing home page/ online users
+* *3* -- Viewing data for document $itemid
+* *4* -- Creating a document
+* *5* -- Saving document $itemid
+* *6* -- Deleting document $itemid
+* *7* -- Waiting while MODX cleans up
+* *8* -- Logged out
+* *9* -- Viewing help
+* *10* -- Viewing/ composing messages
+* *11* -- Creating a user
+* *12* -- Editing user $itemid
+* *13* -- Viewing logging
+* *14* -- Editing a parser
+* *15* -- Saving a parser
+* *16* -- Editing template $itemid
+* *17* -- Editing settings
+* *18* -- Viewing Credits :-)
+* *19* -- Creating a new template
+* *20* -- Saving template $itemid
+* *21* -- Deleting template $itemid
+* *22* -- Editing Snippet $itemid
+* *23* -- Creating a new Snippet
+* *24* -- Saving Snippet $itemid
+* *25* -- Deleting Snippet $itemid
+* *26* -- Refreshing site
+* *27* -- Editing document $itemid
+* *28* -- Changing password
+* *29* -- Error
+* *30* -- Saving settings
+* *31* -- Using file manager
+* *32* -- Saving user $itemid
+* *33* -- Deleting user $itemid
+* *34* -- Saving new password
+* *35* -- Editing role $itemid
+* *36* -- Saving role $itemid
+* *37* -- Deleting role $itemid
+* *38* -- Creating new role
+* *40* -- Editing Access Permissions
+* *41* -- Editing Access Permissions
+* *42* -- Editing Access Permissions
+* *43* -- Editing Access Permissions
+* *44* -- Editing Access Permissions
+* *45* -- Idle
+* *46* -- Editing Access Permissions
+* *47* -- Editing Access Permissions
+* *48* -- Editing Access Permissions
+* *49* -- Editing Access Permissions
+* *50* -- Editing Access Permissions
+* *51* -- Moving document $itemid
+* *52* -- Moved document $itemid
+* *53* -- Viewing system info
+* *54* -- Optimizing a table
+* *55* -- Empty logs
+* *56* -- Refresh document tree
+* *57* -- Refresh menu
+* *58* -- Logged in
+* *59* -- About MODX
+* *60* -- Emptying Recycle Bin
+* *61* -- Publishing a document
+* *62* -- Un-publishing a document
+* *63* -- Un-deleting a document
+* *64* -- Removing deleted content
+* *65* -- Deleting a message
+* *66* -- Sending a message
+* *67* -- Removing locks
+* *68* -- Viewing site logging
+* *69* -- Viewing online visitors
+* *70* -- Viewing site schedule
+* *71* -- Searching
+* *72* -- Adding a weblink
+* *73* -- Editing a weblink
+* *75* -- User/ role management
+* *76* -- Resource management
+* *77* -- Creating a new Chunk (HTML Snippet)
+* *78* -- Editing Chunk (HTML Snippet) $itemid
+* *79* -- Saving Chunk (HTML Snippet) $itemid
+* *80* -- Deleting Chunk (HTML Snippet) $itemid
+* *83* -- Exporting a document to HTML
+* *84* -- Load Resource Selector
+* *85* -- Create Folder
+* *86* -- Role management
+* *87* -- Create new web user
+* *88* -- Editing web user $itemid
+* *89* -- Saving web user $itemid
+* *90* -- Deleting web user $itemid
+* *91* -- Editing Web Access Permissions
+* *92* -- Editing Access Permissions
+* *93* -- Backup Manager
+* *94* -- Duplicate Document $itemid
+* *95* -- Importing documents from HTML
+* *96* -- Duplicate Template $itemid
+* *97* -- Duplicate Chunk (HTML Snippet) $itemid
+* *98* -- Duplicate Snippet $itemid
+* *99* -- Manage Web Users
+* *100* -- Previewing document $itemid
+* *101* -- Create new plugin $itemid
+* *102* -- Edit plugin $itemid
+* *103* -- Saving plugin $itemid
+* *104* -- Delete plugin $itemid
+* *105* -- Duplicate plugin $itemid
+* *114* -- View event log
+* *115* -- View event log details $itemid
+* *116* -- Delete event log $itemid
+* *300* -- Create Template Variable
+* *301* -- Edit Template Variable
+* *302* -- Save Template Variable
+* *303* -- Delete Template Variable
+* *304* -- Duplicate Template Variable $itemid
+* *200* -- Viewing phpInfo()
+* *998* -- Viewing web page $itemid
+* *999* -- Viewing test page
+
+
+When a user creates a Custom Manager Page, a new integer is reserved to identify that controller.";}i:3;a:3:{s:2:"id";s:8:"37683218";s:3:"ver";s:1:"2";s:4:"code";s:4445:"MODX Revolution uses a the *a* parameter in the $_GET array to define actions in the manager.  Each action has its own integer number, defined here:
+
+{code}
+core/model/modx/processors/system/actionlist.inc.php
+{code}
+
+When you need to reference or direct a user to a specific Action from a custom manager page (in JavaScript), you should use the [MODx.action variable|revolution20:MODExt MODx Object] which holds a list of all the actions and their IDs, just in case they have changed in a specific installation. You can also access your custom Actions using that variable (note that as of 2.2, they are prefixed with &quot;namespace:&quot; to avoid collision).
+
+
+h2. MODX Manager Actions by Number
+
+* *1* -- Loading a frame(set)
+* *2* -- Viewing home page/ online users
+* *3* -- Viewing data for document $itemid
+* *4* -- Creating a document
+* *5* -- Saving document $itemid
+* *6* -- Deleting document $itemid
+* *7* -- Waiting while MODX cleans up
+* *8* -- Logged out
+* *9* -- Viewing help
+* *10* -- Viewing/ composing messages
+* *11* -- Creating a user
+* *12* -- Editing user $itemid
+* *13* -- Viewing logging
+* *14* -- Editing a parser
+* *15* -- Saving a parser
+* *16* -- Editing template $itemid
+* *17* -- Editing settings
+* *18* -- Viewing Credits :-)
+* *19* -- Creating a new template
+* *20* -- Saving template $itemid
+* *21* -- Deleting template $itemid
+* *22* -- Editing Snippet $itemid
+* *23* -- Creating a new Snippet
+* *24* -- Saving Snippet $itemid
+* *25* -- Deleting Snippet $itemid
+* *26* -- Refreshing site
+* *27* -- Editing document $itemid
+* *28* -- Changing password
+* *29* -- Error
+* *30* -- Saving settings
+* *31* -- Using file manager
+* *32* -- Saving user $itemid
+* *33* -- Deleting user $itemid
+* *34* -- Saving new password
+* *35* -- Editing role $itemid
+* *36* -- Saving role $itemid
+* *37* -- Deleting role $itemid
+* *38* -- Creating new role
+* *40* -- Editing Access Permissions
+* *41* -- Editing Access Permissions
+* *42* -- Editing Access Permissions
+* *43* -- Editing Access Permissions
+* *44* -- Editing Access Permissions
+* *45* -- Idle
+* *46* -- Editing Access Permissions
+* *47* -- Editing Access Permissions
+* *48* -- Editing Access Permissions
+* *49* -- Editing Access Permissions
+* *50* -- Editing Access Permissions
+* *51* -- Moving document $itemid
+* *52* -- Moved document $itemid
+* *53* -- Viewing system info
+* *54* -- Optimizing a table
+* *55* -- Empty logs
+* *56* -- Refresh document tree
+* *57* -- Refresh menu
+* *58* -- Logged in
+* *59* -- About MODX
+* *60* -- Emptying Recycle Bin
+* *61* -- Publishing a document
+* *62* -- Un-publishing a document
+* *63* -- Un-deleting a document
+* *64* -- Removing deleted content
+* *65* -- Deleting a message
+* *66* -- Sending a message
+* *67* -- Removing locks
+* *68* -- Viewing site logging
+* *69* -- Viewing online visitors
+* *70* -- Viewing site schedule
+* *71* -- Searching
+* *72* -- Adding a weblink
+* *73* -- Editing a weblink
+* *75* -- User/ role management
+* *76* -- Resource management
+* *77* -- Creating a new Chunk (HTML Snippet)
+* *78* -- Editing Chunk (HTML Snippet) $itemid
+* *79* -- Saving Chunk (HTML Snippet) $itemid
+* *80* -- Deleting Chunk (HTML Snippet) $itemid
+* *83* -- Exporting a document to HTML
+* *84* -- Load Resource Selector
+* *85* -- Create Folder
+* *86* -- Role management
+* *87* -- Create new web user
+* *88* -- Editing web user $itemid
+* *89* -- Saving web user $itemid
+* *90* -- Deleting web user $itemid
+* *91* -- Editing Web Access Permissions
+* *92* -- Editing Access Permissions
+* *93* -- Backup Manager
+* *94* -- Duplicate Document $itemid
+* *95* -- Importing documents from HTML
+* *96* -- Duplicate Template $itemid
+* *97* -- Duplicate Chunk (HTML Snippet) $itemid
+* *98* -- Duplicate Snippet $itemid
+* *99* -- Manage Web Users
+* *100* -- Previewing document $itemid
+* *101* -- Create new plugin $itemid
+* *102* -- Edit plugin $itemid
+* *103* -- Saving plugin $itemid
+* *104* -- Delete plugin $itemid
+* *105* -- Duplicate plugin $itemid
+* *114* -- View event log
+* *115* -- View event log details $itemid
+* *116* -- Delete event log $itemid
+* *300* -- Create Template Variable
+* *301* -- Edit Template Variable
+* *302* -- Save Template Variable
+* *303* -- Delete Template Variable
+* *304* -- Duplicate Template Variable $itemid
+* *200* -- Viewing phpInfo()
+* *998* -- Viewing web page $itemid
+* *999* -- Viewing test page
+
+
+When a user creates a Custom Manager Page, a new integer is reserved to identify that controller.";}i:4;a:3:{s:2:"id";s:8:"36634910";s:3:"ver";s:1:"1";s:4:"code";s:3998:"MODX Revolution uses a the *a* parameter in the $_GET array to define actions in the manager.  Each action has its own integer number, defined here:
+
+{code}
+core/model/modx/processors/system/actionlist.inc.php
+{code}
+
+h2. MODX Manager Actions by Number
+
+* *1* -- Loading a frame(set)
+* *2* -- Viewing home page/ online users
+* *3* -- Viewing data for document $itemid
+* *4* -- Creating a document
+* *5* -- Saving document $itemid
+* *6* -- Deleting document $itemid
+* *7* -- Waiting while MODX cleans up
+* *8* -- Logged out
+* *9* -- Viewing help
+* *10* -- Viewing/ composing messages
+* *11* -- Creating a user
+* *12* -- Editing user $itemid
+* *13* -- Viewing logging
+* *14* -- Editing a parser
+* *15* -- Saving a parser
+* *16* -- Editing template $itemid
+* *17* -- Editing settings
+* *18* -- Viewing Credits :)
+* *19* -- Creating a new template
+* *20* -- Saving template $itemid
+* *21* -- Deleting template $itemid
+* *22* -- Editing Snippet $itemid
+* *23* -- Creating a new Snippet
+* *24* -- Saving Snippet $itemid
+* *25* -- Deleting Snippet $itemid
+* *26* -- Refreshing site
+* *27* -- Editing document $itemid
+* *28* -- Changing password
+* *29* -- Error
+* *30* -- Saving settings
+* *31* -- Using file manager
+* *32* -- Saving user $itemid
+* *33* -- Deleting user $itemid
+* *34* -- Saving new password
+* *35* -- Editing role $itemid
+* *36* -- Saving role $itemid
+* *37* -- Deleting role $itemid
+* *38* -- Creating new role
+* *40* -- Editing Access Permissions
+* *41* -- Editing Access Permissions
+* *42* -- Editing Access Permissions
+* *43* -- Editing Access Permissions
+* *44* -- Editing Access Permissions
+* *45* -- Idle
+* *46* -- Editing Access Permissions
+* *47* -- Editing Access Permissions
+* *48* -- Editing Access Permissions
+* *49* -- Editing Access Permissions
+* *50* -- Editing Access Permissions
+* *51* -- Moving document $itemid
+* *52* -- Moved document $itemid
+* *53* -- Viewing system info
+* *54* -- Optimizing a table
+* *55* -- Empty logs
+* *56* -- Refresh document tree
+* *57* -- Refresh menu
+* *58* -- Logged in
+* *59* -- About MODX
+* *60* -- Emptying Recycle Bin
+* *61* -- Publishing a document
+* *62* -- Un-publishing a document
+* *63* -- Un-deleting a document
+* *64* -- Removing deleted content
+* *65* -- Deleting a message
+* *66* -- Sending a message
+* *67* -- Removing locks
+* *68* -- Viewing site logging
+* *69* -- Viewing online visitors
+* *70* -- Viewing site schedule
+* *71* -- Searching
+* *72* -- Adding a weblink
+* *73* -- Editing a weblink
+* *75* -- User/ role management
+* *76* -- Resource management
+* *77* -- Creating a new Chunk (HTML Snippet)
+* *78* -- Editing Chunk (HTML Snippet) $itemid
+* *79* -- Saving Chunk (HTML Snippet) $itemid
+* *80* -- Deleting Chunk (HTML Snippet) $itemid
+* *83* -- Exporting a document to HTML
+* *84* -- Load Resource Selector
+* *85* -- Create Folder
+* *86* -- Role management
+* *87* -- Create new web user
+* *88* -- Editing web user $itemid
+* *89* -- Saving web user $itemid
+* *90* -- Deleting web user $itemid
+* *91* -- Editing Web Access Permissions
+* *92* -- Editing Access Permissions
+* *93* -- Backup Manager
+* *94* -- Duplicate Document $itemid
+* *95* -- Importing documents from HTML
+* *96* -- Duplicate Template $itemid
+* *97* -- Duplicate Chunk (HTML Snippet) $itemid
+* *98* -- Duplicate Snippet $itemid
+* *99* -- Manage Web Users
+* *100* -- Previewing document $itemid
+* *101* -- Create new plugin $itemid
+* *102* -- Edit plugin $itemid
+* *103* -- Saving plugin $itemid
+* *104* -- Delete plugin $itemid
+* *105* -- Duplicate plugin $itemid
+* *114* -- View event log
+* *115* -- View event log details $itemid
+* *116* -- Delete event log $itemid
+* *300* -- Create Template Variable
+* *301* -- Edit Template Variable
+* *302* -- Save Template Variable
+* *303* -- Delete Template Variable
+* *304* -- Duplicate Template Variable $itemid
+* *200* -- Viewing phpInfo()
+* *998* -- Viewing web page $itemid
+* *999* -- Viewing test page
+
+
+When a user creates a Custom Manager Page, a new integer is reserved to identify that controller.";}}}

@@ -1,0 +1,51 @@
+a:5:{s:2:"id";s:8:"18678363";s:4:"info";a:4:{s:6:"Title:";s:21:"modX.getLoginUserName";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:36:"[revolution20:modX.getLoginUserName]";}s:6:"parent";s:8:"18678361";s:6:"source";s:413:"\\
+
+h2. modX::getLoginUserName
+
+Returns the current user name, for the current or specified context.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getLoginUserName
+
+{code}
+string getLoginUserName ([string $context = &#39;&#39;])
+{code}
+
+h2. Example
+
+Grab the user&#39;s username in the current Context.
+{code}
+$username = $modx-&gt;getLoginUserName();
+{code}
+
+h2. See Also
+
+* [Contexts]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678363";s:3:"ver";s:1:"1";s:4:"code";s:413:"\\
+
+h2. modX::getLoginUserName
+
+Returns the current user name, for the current or specified context.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getLoginUserName
+
+{code}
+string getLoginUserName ([string $context = &#39;&#39;])
+{code}
+
+h2. Example
+
+Grab the user&#39;s username in the current Context.
+{code}
+$username = $modx-&gt;getLoginUserName();
+{code}
+
+h2. See Also
+
+* [Contexts]
+
+{scrollbar}";}}}

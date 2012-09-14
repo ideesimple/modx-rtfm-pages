@@ -1,0 +1,42 @@
+a:5:{s:2:"id";s:8:"18678165";s:4:"info";a:4:{s:6:"Title:";s:11:"rb_base_dir";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:26:"[revolution20:rb_base_dir]";}s:6:"parent";s:8:"18678127";s:6:"source";s:533:"h2. rb_base_dir
+
+*Name*: Resource Path
+*Type*: String
+*Default*: 
+
+The physical path to the resource directory. This setting is usually automatically generated. If you&#39;re using IIS, however, MODx may not be able to work the path out on its own, causing the Resource Browser to show an error. In that case, you can enter the path to the images directory here (the path as you&#39;d see it in Windows Explorer).
+
+{warning}This setting is *deprecated* in MODx Revolution. Please use [filemanager_path] instead.{warning}
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678165";s:3:"ver";s:1:"3";s:4:"code";s:533:"h2. rb_base_dir
+
+*Name*: Resource Path
+*Type*: String
+*Default*: 
+
+The physical path to the resource directory. This setting is usually automatically generated. If you&#39;re using IIS, however, MODx may not be able to work the path out on its own, causing the Resource Browser to show an error. In that case, you can enter the path to the images directory here (the path as you&#39;d see it in Windows Explorer).
+
+{warning}This setting is *deprecated* in MODx Revolution. Please use [filemanager_path] instead.{warning}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119703";s:3:"ver";s:1:"2";s:4:"code";s:537:"h2. publish_default
+
+*Name*: Resource Path
+*Type*: String
+*Default*: 
+
+The physical path to the resource directory. This setting is usually automatically generated. If you&#39;re using IIS, however, MODx may not be able to work the path out on its own, causing the Resource Browser to show an error. In that case, you can enter the path to the images directory here (the path as you&#39;d see it in Windows Explorer).
+
+{warning}This setting is *deprecated* in MODx Revolution. Please use [filemanager_path] instead.{warning}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"20119702";s:3:"ver";s:1:"1";s:4:"code";s:590:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Resource Path{zone-data}
+{zone-data:key}rb_base_dir{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}{zone-data}
+{zone-data:desc}The physical path to the resource directory. This setting is usually automatically generated. If you&#39;re using IIS, however, MODx may not be able to work the path out on its own, causing the Resource Browser to show an error. In that case, you can enter the path to the images directory here (the path as you&#39;d see it in Windows Explorer).
+{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

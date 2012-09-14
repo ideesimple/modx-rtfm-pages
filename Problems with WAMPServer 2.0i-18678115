@@ -1,0 +1,41 @@
+a:5:{s:2:"id";s:8:"18678115";s:4:"info";a:4:{s:6:"Title:";s:29:"Problems with WAMPServer 2.0i";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:44:"[revolution20:Problems with WAMPServer 2.0i]";}s:6:"parent";s:8:"18678053";s:6:"source";s:1096:"\\
+
+h2. How to get WAMPServer 2.0i working on MODx Revolution
+
+Mary (einsteinsboi) has a great blog post about using WAMPServer 2.0i with MODx Revolution, and some problems you might encounter.
+
+http://codingpad.maryspad.com/2010/01/11/modx-revolution-and-wamp/
+
+A short summary and explanation is below.
+
+h2. WAMPServer uses mismatched MySQL Server and Client builds
+
+Usually it is best to make sure in any server configuration that your MySQL server and client build versions are the same. WAMPServer allows you to start your stack with different versions of PHP/MySQL combinations.
+
+The problem child comes in WAMPServer 2.0i&#39;s PHP 5.2.11 version. It sets its server version at 5.1.36, but its client version at 5.0.51a. MODx [does not support 5.0.51a|MySQL 5.0.51 Issues], and therefore will not install with this configuration.
+
+h2. The Solution
+
+To fix it, simply start WAMPServer with the PHP 5.3.0 build. WAMPServer 2.0i will set the server to 5.1.36, and the client to 5.0.5-dev. While still not optimal, this will allow Revolution to run smoothly without MySQL hiccups.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678115";s:3:"ver";s:1:"1";s:4:"code";s:1096:"\\
+
+h2. How to get WAMPServer 2.0i working on MODx Revolution
+
+Mary (einsteinsboi) has a great blog post about using WAMPServer 2.0i with MODx Revolution, and some problems you might encounter.
+
+http://codingpad.maryspad.com/2010/01/11/modx-revolution-and-wamp/
+
+A short summary and explanation is below.
+
+h2. WAMPServer uses mismatched MySQL Server and Client builds
+
+Usually it is best to make sure in any server configuration that your MySQL server and client build versions are the same. WAMPServer allows you to start your stack with different versions of PHP/MySQL combinations.
+
+The problem child comes in WAMPServer 2.0i&#39;s PHP 5.2.11 version. It sets its server version at 5.1.36, but its client version at 5.0.51a. MODx [does not support 5.0.51a|MySQL 5.0.51 Issues], and therefore will not install with this configuration.
+
+h2. The Solution
+
+To fix it, simply start WAMPServer with the PHP 5.3.0 build. WAMPServer 2.0i will set the server to 5.1.36, and the client to 5.0.5-dev. While still not optimal, this will allow Revolution to run smoothly without MySQL hiccups.
+
+{scrollbar}";}}}

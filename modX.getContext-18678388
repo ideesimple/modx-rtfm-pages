@@ -1,0 +1,92 @@
+a:5:{s:2:"id";s:8:"18678388";s:4:"info";a:4:{s:6:"Title:";s:15:"modX.getContext";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:30:"[revolution20:modX.getContext]";}s:6:"parent";s:8:"18678361";s:6:"source";s:716:"\\
+
+h2. modX::getContext
+
+Retrieve a context by name without initializing it.
+
+Within a request, contexts retrieved using this function will cache the context data into the modX::$contexts array to avoid loading the same context multiple times.
+
+If you merely want to check the current context, you can return the context key:
+{code}
+$modx-&gt;context-&gt;key;
+{code}
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/modx/modX.html#getContext]
+
+{code}
+&amp;$modContext getContext (string $contextKey)
+{code}
+
+h2. Example
+
+Get the &#39;sports&#39; Context.
+{code}
+$ctx = $modx-&gt;getContext(&#39;sports&#39;);
+{code}
+
+h2. See Also
+
+{contentbylabel:labels=modxclass,context|showLabels=false|showSpace=false}
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678388";s:3:"ver";s:1:"2";s:4:"code";s:716:"\\
+
+h2. modX::getContext
+
+Retrieve a context by name without initializing it.
+
+Within a request, contexts retrieved using this function will cache the context data into the modX::$contexts array to avoid loading the same context multiple times.
+
+If you merely want to check the current context, you can return the context key:
+{code}
+$modx-&gt;context-&gt;key;
+{code}
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/modx/modX.html#getContext]
+
+{code}
+&amp;$modContext getContext (string $contextKey)
+{code}
+
+h2. Example
+
+Get the &#39;sports&#39; Context.
+{code}
+$ctx = $modx-&gt;getContext(&#39;sports&#39;);
+{code}
+
+h2. See Also
+
+{contentbylabel:labels=modxclass,context|showLabels=false|showSpace=false}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33947798";s:3:"ver";s:1:"1";s:4:"code";s:591:"\\
+
+h2. modX::getContext
+
+Retrieve a context by name without initializing it.
+
+Within a request, contexts retrieved using this function will cache the context data into the modX::$contexts array to avoid loading the same context multiple times.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getContext
+
+{code}
+&amp;$modContext getContext (string $contextKey)
+{code}
+
+h2. Example
+
+Get the &#39;sports&#39; Context.
+{code}
+$ctx = $modx-&gt;getContext(&#39;sports&#39;);
+{code}
+
+h2. See Also
+
+{contentbylabel:labels=modxclass,context|showLabels=false|showSpace=false}
+
+{scrollbar}";}}}

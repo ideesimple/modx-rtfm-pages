@@ -1,0 +1,141 @@
+a:5:{s:2:"id";s:8:"18678087";s:4:"info";a:4:{s:6:"Title:";s:11:"User Groups";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:11:"Mike Schell";s:12:"Wiki Markup:";s:26:"[revolution20:User Groups]";}s:6:"parent";s:8:"18678340";s:6:"source";s:2119:"\\
+
+h2. What is a User Group?
+
+A User Group is simply a collection of Users.
+
+h2. Usage
+
+Go to Security \-&gt; Access Controls. From there you will see a tree of User Groups and their respective Users. You can assign a User to a User Group by right-clicking on the User Group and either:
+
+* Adding the User via the context menu item
+* Editing the User Group and adding a User on the grid there
+
+h3. Assigning Policies
+
+A quick clarification on which policies to use:
+
+* Policies assigned on the Context Access tab should be based on the standard Administrator policy.
+* Policies assigned on the Resource Group Access tab should be based on the standard Resource policy.
+* Policies assigned on the Element Category Access tab should be based on the standard Element policy.
+
+h2. Roles in User Groups
+
+Users can have specific Roles within a User Group, should you choose. They can also exist in the User Group without a Role. Roles allow you to fine-tune your permissions more than in previous MODx versions.
+
+Say you want to only allow Supervisors in the &quot;HR Department&quot; User Group access to some Resources; no problem. Just create a Role called &quot;Supervisor&quot;, set its authority to some number below 9999 (let&#39;s say 3), and then add in the Users to the User Group &quot;HR Department&quot; (via the User Group editing screen), setting any would-be supervisors to the Supervisor Role.
+
+Then, you&#39;ll just add a Resource Policy (the packaged-in-with-modx one will do fine) to the Resource Group you want to restrict access to. It will look something like this:
+
+!ug-rg-grid1.png!
+
+And you&#39;ve got a role-based access permission\! This specific ACL will limit all Resources (aka Documents) in the web context and in the resource group &quot;TestResourceGroup4&quot; to only Users in the &quot;HR Department&quot; User Group with at least a Role of Supervisor. Roles with lower authority numbers would also inherit access - say you had a Coordinator Role with an authority of 2; Users in this User Group would have access to this ACL as well.
+
+h2. See Also
+
+{pagetree:root=Security}
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678087";s:3:"ver";s:1:"3";s:4:"code";s:2119:"\\
+
+h2. What is a User Group?
+
+A User Group is simply a collection of Users.
+
+h2. Usage
+
+Go to Security \-&gt; Access Controls. From there you will see a tree of User Groups and their respective Users. You can assign a User to a User Group by right-clicking on the User Group and either:
+
+* Adding the User via the context menu item
+* Editing the User Group and adding a User on the grid there
+
+h3. Assigning Policies
+
+A quick clarification on which policies to use:
+
+* Policies assigned on the Context Access tab should be based on the standard Administrator policy.
+* Policies assigned on the Resource Group Access tab should be based on the standard Resource policy.
+* Policies assigned on the Element Category Access tab should be based on the standard Element policy.
+
+h2. Roles in User Groups
+
+Users can have specific Roles within a User Group, should you choose. They can also exist in the User Group without a Role. Roles allow you to fine-tune your permissions more than in previous MODx versions.
+
+Say you want to only allow Supervisors in the &quot;HR Department&quot; User Group access to some Resources; no problem. Just create a Role called &quot;Supervisor&quot;, set its authority to some number below 9999 (let&#39;s say 3), and then add in the Users to the User Group &quot;HR Department&quot; (via the User Group editing screen), setting any would-be supervisors to the Supervisor Role.
+
+Then, you&#39;ll just add a Resource Policy (the packaged-in-with-modx one will do fine) to the Resource Group you want to restrict access to. It will look something like this:
+
+!ug-rg-grid1.png!
+
+And you&#39;ve got a role-based access permission\! This specific ACL will limit all Resources (aka Documents) in the web context and in the resource group &quot;TestResourceGroup4&quot; to only Users in the &quot;HR Department&quot; User Group with at least a Role of Supervisor. Roles with lower authority numbers would also inherit access - say you had a Coordinator Role with an authority of 2; Users in this User Group would have access to this ACL as well.
+
+h2. See Also
+
+{pagetree:root=Security}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119588";s:3:"ver";s:1:"2";s:4:"code";s:2126:"\\
+
+h2. What is a User Group?
+
+A User Group is simply a collection of Users.
+
+h2. Usage
+
+Go to Security -&gt; Access Controls. From there you will see a tree of User Groups and their respective Users. You can assign a User to a User Group by right-clicking on the User Group and either:
+
+* Adding the User via the context menu item
+* Editing the User Group and adding a User on the grid there
+
+h3. Assigning Policies
+
+A quick clarification on which policies to use:
+
+* Policies assigned on the Context Access tab should be based on the standard Administrator policy.
+* Policies assigned on the Resource Group Access tab should be based on the standard Resource policy.
+* Policies assigned on the Element Category Access tab should be based on the standard Element policy.
+
+h2. Roles in User Groups
+
+Users can have specific Roles within a User Group, should you choose. They can also exist in the User Group without a Role. Roles allow you to do is to fine-tune your permissions more than in previous MODx versions.
+
+Say you want to only allow Supervisors in the &quot;HR Department&quot; User Group access to some Resources; no problem. Just create a Role called &quot;Supervisor&quot;, set its authority to some number below 9999 (let&#39;s say 3), and then add in the Users to the User Group &quot;HR Department&quot; (via the User Group editing screen), setting any would-be supervisors to the Supervisor Role.
+
+Then, you&#39;ll just add a Resource Policy (the packaged-in-with-modx one will do fine) to the Resource Group you want to restrict access to. It will look something like this:
+
+!ug-rg-grid1.png!
+
+And you&#39;ve got a role-based access permission! This specific ACL will limit all Resources (aka Documents) in the web context and in the resource group &quot;TestResourceGroup4&quot; to only Users in the &quot;HR Department&quot; User Group with at least a Role of Supervisor. Roles with lower authority numbers would also inherit access - say you had a Coordinator Role with an authority of 2; Users in this User Group would have access to this ACL as well.
+
+h2. See Also
+
+{pagetree:root=Security}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"19136582";s:3:"ver";s:1:"1";s:4:"code";s:1747:"\\
+
+h2. What is a User Group?
+
+A User Group is simply a collection of Users.
+
+h2. Usage
+
+Go to Security -&gt; Access Controls. From there you will see a tree of User Groups and their respective Users. You can assign a User to a User Group by right-clicking on the User Group and either:
+
+* Adding the User via the context menu item
+* Editing the User Group and adding a User on the grid there
+
+h2. Roles in User Groups
+
+Users can have specific Roles within a User Group, should you choose. They can also exist in the User Group without a Role. Roles allow you to do is to fine-tune your permissions more than in previous MODx versions.
+
+Say you want to only allow Supervisors in the &quot;HR Department&quot; User Group access to some Resources; no problem. Just create a Role called &quot;Supervisor&quot;, set its authority to some number below 9999 (let&#39;s say 3), and then add in the Users to the User Group &quot;HR Department&quot; (via the User Group editing screen), setting any would-be supervisors to the Supervisor Role.
+
+Then, you&#39;ll just add a Resource Policy (the packaged-in-with-modx one will do fine) to the Resource Group you want to restrict access to. It will look something like this:
+
+!ug-rg-grid1.png!
+
+And you&#39;ve got a role-based access permission! This specific ACL will limit all Resources (aka Documents) in the web context and in the resource group &quot;TestResourceGroup4&quot; to only Users in the &quot;HR Department&quot; User Group with at least a Role of Supervisor. Roles with lower authority numbers would also inherit access - say you had a Coordinator Role with an authority of 2; Users in this User Group would have access to this ACL as well.
+
+h2. See Also
+
+{pagetree:root=Security}
+
+{scrollbar}";}}}

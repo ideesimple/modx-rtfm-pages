@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"35095112";s:4:"info";a:4:{s:6:"Title:";s:16:"hidemenu_default";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:31:"[revolution20:hidemenu_default]";}s:6:"parent";s:8:"18678127";s:6:"source";s:197:"h2. hidemenu_default
+
+*Name*: Hide From Menus Default
+*Type*: Yes/No
+*Default*: No
+*Available In:* 2.0.7\+
+
+Select &#39;Yes&#39; to make all new resources hidden from menus by default.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095112";s:3:"ver";s:1:"1";s:4:"code";s:197:"h2. hidemenu_default
+
+*Name*: Hide From Menus Default
+*Type*: Yes/No
+*Default*: No
+*Available In:* 2.0.7\+
+
+Select &#39;Yes&#39; to make all new resources hidden from menus by default.
+
+{scrollbar}";}}}

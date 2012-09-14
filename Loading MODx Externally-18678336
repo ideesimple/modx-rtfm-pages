@@ -1,0 +1,98 @@
+a:5:{s:2:"id";s:8:"18678336";s:4:"info";a:4:{s:6:"Title:";s:23:"Loading MODx Externally";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Jason Coward";s:12:"Wiki Markup:";s:38:"[revolution20:Loading MODx Externally]";}s:6:"parent";s:8:"18678468";s:6:"source";s:911:"\\
+
+h2. Loading the MODx Object
+
+Using the MODx object (and all of its respective classes) is quite simple. All you need is this code:
+
+{code}
+require_once &#39;/absolute/path/to/modx/config.core.php&#39;;
+require_once MODX_CORE_PATH.&#39;model/modx/modx.class.php&#39;;
+$modx = new modX();
+$modx-&gt;initialize(&#39;web&#39;);
+$modx-&gt;getService(&#39;error&#39;,&#39;error.modError&#39;);
+{code}
+
+This will initialize the MODx object into the &#39;web&#39; [Context|Contexts]. Now, if you want to access it under a different context (and thereby changing its access permissions, policies, etc), you&#39;ll just need to change &#39;web&#39; to whatever [Context|Contexts] you want to load. This also loads the MODX error handler as well.
+
+From there, you can use any MODx methods, functions, or classes.
+
+
+h2. See Also
+
+* [Developer Introduction]
+* [xPDO|xPDO20:Home], the db-layer for Revolution
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678336";s:3:"ver";s:1:"3";s:4:"code";s:911:"\\
+
+h2. Loading the MODx Object
+
+Using the MODx object (and all of its respective classes) is quite simple. All you need is this code:
+
+{code}
+require_once &#39;/absolute/path/to/modx/config.core.php&#39;;
+require_once MODX_CORE_PATH.&#39;model/modx/modx.class.php&#39;;
+$modx = new modX();
+$modx-&gt;initialize(&#39;web&#39;);
+$modx-&gt;getService(&#39;error&#39;,&#39;error.modError&#39;);
+{code}
+
+This will initialize the MODx object into the &#39;web&#39; [Context|Contexts]. Now, if you want to access it under a different context (and thereby changing its access permissions, policies, etc), you&#39;ll just need to change &#39;web&#39; to whatever [Context|Contexts] you want to load. This also loads the MODX error handler as well.
+
+From there, you can use any MODx methods, functions, or classes.
+
+
+h2. See Also
+
+* [Developer Introduction]
+* [xPDO|xPDO20:Home], the db-layer for Revolution
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35095465";s:3:"ver";s:1:"2";s:4:"code";s:993:"\\
+
+h2. Loading the MODx Object
+
+Using the MODx object (and all of its respective classes) is quite simple. All you need is this code:
+
+{code}
+require_once &#39;/absolute/path/to/modx/config.core.php&#39;;
+require_once MODX_CORE_PATH.&#39;config/&#39;.MODX_CONFIG_KEY.&#39;.inc.php&#39;;
+require_once MODX_CORE_PATH.&#39;model/modx/modx.class.php&#39;;
+$modx = new modX();
+$modx-&gt;initialize(&#39;web&#39;);
+$modx-&gt;getService(&#39;error&#39;,&#39;error.modError&#39;);
+{code}
+
+This will initialize the MODx object into the &#39;web&#39; [Context|Contexts]. Now, if you want to access it under a different context (and thereby changing its access permissions, policies, etc), you&#39;ll just need to change &#39;web&#39; to whatever [Context|Contexts] you want to load. This also loads the MODX error handler as well.
+
+From there, you can use any MODx methods, functions, or classes.
+
+
+h2. See Also
+
+* [Developer Introduction]
+* [xPDO|xPDO20:Home], the db-layer for Revolution
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35095292";s:3:"ver";s:1:"1";s:4:"code";s:881:"\\
+
+h2. Loading the MODx Object
+
+Using the MODx object (and all of its respective classes) is quite simple. All you need is this code:
+
+{code}
+require_once &#39;/absolute/path/to/modx/config.core.php&#39;;
+require_once MODX_CORE_PATH.&#39;config/&#39;.MODX_CONFIG_KEY.&#39;.inc.php&#39;;
+require_once MODX_CORE_PATH.&#39;model/modx/modx.class.php&#39;;
+$modx = new modX();
+$modx-&gt;initialize(&#39;web&#39;);
+{code}
+
+This will initialize the MODx object into the &#39;web&#39; [Context|Contexts]. Now, if you want to access it under a different context (and thereby changing its access permissions, policies, etc), you&#39;ll just need to change &#39;web&#39; to whatever [Context|Contexts] you want to load.
+
+From there, you can use any MODx methods, functions, or classes.
+
+
+h2. See Also
+
+* [Developer Introduction]
+* [xPDO|xPDO20:Home], the db-layer for Revolution
+
+{scrollbar}";}}}

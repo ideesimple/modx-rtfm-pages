@@ -1,0 +1,178 @@
+a:5:{s:2:"id";s:8:"18678330";s:4:"info";a:4:{s:6:"Title:";s:26:"Getting Started Developing";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Jason Coward";s:12:"Wiki Markup:";s:41:"[revolution20:Getting Started Developing]";}s:6:"parent";s:8:"18678329";s:6:"source";s:3403:"\\
+{toc}
+
+
+h2. Programming in MODx Revolution
+
+MODx Revolution is an OOP Framework, built around the database ORM [xPDO|xPDO20:Home].
+
+h2. 3rd-Party Components (3PCs)
+
+3rd-Party Components (3PCs) are collections of any sort of MODx Objects. They can be a collection of Snippets, Plugins and Chunks, or a single Snippet, or just a collection of files. They are usually transported and installed via [Transport Packages|Transport Packages].
+
+h2. core/components and assets/components
+
+MODx doesn&#39;t necessarily limit where you can put your custom 3rd party component files, but we do have some recommendations. For files that don&#39;t need to be in the webroot (config files, .php, etc), we recommend putting them in:
+
+{quote}core/components/myname{quote}
+
+So, if you had a component named &#39;test&#39;, you would put its non-webroot files in &quot;core/components/test/&quot;. For files that need to be web-accessible, such as css, js and other files, we recommend:
+
+{quote}assets/components/myname{quote}
+
+Ergo, for &#39;test&#39;, &quot;assets/components/test&quot;. This standardization of paths makes it easier for other developers using your components to find your files easily.
+
+h2. [Snippets]
+
+Snippets are simply php scripts that can be executed on any page or other Element. They are the cornerstone of MODx Development and dynamic customization. You can read more about Snippets [here|Snippets].
+
+h2. [Plugins]
+
+[Plugins] are similar to snippets in that they are snippets of code that have access to the MODx API - however the big difference is that plugins are associated to specific system events. For example, in an average MODx page request, several events happen at certain points within the page parsing process and plugins can be attached to any of these events to fulfill a desired function. [Plugins] aren&#39;t just limited to front-end processing though, there are many events that are available in the MODx Manager.
+
+h2. [Properties and Property Sets]
+
+Properties are simply placeholders on Elements (Snippets/Plugins/Chunks/TVs/Templates), which can be parsed by each individual Element. They allow customization and argument passing for each Element.
+
+Property Sets are user-defined groupings of Properties that can be used to quickly centralize custom tag syntax calls.
+
+More on Property Sets can be found [here|Properties and Property Sets].
+
+
+h2. [Custom Manager Pages] (CMPs)
+
+[Custom Manager Pages], or CMPs, are custom pages in the manager built by 3rd Party developers to allow backend management of Components. They use the modAction and modMenu objects to dynamically create manager pages that can be easily found and added with no hacking of the core.
+
+h2. Using MODx Externally
+
+Using the MODx object (and all of its respective classes) is quite simple. All you need is this code:
+
+{code}
+require_once &#39;/absolute/path/to/modx/config.core.php&#39;;
+require_once MODX_CORE_PATH.&#39;model/modx/modx.class.php&#39;;
+$modx = new modX();
+$modx-&gt;initialize(&#39;web&#39;);
+$modx-&gt;getService(&#39;error&#39;, &#39;error.modError&#39;);
+{code}
+
+This will initialize the MODx object into the &#39;web&#39; [Context|Contexts]. Now, if you want to access it under a different [Context|Contexts] (and thereby changing its access permissions, policies, etc), you&#39;ll just need to change &#39;web&#39; to whatever [Context|Contexts] you want to load.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678330";s:3:"ver";s:1:"2";s:4:"code";s:3403:"\\
+{toc}
+
+
+h2. Programming in MODx Revolution
+
+MODx Revolution is an OOP Framework, built around the database ORM [xPDO|xPDO20:Home].
+
+h2. 3rd-Party Components (3PCs)
+
+3rd-Party Components (3PCs) are collections of any sort of MODx Objects. They can be a collection of Snippets, Plugins and Chunks, or a single Snippet, or just a collection of files. They are usually transported and installed via [Transport Packages|Transport Packages].
+
+h2. core/components and assets/components
+
+MODx doesn&#39;t necessarily limit where you can put your custom 3rd party component files, but we do have some recommendations. For files that don&#39;t need to be in the webroot (config files, .php, etc), we recommend putting them in:
+
+{quote}core/components/myname{quote}
+
+So, if you had a component named &#39;test&#39;, you would put its non-webroot files in &quot;core/components/test/&quot;. For files that need to be web-accessible, such as css, js and other files, we recommend:
+
+{quote}assets/components/myname{quote}
+
+Ergo, for &#39;test&#39;, &quot;assets/components/test&quot;. This standardization of paths makes it easier for other developers using your components to find your files easily.
+
+h2. [Snippets]
+
+Snippets are simply php scripts that can be executed on any page or other Element. They are the cornerstone of MODx Development and dynamic customization. You can read more about Snippets [here|Snippets].
+
+h2. [Plugins]
+
+[Plugins] are similar to snippets in that they are snippets of code that have access to the MODx API - however the big difference is that plugins are associated to specific system events. For example, in an average MODx page request, several events happen at certain points within the page parsing process and plugins can be attached to any of these events to fulfill a desired function. [Plugins] aren&#39;t just limited to front-end processing though, there are many events that are available in the MODx Manager.
+
+h2. [Properties and Property Sets]
+
+Properties are simply placeholders on Elements (Snippets/Plugins/Chunks/TVs/Templates), which can be parsed by each individual Element. They allow customization and argument passing for each Element.
+
+Property Sets are user-defined groupings of Properties that can be used to quickly centralize custom tag syntax calls.
+
+More on Property Sets can be found [here|Properties and Property Sets].
+
+
+h2. [Custom Manager Pages] (CMPs)
+
+[Custom Manager Pages], or CMPs, are custom pages in the manager built by 3rd Party developers to allow backend management of Components. They use the modAction and modMenu objects to dynamically create manager pages that can be easily found and added with no hacking of the core.
+
+h2. Using MODx Externally
+
+Using the MODx object (and all of its respective classes) is quite simple. All you need is this code:
+
+{code}
+require_once &#39;/absolute/path/to/modx/config.core.php&#39;;
+require_once MODX_CORE_PATH.&#39;model/modx/modx.class.php&#39;;
+$modx = new modX();
+$modx-&gt;initialize(&#39;web&#39;);
+$modx-&gt;getService(&#39;error&#39;, &#39;error.modError&#39;);
+{code}
+
+This will initialize the MODx object into the &#39;web&#39; [Context|Contexts]. Now, if you want to access it under a different [Context|Contexts] (and thereby changing its access permissions, policies, etc), you&#39;ll just need to change &#39;web&#39; to whatever [Context|Contexts] you want to load.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35095467";s:3:"ver";s:1:"1";s:4:"code";s:3420:"\\
+{toc}
+
+
+h2. Programming in MODx Revolution
+
+MODx Revolution is an OOP Framework, built around the database ORM [xPDO|xPDO20:Home].
+
+h2. 3rd-Party Components (3PCs)
+
+3rd-Party Components (3PCs) are collections of any sort of MODx Objects. They can be a collection of Snippets, Plugins and Chunks, or a single Snippet, or just a collection of files. They are usually transported and installed via [Transport Packages|Transport Packages].
+
+h2. core/components and assets/components
+
+MODx doesn&#39;t necessarily limit where you can put your custom 3rd party component files, but we do have some recommendations. For files that don&#39;t need to be in the webroot (config files, .php, etc), we recommend putting them in:
+
+{quote}core/components/myname{quote}
+
+So, if you had a component named &#39;test&#39;, you would put its non-webroot files in &quot;core/components/test/&quot;. For files that need to be web-accessible, such as css, js and other files, we recommend:
+
+{quote}assets/components/myname{quote}
+
+Ergo, for &#39;test&#39;, &quot;assets/components/test&quot;. This standardization of paths makes it easier for other developers using your components to find your files easily.
+
+h2. [Snippets]
+
+Snippets are simply php scripts that can be executed on any page or other Element. They are the cornerstone of MODx Development and dynamic customization. You can read more about Snippets [here|Snippets].
+
+h2. [Plugins]
+
+[Plugins] are similar to snippets in that they are snippets of code that have access to the MODx API - however the big difference is that plugins are associated to specific system events. For example, in an average MODx page request, several events happen at certain points within the page parsing process and plugins can be attached to any of these events to fulfill a desired function. [Plugins] aren&#39;t just limited to front-end processing though, there are many events that are available in the MODx Manager.
+
+h2. [Properties and Property Sets]
+
+Properties are simply placeholders on Elements (Snippets/Plugins/Chunks/TVs/Templates), which can be parsed by each individual Element. They allow customization and argument passing for each Element.
+
+Property Sets are user-defined groupings of Properties that can be used to quickly centralize custom tag syntax calls.
+
+More on Property Sets can be found [here|Properties and Property Sets].
+
+
+h2. [Custom Manager Pages] (CMPs)
+
+[Custom Manager Pages], or CMPs, are custom pages in the manager built by 3rd Party developers to allow backend management of Components. They use the modAction and modMenu objects to dynamically create manager pages that can be easily found and added with no hacking of the core.
+
+h2. Using MODx Externally
+
+Using the MODx object (and all of its respective classes) is quite simple. All you need is this code:
+
+{code}
+require_once &#39;/absolute/path/to/modx/config.core.php&#39;;
+require_once MODX_CORE_PATH.&#39;config/&#39;.MODX_CONFIG_KEY.&#39;.inc.php&#39;;
+require_once MODX_CORE_PATH.&#39;model/modx/modx.class.php&#39;;
+$modx = new modX();
+$modx-&gt;initialize(&#39;web&#39;);
+{code}
+
+This will initialize the MODx object into the &#39;web&#39; [Context|Contexts]. Now, if you want to access it under a different [Context|Contexts] (and thereby changing its access permissions, policies, etc), you&#39;ll just need to change &#39;web&#39; to whatever [Context|Contexts] you want to load.
+
+{scrollbar}";}}}

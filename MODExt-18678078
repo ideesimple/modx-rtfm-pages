@@ -1,0 +1,447 @@
+a:5:{s:2:"id";s:8:"18678078";s:4:"info";a:4:{s:6:"Title:";s:6:"MODExt";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:21:"[revolution20:MODExt]";}s:6:"parent";s:8:"39354402";s:6:"source";s:4408:"\\
+
+{toc}
+
+h2. What is MODExt?
+
+MODExt is an extension of the ExtJS3 JavaScript Framework that provides extra, customized-to-MODx functionality. It drives MODx Revolution&#39;s manager interface, and it is also available to developers wanting to use it in their CMP development. A developer simply needs to use Ext.extend on the MODx.\* class to instantly get the benefit of custom MODExt components.
+
+h2. Commonly-Used Components
+
+There are a few components that are used throughout the MODx Manager, and will likely be used in CMPs
+
+{pagetree:root=MODExt|startDepth=4|sort=position}
+
+h3. More MODExt Components
+
+Of course, there are more MODExt components at your disposal. For a full list (and source code to examine), browse to the *manager/assets/modext/widgets/core/* directory of your MODx installation.
+
+h4. xcheckbox
+
+The xcheckbox xtype is an extension to the regular ExtJS checkbox added in MODX 2.1 that, when the checkbox is not checked, will send the value &quot;0&quot; instead of an empty string compared to the original checkbox form input.
+
+
+h2. Extending a MODExt Class
+
+Extending a MODExt component is actually quite simple. Let&#39;s extend the MODx.grid.Grid class to create our own custom grid, complete with a custom toolbar.
+
+First, create a new JavaScript file and place the following code:
+
+{code}
+MyComponent.grid.MyGrid = function( config ) {
+    /* Class parent constructor */
+    MyComponent.grid.MyGrid.superclass.constructor.call( this, config );
+};
+Ext.extend( MyComponent.grid.MyGrid, MODx.grid.Grid, {
+    /* Class members will go here */
+} );
+/* Register &quot;mycomponent-grid-mygrid&quot; as an xtype */
+Ext.reg( &quot;mycomponent-grid-mygrid&quot;, MyComponent.grid.MyGrid );
+{code}
+
+Here, we&#39;ve created our own class (MyComponent.grid.MyGrid) which extends MODx.grid.Grid. We have also registered &quot;mycomponent-grid-mygrid&quot; as an Ext xtype, which can be used to display this grid in a FormPanel or other component. It has no additional functionality \-\- yet\!
+
+Now, let&#39;s add some configuration options:
+
+{code}
+MyComponent.grid.MyGrid = function( config ) {
+    config = config || {};
+
+    /* Grid configuration options */
+    Ext.applyIf( config, {
+        id : &quot;mycomponent-grid-mygrid&quot;,
+        title : _( &quot;my_grid&quot; ),
+        url : MyComponent.config.connectors_url + &quot;list.php&quot;,
+        baseParams : {
+            action : &quot;getlist&quot;
+        },
+        paging : true,
+        autosave : true,
+        remoteSort : true,
+        /* Store field list */
+        fields : [ {
+            name : &quot;id&quot;,
+            type : &quot;int&quot;
+        }, {
+            name : &quot;name&quot;,
+            type : &quot;string&quot;
+        }, {
+            name : &quot;menu&quot;
+        } ],
+        /* Grid ColumnModel */
+        columns : [ {
+            header : _( &quot;id&quot; ),
+            dataIndex : &quot;id&quot;,
+            sortable : true
+        }, {
+            header : _( &quot;name&quot; ),
+            dataIndex : &quot;name&quot;,
+            sortable : true
+        } ],
+        /* Top toolbar */
+        tbar : [ {
+            xtype : &quot;button&quot;,
+            text : _( &quot;create&quot; ),
+            handler : {
+                xtype : &quot;mycomponent-window-create&quot;,
+                blankValues : true
+            },
+            scope : this
+        } ]
+    } );
+
+    /* Class parent constructor */
+    MyComponent.grid.MyGrid.superclass.constructor.call( this, config );
+};
+
+Ext.extend( MyComponent.grid.MyGrid, MODx.grid.Grid, {
+    /* Class members will go here */
+} );
+
+/* Register &quot;mycomponent-grid-mygrid&quot; as an xtype */
+Ext.reg( &quot;mycomponent-grid-mygrid&quot;, MyComponent.grid.MyGrid );
+{code}
+
+Our basic configuration sets the grid up to work with a &quot;list&quot; connector, using the &quot;getlist&quot; action parameter. It also sets up paging, sorting, and enables &quot;autosave&quot; functionality so that whenever a record is changed, it&#39;s automatically updated in the database.
+
+We then set up our fields (id, name, and menu), and our ColumnModel which references the fields in our store.
+
+Lastly, we create the top toolbar, consisting of a button. The handler creates a window used for creating a record to add to our database.
+
+h2. See Also
+
+* [ExtJS 3.0 API Documentation|http://extjs.com/deploy/dev/docs/]
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678078";s:3:"ver";s:1:"3";s:4:"code";s:4408:"\\
+
+{toc}
+
+h2. What is MODExt?
+
+MODExt is an extension of the ExtJS3 JavaScript Framework that provides extra, customized-to-MODx functionality. It drives MODx Revolution&#39;s manager interface, and it is also available to developers wanting to use it in their CMP development. A developer simply needs to use Ext.extend on the MODx.\* class to instantly get the benefit of custom MODExt components.
+
+h2. Commonly-Used Components
+
+There are a few components that are used throughout the MODx Manager, and will likely be used in CMPs
+
+{pagetree:root=MODExt|startDepth=4|sort=position}
+
+h3. More MODExt Components
+
+Of course, there are more MODExt components at your disposal. For a full list (and source code to examine), browse to the *manager/assets/modext/widgets/core/* directory of your MODx installation.
+
+h4. xcheckbox
+
+The xcheckbox xtype is an extension to the regular ExtJS checkbox added in MODX 2.1 that, when the checkbox is not checked, will send the value &quot;0&quot; instead of an empty string compared to the original checkbox form input.
+
+
+h2. Extending a MODExt Class
+
+Extending a MODExt component is actually quite simple. Let&#39;s extend the MODx.grid.Grid class to create our own custom grid, complete with a custom toolbar.
+
+First, create a new JavaScript file and place the following code:
+
+{code}
+MyComponent.grid.MyGrid = function( config ) {
+    /* Class parent constructor */
+    MyComponent.grid.MyGrid.superclass.constructor.call( this, config );
+};
+Ext.extend( MyComponent.grid.MyGrid, MODx.grid.Grid, {
+    /* Class members will go here */
+} );
+/* Register &quot;mycomponent-grid-mygrid&quot; as an xtype */
+Ext.reg( &quot;mycomponent-grid-mygrid&quot;, MyComponent.grid.MyGrid );
+{code}
+
+Here, we&#39;ve created our own class (MyComponent.grid.MyGrid) which extends MODx.grid.Grid. We have also registered &quot;mycomponent-grid-mygrid&quot; as an Ext xtype, which can be used to display this grid in a FormPanel or other component. It has no additional functionality \-\- yet\!
+
+Now, let&#39;s add some configuration options:
+
+{code}
+MyComponent.grid.MyGrid = function( config ) {
+    config = config || {};
+
+    /* Grid configuration options */
+    Ext.applyIf( config, {
+        id : &quot;mycomponent-grid-mygrid&quot;,
+        title : _( &quot;my_grid&quot; ),
+        url : MyComponent.config.connectors_url + &quot;list.php&quot;,
+        baseParams : {
+            action : &quot;getlist&quot;
+        },
+        paging : true,
+        autosave : true,
+        remoteSort : true,
+        /* Store field list */
+        fields : [ {
+            name : &quot;id&quot;,
+            type : &quot;int&quot;
+        }, {
+            name : &quot;name&quot;,
+            type : &quot;string&quot;
+        }, {
+            name : &quot;menu&quot;
+        } ],
+        /* Grid ColumnModel */
+        columns : [ {
+            header : _( &quot;id&quot; ),
+            dataIndex : &quot;id&quot;,
+            sortable : true
+        }, {
+            header : _( &quot;name&quot; ),
+            dataIndex : &quot;name&quot;,
+            sortable : true
+        } ],
+        /* Top toolbar */
+        tbar : [ {
+            xtype : &quot;button&quot;,
+            text : _( &quot;create&quot; ),
+            handler : {
+                xtype : &quot;mycomponent-window-create&quot;,
+                blankValues : true
+            },
+            scope : this
+        } ]
+    } );
+
+    /* Class parent constructor */
+    MyComponent.grid.MyGrid.superclass.constructor.call( this, config );
+};
+
+Ext.extend( MyComponent.grid.MyGrid, MODx.grid.Grid, {
+    /* Class members will go here */
+} );
+
+/* Register &quot;mycomponent-grid-mygrid&quot; as an xtype */
+Ext.reg( &quot;mycomponent-grid-mygrid&quot;, MyComponent.grid.MyGrid );
+{code}
+
+Our basic configuration sets the grid up to work with a &quot;list&quot; connector, using the &quot;getlist&quot; action parameter. It also sets up paging, sorting, and enables &quot;autosave&quot; functionality so that whenever a record is changed, it&#39;s automatically updated in the database.
+
+We then set up our fields (id, name, and menu), and our ColumnModel which references the fields in our store.
+
+Lastly, we create the top toolbar, consisting of a button. The handler creates a window used for creating a record to add to our database.
+
+h2. See Also
+
+* [ExtJS 3.0 API Documentation|http://extjs.com/deploy/dev/docs/]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35095198";s:3:"ver";s:1:"2";s:4:"code";s:4169:"\\
+
+{toc}
+
+h2. What is MODExt?
+
+MODExt is an extension of the ExtJS3 JavaScript Framework that provides extra, customized-to-MODx functionality. It drives MODx Revolution&#39;s manager interface, and it is also available to developers wanting to use it in their CMP development. A developer simply needs to use Ext.extend on the MODx.\* class to instantly get the benefit of custom MODExt components.
+
+h2. Commonly-Used Components
+
+There are a few components that are used throughout the MODx Manager, and will likely be used in CMPs
+
+{pagetree:root=MODExt|startDepth=4|sort=position}
+
+h3. More MODExt Components
+
+Of course, there are more MODExt components at your disposal. For a full list (and source code to examine), browse to the *manager/assets/modext/widgets/core/* directory of your MODx installation.
+
+h2. Extending a MODExt Class
+
+Extending a MODExt component is actually quite simple. Let&#39;s extend the MODx.grid.Grid class to create our own custom grid, complete with a custom toolbar.
+
+First, create a new JavaScript file and place the following code:
+
+{code}
+MyComponent.grid.MyGrid = function( config ) {
+    /* Class parent constructor */
+    MyComponent.grid.MyGrid.superclass.constructor.call( this, config );
+};
+Ext.extend( MyComponent.grid.MyGrid, MODx.grid.Grid, {
+    /* Class members will go here */
+} );
+/* Register &quot;mycomponent-grid-mygrid&quot; as an xtype */
+Ext.reg( &quot;mycomponent-grid-mygrid&quot;, MyComponent.grid.MyGrid );
+{code}
+
+Here, we&#39;ve created our own class (MyComponent.grid.MyGrid) which extends MODx.grid.Grid. We have also registered &quot;mycomponent-grid-mygrid&quot; as an Ext xtype, which can be used to display this grid in a FormPanel or other component. It has no additional functionality \-\- yet\!
+
+Now, let&#39;s add some configuration options:
+
+{code}
+MyComponent.grid.MyGrid = function( config ) {
+    config = config || {};
+    
+    /* Grid configuration options */
+    Ext.applyIf( config, {
+        id : &quot;mycomponent-grid-mygrid&quot;,
+        title : _( &quot;my_grid&quot; ),
+        url : MyComponent.config.connectors_url + &quot;list.php&quot;,
+        baseParams : {
+            action : &quot;getlist&quot;
+        },
+        paging : true,
+        autosave : true,
+        remoteSort : true,
+        /* Store field list */
+        fields : [ {
+            name : &quot;id&quot;,
+            type : &quot;int&quot;
+        }, {
+            name : &quot;name&quot;,
+            type : &quot;string&quot;
+        }, {
+            name : &quot;menu&quot;
+        } ],
+        /* Grid ColumnModel */
+        columns : [ {
+            header : _( &quot;id&quot; ),
+            dataIndex : &quot;id&quot;,
+            sortable : true
+        }, {
+            header : _( &quot;name&quot; ),
+            dataIndex : &quot;name&quot;,
+            sortable : true
+        } ],
+        /* Top toolbar */
+        tbar : [ {
+            xtype : &quot;button&quot;,
+            text : _( &quot;create&quot; ),
+            handler : {
+                xtype : &quot;mycomponent-window-create&quot;,
+                blankValues : true
+            },
+            scope : this
+        } ]
+    } );
+    
+    /* Class parent constructor */
+    MyComponent.grid.MyGrid.superclass.constructor.call( this, config );
+};
+
+Ext.extend( MyComponent.grid.MyGrid, MODx.grid.Grid, { 
+    /* Class members will go here */
+} );
+
+/* Register &quot;mycomponent-grid-mygrid&quot; as an xtype */
+Ext.reg( &quot;mycomponent-grid-mygrid&quot;, MyComponent.grid.MyGrid );
+{code}
+
+Our basic configuration sets the grid up to work with a &quot;list&quot; connector, using the &quot;getlist&quot; action parameter. It also sets up paging, sorting, and enables &quot;autosave&quot; functionality so that whenever a record is changed, it&#39;s automatically updated in the database.
+
+We then set up our fields (id, name, and menu), and our ColumnModel which references the fields in our store.
+
+Lastly, we create the top toolbar, consisting of a button. The handler creates a window used for creating a record to add to our database.
+
+h2. See Also
+
+* [ExtJS 3.0 API Documentation|http://extjs.com/deploy/dev/docs/]
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"33226857";s:3:"ver";s:1:"1";s:4:"code";s:4172:"\\
+
+{toc}
+
+h2. What is MODExt?
+
+MODExt is an extension of the ExtJS 3.0 JavaScript Framework that provides extra, customized-to-MODx functionality. It drives MODx Revolution&#39;s manager interface, and it is also available to developers wanting to use it in their CMP development. A developer simply needs to use Ext.extend on the MODx.\* class to instantly get the benefit of custom MODExt components.
+
+h2. Commonly-Used Components
+
+There are a few components that are used throughout the MODx Manager, and will likely be used in CMPs
+
+{pagetree:root=MODExt|startDepth=4|sort=position}
+
+h3. More MODExt Components
+
+Of course, there are more MODExt components at your disposal. For a full list (and source code to examine), browse to the *manager/assets/modext/widgets/core/* directory of your MODx installation.
+
+h2. Extending a MODExt Class
+
+Extending a MODExt component is actually quite simple. Let&#39;s extend the MODx.grid.Grid class to create our own custom grid, complete with a custom toolbar.
+
+First, create a new JavaScript file and place the following code:
+
+{code}
+MyComponent.grid.MyGrid = function( config ) {
+    /* Class parent constructor */
+    MyComponent.grid.MyGrid.superclass.constructor.call( this, config );
+};
+Ext.extend( MyComponent.grid.MyGrid, MODx.grid.Grid, {
+    /* Class members will go here */
+} );
+/* Register &quot;mycomponent-grid-mygrid&quot; as an xtype */
+Ext.reg( &quot;mycomponent-grid-mygrid&quot;, MyComponent.grid.MyGrid );
+{code}
+
+Here, we&#39;ve created our own class (MyComponent.grid.MyGrid) which extends MODx.grid.Grid. We have also registered &quot;mycomponent-grid-mygrid&quot; as an Ext xtype, which can be used to display this grid in a FormPanel or other component. It has no additional functionality \-\- yet\!
+
+Now, let&#39;s add some configuration options:
+
+{code}
+MyComponent.grid.MyGrid = function( config ) {
+    config = config || {};
+    
+    /* Grid configuration options */
+    Ext.applyIf( config, {
+        id : &quot;mycomponent-grid-mygrid&quot;,
+        title : _( &quot;my_grid&quot; ),
+        url : MyComponent.config.connectors_url + &quot;list.php&quot;,
+        baseParams : {
+            action : &quot;getlist&quot;
+        },
+        paging : true,
+        autosave : true,
+        remoteSort : true,
+        /* Store field list */
+        fields : [ {
+            name : &quot;id&quot;,
+            type : &quot;int&quot;
+        }, {
+            name : &quot;name&quot;,
+            type : &quot;string&quot;
+        }, {
+            name : &quot;menu&quot;
+        } ],
+        /* Grid ColumnModel */
+        columns : [ {
+            header : _( &quot;id&quot; ),
+            dataIndex : &quot;id&quot;,
+            sortable : true
+        }, {
+            header : _( &quot;name&quot; ),
+            dataIndex : &quot;name&quot;,
+            sortable : true
+        } ],
+        /* Top toolbar */
+        tbar : [ {
+            xtype : &quot;button&quot;,
+            text : _( &quot;create&quot; ),
+            handler : {
+                xtype : &quot;mycomponent-window-create&quot;,
+                blankValues : true
+            },
+            scope : this
+        } ]
+    } );
+    
+    /* Class parent constructor */
+    MyComponent.grid.MyGrid.superclass.constructor.call( this, config );
+};
+
+Ext.extend( MyComponent.grid.MyGrid, MODx.grid.Grid, { 
+    /* Class members will go here */
+} );
+
+/* Register &quot;mycomponent-grid-mygrid&quot; as an xtype */
+Ext.reg( &quot;mycomponent-grid-mygrid&quot;, MyComponent.grid.MyGrid );
+{code}
+
+Our basic configuration sets the grid up to work with a &quot;list&quot; connector, using the &quot;getlist&quot; action parameter. It also sets up paging, sorting, and enables &quot;autosave&quot; functionality so that whenever a record is changed, it&#39;s automatically updated in the database.
+
+We then set up our fields (id, name, and menu), and our ColumnModel which references the fields in our store.
+
+Lastly, we create the top toolbar, consisting of a button. The handler creates a window used for creating a record to add to our database.
+
+h2. See Also
+
+* [ExtJS 3.0 API Documentation|http://extjs.com/deploy/dev/docs/]
+
+{scrollbar}";}}}

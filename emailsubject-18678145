@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678145";s:4:"info";a:4:{s:6:"Title:";s:12:"emailsubject";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:27:"[revolution20:emailsubject]";}s:6:"parent";s:8:"18678127";s:6:"source";s:146:"h2. email_subject
+
+*Name*: Email Subject
+*Type*: String
+*Default*: Your login details
+
+The subject line for the default signup email.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678145";s:3:"ver";s:1:"2";s:4:"code";s:146:"h2. email_subject
+
+*Name*: Email Subject
+*Type*: String
+*Default*: Your login details
+
+The subject line for the default signup email.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119673";s:3:"ver";s:1:"1";s:4:"code";s:309:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}E-mail subject{zone-data}
+{zone-data:key}emailsubject{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}Your login details{zone-data}
+{zone-data:desc}The subject line for the default signup email.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

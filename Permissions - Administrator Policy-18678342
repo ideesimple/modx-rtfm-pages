@@ -1,0 +1,837 @@
+a:5:{s:2:"id";s:8:"18678342";s:4:"info";a:4:{s:6:"Title:";s:34:"Permissions - Administrator Policy";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:49:"[revolution20:Permissions - Administrator Policy]";}s:6:"parent";s:8:"35094808";s:6:"source";s:5545:"\\
+
+h2. The Administrator Policy
+
+This policy is packaged into MODx and is given to users on the &#39;mgr&#39; context who want to have full access to managing MODx content.
+
+h2. Default Permissions
+
+||Name||Description of Access||
+|about|The About page.|
+|access_permissions|Any Access Permission-related pages and actions.|
+|action_ok||
+|actions|The [Actions|Actions and Menus] page.|
+|change_password|User can change their user password.|
+|change_profile|User can change their profile.|
+|content_types|The [Content Types] page.|
+|create|Basic &quot;create&quot; access on objects.|
+|credits|View the Credits page.|
+|customize_forms|View and manage the [Customizing the Manager] page.|
+|database|The System Info page|
+|database_truncate|The ability to truncate a database table.|
+|delete_category|To delete or remove any Categories.|
+|delete_chunk|To delete or remove any [Chunks].|
+|delete_context|To delete or remove any [Contexts].|
+|delete_document|To delete or remove any [Resources].|
+|delete_eventlog|To empty the Event Log.|
+|delete_plugin|To delete or remove any [Plugins].|
+|delete_snippet|To delete or remove any [Snippets].|
+|delete_template|To delete or remove any [Templates].|
+|delete_tv|To delete or remove any [Template Variables].|
+|delete_role|To delete or remove any [Roles].|
+|delete_user|To delete or remove any [Users].|
+|edit_category|To edit any Categories.|
+|edit_chunk|To edit any [Chunks].|
+|edit_context|To edit any [Contexts].|
+|edit_document|To edit any [Resources|Resources].|
+|edit_locked|Allows a user to override a lock and edit a locked Resource.|
+|edit_parser||
+|edit_plugin|To edit any [Plugins].|
+|edit_role|To edit any [Roles].|
+|edit_snippet|To edit any [Snippets].|
+|edit_template|To edit any [Templates].|
+|edit_tv|To edit any [Template Variables].|
+|edit_user|To edit any [User|Users].|
+|element_tree|The ability to view the Elements Tree on the left nav.|
+|empty_cache|To empty the site cache.|
+|export_static|To export the site to static HTML.|
+|file_manager|To use the file manager, including creating/deleting files.|
+|file_tree|To view the Files Tree on the left nav.|
+|flush_sessions|Can flush Sessions across the site.|
+|frames|To use the MODx Manager UI at all.|
+|help|To view the Help page.|
+|home|To view the Welcome page.|
+|import_static|To view or use the Import pages.|
+|languages|To edit or view Lexicon Languages.|
+|lexicons|To edit or view Lexicons and [Internationalization].|
+|list|Basic permission to &quot;list&quot; any object. List means to get a collection of objects.|
+|load|Basic permission to &quot;load&quot; any object, or be able to return it as an instance at all.|
+|logout|To be able to logout as a user.|
+|logs|To view the logs, such as error and manager logs.|
+|menus|To edit or save any top Menu items.|
+|messages|To send or view any personal Messages.|
+|namespaces|To edit or view [Namespaces].|
+|new_category|To create a new Category.|
+|new_chunk|To create a new [Chunk|Chunks].|
+|new_context|To create a new [Context|Contexts].|
+|new_document|To create a new [Resources].|
+|new_plugin|To create a new [Plugin|Plugins].|
+|new_role|To create a new [Role|Roles].|
+|new_snippet|To create a new [Snippet|Snippets].|
+|new_template|To create a new [Template|Templates].|
+|new_tv|To create a new [Template Variable|Template Variables].|
+|new_user|To create a new [User|Users].|
+|packages|To use any Transport Packages in the [Package Management] system.|
+|property_sets|To view and edit [Properties and Property Sets].|
+|providers|To view and edit [Providers] across the site.|
+|publish_document|To publish or unpublish any Resource.|
+|purge_deleted|To empty the Recycle Bin.|
+|remove|Basic permission to remove any object.|
+|remove_locks|To remove all existing Locks throughout the site.|
+|resource_tree|To view the Resource Tree in the left nav.|
+|save|Basic save permission for any object.|
+|save_category|To save any Categories.|
+|save_chunk|To save any [Chunks].|
+|save_context|To save any [Contexts].|
+|save_document|To save any [Resources|Resources].|
+|save_plugin|To save any [Plugins].|
+|save_role|To save any [Roles].|
+|save_snippet|To save any [Snippets].|
+|save_template|To save any [Templates].|
+|save_tv|To save any [Template Variables].|
+|save_user|To save any [User|Users].|
+|search|To use the Search page.|
+|settings|To view and edit any System Settings.|
+|steal_locks|To &quot;steal&quot; locks, overriding a current lock on a document.|
+|unlock_element_properties|To be able to edit the default properties for any Element.|
+|view|Basic permission to &quot;view&quot; any object.|
+|view_category|To view any Categories.|
+|view_chunk|To view any [Chunks].|
+|view_context|To view any [Contexts].|
+|view_document|To view any [Resources|Resources].|
+|view_eventlog|To view the Event Log.|
+|view_offline||
+|view_plugin|To view any [Plugins].|
+|view_role|To view any [Roles].|
+|view_snippet|To view any [Snippets].|
+|view_template|To view any [Templates].|
+|view_tv|To view any [Template Variables].|
+|view_unpublished|To view any unpublished [Resources|Resources].|
+|view_user|To view any [User|Users].|
+|workspaces|To utilize [Package Management].|
+
+h2. Custom Permissions
+
+If you have created your own actions and menu items (e.g. if you have created a [Custom Manager Page|Custom Manager Pages Tutorial]), then you can define custom permission items when you create the menu item (System --&gt; Actions --&gt; Create Menu) that correspond to permissions listed here.
+
+
+!MODX Custom Permission.jpg!
+
+
+h2. See Also
+
+{pagetree:root=Permissions}
+
+{scrollbar}";s:8:"versions";a:6:{i:0;a:3:{s:2:"id";s:8:"18678342";s:3:"ver";s:1:"6";s:4:"code";s:5545:"\\
+
+h2. The Administrator Policy
+
+This policy is packaged into MODx and is given to users on the &#39;mgr&#39; context who want to have full access to managing MODx content.
+
+h2. Default Permissions
+
+||Name||Description of Access||
+|about|The About page.|
+|access_permissions|Any Access Permission-related pages and actions.|
+|action_ok||
+|actions|The [Actions|Actions and Menus] page.|
+|change_password|User can change their user password.|
+|change_profile|User can change their profile.|
+|content_types|The [Content Types] page.|
+|create|Basic &quot;create&quot; access on objects.|
+|credits|View the Credits page.|
+|customize_forms|View and manage the [Customizing the Manager] page.|
+|database|The System Info page|
+|database_truncate|The ability to truncate a database table.|
+|delete_category|To delete or remove any Categories.|
+|delete_chunk|To delete or remove any [Chunks].|
+|delete_context|To delete or remove any [Contexts].|
+|delete_document|To delete or remove any [Resources].|
+|delete_eventlog|To empty the Event Log.|
+|delete_plugin|To delete or remove any [Plugins].|
+|delete_snippet|To delete or remove any [Snippets].|
+|delete_template|To delete or remove any [Templates].|
+|delete_tv|To delete or remove any [Template Variables].|
+|delete_role|To delete or remove any [Roles].|
+|delete_user|To delete or remove any [Users].|
+|edit_category|To edit any Categories.|
+|edit_chunk|To edit any [Chunks].|
+|edit_context|To edit any [Contexts].|
+|edit_document|To edit any [Resources|Resources].|
+|edit_locked|Allows a user to override a lock and edit a locked Resource.|
+|edit_parser||
+|edit_plugin|To edit any [Plugins].|
+|edit_role|To edit any [Roles].|
+|edit_snippet|To edit any [Snippets].|
+|edit_template|To edit any [Templates].|
+|edit_tv|To edit any [Template Variables].|
+|edit_user|To edit any [User|Users].|
+|element_tree|The ability to view the Elements Tree on the left nav.|
+|empty_cache|To empty the site cache.|
+|export_static|To export the site to static HTML.|
+|file_manager|To use the file manager, including creating/deleting files.|
+|file_tree|To view the Files Tree on the left nav.|
+|flush_sessions|Can flush Sessions across the site.|
+|frames|To use the MODx Manager UI at all.|
+|help|To view the Help page.|
+|home|To view the Welcome page.|
+|import_static|To view or use the Import pages.|
+|languages|To edit or view Lexicon Languages.|
+|lexicons|To edit or view Lexicons and [Internationalization].|
+|list|Basic permission to &quot;list&quot; any object. List means to get a collection of objects.|
+|load|Basic permission to &quot;load&quot; any object, or be able to return it as an instance at all.|
+|logout|To be able to logout as a user.|
+|logs|To view the logs, such as error and manager logs.|
+|menus|To edit or save any top Menu items.|
+|messages|To send or view any personal Messages.|
+|namespaces|To edit or view [Namespaces].|
+|new_category|To create a new Category.|
+|new_chunk|To create a new [Chunk|Chunks].|
+|new_context|To create a new [Context|Contexts].|
+|new_document|To create a new [Resources].|
+|new_plugin|To create a new [Plugin|Plugins].|
+|new_role|To create a new [Role|Roles].|
+|new_snippet|To create a new [Snippet|Snippets].|
+|new_template|To create a new [Template|Templates].|
+|new_tv|To create a new [Template Variable|Template Variables].|
+|new_user|To create a new [User|Users].|
+|packages|To use any Transport Packages in the [Package Management] system.|
+|property_sets|To view and edit [Properties and Property Sets].|
+|providers|To view and edit [Providers] across the site.|
+|publish_document|To publish or unpublish any Resource.|
+|purge_deleted|To empty the Recycle Bin.|
+|remove|Basic permission to remove any object.|
+|remove_locks|To remove all existing Locks throughout the site.|
+|resource_tree|To view the Resource Tree in the left nav.|
+|save|Basic save permission for any object.|
+|save_category|To save any Categories.|
+|save_chunk|To save any [Chunks].|
+|save_context|To save any [Contexts].|
+|save_document|To save any [Resources|Resources].|
+|save_plugin|To save any [Plugins].|
+|save_role|To save any [Roles].|
+|save_snippet|To save any [Snippets].|
+|save_template|To save any [Templates].|
+|save_tv|To save any [Template Variables].|
+|save_user|To save any [User|Users].|
+|search|To use the Search page.|
+|settings|To view and edit any System Settings.|
+|steal_locks|To &quot;steal&quot; locks, overriding a current lock on a document.|
+|unlock_element_properties|To be able to edit the default properties for any Element.|
+|view|Basic permission to &quot;view&quot; any object.|
+|view_category|To view any Categories.|
+|view_chunk|To view any [Chunks].|
+|view_context|To view any [Contexts].|
+|view_document|To view any [Resources|Resources].|
+|view_eventlog|To view the Event Log.|
+|view_offline||
+|view_plugin|To view any [Plugins].|
+|view_role|To view any [Roles].|
+|view_snippet|To view any [Snippets].|
+|view_template|To view any [Templates].|
+|view_tv|To view any [Template Variables].|
+|view_unpublished|To view any unpublished [Resources|Resources].|
+|view_user|To view any [User|Users].|
+|workspaces|To utilize [Package Management].|
+
+h2. Custom Permissions
+
+If you have created your own actions and menu items (e.g. if you have created a [Custom Manager Page|Custom Manager Pages Tutorial]), then you can define custom permission items when you create the menu item (System --&gt; Actions --&gt; Create Menu) that correspond to permissions listed here.
+
+
+!MODX Custom Permission.jpg!
+
+
+h2. See Also
+
+{pagetree:root=Permissions}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"37683819";s:3:"ver";s:1:"5";s:4:"code";s:5513:"\\
+
+h2. The Administrator Policy
+
+This policy is packaged into MODx and is given to users on the &#39;mgr&#39; context who want to have full access to managing MODx content.
+
+h2. Default Permissions
+
+||Name||Description of Access||
+|about|The About page.|
+|access_permissions|Any Access Permission-related pages and actions.|
+|action_ok||
+|actions|The [Actions|Actions and Menus] page.|
+|change_password|User can change their user password.|
+|change_profile|User can change their profile.|
+|content_types|The [Content Types] page.|
+|create|Basic &quot;create&quot; access on objects.|
+|credits|View the Credits page.|
+|customize_forms|View and manage the [Customizing the Manager] page.|
+|database|The System Info page|
+|database_truncate|The ability to truncate a database table.|
+|delete_category|To delete or remove any Categories.|
+|delete_chunk|To delete or remove any [Chunks].|
+|delete_context|To delete or remove any [Contexts].|
+|delete_document|To delete or remove any [Resources].|
+|delete_eventlog|To empty the Event Log.|
+|delete_plugin|To delete or remove any [Plugins].|
+|delete_snippet|To delete or remove any [Snippets].|
+|delete_template|To delete or remove any [Templates].|
+|delete_tv|To delete or remove any [Template Variables].|
+|delete_role|To delete or remove any [Roles].|
+|delete_user|To delete or remove any [Users].|
+|edit_category|To edit any Categories.|
+|edit_chunk|To edit any [Chunks].|
+|edit_context|To edit any [Contexts].|
+|edit_document|To edit any [Resources|Resources].|
+|edit_locked|Allows a user to override a lock and edit a locked Resource.|
+|edit_parser||
+|edit_plugin|To edit any [Plugins].|
+|edit_role|To edit any [Roles].|
+|edit_snippet|To edit any [Snippets].|
+|edit_template|To edit any [Templates].|
+|edit_tv|To edit any [Template Variables].|
+|edit_user|To edit any [User|Users].|
+|element_tree|The ability to view the Elements Tree on the left nav.|
+|empty_cache|To empty the site cache.|
+|export_static|To export the site to static HTML.|
+|file_manager|To use the file manager, including creating/deleting files.|
+|file_tree|To view the Files Tree on the left nav.|
+|flush_sessions|Can flush Sessions across the site.|
+|frames|To use the MODx Manager UI at all.|
+|help|To view the Help page.|
+|home|To view the Welcome page.|
+|import_static|To view or use the Import pages.|
+|languages|To edit or view Lexicon Languages.|
+|lexicons|To edit or view Lexicons and [Internationalization].|
+|list|Basic permission to &quot;list&quot; any object. List means to get a collection of objects.|
+|load|Basic permission to &quot;load&quot; any object, or be able to return it as an instance at all.|
+|logout|To be able to logout as a user.|
+|logs|To view the logs, such as error and manager logs.|
+|menus|To edit or save any top Menu items.|
+|messages|To send or view any personal Messages.|
+|namespaces|To edit or view [Namespaces].|
+|new_category|To create a new Category.|
+|new_chunk|To create a new [Chunk|Chunks].|
+|new_context|To create a new [Context|Contexts].|
+|new_document|To create a new [Resources].|
+|new_plugin|To create a new [Plugin|Plugins].|
+|new_role|To create a new [Role|Roles].|
+|new_snippet|To create a new [Snippet|Snippets].|
+|new_template|To create a new [Template|Templates].|
+|new_tv|To create a new [Template Variable|Template Variables].|
+|new_user|To create a new [User|Users].|
+|packages|To use any Transport Packages in the [Package Management] system.|
+|property_sets|To view and edit [Properties and Property Sets].|
+|providers|To view and edit [Providers] across the site.|
+|publish_document|To publish or unpublish any Resource.|
+|purge_deleted|To empty the Recycle Bin.|
+|remove|Basic permission to remove any object.|
+|remove_locks|To remove all existing Locks throughout the site.|
+|resource_tree|To view the Resource Tree in the left nav.|
+|save|Basic save permission for any object.|
+|save_category|To save any Categories.|
+|save_chunk|To save any [Chunks].|
+|save_context|To save any [Contexts].|
+|save_document|To save any [Resources|Resources].|
+|save_plugin|To save any [Plugins].|
+|save_role|To save any [Roles].|
+|save_snippet|To save any [Snippets].|
+|save_template|To save any [Templates].|
+|save_tv|To save any [Template Variables].|
+|save_user|To save any [User|Users].|
+|search|To use the Search page.|
+|settings|To view and edit any System Settings.|
+|steal_locks|To &quot;steal&quot; locks, overriding a current lock on a document.|
+|unlock_element_properties|To be able to edit the default properties for any Element.|
+|view|Basic permission to &quot;view&quot; any object.|
+|view_category|To view any Categories.|
+|view_chunk|To view any [Chunks].|
+|view_context|To view any [Contexts].|
+|view_document|To view any [Resources|Resources].|
+|view_eventlog|To view the Event Log.|
+|view_offline||
+|view_plugin|To view any [Plugins].|
+|view_role|To view any [Roles].|
+|view_snippet|To view any [Snippets].|
+|view_template|To view any [Templates].|
+|view_tv|To view any [Template Variables].|
+|view_unpublished|To view any unpublished [Resources|Resources].|
+|view_user|To view any [User|Users].|
+|workspaces|To utilize [Package Management].|
+
+h2. Custom Permissions
+
+If you have created your own actions and menu items (e.g. if you have created a [Custom Manager Page|Custom Manager Pages Tutorial]), then you can define custom permission items when you create the menu item (System --&gt; Actions --&gt; Create Menu) that correspond to permissions listed here.
+
+h2. See Also
+
+{pagetree:root=Permissions}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"37683817";s:3:"ver";s:1:"4";s:4:"code";s:5513:"\\
+
+h2. The Administrator Policy
+
+This policy is packaged into MODx and is given to users on the &#39;mgr&#39; context who want to have full access to managing MODx content.
+
+h2. Default Permissions
+
+||Name||Description of Access||
+|about|The About page.|
+|access_permissions|Any Access Permission-related pages and actions.|
+|action_ok||
+|actions|The [Actions|Actions and Menus] page.|
+|change_password|User can change their user password.|
+|change_profile|User can change their profile.|
+|content_types|The [Content Types] page.|
+|create|Basic &quot;create&quot; access on objects.|
+|credits|View the Credits page.|
+|customize_forms|View and manage the [Customizing the Manager] page.|
+|database|The System Info page|
+|database_truncate|The ability to truncate a database table.|
+|delete_category|To delete or remove any Categories.|
+|delete_chunk|To delete or remove any [Chunks].|
+|delete_context|To delete or remove any [Contexts].|
+|delete_document|To delete or remove any [Resources].|
+|delete_eventlog|To empty the Event Log.|
+|delete_plugin|To delete or remove any [Plugins].|
+|delete_snippet|To delete or remove any [Snippets].|
+|delete_template|To delete or remove any [Templates].|
+|delete_tv|To delete or remove any [Template Variables].|
+|delete_role|To delete or remove any [Roles].|
+|delete_user|To delete or remove any [Users].|
+|edit_category|To edit any Categories.|
+|edit_chunk|To edit any [Chunks].|
+|edit_context|To edit any [Contexts].|
+|edit_document|To edit any [Resources|Resources].|
+|edit_locked|Allows a user to override a lock and edit a locked Resource.|
+|edit_parser||
+|edit_plugin|To edit any [Plugins].|
+|edit_role|To edit any [Roles].|
+|edit_snippet|To edit any [Snippets].|
+|edit_template|To edit any [Templates].|
+|edit_tv|To edit any [Template Variables].|
+|edit_user|To edit any [User|Users].|
+|element_tree|The ability to view the Elements Tree on the left nav.|
+|empty_cache|To empty the site cache.|
+|export_static|To export the site to static HTML.|
+|file_manager|To use the file manager, including creating/deleting files.|
+|file_tree|To view the Files Tree on the left nav.|
+|flush_sessions|Can flush Sessions across the site.|
+|frames|To use the MODx Manager UI at all.|
+|help|To view the Help page.|
+|home|To view the Welcome page.|
+|import_static|To view or use the Import pages.|
+|languages|To edit or view Lexicon Languages.|
+|lexicons|To edit or view Lexicons and [Internationalization].|
+|list|Basic permission to &quot;list&quot; any object. List means to get a collection of objects.|
+|load|Basic permission to &quot;load&quot; any object, or be able to return it as an instance at all.|
+|logout|To be able to logout as a user.|
+|logs|To view the logs, such as error and manager logs.|
+|menus|To edit or save any top Menu items.|
+|messages|To send or view any personal Messages.|
+|namespaces|To edit or view [Namespaces].|
+|new_category|To create a new Category.|
+|new_chunk|To create a new [Chunk|Chunks].|
+|new_context|To create a new [Context|Contexts].|
+|new_document|To create a new [Resources].|
+|new_plugin|To create a new [Plugin|Plugins].|
+|new_role|To create a new [Role|Roles].|
+|new_snippet|To create a new [Snippet|Snippets].|
+|new_template|To create a new [Template|Templates].|
+|new_tv|To create a new [Template Variable|Template Variables].|
+|new_user|To create a new [User|Users].|
+|packages|To use any Transport Packages in the [Package Management] system.|
+|property_sets|To view and edit [Properties and Property Sets].|
+|providers|To view and edit [Providers] across the site.|
+|publish_document|To publish or unpublish any Resource.|
+|purge_deleted|To empty the Recycle Bin.|
+|remove|Basic permission to remove any object.|
+|remove_locks|To remove all existing Locks throughout the site.|
+|resource_tree|To view the Resource Tree in the left nav.|
+|save|Basic save permission for any object.|
+|save_category|To save any Categories.|
+|save_chunk|To save any [Chunks].|
+|save_context|To save any [Contexts].|
+|save_document|To save any [Resources|Resources].|
+|save_plugin|To save any [Plugins].|
+|save_role|To save any [Roles].|
+|save_snippet|To save any [Snippets].|
+|save_template|To save any [Templates].|
+|save_tv|To save any [Template Variables].|
+|save_user|To save any [User|Users].|
+|search|To use the Search page.|
+|settings|To view and edit any System Settings.|
+|steal_locks|To &quot;steal&quot; locks, overriding a current lock on a document.|
+|unlock_element_properties|To be able to edit the default properties for any Element.|
+|view|Basic permission to &quot;view&quot; any object.|
+|view_category|To view any Categories.|
+|view_chunk|To view any [Chunks].|
+|view_context|To view any [Contexts].|
+|view_document|To view any [Resources|Resources].|
+|view_eventlog|To view the Event Log.|
+|view_offline||
+|view_plugin|To view any [Plugins].|
+|view_role|To view any [Roles].|
+|view_snippet|To view any [Snippets].|
+|view_template|To view any [Templates].|
+|view_tv|To view any [Template Variables].|
+|view_unpublished|To view any unpublished [Resources|Resources].|
+|view_user|To view any [User|Users].|
+|workspaces|To utilize [Package Management].|
+
+h2. Custom Permissions
+
+If you have created your own actions and menu items (e.g. if you have created a [Custom Manager Pages Tutorial|Custom Manager Page]), then you can define custom permission items when you create the menu item (System --&gt; Actions --&gt; Create Menu) that correspond to permissions listed here.
+
+h2. See Also
+
+{pagetree:root=Permissions}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"37683816";s:3:"ver";s:1:"3";s:4:"code";s:5193:"\\
+
+h2. The Administrator Policy
+
+This policy is packaged into MODx and is given to users on the &#39;mgr&#39; context who want to have full access to managing MODx content.
+
+h2. Default Permissions
+
+||Name||Description of Access||
+|about|The About page.|
+|access_permissions|Any Access Permission-related pages and actions.|
+|action_ok||
+|actions|The [Actions|Actions and Menus] page.|
+|change_password|User can change their user password.|
+|change_profile|User can change their profile.|
+|content_types|The [Content Types] page.|
+|create|Basic &quot;create&quot; access on objects.|
+|credits|View the Credits page.|
+|customize_forms|View and manage the [Customizing the Manager] page.|
+|database|The System Info page|
+|database_truncate|The ability to truncate a database table.|
+|delete_category|To delete or remove any Categories.|
+|delete_chunk|To delete or remove any [Chunks].|
+|delete_context|To delete or remove any [Contexts].|
+|delete_document|To delete or remove any [Resources].|
+|delete_eventlog|To empty the Event Log.|
+|delete_plugin|To delete or remove any [Plugins].|
+|delete_snippet|To delete or remove any [Snippets].|
+|delete_template|To delete or remove any [Templates].|
+|delete_tv|To delete or remove any [Template Variables].|
+|delete_role|To delete or remove any [Roles].|
+|delete_user|To delete or remove any [Users].|
+|edit_category|To edit any Categories.|
+|edit_chunk|To edit any [Chunks].|
+|edit_context|To edit any [Contexts].|
+|edit_document|To edit any [Resources|Resources].|
+|edit_locked|Allows a user to override a lock and edit a locked Resource.|
+|edit_parser||
+|edit_plugin|To edit any [Plugins].|
+|edit_role|To edit any [Roles].|
+|edit_snippet|To edit any [Snippets].|
+|edit_template|To edit any [Templates].|
+|edit_tv|To edit any [Template Variables].|
+|edit_user|To edit any [User|Users].|
+|element_tree|The ability to view the Elements Tree on the left nav.|
+|empty_cache|To empty the site cache.|
+|export_static|To export the site to static HTML.|
+|file_manager|To use the file manager, including creating/deleting files.|
+|file_tree|To view the Files Tree on the left nav.|
+|flush_sessions|Can flush Sessions across the site.|
+|frames|To use the MODx Manager UI at all.|
+|help|To view the Help page.|
+|home|To view the Welcome page.|
+|import_static|To view or use the Import pages.|
+|languages|To edit or view Lexicon Languages.|
+|lexicons|To edit or view Lexicons and [Internationalization].|
+|list|Basic permission to &quot;list&quot; any object. List means to get a collection of objects.|
+|load|Basic permission to &quot;load&quot; any object, or be able to return it as an instance at all.|
+|logout|To be able to logout as a user.|
+|logs|To view the logs, such as error and manager logs.|
+|menus|To edit or save any top Menu items.|
+|messages|To send or view any personal Messages.|
+|namespaces|To edit or view [Namespaces].|
+|new_category|To create a new Category.|
+|new_chunk|To create a new [Chunk|Chunks].|
+|new_context|To create a new [Context|Contexts].|
+|new_document|To create a new [Resources].|
+|new_plugin|To create a new [Plugin|Plugins].|
+|new_role|To create a new [Role|Roles].|
+|new_snippet|To create a new [Snippet|Snippets].|
+|new_template|To create a new [Template|Templates].|
+|new_tv|To create a new [Template Variable|Template Variables].|
+|new_user|To create a new [User|Users].|
+|packages|To use any Transport Packages in the [Package Management] system.|
+|property_sets|To view and edit [Properties and Property Sets].|
+|providers|To view and edit [Providers] across the site.|
+|publish_document|To publish or unpublish any Resource.|
+|purge_deleted|To empty the Recycle Bin.|
+|remove|Basic permission to remove any object.|
+|remove_locks|To remove all existing Locks throughout the site.|
+|resource_tree|To view the Resource Tree in the left nav.|
+|save|Basic save permission for any object.|
+|save_category|To save any Categories.|
+|save_chunk|To save any [Chunks].|
+|save_context|To save any [Contexts].|
+|save_document|To save any [Resources|Resources].|
+|save_plugin|To save any [Plugins].|
+|save_role|To save any [Roles].|
+|save_snippet|To save any [Snippets].|
+|save_template|To save any [Templates].|
+|save_tv|To save any [Template Variables].|
+|save_user|To save any [User|Users].|
+|search|To use the Search page.|
+|settings|To view and edit any System Settings.|
+|steal_locks|To &quot;steal&quot; locks, overriding a current lock on a document.|
+|unlock_element_properties|To be able to edit the default properties for any Element.|
+|view|Basic permission to &quot;view&quot; any object.|
+|view_category|To view any Categories.|
+|view_chunk|To view any [Chunks].|
+|view_context|To view any [Contexts].|
+|view_document|To view any [Resources|Resources].|
+|view_eventlog|To view the Event Log.|
+|view_offline||
+|view_plugin|To view any [Plugins].|
+|view_role|To view any [Roles].|
+|view_snippet|To view any [Snippets].|
+|view_template|To view any [Templates].|
+|view_tv|To view any [Template Variables].|
+|view_unpublished|To view any unpublished [Resources|Resources].|
+|view_user|To view any [User|Users].|
+|workspaces|To utilize [Package Management].|
+
+h2. See Also
+
+{pagetree:root=Permissions}
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"18678518";s:3:"ver";s:1:"2";s:4:"code";s:5187:"\\
+
+h2. The Administrator Policy
+
+This policy is packaged into MODx and is given to users on the &#39;mgr&#39; context who want to have full access to managing MODx content.
+
+h2. Default Permissions
+
+||Name||Description of Access||
+|about|The About page.|
+|access_permissions|Any Access Permission-related pages and actions.|
+|action_ok||
+|actions|The [Actions|Actions and Menus] page.|
+|change_password|User can change their user password.|
+|change_profile|User can change their profile.|
+|content_types|The [Content Types] page.|
+|create|Basic &quot;create&quot; access on objects.|
+|credits|View the Credits page.|
+|customize_forms|View and manage the [Customizing the Manager] page.|
+|database|The System Info page|
+|database_truncate|The ability to truncate a database table.|
+|delete_category|To delete or remove any Categories.|
+|delete_chunk|To delete or remove any [Chunks].|
+|delete_context|To delete or remove any [Contexts].|
+|delete_document|To delete or remove any [Resource].|
+|delete_eventlog|To empty the Event Log.|
+|delete_plugin|To delete or remove any [Plugins].|
+|delete_snippet|To delete or remove any [Snippets].|
+|delete_template|To delete or remove any [Templates].|
+|delete_tv|To delete or remove any [Template Variables].|
+|delete_role|To delete or remove any [Roles].|
+|delete_user|To delete or remove any [Users].|
+|edit_category|To edit any Categories.|
+|edit_chunk|To edit any [Chunks].|
+|edit_context|To edit any [Contexts].|
+|edit_document|To edit any [Resources|Resource].|
+|edit_locked|Allows a user to override a lock and edit a locked Resource.|
+|edit_parser||
+|edit_plugin|To edit any [Plugins].|
+|edit_role|To edit any [Roles].|
+|edit_snippet|To edit any [Snippets].|
+|edit_template|To edit any [Templates].|
+|edit_tv|To edit any [Template Variables].|
+|edit_user|To edit any [User|Users].|
+|element_tree|The ability to view the Elements Tree on the left nav.|
+|empty_cache|To empty the site cache.|
+|export_static|To export the site to static HTML.|
+|file_manager|To use the file manager, including creating/deleting files.|
+|file_tree|To view the Files Tree on the left nav.|
+|flush_sessions|Can flush Sessions across the site.|
+|frames|To use the MODx Manager UI at all.|
+|help|To view the Help page.|
+|home|To view the Welcome page.|
+|import_static|To view or use the Import pages.|
+|languages|To edit or view Lexicon Languages.|
+|lexicons|To edit or view Lexicons and [Internationalization].|
+|list|Basic permission to &quot;list&quot; any object. List means to get a collection of objects.|
+|load|Basic permission to &quot;load&quot; any object, or be able to return it as an instance at all.|
+|logout|To be able to logout as a user.|
+|logs|To view the logs, such as error and manager logs.|
+|menus|To edit or save any top Menu items.|
+|messages|To send or view any personal Messages.|
+|namespaces|To edit or view [Namespaces].|
+|new_category|To create a new Category.|
+|new_chunk|To create a new [Chunk|Chunks].|
+|new_context|To create a new [Context|Contexts].|
+|new_document|To create a new [Resource].|
+|new_plugin|To create a new [Plugin|Plugins].|
+|new_role|To create a new [Role|Roles].|
+|new_snippet|To create a new [Snippet|Snippets].|
+|new_template|To create a new [Template|Templates].|
+|new_tv|To create a new [Template Variable|Template Variables].|
+|new_user|To create a new [User|Users].|
+|packages|To use any Transport Packages in the [Package Management] system.|
+|property_sets|To view and edit [Properties and Property Sets].|
+|providers|To view and edit [Providers] across the site.|
+|publish_document|To publish or unpublish any Resource.|
+|purge_deleted|To empty the Recycle Bin.|
+|remove|Basic permission to remove any object.|
+|remove_locks|To remove all existing Locks throughout the site.|
+|resource_tree|To view the Resource Tree in the left nav.|
+|save|Basic save permission for any object.|
+|save_category|To save any Categories.|
+|save_chunk|To save any [Chunks].|
+|save_context|To save any [Contexts].|
+|save_document|To save any [Resources|Resource].|
+|save_plugin|To save any [Plugins].|
+|save_role|To save any [Roles].|
+|save_snippet|To save any [Snippets].|
+|save_template|To save any [Templates].|
+|save_tv|To save any [Template Variables].|
+|save_user|To save any [User|Users].|
+|search|To use the Search page.|
+|settings|To view and edit any System Settings.|
+|steal_locks|To &quot;steal&quot; locks, overriding a current lock on a document.|
+|unlock_element_properties|To be able to edit the default properties for any Element.|
+|view|Basic permission to &quot;view&quot; any object.|
+|view_category|To view any Categories.|
+|view_chunk|To view any [Chunks].|
+|view_context|To view any [Contexts].|
+|view_document|To view any [Resources|Resource].|
+|view_eventlog|To view the Event Log.|
+|view_offline||
+|view_plugin|To view any [Plugins].|
+|view_role|To view any [Roles].|
+|view_snippet|To view any [Snippets].|
+|view_template|To view any [Templates].|
+|view_tv|To view any [Template Variables].|
+|view_unpublished|To view any unpublished [Resources|Resource].|
+|view_user|To view any [User|Users].|
+|workspaces|To utilize [Package Management].|
+
+h2. See Also
+
+{pagetree:root=Permissions}
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"18678512";s:3:"ver";s:1:"1";s:4:"code";s:5182:"\\
+
+h2. The Administrator Policy
+
+This policy is packaged into MODx and is given to users on the &#39;mgr&#39; context who want to have full access to managing MODx content.
+
+h2. Default Permissions
+
+||Name||Description of Access||
+|about|The About page.|
+|access_permissions|Any Access Permission-related pages and actions.|
+|action_ok||
+|actions|The [Actions|Actions and Menus] page.|
+|change_password|User can change their user password.|
+|change_profile|User can change their profile.|
+|content_types|The [Content Types] page.|
+|create|Basic &quot;create&quot; access on objects.|
+|credits|View the Credits page.|
+|customize_forms|View and manage the [Form Customization] page.|
+|database|The System Info page|
+|database_truncate|The ability to truncate a database table.|
+|delete_category|To delete or remove any Categories.|
+|delete_chunk|To delete or remove any [Chunks].|
+|delete_context|To delete or remove any [Contexts].|
+|delete_document|To delete or remove any [Resource].|
+|delete_eventlog|To empty the Event Log.|
+|delete_plugin|To delete or remove any [Plugins].|
+|delete_snippet|To delete or remove any [Snippets].|
+|delete_template|To delete or remove any [Templates].|
+|delete_tv|To delete or remove any [Template Variables].|
+|delete_role|To delete or remove any [Roles].|
+|delete_user|To delete or remove any [Users].|
+|edit_category|To edit any Categories.|
+|edit_chunk|To edit any [Chunks].|
+|edit_context|To edit any [Contexts].|
+|edit_document|To edit any [Resources|Resource].|
+|edit_locked|Allows a user to override a lock and edit a locked Resource.|
+|edit_parser||
+|edit_plugin|To edit any [Plugins].|
+|edit_role|To edit any [Roles].|
+|edit_snippet|To edit any [Snippets].|
+|edit_template|To edit any [Templates].|
+|edit_tv|To edit any [Template Variables].|
+|edit_user|To edit any [User|Users].|
+|element_tree|The ability to view the Elements Tree on the left nav.|
+|empty_cache|To empty the site cache.|
+|export_static|To export the site to static HTML.|
+|file_manager|To use the file manager, including creating/deleting files.|
+|file_tree|To view the Files Tree on the left nav.|
+|flush_sessions|Can flush Sessions across the site.|
+|frames|To use the MODx Manager UI at all.|
+|help|To view the Help page.|
+|home|To view the Welcome page.|
+|import_static|To view or use the Import pages.|
+|languages|To edit or view Lexicon Languages.|
+|lexicons|To edit or view Lexicons and [Internationalization].|
+|list|Basic permission to &quot;list&quot; any object. List means to get a collection of objects.|
+|load|Basic permission to &quot;load&quot; any object, or be able to return it as an instance at all.|
+|logout|To be able to logout as a user.|
+|logs|To view the logs, such as error and manager logs.|
+|menus|To edit or save any top Menu items.|
+|messages|To send or view any personal Messages.|
+|namespaces|To edit or view [Namespaces].|
+|new_category|To create a new Category.|
+|new_chunk|To create a new [Chunk|Chunks].|
+|new_context|To create a new [Context|Contexts].|
+|new_document|To create a new [Resource].|
+|new_plugin|To create a new [Plugin|Plugins].|
+|new_role|To create a new [Role|Roles].|
+|new_snippet|To create a new [Snippet|Snippets].|
+|new_template|To create a new [Template|Templates].|
+|new_tv|To create a new [Template Variable|Template Variables].|
+|new_user|To create a new [User|Users].|
+|packages|To use any Transport Packages in the [Package Management] system.|
+|property_sets|To view and edit [Properties and Property Sets].|
+|providers|To view and edit [Providers] across the site.|
+|publish_document|To publish or unpublish any Resource.|
+|purge_deleted|To empty the Recycle Bin.|
+|remove|Basic permission to remove any object.|
+|remove_locks|To remove all existing Locks throughout the site.|
+|resource_tree|To view the Resource Tree in the left nav.|
+|save|Basic save permission for any object.|
+|save_category|To save any Categories.|
+|save_chunk|To save any [Chunks].|
+|save_context|To save any [Contexts].|
+|save_document|To save any [Resources|Resource].|
+|save_plugin|To save any [Plugins].|
+|save_role|To save any [Roles].|
+|save_snippet|To save any [Snippets].|
+|save_template|To save any [Templates].|
+|save_tv|To save any [Template Variables].|
+|save_user|To save any [User|Users].|
+|search|To use the Search page.|
+|settings|To view and edit any System Settings.|
+|steal_locks|To &quot;steal&quot; locks, overriding a current lock on a document.|
+|unlock_element_properties|To be able to edit the default properties for any Element.|
+|view|Basic permission to &quot;view&quot; any object.|
+|view_category|To view any Categories.|
+|view_chunk|To view any [Chunks].|
+|view_context|To view any [Contexts].|
+|view_document|To view any [Resources|Resource].|
+|view_eventlog|To view the Event Log.|
+|view_offline||
+|view_plugin|To view any [Plugins].|
+|view_role|To view any [Roles].|
+|view_snippet|To view any [Snippets].|
+|view_template|To view any [Templates].|
+|view_tv|To view any [Template Variables].|
+|view_unpublished|To view any unpublished [Resources|Resource].|
+|view_user|To view any [User|Users].|
+|workspaces|To utilize [Package Management].|
+
+h2. See Also
+
+{pagetree:root=Permissions}
+
+{scrollbar}";}}}

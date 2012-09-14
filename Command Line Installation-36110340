@@ -1,0 +1,524 @@
+a:5:{s:2:"id";s:8:"36110340";s:4:"info";a:4:{s:6:"Title:";s:25:"Command Line Installation";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Romain Tripault";s:12:"Wiki Markup:";s:40:"[revolution20:Command Line Installation]";}s:6:"parent";s:8:"35586761";s:6:"source";s:2968:"{note}CLI Installation is available only for MODX Revolution versions 2.2 and later.{note}
+{toc}
+
+h2. Installing MODX via the PHP Command Line
+
+MODX allows you to do upgrades and installations via the command line (CLI) while using a config XML file. (More info on this file can be found [here|The Setup Config Xml File].) This allows users to create simple batch scripts to update their MODX installations.
+
+{warning}When running upgrades, it is *always* recommended to backup your files before upgrading.{warning}
+
+h2. New CLI Installations
+
+First off, [download MODX|http://modx.com/download/] and extract the files to your server. In the setup/ directory, copy the file &quot;config.dist.new.xml&quot; and rename it to &quot;config.xml&quot;. MODX will automatically look for the setup/config.xml file during installation. You can move it outside of the setup/ directory (and the MODX webroot, if you choose), and specify its location with the &quot;--config=/path/to/config.xml&quot; argument.
+
+Next, edit the XML file and set the appropriate database information, MODX paths, and other configuration parameters, and then in your command line prompt, browse to the MODX setup/ directory, and type:
+
+{code}
+php ./index.php --installmode=new
+{code}
+
+MODX will proceed to install, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+Note : if your core folder is in a &quot;non-standard&quot; location, you might want to use : {code}--core_path=/path/to/core/{code}
+
+h2. Doing a Basic Upgrade MODX via CLI
+
+Follow the same steps as new installations, but this time in your XML file you need only specify the following attributes:
+
+* inplace
+* unpacked
+* language
+* remove_setup_directory
+
+And any other attributes you would like to change during the upgrade. There is an example upgrade xml file named &quot;config.dist.upgrade.xml&quot;. Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+
+h2. Doing an Advanced Upgrade MODX via CLI
+
+Follow the same steps as basic upgrade, but this time in your XML file you need all the attributes included in the config.dist.upgrade-advanced.xml file, as all can be changed in an advanced upgrade.
+
+Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade-advanced
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. See Also
+
+{pagetree:root=Installation}";s:8:"versions";a:10:{i:0;a:3:{s:2:"id";s:8:"36110340";s:3:"ver";s:1:"1";s:4:"code";s:2968:"{note}CLI Installation is available only for MODX Revolution versions 2.2 and later.{note}
+{toc}
+
+h2. Installing MODX via the PHP Command Line
+
+MODX allows you to do upgrades and installations via the command line (CLI) while using a config XML file. (More info on this file can be found [here|The Setup Config Xml File].) This allows users to create simple batch scripts to update their MODX installations.
+
+{warning}When running upgrades, it is *always* recommended to backup your files before upgrading.{warning}
+
+h2. New CLI Installations
+
+First off, [download MODX|http://modx.com/download/] and extract the files to your server. In the setup/ directory, copy the file &quot;config.dist.new.xml&quot; and rename it to &quot;config.xml&quot;. MODX will automatically look for the setup/config.xml file during installation. You can move it outside of the setup/ directory (and the MODX webroot, if you choose), and specify its location with the &quot;--config=/path/to/config.xml&quot; argument.
+
+Next, edit the XML file and set the appropriate database information, MODX paths, and other configuration parameters, and then in your command line prompt, browse to the MODX setup/ directory, and type:
+
+{code}
+php ./index.php --installmode=new
+{code}
+
+MODX will proceed to install, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+Note : if your core folder is in a &quot;non-standard&quot; location, you might want to use : {code}--core_path=/path/to/core/{code}
+
+h2. Doing a Basic Upgrade MODX via CLI
+
+Follow the same steps as new installations, but this time in your XML file you need only specify the following attributes:
+
+* inplace
+* unpacked
+* language
+* remove_setup_directory
+
+And any other attributes you would like to change during the upgrade. There is an example upgrade xml file named &quot;config.dist.upgrade.xml&quot;. Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+
+h2. Doing an Advanced Upgrade MODX via CLI
+
+Follow the same steps as basic upgrade, but this time in your XML file you need all the attributes included in the config.dist.upgrade-advanced.xml file, as all can be changed in an advanced upgrade.
+
+Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade-advanced
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. See Also
+
+{pagetree:root=Installation}";}i:1;a:3:{s:2:"id";s:8:"39976962";s:3:"ver";s:1:"9";s:4:"code";s:2835:"{note}CLI Installation is available only for MODX Revolution versions 2.2 and later.{note}
+{toc}
+
+h2. Installing MODX via the PHP Command Line
+
+MODX allows you to do upgrades and installations via the command line (CLI) while using a config XML file. (More info on this file can be found [here|The Setup Config Xml File].) This allows users to create simple batch scripts to update their MODX installations.
+
+{warning}When running upgrades, it is *always* recommended to backup your files before upgrading.{warning}
+
+h2. New CLI Installations
+
+First off, [download MODX|http://modx.com/download/] and extract the files to your server. In the setup/ directory, copy the file &quot;config.dist.new.xml&quot; and rename it to &quot;config.xml&quot;. MODX will automatically look for the setup/config.xml file during installation. You can move it outside of the setup/ directory (and the MODX webroot, if you choose), and specify its location with the &quot;--config=/path/to/config.xml&quot; argument.
+
+Next, edit the XML file and set the appropriate database information, MODX paths, and other configuration parameters, and then in your command line prompt, browse to the MODX setup/ directory, and type:
+
+{code}
+php ./index.php --installmode=new
+{code}
+
+MODX will proceed to install, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. Doing a Basic Upgrade MODX via CLI
+
+Follow the same steps as new installations, but this time in your XML file you need only specify the following attributes:
+
+* inplace
+* unpacked
+* language
+* remove_setup_directory
+
+And any other attributes you would like to change during the upgrade. There is an example upgrade xml file named &quot;config.dist.upgrade.xml&quot;. Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+
+h2. Doing an Advanced Upgrade MODX via CLI
+
+Follow the same steps as basic upgrade, but this time in your XML file you need all the attributes included in the config.dist.upgrade-advanced.xml file, as all can be changed in an advanced upgrade.
+
+Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade-advanced
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. See Also
+
+{pagetree:root=Installation}
+";}i:2;a:3:{s:2:"id";s:8:"36634787";s:3:"ver";s:1:"8";s:4:"code";s:2734:"{note}CLI Installation is available only for MODX Revolution versions 2.2 and later.{note}
+{toc}
+
+h2. Installing MODX via the PHP Command Line
+
+MODX allows you to do upgrades and installations via the command line (CLI) while using a config XML file. (More info on this file can be found [here|The Setup Config Xml File].) This allows users to create simple batch scripts to update their MODX installations.
+
+{warning}When running upgrades, it is *always* recommended to backup your files before upgrading.{warning}
+
+h2. New CLI Installations
+
+First off, [download MODX|http://modx.com/download/] and extract the files to your server. In the setup/ directory, copy the file &quot;config.dist.xml&quot; and rename it to &quot;config.xml&quot;. MODX will automatically look for the setup/config.xml file during installation. You can move it outside of the setup/ directory (and the MODX webroot, if you choose), and specify its location with the &quot;--config=/path/to/config.xml&quot; argument.
+
+Next, edit the XML file and set the appropriate database information, MODX paths, and other configuration parameters, and then in your command line prompt, browse to the MODX setup/ directory, and type:
+
+{code}
+php ./index.php --installmode=new
+{code}
+
+MODX will proceed to install, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. Doing a Basic Upgrade MODX via CLI
+
+Follow the same steps as new installations, but this time in your XML file you need only specify the following attributes:
+
+* inplace
+* unpacked
+* language
+* remove_setup_directory
+
+And any other attributes you would like to change during the upgrade. Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+
+h2. Doing an Advanced Upgrade MODX via CLI
+
+Follow the same steps as basic upgrade, but this time in your XML file you need all the attributes included in the config.dist.xml file, as all can be changed in an advanced upgrade.
+
+Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade-advanced
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. See Also
+
+{pagetree:root=Installation}
+";}i:3;a:3:{s:2:"id";s:8:"36110351";s:3:"ver";s:1:"7";s:4:"code";s:2626:"{note}CLI Installation is available only for MODX Revolution versions 2.2 and later.{note}
+{toc}
+
+h2. Installing MODX via the PHP Command Line
+
+MODX allows you to do upgrades and installations via the command line (CLI) while using a config XML file. (More info on this file can be found [here|The Setup Config Xml File].) This allows users to create simple batch scripts to update their MODX installations.
+
+h2. New CLI Installations
+
+First off, [download MODX|http://modx.com/download/] and extract the files to your server. In the setup/ directory, copy the file &quot;config.dist.xml&quot; and rename it to &quot;config.xml&quot;. MODX will automatically look for the setup/config.xml file during installation. You can move it outside of the setup/ directory (and the MODX webroot, if you choose), and specify its location with the &quot;--config=/path/to/config.xml&quot; argument.
+
+Next, edit the XML file and set the appropriate database information, MODX paths, and other configuration parameters, and then in your command line prompt, browse to the MODX setup/ directory, and type:
+
+{code}
+php ./index.php --installmode=new
+{code}
+
+MODX will proceed to install, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. Doing a Basic Upgrade MODX via CLI
+
+Follow the same steps as new installations, but this time in your XML file you need only specify the following attributes:
+
+* inplace
+* unpacked
+* language
+* remove_setup_directory
+
+And any other attributes you would like to change during the upgrade. Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+
+h2. Doing an Advanced Upgrade MODX via CLI
+
+Follow the same steps as basic upgrade, but this time in your XML file you need all the attributes included in the config.dist.xml file, as all can be changed in an advanced upgrade.
+
+Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade-advanced
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. See Also
+
+{pagetree:root=Installation}
+";}i:4;a:3:{s:2:"id";s:8:"36110350";s:3:"ver";s:1:"6";s:4:"code";s:2627:"{toc}
+
+{note}CLI Installation is available only for MODX Revolution versions 2.2 and later.{note}
+
+h2. Installing MODX via the PHP Command Line
+
+MODX allows you to do upgrades and installations via the command line (CLI) while using a config XML file. (More info on this file can be found [here|The Setup Config Xml File].) This allows users to create simple batch scripts to update their MODX installations.
+
+h2. New CLI Installations
+
+First off, [download MODX|http://modx.com/download/] and extract the files to your server. In the setup/ directory, copy the file &quot;config.dist.xml&quot; and rename it to &quot;config.xml&quot;. MODX will automatically look for the setup/config.xml file during installation. You can move it outside of the setup/ directory (and the MODX webroot, if you choose), and specify its location with the &quot;--config=/path/to/config.xml&quot; argument.
+
+Next, edit the XML file and set the appropriate database information, MODX paths, and other configuration parameters, and then in your command line prompt, browse to the MODX setup/ directory, and type:
+
+{code}
+php ./index.php --installmode=new
+{code}
+
+MODX will proceed to install, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. Doing a Basic Upgrade MODX via CLI
+
+Follow the same steps as new installations, but this time in your XML file you need only specify the following attributes:
+
+* inplace
+* unpacked
+* language
+* remove_setup_directory
+
+And any other attributes you would like to change during the upgrade. Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+
+h2. Doing an Advanced Upgrade MODX via CLI
+
+Follow the same steps as basic upgrade, but this time in your XML file you need all the attributes included in the config.dist.xml file, as all can be changed in an advanced upgrade.
+
+Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade-advanced
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. See Also
+
+{pagetree:root=Installation}
+";}i:5;a:3:{s:2:"id";s:8:"36110349";s:3:"ver";s:1:"5";s:4:"code";s:2039:"{toc}
+
+{note}CLI Installation is available only for MODX Revolution versions 2.2 and later.{note}
+
+h2. Installing MODX via the PHP Command Line
+
+MODX allows you to do upgrades and installations via the command line (CLI) while using a config XML file. (More info on this file can be found [here|The Setup Config Xml File].) This allows users to create simple batch scripts to update their MODX installations.
+
+h2. New CLI Installations
+
+First off, [download MODX|http://modx.com/download/] and extract the files to your server. In the setup/ directory, copy the file &quot;config.dist.xml&quot; and rename it to &quot;config.xml&quot;. MODX will automatically look for the setup/config.xml file during installation. You can move it outside of the setup/ directory (and the MODX webroot, if you choose), and specify its location with the &quot;--config=/path/to/config.xml&quot; argument.
+
+Next, edit the XML file and set the appropriate database information, MODX paths, and other configuration parameters, and then in your command line prompt, browse to the MODX setup/ directory, and type:
+
+{code}
+php ./index.php --installmode=new
+{code}
+
+MODX will proceed to install, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. Doing a Basic Upgrade MODX via CLI
+
+Follow the same steps as new installations, but this time in your XML file you need only specify the following attributes:
+
+* inplace
+* unpacked
+* language
+* remove_setup_directory
+
+And any other attributes you would like to change during the upgrade. Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. See Also
+
+{pagetree:root=Installation}
+";}i:6;a:3:{s:2:"id";s:8:"36110347";s:3:"ver";s:1:"4";s:4:"code";s:2052:"{toc}
+
+{note}CLI Installation is available only for MODX Revolution versions 2.2 and later.{note}
+
+h2. Installing MODX via the PHP Command Line
+
+MODX allows you to do upgrades and installations via the command line (CLI) while using a config XML file. (More info on this file can be found [here|The Setup Config Xml File].) This allows users to create simple batch scripts to update their MODX installations.
+
+h2. New CLI Installations
+
+First off, [download MODX|http://modx.com/download/] and extract the files to your server. In the setup/ directory, copy the file &quot;config.dist.xml&quot; and rename it to &quot;config.xml&quot;. MODX will automatically look for the setup/config.xml file during installation. You can move it outside of the setup/ directory (and the MODX webroot, if you choose), and specify its location with the &quot;--config=/path/to/config.xml&quot; argument.
+
+Next, edit the XML file and set the appropriate database information, MODX paths, and other configuration parameters, and then in your command line prompt, browse to the MODX setup/ directory, and type:
+
+{code}
+php ./index.php --installmode=new
+{code}
+
+MODX will proceed to install, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. Doing a Basic Upgrade MODX via CLI
+
+Follow the same steps as new installations, but this time in your XML file you need only specify the following attributes:
+
+* inplace
+* unpacked
+* language
+* remove_setup_directory
+
+And any other attributes you would like to change during the upgrade. Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. See Also
+
+{pagetree:root=Command Line Installation}
+";}i:7;a:3:{s:2:"id";s:8:"36110343";s:3:"ver";s:1:"3";s:4:"code";s:2050:"{toc}
+
+{note}CLI Installation is available only for MODX Revolution versions 2.2 and later.{note}
+
+h2. Installing MODX via the PHP Command Line
+
+MODX allows you to do upgrades and installations via the command line (CLI) while using a config XML file. (More info on this file can be found [here|The Setup Config Xml File] This allows users to create simple batch scripts to update their MODX installations.
+
+h2. New CLI Installations
+
+First off, [download MODX|http://modx.com/download/] and extract the files to your server. In the setup/ directory, copy the file &quot;config.dist.xml&quot; and rename it to &quot;config.xml&quot;. MODX will automatically look for the setup/config.xml file during installation. You can move it outside of the setup/ directory (and the MODX webroot, if you choose), and specify its location with the &quot;--config=/path/to/config.xml&quot; argument.
+
+Next, edit the XML file and set the appropriate database information, MODX paths, and other configuration parameters, and then in your command line prompt, browse to the MODX setup/ directory, and type:
+
+{code}
+php ./index.php --installmode=new
+{code}
+
+MODX will proceed to install, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. Doing a Basic Upgrade MODX via CLI
+
+Follow the same steps as new installations, but this time in your XML file you need only specify the following attributes:
+
+* inplace
+* unpacked
+* language
+* remove_setup_directory
+
+And any other attributes you would like to change during the upgrade. Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. See Also
+
+{pagetree:root=Command Line Installation}
+";}i:8;a:3:{s:2:"id";s:8:"36110342";s:3:"ver";s:1:"2";s:4:"code";s:2041:"{toc}
+
+{note}CLI Installation is available only for MODX Revolution versions 2.2 and later.{note}
+
+h2. Installing MODX via the PHP Command Line
+
+MODX allows you to do upgrades and installations via the command line (CLI) while using a config XML file. (More info on this file can be found [here|Setup config.xml] This allows users to create simple batch scripts to update their MODX installations.
+
+h2. New CLI Installations
+
+First off, [download MODX|http://modx.com/download/] and extract the files to your server. In the setup/ directory, copy the file &quot;config.dist.xml&quot; and rename it to &quot;config.xml&quot;. MODX will automatically look for the setup/config.xml file during installation. You can move it outside of the setup/ directory (and the MODX webroot, if you choose), and specify its location with the &quot;--config=/path/to/config.xml&quot; argument.
+
+Next, edit the XML file and set the appropriate database information, MODX paths, and other configuration parameters, and then in your command line prompt, browse to the MODX setup/ directory, and type:
+
+{code}
+php ./index.php --installmode=new
+{code}
+
+MODX will proceed to install, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. Doing a Basic Upgrade MODX via CLI
+
+Follow the same steps as new installations, but this time in your XML file you need only specify the following attributes:
+
+* inplace
+* unpacked
+* language
+* remove_setup_directory
+
+And any other attributes you would like to change during the upgrade. Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. See Also
+
+{pagetree:root=Command Line Installation}
+";}i:9;a:3:{s:2:"id";s:8:"36110341";s:3:"ver";s:1:"1";s:4:"code";s:1980:"{toc}
+
+{note}CLI Installation is available only for MODX Revolution versions 2.2 and later.{note}
+
+h2. Installing MODX via the PHP Command Line
+
+MODX allows you to do upgrades and installations via the command line (CLI) while using a config XML file. This allows users to create simple batch scripts to update their MODX installations.
+
+h2. New CLI Installations
+
+First off, [download MODX|http://modx.com/download/] and extract the files to your server. In the setup/ directory, copy the file &quot;config.dist.xml&quot; and rename it to &quot;config.xml&quot;. MODX will automatically look for the setup/config.xml file during installation. You can move it outside of the setup/ directory (and the MODX webroot, if you choose), and specify its location with the &quot;--config=/path/to/config.xml&quot; argument.
+
+Next, edit the XML file and set the appropriate database information, MODX paths, and other configuration parameters, and then in your command line prompt, browse to the MODX setup/ directory, and type:
+
+{code}
+php ./index.php --installmode=new
+{code}
+
+MODX will proceed to install, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. Doing a Basic Upgrade MODX via CLI
+
+Follow the same steps as new installations, but this time in your XML file you need only specify the following attributes:
+
+* inplace
+* unpacked
+* language
+* remove_setup_directory
+
+And any other attributes you would like to change during the upgrade. Then, once you are ready, browse to the MODX setup directory, and type:
+
+{code}
+php ./index.php --installmode=upgrade
+{code}
+
+This will upgrade your MODX installation, and when finished will display the time it took to run the installation, as well as any errors that occurred (which will also be logged in an install log file in core/cache/logs/).
+
+h2. See Also
+
+{pagetree:root=Command Line Installation}
+";}}}

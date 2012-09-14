@@ -1,0 +1,35 @@
+a:5:{s:2:"id";s:8:"18678189";s:4:"info";a:4:{s:6:"Title:";s:14:"upload_maxsize";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:29:"[revolution20:upload_maxsize]";}s:6:"parent";s:8:"18678127";s:6:"source";s:366:"h2. upload_maxsize
+
+*Name*: Maximum Upload Size
+*Type*: Number
+*Default*: 1048576
+
+The maximum file size that can be uploaded via the file manager. Upload file size must be entered in bytes.
+
+{note}Large files can take a very long time to upload. Also ensure that your PHP setup can handle large files in its max post size setting in the php.ini.{note}
+
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678189";s:3:"ver";s:1:"2";s:4:"code";s:366:"h2. upload_maxsize
+
+*Name*: Maximum Upload Size
+*Type*: Number
+*Default*: 1048576
+
+The maximum file size that can be uploaded via the file manager. Upload file size must be entered in bytes.
+
+{note}Large files can take a very long time to upload. Also ensure that your PHP setup can handle large files in its max post size setting in the php.ini.{note}
+
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119743";s:3:"ver";s:1:"1";s:4:"code";s:428:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Maximum Upload Size{zone-data}
+{zone-data:key}upload_maxsize{zone-data}
+{zone-data:type}number{zone-data}
+{zone-data:default}1048576{zone-data}
+{zone-data:desc}The maximum file size that can be uploaded via the file manager. Upload file size must be entered in bytes.
+
+{note}Large files can take a very long time to upload!{note}{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

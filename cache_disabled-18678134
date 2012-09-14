@@ -1,0 +1,35 @@
+a:5:{s:2:"id";s:8:"18678134";s:4:"info";a:4:{s:6:"Title:";s:14:"cache_disabled";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:29:"[revolution20:cache_disabled]";}s:6:"parent";s:8:"18678127";s:6:"source";s:295:"h2. cache_disabled
+
+*Name*: Disable Global Cache Options
+*Type*: Yes/No
+*Default*: No
+
+If true, disables all MODx caching features.
+
+{warning}This feature is *experimental*. MODx recommends not turning off caching site-wide, as it can significantly slow down your site.{warning}
+
+\\
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678134";s:3:"ver";s:1:"2";s:4:"code";s:295:"h2. cache_disabled
+
+*Name*: Disable Global Cache Options
+*Type*: Yes/No
+*Default*: No
+
+If true, disables all MODx caching features.
+
+{warning}This feature is *experimental*. MODx recommends not turning off caching site-wide, as it can significantly slow down your site.{warning}
+
+\\
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119650";s:3:"ver";s:1:"1";s:4:"code";s:311:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Disable Global Cache Options{zone-data}
+{zone-data:key}cache_disabled{zone-data}
+{zone-data:type}boolean{zone-data}
+{zone-data:default}false{zone-data}
+{zone-data:desc}If true, disables all MODx caching features.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

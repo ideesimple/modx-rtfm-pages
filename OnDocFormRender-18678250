@@ -1,0 +1,39 @@
+a:5:{s:2:"id";s:8:"18678250";s:4:"info";a:4:{s:6:"Title:";s:15:"OnDocFormRender";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:30:"[revolution20:OnDocFormRender]";}s:6:"parent";s:8:"18678228";s:6:"source";s:491:"\\
+
+h2. Event: OnDocFormRender
+
+Fires after a Resource editing form is loaded in the manager. Useful for inserting HTML into forms.
+
+Service: 1 - Parser Service Events
+Group: Documents
+
+h2. Event Parameters
+
+||Name||Description||
+|mode|Either &#39;new&#39; or &#39;upd&#39;, depending on the circumstance.|
+|resource|A reference to the modResource object. Will be null for new Resources.|
+|id|The ID of the Resource. Will be 0 for new Resources.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678250";s:3:"ver";s:1:"1";s:4:"code";s:491:"\\
+
+h2. Event: OnDocFormRender
+
+Fires after a Resource editing form is loaded in the manager. Useful for inserting HTML into forms.
+
+Service: 1 - Parser Service Events
+Group: Documents
+
+h2. Event Parameters
+
+||Name||Description||
+|mode|Either &#39;new&#39; or &#39;upd&#39;, depending on the circumstance.|
+|resource|A reference to the modResource object. Will be null for new Resources.|
+|id|The ID of the Resource. Will be 0 for new Resources.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

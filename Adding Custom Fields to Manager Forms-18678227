@@ -1,0 +1,157 @@
+a:5:{s:2:"id";s:8:"18678227";s:4:"info";a:4:{s:6:"Title:";s:37:"Adding Custom Fields to Manager Forms";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:7:"Bob Ray";s:12:"Wiki Markup:";s:52:"[revolution20:Adding Custom Fields to Manager Forms]";}s:6:"parent";s:8:"18678106";s:6:"source";s:2234:"\\
+
+h2. Adding a Custom Field
+
+Adding custom fields to manager forms - such as the Create Chunk, Update Resource, etc - in MODx Revolution is fairly straightforward. You just use the On*FormRender Plugin events.
+
+We want to add a field called &#39;Home&#39; that puts an address field into the manager interface, and then stores it into the longtitle value (this is not the best place to store it, but let&#39;s go along with it for tutorial purposes :-) ).
+
+To do so, we&#39;d create a [Plugin|Plugins] and associate it to the *OnDocFormRender* and *OnDocFormSave* events. Our code would look like this:
+
+{code}
+&lt;?php
+/**
+ * Register a form field to forms
+ */
+switch ($modx-&gt;event-&gt;name) {
+    case &#39;OnDocFormPrerender&#39;:
+        /* if you want to add custom scripts, css, etc, register them here */
+        break;
+    case &#39;OnDocFormRender&#39;:
+        $v = &#39;&#39;;
+        if (isset($scriptProperties[&#39;resource&#39;])) {
+            /* on the update screen, so set the value */
+            $v = $scriptProperties[&#39;resource&#39;]-&gt;get(&#39;longtitle&#39;);
+        } else {
+            /* on the create screen, so set the default */
+            $profile = $modx-&gt;user-&gt;getOne(&#39;Profile&#39;);
+            $v = $profile-&gt;get(&#39;address&#39;);
+        }
+        /* now do the HTML */
+        $fields = &#39;
+&lt;div class=&quot;x-form-item x-tab-item&quot;&gt;
+    &lt;label class=&quot;x-form-item-label&quot; style=&quot;width:150px;&quot;&gt;Home&lt;/label&gt;
+    &lt;div class=&quot;x-form-element&quot;&gt;
+        &lt;input type=&quot;text&quot; name=&quot;home&quot; value=&quot;&#39;.$v.&#39;&quot; class=&quot;x-form-text x-form-field&quot; /&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&#39;;
+        $modx-&gt;event-&gt;output($fields);
+break;
+    case &#39;OnDocFormSave&#39;:
+        /* do processing logic here. */
+        $resource =&amp; $scriptProperties[&#39;resource&#39;];
+        $resource-&gt;set(&#39;longtitle&#39;,$_POST[&#39;home&#39;]);
+        $resource-&gt;save();
+        break;
+}
+return;
+{code}
+
+Note the CSS classes and styling in the form HTML. Those are unnecessary; but will make the form &quot;match&quot; the styling of the rest of the fields.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678227";s:3:"ver";s:1:"2";s:4:"code";s:2234:"\\
+
+h2. Adding a Custom Field
+
+Adding custom fields to manager forms - such as the Create Chunk, Update Resource, etc - in MODx Revolution is fairly straightforward. You just use the On*FormRender Plugin events.
+
+We want to add a field called &#39;Home&#39; that puts an address field into the manager interface, and then stores it into the longtitle value (this is not the best place to store it, but let&#39;s go along with it for tutorial purposes :-) ).
+
+To do so, we&#39;d create a [Plugin|Plugins] and associate it to the *OnDocFormRender* and *OnDocFormSave* events. Our code would look like this:
+
+{code}
+&lt;?php
+/**
+ * Register a form field to forms
+ */
+switch ($modx-&gt;event-&gt;name) {
+    case &#39;OnDocFormPrerender&#39;:
+        /* if you want to add custom scripts, css, etc, register them here */
+        break;
+    case &#39;OnDocFormRender&#39;:
+        $v = &#39;&#39;;
+        if (isset($scriptProperties[&#39;resource&#39;])) {
+            /* on the update screen, so set the value */
+            $v = $scriptProperties[&#39;resource&#39;]-&gt;get(&#39;longtitle&#39;);
+        } else {
+            /* on the create screen, so set the default */
+            $profile = $modx-&gt;user-&gt;getOne(&#39;Profile&#39;);
+            $v = $profile-&gt;get(&#39;address&#39;);
+        }
+        /* now do the HTML */
+        $fields = &#39;
+&lt;div class=&quot;x-form-item x-tab-item&quot;&gt;
+    &lt;label class=&quot;x-form-item-label&quot; style=&quot;width:150px;&quot;&gt;Home&lt;/label&gt;
+    &lt;div class=&quot;x-form-element&quot;&gt;
+        &lt;input type=&quot;text&quot; name=&quot;home&quot; value=&quot;&#39;.$v.&#39;&quot; class=&quot;x-form-text x-form-field&quot; /&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&#39;;
+        $modx-&gt;event-&gt;output($fields);
+break;
+    case &#39;OnDocFormSave&#39;:
+        /* do processing logic here. */
+        $resource =&amp; $scriptProperties[&#39;resource&#39;];
+        $resource-&gt;set(&#39;longtitle&#39;,$_POST[&#39;home&#39;]);
+        $resource-&gt;save();
+        break;
+}
+return;
+{code}
+
+Note the CSS classes and styling in the form HTML. Those are unnecessary; but will make the form &quot;match&quot; the styling of the rest of the fields.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"19759107";s:3:"ver";s:1:"1";s:4:"code";s:2201:"\\
+
+h2. Adding a Custom Field
+
+Adding custom fields to manager forms - such as the Create Chunk, Update Resource, etc - in MODx Revolution is fairly straightforward. You just use the On*FormRender Plugin events.
+
+We want to add a field called &#39;Home&#39; that puts an address field into the manager interface, and then stores it into the longtitle value (this is not the best place to store it, but let&#39;s go along with it for tutorial purposes :)).
+
+To do so, we&#39;d create a [Plugin|Plugins] and associate it to the *OnDocFormRender* and *OnDocFormSave* events. Our code would look like this:
+
+{code}
+&lt;?php
+/**
+ * Register a form field to forms
+ */
+switch ($modx-&gt;event-&gt;name) {
+    case &#39;OnDocFormPrerender&#39;:
+        /* if you want to add custom scripts, css, etc, register them here */
+        break;
+    case &#39;OnDocFormRender&#39;:
+        $v = &#39;&#39;;
+        if (isset($scriptProperties[&#39;resource&#39;])) {
+            /* on the update screen, so set the value */
+            $v = $scriptProperties[&#39;resource&#39;]-&gt;get(&#39;longtitle&#39;);
+        } else {
+            /* on the create screen, so set the default */
+            $profile = $modx-&gt;user-&gt;getOne(&#39;Profile&#39;);
+            $v = $profile-&gt;get(&#39;address&#39;);
+        }
+        /* now do the HTML */
+        $fields = &#39;
+&lt;div class=&quot;x-form-item x-tab-item&quot;&gt;
+    &lt;label class=&quot;x-form-item-label&quot;&gt;Home&lt;/label&gt;
+    &lt;div class=&quot;x-form-element&quot;&gt;
+        &lt;input type=&quot;text&quot; name=&quot;home&quot; value=&quot;&#39;.$v.&#39;&quot; class=&quot;x-form-text x-form-field&quot; /&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&#39;;
+        $modx-&gt;event-&gt;output($fields);
+break;
+    case &#39;OnDocFormSave&#39;:
+        /* do processing logic here. */
+        $resource =&amp; $scriptProperties[&#39;resource&#39;];
+        $resource-&gt;set(&#39;longtitle&#39;,$_POST[&#39;home&#39;]);
+        $resource-&gt;save();
+        break;
+}
+return;
+{code}
+
+Note the CSS classes and styling in the form HTML. Those are unnecessary; but will make the form &quot;match&quot; the styling of the rest of the fields.
+
+{scrollbar}";}}}

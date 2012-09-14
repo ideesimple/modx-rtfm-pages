@@ -1,0 +1,33 @@
+a:5:{s:2:"id";s:8:"18678173";s:4:"info";a:4:{s:6:"Title:";s:19:"session_cookie_path";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:34:"[revolution20:session_cookie_path]";}s:6:"parent";s:8:"18678127";s:6:"source";s:345:"h2. session_cookie_path
+
+*Name*: Session Cookie Path
+*Type*: String
+*Default*: /
+
+Use this setting to customize the cookie path for identifying site specific session cookies.
+
+{note}This setting isn&#39;t in MODx by default. It&#39;s best to let PHP figure this out on its own. Only set this if you know what you are doing.{note}
+\\
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678173";s:3:"ver";s:1:"2";s:4:"code";s:345:"h2. session_cookie_path
+
+*Name*: Session Cookie Path
+*Type*: String
+*Default*: /
+
+Use this setting to customize the cookie path for identifying site specific session cookies.
+
+{note}This setting isn&#39;t in MODx by default. It&#39;s best to let PHP figure this out on its own. Only set this if you know what you are doing.{note}
+\\
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119714";s:3:"ver";s:1:"1";s:4:"code";s:350:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Session Cookie Path{zone-data}
+{zone-data:key}session_cookie_path{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}/{zone-data}
+{zone-data:desc}Use this setting to customize the cookie path for identifying site specific session cookies.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

@@ -1,0 +1,51 @@
+a:5:{s:2:"id";s:8:"18678428";s:4:"info";a:4:{s:6:"Title:";s:27:"modUser.removeSessionCookie";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:42:"[revolution20:modUser.removeSessionCookie]";}s:6:"parent";s:8:"18678416";s:6:"source";s:454:"\\
+
+h2. modUser::removeSessionCookie
+Removes a session cookie for a user.
+
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modUser.html#removeSessionCookie
+
+{code}
+void removeSessionCookie (string $context)
+{code}
+
+h2. Example
+
+Remove the Session Cookie for the User in the &#39;sports&#39; Context.
+{code}
+$user-&gt;removeSessionCookie(&#39;sports&#39;);
+{code}
+
+h2. See Also
+
+{contentbylabel:labels=user|showLabels=false|showSpace=false}
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678428";s:3:"ver";s:1:"1";s:4:"code";s:454:"\\
+
+h2. modUser::removeSessionCookie
+Removes a session cookie for a user.
+
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modUser.html#removeSessionCookie
+
+{code}
+void removeSessionCookie (string $context)
+{code}
+
+h2. Example
+
+Remove the Session Cookie for the User in the &#39;sports&#39; Context.
+{code}
+$user-&gt;removeSessionCookie(&#39;sports&#39;);
+{code}
+
+h2. See Also
+
+{contentbylabel:labels=user|showLabels=false|showSpace=false}
+
+{scrollbar}";}}}

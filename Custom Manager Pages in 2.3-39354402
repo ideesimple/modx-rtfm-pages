@@ -1,0 +1,435 @@
+a:5:{s:2:"id";s:8:"39354402";s:4:"info";a:4:{s:6:"Title:";s:27:"Custom Manager Pages in 2.3";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:8:"Stephane";s:12:"Wiki Markup:";s:42:"[revolution20:Custom Manager Pages in 2.3]";}s:6:"parent";s:8:"18678076";s:6:"source";s:3328:"{toc}
+
+Creating MODX custom manager pages (CMPs) is *far* simpler in MODX Revolution 2.3 - you simply have to set a Namespace path, and then create PHP files. That&#39;s it.
+
+h2. Setting the Namespace Path
+
+First off, we&#39;ll create a Namespace called &quot;mycmp&quot;, and set its path to &quot;\{core_path\}components/mycmp/&quot;. Set its Assets Path to &quot;\{assets_path\}components/mycmp/&quot; as well.
+
+h2. Creating the Menu
+
+Now we&#39;ll need a Menu item to link to for our CMP. Go to System \-&gt; Top Menu, and create a Menu item under the &quot;Components&quot; menu item that looks like this:
+
+!mycmp1.png!
+
+As you can see, we&#39;re specifying the Namespace as &quot;mycmp&quot;, and then the Action as &quot;welcome&quot;. This means our default controller will be the &quot;welcome&quot; controller.
+
+h2. Creating the Controller File
+
+Next, we&#39;ll go create the Controller file at \{core_path\}components/mycmp/controllers/default/welcome.class.php file. Why the &quot;controllers/default/welcome.class.php&quot; path? Well, MODX automatically looks in the &quot;controllers/&quot; directory for your controllers. Secondly, &quot;default&quot; here is the current Manager Theme (so you could make different controllers for different manager themes), so we&#39;re creating it in default. And finally, &quot;welcome.class.php&quot; is the name that corresponds to our &quot;welcome&quot; action we put in the menu above. If we had set the Action of the Menu to &quot;home&quot;, we would be making a &quot;home.class.php&quot; file instead.
+
+Now, on to the file contents:
+
+{code}
+&lt;?php
+class MycmpWelcomeManagerController extends modExtraManagerController {
+    public function process(array $scriptProperties = array()) {}
+    public function getPageTitle() {
+        return &#39;My Test CMP&#39;;
+    }
+    public function getTemplateFile() {
+        return &#39;welcome.tpl&#39;;
+    }
+}
+{code}
+
+As you can see here, we&#39;re not doing any business logic, so we don&#39;t need to do anything in the process() method. We go ahead and set a page title for this CMP, and then tell MODX where to find our corresponding template file for this CMP.
+
+h2. Creating the Template File
+
+MODX uses Smarty templates for CMP pages. It will automatically look for them in the \[namespace-path\]templates/ directory for you, so all you have to do is tell it in your controller what file in that directory to look for (you can specify subdirectories here too). Create a file at: \{core_path\}components/mycmp/templates/default/welcome.tpl
+
+Let&#39;s make the content simple:
+
+{code}
+&lt;div class=&quot;container&quot;&gt;
+&lt;h2&gt;Welcome!&lt;/h2&gt;
+&lt;/div&gt;
+{code}
+
+A simple h2, with a wrapping div that adds some padding. And that will display this on our CMP:
+
+!mycmp-final.png!
+
+
+h2. We&#39;re Finished\!
+
+That&#39;s it\! That&#39;s all you need to start making CMPs in MODX 2.3. You can see that our CMP is now accessible via /url/to/modx/manager/?action=welcome&amp;namespace=mycmp - which is much neater than the ID-based actions of 2.2 and earlier.
+
+There&#39;s obviously more API methods that you can override in modExtraManagerController in your PHP controller class, and then you can use [modExt] and such in your actual CMP to make powerful pages, but that&#39;s beyond the scope of this tutorial.";s:8:"versions";a:7:{i:0;a:3:{s:2:"id";s:8:"39354402";s:3:"ver";s:1:"7";s:4:"code";s:3328:"{toc}
+
+Creating MODX custom manager pages (CMPs) is *far* simpler in MODX Revolution 2.3 - you simply have to set a Namespace path, and then create PHP files. That&#39;s it.
+
+h2. Setting the Namespace Path
+
+First off, we&#39;ll create a Namespace called &quot;mycmp&quot;, and set its path to &quot;\{core_path\}components/mycmp/&quot;. Set its Assets Path to &quot;\{assets_path\}components/mycmp/&quot; as well.
+
+h2. Creating the Menu
+
+Now we&#39;ll need a Menu item to link to for our CMP. Go to System \-&gt; Top Menu, and create a Menu item under the &quot;Components&quot; menu item that looks like this:
+
+!mycmp1.png!
+
+As you can see, we&#39;re specifying the Namespace as &quot;mycmp&quot;, and then the Action as &quot;welcome&quot;. This means our default controller will be the &quot;welcome&quot; controller.
+
+h2. Creating the Controller File
+
+Next, we&#39;ll go create the Controller file at \{core_path\}components/mycmp/controllers/default/welcome.class.php file. Why the &quot;controllers/default/welcome.class.php&quot; path? Well, MODX automatically looks in the &quot;controllers/&quot; directory for your controllers. Secondly, &quot;default&quot; here is the current Manager Theme (so you could make different controllers for different manager themes), so we&#39;re creating it in default. And finally, &quot;welcome.class.php&quot; is the name that corresponds to our &quot;welcome&quot; action we put in the menu above. If we had set the Action of the Menu to &quot;home&quot;, we would be making a &quot;home.class.php&quot; file instead.
+
+Now, on to the file contents:
+
+{code}
+&lt;?php
+class MycmpWelcomeManagerController extends modExtraManagerController {
+    public function process(array $scriptProperties = array()) {}
+    public function getPageTitle() {
+        return &#39;My Test CMP&#39;;
+    }
+    public function getTemplateFile() {
+        return &#39;welcome.tpl&#39;;
+    }
+}
+{code}
+
+As you can see here, we&#39;re not doing any business logic, so we don&#39;t need to do anything in the process() method. We go ahead and set a page title for this CMP, and then tell MODX where to find our corresponding template file for this CMP.
+
+h2. Creating the Template File
+
+MODX uses Smarty templates for CMP pages. It will automatically look for them in the \[namespace-path\]templates/ directory for you, so all you have to do is tell it in your controller what file in that directory to look for (you can specify subdirectories here too). Create a file at: \{core_path\}components/mycmp/templates/default/welcome.tpl
+
+Let&#39;s make the content simple:
+
+{code}
+&lt;div class=&quot;container&quot;&gt;
+&lt;h2&gt;Welcome!&lt;/h2&gt;
+&lt;/div&gt;
+{code}
+
+A simple h2, with a wrapping div that adds some padding. And that will display this on our CMP:
+
+!mycmp-final.png!
+
+
+h2. We&#39;re Finished\!
+
+That&#39;s it\! That&#39;s all you need to start making CMPs in MODX 2.3. You can see that our CMP is now accessible via /url/to/modx/manager/?action=welcome&amp;namespace=mycmp - which is much neater than the ID-based actions of 2.2 and earlier.
+
+There&#39;s obviously more API methods that you can override in modExtraManagerController in your PHP controller class, and then you can use [modExt] and such in your actual CMP to make powerful pages, but that&#39;s beyond the scope of this tutorial.";}i:1;a:3:{s:2:"id";s:8:"39354414";s:3:"ver";s:1:"6";s:4:"code";s:3323:"{toc}
+
+Creating MODX custom manager pages (CMPs) is *far* simpler in MODX Revolution 2.3 - you simply have to set a Namespace path, and then create PHP files. That&#39;s it.
+
+h2. Setting the Namespace Path
+
+First off, we&#39;ll create a Namespace called &quot;mycmp&quot;, and set its path to &quot;\{core_path\}components/mycmp/&quot;. Set its Assets Path to &quot;\{assets_path\}components/mycmp/&quot; as well.
+
+h2. Creating the Menu
+
+Now we&#39;ll need a Menu item to link to for our CMP. Go to System -&gt; Top Menu, and create a Menu item under the &quot;Components&quot; menu item that looks like this:
+
+!mycmp1.png!
+
+As you can see, we&#39;re specifying the Namespace as &quot;mycmp&quot;, and then the Action as &quot;welcome&quot;. This means our default controller will be the &quot;welcome&quot; controller.
+
+h2. Creating the Controller File
+
+Next, we&#39;ll go create the Controller file at \{core_path\}components/mycmp/controllers/default/welcome.class.php file. Why the &quot;controllers/default/welcome.class.php&quot; path? Well, MODX automatically looks in the &quot;controllers/&quot; directory for your controllers. Secondly, &quot;default&quot; here is the current Manager Theme (so you could make different controllers for different manager themes), so we&#39;re creating it in default. And finally, &quot;welcome.class.php&quot; is the name that corresponds to our &quot;welcome&quot; action we put in the menu above. If we had set the Action of the Menu to &quot;home&quot;, we would be making a &quot;home.class.php&quot; file instead.
+
+Now, on to the file contents:
+
+{code}
+&lt;?php
+class MycmpWelcomeManagerController extends modExtraManagerController {
+    public function process(array $scriptProperties = array()) {}
+    public function getPageTitle() {
+        return &#39;My Test CMP&#39;;
+    }
+    public function getTemplateFile() {
+        return &#39;welcome.tpl&#39;;
+    }
+}
+{code}
+
+As you can see here, we&#39;re not doing any business logic, so we don&#39;t need to do anything in the process() method. We go ahead and set a page title for this CMP, and then tell MODX where to find our corresponding template file for this CMP.
+
+h2. Creating the Template File
+
+MODX uses Smarty templates for CMP pages. It will automatically look for them in the \[namespace-path\]templates/ directory for you, so all you have to do is tell it in your controller what file in that directory to look for (you can specify subdirectories here too). Create a file at: \{core_path\}components/mycmp/templates/default/welcome.tpl
+
+Let&#39;s make the content simple:
+
+{code}
+&lt;div class=&quot;container&quot;&gt;
+&lt;h2&gt;Hello!&lt;/h2&gt;
+&lt;/div&gt;
+{code}
+
+A simple h2, with a wrapping div that adds some padding. And that will display this on our CMP:
+
+!mycmp-final.png!
+
+
+h2. We&#39;re Finished!
+
+That&#39;s it! That&#39;s all you need to start making CMPs in MODX 2.3. You can see that our CMP is now accessible via /url/to/modx/manager/?action=welcome&amp;namespace=mycmp - which is much neater than the ID-based actions of 2.2 and earlier.
+
+There&#39;s obviously more API methods that you can override in modExtraManagerController in your PHP controller class, and then you can use [modExt] and such in your actual CMP to make powerful pages, but that&#39;s beyond the scope of this tutorial.";}i:2;a:3:{s:2:"id";s:8:"39354411";s:3:"ver";s:1:"5";s:4:"code";s:3187:"{toc}
+
+Creating MODX custom manager pages (CMPs) is *far* simpler in MODX Revolution 2.3 - you simply have to set a Namespace path, and then create PHP files. That&#39;s it.
+
+h2. Setting the Namespace Path
+
+First off, we&#39;ll create a Namespace called &quot;mycmp&quot;, and set its path to &quot;\{core_path\}components/mycmp/&quot;. Set its Assets Path to &quot;\{assets_path\}components/mycmp/&quot; as well.
+
+h2. Creating the Menu
+
+Now we&#39;ll need a Menu item to link to for our CMP. Go to System -&gt; Top Menu, and create a Menu item under the &quot;Components&quot; menu item that looks like this:
+
+!mycmp1.png!
+
+As you can see, we&#39;re specifying the Namespace as &quot;mycmp&quot;, and then the Action as &quot;welcome&quot;. This means our default controller will be the &quot;welcome&quot; controller.
+
+h2. Creating the Controller File
+
+Next, we&#39;ll go create the Controller file at \{core_path\}components/mycmp/controllers/default/welcome.class.php file. Why the &quot;controllers/default/welcome.class.php&quot; path? Well, MODX automatically looks in the &quot;controllers/&quot; directory for your controllers. Secondly, &quot;default&quot; here is the current Manager Theme (so you could make different controllers for different manager themes), so we&#39;re creating it in default. And finally, &quot;welcome.class.php&quot; is the name that corresponds to our &quot;welcome&quot; action we put in the menu above. If we had set the Action of the Menu to &quot;home&quot;, we would be making a &quot;home.class.php&quot; file instead.
+
+Now, on to the file contents:
+
+{code}
+&lt;?php
+class MycmpWelcomeManagerController extends modExtraManagerController {
+    public function process(array $scriptProperties = array()) {}
+    public function getPageTitle() {
+        return &#39;My Test CMP&#39;;
+    }
+    public function getTemplateFile() {
+        return &#39;welcome.tpl&#39;;
+    }
+}
+{code}
+
+As you can see here, we&#39;re not doing any business logic, so we don&#39;t need to do anything in the process() method. We go ahead and set a page title for this CMP, and then tell MODX where to find our corresponding template file for this CMP.
+
+h2. Creating the Template File
+
+MODX uses Smarty templates for CMP pages. It will automatically look for them in the \[namespace-path\]templates/ directory for you, so all you have to do is tell it in your controller what file in that directory to look for (you can specify subdirectories here too). Create a file at: \{core_path\}components/mycmp/templates/default/welcome.tpl
+
+Let&#39;s make the content simple:
+
+{code}
+&lt;div class=&quot;container&quot;&gt;
+&lt;h2&gt;Hello!&lt;/h2&gt;
+&lt;/div&gt;
+{code}
+
+A simple h2, with a wrapping div that adds some padding. And that will display this on our CMP:
+
+!mycmp-final.png!
+
+
+h2. We&#39;re Finished!
+
+That&#39;s it! That&#39;s all you need to start making CMPs in MODX 2.3. Much simpler than in 2.2 and earlier. There&#39;s obviously more API methods that you can override in modExtraManagerController in your PHP controller class, and then you can use [modExt] and such in your actual CMP to make powerful pages, but that&#39;s beyond the scope of this tutorial.";}i:3;a:3:{s:2:"id";s:8:"39354409";s:3:"ver";s:1:"4";s:4:"code";s:3188:"{toc}
+
+Creating MODX custom manager pages (CMPs) is *far* simpler in MODX Revolution 2.3 - you simply have to set a Namespace path, and then create PHP files. That&#39;s it.
+
+h2. Setting the Namespace Path
+
+First off, we&#39;ll create a Namespace called &quot;mycmp&quot;, and set its path to &quot;\{core_path\}components/mycmp/&quot;. Set its Assets Path to &quot;\{assets_path\}components/mycmp/&quot; as well.
+
+h2. Creating the Menu
+
+Now we&#39;ll need a Menu item to link to for our CMP. Go to System -\&gt; Top Menu, and create a Menu item under the &quot;Components&quot; menu item that looks like this:
+
+!mycmp1.png!
+
+As you can see, we&#39;re specifying the Namespace as &quot;mycmp&quot;, and then the Action as &quot;welcome&quot;. This means our default controller will be the &quot;welcome&quot; controller.
+
+h2. Creating the Controller File
+
+Next, we&#39;ll go create the Controller file at \{core_path\}components/mycmp/controllers/default/welcome.class.php file. Why the &quot;controllers/default/welcome.class.php&quot; path? Well, MODX automatically looks in the &quot;controllers/&quot; directory for your controllers. Secondly, &quot;default&quot; here is the current Manager Theme (so you could make different controllers for different manager themes), so we&#39;re creating it in default. And finally, &quot;welcome.class.php&quot; is the name that corresponds to our &quot;welcome&quot; action we put in the menu above. If we had set the Action of the Menu to &quot;home&quot;, we would be making a &quot;home.class.php&quot; file instead.
+
+Now, on to the file contents:
+
+{code}
+&lt;?php
+class MycmpWelcomeManagerController extends modExtraManagerController {
+    public function process(array $scriptProperties = array()) {}
+    public function getPageTitle() {
+        return &#39;My Test CMP&#39;;
+    }
+    public function getTemplateFile() {
+        return &#39;welcome.tpl&#39;;
+    }
+}
+{code}
+
+As you can see here, we&#39;re not doing any business logic, so we don&#39;t need to do anything in the process() method. We go ahead and set a page title for this CMP, and then tell MODX where to find our corresponding template file for this CMP.
+
+h2. Creating the Template File
+
+MODX uses Smarty templates for CMP pages. It will automatically look for them in the \[namespace-path\]templates/ directory for you, so all you have to do is tell it in your controller what file in that directory to look for (you can specify subdirectories here too). Create a file at: \{core_path\}components/mycmp/templates/default/welcome.tpl
+
+Let&#39;s make the content simple:
+
+{code}
+&lt;div class=&quot;container&quot;&gt;
+&lt;h2&gt;Hello!&lt;/h2&gt;
+&lt;/div&gt;
+{code}
+
+A simple h2, with a wrapping div that adds some padding. And that will display this on our CMP:
+
+!mycmp-final.png!
+
+
+h2. We&#39;re Finished!
+
+That&#39;s it! That&#39;s all you need to start making CMPs in MODX 2.3. Much simpler than in 2.2 and earlier. There&#39;s obviously more API methods that you can override in modExtraManagerController in your PHP controller class, and then you can use [modExt] and such in your actual CMP to make powerful pages, but that&#39;s beyond the scope of this tutorial.";}i:4;a:3:{s:2:"id";s:8:"39354408";s:3:"ver";s:1:"3";s:4:"code";s:3109:"{toc}
+
+Creating MODX custom manager pages (CMPs) is *far* simpler in MODX Revolution 2.3 - you simply have to set a Namespace path, and then create PHP files. That&#39;s it.
+
+h2. Setting the Namespace Path
+
+First off, we&#39;ll create a Namespace called &quot;mycmp&quot;, and set its path to &quot;\{core_path\}components/mycmp/&quot;. Set its Assets Path to &quot;\{assets_path\}components/mycmp/&quot; as well.
+
+h2. Creating the Menu
+
+Now we&#39;ll need a Menu item to link to for our CMP. Go to System -\&gt; Top Menu, and create a Menu item under the &quot;Components&quot; menu item that looks like this:
+
+!mycmp1.png!
+
+As you can see, we&#39;re specifying the Namespace as &quot;mycmp&quot;, and then the Action as &quot;welcome&quot;. This means our default controller will be the &quot;welcome&quot; controller.
+
+h2. Creating the Controller File
+
+Next, we&#39;ll go create the Controller file at \{core_path\}components/mycmp/controllers/default/welcome.class.php file. Why the &quot;controllers/default/welcome.class.php&quot; path? Well, MODX automatically looks in the &quot;controllers/&quot; directory for your controllers. Secondly, &quot;default&quot; here is the current Manager Theme (so you could make different controllers for different manager themes), so we&#39;re creating it in default. And finally, &quot;welcome.class.php&quot; is the name that corresponds to our &quot;welcome&quot; action we put in the menu above. If we had set the Action of the Menu to &quot;home&quot;, we would be making a &quot;home.class.php&quot; file instead.
+
+Now, on to the file contents:
+
+{code}
+&lt;?php
+class MycmpWelcomeManagerController extends modExtraManagerController {
+    public function process(array $scriptProperties = array()) {}
+    public function getPageTitle() {
+        return &#39;My Test CMP&#39;;
+    }
+    public function getTemplateFile() {
+        return &#39;welcome.tpl&#39;;
+    }
+}
+{code}
+
+As you can see here, we&#39;re not doing any business logic, so we don&#39;t need to do anything in the process() method. We go ahead and set a page title for this CMP, and then tell MODX where to find our corresponding template file for this CMP.
+
+h2. Creating the Template File
+
+MODX uses Smarty templates for CMP pages. It will automatically look for them in the \[namespace-path\]templates/ directory for you, so all you have to do is tell it in your controller what file in that directory to look for (you can specify subdirectories here too). Let&#39;s make the content simple:
+
+{code}
+&lt;div class=&quot;container&quot;&gt;
+&lt;h2&gt;Hello!&lt;/h2&gt;
+&lt;/div&gt;
+{code}
+
+A simple h2, with a wrapping div that adds some padding. And that will display this on our CMP:
+
+!mycmp-final.png!
+
+
+h2. We&#39;re Finished!
+
+That&#39;s it! That&#39;s all you need to start making CMPs in MODX 2.3. Much simpler than in 2.2 and earlier. There&#39;s obviously more API methods that you can override in modExtraManagerController in your PHP controller class, and then you can use [modExt] and such in your actual CMP to make powerful pages, but that&#39;s beyond the scope of this tutorial.";}i:5;a:3:{s:2:"id";s:8:"39354406";s:3:"ver";s:1:"2";s:4:"code";s:2939:"{toc}
+
+Creating MODX custom manager pages (CMPs) is *far* simpler in MODX Revolution 2.3 - you simply have to set a Namespace path, and then create PHP files. That&#39;s it.
+
+h2. Setting the Namespace Path
+
+First off, we&#39;ll create a Namespace called &quot;mycmp&quot;, and set its path to &quot;\{core_path\}components/mycmp/&quot;. Set its Assets Path to &quot;\{assets_path\}components/mycmp/&quot; as well.
+
+h2. Creating the Menu
+
+Now we&#39;ll need a Menu item to link to for our CMP. Go to System -\&gt; Top Menu, and create a Menu item under the &quot;Components&quot; menu item that looks like this:
+
+!mycmp1.png!
+
+As you can see, we&#39;re specifying the Namespace as &quot;mycmp&quot;, and then the Action as &quot;welcome&quot;. This means our default controller will be the &quot;welcome&quot; controller.
+
+h2. Creating the Controller File
+
+Next, we&#39;ll go create the Controller file at \{core_path\}components/mycmp/controllers/default/welcome.class.php file. Why the &quot;controllers/default/welcome.class.php&quot; path? Well, MODX automatically looks in the &quot;controllers/&quot; directory for your controllers. Secondly, &quot;default&quot; here is the current Manager Theme (so you could make different controllers for different manager themes), so we&#39;re creating it in default. And finally, &quot;welcome.class.php&quot; is the name that corresponds to our &quot;welcome&quot; action we put in the menu above. If we had set the Action of the Menu to &quot;home&quot;, we would be making a &quot;home.class.php&quot; file instead.
+
+Now, on to the file contents:
+
+{code}
+&lt;?php
+class MycmpWelcomeManagerController extends modExtraManagerController {
+    public function process(array $scriptProperties = array()) {}
+    public function getPageTitle() {
+        return &#39;My Test CMP&#39;;
+    }
+    public function getTemplateFile() {
+        return &#39;welcome.tpl&#39;;
+    }
+}
+{code}
+
+As you can see here, we&#39;re not doing any business logic, so we don&#39;t need to do anything in the process() method. We go ahead and set a page title for this CMP, and then tell MODX where to find our corresponding template file for this CMP.
+
+h2. Creating the Template File
+
+MODX uses Smarty templates for CMP pages. It will automatically look for them in the \[namespace-path\]templates/ directory for you, so all you have to do is tell it in your controller what file in that directory to look for (you can specify subdirectories here too). Let&#39;s make the content simple:
+
+{code}
+&lt;h2&gt;Hello!&lt;/h2&gt;
+{code}
+
+h2. We&#39;re Finished!
+
+That&#39;s it! That&#39;s all you need to start making CMPs in MODX 2.3. Much simpler than in 2.2 and earlier. There&#39;s obviously more API methods that you can override in modExtraManagerController in your PHP controller class, and then you can use [modExt] and such in your actual CMP to make powerful pages, but that&#39;s beyond the scope of this tutorial.";}i:6;a:3:{s:2:"id";s:8:"39354403";s:3:"ver";s:1:"1";s:4:"code";s:2935:"{toc}
+
+Creating MODX custom manager pages (CMPs) is *far* simpler in MODX Revolution 2.3 - you simply have to set a Namespace path, and then create PHP files. That&#39;s it.
+
+h2. Setting the Namespace Path
+
+First off, we&#39;ll create a Namespace called &quot;mycmp&quot;, and set its path to &quot;{core_path}components/mycmp/&quot;. Set its Assets Path to &quot;{assets_path}components/mycmp/&quot; as well.
+
+h2. Creating the Menu
+
+Now we&#39;ll need a Menu item to link to for our CMP. Go to System -\&gt; Top Menu, and create a Menu item under the &quot;Components&quot; menu item that looks like this:
+
+!mycmp1.png!
+
+As you can see, we&#39;re specifying the Namespace as &quot;mycmp&quot;, and then the Action as &quot;welcome&quot;. This means our default controller will be the &quot;welcome&quot; controller.
+
+h2. Creating the Controller File
+
+Next, we&#39;ll go create the Controller file at \{core_path\}components/mycmp/controllers/default/welcome.class.php file. Why the &quot;controllers/default/welcome.class.php&quot; path? Well, MODX automatically looks in the &quot;controllers/&quot; directory for your controllers. Secondly, &quot;default&quot; here is the current Manager Theme (so you could make different controllers for different manager themes), so we&#39;re creating it in default. And finally, &quot;welcome.class.php&quot; is the name that corresponds to our &quot;welcome&quot; action we put in the menu above. If we had set the Action of the Menu to &quot;home&quot;, we would be making a &quot;home.class.php&quot; file instead.
+
+Now, on to the file contents:
+
+{code}
+&lt;?php
+class MycmpWelcomeManagerController extends modExtraManagerController {
+    public function process(array $scriptProperties = array()) {}
+    public function getPageTitle() {
+        return &#39;My Test CMP&#39;;
+    }
+    public function getTemplateFile() {
+        return &#39;welcome.tpl&#39;;
+    }
+}
+{code}
+
+As you can see here, we&#39;re not doing any business logic, so we don&#39;t need to do anything in the process() method. We go ahead and set a page title for this CMP, and then tell MODX where to find our corresponding template file for this CMP.
+
+h2. Creating the Template File
+
+MODX uses Smarty templates for CMP pages. It will automatically look for them in the \[namespace-path\]templates/ directory for you, so all you have to do is tell it in your controller what file in that directory to look for (you can specify subdirectories here too). Let&#39;s make the content simple:
+
+{code}
+&lt;h2&gt;Hello!&lt;/h2&gt;
+{code}
+
+h2. We&#39;re Finished!
+
+That&#39;s it! That&#39;s all you need to start making CMPs in MODX 2.3. Much simpler than in 2.2 and earlier. There&#39;s obviously more API methods that you can override in modExtraManagerController in your PHP controller class, and then you can use [modExt] and such in your actual CMP to make powerful pages, but that&#39;s beyond the scope of this tutorial.";}}}

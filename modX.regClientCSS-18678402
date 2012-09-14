@@ -1,0 +1,63 @@
+a:5:{s:2:"id";s:8:"18678402";s:4:"info";a:4:{s:6:"Title:";s:17:"modX.regClientCSS";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:32:"[revolution20:modX.regClientCSS]";}s:6:"parent";s:8:"18678225";s:6:"source";s:567:"\\
+
+h2. modX::regClientCSS
+
+Register CSS to be injected inside the HEAD tag of a resource.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#regClientCSS
+
+{code}
+void regClientCSS (string $src)
+{code}
+
+h2. Example
+
+Register a CSS file to the HEAD tag:
+{code}
+$modx-&gt;regClientCSS(&#39;assets/css/style.css&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.regClientHTMLBlock]
+* [modX.regClientScript]
+* [modX.regClientStartupHTMLBlock]
+* [modX.regClientStartupScript]
+* [modX.getRegisteredClientScripts]
+* [modX.getRegisteredClientStartupScripts]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678402";s:3:"ver";s:1:"1";s:4:"code";s:567:"\\
+
+h2. modX::regClientCSS
+
+Register CSS to be injected inside the HEAD tag of a resource.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#regClientCSS
+
+{code}
+void regClientCSS (string $src)
+{code}
+
+h2. Example
+
+Register a CSS file to the HEAD tag:
+{code}
+$modx-&gt;regClientCSS(&#39;assets/css/style.css&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.regClientHTMLBlock]
+* [modX.regClientScript]
+* [modX.regClientStartupHTMLBlock]
+* [modX.regClientStartupScript]
+* [modX.getRegisteredClientScripts]
+* [modX.getRegisteredClientStartupScripts]
+
+{scrollbar}";}}}

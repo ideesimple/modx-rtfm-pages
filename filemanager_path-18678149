@@ -1,0 +1,63 @@
+a:5:{s:2:"id";s:8:"18678149";s:4:"info";a:4:{s:6:"Title:";s:16:"filemanager_path";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:31:"[revolution20:filemanager_path]";}s:6:"parent";s:8:"35095073";s:6:"source";s:410:"h2. filemanager_path
+
+*Name*: File Manager Path
+*Type*: string
+*Default*: 
+*Available In*: Revolution 2.0.0+
+
+Determines the root of the file browser for the currently-logged in user in the manager backend.
+
+h2. Usage
+
+Specify either a relative path from the MODx root directory, or an absolute path. It can be outside of the webroot, but you will have to set [filemanager_path_relative] to false.
+
+{scrollbar}";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"18678149";s:3:"ver";s:1:"4";s:4:"code";s:410:"h2. filemanager_path
+
+*Name*: File Manager Path
+*Type*: string
+*Default*: 
+*Available In*: Revolution 2.0.0+
+
+Determines the root of the file browser for the currently-logged in user in the manager backend.
+
+h2. Usage
+
+Specify either a relative path from the MODx root directory, or an absolute path. It can be outside of the webroot, but you will have to set [filemanager_path_relative] to false.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35095075";s:3:"ver";s:1:"3";s:4:"code";s:313:"h2. filemanager_path
+
+*Name*: File Manager Path
+*Type*: string
+*Default*: 
+
+Determines the root of the file browser for the currently-logged in user in the manager backend.
+
+h2. Usage
+
+Specify either a relative path from the MODx root directory, or an absolute path. It can be outside of the webroot.
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"20119681";s:3:"ver";s:1:"2";s:4:"code";s:476:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}File Manager Path{zone-data}
+{zone-data:key}filemanager_path{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}{zone-data}
+{zone-data:desc}Determines the root of the file browser for the currently-logged in user in the manager backend.{zone-data}
+{zone-template-instance}
+
+h2. Usage
+
+Specify either a relative path from the MODx root directory, or an absolute path. It can be outside of the webroot.
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"19136580";s:3:"ver";s:1:"1";s:4:"code";s:504:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}File Manager Path{zone-data}
+{zone-data:key}filemanager_path{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}{zone-data}
+{zone-data:desc}IIS often does not populate the document_root setting properly, which is used by the file manager to determine what you can look at. If you&#39;re having problems using the file manager, make sure this path points to the root of your MODx installation.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

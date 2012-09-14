@@ -1,0 +1,39 @@
+a:5:{s:2:"id";s:8:"18678245";s:4:"info";a:4:{s:6:"Title:";s:21:"OnBeforeChunkFormSave";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:36:"[revolution20:OnBeforeChunkFormSave]";}s:6:"parent";s:8:"18678228";s:6:"source";s:426:"\\
+
+h2. Event: OnBeforeChunkFormSave
+
+Fires after a form is submitted but before a Chunk is saved in the manager.
+
+Service: 1 - Parser Service Events
+Group: Chunks
+
+h2. Event Parameters
+
+||Name||Description||
+|mode|Either &#39;upd&#39; or &#39;new&#39;, depending on the circumstance.|
+|chunk|A reference to the modChunk object.|
+|id|The ID of the chunk. Will be 0 for new chunks.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678245";s:3:"ver";s:1:"1";s:4:"code";s:426:"\\
+
+h2. Event: OnBeforeChunkFormSave
+
+Fires after a form is submitted but before a Chunk is saved in the manager.
+
+Service: 1 - Parser Service Events
+Group: Chunks
+
+h2. Event Parameters
+
+||Name||Description||
+|mode|Either &#39;upd&#39; or &#39;new&#39;, depending on the circumstance.|
+|chunk|A reference to the modChunk object.|
+|id|The ID of the chunk. Will be 0 for new chunks.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

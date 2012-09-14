@@ -1,0 +1,67 @@
+a:5:{s:2:"id";s:8:"35586579";s:4:"info";a:4:{s:6:"Title:";s:28:"Dashboard Widget Type - HTML";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:43:"[revolution20:Dashboard Widget Type - HTML]";}s:6:"parent";s:8:"35586573";s:6:"source";s:725:"The HTML Dashboard Widget Type displays straight HTML - nothing else - in a widget. Useful for simple messages and other data.
+
+h2. Usage
+
+Simply place your HTML in the content panel, and it will load the HTML in the widget.
+
+This widget type also supports cached placeholders and element calls (uncached calls will not work). So, for example, you can use:
+
+{code}Hello, [[+modx.user.username]]!{code}
+
+To output the username of the logged-in user. You can also call Snippets, like so:
+
+{code}[[MyDashboardSnippet]]{code}
+
+{note}Note that in snippets there is no &quot;active resource&quot;, so snippets referencing $modx-&gt;resource will have issues.{note}
+
+h2. See Also
+
+{pagetree:root=Dashboard Widget Types}
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"35586579";s:3:"ver";s:1:"3";s:4:"code";s:725:"The HTML Dashboard Widget Type displays straight HTML - nothing else - in a widget. Useful for simple messages and other data.
+
+h2. Usage
+
+Simply place your HTML in the content panel, and it will load the HTML in the widget.
+
+This widget type also supports cached placeholders and element calls (uncached calls will not work). So, for example, you can use:
+
+{code}Hello, [[+modx.user.username]]!{code}
+
+To output the username of the logged-in user. You can also call Snippets, like so:
+
+{code}[[MyDashboardSnippet]]{code}
+
+{note}Note that in snippets there is no &quot;active resource&quot;, so snippets referencing $modx-&gt;resource will have issues.{note}
+
+h2. See Also
+
+{pagetree:root=Dashboard Widget Types}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35586585";s:3:"ver";s:1:"2";s:4:"code";s:722:"The HTML Dashboard Widget Type displays straight HTML - nothing else - in a widget. Useful for simple messages and other data.
+
+h2. Usage
+
+Simply place your HTML in the content panel, and it will load the HTML in the widget.
+
+This widget type also supports cached placeholders and element calls (uncached calls will not work). So, for example, you can use:
+
+{code}Hello, [[+modx.user.username]]!{code}
+
+To output the username of the logged-in user. You can also call Snippets, like so:
+
+{code}[[MyDashboardSnippet]]{code}
+
+However, note that in snippets there is no &quot;active resource&quot;, so snippets referencing $modx-&gt;resource will have issues.
+
+h2. See Also
+
+{pagetree:root=Dashboard Widget Types}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35586581";s:3:"ver";s:1:"1";s:4:"code";s:226:"The HTML Dashboard Widget Type displays straight HTML - nothing else - in a widget. Useful for simple messages and other data.
+
+h2. Usage
+
+Simply place your HTML in the content panel, and it will load the HTML in the widget.
+
+";}}}

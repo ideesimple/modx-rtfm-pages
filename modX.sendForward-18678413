@@ -1,0 +1,93 @@
+a:5:{s:2:"id";s:8:"18678413";s:4:"info";a:4:{s:6:"Title:";s:16:"modX.sendForward";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:31:"[revolution20:modX.sendForward]";}s:6:"parent";s:8:"18678414";s:6:"source";s:1383:"{color:#000000}{*}modX::sendForward{*}{color}
+
+Forwards the request to another resource without changing the URL. If the ID provided does not exist, sends to a 404 Error page.
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/modx/modX.html#sendForward]
+
+{code}
+void sendForward (integer $id, [string|array $options = null])
+{code}
+
+$id is a Resource ID (you cannot sendForward to an URL - if you need to pass some value, use modX::setPlaceholder and call that on the target resource).&amp;nbsp;
+
+$options is assumed to be a proper HTTP response code when it is a string, eg &quot;HTTP/1.1 301 Moved Permanently&quot;. If it&#39;s an array, you can use the following options:
+
+* response_code: the same as if you would pass a string to the $options var
+* merge: a way to merge the resource currently in $modx-&gt;resource with the target resource. The content, pub_date, unpub_date, richtext, \_content and \_processed values are excluded as well as the value of the forward_merge_excludes system setting/another option key. I&#39;m not sure if this is supposed to be used out of the core and there&#39;s probably better ways to get data combined (eg: setPlaceholder) then merging.
+
+h2. Example
+
+Send the user to Resource ID 234 without actually changing the URL.
+{code}
+$modx-&gt;sendForward(234);
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.sendRedirect]
+* [modX.sendErrorPage]
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678413";s:3:"ver";s:1:"2";s:4:"code";s:1383:"{color:#000000}{*}modX::sendForward{*}{color}
+
+Forwards the request to another resource without changing the URL. If the ID provided does not exist, sends to a 404 Error page.
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/modx/modX.html#sendForward]
+
+{code}
+void sendForward (integer $id, [string|array $options = null])
+{code}
+
+$id is a Resource ID (you cannot sendForward to an URL - if you need to pass some value, use modX::setPlaceholder and call that on the target resource).&amp;nbsp;
+
+$options is assumed to be a proper HTTP response code when it is a string, eg &quot;HTTP/1.1 301 Moved Permanently&quot;. If it&#39;s an array, you can use the following options:
+
+* response_code: the same as if you would pass a string to the $options var
+* merge: a way to merge the resource currently in $modx-&gt;resource with the target resource. The content, pub_date, unpub_date, richtext, \_content and \_processed values are excluded as well as the value of the forward_merge_excludes system setting/another option key. I&#39;m not sure if this is supposed to be used out of the core and there&#39;s probably better ways to get data combined (eg: setPlaceholder) then merging.
+
+h2. Example
+
+Send the user to Resource ID 234 without actually changing the URL.
+{code}
+$modx-&gt;sendForward(234);
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.sendRedirect]
+* [modX.sendErrorPage]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"36634796";s:3:"ver";s:1:"1";s:4:"code";s:506:"\\
+
+h2. modX::sendForward
+
+Forwards the request to another resource without changing the URL. If the ID provided does not exist, sends to a 404 Error page.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#sendForward
+
+{code}
+void sendForward (integer $id, [string $options = null])
+{code}
+
+h2. Example
+
+Send the user to Resource ID 234 without actually changing the URL.
+{code}
+$modx-&gt;sendForward(234);
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.sendRedirect]
+* [modX.sendErrorPage]
+
+{scrollbar}
+";}}}

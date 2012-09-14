@@ -1,0 +1,28 @@
+a:5:{s:2:"id";s:8:"18678151";s:4:"info";a:4:{s:6:"Title:";s:13:"friendly_urls";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:28:"[revolution20:friendly_urls]";}s:6:"parent";s:8:"18678127";s:6:"source";s:354:"\\
+h2. friendly_urls
+
+*Name*: Use Friendly URLs
+*Type*: Yes/No
+*Default*: No
+
+This allows you to use search engine friendly URLs with MODx. Please note, this only works for MODx installations running on Apache, and you&#39;ll need to write a .htaccess file for this to work. See the .htaccess file included in the distribution for more info.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678151";s:3:"ver";s:1:"2";s:4:"code";s:354:"\\
+h2. friendly_urls
+
+*Name*: Use Friendly URLs
+*Type*: Yes/No
+*Default*: No
+
+This allows you to use search engine friendly URLs with MODx. Please note, this only works for MODx installations running on Apache, and you&#39;ll need to write a .htaccess file for this to work. See the .htaccess file included in the distribution for more info.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119689";s:3:"ver";s:1:"1";s:4:"code";s:516:"\\
+{zone-template-instance:sszt}
+{zone-data:name}Use Friendly URLs{zone-data}
+{zone-data:key}friendly_urls{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}false{zone-data}
+{zone-data:desc}This allows you to use search engine friendly URLs with MODx. Please note, this only works for MODx installations running on Apache, and you&#39;ll need to write a .htaccess file for this to work. See the .htaccess file included in the distribution for more info.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

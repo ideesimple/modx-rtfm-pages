@@ -1,0 +1,62 @@
+a:5:{s:2:"id";s:8:"18678128";s:4:"info";a:4:{s:6:"Title:";s:18:"allow_tags_in_post";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:33:"[revolution20:allow_tags_in_post]";}s:6:"parent";s:8:"18678127";s:6:"source";s:375:"\\
+
+h2. allow_tags_in_post
+
+*Name*: Allow Tags in Post
+*Type*: Yes/No
+*Default*: Yes
+
+If set to true, will allow POST requests to contain HTML form tags.
+
+{note}*Do not* change this value for the manager context. Only use this in a Context if you specifically want to. This can cause problems in a MODx install if you change it without an explicit purpose.{note}
+
+{scrollbar}";s:8:"versions";a:5:{i:0;a:3:{s:2:"id";s:8:"18678128";s:3:"ver";s:1:"5";s:4:"code";s:375:"\\
+
+h2. allow_tags_in_post
+
+*Name*: Allow Tags in Post
+*Type*: Yes/No
+*Default*: Yes
+
+If set to true, will allow POST requests to contain HTML form tags.
+
+{note}*Do not* change this value for the manager context. Only use this in a Context if you specifically want to. This can cause problems in a MODx install if you change it without an explicit purpose.{note}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119639";s:3:"ver";s:1:"4";s:4:"code";s:377:"\\
+
+h2. Allow Tags In Post
+
+*Key*: allow_tags_in_post
+*Type*: Yes/No
+
+If set to true, will allow POST requests to contain HTML form tags. Defaults to true.
+
+{note}*Do not* change this value for the manager context. Only use this in a Context if you specifically want to. This can cause problems in a MODx install if you change it without an explicit purpose.{note}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"20119635";s:3:"ver";s:1:"3";s:4:"code";s:168:"\\
+
+h2. Allow Tags In Post
+
+*Key*: allow_tags_in_post
+*Type*: Yes/No
+
+If set to true, will allow POST requests to contain HTML form tags. Defaults to true.
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"20119633";s:3:"ver";s:1:"2";s:4:"code";s:153:"\\
+
+h2. Allow Tags In Post
+
+*Key*: allow_tags_in_post
+
+If set to true, will allow POST requests to contain HTML form tags. Defaults to true.
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"20119632";s:3:"ver";s:1:"1";s:4:"code";s:326:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Allow Tags In Post{zone-data}
+{zone-data:key}allow_tags_in_post{zone-data}
+{zone-data:type}boolean{zone-data}
+{zone-data:default}true{zone-data}
+{zone-data:desc}If set to true, will allow POST requests to contain HTML form tags.{zone-data}
+{zone-template-instance}
+{scrollbar}";}}}

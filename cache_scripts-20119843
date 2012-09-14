@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"20119843";s:4:"info";a:4:{s:6:"Title:";s:13:"cache_scripts";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:28:"[revolution20:cache_scripts]";}s:6:"parent";s:8:"18678127";s:6:"source";s:237:"h2. cache_scripts
+
+*Name*: Enable Script Cache
+*Type*: Yes/No
+*Default*: Yes
+
+When enabled, MODx will cache all Scripts (Snippets and Plugins) to file to reduce load times. MODx recommends leaving this set to &#39;Yes&#39;.
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"20119843";s:3:"ver";s:1:"1";s:4:"code";s:237:"h2. cache_scripts
+
+*Name*: Enable Script Cache
+*Type*: Yes/No
+*Default*: Yes
+
+When enabled, MODx will cache all Scripts (Snippets and Plugins) to file to reduce load times. MODx recommends leaving this set to &#39;Yes&#39;.
+
+{scrollbar}
+";}}}

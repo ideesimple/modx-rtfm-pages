@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678147";s:4:"info";a:4:{s:6:"Title:";s:21:"failed_login_attempts";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:36:"[revolution20:failed_login_attempts]";}s:6:"parent";s:8:"18678127";s:6:"source";s:168:"h2. failed_login_attempts
+
+*Name*: Failed Login Attempts
+*Type*: Number
+*Default*: 3
+
+The number of times a user can attempt to login before being blocked.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678147";s:3:"ver";s:1:"2";s:4:"code";s:168:"h2. failed_login_attempts
+
+*Name*: Failed Login Attempts
+*Type*: Number
+*Default*: 3
+
+The number of times a user can attempt to login before being blocked.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119677";s:3:"ver";s:1:"1";s:4:"code";s:262:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Failed Login Attempts{zone-data}
+{zone-data:key}failed_login_attempts{zone-data}
+{zone-data:type}number{zone-data}
+{zone-data:default}3{zone-data}
+{zone-data:desc}{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

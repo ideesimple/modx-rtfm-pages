@@ -1,0 +1,798 @@
+a:5:{s:2:"id";s:8:"18678335";s:4:"info";a:4:{s:6:"Title:";s:20:"Internationalization";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:35:"[revolution20:Internationalization]";}s:6:"parent";s:8:"18678206";s:6:"source";s:8247:"\\
+
+{toc}
+
+h2. An Overview
+
+Internationalization, or i18n, is the process of extrapolating text strings in a document to separate languages, so that the document may be viewed by a multitude of different languages without having to duplicate the page for every different language. Technically speaking, _internationalization_ refers to the process of _preparing_ code so that it can be translated; in MODx this process often boils down to isolating translatable strings into separate placeholders.
+
+{info:title=i18n}
+The abbreviation *i18n* derives from the word &quot;internationalization&quot;. It means &quot;*i* plus 18 letters then *n*&quot;.
+{info}
+
+MODx Revolution supports i18n at the core level, through what it calls &quot;Lexicons&quot;. A lexicon is simply a collection of the following:
+
+* Languages (IANA format)
+* Topics
+* Entries
+
+A Lexicon Topic is a collection of Lexicon Entries. A Lexicon Entry is one single language string, with a key and a value. Revolution separates Entries into Topics to make for quicker language file loading, lower JS language cache load times, and ease of maintenance.
+
+Furthermore, the modNamespace class is used to further separate Lexicon Topics into separate namespaces, preventing you from accidentally overwriting a core lexicon.
+
+h3. Locales
+
+Some translation frameworks (such as [gettext|http://www.gnu.org/software/gettext/]) rely on a specific _locale_ and a context to help distinguish between meanings. For example &quot;football&quot; has a different meaning depending on locale (Britain or the United States). MODx willl likely not support locales in the core, but you can handle setting locales however you need to based on your site organization and i18n approach. The most logical place would probably be using a plugin tied to the [OnInitCulture] event.
+
+h2. Lexicon Entries
+
+A Lexicon Entry (or modLexiconEntry in the MODx model) is simply a single translation of a string into another language. It has a few important fields we&#39;ll note:
+
+* name - This is the name, or &quot;key&quot; of the Entry. When using Lexicons, this is how you will reference this key.
+* value - The translation of the key.
+* topic - The topic that this entry belongs to.
+* language - The IANA key of the language this Entry is translated into.
+
+h2. Loading and Using Lexicons
+
+Lexicons must first be loaded if they are to be used in the front-end; however, this is a trivial process.
+
+h3. Lexicons via Tag (in content, chunks, templates etc)
+
+To use a Lexicon Entry in a tag, use the following syntax:
+
+{code}[[%key? &amp;topic=`topicname` &amp;namespace=`namespace_name` &amp;language=`en`]]{code}
+
+The &#39;language&#39;, &#39;topic&#39;, and &#39;namespace&#39; properties are optional; if the tag has been run earlier on the page with the same &#39;topic&#39; property value, that topic will have already been loaded. If &#39;topic&#39; is not specified, it will assume &#39;default&#39;. If &#39;namespace&#39; is not specified, it will assume &#39;core&#39;, or the MODx Revolution Core Namespace.
+
+{note}It is preferable not to use the &#39;language&#39; property for every tag should you be changing languages; this is best done through a System or Context Setting for the entire site or context. The best option is different contexts for each language. But again, MODx leaves you with the preference.{note}
+If you have placeholders in your lexicon string, for example &quot;This is \[\[+userinput\]\]\!&quot;, you simply specify the key (&quot;userinput&quot;) as tag property and pass what you want it replaced with in the value. Example:
+
+\[\[\!%key? &amp;topic=`topicname` &amp;namespace=`namespace_name` &amp;language=`en` &amp;userinput=`amazing`\]\]
+
+{note}
+
+Note our \! prefix for the Tag; this makes sure  the Tag isn&#39;t cached, since our string might be changing before the  page cache does.
+
+{note}
+
+
+h3. Lexicons in PHP
+
+Using lexicons in code is fairly simple; first off you&#39;ll want to make sure the modLexicon class is loaded by instantiating it as a service:
+
+{code}$modx-&gt;getService(&#39;lexicon&#39;,&#39;modLexicon&#39;);{code}
+
+Then we&#39;ll want to load the Topic using the load() method.
+
+h4. Loading lexicon topics with modLexicon::load()
+
+The syntax for the modLexicon::load method is pretty simple:
+{code}$modx-&gt;lexicon-&gt;load(&#39;topicname&#39;);{code}
+
+The load() function supports Namespace-specific loading. So, say you had a Lexicon Topic named &#39;default&#39; in a Namespace called &#39;school&#39;. You&#39;d simply load it like so:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;school:default&#39;);{code}
+This would load the &#39;default&#39; Topic in the &#39;school&#39; Namespace. If the Namespace is not specified, it defaults to &#39;core&#39;, which is the default Namespace for the MODx Revolution backend.
+
+The load() function also takes an infinite number of parameters; each parameter loads a separate Topic. Example:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;chunk&#39;,&#39;user&#39;,&#39;school:playground&#39;);{code}
+This would load 3 Topics: &#39;chunk&#39;, &#39;user&#39;, and the &#39;playground&#39; Topic from the &#39;school&#39; Namespace.
+
+Furthermore, the load parameter supports language-specific loading, should you want to override the default language that is being loaded (which defaults to the current value of $this-&gt;modx-&gt;cultureKey, which is set differently depending on the Context loaded, and can be set via Settings), you could load it like so:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;es:school:playground&#39;);{code}
+
+This would load the Spanish version of the &#39;playground&#39; Topic for the &#39;school&#39; Namespace. Fun, huh?
+
+h4. Displaying translated content with modX::lexicon()
+
+Now we can use the lexicon() method on the MODx object to get our Entry with key &#39;school.basketball&#39;:
+
+{code}$modx-&gt;lexicon(&#39;school.basketball&#39;);{code}
+
+If you have placeholders in your lexicon string, for example &quot;This is  \[\[+userinput\]\]\!&quot;, you can pass an array as the second arguement which has key=&gt;value pairs of your placeholder content, like so:
+
+{code}
+$modx-&gt;lexicon(&#39;school.basketball&#39;,array(&#39;sport&#39; =&gt; &#39;basketball&#39;));
+{code}
+
+h3. Lexicons in JavaScript (within MODX)
+
+In CMPs you can use the following to use lexicons.
+
+{code}
+ _(&#39;lexicon.key&#39;)
+{code}
+Please note that this assumes you have loaded the lexicon in your  connector - there is (at least to my knowledge at this time \~Mark H.) no way to  dynamically load other lexicon topics through JavaScript.
+
+If you have placeholders in your lexicon string, for example &quot;This is \[\[+userinput\]\]\!&quot;, you can pass the values for the placeholders as a javascript object, like so:
+
+{code}
+ _(&#39;lexicon.key&#39;,{ userinput: &#39;amazing&#39; })
+{code}
+
+h2. Lexicons for Settings
+
+So say you&#39;re creating System Settings for your 3rd Party Component (3PC). The syntax for auto-loading them into the Revolution Settings grid is simple. Let&#39;s say we have a Namespace for our Component called &#39;gallery&#39;, and a setting called &#39;gallery.display_thumbs&#39;
+
+{info:title=Recommended Format}The recommended format for 3PC developers is to use a prefix which identifies the parent component:
+
+$_lang\[&#39;_name-of-component_.key-name&#39;\] = &#39;Your translation here.&#39;;
+
+This helps to prevent name collisions; keep in mind that the *$_lang* array may have thousands of entries, so you want to make sure each entry is unique.{info}
+
+To add a lexicon name and description, we&#39;d simply add the following 2 strings into our &#39;default&#39; Lexicon Topic for our &#39;gallery&#39; Namespace:
+
+{code}
+$_lang[&#39;setting_gallery.display_thumbs&#39;] = &#39;Display Thumbnails&#39;;
+$_lang[&#39;setting_gallery.display_thumbs_desc&#39;] = &#39;When set to true, this will display thumbnails for the gallery.&#39;;
+{code}
+
+And we&#39;re done\!
+
+h2. Conclusion
+
+Lexicons provide MODx Revolution users with a plethora of avenues and options to do their i18n work. Lexicons are composed of multiple Entries for each Language, and are grouped into Topics. They can be called by PHP method calls, or by MODx Tags.
+
+h2. See Also
+
+* [modX.lexicon]
+
+{scrollbar}";s:8:"versions";a:5:{i:0;a:3:{s:2:"id";s:8:"18678335";s:3:"ver";s:1:"5";s:4:"code";s:8247:"\\
+
+{toc}
+
+h2. An Overview
+
+Internationalization, or i18n, is the process of extrapolating text strings in a document to separate languages, so that the document may be viewed by a multitude of different languages without having to duplicate the page for every different language. Technically speaking, _internationalization_ refers to the process of _preparing_ code so that it can be translated; in MODx this process often boils down to isolating translatable strings into separate placeholders.
+
+{info:title=i18n}
+The abbreviation *i18n* derives from the word &quot;internationalization&quot;. It means &quot;*i* plus 18 letters then *n*&quot;.
+{info}
+
+MODx Revolution supports i18n at the core level, through what it calls &quot;Lexicons&quot;. A lexicon is simply a collection of the following:
+
+* Languages (IANA format)
+* Topics
+* Entries
+
+A Lexicon Topic is a collection of Lexicon Entries. A Lexicon Entry is one single language string, with a key and a value. Revolution separates Entries into Topics to make for quicker language file loading, lower JS language cache load times, and ease of maintenance.
+
+Furthermore, the modNamespace class is used to further separate Lexicon Topics into separate namespaces, preventing you from accidentally overwriting a core lexicon.
+
+h3. Locales
+
+Some translation frameworks (such as [gettext|http://www.gnu.org/software/gettext/]) rely on a specific _locale_ and a context to help distinguish between meanings. For example &quot;football&quot; has a different meaning depending on locale (Britain or the United States). MODx willl likely not support locales in the core, but you can handle setting locales however you need to based on your site organization and i18n approach. The most logical place would probably be using a plugin tied to the [OnInitCulture] event.
+
+h2. Lexicon Entries
+
+A Lexicon Entry (or modLexiconEntry in the MODx model) is simply a single translation of a string into another language. It has a few important fields we&#39;ll note:
+
+* name - This is the name, or &quot;key&quot; of the Entry. When using Lexicons, this is how you will reference this key.
+* value - The translation of the key.
+* topic - The topic that this entry belongs to.
+* language - The IANA key of the language this Entry is translated into.
+
+h2. Loading and Using Lexicons
+
+Lexicons must first be loaded if they are to be used in the front-end; however, this is a trivial process.
+
+h3. Lexicons via Tag (in content, chunks, templates etc)
+
+To use a Lexicon Entry in a tag, use the following syntax:
+
+{code}[[%key? &amp;topic=`topicname` &amp;namespace=`namespace_name` &amp;language=`en`]]{code}
+
+The &#39;language&#39;, &#39;topic&#39;, and &#39;namespace&#39; properties are optional; if the tag has been run earlier on the page with the same &#39;topic&#39; property value, that topic will have already been loaded. If &#39;topic&#39; is not specified, it will assume &#39;default&#39;. If &#39;namespace&#39; is not specified, it will assume &#39;core&#39;, or the MODx Revolution Core Namespace.
+
+{note}It is preferable not to use the &#39;language&#39; property for every tag should you be changing languages; this is best done through a System or Context Setting for the entire site or context. The best option is different contexts for each language. But again, MODx leaves you with the preference.{note}
+If you have placeholders in your lexicon string, for example &quot;This is \[\[+userinput\]\]\!&quot;, you simply specify the key (&quot;userinput&quot;) as tag property and pass what you want it replaced with in the value. Example:
+
+\[\[\!%key? &amp;topic=`topicname` &amp;namespace=`namespace_name` &amp;language=`en` &amp;userinput=`amazing`\]\]
+
+{note}
+
+Note our \! prefix for the Tag; this makes sure  the Tag isn&#39;t cached, since our string might be changing before the  page cache does.
+
+{note}
+
+
+h3. Lexicons in PHP
+
+Using lexicons in code is fairly simple; first off you&#39;ll want to make sure the modLexicon class is loaded by instantiating it as a service:
+
+{code}$modx-&gt;getService(&#39;lexicon&#39;,&#39;modLexicon&#39;);{code}
+
+Then we&#39;ll want to load the Topic using the load() method.
+
+h4. Loading lexicon topics with modLexicon::load()
+
+The syntax for the modLexicon::load method is pretty simple:
+{code}$modx-&gt;lexicon-&gt;load(&#39;topicname&#39;);{code}
+
+The load() function supports Namespace-specific loading. So, say you had a Lexicon Topic named &#39;default&#39; in a Namespace called &#39;school&#39;. You&#39;d simply load it like so:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;school:default&#39;);{code}
+This would load the &#39;default&#39; Topic in the &#39;school&#39; Namespace. If the Namespace is not specified, it defaults to &#39;core&#39;, which is the default Namespace for the MODx Revolution backend.
+
+The load() function also takes an infinite number of parameters; each parameter loads a separate Topic. Example:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;chunk&#39;,&#39;user&#39;,&#39;school:playground&#39;);{code}
+This would load 3 Topics: &#39;chunk&#39;, &#39;user&#39;, and the &#39;playground&#39; Topic from the &#39;school&#39; Namespace.
+
+Furthermore, the load parameter supports language-specific loading, should you want to override the default language that is being loaded (which defaults to the current value of $this-&gt;modx-&gt;cultureKey, which is set differently depending on the Context loaded, and can be set via Settings), you could load it like so:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;es:school:playground&#39;);{code}
+
+This would load the Spanish version of the &#39;playground&#39; Topic for the &#39;school&#39; Namespace. Fun, huh?
+
+h4. Displaying translated content with modX::lexicon()
+
+Now we can use the lexicon() method on the MODx object to get our Entry with key &#39;school.basketball&#39;:
+
+{code}$modx-&gt;lexicon(&#39;school.basketball&#39;);{code}
+
+If you have placeholders in your lexicon string, for example &quot;This is  \[\[+userinput\]\]\!&quot;, you can pass an array as the second arguement which has key=&gt;value pairs of your placeholder content, like so:
+
+{code}
+$modx-&gt;lexicon(&#39;school.basketball&#39;,array(&#39;sport&#39; =&gt; &#39;basketball&#39;));
+{code}
+
+h3. Lexicons in JavaScript (within MODX)
+
+In CMPs you can use the following to use lexicons.
+
+{code}
+ _(&#39;lexicon.key&#39;)
+{code}
+Please note that this assumes you have loaded the lexicon in your  connector - there is (at least to my knowledge at this time \~Mark H.) no way to  dynamically load other lexicon topics through JavaScript.
+
+If you have placeholders in your lexicon string, for example &quot;This is \[\[+userinput\]\]\!&quot;, you can pass the values for the placeholders as a javascript object, like so:
+
+{code}
+ _(&#39;lexicon.key&#39;,{ userinput: &#39;amazing&#39; })
+{code}
+
+h2. Lexicons for Settings
+
+So say you&#39;re creating System Settings for your 3rd Party Component (3PC). The syntax for auto-loading them into the Revolution Settings grid is simple. Let&#39;s say we have a Namespace for our Component called &#39;gallery&#39;, and a setting called &#39;gallery.display_thumbs&#39;
+
+{info:title=Recommended Format}The recommended format for 3PC developers is to use a prefix which identifies the parent component:
+
+$_lang\[&#39;_name-of-component_.key-name&#39;\] = &#39;Your translation here.&#39;;
+
+This helps to prevent name collisions; keep in mind that the *$_lang* array may have thousands of entries, so you want to make sure each entry is unique.{info}
+
+To add a lexicon name and description, we&#39;d simply add the following 2 strings into our &#39;default&#39; Lexicon Topic for our &#39;gallery&#39; Namespace:
+
+{code}
+$_lang[&#39;setting_gallery.display_thumbs&#39;] = &#39;Display Thumbnails&#39;;
+$_lang[&#39;setting_gallery.display_thumbs_desc&#39;] = &#39;When set to true, this will display thumbnails for the gallery.&#39;;
+{code}
+
+And we&#39;re done\!
+
+h2. Conclusion
+
+Lexicons provide MODx Revolution users with a plethora of avenues and options to do their i18n work. Lexicons are composed of multiple Entries for each Language, and are grouped into Topics. They can be called by PHP method calls, or by MODx Tags.
+
+h2. See Also
+
+* [modX.lexicon]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35095322";s:3:"ver";s:1:"4";s:4:"code";s:7831:"\\
+
+{toc}
+
+h2. An Overview
+
+Internationalization, or i18n, is the process of extrapolating text strings in a document to separate languages, so that the document may be viewed by a multitude of different languages without having to duplicate the page for every different language. Technically speaking, _internationalization_ refers to the process of _preparing_ code so that it can be translated; in MODx this process often boils down to isolating translatable strings into separate placeholders.
+
+{info:title=i18n}
+The abbreviation *i18n* derives from the word &quot;internationalization&quot;. It means &quot;*i* plus 18 letters then *n*&quot;.
+{info}
+
+MODx Revolution supports i18n at the core level, through what it calls &quot;Lexicons&quot;. A lexicon is simply a collection of the following:
+
+* Languages (IANA format)
+* Topics
+* Entries
+
+A Lexicon Topic is a collection of Lexicon Entries. A Lexicon Entry is one single language string, with a key and a value. Revolution separates Entries into Topics to make for quicker language file loading, lower JS language cache load times, and ease of maintenance.
+
+Furthermore, the modNamespace class is used to further separate Lexicon Topics into separate namespaces, preventing you from accidentally overwriting a core lexicon.
+
+h3. Locales
+
+Some translation frameworks (such as [gettext|http://www.gnu.org/software/gettext/]) rely on a specific _locale_ and a context to help distinguish between meanings. For example &quot;football&quot; has a different meaning depending on locale (Britain or the United States). MODx willl likely not support locales in the core, but you can handle setting locales however you need to based on your site organization and i18n approach. The most logical place would probably be using a plugin tied to the [OnInitCulture] event.
+
+h2. Lexicon Entries
+
+A Lexicon Entry (or modLexiconEntry in the MODx model) is simply a single translation of a string into another language. It has a few important fields we&#39;ll note:
+
+* name - This is the name, or &quot;key&quot; of the Entry. When using Lexicons, this is how you will reference this key.
+* value - The translation of the key.
+* topic - The topic that this entry belongs to.
+* language - The IANA key of the language this Entry is translated into.
+
+h2. Loading and Using Lexicons
+
+Lexicons must first be loaded if they are to be used in the front-end; however, this is a trivial process.
+
+h3. Lexicons Via Tag
+
+To use a Lexicon Entry in a tag, use the following syntax:
+
+{code}[[%key? &amp;topic=`topicname` &amp;namespace=`namespace_name` &amp;language=`en`]]{code}
+
+The &#39;language&#39;, &#39;topic&#39;, and &#39;namespace&#39; properties are optional; if the tag has been run earlier on the page with the same &#39;topic&#39; property value, that topic will have already been loaded. If &#39;topic&#39; is not specified, it will assume &#39;default&#39;. If &#39;namespace&#39; is not specified, it will assume &#39;core&#39;, or the MODx Revolution Core Namespace.
+
+{note}It is preferable not to use the &#39;language&#39; property for every tag should you be changing languages; this is best done through a System or Context Setting for the entire site or context. The best option is different contexts for each language. But again, MODx leaves you with the preference.{note}
+
+h3. Lexicons in Code
+
+Using lexicons in code is fairly simple; first off you&#39;ll want to make sure the modLexicon class is loaded by instantiating it as a service:
+
+{code}$modx-&gt;getService(&#39;lexicon&#39;,&#39;modLexicon&#39;);{code}
+
+Then we&#39;ll want to load the Topic using the load() method.
+
+h4. modLexicon::load()
+
+The syntax for the modLexicon::load method is pretty simple:
+{code}$modx-&gt;lexicon-&gt;load(&#39;topicname&#39;);{code}
+
+The load() function supports Namespace-specific loading. So, say you had a Lexicon Topic named &#39;default&#39; in a Namespace called &#39;school&#39;. You&#39;d simply load it like so:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;school:default&#39;);{code}
+This would load the &#39;default&#39; Topic in the &#39;school&#39; Namespace. If the Namespace is not specified, it defaults to &#39;core&#39;, which is the default Namespace for the MODx Revolution backend.
+
+The load() function also takes an infinite number of parameters; each parameter loads a separate Topic. Example:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;chunk&#39;,&#39;user&#39;,&#39;school:playground&#39;);{code}
+This would load 3 Topics: &#39;chunk&#39;, &#39;user&#39;, and the &#39;playground&#39; Topic from the &#39;school&#39; Namespace.
+
+Furthermore, the load parameter supports language-specific loading, should you want to override the default language that is being loaded (which defaults to the current value of $this-&gt;modx-&gt;cultureKey, which is set differently depending on the Context loaded, and can be set via Settings), you could load it like so:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;es:school:playground&#39;);{code}
+
+This would load the Spanish version of the &#39;playground&#39; Topic for the &#39;school&#39; Namespace. Fun, huh?
+
+h4. modX::lexicon()
+
+Now we can use the lexicon() method on the MODx object to get our Entry with key &#39;school.basketball&#39;:
+
+{code}$modx-&gt;lexicon(&#39;school.basketball&#39;);{code}
+
+h2. Lexicons with Placeholders
+
+Say we wanted to load a Lexicon Entry with some dynamic values we have in our page. For example, say we want a greeting on a website, that says, &quot;Hello, John\!&quot; if John is the username of the currently logged in user. Our Lexicon Entry &quot;welcome_message&quot; value would look like this:
+
+{quote}Hello, \[\[+name\]\]\!{quote}
+
+And then in tag form:
+
+{code}[[!%welcome_message? &amp;name=`John`]]{code}
+
+Or in PHP:
+
+{code}$modx-&gt;lexicon(&#39;welcome_message&#39;,array(&#39;name&#39; =&gt; &#39;John&#39;));{code}
+
+You can have an infinite number of placeholders for each Tag.
+
+{note}Note our \! prefix for the Tag; this makes sure the Tag isn&#39;t cached, since our string might be changing before the page cache does.{note}
+
+h3. Lexicons in JavaScript (within MODX)
+
+In CMPs you can use the following to use lexicons.
+
+{code}
+ _(&#39;lexicon.key&#39;)
+{code}
+Please note that this assumes you have loaded the lexicon in your  connector - there is (at least to my knowledge at this time \~Mark H.) no way to  dynamically load other lexicon topics through JavaScript.
+
+h2. Lexicons for Settings
+
+So say you&#39;re creating System Settings for your 3rd Party Component (3PC). The syntax for auto-loading them into the Revolution Settings grid is simple. Let&#39;s say we have a Namespace for our Component called &#39;gallery&#39;, and a setting called &#39;gallery.display_thumbs&#39;
+
+{info:title=Recommended Format}The recommended format for 3PC developers is to use a prefix which identifies the parent component:
+
+$_lang\[&#39;_name-of-component_.key-name&#39;\] = &#39;Your translation here.&#39;;
+
+This helps to prevent name collisions; keep in mind that the *$_lang* array may have thousands of entries, so you want to make sure each entry is unique.{info}
+
+To add a lexicon name and description, we&#39;d simply add the following 2 strings into our &#39;default&#39; Lexicon Topic for our &#39;gallery&#39; Namespace:
+
+{code}
+$_lang[&#39;setting_gallery.display_thumbs&#39;] = &#39;Display Thumbnails&#39;;
+$_lang[&#39;setting_gallery.display_thumbs_desc&#39;] = &#39;When set to true, this will display thumbnails for the gallery.&#39;;
+{code}
+
+And we&#39;re done\!
+
+h2. Conclusion
+
+Lexicons provide MODx Revolution users with a plethora of avenues and options to do their i18n work. Lexicons are composed of multiple Entries for each Language, and are grouped into Topics. They can be called by PHP method calls, or by MODx Tags.
+
+h2. See Also
+
+* [modX.lexicon]
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35095320";s:3:"ver";s:1:"3";s:4:"code";s:7489:"\\
+
+{toc}
+
+h2. An Overview
+
+Internationalization, or i18n, is the process of extrapolating text strings in a document to separate languages, so that the document may be viewed by a multitude of different languages without having to duplicate the page for every different language. Technically speaking, _internationalization_ refers to the process of _preparing_ code so that it can be translated; in MODx this process often boils down to isolating translatable strings into separate placeholders.
+
+{info:title=i18n}
+The abbreviation *i18n* derives from the word &quot;internationalization&quot;. It means &quot;*i* plus 18 letters then *n*&quot;.
+{info}
+
+MODx Revolution supports i18n at the core level, through what it calls &quot;Lexicons&quot;. A lexicon is simply a collection of the following:
+
+* Languages (IANA format)
+* Topics
+* Entries
+
+A Lexicon Topic is a collection of Lexicon Entries. A Lexicon Entry is one single language string, with a key and a value. Revolution separates Entries into Topics to make for quicker language file loading, lower JS language cache load times, and ease of maintenance.
+
+Furthermore, the modNamespace class is used to further separate Lexicon Topics into separate namespaces, preventing you from accidentally overwriting a core lexicon.
+
+h3. Locales
+
+Some translation frameworks (such as [gettext|http://www.gnu.org/software/gettext/]) rely on a specific _locale_ and a context to help distinguish between meanings. For example &quot;football&quot; has a different meaning depending on locale (Britain or the United States). MODx willl likely not support locales in the core, but you can handle setting locales however you need to based on your site organization and i18n approach. The most logical place would probably be using a plugin tied to the [OnInitCulture] event.
+
+h2. Lexicon Entries
+
+A Lexicon Entry (or modLexiconEntry in the MODx model) is simply a single translation of a string into another language. It has a few important fields we&#39;ll note:
+
+* name - This is the name, or &quot;key&quot; of the Entry. When using Lexicons, this is how you will reference this key.
+* value - The translation of the key.
+* topic - The topic that this entry belongs to.
+* language - The IANA key of the language this Entry is translated into.
+
+h2. Loading and Using Lexicons
+
+Lexicons must first be loaded if they are to be used in the front-end; however, this is a trivial process.
+
+h3. Lexicons Via Tag
+
+To use a Lexicon Entry in a tag, use the following syntax:
+
+{code}[[%key? &amp;topic=`topicname` &amp;namespace=`namespace_name` &amp;language=`en`]]{code}
+
+The &#39;language&#39;, &#39;topic&#39;, and &#39;namespace&#39; properties are optional; if the tag has been run earlier on the page with the same &#39;topic&#39; property value, that topic will have already been loaded. If &#39;topic&#39; is not specified, it will assume &#39;default&#39;. If &#39;namespace&#39; is not specified, it will assume &#39;core&#39;, or the MODx Revolution Core Namespace.
+
+{note}It is preferable not to use the &#39;language&#39; property for every tag should you be changing languages; this is best done through a System or Context Setting for the entire site or context. The best option is different contexts for each language. But again, MODx leaves you with the preference.{note}
+
+h3. Lexicons in Code
+
+Using lexicons in code is fairly simple; first off you&#39;ll want to make sure the modLexicon class is loaded by instantiating it as a service:
+
+{code}$modx-&gt;getService(&#39;lexicon&#39;,&#39;modLexicon&#39;);{code}
+
+Then we&#39;ll want to load the Topic using the load() method.
+
+h4. modLexicon::load()
+
+The syntax for the modLexicon::load method is pretty simple:
+{code}$modx-&gt;lexicon-&gt;load(&#39;topicname&#39;);{code}
+
+The load() function supports Namespace-specific loading. So, say you had a Lexicon Topic named &#39;default&#39; in a Namespace called &#39;school&#39;. You&#39;d simply load it like so:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;school:default&#39;);{code}
+This would load the &#39;default&#39; Topic in the &#39;school&#39; Namespace. If the Namespace is not specified, it defaults to &#39;core&#39;, which is the default Namespace for the MODx Revolution backend.
+
+The load() function also takes an infinite number of parameters; each parameter loads a separate Topic. Example:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;chunk&#39;,&#39;user&#39;,&#39;school:playground&#39;);{code}
+This would load 3 Topics: &#39;chunk&#39;, &#39;user&#39;, and the &#39;playground&#39; Topic from the &#39;school&#39; Namespace.
+
+Furthermore, the load parameter supports language-specific loading, should you want to override the default language that is being loaded (which defaults to the current value of $this-&gt;modx-&gt;cultureKey, which is set differently depending on the Context loaded, and can be set via Settings), you could load it like so:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;es:school:playground&#39;);{code}
+
+This would load the Spanish version of the &#39;playground&#39; Topic for the &#39;school&#39; Namespace. Fun, huh?
+
+h4. modX::lexicon()
+
+Now we can use the lexicon() method on the MODx object to get our Entry with key &#39;school.basketball&#39;:
+
+{code}$modx-&gt;lexicon(&#39;school.basketball&#39;);{code}
+
+h2. Lexicons with Placeholders
+
+Say we wanted to load a Lexicon Entry with some dynamic values we have in our page. For example, say we want a greeting on a website, that says, &quot;Hello, John\!&quot; if John is the username of the currently logged in user. Our Lexicon Entry &quot;welcome_message&quot; value would look like this:
+
+{quote}Hello, \[\[+name\]\]\!{quote}
+
+And then in tag form:
+
+{code}[[!%welcome_message? &amp;name=`John`]]{code}
+
+Or in PHP:
+
+{code}$modx-&gt;lexicon(&#39;welcome_message&#39;,array(&#39;name&#39; =&gt; &#39;John&#39;));{code}
+
+You can have an infinite number of placeholders for each Tag.
+
+{note}Note our \! prefix for the Tag; this makes sure the Tag isn&#39;t cached, since our string might be changing before the page cache does.{note}
+
+h2. Lexicons for Settings
+
+So say you&#39;re creating System Settings for your 3rd Party Component (3PC). The syntax for auto-loading them into the Revolution Settings grid is simple. Let&#39;s say we have a Namespace for our Component called &#39;gallery&#39;, and a setting called &#39;gallery.display_thumbs&#39;
+
+{info:title=Recommended Format}The recommended format for 3PC developers is to use a prefix which identifies the parent component:
+
+$_lang\[&#39;_name-of-component_.key-name&#39;\] = &#39;Your translation here.&#39;;
+
+This helps to prevent name collisions; keep in mind that the *$_lang* array may have thousands of entries, so you want to make sure each entry is unique.{info}
+
+To add a lexicon name and description, we&#39;d simply add the following 2 strings into our &#39;default&#39; Lexicon Topic for our &#39;gallery&#39; Namespace:
+
+{code}
+$_lang[&#39;setting_gallery.display_thumbs&#39;] = &#39;Display Thumbnails&#39;;
+$_lang[&#39;setting_gallery.display_thumbs_desc&#39;] = &#39;When set to true, this will display thumbnails for the gallery.&#39;;
+{code}
+
+And we&#39;re done\!
+
+h2. Conclusion
+
+Lexicons provide MODx Revolution users with a plethora of avenues and options to do their i18n work. Lexicons are composed of multiple Entries for each Language, and are grouped into Topics. They can be called by PHP method calls, or by MODx Tags.
+
+h2. See Also
+
+* [modX.lexicon]
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"33226861";s:3:"ver";s:1:"2";s:4:"code";s:6954:"\\
+
+{toc}
+
+h2. An Overview
+
+Internationalization, or i18n, is the process of extrapolating text strings in a document to separate languages, so that the document may be viewed by a multitude of different languages without having to duplicate the page for every different language. Technically speaking, _internationalization_ refers to the process of _preparing_ code so that it can be translated; in MODx this process often boils down to isolating translatable strings into separate placeholders. 
+
+{info:title=i18n}
+The abbreviation *i18n* derives from the word &quot;internationalization&quot;. It means &quot;*i* plus 18 letters then *n*&quot;.
+{info}
+
+MODx Revolution supports i18n at the core level, through what it calls &quot;Lexicons&quot;. A lexicon is simply a collection of the following:
+
+* Languages (IANA format)
+* Topics
+* Entries
+
+A Lexicon Topic is a collection of Lexicon Entries. A Lexicon Entry is one single language string, with a key and a value. Revolution separates Entries into Topics to make for quicker language file loading, lower JS language cache load times, and ease of maintenance.
+
+Furthermore, the modNamespace class is used to further separate Lexicon Topics into separate namespaces, preventing you from accidentally overwriting a core lexicon.
+
+h2. Lexicon Entries
+
+A Lexicon Entry (or modLexiconEntry in the MODx model) is simply a single translation of a string into another language. It has a few important fields we&#39;ll note:
+
+* name - This is the name, or &quot;key&quot; of the Entry. When using Lexicons, this is how you will reference this key.
+* value - The translation of the key.
+* topic - The topic that this entry belongs to.
+* language - The IANA key of the language this Entry is translated into.
+
+h2. Loading and Using Lexicons
+
+Lexicons must first be loaded if they are to be used in the front-end; however, this is a trivial process.
+
+h3. Lexicons Via Tag
+
+To use a Lexicon Entry in a tag, use the following syntax:
+
+{code}[[%key? &amp;topic=`topicname` &amp;namespace=`namespace_name` &amp;language=`en`]]{code}
+
+The &#39;language&#39;, &#39;topic&#39;, and &#39;namespace&#39; properties are optional; if the tag has been run earlier on the page with the same &#39;topic&#39; property value, that topic will have already been loaded. If &#39;topic&#39; is not specified, it will assume &#39;default&#39;. If &#39;namespace&#39; is not specified, it will assume &#39;core&#39;, or the MODx Revolution Core Namespace.
+
+{note}It is preferable not to use the &#39;language&#39; property for every tag should you be changing languages; this is best done through a System or Context Setting for the entire site or context. The best option is different contexts for each language. But again, MODx leaves you with the preference.{note}
+
+h3. Lexicons in Code
+
+Using lexicons in code is fairly simple; first off you&#39;ll want to make sure the modLexicon class is loaded by instantiating it as a service:
+
+{code}$modx-&gt;getService(&#39;lexicon&#39;,&#39;modLexicon&#39;);{code}
+
+Then we&#39;ll want to load the Topic using the load() method.
+
+h4. modLexicon::load()
+
+The syntax for the modLexicon::load method is pretty simple:
+{code}$modx-&gt;lexicon-&gt;load(&#39;topicname&#39;);{code}
+
+The load() function supports Namespace-specific loading. So, say you had a Lexicon Topic named &#39;default&#39; in a Namespace called &#39;school&#39;. You&#39;d simply load it like so:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;school:default&#39;);{code}
+This would load the &#39;default&#39; Topic in the &#39;school&#39; Namespace. If the Namespace is not specified, it defaults to &#39;core&#39;, which is the default Namespace for the MODx Revolution backend.
+
+The load() function also takes an infinite number of parameters; each parameter loads a separate Topic. Example:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;chunk&#39;,&#39;user&#39;,&#39;school:playground&#39;);{code}
+This would load 3 Topics: &#39;chunk&#39;, &#39;user&#39;, and the &#39;playground&#39; Topic from the &#39;school&#39; Namespace.
+
+Furthermore, the load parameter supports language-specific loading, should you want to override the default language that is being loaded (which defaults to the current value of $this-&gt;modx-&gt;cultureKey, which is set differently depending on the Context loaded, and can be set via Settings), you could load it like so:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;es:school:playground&#39;);{code}
+
+This would load the Spanish version of the &#39;playground&#39; Topic for the &#39;school&#39; Namespace. Fun, huh?
+
+h4. modX::lexicon()
+
+Now we can use the lexicon() method on the MODx object to get our Entry with key &#39;school.basketball&#39;:
+
+{code}$modx-&gt;lexicon(&#39;school.basketball&#39;);{code}
+
+h2. Lexicons with Placeholders
+
+Say we wanted to load a Lexicon Entry with some dynamic values we have in our page. For example, say we want a greeting on a website, that says, &quot;Hello, John\!&quot; if John is the username of the currently logged in user. Our Lexicon Entry &quot;welcome_message&quot; value would look like this:
+
+{quote}Hello, \[\[+name\]\]\!{quote}
+
+And then in tag form:
+
+{code}[[!%welcome_message? &amp;name=`John`]]{code}
+
+Or in PHP:
+
+{code}$modx-&gt;lexicon(&#39;welcome_message&#39;,array(&#39;name&#39; =&gt; &#39;John&#39;));{code}
+
+You can have an infinite number of placeholders for each Tag.
+
+{note}Note our \! prefix for the Tag; this makes sure the Tag isn&#39;t cached, since our string might be changing before the page cache does.{note}
+
+h2. Lexicons for Settings
+
+So say you&#39;re creating System Settings for your 3rd Party Component (3PC). The syntax for auto-loading them into the Revolution Settings grid is simple. Let&#39;s say we have a Namespace for our Component called &#39;gallery&#39;, and a setting called &#39;gallery.display_thumbs&#39;
+
+{info:title=Recommended Format}The recommended format for 3PC developers is to use a prefix which identifies the parent component:
+
+$_lang\[&#39;_name-of-component_.key-name&#39;\] = &#39;Your translation here.&#39;;
+
+This helps to prevent name collisions; keep in mind that the *$_lang* array may have thousands of entries, so you want to make sure each entry is unique.{info}
+
+To add a lexicon name and description, we&#39;d simply add the following 2 strings into our &#39;default&#39; Lexicon Topic for our &#39;gallery&#39; Namespace:
+
+{code}
+$_lang[&#39;setting_gallery.display_thumbs&#39;] = &#39;Display Thumbnails&#39;;
+$_lang[&#39;setting_gallery.display_thumbs_desc&#39;] = &#39;When set to true, this will display thumbnails for the gallery.&#39;;
+{code}
+
+And we&#39;re done\!
+
+h2. Conclusion
+
+Lexicons provide MODx Revolution users with a plethora of avenues and options to do their i18n work. Lexicons are composed of multiple Entries for each Language, and are grouped into Topics. They can be called by PHP method calls, or by MODx Tags.
+
+h2. See Also
+
+* [modX.lexicon]
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"33226859";s:3:"ver";s:1:"1";s:4:"code";s:6566:"\\
+
+{toc}
+
+h2. An Overview
+
+Internationalization, or i18n, is the process of extrapolating text strings on a document to separate languages, so that the document may be viewed by a multitude of different languages without having to duplicate the page for every different language.
+
+MODx Revolution supports i18n at the core level, through what it calls &quot;Lexicons&quot;. A lexicon is simply a collection of the following:
+
+* Languages (IANA format)
+* Topics
+* Entries
+
+A Lexicon Topic is a collection of Lexicon Entries. A Lexicon Entry is one single language string, with a key and a value. Revolution separates Entries into Topics to make for quicker language file loading, lower JS language cache load times, and ease of maintenance.
+
+Furthermore, the modNamespace class is used to further separate Lexicon Topics into separate namespaces, preventing you from accidentally overwriting a core lexicon.
+
+h2. Lexicon Entries
+
+A Lexicon Entry (or modLexiconEntry in the MODx model) is simply a single translation of a string into another language. It has a few important fields we&#39;ll note:
+
+* name - This is the name, or &quot;key&quot; of the Entry. When using Lexicons, this is how you will reference this key.
+* value - The translation of the key.
+* topic - The topic that this entry belongs to.
+* language - The IANA key of the language this Entry is translated into.
+
+h2. Loading and Using Lexicons
+
+Lexicons must first be loaded if they are to be used in the front-end; however, this is a trivial process.
+
+h3. Lexicons Via Tag
+
+To use a Lexicon Entry in a tag, simply do:
+
+{code}[[%key? &amp;topic=`topicname` &amp;namespace=`namespace_name` &amp;language=`en`]]{code}
+
+The &#39;language&#39;, &#39;topic&#39;, and &#39;namespace&#39; properties are optional; if the tag has been run earlier on the page with the same &#39;topic&#39; property value, that topic will have already been loaded. If &#39;topic&#39; is not specified, it will assume &#39;default&#39;. If &#39;namespace&#39; is not specified, it will assume &#39;core&#39;, or the MODx Revolution Core Namespace.
+
+{note}It is preferable not to use the &#39;language&#39; property for every tag should you be changing languages; this is best done through a System or Context Setting for the entire site or context. The best option is different contexts for each language. But again, MODx leaves you with the preference.{note}
+
+h3. Lexicons in Code
+
+Using lexicons in code is fairly simple; first off you&#39;ll want to make sure the modLexicon class is loaded by instantiating it as a service:
+
+{code}$modx-&gt;getService(&#39;lexicon&#39;,&#39;modLexicon&#39;);{code}
+
+Then we&#39;ll want to load the Topic using the load() method.
+
+h4. modLexicon::load()
+
+The syntax for the modLexicon::load method is pretty simple:
+{code}$modx-&gt;lexicon-&gt;load(&#39;topicname&#39;);{code}
+
+The load() function supports Namespace-specific loading. So, say you had a Lexicon Topic named &#39;default&#39; in a Namespace called &#39;school&#39;. You&#39;d simply load it like so:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;school:default&#39;);{code}
+This would load the &#39;default&#39; Topic in the &#39;school&#39; Namespace. If the Namespace is not specified, it defaults to &#39;core&#39;, which is the default Namespace for the MODx Revolution backend. 
+
+The load() function also takes an infinite number of parameters; each parameter loads a separate Topic. Example:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;chunk&#39;,&#39;user&#39;,&#39;school:playground&#39;);{code}
+This would load 3 Topics: &#39;chunk&#39;, &#39;user&#39;, and the &#39;playground&#39; Topic from the &#39;school&#39; Namespace.
+
+Furthermore, the load parameter supports language-specific loading, should you want to override the default language that is being loaded (which defaults to the current value of $this-&gt;modx-&gt;cultureKey, which is set differently depending on the Context loaded, and can be set via Settings), you could load it like so:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;es:school:playground&#39;);{code}
+
+This would load the Spanish version of the &#39;playground&#39; Topic for the &#39;school&#39; Namespace. Fun, huh?
+
+h4. modX::lexicon()
+
+Now we can use the lexicon() method on the MODx object to get our Entry with key &#39;school.basketball&#39;:
+
+{code}$modx-&gt;lexicon(&#39;school.basketball&#39;);{code}
+
+h2. Lexicons with Placeholders
+
+Say we wanted to load a Lexicon Entry with some dynamic values we have in our page. For example, say we want a greeting on a website, that says, &quot;Hello, John!&quot; if John is the username of the currently logged in user. Our Lexicon Entry &quot;welcome_message&quot; value would look like this:
+
+{quote}Hello, \[\[+name\]\]!{quote}
+
+And then in tag form:
+
+{code}[[!%welcome_message? &amp;name=`John`]]{code}
+
+Or in PHP: 
+
+{code}$modx-&gt;lexicon(&#39;welcome_message&#39;,array(&#39;name&#39; =&gt; &#39;John&#39;));{code}
+
+You can have an infinite number of placeholders for each Tag.
+
+{note}Note our ! prefix for the Tag; this makes sure the Tag isn&#39;t cached, since our string might be changing before the page cache does.{note}
+
+h2. Lexicons for Settings
+
+So say you&#39;re creating System Settings for your 3rd Party Component (3PC). The syntax for auto-loading them into the Revolution Settings grid is simple. Let&#39;s say we have a Namespace for our Component called &#39;gallery&#39;, and a setting called &#39;gallery.display_thumbs&#39; 
+
+{info:title=Recommended Format}The recommended format for 3PC developers is to use a prefix which identifies the parent component:
+
+$\_lang\[&#39;_name-of-component_.key-name&#39;\] = &#39;Your translation here.&#39;;
+
+This helps to prevent name collisions; keep in mind that the *$\_lang* array may have thousands of entries, so you want to make sure each entry is unique.{info}
+
+To add a lexicon name and description, we&#39;d simply add the following 2 strings into our &#39;default&#39; Lexicon Topic for our &#39;gallery&#39; Namespace:
+
+{code}
+$_lang[&#39;setting_gallery.display_thumbs&#39;] = &#39;Display Thumbnails&#39;;
+$_lang[&#39;setting_gallery.display_thumbs_desc&#39;] = &#39;When set to true, this will display thumbnails for the gallery.&#39;;
+{code}
+
+And we&#39;re done! 
+
+h2. Conclusion
+
+Lexicons provide MODx Revolution users with a plethora of avenues and options to do their i18n work. Lexicons are composed of multiple Entries for each Language, and are grouped into Topics. They can be called by PHP method calls, or by MODx Tags.
+
+h2. See Also
+
+* [modX.lexicon]
+
+{scrollbar}";}}}

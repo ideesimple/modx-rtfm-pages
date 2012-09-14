@@ -1,0 +1,73 @@
+a:5:{s:2:"id";s:8:"18678357";s:4:"info";a:4:{s:6:"Title:";s:39:"Managing Resources and Elements via SVN";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:54:"[revolution20:Managing Resources and Elements via SVN]";}s:6:"parent";s:8:"18678106";s:6:"source";s:1231:"\\
+
+h2. The Problem
+
+When working in collaboration, teams of developers and designers often collaborate via Subversion (SVN) to make development easier between multiple people. MODx, however, stores its data in the database. This has many benefits generally, but DB-stored code cannot be version-controlled via SVN.
+
+However, the solution in MODx Revolution is quite simple.
+
+h2. The Solution
+
+For Resources, it&#39;s simple. Just use [Static Resources|Static Resource], and point the content to a file in your SVN checkout.
+
+For Elements, all you need is a simple &quot;include&quot; [snippet|Snippets]. The code:
+
+{code}
+if (!file_exists($file)) return &#39;&#39;;
+$o = include $file;
+return $o;
+{code}
+
+You can then call it like so in your Static Resources:
+
+{code}
+[[include? &amp;file=`/path/to/my/svn/checkout/snippet.php`]]
+{code}
+
+And you&#39;re done. You can also use tags within the &#39;file&#39; parameter, such as this:
+
+{code}
+[[include? &amp;file=`[[++assets_path]]/js/myscript.js`]]
+{code}
+
+h2. Conclusion
+
+This allows you to easily manage content via SVN. It can be achieved with [Templates] and [TVs|Template Variables] as well; just plop the include snippet wherever you need filesystem-based files.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678357";s:3:"ver";s:1:"1";s:4:"code";s:1231:"\\
+
+h2. The Problem
+
+When working in collaboration, teams of developers and designers often collaborate via Subversion (SVN) to make development easier between multiple people. MODx, however, stores its data in the database. This has many benefits generally, but DB-stored code cannot be version-controlled via SVN.
+
+However, the solution in MODx Revolution is quite simple.
+
+h2. The Solution
+
+For Resources, it&#39;s simple. Just use [Static Resources|Static Resource], and point the content to a file in your SVN checkout.
+
+For Elements, all you need is a simple &quot;include&quot; [snippet|Snippets]. The code:
+
+{code}
+if (!file_exists($file)) return &#39;&#39;;
+$o = include $file;
+return $o;
+{code}
+
+You can then call it like so in your Static Resources:
+
+{code}
+[[include? &amp;file=`/path/to/my/svn/checkout/snippet.php`]]
+{code}
+
+And you&#39;re done. You can also use tags within the &#39;file&#39; parameter, such as this:
+
+{code}
+[[include? &amp;file=`[[++assets_path]]/js/myscript.js`]]
+{code}
+
+h2. Conclusion
+
+This allows you to easily manage content via SVN. It can be achieved with [Templates] and [TVs|Template Variables] as well; just plop the include snippet wherever you need filesystem-based files.
+
+{scrollbar}";}}}

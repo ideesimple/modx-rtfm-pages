@@ -1,0 +1,33 @@
+a:5:{s:2:"id";s:8:"18678092";s:4:"info";a:4:{s:6:"Title:";s:11:"Field Label";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:26:"[revolution20:Field Label]";}s:6:"parent";s:8:"18678090";s:6:"source";s:380:"\\
+
+h2. The Field Label Rule
+
+The Field Label Rule, when set, will change a Label of a field to any text value.
+
+h2. Examples
+
+An example Rule of changing the introtext&#39;s label to &quot;Comments&quot; for the [Users] in the [User Group|User Groups] &quot;Marketing&quot; would look like this:
+
+!fc-fieldLabel.png!
+
+h2. See Also
+
+{pagetree:root=Form Customization}
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678092";s:3:"ver";s:1:"1";s:4:"code";s:380:"\\
+
+h2. The Field Label Rule
+
+The Field Label Rule, when set, will change a Label of a field to any text value.
+
+h2. Examples
+
+An example Rule of changing the introtext&#39;s label to &quot;Comments&quot; for the [Users] in the [User Group|User Groups] &quot;Marketing&quot; would look like this:
+
+!fc-fieldLabel.png!
+
+h2. See Also
+
+{pagetree:root=Form Customization}
+
+{scrollbar}";}}}

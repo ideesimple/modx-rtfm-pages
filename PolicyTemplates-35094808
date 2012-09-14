@@ -1,0 +1,143 @@
+a:5:{s:2:"id";s:8:"35094808";s:4:"info";a:4:{s:6:"Title:";s:15:"PolicyTemplates";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:30:"[revolution20:PolicyTemplates]";}s:6:"parent";s:8:"18678084";s:6:"source";s:1227:"{toc}
+
+h2. What are Policy Templates?
+
+Policy Templates are collections of Permissions. [Access Policies|Policies] use these to create lists of Permissions that Users can have. They are useful for making standard groups of policies for various access levels - such as, for example, an Administrator, a Moderator, or a Content Editor.
+
+Although there is some overlap between the specific permissions defined in each policy template, each template contains mostly unique permissions.  Each template defines all the permissions that apply to the Access Control Lists (ACLs) they target; each is meant to be self-contained.
+
+
+h3. AdministratorTemplate
+
+Defines all permissions for working in the MODX manager. [See all Administrator Policy Permissions|Permissions - Administrator Policy]
+
+h3. ElementTemplate
+
+Element defines extra permissions associated with Element ACLs
+
+h3. MediaSourceTemplate
+
+This deals with permissions involved in accessing file sources.
+
+h3. ObjectTemplate
+
+Generic xPDOObject permissions.
+
+h3. ResourceTemplate
+
+Resource defines extra permissions associated with Resource Group ACLs. [See all Resource Policy permissions|Permissions - Resource Policy]
+
+h2. See Also
+
+{pagetree:root=Security}
+
+{scrollbar}";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"35094808";s:3:"ver";s:1:"4";s:4:"code";s:1227:"{toc}
+
+h2. What are Policy Templates?
+
+Policy Templates are collections of Permissions. [Access Policies|Policies] use these to create lists of Permissions that Users can have. They are useful for making standard groups of policies for various access levels - such as, for example, an Administrator, a Moderator, or a Content Editor.
+
+Although there is some overlap between the specific permissions defined in each policy template, each template contains mostly unique permissions.  Each template defines all the permissions that apply to the Access Control Lists (ACLs) they target; each is meant to be self-contained.
+
+
+h3. AdministratorTemplate
+
+Defines all permissions for working in the MODX manager. [See all Administrator Policy Permissions|Permissions - Administrator Policy]
+
+h3. ElementTemplate
+
+Element defines extra permissions associated with Element ACLs
+
+h3. MediaSourceTemplate
+
+This deals with permissions involved in accessing file sources.
+
+h3. ObjectTemplate
+
+Generic xPDOObject permissions.
+
+h3. ResourceTemplate
+
+Resource defines extra permissions associated with Resource Group ACLs. [See all Resource Policy permissions|Permissions - Resource Policy]
+
+h2. See Also
+
+{pagetree:root=Security}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"37683822";s:3:"ver";s:1:"3";s:4:"code";s:1227:"{toc}
+
+h2. What are Policy Templates?
+
+Policy Templates are collections of Permissions. [Access Policies|Policies] use these to create lists of Permissions that Users can have. They are useful for making standard groups of policies for various access levels - such as, for example, an Administrator, a Moderator, or a Content Editor.
+
+Although there is some overlap between the specific permissions defined in each policy template, each template contains mostly unique permissions.  Each template defines all the permissions that apply to the Access Control Lists (ACLs) they target; each is meant to be self-contained.
+
+
+h3. AdministratorTemplate
+
+Defines all permissions for working in the MODX manager. [Permissions - Administrator Policy|See all Administrator Policy Permissions]
+
+h3. ElementTemplate
+
+Element defines extra permissions associated with Element ACLs
+
+h3. MediaSourceTemplate
+
+This deals with permissions involved in accessing file sources.
+
+h3. ObjectTemplate
+
+Generic xPDOObject permissions.
+
+h3. ResourceTemplate
+
+Resource defines extra permissions associated with Resource Group ACLs. [Permissions - Resource Policy|See all Resource Policy permissions]
+
+h2. See Also
+
+{pagetree:root=Security}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"37683821";s:3:"ver";s:1:"2";s:4:"code";s:1080:"{toc}
+
+h2. What are Policy Templates?
+
+Policy Templates are collections of Permissions. [Access Policies|Policies] use these to create lists of Permissions that Users can have. They are useful for making standard groups of policies for various access levels - such as, for example, an Administrator, a Moderator, or a Content Editor.
+
+Although there is some overlap between the specific permissions defined in each policy template, each template contains mostly unique permissions.  Each template defines all the permissions that apply to the Access Control Lists (ACLs) they target; each is meant to be self-contained.
+
+
+h3. AdministratorTemplate
+
+Defines all permissions for working in the MODX manager.
+
+h3. ElementTemplate
+
+Element defines extra permissions associated with Element ACLs
+
+h3. MediaSourceTemplate
+
+This deals with permissions involved in accessing file sources.
+
+h3. ObjectTemplate
+
+Generic xPDOObject permissions.
+
+h3. ResourceTemplate
+
+Resource defines extra permissions associated with Resource Group ACLs
+
+h2. See Also
+
+{pagetree:root=Security}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"37683814";s:3:"ver";s:1:"1";s:4:"code";s:386:"{toc}
+
+h2. What are Policy Templates?
+
+Policy Templates are collections of Permissions. [Access Policies|Policies] use these to create lists of Permissions that Users can have. They are useful for making standard groups of policies for various access levels - such as, for example, an Administrator, a Moderator, or a Content Editor.
+
+h2. See Also
+
+{pagetree:root=Security}
+
+{scrollbar}";}}}

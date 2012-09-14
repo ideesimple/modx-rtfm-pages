@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678174";s:4:"info";a:4:{s:6:"Title:";s:21:"session_cookie_secure";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:36:"[revolution20:session_cookie_secure]";}s:6:"parent";s:8:"18678127";s:6:"source";s:150:"h2. session_cookie_secure
+
+*Name*: Session Cookie Secure
+*Type*: Yes/No
+*Default*: No
+
+Enable this setting to use secure session cookies.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678174";s:3:"ver";s:1:"2";s:4:"code";s:150:"h2. session_cookie_secure
+
+*Name*: Session Cookie Secure
+*Type*: Yes/No
+*Default*: No
+
+Enable this setting to use secure session cookies.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119715";s:3:"ver";s:1:"1";s:4:"code";s:317:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Session Cookie Secure{zone-data}
+{zone-data:key}session_cookie_secure{zone-data}
+{zone-data:type}boolean{zone-data}
+{zone-data:default}false{zone-data}
+{zone-data:desc}Enable this setting to use secure session cookies.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

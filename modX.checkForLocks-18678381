@@ -1,0 +1,51 @@
+a:5:{s:2:"id";s:8:"18678381";s:4:"info";a:4:{s:6:"Title:";s:18:"modX.checkForLocks";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:33:"[revolution20:modX.checkForLocks]";}s:6:"parent";s:8:"18678361";s:6:"source";s:504:"\\
+
+h2. modX::checkForLocks
+
+Checks for locking on a page. A page is &quot;locked&quot; if another user is already viewing it. This prevents collisions.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#checkForLocks
+
+{code}
+void checkForLocks (integer $id, string $action, string $type)
+{code}
+
+h2. Example
+
+Check for locks on the edit_chunk action.
+{code}
+if ($modx-&gt;checkForLocks($modx-&gt;getLoginUserID(),&#39;edit_chunk&#39;,&#39;edit&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678381";s:3:"ver";s:1:"1";s:4:"code";s:504:"\\
+
+h2. modX::checkForLocks
+
+Checks for locking on a page. A page is &quot;locked&quot; if another user is already viewing it. This prevents collisions.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#checkForLocks
+
+{code}
+void checkForLocks (integer $id, string $action, string $type)
+{code}
+
+h2. Example
+
+Check for locks on the edit_chunk action.
+{code}
+if ($modx-&gt;checkForLocks($modx-&gt;getLoginUserID(),&#39;edit_chunk&#39;,&#39;edit&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";}}}

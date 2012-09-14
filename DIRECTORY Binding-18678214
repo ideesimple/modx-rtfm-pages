@@ -1,0 +1,103 @@
+a:5:{s:2:"id";s:8:"18678214";s:4:"info";a:4:{s:6:"Title:";s:17:"DIRECTORY Binding";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:32:"[revolution20:DIRECTORY Binding]";}s:6:"parent";s:8:"18678208";s:6:"source";s:2090:"\\
+
+h2. What is the @DIRECTORY Binding?
+
+The DIRECTORY binding reads the contents of a directory.  This can really useful when you tie it into a List control widget, e.g. if you want to do something like give the user a list of logo images to choose for a page, or choose which mp3 file plays on a particular page.  REMEMBER: it returns *ALL* contents of a directory, including all files and all directories - with the sole exception of directories prefixed with a period.
+
+h2. Usage
+
+When you create a Template Variable, place the following text into the&amp;nbsp;*Input Option Values* box:
+
+
+{code}@DIRECTORY /path/to/some_directory{code}
+
+Frequently, this is coupled with an Input Type of &quot;DropDown List Menu&quot; to allow the user to select a file from the list.
+{note}In MODx Revolution, the path used for the @DIRECTORY binding is relative to the site&#39;s root.  It is *not* an absolute file path. If you want to list files above your site&#39;s root, you must use the &quot;..&quot; syntax, e.g. *@DIRECTORY /../dir_above_root* &amp;nbsp;This binding will work with or without a trailing slash in the directory name.{note}
+If you are using the @DIRECTORY binding for your template variable \[\[*myTV\]\], you can easily imagine that your template code could have some stuff in it like:
+
+{code}&lt;img src=&quot;[[*myTV]]&quot; alt=&quot;&quot; /&gt;{code}
+
+h2. Additional Info
+
+Can you filter which files are selected?  E.g. using \*.jpg?  The following DOES NOT WORK:
+
+{code}@DIRECTORY /list/*.jpg  # doesn&#39;t work!{code}
+
+There are PHP code snippets out there that emulate this functionality.  See the following forum thread: [http://modxcms.com/forums/index.php/topic,3124.0.html]
+
+h2. Security
+
+Depending on how the file is used on the page, it may pose a security risk.  Be careful if you were using this binding to select JavaScript files to be executed.  What if a user had the ability to upload (and thus execute) a JavaScript file? Also, always be wary of letting users see your directory structure.
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678214";s:3:"ver";s:1:"2";s:4:"code";s:2090:"\\
+
+h2. What is the @DIRECTORY Binding?
+
+The DIRECTORY binding reads the contents of a directory.  This can really useful when you tie it into a List control widget, e.g. if you want to do something like give the user a list of logo images to choose for a page, or choose which mp3 file plays on a particular page.  REMEMBER: it returns *ALL* contents of a directory, including all files and all directories - with the sole exception of directories prefixed with a period.
+
+h2. Usage
+
+When you create a Template Variable, place the following text into the&amp;nbsp;*Input Option Values* box:
+
+
+{code}@DIRECTORY /path/to/some_directory{code}
+
+Frequently, this is coupled with an Input Type of &quot;DropDown List Menu&quot; to allow the user to select a file from the list.
+{note}In MODx Revolution, the path used for the @DIRECTORY binding is relative to the site&#39;s root.  It is *not* an absolute file path. If you want to list files above your site&#39;s root, you must use the &quot;..&quot; syntax, e.g. *@DIRECTORY /../dir_above_root* &amp;nbsp;This binding will work with or without a trailing slash in the directory name.{note}
+If you are using the @DIRECTORY binding for your template variable \[\[*myTV\]\], you can easily imagine that your template code could have some stuff in it like:
+
+{code}&lt;img src=&quot;[[*myTV]]&quot; alt=&quot;&quot; /&gt;{code}
+
+h2. Additional Info
+
+Can you filter which files are selected?  E.g. using \*.jpg?  The following DOES NOT WORK:
+
+{code}@DIRECTORY /list/*.jpg  # doesn&#39;t work!{code}
+
+There are PHP code snippets out there that emulate this functionality.  See the following forum thread: [http://modxcms.com/forums/index.php/topic,3124.0.html]
+
+h2. Security
+
+Depending on how the file is used on the page, it may pose a security risk.  Be careful if you were using this binding to select JavaScript files to be executed.  What if a user had the ability to upload (and thus execute) a JavaScript file? Also, always be wary of letting users see your directory structure.
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"21659703";s:3:"ver";s:1:"1";s:4:"code";s:1500:"\\
+
+h2. What is the @DIRECTORY Binding?
+
+The DIRECTORY binding reads the contents of a directory.  This can really useful when you tie it into a List control widget, e.g. if you want to do something like give the user a list of logo images to choose for a page, or choose which mp3 file plays on a particular page.  REMEMBER: it returns *ALL* contents of a directory, including all files and all directories - with the sole exception of directories prefixed with a period.
+
+h2. Usage
+
+
+{code}@DIRECTORY /html_root_folder/path/to/some_directory{code}
+
+If you are using the @DIRECTORY binding for your template variable \[\[*myTV\]\], you can easily imagine that your template code could have some stuff in it like:
+
+{code}&lt;img src=&quot;[[*myTV]]&quot; alt=&quot;&quot; /&gt;{code}
+
+h2. Additional Info
+
+Can you filter which files are selected?  E.g. using *.jpg?  The following DOES NOT WORK:
+
+{code}@DIRECTORY /list/*.jpg  # doesn&#39;t work!{code}
+
+There are PHP code snippets out there that emulate this functionality.  See the following forum thread: [http://modxcms.com/forums/index.php/topic,3124.0.html]
+
+h2. Security
+Depending on how the file is used on the page, it may pose a security risk.  Be careful if you were using this binding to select JavaScript files to be executed.  What if a user had the ability to upload (and thus execute) a JavaScript file? Also, always be wary of letting users see your directory structure.
+
+h2. See Also
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";}}}

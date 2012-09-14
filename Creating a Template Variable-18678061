@@ -1,0 +1,434 @@
+a:5:{s:2:"id";s:8:"18678061";s:4:"info";a:4:{s:6:"Title:";s:28:"Creating a Template Variable";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:43:"[revolution20:Creating a Template Variable]";}s:6:"parent";s:8:"18678062";s:6:"source";s:6085:"\\
+{toc}
+
+This page outlines how to create a Template Variable in MODx Revolution.  A Template Variable, in a nutshell, is a custom field. To read more about what about what a Template Variable is, see the page on [Template Variables].
+
+h2. Explanation
+
+When we say &quot;Create a Template Variable&quot;, there are two possible actions that we might be talking about: we can be referring to the action of adding some text or content to one of our existing custom fields when we edit a MODx page (i.e. a Resource), OR we can be referring to the action of defining this field so that it is available to our MODx resources.  This page is all about the latter. In the first case, we would be creating an _instance_ of the Template Variable, whereas the second case is all about defining the Template Variable blueprint, which determines how each instance will behave. 
+
+{note:title=A Class of Field}
+When you create a Template Variable, you are really defining a _class_ of custom field; it acts as a blueprint for all instances of this custom field.  
+{note}
+
+h2. Creating the Template Variable
+
+h3. 1. Log into the MODx manager
+
+Just to be clear, you must be logged into the MODx manager as an Administrator (or similar) for this to work!
+
+h3. 2. Add the Template Variable
+
+On the left-hand resource-tree pane, click on the *Elements* tab
+
+!MODx Create TV.png|align=left!
+
+
+h3. 3. Define the General Information
+
+When we define a TV, we have to define a lot of information about the behavior of this custom field. The &quot;General Information&quot; tab contains the basic information for this variable.
+
+!create-tv-general1.png!
+
+* *Variable Name*: This corresponds to the placeholders that will be used in your templates, e.g. *bio* = \[\[\*bio\]\]. _This name should be *unique*_!
+* *Caption*: This is the primary label for your variable that appears when you edit a resource that uses this TV
+* *Description*: This is the secondary label for your variable
+* *Category*: This affects which sub-tab the variable appears on
+* *Sort Order*: If you&#39;re using more than one TV, this will determine which appear at the top (1 = top, bigger numbers sink to the bottom)
+
+!MODX __ Template Variable_ bio-1.png!
+
+In the picture, you can see how the settings will correspond to your pages&#39;s editor fields.
+
+{note}
+The name should be unique!
+{note}
+
+h3. 4. Define the Input Options
+
+Next, click on the *Input Options* tab: you need to choose which kind of field this will be, e.g. a text field, a dropdown field, a WYSIWYG, etc. See the page for See the [Template Variable Input Types] for a full list of possible input types.
+
+* *Input Type*: Your field might be a simple text field, a dropdown, a reference to another page, or many other types of field.  
+* *Input Options*: Some Input Types ignore this field, but others may require it.  E.g. a dropdown list requires a list of possible values.  Again, see the page on [Template Variable Input Types] for more info.
+* *Default*: this affects what the default value for the field will be.  This can be a simple value, or it can utilize one of the MODx [Bindings] to do things like select a value from the database or inherit a value from a parent page.
+
+!create-tv-rendopt1.png!
+
+h3. 5. Configure Template Access
+
+Click the *Template Access* tab: you must define which template(s) will actually use this custom field that you&#39;ve defined -- once you&#39;ve defined this custom field, you can choose which template(s) can actually use it.  
+
+Any time you create a Resource that uses a template to which this TV has bee attached, the field will be available for editing. *Make sure you attached the TV to at least one template!*
+
+h3. 6. Save the TV definition.  
+
+Now when you edit a page that uses one of the templates containing this TV, you&#39;ll be able to add data to that custom field.
+
+h3. 7. Use it: Create a Resource
+
+Now that you&#39;ve defined this and you&#39;ve added it to a template, you should try adding a MODx Resource (e.g. right-click in the page tree and choose *Create --&gt; Create Resource Here*).  Choose the template that uses this template variable.
+
+h3. 8. Edit the Value 
+
+Once your MODx Resource (i.e. page) is using the template that contains your template variable, you can add data to this attribute by clicking on the page&#39;s &quot;Template Variables&quot; tab.
+
+
+----
+
+h2. Advanced Usage
+
+IN PROGRESS ...
+
+You may have noticed we skipped over a fair number of tabs in the initial walk through.  Template Variables offer for some more complex functionality that you don&#39;t need for simple scenarios.
+
+
+h2. Output Rendering Options
+
+Next, we&#39;ll select the output rendering options. We&#39;ll select &#39;Date&#39; as well, and as you&#39;ll note, below this box (depending on the Output Render selected) some form fields will show:
+
+!create-tv-outtype1.png!
+
+Allowing us to edit more fine-grained options for that Output Render.
+
+h2. Properties
+
+From there, we can specify any default properties we want for the TV. &quot;How can you use properties on a TV?&quot;, you might ask. Well, let&#39;s say we&#39;re doing a textarea TV named &quot;viewingSS&quot;. In our content, we&#39;ve got this:
+
+{code}Viewing: [[+subsection]]{code}
+
+We can add a list property &#39;subsection&#39; to the grid, and then allow that property to be overridden via property sets. Say we created a Property Set named &#39;CarsSectionTVPS&#39; (PS for Property Set). In it, we set the &#39;subsection&#39; property to &quot;Cars&quot;. We&#39;d then attach it to the TV in our Resource, or Template, or whereever we are using it like so:
+
+{code}[[*viewingSS@CarsSectionTVPS]]{code}
+
+This would output in the place of the TV:
+
+{quote}Viewing: Cars{quote}
+
+h2. Template and Resource Group Access
+
+We can assign TVs to [Templates], as well. This allows those Resources assigned to those [Templates] to edit the TVs for each Resource.
+
+Also, TVs can be restricted to certain Resource Groups, selectable in the grid labeled &quot;Access Permissions&quot;.
+
+h2. See Also
+
+{pagetree:root=Template Variables}
+
+{scrollbar}";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"18678061";s:3:"ver";s:1:"4";s:4:"code";s:6085:"\\
+{toc}
+
+This page outlines how to create a Template Variable in MODx Revolution.  A Template Variable, in a nutshell, is a custom field. To read more about what about what a Template Variable is, see the page on [Template Variables].
+
+h2. Explanation
+
+When we say &quot;Create a Template Variable&quot;, there are two possible actions that we might be talking about: we can be referring to the action of adding some text or content to one of our existing custom fields when we edit a MODx page (i.e. a Resource), OR we can be referring to the action of defining this field so that it is available to our MODx resources.  This page is all about the latter. In the first case, we would be creating an _instance_ of the Template Variable, whereas the second case is all about defining the Template Variable blueprint, which determines how each instance will behave. 
+
+{note:title=A Class of Field}
+When you create a Template Variable, you are really defining a _class_ of custom field; it acts as a blueprint for all instances of this custom field.  
+{note}
+
+h2. Creating the Template Variable
+
+h3. 1. Log into the MODx manager
+
+Just to be clear, you must be logged into the MODx manager as an Administrator (or similar) for this to work!
+
+h3. 2. Add the Template Variable
+
+On the left-hand resource-tree pane, click on the *Elements* tab
+
+!MODx Create TV.png|align=left!
+
+
+h3. 3. Define the General Information
+
+When we define a TV, we have to define a lot of information about the behavior of this custom field. The &quot;General Information&quot; tab contains the basic information for this variable.
+
+!create-tv-general1.png!
+
+* *Variable Name*: This corresponds to the placeholders that will be used in your templates, e.g. *bio* = \[\[\*bio\]\]. _This name should be *unique*_!
+* *Caption*: This is the primary label for your variable that appears when you edit a resource that uses this TV
+* *Description*: This is the secondary label for your variable
+* *Category*: This affects which sub-tab the variable appears on
+* *Sort Order*: If you&#39;re using more than one TV, this will determine which appear at the top (1 = top, bigger numbers sink to the bottom)
+
+!MODX __ Template Variable_ bio-1.png!
+
+In the picture, you can see how the settings will correspond to your pages&#39;s editor fields.
+
+{note}
+The name should be unique!
+{note}
+
+h3. 4. Define the Input Options
+
+Next, click on the *Input Options* tab: you need to choose which kind of field this will be, e.g. a text field, a dropdown field, a WYSIWYG, etc. See the page for See the [Template Variable Input Types] for a full list of possible input types.
+
+* *Input Type*: Your field might be a simple text field, a dropdown, a reference to another page, or many other types of field.  
+* *Input Options*: Some Input Types ignore this field, but others may require it.  E.g. a dropdown list requires a list of possible values.  Again, see the page on [Template Variable Input Types] for more info.
+* *Default*: this affects what the default value for the field will be.  This can be a simple value, or it can utilize one of the MODx [Bindings] to do things like select a value from the database or inherit a value from a parent page.
+
+!create-tv-rendopt1.png!
+
+h3. 5. Configure Template Access
+
+Click the *Template Access* tab: you must define which template(s) will actually use this custom field that you&#39;ve defined -- once you&#39;ve defined this custom field, you can choose which template(s) can actually use it.  
+
+Any time you create a Resource that uses a template to which this TV has bee attached, the field will be available for editing. *Make sure you attached the TV to at least one template!*
+
+h3. 6. Save the TV definition.  
+
+Now when you edit a page that uses one of the templates containing this TV, you&#39;ll be able to add data to that custom field.
+
+h3. 7. Use it: Create a Resource
+
+Now that you&#39;ve defined this and you&#39;ve added it to a template, you should try adding a MODx Resource (e.g. right-click in the page tree and choose *Create --&gt; Create Resource Here*).  Choose the template that uses this template variable.
+
+h3. 8. Edit the Value 
+
+Once your MODx Resource (i.e. page) is using the template that contains your template variable, you can add data to this attribute by clicking on the page&#39;s &quot;Template Variables&quot; tab.
+
+
+----
+
+h2. Advanced Usage
+
+IN PROGRESS ...
+
+You may have noticed we skipped over a fair number of tabs in the initial walk through.  Template Variables offer for some more complex functionality that you don&#39;t need for simple scenarios.
+
+
+h2. Output Rendering Options
+
+Next, we&#39;ll select the output rendering options. We&#39;ll select &#39;Date&#39; as well, and as you&#39;ll note, below this box (depending on the Output Render selected) some form fields will show:
+
+!create-tv-outtype1.png!
+
+Allowing us to edit more fine-grained options for that Output Render.
+
+h2. Properties
+
+From there, we can specify any default properties we want for the TV. &quot;How can you use properties on a TV?&quot;, you might ask. Well, let&#39;s say we&#39;re doing a textarea TV named &quot;viewingSS&quot;. In our content, we&#39;ve got this:
+
+{code}Viewing: [[+subsection]]{code}
+
+We can add a list property &#39;subsection&#39; to the grid, and then allow that property to be overridden via property sets. Say we created a Property Set named &#39;CarsSectionTVPS&#39; (PS for Property Set). In it, we set the &#39;subsection&#39; property to &quot;Cars&quot;. We&#39;d then attach it to the TV in our Resource, or Template, or whereever we are using it like so:
+
+{code}[[*viewingSS@CarsSectionTVPS]]{code}
+
+This would output in the place of the TV:
+
+{quote}Viewing: Cars{quote}
+
+h2. Template and Resource Group Access
+
+We can assign TVs to [Templates], as well. This allows those Resources assigned to those [Templates] to edit the TVs for each Resource.
+
+Also, TVs can be restricted to certain Resource Groups, selectable in the grid labeled &quot;Access Permissions&quot;.
+
+h2. See Also
+
+{pagetree:root=Template Variables}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35095439";s:3:"ver";s:1:"3";s:4:"code";s:5480:"\\
+{toc}
+
+This page outlines how to create a Template Variable in MODx Revolution.  A Template Variable, in a nutshell, is a custom field. To read more about what about what a Template Variable is, see the page on [Template Variables].
+
+When we say &quot;Create a Template Variable&quot;, there are two possible actions that we might be talking about: we can be referring to the action of adding some text or content to one of our custom fields when we edit a MODx page (i.e. a Resource), OR we can be referring to the action of defining this field so that it is available to our MODx resources.  This page is all about the latter. In the first case, we would be creating an _instance_ of the Template Variable, whereas the second case is all about defining the Template Variable blueprint, which determines how each instance will behave. 
+
+{note:title=A Class of Field}
+When you create a Template Variable, you are really defining a _class_ of custom field; it acts as a blueprint for all instances of this custom field.  
+{note}
+
+h2. Creating the Template Variable
+
+1. Log into the MODx manager
+2. On the left-hand resource-tree pane, click on the *Elements* tab
+
+!MODx Create TV.png|align=left!
+
+When we define a TV, we have to define a lot of information about the behavior of this custom field.
+
+3. Define the &quot;General Information&quot; for the TV.
+
+* *Variable Name*: This corresponds to the placeholders that will be used in your templates, e.g. *bio* = \[\[\*bio\]\]
+* *Caption*: This is the primary label for your variable that appears when you edit a resource that uses this TV
+* *Description*: This is the secondary label for your variable
+* *Category*: This affects which sub-tab the variable appears on
+* *Sort Order*: If you&#39;re using more than one TV, this will determine which appear at the top (1 = top, bigger numbers sink to the bottom)
+
+!MODX __ Template Variable_ bio-1.png|align=center,border=1!
+
+In the picture, you can see how the settings correspond to your pages&#39;s editor fields.
+
+4. Next, click on the *Input Options* tab: you need to choose which kind of field this will be.
+
+* *Input Type*: Your field might be a simple text field, a dropdown, a reference to another page, or many other types of field.  See the [Template Variable Input Types]
+* *Input Options*: Some Input Types ignore this field, but others may require it.  E.g. a dropdown list requires a list of possible values.  Again, see the page on [Template Variable Input Types] for more info.
+* *Default*: this affects what the default value for the field will be.  
+
+See the following sections below for more info.
+
+5. Click the *Template Access* tab: you must define which template(s) will actually use this custom field that you&#39;ve defined.  Any time you create a Resource that uses a template to which this TV has bee attached, the field will be available for editing. *Make sure you attached the TV to at least one template!*
+
+6. Save the TV definition.  Now when you edit a page that uses one of the templates containing this TV, you&#39;ll be able to add data to that custom field.
+
+That&#39;s the basic walk-through: see the below sections for more information on each tab.
+
+
+h2. General Settings
+
+First off, you&#39;ll want to specify a name for the Template Variable. TVs in MODx are case-sensitive, so you&#39;ll want to be careful about the name you choose. You can also specify a caption and description.
+
+!create-tv-general1.png!
+
+h2. Rendering Options (Input Type)
+
+From there, you can select all kinds of rendering options for the TV. First off, you&#39;ll want to select an input type:
+
+!create-tv-rendopt1.png!
+
+These determine how the input form is rendered for the TV in the MODx manager interface. For this example, we&#39;ll choose &quot;Date&quot;. Should we have chosen a list, or dropdown, we can specify the Input Option Values in the following format:
+
+{quote}option1==value1\|\|option2==value2\|\|option3==value3{quote}
+
+We can then also specify a default value for the TV as well.
+
+Next, we&#39;ll select the output rendering options. We&#39;ll select &#39;Date&#39; as well, and as you&#39;ll note, below this box (depending on the Output Render selected) some form fields will show:
+
+!create-tv-outtype1.png!
+
+Allowing us to edit more fine-grained options for that Output Render.
+
+h2. Properties
+
+From there, we can specify any default properties we want for the TV. &quot;How can you use properties on a TV?&quot;, you might ask. Well, let&#39;s say we&#39;re doing a textarea TV named &quot;viewingSS&quot;. In our content, we&#39;ve got this:
+
+{code}Viewing: [[+subsection]]{code}
+
+We can add a list property &#39;subsection&#39; to the grid, and then allow that property to be overridden via property sets. Say we created a Property Set named &#39;CarsSectionTVPS&#39; (PS for Property Set). In it, we set the &#39;subsection&#39; property to &quot;Cars&quot;. We&#39;d then attach it to the TV in our Resource, or Template, or whereever we are using it like so:
+
+{code}[[*viewingSS@CarsSectionTVPS]]{code}
+
+This would output in the place of the TV:
+
+{quote}Viewing: Cars{quote}
+
+h2. Template and Resource Group Access
+
+We can assign TVs to [Templates], as well. This allows those Resources assigned to those [Templates] to edit the TVs for each Resource.
+
+Also, TVs can be restricted to certain Resource Groups, selectable in the grid labeled &quot;Access Permissions&quot;.
+
+h2. See Also
+
+{pagetree:root=Template Variables}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35095435";s:3:"ver";s:1:"2";s:4:"code";s:2373:"\\
+{toc}
+
+This page outlines how to create a Template Variable in MODx Revolution.
+
+h2. General Settings
+
+First off, you&#39;ll want to specify a name for the Template Variable. TVs in MODx are case-sensitive, so you&#39;ll want to be careful about the name you choose. You can also specify a caption and description.
+
+!create-tv-general1.png!
+
+h2. Rendering Options (Input Type)
+
+From there, you can select all kinds of rendering options for the TV. First off, you&#39;ll want to select an input type:
+
+!create-tv-rendopt1.png!
+
+These determine how the input form is rendered for the TV in the MODx manager interface. For this example, we&#39;ll choose &quot;Date&quot;. Should we have chosen a list, or dropdown, we can specify the Input Option Values in the following format:
+
+{quote}option1==value1\|\|option2==value2\|\|option3==value3{quote}
+
+We can then also specify a default value for the TV as well.
+
+Next, we&#39;ll select the output rendering options. We&#39;ll select &#39;Date&#39; as well, and as you&#39;ll note, below this box (depending on the Output Render selected) some form fields will show:
+
+!create-tv-outtype1.png!
+
+Allowing us to edit more fine-grained options for that Output Render.
+
+h2. Properties
+
+From there, we can specify any default properties we want for the TV. &quot;How can you use properties on a TV?&quot;, you might ask. Well, let&#39;s say we&#39;re doing a textarea TV named &quot;viewingSS&quot;. In our content, we&#39;ve got this:
+
+{code}Viewing: [[+subsection]]{code}
+
+We can add a list property &#39;subsection&#39; to the grid, and then allow that property to be overridden via property sets. Say we created a Property Set named &#39;CarsSectionTVPS&#39; (PS for Property Set). In it, we set the &#39;subsection&#39; property to &quot;Cars&quot;. We&#39;d then attach it to the TV in our Resource, or Template, or whereever we are using it like so:
+
+{code}[[*viewingSS@CarsSectionTVPS]]{code}
+
+This would output in the place of the TV:
+
+{quote}Viewing: Cars{quote}
+
+h2. Template and Resource Group Access
+
+We can assign TVs to [Templates], as well. This allows those Resources assigned to those [Templates] to edit the TVs for each Resource.
+
+Also, TVs can be restricted to certain Resource Groups, selectable in the grid labeled &quot;Access Permissions&quot;.
+
+h2. See Also
+
+{pagetree:root=Template Variables}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"21659679";s:3:"ver";s:1:"1";s:4:"code";s:2358:"\\
+{toc}
+
+This page outlines how to create a Template Variable in MODx Revolution.
+
+h2. General Settings
+
+First off, you&#39;ll want to specify a name for the Template Variable. TVs in MODx are case-sensitive, so you&#39;ll want to be careful about the name you choose. You can also specify a caption and description. 
+
+!create-tv-general1.png!
+
+h2. Rendering Options
+
+From there, you can select all kinds of rendering options for the TV. First off, you&#39;ll want to select an input type:
+
+!create-tv-rendopt1.png!
+
+These determine how the input form is rendered for the TV in the MODx manager interface. For this example, we&#39;ll choose &quot;Date&quot;. Should we have chosen a list, or dropdown, we can specify the Input Option Values in the following format:
+
+{quote}option1==value1||option2==value2||option3==value3{quote}
+
+We can then also specify a default value for the TV as well.
+
+Next, we&#39;ll select the output rendering options. We&#39;ll select &#39;Date&#39; as well, and as you&#39;ll note, below this box (depending on the Output Render selected) some form fields will show:
+
+!create-tv-outtype1.png!
+
+Allowing us to edit more fine-grained options for that Output Render. 
+
+h2. Properties
+
+From there, we can specify any default properties we want for the TV. &quot;How can you use properties on a TV?&quot;, you might ask. Well, let&#39;s say we&#39;re doing a textarea TV named &quot;viewingSS&quot;. In our content, we&#39;ve got this:
+
+{code}Viewing: [[+subsection]]{code}
+
+We can add a list property &#39;subsection&#39; to the grid, and then allow that property to be overridden via property sets. Say we created a Property Set named &#39;CarsSectionTVPS&#39; (PS for Property Set). In it, we set the &#39;subsection&#39; property to &quot;Cars&quot;. We&#39;d then attach it to the TV in our Resource, or Template, or whereever we are using it like so:
+
+{code}[[*viewingSS@CarsSectionTVPS]]{code}
+
+This would output in the place of the TV:
+
+{quote}Viewing: Cars{quote}
+
+h2. Template and Resource Group Access
+
+We can assign TVs to [Templates], as well. This allows those Resources assigned to those [Templates] to edit the TVs for each Resource.
+
+Also, TVs can be restricted to certain Resource Groups, selectable in the grid labeled &quot;Access Permissions&quot;.
+
+h2. See Also
+
+{pagetree:root=Template Variables}
+
+{scrollbar}";}}}

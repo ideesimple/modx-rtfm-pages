@@ -1,0 +1,171 @@
+a:5:{s:2:"id";s:8:"18678084";s:4:"info";a:4:{s:6:"Title:";s:8:"Policies";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:23:"[revolution20:Policies]";}s:6:"parent";s:8:"18678340";s:6:"source";s:2646:"\\
+
+h2. What is an Access Policy?
+
+An Access Policy is a set of [Permissions] containing one or many Permissions, as defined in the manager.
+
+h2. Creating and Editing
+
+To create an Access Policy in the manager, navigate to
+
+*Security \-&gt; Access Controls \-&gt; Access Policies*
+
+From there you can add new policies. To edit an Access Policy in the manager, simply right-click the Policy you want to edit.
+
+h2. Usage
+
+Policies can be used in a myriad of different ways. Here are 3 example usages that come by default in MODx:
+
+h3. Context Access
+
+Access Policies can be assigned as [Access Control Lists|ACLs] (ACLs) to a Context and User Group, with a specified Minimum [Role|Roles]. When done, this means that all the Users in that User Group with at least the Role specified as the Minimum Role can use the Permissions in the Policy in the Context specified in the [ACL|ACLs].
+
+MODx comes with a default [&quot;Administrator&quot; Policy|Permissions - Administrator Policy] that contains all the [Permissions] one would use in a Context ACL. It&#39;s best to duplicate this policy when creating a custom access policy for restricting manager users.
+
+h3. Resource Group Access
+
+They can also be Resource ACLs, that limit access to Resources based on Roles and Resource Groups. MODx comes packaged with a default [&quot;Resource&quot; Policy|Permissions - Resource Policy] that contains all the basic Permissions one would use in a Resource Group ACL.
+
+An example would be to assign the &quot;Resource&quot; policy to a Resource Group called &#39;HR Documents&#39;. Then, you would give a User Group called &quot;HR Department&quot; access to this Resource Group via the Resource ACL:
+
+!acl-rg1.png!
+
+This would restrict all Resources in the &quot;HR Documents&quot; Resource Group to Users only in the &quot;HR Department&quot; group.
+
+h3. Element Category Access
+
+Elements can be restricted from view by ACLs on Categories. For example, if you had a User Group called &#39;Developers&#39;, and wanted Users in that group to be the only Group that could see Elements in the Category &#39;Gallery&#39;, you would create an ACL like such, in the &quot;Element Category Access&quot; tab when editing the User Group:
+
+!acl-ecat1.png!
+
+This would allow only Users in the &quot;Developers&quot; User Group access to see Elements in the &quot;Gallery&quot; Category.
+
+h2. Examples
+
+Here&#39;s an example custom policy:
+
+!policy1.png!
+
+and its permissions:
+
+!policy1-perm.png!
+
+Any User that had access to this Policy would have the permissions &#39;view_accounts&#39; and &#39;save_accounts&#39;.
+
+h2. See Also
+
+{pagetree:root=Security}
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678084";s:3:"ver";s:1:"2";s:4:"code";s:2646:"\\
+
+h2. What is an Access Policy?
+
+An Access Policy is a set of [Permissions] containing one or many Permissions, as defined in the manager.
+
+h2. Creating and Editing
+
+To create an Access Policy in the manager, navigate to
+
+*Security \-&gt; Access Controls \-&gt; Access Policies*
+
+From there you can add new policies. To edit an Access Policy in the manager, simply right-click the Policy you want to edit.
+
+h2. Usage
+
+Policies can be used in a myriad of different ways. Here are 3 example usages that come by default in MODx:
+
+h3. Context Access
+
+Access Policies can be assigned as [Access Control Lists|ACLs] (ACLs) to a Context and User Group, with a specified Minimum [Role|Roles]. When done, this means that all the Users in that User Group with at least the Role specified as the Minimum Role can use the Permissions in the Policy in the Context specified in the [ACL|ACLs].
+
+MODx comes with a default [&quot;Administrator&quot; Policy|Permissions - Administrator Policy] that contains all the [Permissions] one would use in a Context ACL. It&#39;s best to duplicate this policy when creating a custom access policy for restricting manager users.
+
+h3. Resource Group Access
+
+They can also be Resource ACLs, that limit access to Resources based on Roles and Resource Groups. MODx comes packaged with a default [&quot;Resource&quot; Policy|Permissions - Resource Policy] that contains all the basic Permissions one would use in a Resource Group ACL.
+
+An example would be to assign the &quot;Resource&quot; policy to a Resource Group called &#39;HR Documents&#39;. Then, you would give a User Group called &quot;HR Department&quot; access to this Resource Group via the Resource ACL:
+
+!acl-rg1.png!
+
+This would restrict all Resources in the &quot;HR Documents&quot; Resource Group to Users only in the &quot;HR Department&quot; group.
+
+h3. Element Category Access
+
+Elements can be restricted from view by ACLs on Categories. For example, if you had a User Group called &#39;Developers&#39;, and wanted Users in that group to be the only Group that could see Elements in the Category &#39;Gallery&#39;, you would create an ACL like such, in the &quot;Element Category Access&quot; tab when editing the User Group:
+
+!acl-ecat1.png!
+
+This would allow only Users in the &quot;Developers&quot; User Group access to see Elements in the &quot;Gallery&quot; Category.
+
+h2. Examples
+
+Here&#39;s an example custom policy:
+
+!policy1.png!
+
+and its permissions:
+
+!policy1-perm.png!
+
+Any User that had access to this Policy would have the permissions &#39;view_accounts&#39; and &#39;save_accounts&#39;.
+
+h2. See Also
+
+{pagetree:root=Security}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33226834";s:3:"ver";s:1:"1";s:4:"code";s:2660:"\\
+
+h2. What is an Access Policy?
+
+An Access Policy is a set of [Permissions] containing one or many Permissions, as defined in the manager.
+
+h2. Creating and Editing
+
+To create an Access Policy in the manager, navigate to the &quot;Security&quot; menu and select &quot;Access Policies&quot;.  From there you can add new policies. To edit an Access Policy in the manager, simply right-click the Policy you want to edit.
+
+h2. Usage
+
+Policies can be used in a myriad of different ways. Here are 3 example usages that come by default in MODx:
+
+h3. Context Access
+
+Access Policies can be assigned as [Access Control Lists|ACLs] (ACLs) to a Context and User Group, with a specified Minimum [Role|Roles]. When done, this means that all the Users in that User Group with at least the Role specified as the Minimum Role can use the Permissions in the Policy in the Context specified in the [ACL|ACLs]. 
+
+MODx comes with a default [&quot;Administrator&quot; Policy|Permissions - Administrator Policy] that contains all the [Permissions] one would use in a Context ACL. It&#39;s best to duplicate this policy when creating a custom access policy for restricting manager users.
+
+h3. Resource Group Access
+
+They can also be Resource ACLs, that limit access to Resources based on Roles and Resource Groups. MODx comes packaged with a default [&quot;Resource&quot; Policy|Permissions - Resource Policy] that contains all the basic Permissions one would use in a Resource Group ACL.
+
+An example would be to assign the &quot;Resource&quot; policy to a Resource Group called &#39;HR Documents&#39;. Then, you would give a User Group called &quot;HR Department&quot; access to this Resource Group via the Resource ACL:
+
+!acl-rg1.png!
+
+This would restrict all Resources in the &quot;HR Documents&quot; Resource Group to Users only in the &quot;HR Department&quot; group.
+
+h3. Element Category Access
+
+Elements can be restricted from view by ACLs on Categories. For example, if you had a User Group called &#39;Developers&#39;, and wanted Users in that group to be the only Group that could see Elements in the Category &#39;Gallery&#39;, you would create an ACL like such, in the &quot;Element Category Access&quot; tab when editing the User Group:
+
+!acl-ecat1.png!
+
+This would allow only Users in the &quot;Developers&quot; User Group access to see Elements in the &quot;Gallery&quot; Category.
+
+h2. Examples
+
+Here&#39;s an example custom policy:
+
+!policy1.png!
+
+and its permissions: 
+
+!policy1-perm.png!
+
+Any User that had access to this Policy would have the permissions &#39;view_accounts&#39; and &#39;save_accounts&#39;.
+
+h2. See Also
+
+{pagetree:root=Security}
+
+{scrollbar}";}}}

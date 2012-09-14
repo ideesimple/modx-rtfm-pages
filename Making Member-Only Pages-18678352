@@ -1,0 +1,1245 @@
+a:5:{s:2:"id";s:8:"18678352";s:4:"info";a:4:{s:6:"Title:";s:24:"Making Member-Only Pages";s:7:"Author:";s:12:"Mark Hamstra";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:39:"[revolution20:Making Member-Only Pages]";}s:6:"parent";s:8:"36110372";s:6:"source";s:6079:"\\
+
+{toc}
+
+h2. Introduction
+
+MODX Revolution uses a whole new set of security systems to allow you more flexibility while giving your users access (or denying) to Manager and Web resources. As there seems to be need for a proper tutorial to get you into the basics of working with this advanced system this document has been written.
+
+It&#39;s common to have pages in the front end of a site that can only be seen by certain users. This tutorial describes how to do that in MODX Revolution. It assumes that you already know how to let users register and log in using the components in the [ADDON:Login] package. The process described below will have no effect on which resources users can see or edit in the MODX Manager.
+
+For those that are savvy enough, below follows a simple list to help you through the maze or to remind you how it works. If you need more information and would like some examples, scroll down to the related subsection below.
+
+# Create a Resource Group (Security \-&gt; Resource Groups \-&gt; Create Resource Group)
+# Link your member-only resource to the Resource Group. (By editing the resource, or by dragging them from the resource tree to the right)
+# Create a User Group (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; New User Group)
+# Add a resource group entry on the Resource Group Access tab (context: web, minimum role: Member (9999), access policy: Resource)
+# Add users to the user group with the role of Member. (Security \-&gt; Manage Users)
+# Flush permissions (Security \-&gt; Flush Permissions) and try it in another browser (not just another browser window: another browser)
+
+h2. Step-by-step explanation
+
+If you&#39;re not quite as savvy, or would rather also know what happens when you set a certain permission or make an access entry, you might find this section interesting.
+
+h3. 1. Create a Resource Group
+
+A [Resource Group|Resource Groups] is a collection of resources which you can link to user groups and access list entries. When you have created a resource group, you can easily classify pages to be only visible for certain user groups, or roles within user groups.
+
+To create a resource group, navigate to Security \-&gt; Resource Groups and click on the Create Resource Group button. In the popup you are prompted to enter a name for the resource group. In the tutorial we expect you named it &quot;Protected&quot;.
+
+h3. 2. Link your member-only resource to the Resource Group
+
+Now that you have a resource group, you should add resources to it. There are two ways to achieve this.
+
+First of all, you can go to Security \-&gt; Resource Groups and drag resources from the right resource tree to the left resource groups (&quot;Protected&quot;). The second option is editing your resource, and ticking the right box on the &quot;Access Permissions&quot; tab.
+
+
+
+h3. 3. Create a User Group
+
+You have a resource group with resource applied to them, now you&#39;ll need to decide who will be able to view the resources. For this, we&#39;ll make a new user group.
+
+To do this, go to Security \-&gt; Access Controls. On the (default) User Groups tab, click on the New User Group button. Choose a name for the group, and submit the form.
+
+
+h3. 4. Add Resource Group access
+
+Move on to the &quot;Resource Group Access&quot; tab. This tab defines the resource groups your user group has access to. Three out of four fields are similar to the Context Access groups, namely the Context, Minimum Role and Access Policy. A new one is Resource Group which, as you probably guessed, defines the resource group the user group can access.
+
+The settings:
+* Resource Group: whatever you named it, for example &quot;Protected&quot;
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Resource
+
+It is important to realize that as soon as you have protected a resource   by (1) assigning it to one or more resource groups and (2) linking the resource group to a user group using an access control, those pages will no   longer show up for users that are not linked to the resource group. The   default behavior in that case is displaying the 404-error page. If you   would rather return the 401-error, you will need to give the anonymous   user group &quot;load&quot; permission for the resource group. More about this  in a  later tutorial. At this moment in the tutorial, your page will not  be visible as you have not yet added it to a user group.
+
+h3. 5. Add users to the user group
+
+Now add some users to the user group. You can do this by editing the user, or by going back to the Users tab and adding them from there. It will ask for the User Group, as well as the Role. As we assumed the Member role with an authority of 9999, you can simply use that one.
+
+When using a websignup snippet, make sure it automatically puts them in the right user group.
+
+
+h3. 6. Flush permissions
+
+Now that all settings are done, you will need to flush permissions (Security \-&gt; Flush Permissions) before you will see an effect. Also make sure that, if you go to test it front-end, you use a different browser all together. Don&#39;t use a different tab or browser window, as it will still use your Manager login to check for permissions.
+
+Please note that in some cases it is also necessary to clear the site cache, specifically for the mgr (manager) context, as elements and resources may cache their permissions.
+
+h2. Help\! I can&#39;t get this to work, still\!
+
+Make sure you followed everything step by step and that you flushed permissions properly. If everything seems to be alright, check again and then go to the Forums to ask for help. If you think the tutorial is misleading or inaccurate, please visit the forum topic (linked below) and post about what is incorrect so it can be fixed.
+
+h2. See Also
+
+Bob&#39;s permissions guide: [http://bobsguides.com/revolution-permissions.html]
+
+
+
+Forum topic discussing this tutorial: [http://modxcms.com/forums/index.php/topic,51259.0.html]
+
+
+
+Using the Login Snippet to set up a basic &quot;Members Only&quot; area: [ADDON:Login.Basic Setup]
+
+
+
+Security: [Security]
+
+
+
+{scrollbar}";s:8:"versions";a:12:{i:0;a:3:{s:2:"id";s:8:"18678352";s:3:"ver";s:1:"1";s:4:"code";s:6079:"\\
+
+{toc}
+
+h2. Introduction
+
+MODX Revolution uses a whole new set of security systems to allow you more flexibility while giving your users access (or denying) to Manager and Web resources. As there seems to be need for a proper tutorial to get you into the basics of working with this advanced system this document has been written.
+
+It&#39;s common to have pages in the front end of a site that can only be seen by certain users. This tutorial describes how to do that in MODX Revolution. It assumes that you already know how to let users register and log in using the components in the [ADDON:Login] package. The process described below will have no effect on which resources users can see or edit in the MODX Manager.
+
+For those that are savvy enough, below follows a simple list to help you through the maze or to remind you how it works. If you need more information and would like some examples, scroll down to the related subsection below.
+
+# Create a Resource Group (Security \-&gt; Resource Groups \-&gt; Create Resource Group)
+# Link your member-only resource to the Resource Group. (By editing the resource, or by dragging them from the resource tree to the right)
+# Create a User Group (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; New User Group)
+# Add a resource group entry on the Resource Group Access tab (context: web, minimum role: Member (9999), access policy: Resource)
+# Add users to the user group with the role of Member. (Security \-&gt; Manage Users)
+# Flush permissions (Security \-&gt; Flush Permissions) and try it in another browser (not just another browser window: another browser)
+
+h2. Step-by-step explanation
+
+If you&#39;re not quite as savvy, or would rather also know what happens when you set a certain permission or make an access entry, you might find this section interesting.
+
+h3. 1. Create a Resource Group
+
+A [Resource Group|Resource Groups] is a collection of resources which you can link to user groups and access list entries. When you have created a resource group, you can easily classify pages to be only visible for certain user groups, or roles within user groups.
+
+To create a resource group, navigate to Security \-&gt; Resource Groups and click on the Create Resource Group button. In the popup you are prompted to enter a name for the resource group. In the tutorial we expect you named it &quot;Protected&quot;.
+
+h3. 2. Link your member-only resource to the Resource Group
+
+Now that you have a resource group, you should add resources to it. There are two ways to achieve this.
+
+First of all, you can go to Security \-&gt; Resource Groups and drag resources from the right resource tree to the left resource groups (&quot;Protected&quot;). The second option is editing your resource, and ticking the right box on the &quot;Access Permissions&quot; tab.
+
+
+
+h3. 3. Create a User Group
+
+You have a resource group with resource applied to them, now you&#39;ll need to decide who will be able to view the resources. For this, we&#39;ll make a new user group.
+
+To do this, go to Security \-&gt; Access Controls. On the (default) User Groups tab, click on the New User Group button. Choose a name for the group, and submit the form.
+
+
+h3. 4. Add Resource Group access
+
+Move on to the &quot;Resource Group Access&quot; tab. This tab defines the resource groups your user group has access to. Three out of four fields are similar to the Context Access groups, namely the Context, Minimum Role and Access Policy. A new one is Resource Group which, as you probably guessed, defines the resource group the user group can access.
+
+The settings:
+* Resource Group: whatever you named it, for example &quot;Protected&quot;
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Resource
+
+It is important to realize that as soon as you have protected a resource   by (1) assigning it to one or more resource groups and (2) linking the resource group to a user group using an access control, those pages will no   longer show up for users that are not linked to the resource group. The   default behavior in that case is displaying the 404-error page. If you   would rather return the 401-error, you will need to give the anonymous   user group &quot;load&quot; permission for the resource group. More about this  in a  later tutorial. At this moment in the tutorial, your page will not  be visible as you have not yet added it to a user group.
+
+h3. 5. Add users to the user group
+
+Now add some users to the user group. You can do this by editing the user, or by going back to the Users tab and adding them from there. It will ask for the User Group, as well as the Role. As we assumed the Member role with an authority of 9999, you can simply use that one.
+
+When using a websignup snippet, make sure it automatically puts them in the right user group.
+
+
+h3. 6. Flush permissions
+
+Now that all settings are done, you will need to flush permissions (Security \-&gt; Flush Permissions) before you will see an effect. Also make sure that, if you go to test it front-end, you use a different browser all together. Don&#39;t use a different tab or browser window, as it will still use your Manager login to check for permissions.
+
+Please note that in some cases it is also necessary to clear the site cache, specifically for the mgr (manager) context, as elements and resources may cache their permissions.
+
+h2. Help\! I can&#39;t get this to work, still\!
+
+Make sure you followed everything step by step and that you flushed permissions properly. If everything seems to be alright, check again and then go to the Forums to ask for help. If you think the tutorial is misleading or inaccurate, please visit the forum topic (linked below) and post about what is incorrect so it can be fixed.
+
+h2. See Also
+
+Bob&#39;s permissions guide: [http://bobsguides.com/revolution-permissions.html]
+
+
+
+Forum topic discussing this tutorial: [http://modxcms.com/forums/index.php/topic,51259.0.html]
+
+
+
+Using the Login Snippet to set up a basic &quot;Members Only&quot; area: [ADDON:Login.Basic Setup]
+
+
+
+Security: [Security]
+
+
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35586122";s:3:"ver";s:1:"1";s:4:"code";s:6079:"\\
+
+{toc}
+
+h2. Introduction
+
+MODX Revolution uses a whole new set of security systems to allow you more flexibility while giving your users access (or denying) to Manager and Web resources. As there seems to be need for a proper tutorial to get you into the basics of working with this advanced system this document has been written.
+
+It&#39;s common to have pages in the front end of a site that can only be seen by certain users. This tutorial describes how to do that in MODX Revolution. It assumes that you already know how to let users register and log in using the components in the [ADDON:Login] package. The process described below will have no effect on which resources users can see or edit in the MODX Manager.
+
+For those that are savvy enough, below follows a simple list to help you through the maze or to remind you how it works. If you need more information and would like some examples, scroll down to the related subsection below.
+
+# Create a Resource Group (Security \-&gt; Resource Groups \-&gt; Create Resource Group)
+# Link your member-only resource to the Resource Group. (By editing the resource, or by dragging them from the resource tree to the right)
+# Create a User Group (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; New User Group)
+# Add a resource group entry on the Resource Group Access tab (context: web, minimum role: Member (9999), access policy: Resource)
+# Add users to the user group with the role of Member. (Security \-&gt; Manage Users)
+# Flush permissions (Security \-&gt; Flush Permissions) and try it in another browser (not just another browser window: another browser)
+
+h2. Step-by-step explanation
+
+If you&#39;re not quite as savvy, or would rather also know what happens when you set a certain permission or make an access entry, you might find this section interesting.
+
+h3. 1. Create a Resource Group
+
+A [Resource Group|Resource Groups] is a collection of resources which you can link to user groups and access list entries. When you have created a resource group, you can easily classify pages to be only visible for certain user groups, or roles within user groups.
+
+To create a resource group, navigate to Security \-&gt; Resource Groups and click on the Create Resource Group button. In the popup you are prompted to enter a name for the resource group. In the tutorial we expect you named it &quot;Protected&quot;.
+
+h3. 2. Link your member-only resource to the Resource Group
+
+Now that you have a resource group, you should add resources to it. There are two ways to achieve this.
+
+First of all, you can go to Security \-&gt; Resource Groups and drag resources from the right resource tree to the left resource groups (&quot;Protected&quot;). The second option is editing your resource, and ticking the right box on the &quot;Access Permissions&quot; tab.
+
+
+
+h3. 3. Create a User Group
+
+You have a resource group with resource applied to them, now you&#39;ll need to decide who will be able to view the resources. For this, we&#39;ll make a new user group.
+
+To do this, go to Security \-&gt; Access Controls. On the (default) User Groups tab, click on the New User Group button. Choose a name for the group, and submit the form.
+
+h3. 4. Add Resource access
+
+Move on to the Resource Access tab. This tab defines the resources your user has access to if they are protected by resource groups. Three out of four fields are similar to the Context Access groups, namely the Context, Minimum Role and Access Policy. A new one is Resource Group which, as you probably guessed, defines the resource group the user group can access.
+
+The settings:
+* Resource Group: whatever you named it, for example &quot;Protected&quot;
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Resource
+
+It is important to realize that as soon as you have protected a resource   by (1) assigning it to one or more resource groups and (2) linking the resource group to a user group using an access control, those pages will no   longer show up for users that are not linked to the resource group. The   default behavior in that case is displaying the 404-error page. If you   would rather return the 401-error, you will need to give the anonymous   user group &quot;load&quot; permission for the resource group. More about this  in a  later tutorial. At this moment in the tutorial, your page will not  be visible as you have not yet added it to a user group.
+
+h3. 5. Add users to the user group
+
+Now add some users to the user group. You can do this by editing the user, or by going back to the Users tab and adding them from there. It will ask for the User Group, as well as the Role. As we assumed the Member role with an authority of 9999, you can simply use that one.
+
+When using a websignup snippet, make sure it automatically puts them in the right user group.
+
+
+h3. 6. Flush permissions
+
+Now that all settings are done, you will need to flush permissions (Security \-&gt; Flush Permissions) before you will see an effect. Also make sure that, if you go to test it front-end, you use a different browser all together. Don&#39;t use a different tab or browser window, as it will still use your Manager login to check for permissions.
+
+Please note that in some cases it is also necessary to clear the site cache, specifically for the mgr (manager) context, as elements and resources may cache their permissions.
+
+h2. Help\! I can&#39;t get this to work, still\!
+
+Make sure you followed everything step by step and that you flushed permissions properly. If everything seems to be alright, check again and then go to the Forums to ask for help. If you think the tutorial is misleading or inaccurate, please visit the forum topic (linked below) and post about what is incorrect so it can be fixed.
+
+h2. See Also
+
+Bob&#39;s permissions guide: [http://bobsguides.com/revolution-permissions.html]
+
+
+Forum topic discussing this tutorial: [http://modxcms.com/forums/index.php/topic,51259.0.html]
+
+
+Using the Login Snippet to set up a basic &quot;Members Only&quot; area: [ADDON:Login.Basic Setup]
+
+
+Security: [Security]
+
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35586119";s:3:"ver";s:1:"1";s:4:"code";s:5989:"\\
+
+{toc}
+
+h2. Introduction
+
+MODX Revolution uses a whole new set of security systems to allow you more flexibility while giving your users access (or denying) to Manager and Web resources. As there seems to be need for a proper tutorial to get you into the basics of working with this advanced system this document has been written.
+
+It&#39;s common to have pages in the front end of a site that can only be seen by certain users. This tutorial describes how to do that in MODX Revolution. It assumes that you already know how to let users register and log in using the components in the [ADDON:Login] package. The process described below will have no effect on which resources users can see or edit in the MODX Manager.
+
+For those that are savvy enough, below follows a simple list to help you through the maze or to remind you how it works. If you need more information and would like some examples, scroll down to the related subsection below.
+
+# Create a Resource Group (Security \-&gt; Resource Groups \-&gt; Create Resource Group)
+# Link your member-only resource to the Resource Group. (By editing the resource, or by dragging them from the resource tree to the right)
+# Create a User Group (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; New User Group)
+# Add a resource group entry on the Resource Group Access tab (context: web, minimum role: Member (9999), access policy: Resource)
+# Add users to the user group with the role of Member. (Security \-&gt; Manage Users)
+# Flush permissions (Security \-&gt; Flush Permissions) and try it in another browser (not just another browser window: another browser)
+
+h2. Step-by-step explanation
+
+If you&#39;re not quite as savvy, or would rather also know what happens when you set a certain permission or make an access entry, you might find this section interesting.
+
+h3. 1. Create a Resource Group
+
+A [Resource Group|Resource Groups] is a collection of resources which you can link to user groups and access list entries. When you have created a resource group, you can easily classify pages to be only visible for certain user groups, or roles within user groups.
+
+To create a resource group, navigate to Security \-&gt; Resource Groups and click on the Create Resource Group button. In the popup you are prompted to enter a name for the resource group. In the tutorial we expect you named it &quot;Protected&quot;.
+
+h3. 2. Link your member-only resource to the Resource Group
+
+Now that you have a resource group, you should add resources to it. There are two ways to achieve this.
+
+First of all, you can go to Security \-&gt; Resource Groups and drag resources from the right resource tree to the left resource groups (&quot;Protected&quot;). The second option is editing your resource, and ticking the right box on the &quot;Access Permissions&quot; tab.
+
+
+It is important to realize that as soon as you have protected a resource  by assigning it to one or more resource groups, those pages will no  longer show up for users that are not linked to the resource group. The  default behaviour in that case is displaying the 404-error page. If you  would rather return the 401-error, you will need to give the anonymous  user group &quot;load&quot; permission for the resource group. More about this in a  later tutorial. At this moment in the tutorial, your page will not be visible as you have not yet added it to a user group.
+
+h3. 3. Create a User Group
+
+You have a resource group with resource applied to them, now you&#39;ll need to decide who will be able to view the resources. For this, we&#39;ll make a new user group.
+
+To do this, go to Security \-&gt; Access Controls. On the (default) User Groups tab, click on the New User Group button. Choose a name for the group, and submit the form.
+
+h3. 4. Add Resource access
+
+Move on to the Resource Access tab. This tab defines the resources your user has access to if they are protected by resource groups. Three out of four fields are similar to the Context Access groups, namely the Context, Minimum Role and Access Policy. A new one is Resource Group which, as you probably guessed, defines the resource group the user group can access.
+
+The settings:
+* Resource Group: whatever you named it, for example &quot;Protected&quot;
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Resource
+
+h3. 5. Add users to the user group
+
+Now add some users to the user group. You can do this by editing the user, or by going back to the Users tab and adding them from there. It will ask for the User Group, as well as the Role. As we assumed the Member role with an authority of 9999, you can simply use that one.
+
+When using a websignup snippet, make sure it automatically puts them in the right user group.
+
+
+h3. 6. Flush permissions
+
+Now that all settings are done, you will need to flush permissions (Security \-&gt; Flush Permissions) before you will see an effect. Also make sure that, if you go to test it front-end, you use a different browser all together. Don&#39;t use a different tab or browser window, as it will still use your Manager login to check for permissions.
+
+Please note that in some cases it is also necessary to clear the site cache, specifically for the mgr (manager) context, as elements and resources may cache their permissions.
+
+h2. Help\! I can&#39;t get this to work, still\!
+
+Make sure you followed everything step by step and that you flushed permissions properly. If everything seems to be alright, check again and then go to the Forums to ask for help. If you think the tutorial is misleading or inaccurate, please visit the forum topic (linked below) and post about what is incorrect so it can be fixed.
+
+h2. See Also
+
+Bob&#39;s permissions guide: [http://bobsguides.com/revolution-permissions.html]
+
+Forum topic discussing this tutorial: [http://modxcms.com/forums/index.php/topic,51259.0.html]
+
+Using the Login Snippet to set up a basic &quot;Members Only&quot; area: [ADDON:Login.Basic Setup]
+
+Security: [Security]
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"35586117";s:3:"ver";s:1:"9";s:4:"code";s:5989:"\\
+
+{toc}
+
+h2. Introduction
+
+MODX Revolution uses a whole new set of security systems to allow you more flexibility while giving your users access (or denying) to Manager and Web resources. As there seems to be need for a proper tutorial to get you into the basics of working with this advanced system this document has been written.
+
+It&#39;s common to have pages in the front end of a site that can only be seen by certain users. This tutorial describes how to do that in MODX Revolution. It assumes that you already know how to let users register and log in using the components in the [ADDON:Login] package. The process described below will have no effect on which resources users can see or edit in the MODX Manager.
+
+For those that are savvy enough, below follows a simple list to help you through the maze or to remind you how it works. If you need more information and would like some examples, scroll down to the related subsection below.
+
+# Create a Resource Group (Security \-&gt; Resource Groups \-&gt; Create Resource Group)
+# Link your member-only resource to the Resource Group. (By editing the resource, or by dragging them from the resource tree to the right)
+# Create a User Group (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; New User Group)
+# Add a resource group entry on the Resource Group Access tab (context: web, minimum role: Member (9999), access policy: Resource)
+# Add users to the user group with the role of Member. (Security \-&gt; Manage Users)
+# Flush permissions (Security \-&gt; Flush Permissions) and try it in another browser (not just another browser window: another browser)
+
+h2. Step-by-step explanation
+
+If you&#39;re not quite as savvy, or would rather also know what happens when you set a certain permission or make an access entry, you might find this section interesting.
+
+h3. 1. Create a Resource Group
+
+A [Resource Group|Resource Groups] is a collection of resources which you can link to user groups and access list entries. When you have created a resource group, you can easily classify pages to be only visible for certain user groups, or roles within user groups.
+
+To create a resource group, navigate to Security \-&gt; Resource Groups and click on the Create Resource Group button. In the popup you are prompted to enter a name for the resource group. In the tutorial we expect you named it &quot;Protected&quot;.
+
+h3. 2. Link your member-only resource to the Resource Group
+
+Now that you have a resource group, you should add resources to it. There are two ways to achieve this.
+
+First of all, you can go to Security \-&gt; Resource Groups and drag resources from the right resource tree to the left resource groups (&quot;Protected&quot;). The second option is editing your resource, and ticking the right box on the &quot;Access Permissions&quot; tab.
+
+
+It is important to realize that as soon as you have protected a resource  by assigning it to one or more resource groups, those pages will no  longer show up for users that are not linked to the resource group. The  default behaviour in that case is displaying the 404-error page. If you  would rather return the 403-error, you will need to give the anonymous  user group &quot;load&quot; permission for the resource group. More about this in a  later tutorial. At this moment in the tutorial, your page will not be visible as you have not yet added it to a user group.
+
+h3. 3. Create a User Group
+
+You have a resource group with resource applied to them, now you&#39;ll need to decide who will be able to view the resources. For this, we&#39;ll make a new user group.
+
+To do this, go to Security \-&gt; Access Controls. On the (default) User Groups tab, click on the New User Group button. Choose a name for the group, and submit the form.
+
+h3. 4. Add Resource access
+
+Move on to the Resource Access tab. This tab defines the resources your user has access to if they are protected by resource groups. Three out of four fields are similar to the Context Access groups, namely the Context, Minimum Role and Access Policy. A new one is Resource Group which, as you probably guessed, defines the resource group the user group can access.
+
+The settings:
+* Resource Group: whatever you named it, for example &quot;Protected&quot;
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Resource
+
+h3. 5. Add users to the user group
+
+Now add some users to the user group. You can do this by editing the user, or by going back to the Users tab and adding them from there. It will ask for the User Group, as well as the Role. As we assumed the Member role with an authority of 9999, you can simply use that one.
+
+When using a websignup snippet, make sure it automatically puts them in the right user group.
+
+
+h3. 6. Flush permissions
+
+Now that all settings are done, you will need to flush permissions (Security \-&gt; Flush Permissions) before you will see an effect. Also make sure that, if you go to test it front-end, you use a different browser all together. Don&#39;t use a different tab or browser window, as it will still use your Manager login to check for permissions.
+
+Please note that in some cases it is also necessary to clear the site cache, specifically for the mgr (manager) context, as elements and resources may cache their permissions.
+
+h2. Help\! I can&#39;t get this to work, still\!
+
+Make sure you followed everything step by step and that you flushed permissions properly. If everything seems to be alright, check again and then go to the Forums to ask for help. If you think the tutorial is misleading or inaccurate, please visit the forum topic (linked below) and post about what is incorrect so it can be fixed.
+
+h2. See Also
+
+Bob&#39;s permissions guide: [http://bobsguides.com/revolution-permissions.html]
+
+Forum topic discussing this tutorial: [http://modxcms.com/forums/index.php/topic,51259.0.html]
+
+Using the Login Snippet to set up a basic &quot;Members Only&quot; area: [ADDON:Login.Basic Setup]
+
+Security: [Security]
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"35095184";s:3:"ver";s:1:"8";s:4:"code";s:5598:"\\
+
+{toc}
+
+h2. Introduction
+
+MODx Revolution uses a whole new set of security systems to allow you more flexibility while giving your users access (or denying) to Manager and Web resources. As there seems to be need for a proper tutorial to get you into the basics of working with this advanced system this document has been written.
+
+For those that are savvy enough, below follows a simple list to help you through the maze or to remind you how it works. If you need more information and would like some examples, scroll down to the related subsection below.
+
+# Create a Resource Group (Security \-&gt; Resource Groups \-&gt; Create Resource Group)
+# Link your member-only resource to the Resource Group. (By editing the resource, or by dragging them from the resource tree to the right)
+# Create a User Group (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; New User Group)
+# Add a resource group entry on the Resource Group Access tab (context: web, minimum role: Member (9999), access policy: Resource)
+# Add users to the user group with the role of Member. (Security \-&gt; Manage Users)
+# Flush permissions (Security \-&gt; Flush Permissions) and try it in another browser (not just another browser window: another browser)
+
+h2. Step-by-step explanation
+
+If you&#39;re not quite as savvy, or would rather also know what happens when you set a certain permission or make an access entry, you might find this section interesting.
+
+h3. 1. Create a Resource Group
+
+A [Resource Group|Resource Groups] is a collection of resources which you can link to user groups and access list entries. When you have created a resource group, you can easily classify pages to be only visible for certain user groups, or roles within user groups.
+
+To create a resource group, navigate to Security \-&gt; Resource Groups and click on the Create Resource Group button. In the popup you are prompted to enter a name for the resource group. In the tutorial we expect you named it &quot;Protected&quot;.
+
+h3. 2. Link your member-only resource to the Resource Group
+
+Now that you have a resource group, you should add resources to it. There are two ways to achive this.
+
+First of all, you can go to Security \-&gt; Resource Groups and drag resources from the right resource tree to the left resource groups (&quot;Protected&quot;). The second option is editing your resource, and ticking the right box on the &quot;Access Permissions&quot; tab.
+
+
+It is important to realize that as soon as you have protected a resource  by assigning it to one or more resource groups, those pages will no  longer show up for users that are not linked to the resource group. The  default behaviour in that case is displaying the 404-error page. If you  would rather return the 403-error, you will need to give the anonymous  user group &quot;load&quot; permission for the resource group. More about this in a  later tutorial. At this moment in the tutorial, your page will not be visible as you have not yet added it to a user group.
+
+h3. 3. Create a User Group
+
+You have a resource group with resource applied to them, now you&#39;ll need to decide who will be able to view the resources. For this, we&#39;ll make a new user group.
+
+To do this, go to Security \-&gt; Access Controls. On the (default) User Groups tab, click on the New User Group button. Choose a name for the group, and submit the form.
+
+h3. 4. Add Resource access
+
+Move on to the Resource Access tab. This tab defines the resources your user has access to if they are protected by resource groups. Three out of four fields are similar to the Context Access groups, namely the Context, Minimum Role and Access Policy. A new one is Resource Group which, as you probably guessed, defines the resource group the user group can access.
+
+The settings:
+* Resource Group: whatever you named it, for example &quot;Protected&quot;
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Resource
+
+h3. 5. Add users to the user group
+
+Now add some users to the user group. You can do this by editing the user, or by going back to the Users tab and adding them from there. It will ask for the User Group, as well as the Role. As we assumed the Member role with an authority of 9999, you can simply use that one.
+
+When using a websignup snippet, make sure it automaticly puts them in the right user group.
+
+
+h3. 6. Flush permissions
+
+Now that all settings are done, you will need to flush permissions (Security \-&gt; Flush Permissions) before you will see an effect. Also make sure that, if you go to test it front-end, you use a different browser all together. Don&#39;t use a different tab or browser window, as it will still use your Manager login to check for permissions.
+
+Please note that in some cases it is also neccesary to clear the site cache, specifically for the mgr (manager) context, as elements and resources may cache their permissions.
+
+h2. Help\! I can&#39;t get this to work, still\!
+
+Make sure you followed everything step by step and that you flushed permissions properly. If everything seems to be alright, check again and then go to the Forums to ask for help. If you think the tutorial is misleading or inaccurate, please visit the forum topic (linked below) and post about what is incorrect so it can be fixed.
+
+h2. See Also
+
+Bob&#39;s permissions guide: [http://bobsguides.com/revolution-permissions.html]
+
+Forum topic discussing this tutorial: [http://modxcms.com/forums/index.php/topic,51259.0.html]
+
+Using the Login Snippet to set up a basic &quot;Members Only&quot; area: [ADDON:Login.Basic Setup]
+
+Security: [Security]
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"35095028";s:3:"ver";s:1:"7";s:4:"code";s:5913:"\\
+
+{toc}
+
+{note:title=Work in progress}Please note that this document is a work in progress and may still be inaccurate. It should, however, be possible to set up a member only page using this documentation.{note}
+
+h2. Introduction
+
+MODx Revolution uses a whole new set of security systems to allow you more flexibility while giving your users access (or denying) to Manager and Web resources. As there seems to be need for a proper tutorial to get you into the basics of working with this advanced system this document has been written.
+
+For those that are savvy enough, below follows a simple list to help you through the maze or to remind you how it works. If you need more information and would like some examples, scroll down to the related subsection below.
+
+# Create a Resource Group (Security \-&gt; Resource Groups \-&gt; Create Resource Group)
+# Link your member-only resource to the Resource Group. (By editing the resource, or by dragging them from the resource tree to the right)
+# Create a User Group (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; New User Group)
+# Add a resource group entry on the Resource Group Access tab (context: web, minimum role: Member (9999), access policy: Resource)
+# Add users to the user group with the role of Member. (Security \-&gt; Manage Users)
+# Flush permissions (Security \-&gt; Flush Permissions) and try it in another browser (not just another browser window: another browser)
+
+h2. Step-by-step explanation
+
+{note:title=Work in progress}This section is still being worked on and may be incomplete or incorrect.{note}
+
+If you&#39;re not quite as savvy, or would rather also know what happens when you set a certain permission or make an access entry, you might find this section interesting.
+
+h3. 1. Create a Resource Group
+
+A [Resource Group|Resource Groups] is a collection of resources which you can link to user groups and access list entries. When you have created a resource group, you can easily classify pages to be only visible for certain user groups, or roles within user groups.
+
+To create a resource group, navigate to Security \-&gt; Resource Groups and click on the Create Resource Group button. In the popup you are prompted to enter a name for the resource group. In the tutorial we expect you named it &quot;Protected&quot;.
+
+h3. 2. Link your member-only resource to the Resource Group
+
+Now that you have a resource group, you should add resources to it. There are two ways to achive this.
+
+First of all, you can go to Security \-&gt; Resource Groups and drag resources from the right resource tree to the left resource groups (&quot;Protected&quot;). The second option is editing your resource, and ticking the right box on the &quot;Access Permissions&quot; tab.
+
+
+It is important to realize that as soon as you have protected a resource  by assigning it to one or more resource groups, those pages will no  longer show up for users that are not linked to the resource group. The  default behaviour in that case is displaying the 404-error page. If you  would rather return the 403-error, you will need to give the anonymous  user group &quot;load&quot; permission for the resource group. More about this in a  later tutorial. At this moment in the tutorial, your page will not be visible as you have not yet added it to a user group.
+
+h3. 3. Create a User Group
+
+You have a resource group with resource applied to them, now you&#39;ll need to decide who will be able to view the resources. For this, we&#39;ll make a new user group.
+
+To do this, go to Security \-&gt; Access Controls. On the (default) User Groups tab, click on the New User Group button. Choose a name for the group, and submit the form.
+
+h3. 4. Add Resource access
+
+Move on to the Resource Access tab. This tab defines the resources your user has access to if they are protected by resource groups. Three out of four fields are similar to the Context Access groups, namely the Context, Minimum Role and Access Policy. A new one is Resource Group which, as you probably guessed, defines the resource group the user group can access.
+
+The settings:
+* Resource Group: whatever you named it, for example &quot;Protected&quot;
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Resource
+
+h3. 5. Add users to the user group
+
+Now add some users to the user group. You can do this by editing the user, or by going back to the Users tab and adding them from there. It will ask for the User Group, as well as the Role. As we assumed the Member role with an authority of 9999, you can simply use that one.
+
+When using a websignup snippet, make sure it automaticly puts them in the right user group.
+
+
+h3. 6. Flush permissions
+
+Now that all settings are done, you will need to flush permissions (Security \-&gt; Flush Permissions) before you will see an effect. Also make sure that, if you go to test it front-end, you use a different browser all together. Don&#39;t use a different tab or browser window, as it will still use your Manager login to check for permissions.
+
+Please note that in some cases it is also neccesary to clear the site cache, specifically for the mgr (manager) context, as elements and resources may cache their permissions.
+
+h2. Help\! I can&#39;t get this to work, still\!
+
+Make sure you followed everything step by step and that you flushed permissions properly. If everything seems to be alright, check again and then go to the Forums to ask for help. If you think the tutorial is misleading or inaccurate, please visit the forum topic (linked below) and post about what is incorrect so it can be fixed.
+
+h2. See Also
+
+Bob&#39;s permissions guide: [http://bobsguides.com/revolution-permissions.html]
+
+Forum topic discussing this tutorial: [http://modxcms.com/forums/index.php/topic,51259.0.html]
+
+Using the Login Snippet to set up a basic &quot;Members Only&quot; area: [ADDON:Login.Basic Setup]
+
+Security: [Security]
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"35095023";s:3:"ver";s:1:"6";s:4:"code";s:8290:"\\
+
+{toc}
+
+{note:title=Work in progress}Please note that this document is a work in progress and may still be inaccurate. It should, however, be possible to set up a member only page using this documentation.{note}
+
+h2. Introduction
+
+MODx Revolution uses a whole new set of security systems to allow you more flexibility while giving your users access (or denying) to Manager and Web resources. As there seems to be need for a proper tutorial to get you into the basics of working with this advanced system this document has been written.
+
+For those that are savvy enough, below follows a simple list to help you through the maze or to remind you how it works. If you need more information and would like some examples, scroll down to the related subsection below.
+
+# Create a Resource Group (Security \-&gt; Resource Groups \-&gt; Create Resource Group)
+# Link your member-only resource to the Resource Group. (By editing the resource, or by dragging them from the resource tree to the right)
+# Create a User Group (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; New User Group)
+# Add a resource group entry on the Resource Group Access tab (context: web, minimum role: Member (9999), access policy: Resource)
+# Add users to the user group with the role of Member. (Security \-&gt; Manage Users)
+# Flush permissions (Security \-&gt; Flush Permissions) and try it in another browser (not just another browser window: another browser)
+
+h2. Step-by-step explanation
+
+{note:title=Work in progress}This section is still being worked on and may be incomplete or incorrect.{note}
+
+If you&#39;re not quite as savvy, or would rather also know what happens when you set a certain permission or make an access entry, you might find this section interesting.
+
+h3. 1. Create a Resource Group
+
+A [Resource Group|Resource Groups] is a collection of resources which you can link to user groups and access list entries. When you have created a resource group, you can easily classify pages to be only visible for certain user groups, or roles within user groups.
+
+To create a resource group, navigate to Security \-&gt; Resource Groups and click on the Create Resource Group button. In the popup you are prompted to enter a name for the resource group. In the tutorial we expect you named it &quot;Protected&quot;.
+
+h3. 2. Link your member-only resource to the Resource Group
+
+Now that you have a resource group, you should add resources to it. There are two ways to achive this.
+
+First of all, you can go to Security \-&gt; Resource Groups and drag resources from the right resource tree to the left resource groups (&quot;Protected&quot;). The second option is editing your resource, and ticking the right box on the &quot;Access Permissions&quot; tab.
+
+
+It is important to realize that as soon as you have protected a resource  by assigning it to one or more resource groups, those pages will no  longer show up for users that are not linked to the resource group. The  default behaviour in that case is displaying the 404-error page. If you  would rather return the 403-error, you will need to give the anonymous  user group &quot;load&quot; permission for the resource group. More about this in a  later tutorial. At this moment in the tutorial, your page will not be visible as you have not yet added it to a user group.
+
+h3. 3. Create a User Group
+
+You have a resource group with resource applied to them, now you&#39;ll need to decide who will be able to view the resources. For this, we&#39;ll make a new user group.
+
+To do this, go to Security \-&gt; Access Controls. On the (default) User Groups tab, click on the New User Group button. Choose a name for the group, and submit the form.
+
+
+h3. 4. Add Context access
+
+At this point the user group means nothing, it has zero access. To start with, we&#39;ll add context access to the user group. When a user group has access to a context, it can view (unprotected) resources within that context.
+
+
+While still being on the Access Controls page, viewing the User Group tab, right click the user group you just made and click on &quot;Update User Group&quot;. You will find five different tabs:
+# General Information: this contains the name and if applicable the parent group.
+# Users: shows an overview of users in the user group and offers you to add new users.
+# Context Access: we will discuss this in a minute.
+# Resource Access: we will discuss this in step five.
+# Element Category Access: will not be covered in this tutorial, but can be used to limit access to elements.
+
+Go to the Context Access tab again. At the moment it should still be empty, so the user has no access to any contexts. Click on &quot;Add Context&quot;.
+
+As we want our users to be able of accessing the &quot;web&quot; context (that means your resources in the Web context), select &quot;web&quot; from the context dropdown.&amp;nbsp;
+The Minimum role refers to the role the user should have within the user group to receive the access to the context. As we want all users, we&#39;ll set this to Member (9999). Note that the number refers to the authority: a user at authority 20 will receive all access list entries that require a role with an authority of 20, 21, 22...9998, 9999. To make it applicable to all users in that group, choose an authority level of 9999.
+The Access Policy is key in this form. That determines what a user can actually do. As with everything MODx, this is highly flexible. Per default there are several Access Policies added. In this case, we&#39;ll set it to Resource. This Access Policy includes all default permissions for resource access. If you ever want to change some of the permissions (which may be covered in a different tutorial or article) always duplicate the access policy and don&#39;t modify it directly, as there&#39;s no way to recover changes made.
+
+So, to sum up, apply this context access:
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Load Only
+
+Now, your user group has access to your Web context, as long as access to resources is not being blocked by resource groups.
+
+h3. 5. Add Resource access
+
+Move on to the Resource Access tab. This tab defines the resources your user has access to if they are protected by resource groups. Three out of four fields are similar to the Context Access groups, namely the Context, Minimum Role and Access Policy. A new one is Resource Group which, as you probably guessed, defines the resource group the user group can access.
+
+The settings:
+* Resource Group: whatever you named it, for example &quot;Protected&quot;
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Resource
+
+h3. 6. Add users to the user group
+
+Now add some users to the user group. You can do this by editing the user, or by going back to the Users tab and adding them from there. It will ask for the User Group, as well as the Role. As we assumed the Member role with an authority of 9999, you can simply use that one.
+
+When using a websignup snippet, make sure it automaticly puts them in the right user group.
+
+
+h3. 7. Flush permissions
+
+Now that all settings are done, you will need to flush permissions (Security \-&gt; Flush Permissions) before you will see an effect. Also make sure that, if you go to test it front-end, you use a different browser all together. Don&#39;t use a different tab or browser window, as it will still use your Manager login to check for permissions.
+
+Please note that in some cases it is also neccesary to clear the site cache, specifically for the mgr (manager) context, as elements and resources may cache their permissions.
+
+h2. Help\! I can&#39;t get this to work, still\!
+
+Make sure you followed everything step by step and that you flushed permissions properly. If everything seems to be alright, check again and then go to the Forums to ask for help. If you think the tutorial is misleading or inaccurate, please visit the forum topic (linked below) and post about what is incorrect so it can be fixed.
+
+h2. See Also
+
+Bob&#39;s permissions guide: [http://bobsguides.com/revolution-permissions.html]
+
+Forum topic discussing this tutorial: [http://modxcms.com/forums/index.php/topic,51259.0.html]
+
+Using the Login Snippet to set up a basic &quot;Members Only&quot; area: [ADDON:Login.Basic Setup]
+
+Security: [Security]
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"35095021";s:3:"ver";s:1:"5";s:4:"code";s:8301:"\\
+
+{toc}
+
+{note:title=Work in progress}Please note that this document is a work in progress and may still be inaccurate. It should, however, be possible to set up a member only page using this documentation.{note}
+
+h2. Introduction
+
+MODx Revolution uses a whole new set of security systems to allow you more flexibility while giving your users access (or denying) to Manager and Web resources. As there seems to be need for a proper tutorial to get you into the basics of working with this advanced system this document has been written.
+
+For those that are savvy enough, below follows a simple list to help you through the maze or to remind you how it works. If you need more information and would like some examples, scroll down to the related subsection below.
+
+# Create a Resource Group (Security \-&gt; Resource Groups \-&gt; Create Resource Group)
+# Link your member-only resource to the Resource Group. (By editing the resource, or by dragging them from the resource tree to the right)
+# Create a User Group (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; New User Group)
+# Add a resource group entry on the Resource Group Access tab (context: web, minimum role: Member (9999), access policy: Resource)
+# Add users to the user group with the role of Member. (Security \-&gt; Manage Users)
+# Flush permissions (Security \-&gt; Flush Permissions) and try it in another browser (not just another browser window: another browser)
+
+h2. Step-by-step explanation
+
+{note:title=Work in progress}This section is still being worked on and may be incomplete or incorrect.{note}
+
+If you&#39;re not quite as savvy, or would rather also know what happens when you set a certain permission or make an access entry, you might find this section interesting.
+
+h3. 1. Create a Resource Group
+
+A [resource group|revolution:Resource Groups] is a collection of resources which you can link to user groups and access list entries. When you have created a resource group, you can easily classify pages to be only visible for certain user groups, or roles within user groups.
+
+To create a resource group, navigate to Security \-&gt; Resource Groups and click on the Create Resource Group button. In the popup you are prompted to enter a name for the resource group. In the tutorial we expect you named it &quot;Protected&quot;.
+
+h3. 2. Link your member-only resource to the Resource Group
+
+Now that you have a resource group, you should add resources to it. There are two ways to achive this.
+
+First of all, you can go to Security \-&gt; Resource Groups and drag resources from the right resource tree to the left resource groups (&quot;Protected&quot;). The second option is editing your resource, and ticking the right box on the &quot;Access Permissions&quot; tab.
+
+
+It is important to realize that as soon as you have protected a resource  by assigning it to one or more resource groups, those pages will no  longer show up for users that are not linked to the resource group. The  default behaviour in that case is displaying the 404-error page. If you  would rather return the 403-error, you will need to give the anonymous  user group &quot;load&quot; permission for the resource group. More about this in a  later tutorial. At this moment in the tutorial, your page will not be visible as you have not yet added it to a user group.
+
+h3. 3. Create a User Group
+
+You have a resource group with resource applied to them, now you&#39;ll need to decide who will be able to view the resources. For this, we&#39;ll make a new user group.
+
+To do this, go to Security \-&gt; Access Controls. On the (default) User Groups tab, click on the New User Group button. Choose a name for the group, and submit the form.
+
+
+h3. 4. Add Context access
+
+At this point the user group means nothing, it has zero access. To start with, we&#39;ll add context access to the user group. When a user group has access to a context, it can view (unprotected) resources within that context.
+
+
+While still being on the Access Controls page, viewing the User Group tab, right click the user group you just made and click on &quot;Update User Group&quot;. You will find five different tabs:
+# General Information: this contains the name and if applicable the parent group.
+# Users: shows an overview of users in the user group and offers you to add new users.
+# Context Access: we will discuss this in a minute.
+# Resource Access: we will discuss this in step five.
+# Element Category Access: will not be covered in this tutorial, but can be used to limit access to elements.
+
+Go to the Context Access tab again. At the moment it should still be empty, so the user has no access to any contexts. Click on &quot;Add Context&quot;.
+
+As we want our users to be able of accessing the &quot;web&quot; context (that means your resources in the Web context), select &quot;web&quot; from the context dropdown.&amp;nbsp;
+The Minimum role refers to the role the user should have within the user group to receive the access to the context. As we want all users, we&#39;ll set this to Member (9999). Note that the number refers to the authority: a user at authority 20 will receive all access list entries that require a role with an authority of 20, 21, 22...9998, 9999. To make it applicable to all users in that group, choose an authority level of 9999.
+The Access Policy is key in this form. That determines what a user can actually do. As with everything MODx, this is highly flexible. Per default there are several Access Policies added. In this case, we&#39;ll set it to Resource. This Access Policy includes all default permissions for resource access. If you ever want to change some of the permissions (which may be covered in a different tutorial or article) always duplicate the access policy and don&#39;t modify it directly, as there&#39;s no way to recover changes made.
+
+So, to sum up, apply this context access:
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Load Only
+
+Now, your user group has access to your Web context, as long as access to resources is not being blocked by resource groups.
+
+h3. 5. Add Resource access
+
+Move on to the Resource Access tab. This tab defines the resources your user has access to if they are protected by resource groups. Three out of four fields are similar to the Context Access groups, namely the Context, Minimum Role and Access Policy. A new one is Resource Group which, as you probably guessed, defines the resource group the user group can access.
+
+The settings:
+* Resource Group: whatever you named it, for example &quot;Protected&quot;
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Resource
+
+h3. 6. Add users to the user group
+
+Now add some users to the user group. You can do this by editing the user, or by going back to the Users tab and adding them from there. It will ask for the User Group, as well as the Role. As we assumed the Member role with an authority of 9999, you can simply use that one.
+
+When using a websignup snippet, make sure it automaticly puts them in the right user group.
+
+
+h3. 7. Flush permissions
+
+Now that all settings are done, you will need to flush permissions (Security \-&gt; Flush Permissions) before you will see an effect. Also make sure that, if you go to test it front-end, you use a different browser all together. Don&#39;t use a different tab or browser window, as it will still use your Manager login to check for permissions.
+
+Please note that in some cases it is also neccesary to clear the site cache, specifically for the mgr (manager) context, as elements and resources may cache their permissions.
+
+h2. Help\! I can&#39;t get this to work, still\!
+
+Make sure you followed everything step by step and that you flushed permissions properly. If everything seems to be alright, check again and then go to the Forums to ask for help. If you think the tutorial is misleading or inaccurate, please visit the forum topic (linked below) and post about what is incorrect so it can be fixed.
+
+h2. See Also
+
+Bob&#39;s permissions guide: [http://bobsguides.com/revolution-permissions.html]
+
+Forum topic discussing this tutorial: [http://modxcms.com/forums/index.php/topic,51259.0.html]
+
+Using the Login Snippet to set up a basic &quot;Members Only&quot; area: [ADDON:Login.Basic Setup]
+
+Security: [Security]
+
+{scrollbar}";}i:8;a:3:{s:2:"id";s:8:"35095020";s:3:"ver";s:1:"4";s:4:"code";s:8664:"\\
+
+{toc}
+
+{note:title=Work in progress}Please note that this document is a work in progress and may still be inaccurate. It should, however, be possible to set up a member only page using this documentation.{note}
+
+h2. Introduction
+
+MODx Revolution uses a whole new set of security systems to allow you more flexibility while giving your users access (or denying) to Manager and Web resources. As there seems to be need for a proper tutorial to get you into the basics of working with this advanced system this document has been written.
+
+For those that are savvy enough, below follows a simple list to help you through the maze or to remind you how it works. If you need more information and would like some examples, scroll down to the related subsection below.
+
+# Create a Resource Group (Security \-&gt; Resource Groups \-&gt; Create Resource Group)
+# Link your member-only resource to the Resource Group. (By editing the resource, or by dragging them from the resource tree to the right)
+# Create a User Group (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; New User Group)
+# Edit the user group you created to add Context Access (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; Right click your user group \-&gt; on the Context Access tab add context &quot;web&quot;, minimum role &#39;Member (9999)&#39;, access policy &#39;Resource&#39; (if you want to modify permissions, duplicate that policy. Do not edit it directly\!))
+# Add a resource group entry on the Resource Group Access tab (context: web, minimum role: Member (9999), access policy: resource)
+# Add users to the user group with the role of Member. (Security \-&gt; Manage Users)
+# Flush permissions (Security \-&gt; Flush Permissions) and try it in another browser (not just another browser window: another browser)
+
+h2. Step-by-step explanation
+
+{note:title=Work in progress}This section is still being worked on and may be incomplete or incorrect.{note}
+
+If you&#39;re not quite as savvy, or would rather also know what happens when you set a certain permission or make an access entry, you might find this section interesting.
+
+h3. 1. Create a Resource Group
+
+A [resource group|revolution:Resource Groups] is a collection of resources which you can link to user groups and access list entries. When you have created a resource group, you can easily classify pages to be only visible for certain user groups, or roles within user groups.
+
+To create a resource group, navigate to Security \-&gt; Resource Groups and click on the Create Resource Group button. In the popup you are prompted to enter a name for the resource group. In the tutorial we expect you named it &quot;Protected&quot;.
+
+h3. 2. Link your member-only resource to the Resource Group
+
+Now that you have a resource group, you should add resources to it. There are two ways to achive this.
+
+First of all, you can go to Security \-&gt; Resource Groups and drag resources from the right resource tree to the left resource groups (&quot;Protected&quot;). The second option is editing your resource, and ticking the right box on the &quot;Access Permissions&quot; tab.
+
+
+It is important to realize that as soon as you have protected a resource  by assigning it to one or more resource groups, those pages will no  longer show up for users that are not linked to the resource group. The  default behaviour in that case is displaying the 404-error page. If you  would rather return the 403-error, you will need to give the anonymous  user group &quot;load&quot; permission for the resource group. More about this in a  later tutorial. At this moment in the tutorial, your page will not be visible as you have not yet added it to a user group.
+
+h3. 3. Create a User Group
+
+You have a resource group with resource applied to them, now you&#39;ll need to decide who will be able to view the resources. For this, we&#39;ll make a new user group.
+
+To do this, go to Security \-&gt; Access Controls. On the (default) User Groups tab, click on the New User Group button. Choose a name for the group, and submit the form.
+
+
+h3. 4. Add Context access
+
+At this point the user group means nothing, it has zero access. To start with, we&#39;ll add context access to the user group. When a user group has access to a context, it can view (unprotected) resources within that context.
+
+
+While still being on the Access Controls page, viewing the User Group tab, right click the user group you just made and click on &quot;Update User Group&quot;. You will find five different tabs:
+# General Information: this contains the name and if applicable the parent group.
+# Users: shows an overview of users in the user group and offers you to add new users.
+# Context Access: we will discuss this in a minute.
+# Resource Access: we will discuss this in step five.
+# Element Category Access: will not be covered in this tutorial, but can be used to limit access to elements.
+
+Go to the Context Access tab again. At the moment it should still be empty, so the user has no access to any contexts. Click on &quot;Add Context&quot;.
+
+As we want our users to be able of accessing the &quot;web&quot; context (that means your resources in the Web context), select &quot;web&quot; from the context dropdown.&amp;nbsp;
+The Minimum role refers to the role the user should have within the user group to receive the access to the context. As we want all users, we&#39;ll set this to Member (9999). Note that the number refers to the authority: a user at authority 20 will receive all access list entries that require a role with an authority of 20, 21, 22...9998, 9999. To make it applicable to all users in that group, choose an authority level of 9999.
+The Access Policy is key in this form. That determines what a user can actually do. As with everything MODx, this is highly flexible. Per default there are several Access Policies added. In this case, we&#39;ll set it to Resource. This Access Policy includes all default permissions for resource access. If you ever want to change some of the permissions (which may be covered in a different tutorial or article) always duplicate the access policy and don&#39;t modify it directly, as there&#39;s no way to recover changes made.
+
+So, to sum up, apply this context access:
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Load Only
+
+Now, your user group has access to your Web context, as long as access to resources is not being blocked by resource groups.
+
+h3. 5. Add Resource access
+
+Move on to the Resource Access tab. This tab defines the resources your user has access to if they are protected by resource groups. Three out of four fields are similar to the Context Access groups, namely the Context, Minimum Role and Access Policy. A new one is Resource Group which, as you probably guessed, defines the resource group the user group can access.
+
+The settings:
+* Resource Group: whatever you named it, for example &quot;Protected&quot;
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Resource
+
+h3. 6. Add users to the user group
+
+Now add some users to the user group. You can do this by editing the user, or by going back to the Users tab and adding them from there. It will ask for the User Group, as well as the Role. As we assumed the Member role with an authority of 9999, you can simply use that one.
+
+When using a websignup snippet, make sure it automaticly puts them in the right user group.
+
+
+h3. 7. Flush permissions
+
+Now that all settings are done, you will need to flush permissions (Security \-&gt; Flush Permissions) before you will see an effect. Also make sure that, if you go to test it front-end, you use a different browser all together. Don&#39;t use a different tab or browser window, as it will still use your Manager login to check for permissions.
+
+Please note that in some cases it is also neccesary to clear the site cache, specifically for the mgr (manager) context, as elements and resources may cache their permissions.
+
+h2. Help\! I can&#39;t get this to work, still\!
+
+Make sure you followed everything step by step and that you flushed permissions properly. If everything seems to be alright, check again and then go to the Forums to ask for help. If you think the tutorial is misleading or inaccurate, please visit the forum topic (linked below) and post about what is incorrect so it can be fixed.
+
+h2. See Also
+
+Bob&#39;s permissions guide: [http://bobsguides.com/revolution-permissions.html]
+
+Forum topic discussing this tutorial: [http://modxcms.com/forums/index.php/topic,51259.0.html]
+
+Using the Login Snippet to set up a basic &quot;Members Only&quot; area: [ADDON:Login.Basic Setup]
+
+Security: [Security]
+
+{scrollbar}";}i:9;a:3:{s:2:"id";s:8:"35094663";s:3:"ver";s:1:"3";s:4:"code";s:8564:"\\
+
+{toc}
+
+{note:title=Work in progress}Please note that this document is a work in progress and may still be inaccurate. It should, however, be possible to set up a member only page using this documentation.{note}
+
+h2. Introduction
+
+MODx Revolution uses a whole new set of security systems to allow you more flexibility while giving your users access (or denying) to Manager and Web resources. As there seems to be need for a proper tutorial to get you into the basics of working with this advanced system this document has been written.
+
+For those that are savvy enough, below follows a simple list to help you through the maze or to remind you how it works. If you need more information and would like some examples, scroll down to the related subsection below.
+
+# Create a Resource Group (Security \-&gt; Resource Groups \-&gt; Create Resource Group)
+# Link your member-only resource to the Resource Group. (By editing the resource, or by dragging them from the resource tree to the right)
+# Create a User Group (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; New User Group)
+# Edit the user group you created to add Context Access (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; Right click your user group \-&gt; on the Context Access tab add context &quot;web&quot;, minimum role &#39;Member (9999)&#39;, access policy &#39;Resource&#39; (if you want to modify permissions, duplicate that policy. Do not edit it directly\!))
+# Add a resource group entry on the Resource Group Access tab (context: web, minimum role: Member (9999), access policy: resource)
+# Add users to the user group with the role of Member. (Security \-&gt; Manage Users)
+# Flush permissions (Security \-&gt; Flush Permissions) and try it in another browser (not just another browser window: another browser)
+
+h2. Step-by-step explanation
+
+{note:title=Work in progress}This section is still being worked on and may be incomplete or incorrect.{note}
+
+If you&#39;re not quite as savvy, or would rather also know what happens when you set a certain permission or make an access entry, you might find this section interesting.
+
+h3. 1. Create a Resource Group
+
+A [resource group|revolution:Resource Groups] is a collection of resources which you can link to user groups and access list entries. When you have created a resource group, you can easily classify pages to be only visible for certain user groups, or roles within user groups.
+
+To create a resource group, navigate to Security \-&gt; Resource Groups and click on the Create Resource Group button. In the popup you are prompted to enter a name for the resource group. In the tutorial we expect you named it &quot;Protected&quot;.
+
+h3. 2. Link your member-only resource to the Resource Group
+
+Now that you have a resource group, you should add resources to it. There are two ways to achive this.
+
+First of all, you can go to Security \-&gt; Resource Groups and drag resources from the right resource tree to the left resource groups (&quot;Protected&quot;). The second option is editing your resource, and ticking the right box on the &quot;Access Permissions&quot; tab.
+
+
+It is important to realize that as soon as you have protected a resource  by assigning it to one or more resource groups, those pages will no  longer show up for users that are not linked to the resource group. The  default behaviour in that case is displaying the 404-error page. If you  would rather return the 403-error, you will need to give the anonymous  user group &quot;load&quot; permission for the resource group. More about this in a  later tutorial. At this moment in the tutorial, your page will not be visible as you have not yet added it to a user group.
+
+h3. 3. Create a User Group
+
+You have a resource group with resource applied to them, now you&#39;ll need to decide who will be able to view the resources. For this, we&#39;ll make a new user group.
+
+To do this, go to Security \-&gt; Access Controls. On the (default) User Groups tab, click on the New User Group button. Choose a name for the group, and submit the form.
+
+
+h3. 4. Add Context access
+
+At this point the user group means nothing, it has zero access. To start with, we&#39;ll add context access to the user group. When a user group has access to a context, it can view (unprotected) resources within that context.
+
+
+While still being on the Access Controls page, viewing the User Group tab, right click the user group you just made and click on &quot;Update User Group&quot;. You will find five different tabs:
+# General Information: this contains the name and if applicable the parent group.
+# Users: shows an overview of users in the user group and offers you to add new users.
+# Context Access: we will discuss this in a minute.
+# Resource Access: we will discuss this in step five.
+# Element Category Access: will not be covered in this tutorial, but can be used to limit access to elements.
+
+Go to the Context Access tab again. At the moment it should still be empty, so the user has no access to any contexts. Click on &quot;Add Context&quot;.
+
+As we want our users to be able of accessing the &quot;web&quot; context (that means your resources in the Web context), select &quot;web&quot; from the context dropdown.&amp;nbsp;
+The Minimum role refers to the role the user should have within the user group to receive the access to the context. As we want all users, we&#39;ll set this to Member (9999). Note that the number refers to the authority: a user at authority 20 will receive all access list entries that require a role with an authority of 20, 21, 22...9998, 9999. To make it applicable to all users in that group, choose an authority level of 9999.
+The Access Policy is key in this form. That determines what a user can actually do. As with everything MODx, this is highly flexible. Per default there are several Access Policies added. In this case, we&#39;ll set it to Resource. This Access Policy includes all default permissions for resource access. If you ever want to change some of the permissions (which may be covered in a different tutorial or article) always duplicate the access policy and don&#39;t modify it directly, as there&#39;s no way to recover changes made.
+
+So, to sum up, apply this context access:
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Load Only
+
+Now, your user group has access to your Web context, as long as access to resources is not being blocked by resource groups.
+
+h3. 5. Add Resource access
+
+Move on to the Resource Access tab. This tab defines the resources your user has access to if they are protected by resource groups. Three out of four fields are similar to the Context Access groups, namely the Context, Minimum Role and Access Policy. A new one is Resource Group which, as you probably guessed, defines the resource group the user group can access.
+
+The settings:
+* Resource Group: whatever you named it, for example &quot;Protected&quot;
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Resource
+
+h3. 6. Add users to the user group
+
+Now add some users to the user group. You can do this by editing the user, or by going back to the Users tab and adding them from there. It will ask for the User Group, as well as the Role. As we assumed the Member role with an authority of 9999, you can simply use that one.
+
+When using a websignup snippet, make sure it automaticly puts them in the right user group.
+
+
+h3. 7. Flush permissions
+
+Now that all settings are done, you will need to flush permissions (Security \-&gt; Flush Permissions) before you will see an effect. Also make sure that, if you go to test it front-end, you use a different browser all together. Don&#39;t use a different tab or browser window, as it will still use your Manager login to check for permissions.
+
+Please note that in some cases it is also neccesary to clear the site cache, specifically for the mgr (manager) context, as elements and resources may cache their permissions.
+
+h2. Help\! I can&#39;t get this to work, still\!
+
+Make sure you followed everything step by step and that you flushed permissions properly. If everything seems to be alright, check again and then go to the Forums to ask for help. If you think the tutorial is misleading or inaccurate, please visit the forum topic (linked below) and post about what is incorrect so it can be fixed.
+
+h2. See Also
+
+Bob&#39;s permissions guide: [http://bobsguides.com/revolution-permissions.html]
+
+Forum topic discussing this tutorial: [http://modxcms.com/forums/index.php/topic,51259.0.html]
+
+Security: [Security]
+
+{scrollbar}";}i:10;a:3:{s:2:"id";s:8:"33587346";s:3:"ver";s:1:"2";s:4:"code";s:8563:"\\
+
+{toc}
+
+{note:title=Work in progress}Please note that this document is a work in progress and may still be inaccurate. It should, however, be possible to set up a member only page using this documentation.{note}
+
+h2. Introduction
+
+MODx Revolution uses a whole new set of security systems to allow you more flexibility while giving your users access (or denying) to Manager and Web resources. As there seems to be need for a proper tutorial to get you into the basics of working with this advanced system this document has been written.
+
+For those that are savvy enough, below follows a simple list to help you through the maze or to remind you how it works. If you need more information and would like some examples, scroll down to the related subsection below.
+
+# Create a Resource Group (Security \-&gt; Resource Groups \-&gt; Create Resource Group)
+# Link your member-only resource to the Resource Group. (By editing the resource, or by dragging them from the resource tree to the right)
+# Create a User Group (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; New User Group)
+# Edit the user group you created to add Context Access (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; Right click your user group \-&gt; on the Context Access tab add context &quot;web&quot;, minimum role &#39;Member (9999)&#39;, access policy &#39;Resource&#39; (if you want to modify permissions, duplicate that policy. Do not edit it directly\!))
+# Add a resource group entry on the Resource Group Access tab (context: web, minimum role: Member (9999), access policy: resource)
+# Add users to the user group with the role of Member. (Security \-&gt; Manage Users)
+# Flush permissions (Security \-&gt; Flush Permissions) and try it in another browser (not just another browser window: another browser)
+
+h2. Step-by-step explanation
+
+{note:title=Work in progress}This section is still being worked on and may be incomplete or incorrect.{note}
+
+If you&#39;re not quite as savvy, or would rather also know what happens when you set a certain permission or make an access entry, you might find this section interesting.
+
+h3. 1. Create a Resource Group
+
+A [resource group|revolution:Resource Groups] is a collection of resources which you can link to user groups and access list entries. When you have created a resource group, you can easily classify pages to be only visible for certain user groups, or roles within user groups.
+
+To create a resource group, navigate to Security \-&gt; Resource Groups and click on the Create Resource Group button. In the popup you are prompted to enter a name for the resource group. In the tutorial we expect you named it &quot;Protected&quot;.
+
+h3. 2. Link your member-only resource to the Resource Group
+
+Now that you have a resource group, you should add resources to it. There are two ways to achive this.
+
+First of all, you can go to Security \-&gt; Resource Groups and drag resources from the right resource tree to the left resource groups (&quot;Protected&quot;). The second option is editing your resource, and ticking the right box on the &quot;Access Permissions&quot; tab.
+
+
+It is important to realize that as soon as you have protected a resource  by assigning it to one or more resource groups, those pages will no  longer show up for users that are not linked to the resource group. The  default behaviour in that case is displaying the 404-error page. If you  would rather return the 403-error, you will need to give the anonymous  user group &quot;load&quot; permission for the resource group. More about this in a  later tutorial. At this moment in the tutorial, your page will not be visible as you have not yet added it to a user group.
+
+h3. 3. Create a User Group
+
+You have a resource group with resource applied to them, now you&#39;ll need to decide who will be able to view the resources. For this, we&#39;ll make a new user group.
+
+To do this, go to Security \-&gt; Access Controls. On the (default) User Groups tab, click on the New User Group button. Choose a name for the group, and submit the form.
+
+
+h3. 4. Add Context access
+
+At this point the user group means nothing, it has zero access. To start with, we&#39;ll add context access to the user group. When a user group has access to a context, it can view (unprotected) resources within that context.
+
+
+While still being on the Access Controls page, viewing the User Group tab, right click the user group you just made and click on &quot;Update User Group&quot;. You will find five different tabs:
+# General Information: this contains the name and if applicable the parent group.
+# Users: shows an overview of users in the user group and offers you to add new users.
+# Context Access: we will discuss this in a minute.
+# Resource Access: we will discuss this in step five.
+# Element Category Access: will not be covered in this tutorial, but can be used to limit access to elements.
+
+Go to the Context Access tab again. At the moment it should still be empty, so the user has no access to any contexts. Click on &quot;Add Context&quot;.
+
+As we want our users to be able of accessing the &quot;web&quot; context (that means your resources in the Web context), select &quot;web&quot; from the context dropdown.&amp;nbsp;
+The Minimum role refers to the role the user should have within the user group to receive the access to the context. As we want all users, we&#39;ll set this to Member (9999). Note that the number refers to the authority: a user at authority 20 will receive all access list entries that require a role with an authority of 20, 21, 22...9998, 9999. To make it applicable to all users in that group, choose an authority level of 9999.
+The Access Policy is key in this form. That determines what a user can actually do. As with everything MODx, this is highly flexible. Per default there are several Access Policies added. In this case, we&#39;ll set it to Resource. This Access Policy includes all default permissions for resource access. If you ever want to change some of the permissions (which may be covered in a different tutorial or article) always duplicate the access policy and don&#39;t modify it directly, as there&#39;s no way to recover changes made.
+
+So, to sum up, apply this context access:
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Resource
+
+Now, your user group has access to your Web context, as long as access to resources is not being blocked by resource groups.
+
+h3. 5. Add Resource access
+
+Move on to the Resource Access tab. This tab defines the resources your user has access to if they are protected by resource groups. Three out of four fields are similar to the Context Access groups, namely the Context, Minimum Role and Access Policy. A new one is Resource Group which, as you probably guessed, defines the resource group the user group can access.
+
+The settings:
+* Resource Group: whatever you named it, for example &quot;Protected&quot;
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Resource
+
+h3. 6. Add users to the user group
+
+Now add some users to the user group. You can do this by editing the user, or by going back to the Users tab and adding them from there. It will ask for the User Group, as well as the Role. As we assumed the Member role with an authority of 9999, you can simply use that one.
+
+When using a websignup snippet, make sure it automaticly puts them in the right user group.
+
+
+h3. 7. Flush permissions
+
+Now that all settings are done, you will need to flush permissions (Security \-&gt; Flush Permissions) before you will see an effect. Also make sure that, if you go to test it front-end, you use a different browser all together. Don&#39;t use a different tab or browser window, as it will still use your Manager login to check for permissions.
+
+Please note that in some cases it is also neccesary to clear the site cache, specifically for the mgr (manager) context, as elements and resources may cache their permissions.
+
+h2. Help\! I can&#39;t get this to work, still\!
+
+Make sure you followed everything step by step and that you flushed permissions properly. If everything seems to be alright, check again and then go to the Forums to ask for help. If you think the tutorial is misleading or inaccurate, please visit the forum topic (linked below) and post about what is incorrect so it can be fixed.
+
+h2. See Also
+
+Bob&#39;s permissions guide: [http://bobsguides.com/revolution-permissions.html]
+
+Forum topic discussing this tutorial: [http://modxcms.com/forums/index.php/topic,51259.0.html]
+
+Security: [Security]
+
+{scrollbar}";}i:11;a:3:{s:2:"id";s:8:"33226773";s:3:"ver";s:1:"1";s:4:"code";s:8610:"\\
+
+{toc}
+
+{note:title=Work in progress}Please note that this document is a work in progress and may still be inaccurate. It should, however, be possible to set up a member only page using this documentation.{note}
+
+h2. Introduction
+
+MODx Revolution uses a whole new set of security systems to allow you more flexibility while giving your users access (or denying) to Manager and Web resources. As there seems to be need for a proper tutorial to get you into the basics of working with this advanced system this document has been written.
+
+For those that are savvy enough, below follows a simple list to help you through the maze or to remind you how it works. If you need more information and would like some examples, scroll down to the related subsection below.
+
+# Create a Resource Group (Security \-&gt; Resource Groups \-&gt; Create Resource Group)
+# Link your member-only resource to the Resource Group. (By editing the resource, or by dragging them from the resource tree to the right)
+# Create a User Group (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; New User Group)
+# Edit the user group you created to add Context Access (Security \-&gt; Access Controls \-&gt; User Groups \-&gt; Right click your user group \-&gt; on the Context Access tab add context &quot;web&quot;, minimum role &#39;Member (9999)&#39;, access policy &#39;Resource&#39; (if you want to modify permissions, duplicate that policy. Do not edit it directly\!))
+# Add a resource group entry on the Resource Group Access tab (context: web, minimum role: Member (9999), access policy: resource)
+# Add users to the user group with the role of Member. (Security \-&gt; Manage Users)
+# Flush permissions (Security \-&gt; Flush Permissions) and try it in another browser (not just another browser window: another browser)
+
+h2. Step-by-step explanation
+
+{note:title=Work in progress}This section is still being worked on and may be incomplete or incorrect.{note}
+
+If you&#39;re not quite as savvy, or would rather also know what happens when you set a certain permission or make an access entry, you might find this section interesting.
+
+h3. 1. Create a Resource Group
+
+A [resource group|revolution:Resource Groups] is a collection of resources which you can link to user groups and access list entries. When you have created a resource group, you can easily classify pages to be only visible for certain user groups, or roles within user groups.
+
+To create a resource group, navigate to Security \-&gt; Resource Groups and click on the Create Resource Group button. In the popup you are prompted to enter a name for the resource group. In the tutorial we expect you named it &quot;Protected&quot;.
+
+h3. 2. Link your member-only resource to the Resource Group
+
+Now that you have a resource group, you should add resources to it. There are two ways to achive this.
+
+First of all, you can go to Security \-&gt; Resource Groups and drag resources from the right resource tree to the left resource groups (&quot;Protected&quot;). The second option is editing your resource, and ticking the right box on the &quot;Access Permissions&quot; tab.
+
+
+It is important to realize that as soon as you have protected a resource  by assigning it to one or more resource groups, those pages will no  longer show up for users that are not linked to the resource group. The  default behaviour in that case is displaying the 404-error page. If you  would rather return the 403-error, you will need to give the anonymous  user group &quot;load&quot; permission for the resource group. More about this in a  later tutorial. At this moment in the tutorial, your page will not be visible as you have not yet added it to a user group.
+
+h3. 3. Create a User Group
+
+You have a resource group with resource applied to them, now you&#39;ll need to decide who will be able to view the resources. For this, we&#39;ll make a new user group.
+
+To do this, go to Security \-&gt; Access Controls. On the (default) User Groups tab, click on the New User Group button. Choose a name for the group, and submit the form.
+
+
+h3. 4. Add Context access
+
+At this point the user group means nothing, it has zero access. To start with, we&#39;ll add context access to the user group. When a user group has access to a context, it can view (unprotected) resources within that context.
+
+
+While still being on the Access Controls page, viewing the User Group tab, right click the user group you just made and click on &quot;Update User Group&quot;. You will find five different tabs:
+# General Information: this contains the name and if applicable the parent group.
+# Users: shows an overview of users in the user group and offers you to add new users.
+# Context Access: we will discuss this in a minute.
+# Resource Access: we will discuss this in step five.
+# Element Category Access: will not be covered in this tutorial, but can be used to limit access to elements.
+
+Go to the Context Access tab again. At the moment it should still be empty, so the user has no access to any contexts. Click on &quot;Add Context&quot;.
+
+As we want our users to be able of accessing the &quot;web&quot; context (that means your resources in the Web context), select &quot;web&quot; from the context dropdown.&amp;nbsp;
+The Minimum role refers to the role the user should have within the user group to receive the access to the context. As we want all users, we&#39;ll set this to Member (9999). Note that the number refers to the authority: a user at authority 20 will receive all access list entries that require a role with an authority of 20, 21, 22...9998, 9999. To make it applicable to all users in that group, choose an authority level of 9999.
+The Access Policy is key in this form. That determines what a user can actually do. As with everything MODx, this is highly flexible. Per default there are several Access Policies added. In this case, we&#39;ll set it to Resource. This Access Policy includes all default permissions for resource access. If you ever want to change some of the permissions (which may be covered in a different tutorial or article) always duplicate the access policy and don&#39;t modify it directly, as there&#39;s no way to recover changes made.
+
+So, to sum up, apply this context access:
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Resource
+
+Now, your user group has access to your Web context, as long as access to resources is not being blocked by resource groups.
+
+h3. 5. Add Resource access
+
+Move on to the Resource Access tab. This tab defines the resources your user has access to if they are protected by resource groups. Three out of four fields are similar to the Context Access groups, namely the Context, Minimum Role and Access Policy. A new one is Resource Group which, as you probably guessed, defines the resource group the user group can access.
+
+The settings:
+* Resource Group: whatever you named it, for example &quot;Protected&quot;
+* Context: web
+* Minimum role: Member (9999)
+* Access Policy: Resource
+
+h3. 6. Add users to the user group
+
+Now add some users to the user group. You can do this by editing the user, or by going back to the Users tab and adding them from there. It will ask for the User Group, as well as the Role. As we assumed the Member role with an authority of 9999, you can simply use that one.
+
+When using a websignup snippet, make sure it automaticly puts them in the right user group.
+
+
+h3. 7. Flush permissions
+
+Now that all settings are done, you will need to flush permissions (Security \-&gt; Flush Permissions) before you will see an effect. Also make sure that, if you go to test it front-end, you use a different browser all together. Don&#39;t use a different tab or browser window, as it will still use your Manager login to check for permissions.
+
+Please note that in some cases it is also neccesary to clear the site cache, specifically for the mgr (manager) context, as elements and resources may cache their permissions.
+
+h2. Help\! I can&#39;t get this to work, still\!
+
+Make sure you followed everything step by step and that you flushed permissions properly. If everything seems to be alright, check again and then go to the Forums to ask for help. If you think the tutorial is misleading or inaccurate, please visit the forum topic (linked below) and post about what is incorrect so it can be fixed.
+
+h2. See Also
+
+Bob&#39;s permissions guide: [http://bobsguides.com/revolution-permissions.html]
+
+Forum topic discussing this tutorial: [http://modxcms.com/forums/index.php/topic,51259.0.html]
+
+Security: [http://svn.modxcms.com/docs/display/revolution/Security]
+
+{scrollbar}";}}}

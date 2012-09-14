@@ -1,0 +1,21 @@
+a:5:{s:2:"id";s:8:"35095069";s:4:"info";a:4:{s:6:"Title:";s:16:"default_per_page";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:31:"[revolution20:default_per_page]";}s:6:"parent";s:8:"18678127";s:6:"source";s:198:"h2. default_per_page
+
+*Name*: Default Per Page
+*Type*: Textfield
+*Default*: 20
+*Available In*: Revolution 2.0.8+
+
+The default number of results to show in grids throughout the manager.
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095069";s:3:"ver";s:1:"1";s:4:"code";s:198:"h2. default_per_page
+
+*Name*: Default Per Page
+*Type*: Textfield
+*Default*: 20
+*Available In*: Revolution 2.0.8+
+
+The default number of results to show in grids throughout the manager.
+
+{scrollbar}
+";}}}

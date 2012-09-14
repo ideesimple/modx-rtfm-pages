@@ -1,0 +1,35 @@
+a:5:{s:2:"id";s:8:"18678318";s:4:"info";a:4:{s:6:"Title:";s:11:"OnChunkSave";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:26:"[revolution20:OnChunkSave]";}s:6:"parent";s:8:"18678228";s:6:"source";s:245:"\\
+
+h2. Event: OnChunkSave
+
+Happens after a chunk is saved.
+
+Service: 2 - Manager Access Events
+Group: modChunk
+
+h2. Event Parameters
+
+||Name||Description||
+|chunk|A reference to the modChunk object.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678318";s:3:"ver";s:1:"1";s:4:"code";s:245:"\\
+
+h2. Event: OnChunkSave
+
+Happens after a chunk is saved.
+
+Service: 2 - Manager Access Events
+Group: modChunk
+
+h2. Event Parameters
+
+||Name||Description||
+|chunk|A reference to the modChunk object.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

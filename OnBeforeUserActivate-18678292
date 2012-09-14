@@ -1,0 +1,33 @@
+a:5:{s:2:"id";s:8:"18678292";s:4:"info";a:4:{s:6:"Title:";s:20:"OnBeforeUserActivate";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:35:"[revolution20:OnBeforeUserActivate]";}s:6:"parent";s:8:"18678228";s:6:"source";s:300:"\\
+
+h2. Event: OnBeforeUserActivate
+
+Never fired in MODx core; can be used by 3rd Party Components (such as [addon:Login]) when a User is being activated.
+
+Service: 1 - Parser Service Events
+Group: modUser
+
+h2. Event Parameters
+
+Depends on implementation.
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678292";s:3:"ver";s:1:"1";s:4:"code";s:300:"\\
+
+h2. Event: OnBeforeUserActivate
+
+Never fired in MODx core; can be used by 3rd Party Components (such as [addon:Login]) when a User is being activated.
+
+Service: 1 - Parser Service Events
+Group: modUser
+
+h2. Event Parameters
+
+Depends on implementation.
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

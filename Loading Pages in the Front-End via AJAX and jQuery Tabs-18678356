@@ -1,0 +1,391 @@
+a:5:{s:2:"id";s:8:"18678356";s:4:"info";a:4:{s:6:"Title:";s:55:"Loading Pages in the Front-End via AJAX and jQuery Tabs";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:70:"[revolution20:Loading Pages in the Front-End via AJAX and jQuery Tabs]";}s:6:"parent";s:8:"18678106";s:6:"source";s:4583:"\\
+
+{toc}
+
+h2. The Problem
+
+We want in our site to use [jQuery&#39;s tabs|http://jqueryui.com/demos/tabs/] to load our Resources via AJAX. How do we do that in MODx? This tutorial will show you just how easy it is to accomplish this in MODx Revolution.
+
+
+h2. Creating the Resources
+
+In the Resources you want to load via the tabs, you&#39;ll need to just create all your Resources with the Template being *blank* (or a minimal template with only the things you want inside the tabs). This will make sure that we&#39;re not loading anything besides the wanted material - you wouldn&#39;t want to load your whole page header and footer into each tab\!
+
+h2. Doing the Front-End Loading
+
+Now we&#39;ll use jQuery&#39;s fun tabs() command to create the front-end loading system. The code would look something like this (pulled from jquery UI&#39;s docs):
+
+{code}
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(function() { $(&quot;#tabs&quot;).tabs(); });
+&lt;/script&gt;
+
+&lt;div id=&quot;tabs&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;[[~92]]&quot;&gt;Resource with ID 92&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;[[~546]]&quot;&gt;Resource with ID 546&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;[[~123]]&quot;&gt;Resource with ID 123&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+{code}
+
+Great\! So this loads the pages via Ajax.
+
+h2. Wait, I want the Page Titles as the tab headers\!
+
+There are a few ways you can do this; one, you can use [getResources|addon:getResources], [Wayfinder|addon:Wayfinder], or use a getField snippet.
+
+h3. Using getResources
+
+For getResources, make sure you use the &#39;tpl&#39; property, which you can create as a Chunk named &#39;myRowTpl&#39; (or whatever you want), looks like this:
+
+{code}&lt;li id=&quot;[[+id]]&quot;&gt;&lt;a href=&quot;[[~[[+id]]]]&quot; title=&quot;[[+longtitle]]&quot;&gt;[[+pagetitle]]&lt;/a&gt;&lt;/li&gt;{code}
+
+and in our tabs page:
+
+{code}
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(function() { $(&quot;#tabs&quot;).tabs(); });
+&lt;/script&gt;
+
+&lt;div id=&quot;tabs&quot;&gt;
+&lt;ul&gt;
+[[getResources? &amp;parents=`123` &amp;depth=`1` &amp;tpl=`myRowTpl` &amp;includeContent=`1` &amp;includeTVs=`1`]]
+&lt;/ul&gt;
+&lt;/div&gt;
+{code}
+
+
+h3. Using Wayfinder
+
+For Wayfinder, make sure your rowTpl template, which you can create as a Chunk named &#39;myRowTpl&#39; (or whatever you want), looks like this:
+
+{code}&lt;li[[+wf.id]][[+wf.classes]]&gt;&lt;a href=&quot;[[+wf.link]]&quot; title=&quot;[[+wf.title]]&quot;&gt;[[+wf.linktext]]&lt;/a&gt;&lt;/li&gt;{code}
+
+and in our tabs page:
+
+{code}
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(function() { $(&quot;#tabs&quot;).tabs(); });
+&lt;/script&gt;
+
+&lt;div id=&quot;tabs&quot;&gt;
+&lt;ul&gt;
+[[Wayfinder? &amp;startId=`123` &amp;level=`1` &amp;rowTpl=`myRowTpl`]]
+&lt;/ul&gt;
+&lt;/div&gt;
+{code}
+
+
+h3. Using a getField Snippet
+
+Or, you can use a Snippet such as this one to grab the pagetitle:
+
+{code}
+&lt;?php
+/**
+ * Grabs a field for a specified Resource
+ */
+/* setup some default properties */
+$id = $modx-&gt;getOption(&#39;id&#39;,$scriptProperties,false);
+$field = $modx-&gt;getOption(&#39;field&#39;,$scriptProperties,&#39;pagetitle&#39;);
+
+if ($id) { /* grab the resource object */
+    $resource = $modx-&gt;getObject(&#39;modResource&#39;,$id);
+    if ($resource == null) return &#39;&#39;;
+} else { /* if no id specified, use current doc */
+    $resource =&amp; $modx-&gt;resource;
+}
+
+/* return the field value */
+return $resource-&gt;get($field);
+?&gt;
+{code}
+
+Call this Snippet getField like so in our tabs page:
+
+
+{code}
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(function() { $(&quot;#tabs&quot;).tabs(); });
+&lt;/script&gt;
+
+&lt;div id=&quot;tabs&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;[[~92]]&quot;&gt;[[getField? &amp;id=`92` &amp;field=`pagetitle`]]&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;[[~546]]&quot;&gt;[[getField? &amp;id=`546` &amp;field=`pagetitle`]]&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;[[~123]]&quot;&gt;[[getField? &amp;id=`123` &amp;field=`pagetitle`]]&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+{code}
+
+However, the getField solution is not as fast or elegant as the Wayfinder solution, since it has to make a query every tab.
+
+
+h2. Conclusion
+
+Note that all you&#39;re doing is pointing the href tags to the actual document IDs, just like a normal link. The trick is you&#39;re making your Template for the Documents be blank (or minimal) so that it only loads the parsed content itself.
+
+This will successfully load your MODx Resources into jQuery tabs.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678356";s:3:"ver";s:1:"2";s:4:"code";s:4583:"\\
+
+{toc}
+
+h2. The Problem
+
+We want in our site to use [jQuery&#39;s tabs|http://jqueryui.com/demos/tabs/] to load our Resources via AJAX. How do we do that in MODx? This tutorial will show you just how easy it is to accomplish this in MODx Revolution.
+
+
+h2. Creating the Resources
+
+In the Resources you want to load via the tabs, you&#39;ll need to just create all your Resources with the Template being *blank* (or a minimal template with only the things you want inside the tabs). This will make sure that we&#39;re not loading anything besides the wanted material - you wouldn&#39;t want to load your whole page header and footer into each tab\!
+
+h2. Doing the Front-End Loading
+
+Now we&#39;ll use jQuery&#39;s fun tabs() command to create the front-end loading system. The code would look something like this (pulled from jquery UI&#39;s docs):
+
+{code}
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(function() { $(&quot;#tabs&quot;).tabs(); });
+&lt;/script&gt;
+
+&lt;div id=&quot;tabs&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;[[~92]]&quot;&gt;Resource with ID 92&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;[[~546]]&quot;&gt;Resource with ID 546&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;[[~123]]&quot;&gt;Resource with ID 123&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+{code}
+
+Great\! So this loads the pages via Ajax.
+
+h2. Wait, I want the Page Titles as the tab headers\!
+
+There are a few ways you can do this; one, you can use [getResources|addon:getResources], [Wayfinder|addon:Wayfinder], or use a getField snippet.
+
+h3. Using getResources
+
+For getResources, make sure you use the &#39;tpl&#39; property, which you can create as a Chunk named &#39;myRowTpl&#39; (or whatever you want), looks like this:
+
+{code}&lt;li id=&quot;[[+id]]&quot;&gt;&lt;a href=&quot;[[~[[+id]]]]&quot; title=&quot;[[+longtitle]]&quot;&gt;[[+pagetitle]]&lt;/a&gt;&lt;/li&gt;{code}
+
+and in our tabs page:
+
+{code}
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(function() { $(&quot;#tabs&quot;).tabs(); });
+&lt;/script&gt;
+
+&lt;div id=&quot;tabs&quot;&gt;
+&lt;ul&gt;
+[[getResources? &amp;parents=`123` &amp;depth=`1` &amp;tpl=`myRowTpl` &amp;includeContent=`1` &amp;includeTVs=`1`]]
+&lt;/ul&gt;
+&lt;/div&gt;
+{code}
+
+
+h3. Using Wayfinder
+
+For Wayfinder, make sure your rowTpl template, which you can create as a Chunk named &#39;myRowTpl&#39; (or whatever you want), looks like this:
+
+{code}&lt;li[[+wf.id]][[+wf.classes]]&gt;&lt;a href=&quot;[[+wf.link]]&quot; title=&quot;[[+wf.title]]&quot;&gt;[[+wf.linktext]]&lt;/a&gt;&lt;/li&gt;{code}
+
+and in our tabs page:
+
+{code}
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(function() { $(&quot;#tabs&quot;).tabs(); });
+&lt;/script&gt;
+
+&lt;div id=&quot;tabs&quot;&gt;
+&lt;ul&gt;
+[[Wayfinder? &amp;startId=`123` &amp;level=`1` &amp;rowTpl=`myRowTpl`]]
+&lt;/ul&gt;
+&lt;/div&gt;
+{code}
+
+
+h3. Using a getField Snippet
+
+Or, you can use a Snippet such as this one to grab the pagetitle:
+
+{code}
+&lt;?php
+/**
+ * Grabs a field for a specified Resource
+ */
+/* setup some default properties */
+$id = $modx-&gt;getOption(&#39;id&#39;,$scriptProperties,false);
+$field = $modx-&gt;getOption(&#39;field&#39;,$scriptProperties,&#39;pagetitle&#39;);
+
+if ($id) { /* grab the resource object */
+    $resource = $modx-&gt;getObject(&#39;modResource&#39;,$id);
+    if ($resource == null) return &#39;&#39;;
+} else { /* if no id specified, use current doc */
+    $resource =&amp; $modx-&gt;resource;
+}
+
+/* return the field value */
+return $resource-&gt;get($field);
+?&gt;
+{code}
+
+Call this Snippet getField like so in our tabs page:
+
+
+{code}
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(function() { $(&quot;#tabs&quot;).tabs(); });
+&lt;/script&gt;
+
+&lt;div id=&quot;tabs&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;[[~92]]&quot;&gt;[[getField? &amp;id=`92` &amp;field=`pagetitle`]]&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;[[~546]]&quot;&gt;[[getField? &amp;id=`546` &amp;field=`pagetitle`]]&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;[[~123]]&quot;&gt;[[getField? &amp;id=`123` &amp;field=`pagetitle`]]&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+{code}
+
+However, the getField solution is not as fast or elegant as the Wayfinder solution, since it has to make a query every tab.
+
+
+h2. Conclusion
+
+Note that all you&#39;re doing is pointing the href tags to the actual document IDs, just like a normal link. The trick is you&#39;re making your Template for the Documents be blank (or minimal) so that it only loads the parsed content itself.
+
+This will successfully load your MODx Resources into jQuery tabs.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33226936";s:3:"ver";s:1:"1";s:4:"code";s:4579:"\\
+
+{toc}
+
+h2. The Problem
+
+We want in our site to use [jQuery&#39;s tabs|http://jqueryui.com/demos/tabs/] to load our Resources via AJAX. How do we do that in MODx? This tutorial will show you just how easy it is to accomplish this in MODx Revolution.
+
+
+h2. Creating the Resources
+
+In the Resources you want to load via the tabs, you&#39;ll need to just create all your Resources with the Template being *blank* (or a minimal template with only the things you want inside the tabs). This will make sure that we&#39;re not loading anything besides the wanted material - you wouldn&#39;t want to load your whole page header and footer into each tab!
+
+h2. Doing the Front-End Loading
+
+Now we&#39;ll use jQuery&#39;s fun tabs() command to create the front-end loading system. The code would look something like this (pulled from jquery UI&#39;s docs):
+
+{code}
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(function() { $(&quot;#tabs&quot;).tabs(); });
+&lt;/script&gt;
+
+&lt;div id=&quot;tabs&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;[[~92]]&quot;&gt;Resource with ID 92&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;[[~546]]&quot;&gt;Resource with ID 546&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;[[~123]]&quot;&gt;Resource with ID 123&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+{code}
+
+Great! So this loads the pages via Ajax.
+
+h2. Wait, I want the Page Titles as the tab headers!
+
+There are a few ways you can do this; one, you can use [getResources|addon:getResources], [Wayfinder|addon:Wayfinder], or use a getField snippet.
+
+h3. Using getResources
+
+For getResources, make sure you use the &#39;tpl&#39; property, which you can create as a Chunk named &#39;myRowTpl&#39; (or whatever you want), looks like this:
+
+{code}&lt;li id=&quot;[[+id]&quot;&gt;&lt;a href=&quot;[[~[[+id]]]]&quot; title=&quot;[[+longtitle]]&quot;&gt;[[+pagetitle]]&lt;/a&gt;&lt;/li&gt;{code}
+
+and in our tabs page:
+
+{code}
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(function() { $(&quot;#tabs&quot;).tabs(); });
+&lt;/script&gt;
+
+&lt;div id=&quot;tabs&quot;&gt;
+&lt;ul&gt;
+[[getResources? &amp;parents=`123` &amp;depth=`1` &amp;tpl=`myRowTpl` &amp;includeContent=`1` &amp;includeTVs=`1`]]
+&lt;/ul&gt;
+&lt;/div&gt;
+{code}
+
+
+h3. Using Wayfinder
+
+For Wayfinder, make sure your rowTpl template, which you can create as a Chunk named &#39;myRowTpl&#39; (or whatever you want), looks like this:
+
+{code}&lt;li[[+wf.id]][[+wf.classes]]&gt;&lt;a href=&quot;[[+wf.link]]&quot; title=&quot;[[+wf.title]]&quot;&gt;[[+wf.linktext]]&lt;/a&gt;&lt;/li&gt;{code}
+
+and in our tabs page:
+
+{code}
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(function() { $(&quot;#tabs&quot;).tabs(); });
+&lt;/script&gt;
+
+&lt;div id=&quot;tabs&quot;&gt;
+&lt;ul&gt;
+[[Wayfinder? &amp;startId=`123` &amp;level=`1` &amp;rowTpl=`myRowTpl`]]
+&lt;/ul&gt;
+&lt;/div&gt;
+{code}
+
+
+h3. Using a getField Snippet
+
+Or, you can use a Snippet such as this one to grab the pagetitle:
+
+{code}
+&lt;?php
+/**
+ * Grabs a field for a specified Resource
+ */
+/* setup some default properties */
+$id = $modx-&gt;getOption(&#39;id&#39;,$scriptProperties,false);
+$field = $modx-&gt;getOption(&#39;field&#39;,$scriptProperties,&#39;pagetitle&#39;);
+
+if ($id) { /* grab the resource object */
+    $resource = $modx-&gt;getObject(&#39;modResource&#39;,$id);
+    if ($resource == null) return &#39;&#39;;
+} else { /* if no id specified, use current doc */
+    $resource =&amp; $modx-&gt;resource;
+}
+
+/* return the field value */
+return $resource-&gt;get($field);
+?&gt;
+{code}
+
+Call this Snippet getField like so in our tabs page:
+
+
+{code}
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(function() { $(&quot;#tabs&quot;).tabs(); });
+&lt;/script&gt;
+
+&lt;div id=&quot;tabs&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;[[~92]]&quot;&gt;[[getField? &amp;id=`92` &amp;field=`pagetitle`]]&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;[[~546]]&quot;&gt;[[getField? &amp;id=`546` &amp;field=`pagetitle`]]&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;[[~123]]&quot;&gt;[[getField? &amp;id=`123` &amp;field=`pagetitle`]]&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+{code}
+
+However, the getField solution is not as fast or elegant as the Wayfinder solution, since it has to make a query every tab.
+
+
+h2. Conclusion
+
+Note that all you&#39;re doing is pointing the href tags to the actual document IDs, just like a normal link. The trick is you&#39;re making your Template for the Documents be blank (or minimal) so that it only loads the parsed content itself.
+
+This will successfully load your MODx Resources into jQuery tabs.
+
+{scrollbar}";}}}

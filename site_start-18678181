@@ -1,0 +1,45 @@
+a:5:{s:2:"id";s:8:"18678181";s:4:"info";a:4:{s:6:"Title:";s:10:"site_start";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:25:"[revolution20:site_start]";}s:6:"parent";s:8:"18678127";s:6:"source";s:233:"h2. site_start
+
+*Name*: Site Start
+*Type*: Number
+*Default*: 1
+
+The ID of the resource you want to use as your homepage.
+
+{note}Make sure the ID you enter belongs to an existing Resource that has been published!{note}
+
+\\
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678181";s:3:"ver";s:1:"3";s:4:"code";s:233:"h2. site_start
+
+*Name*: Site Start
+*Type*: Number
+*Default*: 1
+
+The ID of the resource you want to use as your homepage.
+
+{note}Make sure the ID you enter belongs to an existing Resource that has been published!{note}
+
+\\
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119729";s:3:"ver";s:1:"2";s:4:"code";s:234:"h2. site_start
+
+*Name*: Site Start
+*Type*: Number
+*Default*: 1
+
+The ID of the resource you want to use as your homepage.
+
+{note}Make sure this ID you enter belongs to an existing Resource that has been published!{note}
+
+\\
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"20119728";s:3:"ver";s:1:"1";s:4:"code";s:401:"\\
+{zone-template-instance:sszt}
+{zone-data:name}Site Start{zone-data}
+{zone-data:key}site_start{zone-data}
+{zone-data:type}number{zone-data}
+{zone-data:default}1{zone-data}
+{zone-data:desc}The ID of the resource you want to use as your homepage.
+
+{note}Make sure this ID you enter belongs to an existing document, and that it has been published!{note}{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

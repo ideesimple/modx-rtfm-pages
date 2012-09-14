@@ -1,0 +1,285 @@
+a:5:{s:2:"id";s:8:"18678354";s:4:"info";a:4:{s:6:"Title:";s:37:"PHP Coding in MODx Revolution, Pt. II";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:52:"[revolution20:PHP Coding in MODx Revolution, Pt. II]";}s:6:"parent";s:8:"18678353";s:6:"source";s:3295:"\\
+
+{toc}
+
+In this article, we&#39;ll talk about creating and removing objects (and their respective rows in the database), as well as more complex queries.
+
+h2. Creating Objects
+
+Creating objects is pretty simple. It&#39;s important to note, however, that a row is never actually added to the database until the object&#39;s save() command is run. So, on to the code:
+{code}
+// let&#39;s create a Template
+$template = $modx-&gt;newObject(&#39;modTemplate&#39;);
+
+// now, lets save some data into the fields
+$template-&gt;set(&#39;templatename&#39;,&#39;TestTemplate&#39;);
+$template-&gt;set(&#39;description&#39;,&#39;A test template.&#39;);
+
+// we could have also done it like this:
+$data = array(
+&#39;templatename&#39; =&gt; &#39;TestTemplate&#39;,
+&#39;description&#39; =&gt; &#39;A test template.&#39;,
+);
+$template-&gt;fromArray($data);
+
+// okay, now we&#39;re ready. let&#39;s save.
+if ($template-&gt;save() === false) {
+die(&#39;An error occurred while saving!&#39;);
+}
+{code}
+It&#39;s that simple.
+
+h2. Removing an Object
+
+Okay, so assuming we have the same previous object and now want to remove it, the code is simply:
+{code}
+$template-&gt;remove();
+{code}
+Yes. That&#39;s it. Done. It will also remove any composite relationships - with modTemplates, these are the modTemplateVarTemplate objects, which map Templates to TVs. Those will cascade and be removed.
+
+h2. More Complex Queries
+
+Okay, so pretty soon you are going to need to do some more complex queries than we&#39;ve dealt with. That&#39;s where the xPDOQuery object comes in. This allows you to build abstract query objects that emulate more advanced SQL commands. So, lets try to grab the third 10 resources (so 21-30), ordered by menuindex, that are either 1) published and searchable, or 2) created by the user with username &#39;george123&#39;.
+{code}
+$c = $modx-&gt;newQuery(&#39;modResource&#39;);
+$c-&gt;leftJoin(&#39;modUser&#39;,&#39;PublishedBy&#39;);
+$c-&gt;where(array(
+&#39;modResource.published&#39; =&gt; 1,
+&#39;modResource.searchable&#39; =&gt; 1,
+));
+$c-&gt;orCondition(array(
+&#39;PublishedBy.username&#39; =&gt; &#39;george123&#39;,
+),null,1);
+$c-&gt;sortby(&#39;menuindex&#39;,&#39;ASC&#39;);
+$c-&gt;limit(10,20);
+
+$resources = $modx-&gt;getCollection(&#39;modResource&#39;,$c);
+{code}
+A couple of things to note. One, note that innerJoin first passes the class name, then the alias. And in orCondition, the 3rd parameter is the group number, which effectively groups the conditions into proper parenthesis (the first 2 in the first parenthetical group, the 3rd in another).
+
+[xPDOQuery|xPDO20:xPDOQuery] supports the the methods: join, rightJoin, leftJoin, innerJoin, andCondition, orCondition, sortby, groupby, limit, bindGraph, bindGraphNode, and select.
+
+Obviously, you can go pretty wild here with complex queries. The nice thing about xPDO in MODx is that there&#39;s really a ton of different ways to do most things - you could also have used $modx-&gt;getCollectionGraph for this as well.
+
+In the [next article|revolution:PHP Coding in MODx Revolution, Pt. III], we&#39;ll talk about how this is used in the context of MODx processors with JSON.
+
+h2. See Also
+
+* [xPDO: Creating Objects|XPDO20:Creating Objects]
+* [xPDOObject::remove|XPDO20:remove]
+* [xPDOQuery|XPDO20:xPDOQuery]
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678354";s:3:"ver";s:1:"3";s:4:"code";s:3295:"\\
+
+{toc}
+
+In this article, we&#39;ll talk about creating and removing objects (and their respective rows in the database), as well as more complex queries.
+
+h2. Creating Objects
+
+Creating objects is pretty simple. It&#39;s important to note, however, that a row is never actually added to the database until the object&#39;s save() command is run. So, on to the code:
+{code}
+// let&#39;s create a Template
+$template = $modx-&gt;newObject(&#39;modTemplate&#39;);
+
+// now, lets save some data into the fields
+$template-&gt;set(&#39;templatename&#39;,&#39;TestTemplate&#39;);
+$template-&gt;set(&#39;description&#39;,&#39;A test template.&#39;);
+
+// we could have also done it like this:
+$data = array(
+&#39;templatename&#39; =&gt; &#39;TestTemplate&#39;,
+&#39;description&#39; =&gt; &#39;A test template.&#39;,
+);
+$template-&gt;fromArray($data);
+
+// okay, now we&#39;re ready. let&#39;s save.
+if ($template-&gt;save() === false) {
+die(&#39;An error occurred while saving!&#39;);
+}
+{code}
+It&#39;s that simple.
+
+h2. Removing an Object
+
+Okay, so assuming we have the same previous object and now want to remove it, the code is simply:
+{code}
+$template-&gt;remove();
+{code}
+Yes. That&#39;s it. Done. It will also remove any composite relationships - with modTemplates, these are the modTemplateVarTemplate objects, which map Templates to TVs. Those will cascade and be removed.
+
+h2. More Complex Queries
+
+Okay, so pretty soon you are going to need to do some more complex queries than we&#39;ve dealt with. That&#39;s where the xPDOQuery object comes in. This allows you to build abstract query objects that emulate more advanced SQL commands. So, lets try to grab the third 10 resources (so 21-30), ordered by menuindex, that are either 1) published and searchable, or 2) created by the user with username &#39;george123&#39;.
+{code}
+$c = $modx-&gt;newQuery(&#39;modResource&#39;);
+$c-&gt;leftJoin(&#39;modUser&#39;,&#39;PublishedBy&#39;);
+$c-&gt;where(array(
+&#39;modResource.published&#39; =&gt; 1,
+&#39;modResource.searchable&#39; =&gt; 1,
+));
+$c-&gt;orCondition(array(
+&#39;PublishedBy.username&#39; =&gt; &#39;george123&#39;,
+),null,1);
+$c-&gt;sortby(&#39;menuindex&#39;,&#39;ASC&#39;);
+$c-&gt;limit(10,20);
+
+$resources = $modx-&gt;getCollection(&#39;modResource&#39;,$c);
+{code}
+A couple of things to note. One, note that innerJoin first passes the class name, then the alias. And in orCondition, the 3rd parameter is the group number, which effectively groups the conditions into proper parenthesis (the first 2 in the first parenthetical group, the 3rd in another).
+
+[xPDOQuery|xPDO20:xPDOQuery] supports the the methods: join, rightJoin, leftJoin, innerJoin, andCondition, orCondition, sortby, groupby, limit, bindGraph, bindGraphNode, and select.
+
+Obviously, you can go pretty wild here with complex queries. The nice thing about xPDO in MODx is that there&#39;s really a ton of different ways to do most things - you could also have used $modx-&gt;getCollectionGraph for this as well.
+
+In the [next article|revolution:PHP Coding in MODx Revolution, Pt. III], we&#39;ll talk about how this is used in the context of MODx processors with JSON.
+
+h2. See Also
+
+* [xPDO: Creating Objects|XPDO20:Creating Objects]
+* [xPDOObject::remove|XPDO20:remove]
+* [xPDOQuery|XPDO20:xPDOQuery]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33226893";s:3:"ver";s:1:"2";s:4:"code";s:3341:"\\
+
+{toc}
+
+In this article, we&#39;ll talk about creating and removing objects (and their respective rows in the database), as well as more complex queries.
+
+h2. Creating Objects
+
+Creating objects is pretty simple. It&#39;s important to note, however, that a row is never actually added to the database until the object&#39;s save() command is run. So, on to the code:
+{code}
+// let&#39;s create a Template
+$template = $modx-&gt;newObject(&#39;modTemplate&#39;);
+
+// now, lets save some data into the fields
+$template-&gt;set(&#39;templatename&#39;,&#39;TestTemplate&#39;);
+$template-&gt;set(&#39;description&#39;,&#39;A test template.&#39;);
+
+// we could have also done it like this:
+$data = array(
+&#39;templatename&#39; =&gt; &#39;TestTemplate&#39;,
+&#39;description&#39; =&gt; &#39;A test template.&#39;,
+);
+$template-&gt;fromArray($data);
+
+// okay, now we&#39;re ready. let&#39;s save.
+if ($template-&gt;save() === false) {
+die(&#39;An error occurred while saving!&#39;);
+}
+{code}
+It&#39;s that simple.
+
+h2. Removing an Object
+
+Okay, so assuming we have the same previous object and now want to remove it (you could also grab another object, of course), the code is simply:
+{code}
+$template-&gt;remove();
+{code}
+Yes. That&#39;s it. Done. It will also remove any composite relationships - with modTemplates, these are the modTemplateVarTemplate objects, which map Templates to TVs. Those will cascade and be removed.
+
+h2. More Complex Queries
+
+Okay, so obviously you are going to need to do some more complex queries than we&#39;ve dealt with. That&#39;s where the xPDOQuery object comes in. This allows you to build abstract query objects that emulate more advanced SQL commands. So, lets try to grab the third 10 resources (so 21-30), ordered by menuindex, that are either 1) published and searchable, or 2) created by the user with username &#39;george123&#39;.
+{code}
+$c = $modx-&gt;newQuery(&#39;modResource&#39;);
+$c-&gt;leftJoin(&#39;modUser&#39;,&#39;PublishedBy&#39;);
+$c-&gt;where(array(
+&#39;modResource.published&#39; =&gt; 1,
+&#39;modResource.searchable&#39; =&gt; 1,
+));
+$c-&gt;orCondition(array(
+&#39;PublishedBy.username&#39; =&gt; &#39;george123&#39;,
+),null,1);
+$c-&gt;sortby(&#39;menuindex&#39;,&#39;ASC&#39;);
+$c-&gt;limit(10,20);
+
+$resources = $modx-&gt;getCollection(&#39;modResource&#39;,$c);
+{code}
+A couple of things to note. One, note that innerJoin first passes the class name, then the alias. And in orCondition, the 3rd parameter is the group number, which effectively groups the conditions into proper parenthesis (the first 2 in the first parenthetical group, the 3rd in another).
+
+[xPDOQuery|xPDO20:xPDOQuery] supports the the methods: join, rightJoin, leftJoin, innerJoin, andCondition, orCondition, sortby, groupby, limit, bindGraph, bindGraphNode, and select.
+
+Obviously, you can go pretty wild here with complex queries. The nice thing about xPDO in MODx is that there&#39;s really a ton of different ways to do most things - you could also have used $modx-&gt;getCollectionGraph for this as well.
+
+In the [next article|revolution:PHP Coding in MODx Revolution, Pt. III], we&#39;ll talk about how this is used in the context of MODx processors with JSON.
+
+h2. See Also
+
+* [xPDO: Creating Objects|XPDO20:Creating Objects]
+* [xPDOObject::remove|XPDO20:remove]
+* [xPDOQuery|XPDO20:xPDOQuery]
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"33226856";s:3:"ver";s:1:"1";s:4:"code";s:3322:"\\
+
+{toc}
+
+In this article, we&#39;ll talk about creating and removing objects (and their respective rows in the database), as well as more complex queries.
+
+h2. Creating Objects
+
+Creating objects is pretty simple. It&#39;s important to note, however, that a row is never actually added to the database until the object&#39;s save() command is run. So, on to the code:
+{code}
+// let&#39;s create a Template
+$template = $modx-&gt;newObject(&#39;modTemplate&#39;);
+
+// now, lets save some data into the fields
+$template-&gt;set(&#39;templatename&#39;,&#39;TestTemplate&#39;);
+$template-&gt;set(&#39;description&#39;,&#39;A test template.&#39;);
+
+// we could have also done it like this:
+$data = array(
+&#39;templatename&#39; =&gt; &#39;TestTemplate&#39;,
+&#39;description&#39; =&gt; &#39;A test template.&#39;,
+);
+$template-&gt;fromArray($data);
+
+// okay, now we&#39;re ready. let&#39;s save.
+if ($template-&gt;save() === false) {
+die(&#39;An error occurred while saving!&#39;);
+}
+{code}
+It&#39;s that simple.
+
+h2. Removing an Object
+
+Okay, so assuming we have the same previous object and now want to remove it (you could also grab another object, of course), the code is simply:
+{code}
+$template-&gt;remove();
+{code}
+Yes. That&#39;s it. Done. It will also remove any composite relationships - with modTemplates, these are the modTemplateVarTemplate objects, which map Templates to TVs. Those will cascade and be removed.
+
+h2. More Complex Queries
+
+Okay, so obviously you are going to need to do some more complex queries than we&#39;ve dealt with. That&#39;s where the xPDOQuery object comes in. This allows you to build abstract query objects that emulate more advanced SQL commands. So, lets try to grab the third 10 resources (so 21-30), ordered by menuindex, that are either 1) published and searchable, or 2) created by the user with username &#39;george123&#39;.
+{code}
+$c = $modx-&gt;newQuery(&#39;modResource&#39;);
+$c-&gt;leftJoin(&#39;modUser&#39;,&#39;PublishedBy&#39;);
+$c-&gt;where(array(
+&#39;modResource.published&#39; =&gt; 1,
+&#39;modResource.searchable&#39; =&gt; 1,
+));
+$c-&gt;orCondition(array(
+&#39;PublishedBy.username&#39; =&gt; &#39;george123&#39;,
+),null,1);
+$c-&gt;sortby(&#39;menuindex&#39;,&#39;ASC&#39;);
+$c-&gt;limit(10,20);
+
+$resources = $modx-&gt;getCollection(&#39;modResource&#39;,$c);
+{code}
+A couple of things to note. One, note that innerJoin first passes the class name, then the alias. And in orCondition, the 3rd parameter is the group number, which effectively groups the conditions into proper parenthesis (the first 2 in the first parenthetical group, the 3rd in another).
+
+xPDOQuery supports the the methods: join, rightJoin, leftJoin, innerJoin, andCondition, orCondition, sortby, groupby, limit, bindGraph, bindGraphNode, and select.
+
+Obviously, you can go pretty wild here with complex queries. The nice thing about xPDO in MODx is that there&#39;s really a ton of different ways to do most things - you could also have used $modx-&gt;getCollectionGraph for this as well.
+
+In the [next article|revolution:PHP Coding in MODx Revolution, Pt. III], we&#39;ll talk about how this is used in the context of MODx processors with JSON.
+
+h2. See Also
+
+* [xPDO: Creating Objects|XPDO20:Creating Objects]
+* [xPDOObject::remove|XPDO20:remove]
+* [xPDOQuery|XPDO20:xPDOQuery]
+
+{scrollbar}";}}}

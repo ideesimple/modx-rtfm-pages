@@ -1,0 +1,1129 @@
+a:5:{s:2:"id";s:8:"36634952";s:4:"info";a:4:{s:6:"Title:";s:25:"Creating a Resource Class";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:40:"[revolution20:Creating a Resource Class]";}s:6:"parent";s:8:"36634961";s:6:"source";s:7440:"{panel}This tutorial is part of a Series:
+* Part I: Creating a Custom Resource Class
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* [Part III: Customizing the Controllers|Creating a Resource Class - Step 3]
+* [Part IV: Customizing the Processors|Creating a Resource Class - Step 4]{panel}
+
+We&#39;re going to create a sample Custom Resource Class (CRC) that does a very simple task - it outputs a copyright on the bottom of a page with the current date. Yes - this is much more easily done in a [Snippet|Snippets] in your [Template|Templates], and is much better to do it that way. But this is a tutorial illustrating the concept of CRCs, so bear with it. :)
+
+This page deals with Step 1 - creating the actual Custom Resource Class itself. Step 2 will actually implement the behavior of appending the copyright. Step 3 will deal with overriding the Controllers, and Step 4 will deal with overriding the Processors. The files used in this tutorial can be found on GitHub for reference: https://github.com/modxcms/CopyrightedResource
+
+h2. Step 1. Creating your Class
+
+First off, create a xPDO package using a schema (if you&#39;re not familiar on how to do this, please read the [Developing an Extra in MODX Revolution] tutorial and/or the [xPDO Defining a Schema|xPDO20:Defining a Schema] tutorial):
+
+{code}&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;model package=&quot;CopyrightedResource&quot; baseClass=&quot;xPDOObject&quot; platform=&quot;mysql&quot; defaultEngine=&quot;MyISAM&quot;&gt;
+    &lt;object class=&quot;CopyrightedResource&quot; extends=&quot;modResource&quot; /&gt;
+&lt;/model&gt;{code}
+
+Then generate the maps and classes for the model. This should give you a class that looks like this:
+
+{code}
+class CopyrightedResource extends modResource {
+}
+{code}
+
+Simple, eh? Now we want to force the class_key of the resource, and ensure that it shows up in the Resource Create context menu (which we&#39;ll configure later on):
+
+{code}
+class CopyrightedResource extends modResource {
+    public $showInContextMenu = true;
+    function __construct(xPDO &amp; $xpdo) {
+        parent :: __construct($xpdo);
+        $this-&gt;set(&#39;class_key&#39;,&#39;CopyrightedResource&#39;);
+    }
+}
+{code}
+
+This forces the class_key to &quot;CopyrightedResource&quot;, which is our class, and ensures our Resource class shows up in the left-hand tree&#39;s context menu.
+
+{warning}You should *never* add fields to the modResource table (yes, there were Extras that did this, but it&#39;s not the proper way). Rather, create a separate related table to join into, or use Revolution 2.2.1+&#39;s new properties field to store extra data.{warning}
+
+h3. Getting Familiar with the modResourceInterface Interface class
+
+If you look in the modResource class file, you&#39;ll see at the top a PHP Interface that defines what methods *must* be defined for a CRC to work:
+
+{code}
+interface modResourceInterface {
+    public static function getControllerPath(xPDO &amp;$modx);
+    public function getContextMenuText();
+    public function getResourceTypeName();
+}
+{code}
+
+We&#39;ll now go into detail on each of these methods and how they implement our CRC.
+
+h3. Adding the getControllerPath Method
+
+We&#39;re going to add the getControllerPath method to our class, but first, make sure you create a [Namespace|Namespaces] called &quot;copyrightedresource&quot; that points to your CRC&#39;s model directory. Once you&#39;ve done that, then you can add this to your class:
+
+{code}public static function getControllerPath(xPDO &amp;$modx) {
+    return $modx-&gt;getOption(&#39;copyrightedresource.core_path&#39;,null,$modx-&gt;getOption(&#39;core_path&#39;).&#39;components/copyrightedresource/&#39;).&#39;controllers/&#39;;
+}{code}
+
+What this method does is tell MODX that hey, look for my manager controllers in this directory that I return. This allows us to override the controllers for our CopyrightedResource CRC. The line first checks for a custom System Setting that shows where our CRC core directory path is (which is optional), and if it&#39;s not set, looks for our CRC path in &#39;core/components/copyrightedresource/&#39;. It then appends &quot;controllers/&quot; to it (you could make this whatever you want, but the standard path for controllers is, strangely enough, &quot;controllers/&quot;.
+
+Great! MODX will now look for our controllers in that directory. We&#39;ll get into creating those in Step 2 of the tutorial.
+
+h3. Adding the getContextMenuText Method
+
+Go ahead and add this method to your class:
+
+{code}public function getContextMenuText() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return array(
+    &#39;text_create&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;),
+    &#39;text_create_here&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource_create_here&#39;),
+  );
+}{code}
+
+This returns two translated strings that MODX will insert into the &quot;Create&quot; context menu when right-clicking on a node in the Resource tab on the left-hand tree.
+
+Obviously, you don&#39;t need to use the MODX lexicon here. You could simply return the text like so:
+
+{code}public function getContextMenuText() {
+  return array(
+    &#39;text_create&#39; =&gt; &#39;Copyrighted Page&#39;
+    &#39;text_create_here&#39; =&gt; &#39;Create a Copyrighted Page Here&#39;,
+  );
+}{code}
+
+And that&#39;d work fine. But MODX allows you to load a Lexicon Topic so that you can translate the strings for your worldwide users.
+
+h3. Adding the getResourceTypeName Method
+
+This final method tells MODX what the translated &quot;name&quot; of your CRC is. We probably don&#39;t want to call it &quot;CopyrightedResource&quot;, so we&#39;re going to plop in this method:
+
+{code}
+public function getResourceTypeName() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;);
+}{code}
+
+Again, this could just return a string:
+
+{code}public function getResourceTypeName() {
+  return &#39;Copyrighted Page&#39;;
+}{code}
+
+This tells MODX to call it a &quot;Copyrighted Page&quot;, rather than its class name, when dealing with it in the manager.
+
+h2. Adding the Class to Extension Packages
+
+To load the CRC properly, you&#39;ll need to add it to the Extension Packages. Why? Well, MODX needs to load your CRC when it loads, so that it has a &quot;library&quot; of sorts of all the loaded Resource Classes available to it. MODX 2.2 provides you with an assistance method to add your package to the Extension Packages dataset: 
+
+{code}$modx-&gt;addExtensionPackage(&#39;copyrightedresource&#39;,&#39;/path/to/copyrightedresource/model/&#39;);{code}
+
+Simply run this code once and MODX will automatically add it to the Extension Packages. There&#39;s also a removeExtensionPackage as well for removing the package from MODX.
+
+{info}This is a very useful method to add to a Resolver if you&#39;re building an Extra for your CRC so that this happens on install and uninstall.{info}
+
+h2. Conclusion
+
+Now, if you reload the page and right-click on a Resource in the tree, then move over &quot;Create&quot;, you should see this:
+
+!context-menu.png!
+
+Fantastic! Now we&#39;ve got our Custom Resource Class loaded, and we&#39;re ready to start actually getting into the nitty-gritty. [Proceed onto Step 2|Creating a Resource Class - Step 2]!
+
+{scrollbar}";s:8:"versions";a:9:{i:0;a:3:{s:2:"id";s:8:"36634952";s:3:"ver";s:1:"9";s:4:"code";s:7440:"{panel}This tutorial is part of a Series:
+* Part I: Creating a Custom Resource Class
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* [Part III: Customizing the Controllers|Creating a Resource Class - Step 3]
+* [Part IV: Customizing the Processors|Creating a Resource Class - Step 4]{panel}
+
+We&#39;re going to create a sample Custom Resource Class (CRC) that does a very simple task - it outputs a copyright on the bottom of a page with the current date. Yes - this is much more easily done in a [Snippet|Snippets] in your [Template|Templates], and is much better to do it that way. But this is a tutorial illustrating the concept of CRCs, so bear with it. :)
+
+This page deals with Step 1 - creating the actual Custom Resource Class itself. Step 2 will actually implement the behavior of appending the copyright. Step 3 will deal with overriding the Controllers, and Step 4 will deal with overriding the Processors. The files used in this tutorial can be found on GitHub for reference: https://github.com/modxcms/CopyrightedResource
+
+h2. Step 1. Creating your Class
+
+First off, create a xPDO package using a schema (if you&#39;re not familiar on how to do this, please read the [Developing an Extra in MODX Revolution] tutorial and/or the [xPDO Defining a Schema|xPDO20:Defining a Schema] tutorial):
+
+{code}&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;model package=&quot;CopyrightedResource&quot; baseClass=&quot;xPDOObject&quot; platform=&quot;mysql&quot; defaultEngine=&quot;MyISAM&quot;&gt;
+    &lt;object class=&quot;CopyrightedResource&quot; extends=&quot;modResource&quot; /&gt;
+&lt;/model&gt;{code}
+
+Then generate the maps and classes for the model. This should give you a class that looks like this:
+
+{code}
+class CopyrightedResource extends modResource {
+}
+{code}
+
+Simple, eh? Now we want to force the class_key of the resource, and ensure that it shows up in the Resource Create context menu (which we&#39;ll configure later on):
+
+{code}
+class CopyrightedResource extends modResource {
+    public $showInContextMenu = true;
+    function __construct(xPDO &amp; $xpdo) {
+        parent :: __construct($xpdo);
+        $this-&gt;set(&#39;class_key&#39;,&#39;CopyrightedResource&#39;);
+    }
+}
+{code}
+
+This forces the class_key to &quot;CopyrightedResource&quot;, which is our class, and ensures our Resource class shows up in the left-hand tree&#39;s context menu.
+
+{warning}You should *never* add fields to the modResource table (yes, there were Extras that did this, but it&#39;s not the proper way). Rather, create a separate related table to join into, or use Revolution 2.2.1+&#39;s new properties field to store extra data.{warning}
+
+h3. Getting Familiar with the modResourceInterface Interface class
+
+If you look in the modResource class file, you&#39;ll see at the top a PHP Interface that defines what methods *must* be defined for a CRC to work:
+
+{code}
+interface modResourceInterface {
+    public static function getControllerPath(xPDO &amp;$modx);
+    public function getContextMenuText();
+    public function getResourceTypeName();
+}
+{code}
+
+We&#39;ll now go into detail on each of these methods and how they implement our CRC.
+
+h3. Adding the getControllerPath Method
+
+We&#39;re going to add the getControllerPath method to our class, but first, make sure you create a [Namespace|Namespaces] called &quot;copyrightedresource&quot; that points to your CRC&#39;s model directory. Once you&#39;ve done that, then you can add this to your class:
+
+{code}public static function getControllerPath(xPDO &amp;$modx) {
+    return $modx-&gt;getOption(&#39;copyrightedresource.core_path&#39;,null,$modx-&gt;getOption(&#39;core_path&#39;).&#39;components/copyrightedresource/&#39;).&#39;controllers/&#39;;
+}{code}
+
+What this method does is tell MODX that hey, look for my manager controllers in this directory that I return. This allows us to override the controllers for our CopyrightedResource CRC. The line first checks for a custom System Setting that shows where our CRC core directory path is (which is optional), and if it&#39;s not set, looks for our CRC path in &#39;core/components/copyrightedresource/&#39;. It then appends &quot;controllers/&quot; to it (you could make this whatever you want, but the standard path for controllers is, strangely enough, &quot;controllers/&quot;.
+
+Great! MODX will now look for our controllers in that directory. We&#39;ll get into creating those in Step 2 of the tutorial.
+
+h3. Adding the getContextMenuText Method
+
+Go ahead and add this method to your class:
+
+{code}public function getContextMenuText() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return array(
+    &#39;text_create&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;),
+    &#39;text_create_here&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource_create_here&#39;),
+  );
+}{code}
+
+This returns two translated strings that MODX will insert into the &quot;Create&quot; context menu when right-clicking on a node in the Resource tab on the left-hand tree.
+
+Obviously, you don&#39;t need to use the MODX lexicon here. You could simply return the text like so:
+
+{code}public function getContextMenuText() {
+  return array(
+    &#39;text_create&#39; =&gt; &#39;Copyrighted Page&#39;
+    &#39;text_create_here&#39; =&gt; &#39;Create a Copyrighted Page Here&#39;,
+  );
+}{code}
+
+And that&#39;d work fine. But MODX allows you to load a Lexicon Topic so that you can translate the strings for your worldwide users.
+
+h3. Adding the getResourceTypeName Method
+
+This final method tells MODX what the translated &quot;name&quot; of your CRC is. We probably don&#39;t want to call it &quot;CopyrightedResource&quot;, so we&#39;re going to plop in this method:
+
+{code}
+public function getResourceTypeName() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;);
+}{code}
+
+Again, this could just return a string:
+
+{code}public function getResourceTypeName() {
+  return &#39;Copyrighted Page&#39;;
+}{code}
+
+This tells MODX to call it a &quot;Copyrighted Page&quot;, rather than its class name, when dealing with it in the manager.
+
+h2. Adding the Class to Extension Packages
+
+To load the CRC properly, you&#39;ll need to add it to the Extension Packages. Why? Well, MODX needs to load your CRC when it loads, so that it has a &quot;library&quot; of sorts of all the loaded Resource Classes available to it. MODX 2.2 provides you with an assistance method to add your package to the Extension Packages dataset: 
+
+{code}$modx-&gt;addExtensionPackage(&#39;copyrightedresource&#39;,&#39;/path/to/copyrightedresource/model/&#39;);{code}
+
+Simply run this code once and MODX will automatically add it to the Extension Packages. There&#39;s also a removeExtensionPackage as well for removing the package from MODX.
+
+{info}This is a very useful method to add to a Resolver if you&#39;re building an Extra for your CRC so that this happens on install and uninstall.{info}
+
+h2. Conclusion
+
+Now, if you reload the page and right-click on a Resource in the tree, then move over &quot;Create&quot;, you should see this:
+
+!context-menu.png!
+
+Fantastic! Now we&#39;ve got our Custom Resource Class loaded, and we&#39;re ready to start actually getting into the nitty-gritty. [Proceed onto Step 2|Creating a Resource Class - Step 2]!
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"38633475";s:3:"ver";s:1:"8";s:4:"code";s:7166:"{panel}This tutorial is part of a Series:
+* Part I: Creating a Custom Resource Class
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* [Part III: Customizing the Controllers|Creating a Resource Class - Step 3]
+* [Part IV: Customizing the Processors|Creating a Resource Class - Step 4]{panel}
+
+We&#39;re going to create a sample Custom Resource Class (CRC) that does a very simple task - it outputs a copyright on the bottom of a page with the current date. Yes - this is much more easily done in a [Snippet|Snippets] in your [Template|Templates], and is much better to do it that way. But this is a tutorial illustrating the concept of CRCs, so bear with it. :)
+
+This page deals with Step 1 - creating the actual Custom Resource Class itself. Step 2 will actually implement the behavior of appending the copyright. Step 3 will deal with overriding the Controllers, and Step 4 will deal with overriding the Processors. The files used in this tutorial can be found on GitHub for reference: https://github.com/modxcms/CopyrightedResource
+
+h2. Step 1. Creating your Class
+
+First off, create a xPDO package using a schema (if you&#39;re not familiar on how to do this, please read the [Developing an Extra in MODX Revolution] tutorial and/or the [xPDO Defining a Schema|xPDO20:Defining a Schema] tutorial):
+
+{code}&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;model package=&quot;CopyrightedResource&quot; baseClass=&quot;xPDOObject&quot; platform=&quot;mysql&quot; defaultEngine=&quot;MyISAM&quot;&gt;
+    &lt;object class=&quot;CopyrightedResource&quot; extends=&quot;modResource&quot; /&gt;
+&lt;/model&gt;{code}
+
+Then generate the maps and classes for the model. This should give you a class that looks like this:
+
+{code}
+class CopyrightedResource extends modResource {
+}
+{code}
+
+Simple, eh? Now we want to force the class_key of the resource, and ensure that it shows up in the Resource Create context menu (which we&#39;ll configure later on):
+
+{code}
+class CopyrightedResource extends modResource {
+    public $showInContextMenu = true;
+    function __construct(xPDO &amp; $xpdo) {
+        parent :: __construct($xpdo);
+        $this-&gt;set(&#39;class_key&#39;,&#39;CopyrightedResource&#39;);
+    }
+}
+{code}
+
+This forces the class_key to &quot;CopyrightedResource&quot;, which is our class, and ensures our Resource class shows up in the left-hand tree&#39;s context menu.
+
+h3. Getting Familiar with the modResourceInterface Interface class
+
+If you look in the modResource class file, you&#39;ll see at the top a PHP Interface that defines what methods *must* be defined for a CRC to work:
+
+{code}
+interface modResourceInterface {
+    public static function getControllerPath(xPDO &amp;$modx);
+    public function getContextMenuText();
+    public function getResourceTypeName();
+}
+{code}
+
+We&#39;ll now go into detail on each of these methods and how they implement our CRC.
+
+h3. Adding the getControllerPath Method
+
+We&#39;re going to add the getControllerPath method to our class, but first, make sure you create a [Namespace|Namespaces] called &quot;copyrightedresource&quot; that points to your CRC&#39;s model directory. Once you&#39;ve done that, then you can add this to your class:
+
+{code}public static function getControllerPath(xPDO &amp;$modx) {
+    return $modx-&gt;getOption(&#39;copyrightedresource.core_path&#39;,null,$modx-&gt;getOption(&#39;core_path&#39;).&#39;components/copyrightedresource/&#39;).&#39;controllers/&#39;;
+}{code}
+
+What this method does is tell MODX that hey, look for my manager controllers in this directory that I return. This allows us to override the controllers for our CopyrightedResource CRC. The line first checks for a custom System Setting that shows where our CRC core directory path is (which is optional), and if it&#39;s not set, looks for our CRC path in &#39;core/components/copyrightedresource/&#39;. It then appends &quot;controllers/&quot; to it (you could make this whatever you want, but the standard path for controllers is, strangely enough, &quot;controllers/&quot;.
+
+Great! MODX will now look for our controllers in that directory. We&#39;ll get into creating those in Step 2 of the tutorial.
+
+h3. Adding the getContextMenuText Method
+
+Go ahead and add this method to your class:
+
+{code}public function getContextMenuText() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return array(
+    &#39;text_create&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;),
+    &#39;text_create_here&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource_create_here&#39;),
+  );
+}{code}
+
+This returns two translated strings that MODX will insert into the &quot;Create&quot; context menu when right-clicking on a node in the Resource tab on the left-hand tree.
+
+Obviously, you don&#39;t need to use the MODX lexicon here. You could simply return the text like so:
+
+{code}public function getContextMenuText() {
+  return array(
+    &#39;text_create&#39; =&gt; &#39;Copyrighted Page&#39;
+    &#39;text_create_here&#39; =&gt; &#39;Create a Copyrighted Page Here&#39;,
+  );
+}{code}
+
+And that&#39;d work fine. But MODX allows you to load a Lexicon Topic so that you can translate the strings for your worldwide users.
+
+h3. Adding the getResourceTypeName Method
+
+This final method tells MODX what the translated &quot;name&quot; of your CRC is. We probably don&#39;t want to call it &quot;CopyrightedResource&quot;, so we&#39;re going to plop in this method:
+
+{code}
+public function getResourceTypeName() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;);
+}{code}
+
+Again, this could just return a string:
+
+{code}public function getResourceTypeName() {
+  return &#39;Copyrighted Page&#39;;
+}{code}
+
+This tells MODX to call it a &quot;Copyrighted Page&quot;, rather than its class name, when dealing with it in the manager.
+
+h2. Adding the Class to Extension Packages
+
+To load the CRC properly, you&#39;ll need to add it to the Extension Packages. Why? Well, MODX needs to load your CRC when it loads, so that it has a &quot;library&quot; of sorts of all the loaded Resource Classes available to it. MODX 2.2 provides you with an assistance method to add your package to the Extension Packages dataset: 
+
+{code}$modx-&gt;addExtensionPackage(&#39;copyrightedresource&#39;,&#39;/path/to/copyrightedresource/model/&#39;);{code}
+
+Simply run this code once and MODX will automatically add it to the Extension Packages. There&#39;s also a removeExtensionPackage as well for removing the package from MODX.
+
+{info}This is a very useful method to add to a Resolver if you&#39;re building an Extra for your CRC so that this happens on install and uninstall.{info}
+
+h2. Conclusion
+
+Now, if you reload the page and right-click on a Resource in the tree, then move over &quot;Create&quot;, you should see this:
+
+!context-menu.png!
+
+Fantastic! Now we&#39;ve got our Custom Resource Class loaded, and we&#39;re ready to start actually getting into the nitty-gritty. [Proceed onto Step 2|Creating a Resource Class - Step 2]!
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"36634986";s:3:"ver";s:1:"7";s:4:"code";s:6925:"{panel}This tutorial is part of a Series:
+* Part I: Creating a Custom Resource Class
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* [Part III: Customizing the Controllers|Creating a Resource Class - Step 3]
+* [Part IV: Customizing the Processors|Creating a Resource Class - Step 4]{panel}
+
+We&#39;re going to create a sample Custom Resource Class (CRC) that does a very simple task - it outputs a copyright on the bottom of a page with the current date. Yes - this is much more easily done in a [Snippet|Snippets] in your [Template|Templates], and is much better to do it that way. But this is a tutorial illustrating the concept of CRCs, so bear with it. :)
+
+This page deals with Step 1 - creating the actual Custom Resource Class itself. Step 2 will actually implement the behavior of appending the copyright. Step 3 will deal with overriding the Controllers, and Step 4 will deal with overriding the Processors. The files used in this tutorial can be found on GitHub for reference: https://github.com/modxcms/CopyrightedResource
+
+h2. Step 1. Creating your Class
+
+First off, create a xPDO package using a schema (if you&#39;re not familiar on how to do this, please read the [Developing an Extra in MODX Revolution] tutorial and/or the [xPDO Defining a Schema|xPDO20:Defining a Schema] tutorial):
+
+{code}&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;model package=&quot;CopyrightedResource&quot; baseClass=&quot;xPDOObject&quot; platform=&quot;mysql&quot; defaultEngine=&quot;MyISAM&quot;&gt;
+    &lt;object class=&quot;CopyrightedResource&quot; extends=&quot;modResource&quot; /&gt;
+&lt;/model&gt;{code}
+
+Then generate the maps and classes for the model. This should give you a class that looks like this:
+
+{code}
+class CopyrightedResource extends modResource {
+}
+{code}
+
+Simple, eh? Now we want to force the class_key of the resource, and ensure that it shows up in the Resource Create context menu (which we&#39;ll configure later on):
+
+{code}
+class CopyrightedResource extends modResource {
+    public $showInContextMenu = true;
+    function __construct(xPDO &amp; $xpdo) {
+        parent :: __construct($xpdo);
+        $this-&gt;set(&#39;class_key&#39;,&#39;CopyrightedResource&#39;);
+    }
+}
+{code}
+
+This forces the class_key to &quot;CopyrightedResource&quot;, which is our class, and ensures our Resource class shows up in the left-hand tree&#39;s context menu.
+
+h3. Getting Familiar with the modResourceInterface Interface class
+
+If you look in the modResource class file, you&#39;ll see at the top a PHP Interface that defines what methods *must* be defined for a CRC to work:
+
+{code}
+interface modResourceInterface {
+    public static function getControllerPath(xPDO &amp;$modx);
+    public function getContextMenuText();
+    public function getResourceTypeName();
+}
+{code}
+
+We&#39;ll now go into detail on each of these methods and how they implement our CRC.
+
+h3. Adding the getControllerPath Method
+
+We&#39;re going to add the getControllerPath method to our class, but first, make sure you create a [Namespace|Namespaces] called &quot;copyrightedresource&quot; that points to your CRC&#39;s model directory. Once you&#39;ve done that, then you can add this to your class:
+
+{code}public static function getControllerPath(xPDO &amp;$modx) {
+    return $modx-&gt;getOption(&#39;copyrightedresource.core_path&#39;,null,$modx-&gt;getOption(&#39;core_path&#39;).&#39;components/copyrightedresource/&#39;).&#39;controllers/&#39;;
+}{code}
+
+What this method does is tell MODX that hey, look for my manager controllers in this directory that I return. This allows us to override the controllers for our CopyrightedResource CRC. The line first checks for a custom System Setting that shows where our CRC core directory path is (which is optional), and if it&#39;s not set, looks for our CRC path in &#39;core/components/copyrightedresource/&#39;. It then appends &quot;controllers/&quot; to it (you could make this whatever you want, but the standard path for controllers is, strangely enough, &quot;controllers/&quot;.
+
+Great! MODX will now look for our controllers in that directory. We&#39;ll get into creating those in Step 2 of the tutorial.
+
+h3. Adding the getContextMenuText Method
+
+Go ahead and add this method to your class:
+
+{code}public function getContextMenuText() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return array(
+    &#39;text_create&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;),
+    &#39;text_create_here&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource_create_here&#39;),
+  );
+}{code}
+
+This returns two translated strings that MODX will insert into the &quot;Create&quot; context menu when right-clicking on a node in the Resource tab on the left-hand tree.
+
+Obviously, you don&#39;t need to use the MODX lexicon here. You could simply return the text like so:
+
+{code}public function getContextMenuText() {
+  return array(
+    &#39;text_create&#39; =&gt; &#39;Copyrighted Page&#39;
+    &#39;text_create_here&#39; =&gt; &#39;Create a Copyrighted Page Here&#39;,
+  );
+}{code}
+
+And that&#39;d work fine. But MODX allows you to load a Lexicon Topic so that you can translate the strings for your worldwide users.
+
+h3. Adding the getResourceTypeName Method
+
+This final method tells MODX what the translated &quot;name&quot; of your CRC is. We probably don&#39;t want to call it &quot;CopyrightedResource&quot;, so we&#39;re going to plop in this method:
+
+{code}
+public function getResourceTypeName() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;);
+}{code}
+
+Again, this could just return a string:
+
+{code}public function getResourceTypeName() {
+  return &#39;Copyrighted Page&#39;;
+}{code}
+
+This tells MODX to call it a &quot;Copyrighted Page&quot;, rather than its class name, when dealing with it in the manager.
+
+h2. Adding the Class to Extension Packages
+
+To load the CRC properly, you&#39;ll need to add it to the Extension Packages. Why? Well, MODX needs to load your CRC when it loads, so that it has a &quot;library&quot; of sorts of all the loaded Resource Classes available to it. MODX 2.2 provides you with an assistance method to add your package to the Extension Packages dataset: 
+
+{code}$modx-&gt;addExtensionPackage(&#39;copyrightedresource&#39;,&#39;/path/to/copyrightedresource/model/&#39;);{code}
+
+Simply run this code once and MODX will automatically add it to the Extension Packages.
+
+h2. Conclusion
+
+Now, if you reload the page and right-click on a Resource in the tree, then move over &quot;Create&quot;, you should see this:
+
+!context-menu.png!
+
+Fantastic! Now we&#39;ve got our Custom Resource Class loaded, and we&#39;re ready to start actually getting into the nitty-gritty. [Proceed onto Step 2|Creating a Resource Class - Step 2]!
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"36634979";s:3:"ver";s:1:"6";s:4:"code";s:6914:"{panel}This tutorial is part of a Series:
+* Part I: Creating a Custom Resource Class
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* [Part III: Customizing the Controllers|Creating a Resource Class - Step 3]
+* [Part IV: Customizing the Processors|Creating a Resource Class - Step 4]{panel}
+
+We&#39;re going to create a sample Custom Resource Class (CRC) that does a very simple task - it outputs a copyright on the bottom of a page with the current date. Yes - this is much more easily done in a [Snippet|Snippets] in your [Template|Templates], and is much better to do it that way. But this is a tutorial illustrating the concept of CRCs, so bear with it. :)
+
+This page deals with Step 1 - creating the actual Custom Resource Class itself. Step 2 will actually implement the behavior of appending the copyright. Step 3 will deal with overriding the Controllers, and Step 4 will deal with overriding the Processors. The files used in this tutorial can be found on GitHub for reference: https://github.com/modxcms/CopyrightedResource
+
+h2. Step 1. Creating your Class
+
+First off, create a xPDO package using a schema (if you&#39;re not familiar on how to do this, please read the [Developing an Extra in MODX Revolution] tutorial and/or the [xPDO Defining a Schema|xPDO20:Defining a Schema] tutorial):
+
+{code}&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;model package=&quot;CopyrightedResource&quot; baseClass=&quot;xPDOObject&quot; platform=&quot;mysql&quot; defaultEngine=&quot;MyISAM&quot;&gt;
+    &lt;object class=&quot;CopyrightedResource&quot; extends=&quot;modResource&quot; /&gt;
+&lt;/model&gt;{code}
+
+Then generate the maps and classes for the model. This should give you a class that looks like this:
+
+{code}
+class CopyrightedResource extends modResource {
+}
+{code}
+
+Simple, eh? Now we want to force the class_key of the resource, and ensure that it shows up in the Resource Create context menu (which we&#39;ll configure later on):
+
+{code}
+class CopyrightedResource extends modResource {
+    public $showInContextMenu = true;
+    function __construct(xPDO &amp; $xpdo) {
+        parent :: __construct($xpdo);
+        $this-&gt;set(&#39;class_key&#39;,&#39;CopyrightedResource&#39;);
+    }
+}
+{code}
+
+This forces the class_key to &quot;CopyrightedResource&quot;, which is our class, and ensures our Resource class shows up in the left-hand tree&#39;s context menu.
+
+h3. Getting Familiar with the modResourceInterface Interface class
+
+If you look in the modResource class file, you&#39;ll see at the top a PHP Interface that defines what methods *must* be defined for a CRC to work:
+
+{code}
+interface modResourceInterface {
+    public static function getControllerPath(xPDO &amp;$modx);
+    public function getContextMenuText();
+    public function getResourceTypeName();
+}
+{code}
+
+We&#39;ll now go into detail on each of these methods and how they implement our CRC.
+
+h3. Adding the getControllerPath Method
+
+We&#39;re going to add the getControllerPath method to our class, but first, make sure you create a [Namespace] called &quot;copyrightedresource&quot; that points to your CRC&#39;s model directory. Once you&#39;ve done that, then you can add this to your class:
+
+{code}public static function getControllerPath(xPDO &amp;$modx) {
+    return $modx-&gt;getOption(&#39;copyrightedresource.core_path&#39;,null,$modx-&gt;getOption(&#39;core_path&#39;).&#39;components/copyrightedresource/&#39;).&#39;controllers/&#39;;
+}{code}
+
+What this method does is tell MODX that hey, look for my manager controllers in this directory that I return. This allows us to override the controllers for our CopyrightedResource CRC. The line first checks for a custom System Setting that shows where our CRC core directory path is (which is optional), and if it&#39;s not set, looks for our CRC path in &#39;core/components/copyrightedresource/&#39;. It then appends &quot;controllers/&quot; to it (you could make this whatever you want, but the standard path for controllers is, strangely enough, &quot;controllers/&quot;.
+
+Great! MODX will now look for our controllers in that directory. We&#39;ll get into creating those in Step 2 of the tutorial.
+
+h3. Adding the getContextMenuText Method
+
+Go ahead and add this method to your class:
+
+{code}public function getContextMenuText() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return array(
+    &#39;text_create&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;),
+    &#39;text_create_here&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource_create_here&#39;),
+  );
+}{code}
+
+This returns two translated strings that MODX will insert into the &quot;Create&quot; context menu when right-clicking on a node in the Resource tab on the left-hand tree.
+
+Obviously, you don&#39;t need to use the MODX lexicon here. You could simply return the text like so:
+
+{code}public function getContextMenuText() {
+  return array(
+    &#39;text_create&#39; =&gt; &#39;Copyrighted Page&#39;
+    &#39;text_create_here&#39; =&gt; &#39;Create a Copyrighted Page Here&#39;,
+  );
+}{code}
+
+And that&#39;d work fine. But MODX allows you to load a Lexicon Topic so that you can translate the strings for your worldwide users.
+
+h3. Adding the getResourceTypeName Method
+
+This final method tells MODX what the translated &quot;name&quot; of your CRC is. We probably don&#39;t want to call it &quot;CopyrightedResource&quot;, so we&#39;re going to plop in this method:
+
+{code}
+public function getResourceTypeName() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;);
+}{code}
+
+Again, this could just return a string:
+
+{code}public function getResourceTypeName() {
+  return &#39;Copyrighted Page&#39;;
+}{code}
+
+This tells MODX to call it a &quot;Copyrighted Page&quot;, rather than its class name, when dealing with it in the manager.
+
+h2. Adding the Class to Extension Packages
+
+To load the CRC properly, you&#39;ll need to add it to the Extension Packages. Why? Well, MODX needs to load your CRC when it loads, so that it has a &quot;library&quot; of sorts of all the loaded Resource Classes available to it. MODX 2.2 provides you with an assistance method to add your package to the Extension Packages dataset: 
+
+{code}$modx-&gt;addExtensionPackage(&#39;copyrightedresource&#39;,&#39;/path/to/copyrightedresource/model/&#39;);{code}
+
+Simply run this code once and MODX will automatically add it to the Extension Packages.
+
+h2. Conclusion
+
+Now, if you reload the page and right-click on a Resource in the tree, then move over &quot;Create&quot;, you should see this:
+
+!context-menu.png!
+
+Fantastic! Now we&#39;ve got our Custom Resource Class loaded, and we&#39;re ready to start actually getting into the nitty-gritty. [Proceed onto Step 2|Creating a Resource Class - Step 2]!
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"36634978";s:3:"ver";s:1:"5";s:4:"code";s:6797:"{panel}This tutorial is part of a Series:
+* Part I: Creating a Custom Resource Class
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* [Part III: Customizing the Controllers|Creating a Resource Class - Step 3]
+* [Part IV: Customizing the Processors|Creating a Resource Class - Step 4]{panel}
+
+We&#39;re going to create a sample Custom Resource Class (CRC) that does a very simple task - it outputs a copyright on the bottom of a page with the current date. Yes - this is much more easily done in a [Snippet|Snippets] in your [Template|Templates], and is much better to do it that way. But this is a tutorial illustrating the concept of CRCs, so bear with it. :)
+
+This page deals with Step 1 - creating the actual Custom Resource Class itself. Step 2 will actually implement the behavior of appending the copyright. Step 3 will deal with overriding the Controllers, and Step 4 will deal with overriding the Processors.
+
+h2. Step 1. Creating your Class
+
+First off, create a xPDO package using a schema (if you&#39;re not familiar on how to do this, please read the [Developing an Extra in MODX Revolution] tutorial and/or the [xPDO Defining a Schema|xPDO20:Defining a Schema] tutorial):
+
+{code}&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;model package=&quot;CopyrightedResource&quot; baseClass=&quot;xPDOObject&quot; platform=&quot;mysql&quot; defaultEngine=&quot;MyISAM&quot;&gt;
+    &lt;object class=&quot;CopyrightedResource&quot; extends=&quot;modResource&quot; /&gt;
+&lt;/model&gt;{code}
+
+Then generate the maps and classes for the model. This should give you a class that looks like this:
+
+{code}
+class CopyrightedResource extends modResource {
+}
+{code}
+
+Simple, eh? Now we want to force the class_key of the resource, and ensure that it shows up in the Resource Create context menu (which we&#39;ll configure later on):
+
+{code}
+class CopyrightedResource extends modResource {
+    public $showInContextMenu = true;
+    function __construct(xPDO &amp; $xpdo) {
+        parent :: __construct($xpdo);
+        $this-&gt;set(&#39;class_key&#39;,&#39;CopyrightedResource&#39;);
+    }
+}
+{code}
+
+This forces the class_key to &quot;CopyrightedResource&quot;, which is our class, and ensures our Resource class shows up in the left-hand tree&#39;s context menu.
+
+h3. Getting Familiar with the modResourceInterface Interface class
+
+If you look in the modResource class file, you&#39;ll see at the top a PHP Interface that defines what methods *must* be defined for a CRC to work:
+
+{code}
+interface modResourceInterface {
+    public static function getControllerPath(xPDO &amp;$modx);
+    public function getContextMenuText();
+    public function getResourceTypeName();
+}
+{code}
+
+We&#39;ll now go into detail on each of these methods and how they implement our CRC.
+
+h3. Adding the getControllerPath Method
+
+We&#39;re going to add the getControllerPath method to our class, but first, make sure you create a [Namespace] called &quot;copyrightedresource&quot; that points to your CRC&#39;s model directory. Once you&#39;ve done that, then you can add this to your class:
+
+{code}public static function getControllerPath(xPDO &amp;$modx) {
+    return $modx-&gt;getOption(&#39;copyrightedresource.core_path&#39;,null,$modx-&gt;getOption(&#39;core_path&#39;).&#39;components/copyrightedresource/&#39;).&#39;controllers/&#39;;
+}{code}
+
+What this method does is tell MODX that hey, look for my manager controllers in this directory that I return. This allows us to override the controllers for our CopyrightedResource CRC. The line first checks for a custom System Setting that shows where our CRC core directory path is (which is optional), and if it&#39;s not set, looks for our CRC path in &#39;core/components/copyrightedresource/&#39;. It then appends &quot;controllers/&quot; to it (you could make this whatever you want, but the standard path for controllers is, strangely enough, &quot;controllers/&quot;.
+
+Great! MODX will now look for our controllers in that directory. We&#39;ll get into creating those in Step 2 of the tutorial.
+
+h3. Adding the getContextMenuText Method
+
+Go ahead and add this method to your class:
+
+{code}public function getContextMenuText() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return array(
+    &#39;text_create&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;),
+    &#39;text_create_here&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource_create_here&#39;),
+  );
+}{code}
+
+This returns two translated strings that MODX will insert into the &quot;Create&quot; context menu when right-clicking on a node in the Resource tab on the left-hand tree.
+
+Obviously, you don&#39;t need to use the MODX lexicon here. You could simply return the text like so:
+
+{code}public function getContextMenuText() {
+  return array(
+    &#39;text_create&#39; =&gt; &#39;Copyrighted Page&#39;
+    &#39;text_create_here&#39; =&gt; &#39;Create a Copyrighted Page Here&#39;,
+  );
+}{code}
+
+And that&#39;d work fine. But MODX allows you to load a Lexicon Topic so that you can translate the strings for your worldwide users.
+
+h3. Adding the getResourceTypeName Method
+
+This final method tells MODX what the translated &quot;name&quot; of your CRC is. We probably don&#39;t want to call it &quot;CopyrightedResource&quot;, so we&#39;re going to plop in this method:
+
+{code}
+public function getResourceTypeName() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;);
+}{code}
+
+Again, this could just return a string:
+
+{code}public function getResourceTypeName() {
+  return &#39;Copyrighted Page&#39;;
+}{code}
+
+This tells MODX to call it a &quot;Copyrighted Page&quot;, rather than its class name, when dealing with it in the manager.
+
+h2. Adding the Class to Extension Packages
+
+To load the CRC properly, you&#39;ll need to add it to the Extension Packages. Why? Well, MODX needs to load your CRC when it loads, so that it has a &quot;library&quot; of sorts of all the loaded Resource Classes available to it. MODX 2.2 provides you with an assistance method to add your package to the Extension Packages dataset: 
+
+{code}$modx-&gt;addExtensionPackage(&#39;copyrightedresource&#39;,&#39;/path/to/copyrightedresource/model/&#39;);{code}
+
+Simply run this code once and MODX will automatically add it to the Extension Packages.
+
+h2. Conclusion
+
+Now, if you reload the page and right-click on a Resource in the tree, then move over &quot;Create&quot;, you should see this:
+
+!context-menu.png!
+
+Fantastic! Now we&#39;ve got our Custom Resource Class loaded, and we&#39;re ready to start actually getting into the nitty-gritty. [Proceed onto Step 2|Creating a Resource Class - Step 2]!
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"36634977";s:3:"ver";s:1:"4";s:4:"code";s:6811:"{note}Under Construction{note}
+
+{panel}This tutorial is part of a Series:
+* Part I: Creating a Custom Resource Class
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* [Part III: Customizing the Controllers|Creating a Resource Class - Step 3]
+* [Part IV: Customizing the Processors|Creating a Resource Class - Step 4]{panel}
+
+
+We&#39;re going to create a sample Custom Resource Class (CRC) that does a very simple task - it outputs a copyright on the bottom of a page with the current date. Yes - this is much more easily done in a [Snippet] in your [Template], and is much better to do it that way. But this is a tutorial illustrating the concept of CRCs, so bear with it. :)
+
+This page deals with Step 1 - creating the actual Custom Resource Class itself. Step 2 will actually implement the behavior of appending the copyright. Step 3 will deal with overriding the Controllers, and Step 4 will deal with overriding the Processors.
+
+h2. Step 1. Creating your Class
+
+First off, create a xPDO package using a schema (if you&#39;re not familiar on how to do this, please read the [Developing an Extra in MODX Revolution] tutorial and/or the [xPDO Defining a Schema|xPDO20:Defining a Schema] tutorial):
+
+{code}&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;model package=&quot;CopyrightedResource&quot; baseClass=&quot;xPDOObject&quot; platform=&quot;mysql&quot; defaultEngine=&quot;MyISAM&quot;&gt;
+    &lt;object class=&quot;CopyrightedResource&quot; extends=&quot;modResource&quot; /&gt;
+&lt;/model&gt;{code}
+
+Then generate the maps and classes for the model. This should give you a class that looks like this:
+
+{code}
+class CopyrightedResource extends modResource {
+}
+{code}
+
+Simple, eh? Now we want to force the class_key of the resource, and ensure that it shows up in the Resource Create context menu (which we&#39;ll configure later on):
+
+{code}
+class CopyrightedResource extends modResource {
+    public $showInContextMenu = true;
+    function __construct(xPDO &amp; $xpdo) {
+        parent :: __construct($xpdo);
+        $this-&gt;set(&#39;class_key&#39;,&#39;CopyrightedResource&#39;);
+    }
+}
+{code}
+
+This forces the class_key to &quot;CopyrightedResource&quot;, which is our class, and ensures our Resource class shows up in the left-hand tree&#39;s context menu.
+
+h3. Getting Familiar with the modResourceInterface Interface class
+
+If you look in the modResource class file, you&#39;ll see at the top a PHP Interface that defines what methods *must* be defined for a CRC to work:
+
+{code}
+interface modResourceInterface {
+    public static function getControllerPath(xPDO &amp;$modx);
+    public function getContextMenuText();
+    public function getResourceTypeName();
+}
+{code}
+
+We&#39;ll now go into detail on each of these methods and how they implement our CRC.
+
+h3. Adding the getControllerPath Method
+
+We&#39;re going to add the getControllerPath method to our class, but first, make sure you create a [Namespace] called &quot;copyrightedresource&quot; that points to your CRC&#39;s model directory. Once you&#39;ve done that, then you can add this to your class:
+
+{code}public static function getControllerPath(xPDO &amp;$modx) {
+    return $modx-&gt;getOption(&#39;copyrightedresource.core_path&#39;,null,$modx-&gt;getOption(&#39;core_path&#39;).&#39;components/copyrightedresource/&#39;).&#39;controllers/&#39;;
+}{code}
+
+What this method does is tell MODX that hey, look for my manager controllers in this directory that I return. This allows us to override the controllers for our CopyrightedResource CRC. The line first checks for a custom System Setting that shows where our CRC core directory path is (which is optional), and if it&#39;s not set, looks for our CRC path in &#39;core/components/copyrightedresource/&#39;. It then appends &quot;controllers/&quot; to it (you could make this whatever you want, but the standard path for controllers is, strangely enough, &quot;controllers/&quot;.
+
+Great! MODX will now look for our controllers in that directory. We&#39;ll get into creating those in Step 2 of the tutorial.
+
+h3. Adding the getContextMenuText Method
+
+Go ahead and add this method to your class:
+
+{code}public function getContextMenuText() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return array(
+    &#39;text_create&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;),
+    &#39;text_create_here&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource_create_here&#39;),
+  );
+}{code}
+
+This returns two translated strings that MODX will insert into the &quot;Create&quot; context menu when right-clicking on a node in the Resource tab on the left-hand tree.
+
+Obviously, you don&#39;t need to use the MODX lexicon here. You could simply return the text like so:
+
+{code}public function getContextMenuText() {
+  return array(
+    &#39;text_create&#39; =&gt; &#39;Copyrighted Page&#39;
+    &#39;text_create_here&#39; =&gt; &#39;Create a Copyrighted Page Here&#39;,
+  );
+}{code}
+
+And that&#39;d work fine. But MODX allows you to load a Lexicon Topic so that you can translate the strings for your worldwide users.
+
+h3. Adding the getResourceTypeName Method
+
+This final method tells MODX what the translated &quot;name&quot; of your CRC is. We probably don&#39;t want to call it &quot;CopyrightedResource&quot;, so we&#39;re going to plop in this method:
+
+{code}
+public function getResourceTypeName() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;);
+}{code}
+
+Again, this could just return a string:
+
+{code}public function getResourceTypeName() {
+  return &#39;Copyrighted Page&#39;;
+}{code}
+
+This tells MODX to call it a &quot;Copyrighted Page&quot;, rather than its class name, when dealing with it in the manager.
+
+h2. Adding the Class to Extension Packages
+
+To load the CRC properly, you&#39;ll need to add it to the Extension Packages. Why? Well, MODX needs to load your CRC when it loads, so that it has a &quot;library&quot; of sorts of all the loaded Resource Classes available to it. MODX 2.2 provides you with an assistance method to add your package to the Extension Packages dataset: 
+
+{code}$modx-&gt;addExtensionPackage(&#39;copyrightedresource&#39;,&#39;/path/to/copyrightedresource/model/&#39;);{code}
+
+Simply run this code once and MODX will automatically add it to the Extension Packages.
+
+h2. Conclusion
+
+Now, if you reload the page and right-click on a Resource in the tree, then move over &quot;Create&quot;, you should see this:
+
+!context-menu.png!
+
+Fantastic! Now we&#39;ve got our Custom Resource Class loaded, and we&#39;re ready to start actually getting into the nitty-gritty. [Proceed onto Step 2|Creating a Resource Class - Step 2]!
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"36634965";s:3:"ver";s:1:"3";s:4:"code";s:6647:"{note}Under Construction{note}
+
+{panel}This tutorial is part of a Series:
+* Part I: Creating a Custom Resource Class
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* [Part III: Customizing the Controllers|Creating a Resource Class - Step 3]
+* [Part IV: Customizing the Processors|Creating a Resource Class - Step 4]{panel}
+
+
+We&#39;re going to create a sample Custom Resource Class (CRC) that does a very simple task - it outputs a copyright on the bottom of a page with the current date. Yes - this is much more easily done in a [Snippet] in your [Template], and is much better to do it that way. But this is a tutorial illustrating the concept of CRCs, so bear with it. :)
+
+This page deals with Step 1 - creating the actual Custom Resource Class itself. Step 2 will actually implement the behavior of appending the copyright. Step 3 will deal with overriding the Controllers, and Step 4 will deal with overriding the Processors.
+
+h2. Step 1. Creating your Class
+
+First off, create a xPDO package using a schema (if you&#39;re not familiar on how to do this, please read the [Developing an Extra in MODX Revolution] tutorial and/or the [xPDO Defining a Schema|xPDO20:Defining a Schema] tutorial):
+
+{code}&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;model package=&quot;CopyrightedResource&quot; baseClass=&quot;xPDOObject&quot; platform=&quot;mysql&quot; defaultEngine=&quot;MyISAM&quot;&gt;
+    &lt;object class=&quot;CopyrightedResource&quot; extends=&quot;modResource&quot; /&gt;
+&lt;/model&gt;{code}
+
+Then generate the maps and classes for the model. This should give you a class that looks like this:
+
+{code}
+class CopyrightedResource extends modResource {
+}
+{code}
+
+Simple, eh? Now we want to force the class_key of the resource, and ensure that it shows up in the Resource Create context menu (which we&#39;ll configure later on):
+
+{code}
+class CopyrightedResource extends modResource {
+    public $showInContextMenu = true;
+    function __construct(xPDO &amp; $xpdo) {
+        parent :: __construct($xpdo);
+        $this-&gt;set(&#39;class_key&#39;,&#39;CopyrightedResource&#39;);
+    }
+}
+{code}
+
+This forces the class_key to &quot;CopyrightedResource&quot;, which is our class, and ensures our Resource class shows up in the left-hand tree&#39;s context menu.
+
+h3. Getting Familiar with the modResourceInterface Interface class
+
+If you look in the modResource class file, you&#39;ll see at the top a PHP Interface that defines what methods *must* be defined for a CRC to work:
+
+{code}
+interface modResourceInterface {
+    public static function getControllerPath(xPDO &amp;$modx);
+    public function getContextMenuText();
+    public function getResourceTypeName();
+}
+{code}
+
+We&#39;ll now go into detail on each of these methods and how they implement our CRC.
+
+h3. Adding the getControllerPath Method
+
+We&#39;re going to add the getControllerPath method to our class, but first, make sure you create a [Namespace] called &quot;copyrightedresource&quot; that points to your CRC&#39;s model directory. Once you&#39;ve done that, then you can add this to your class:
+
+{code}public static function getControllerPath(xPDO &amp;$modx) {
+    return $modx-&gt;getOption(&#39;copyrightedresource.core_path&#39;,null,$modx-&gt;getOption(&#39;core_path&#39;).&#39;components/copyrightedresource/&#39;).&#39;controllers/&#39;;
+}{code}
+
+What this method does is tell MODX that hey, look for my manager controllers in this directory that I return. This allows us to override the controllers for our CopyrightedResource CRC. The line first checks for a custom System Setting that shows where our CRC core directory path is (which is optional), and if it&#39;s not set, looks for our CRC path in &#39;core/components/copyrightedresource/&#39;. It then appends &quot;controllers/&quot; to it (you could make this whatever you want, but the standard path for controllers is, strangely enough, &quot;controllers/&quot;.
+
+Great! MODX will now look for our controllers in that directory. We&#39;ll get into creating those in Step 2 of the tutorial.
+
+h3. Adding the getContextMenuText Method
+
+Go ahead and add this method to your class:
+
+{code}public function getContextMenuText() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return array(
+    &#39;text_create&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;),
+    &#39;text_create_here&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource_create_here&#39;),
+  );
+}{code}
+
+This returns two translated strings that MODX will insert into the &quot;Create&quot; context menu when right-clicking on a node in the Resource tab on the left-hand tree.
+
+Obviously, you don&#39;t need to use the MODX lexicon here. You could simply return the text like so:
+
+{code}public function getContextMenuText() {
+  return array(
+    &#39;text_create&#39; =&gt; &#39;Copyrighted Page&#39;
+    &#39;text_create_here&#39; =&gt; &#39;Create a Copyrighted Page Here&#39;,
+  );
+}{code}
+
+And that&#39;d work fine. But MODX allows you to load a Lexicon Topic so that you can translate the strings for your worldwide users.
+
+h3. Adding the getResourceTypeName Method
+
+This final method tells MODX what the translated &quot;name&quot; of your CRC is. We probably don&#39;t want to call it &quot;CopyrightedResource&quot;, so we&#39;re going to plop in this method:
+
+{code}
+public function getResourceTypeName() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;);
+}{code}
+
+Again, this could just return a string:
+
+{code}public function getResourceTypeName() {
+  return &#39;Copyrighted Page&#39;;
+}{code}
+
+This tells MODX to call it a &quot;Copyrighted Page&quot;, rather than its class name, when dealing with it in the manager.
+
+h2. Adding the Class to Extension Packages
+
+To load the CRC properly, you&#39;ll need to add it to the Extension Packages. Why? Well, MODX needs to load your CRC when it loads, so that it has a &quot;library&quot; of sorts of all the loaded Resource Classes available to it. MODX 2.2 provides you with an assistance method to add your package to the Extension Packages dataset: 
+
+{code}$modx-&gt;addExtensionPackage(&#39;copyrightedresource&#39;,&#39;/path/to/copyrightedresource/model/&#39;);{code}
+
+Simply run this code once and MODX will automatically add it to the Extension Packages.
+
+Fantastic! Now we&#39;ve got our Custom Resource Class loaded, and we&#39;re ready to start actually getting into the nitty-gritty. [Proceed onto Step 2|Creating a Resource Class - Step 2]!
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"36634959";s:3:"ver";s:1:"2";s:4:"code";s:6327:"{note}Under Construction{note}
+
+We&#39;re going to create a sample Custom Resource Class (CRC) that does a very simple task - it outputs a copyright on the bottom of a page with the current date. Yes - this is much more easily done in a [Snippet] in your [Template], and is much better to do it that way. But this is a tutorial illustrating the concept of CRCs, so bear with it. :)
+
+This page deals with Step 1 - creating the actual Custom Resource Class itself. Step 2 will actually implement the behavior of appending the copyright. Step 3 will deal with overriding the Controllers, and Step 4 will deal with overriding the Processors.
+
+h2. Step 1. Creating your Class
+
+First off, create a xPDO package using a schema (if you&#39;re not familiar on how to do this, please read the [Developing an Extra in MODX Revolution] tutorial and/or the [xPDO Defining a Schema|xPDO20:Defining a Schema] tutorial):
+
+{code}&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;model package=&quot;CopyrightedResource&quot; baseClass=&quot;xPDOObject&quot; platform=&quot;mysql&quot; defaultEngine=&quot;MyISAM&quot;&gt;
+    &lt;object class=&quot;CopyrightedResource&quot; extends=&quot;modResource&quot; /&gt;
+&lt;/model&gt;{code}
+
+Then generate the maps and classes for the model. This should give you a class that looks like this:
+
+{code}
+class CopyrightedResource extends modResource {
+}
+{code}
+
+Simple, eh? Now we want to force the class_key of the resource, and ensure that it shows up in the Resource Create context menu (which we&#39;ll configure later on):
+
+{code}
+class CopyrightedResource extends modResource {
+    public $showInContextMenu = true;
+    function __construct(xPDO &amp; $xpdo) {
+        parent :: __construct($xpdo);
+        $this-&gt;set(&#39;class_key&#39;,&#39;CopyrightedResource&#39;);
+    }
+}
+{code}
+
+This forces the class_key to &quot;CopyrightedResource&quot;, which is our class, and ensures our Resource class shows up in the left-hand tree&#39;s context menu.
+
+h3. Getting Familiar with the modResourceInterface Interface class
+
+If you look in the modResource class file, you&#39;ll see at the top a PHP Interface that defines what methods *must* be defined for a CRC to work:
+
+{code}
+interface modResourceInterface {
+    public static function getControllerPath(xPDO &amp;$modx);
+    public function getContextMenuText();
+    public function getResourceTypeName();
+}
+{code}
+
+We&#39;ll now go into detail on each of these methods and how they implement our CRC.
+
+h3. Adding the getControllerPath Method
+
+We&#39;re going to add the getControllerPath method to our class, but first, make sure you create a [Namespace] called &quot;copyrightedresource&quot; that points to your CRC&#39;s model directory. Once you&#39;ve done that, then you can add this to your class:
+
+{code}public static function getControllerPath(xPDO &amp;$modx) {
+    return $modx-&gt;getOption(&#39;copyrightedresource.core_path&#39;,null,$modx-&gt;getOption(&#39;core_path&#39;).&#39;components/copyrightedresource/&#39;).&#39;controllers/&#39;;
+}{code}
+
+What this method does is tell MODX that hey, look for my manager controllers in this directory that I return. This allows us to override the controllers for our CopyrightedResource CRC. The line first checks for a custom System Setting that shows where our CRC core directory path is (which is optional), and if it&#39;s not set, looks for our CRC path in &#39;core/components/copyrightedresource/&#39;. It then appends &quot;controllers/&quot; to it (you could make this whatever you want, but the standard path for controllers is, strangely enough, &quot;controllers/&quot;.
+
+Great! MODX will now look for our controllers in that directory. We&#39;ll get into creating those in Step 2 of the tutorial.
+
+h3. Adding the getContextMenuText Method
+
+Go ahead and add this method to your class:
+
+{code}public function getContextMenuText() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return array(
+    &#39;text_create&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;),
+    &#39;text_create_here&#39; =&gt; $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource_create_here&#39;),
+  );
+}{code}
+
+This returns two translated strings that MODX will insert into the &quot;Create&quot; context menu when right-clicking on a node in the Resource tab on the left-hand tree.
+
+Obviously, you don&#39;t need to use the MODX lexicon here. You could simply return the text like so:
+
+{code}public function getContextMenuText() {
+  return array(
+    &#39;text_create&#39; =&gt; &#39;Copyrighted Page&#39;
+    &#39;text_create_here&#39; =&gt; &#39;Create a Copyrighted Page Here&#39;,
+  );
+}{code}
+
+And that&#39;d work fine. But MODX allows you to load a Lexicon Topic so that you can translate the strings for your worldwide users.
+
+h3. Adding the getResourceTypeName Method
+
+This final method tells MODX what the translated &quot;name&quot; of your CRC is. We probably don&#39;t want to call it &quot;CopyrightedResource&quot;, so we&#39;re going to plop in this method:
+
+{code}
+public function getResourceTypeName() {
+  $this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;copyrightedresource:default&#39;);
+  return $this-&gt;xpdo-&gt;lexicon(&#39;copyrightedresource&#39;);
+}{code}
+
+Again, this could just return a string:
+
+{code}public function getResourceTypeName() {
+  return &#39;Copyrighted Page&#39;;
+}{code}
+
+This tells MODX to call it a &quot;Copyrighted Page&quot;, rather than its class name, when dealing with it in the manager.
+
+h2. Adding the Class to Extension Packages
+
+To load the CRC properly, you&#39;ll need to add it to the Extension Packages. Why? Well, MODX needs to load your CRC when it loads, so that it has a &quot;library&quot; of sorts of all the loaded Resource Classes available to it. MODX 2.2 provides you with an assistance method to add your package to the Extension Packages dataset: 
+
+{code}$modx-&gt;addExtensionPackage(&#39;copyrightedresource&#39;,&#39;/path/to/copyrightedresource/model/&#39;);{code}
+
+Simply run this code once and MODX will automatically add it to the Extension Packages.
+
+Fantastic! Now we&#39;ve got our Custom Resource Class loaded, and we&#39;re ready to start actually getting into the nitty-gritty. [Proceed onto Step 2|Creating a Resource Class - Step 2]!
+
+{scrollbar}";}i:8;a:3:{s:2:"id";s:8:"36634956";s:3:"ver";s:1:"1";s:4:"code";s:44:"
+{note}Under Construction{note}
+
+{scrollbar}";}}}

@@ -1,0 +1,555 @@
+a:5:{s:2:"id";s:8:"33587218";s:4:"info";a:4:{s:6:"Title:";s:42:"Upgrading from Versions Earlier than 2.0.5";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:57:"[revolution20:Upgrading from Versions Earlier than 2.0.5]";}s:6:"parent";s:8:"18678122";s:6:"source";s:3791:"{alias:Upgrading to Revolution 2.0.5}
+\\
+
+{toc}
+
+h2. Upgrading to Revolution 2.0.5
+
+There are a few changes that have occurred in 2.0.5 that will only apply to certain cases.
+
+This upgrade process applies to you only if you:
+
+* Use Form Customization
+* Have a Custom Access Policy
+* Use the extension_packages setting
+
+If you didn&#39;t employ any of the above on your site you don&#39;t need to read further. If your site was set up by someone else it would be wise to confer with them prior to upgrading to ensure your site doesn&#39;t.
+
+These upgrades should go smoothly; however, if they do not, please [post on the forums|http://modxcms.com/forums] regarding your issue.
+
+{note}It is always recommended to backup your database before upgrading.{note}
+
+h2. Form Customization Updates
+
+Form Customization has been completely rewritten. It now *only works for Resource pages*. If you have FC rules that are not Resource-page targeted, *they will be erased*. Why did we do this? Well, for one, 95% of FC rules were targeted at the Resource pages. The UI prior to 2.0.5 for managing FC rules, while powerful, was confusing and complex. We decided to simplify the UI; however, this required restricting FC&#39;s scope to just the Resource pages. Also, *inactive rules will be erased*, because there is no such thing as an &quot;Inactive Rule&quot; in 2.0.5. There are only inactive Sets and Profiles.
+
+An FC &quot;Set&quot; now is a collection of Rules that apply to one page (either create or update Resource). Constraints are now set-specific instead of rule-specific. Also, Sets can be targeted to specified Templates. Specific sets can be active or inactive.
+
+An FC &quot;Profile&quot; is a collection of Sets. They can be restricted to certain User Groups, and be declared active or inactive.
+
+Also, there are now 4 new tables and classes:
+
+* \[prefix\]_fc_profiles - modFormCustomizationProfile
+* \[prefix\]_fc_profiles_usergroups - modFormCustomizationProfileUserGroup
+* \[prefix\]_fc_sets - modFormCustomizationSet
+* \[prefix\]_actions_fields - modActionField
+
+Your old rules will be separated based on their constraints. If they had any UserGroup restrictions, they will be divided into separate Profiles. Within that, they will be separated into Sets based on their page they targeted (create or update) and any constraints they had - since constraints are now set-based. You can then use a point-and-click interface to edit rules within the set.
+
+h2. Access Policy Updates
+
+Access Policies have been enhanced to have what are now called &quot;Access Policy Templates&quot;. These are what Access Policies used to be in a user interface sense; they have a list of Permissions you can add to or remove from. However, now when you edit an Access Policy itself, you are presented with a checkbox list of Permissions pulled from that Policy&#39;s Template. This allows for much easier editing and defining of Access Policies.
+
+You can easily create manager policies, for example, by creating a new Access Policy based on the Administrator Access Policy Template.
+
+Your old Policies will be upgraded into the Administrator Template if they used only Administrator policies. If you had custom Access Policies that used custom Permissions, a custom Access Policy Template will be generated for them.
+
+h2. extension_packages Changes
+
+The setting extension_packages has been changed to a JSON format. The format used to be:
+
+{code}package_name:package_path,another_package:another_path{code}
+
+And is now:
+
+{code}[{&quot;package_name&quot;:{&quot;path&quot;:&quot;package_path&quot;}},{&quot;another_package&quot;:{&quot;path&quot;:&quot;another_path&quot;}}]{code}
+
+This should automatically upgrade without you having to adjust it.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";s:8:"versions";a:9:{i:0;a:3:{s:2:"id";s:8:"33587218";s:3:"ver";s:1:"9";s:4:"code";s:3791:"{alias:Upgrading to Revolution 2.0.5}
+\\
+
+{toc}
+
+h2. Upgrading to Revolution 2.0.5
+
+There are a few changes that have occurred in 2.0.5 that will only apply to certain cases.
+
+This upgrade process applies to you only if you:
+
+* Use Form Customization
+* Have a Custom Access Policy
+* Use the extension_packages setting
+
+If you didn&#39;t employ any of the above on your site you don&#39;t need to read further. If your site was set up by someone else it would be wise to confer with them prior to upgrading to ensure your site doesn&#39;t.
+
+These upgrades should go smoothly; however, if they do not, please [post on the forums|http://modxcms.com/forums] regarding your issue.
+
+{note}It is always recommended to backup your database before upgrading.{note}
+
+h2. Form Customization Updates
+
+Form Customization has been completely rewritten. It now *only works for Resource pages*. If you have FC rules that are not Resource-page targeted, *they will be erased*. Why did we do this? Well, for one, 95% of FC rules were targeted at the Resource pages. The UI prior to 2.0.5 for managing FC rules, while powerful, was confusing and complex. We decided to simplify the UI; however, this required restricting FC&#39;s scope to just the Resource pages. Also, *inactive rules will be erased*, because there is no such thing as an &quot;Inactive Rule&quot; in 2.0.5. There are only inactive Sets and Profiles.
+
+An FC &quot;Set&quot; now is a collection of Rules that apply to one page (either create or update Resource). Constraints are now set-specific instead of rule-specific. Also, Sets can be targeted to specified Templates. Specific sets can be active or inactive.
+
+An FC &quot;Profile&quot; is a collection of Sets. They can be restricted to certain User Groups, and be declared active or inactive.
+
+Also, there are now 4 new tables and classes:
+
+* \[prefix\]_fc_profiles - modFormCustomizationProfile
+* \[prefix\]_fc_profiles_usergroups - modFormCustomizationProfileUserGroup
+* \[prefix\]_fc_sets - modFormCustomizationSet
+* \[prefix\]_actions_fields - modActionField
+
+Your old rules will be separated based on their constraints. If they had any UserGroup restrictions, they will be divided into separate Profiles. Within that, they will be separated into Sets based on their page they targeted (create or update) and any constraints they had - since constraints are now set-based. You can then use a point-and-click interface to edit rules within the set.
+
+h2. Access Policy Updates
+
+Access Policies have been enhanced to have what are now called &quot;Access Policy Templates&quot;. These are what Access Policies used to be in a user interface sense; they have a list of Permissions you can add to or remove from. However, now when you edit an Access Policy itself, you are presented with a checkbox list of Permissions pulled from that Policy&#39;s Template. This allows for much easier editing and defining of Access Policies.
+
+You can easily create manager policies, for example, by creating a new Access Policy based on the Administrator Access Policy Template.
+
+Your old Policies will be upgraded into the Administrator Template if they used only Administrator policies. If you had custom Access Policies that used custom Permissions, a custom Access Policy Template will be generated for them.
+
+h2. extension_packages Changes
+
+The setting extension_packages has been changed to a JSON format. The format used to be:
+
+{code}package_name:package_path,another_package:another_path{code}
+
+And is now:
+
+{code}[{&quot;package_name&quot;:{&quot;path&quot;:&quot;package_path&quot;}},{&quot;another_package&quot;:{&quot;path&quot;:&quot;another_path&quot;}}]{code}
+
+This should automatically upgrade without you having to adjust it.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33587264";s:3:"ver";s:1:"8";s:4:"code";s:3753:"\\
+
+{toc}
+
+h2. Upgrading to Revolution 2.0.5
+
+There are a few changes that have occurred in 2.0.5 that will only apply to certain cases.
+
+This upgrade process applies to you only if you:
+
+* Use Form Customization
+* Have a Custom Access Policy
+* Use the extension_packages setting
+
+If you didn&#39;t employ any of the above on your site you don&#39;t need to read further. If your site was set up by someone else it would be wise to confer with them prior to upgrading to ensure your site doesn&#39;t.
+
+These upgrades should go smoothly; however, if they do not, please [post on the forums|http://modxcms.com/forums] regarding your issue.
+
+{note}It is always recommended to backup your database before upgrading.{note}
+
+h2. Form Customization Updates
+
+Form Customization has been completely rewritten. It now *only works for Resource pages*. If you have FC rules that are not Resource-page targeted, *they will be erased*. Why did we do this? Well, for one, 95% of FC rules were targeted at the Resource pages. The UI prior to 2.0.5 for managing FC rules, while powerful, was confusing and complex. We decided to simplify the UI; however, this required restricting FC&#39;s scope to just the Resource pages. Also, *inactive rules will be erased*, because there is no such thing as an &quot;Inactive Rule&quot; in 2.0.5. There are only inactive Sets and Profiles.
+
+An FC &quot;Set&quot; now is a collection of Rules that apply to one page (either create or update Resource). Constraints are now set-specific instead of rule-specific. Also, Sets can be targeted to specified Templates. Specific sets can be active or inactive.
+
+An FC &quot;Profile&quot; is a collection of Sets. They can be restricted to certain User Groups, and be declared active or inactive.
+
+Also, there are now 4 new tables and classes:
+
+* \[prefix\]_fc_profiles - modFormCustomizationProfile
+* \[prefix\]_fc_profiles_usergroups - modFormCustomizationProfileUserGroup
+* \[prefix\]_fc_sets - modFormCustomizationSet
+* \[prefix\]_actions_fields - modActionField
+
+Your old rules will be separated based on their constraints. If they had any UserGroup restrictions, they will be divided into separate Profiles. Within that, they will be separated into Sets based on their page they targeted (create or update) and any constraints they had - since constraints are now set-based. You can then use a point-and-click interface to edit rules within the set.
+
+h2. Access Policy Updates
+
+Access Policies have been enhanced to have what are now called &quot;Access Policy Templates&quot;. These are what Access Policies used to be in a user interface sense; they have a list of Permissions you can add to or remove from. However, now when you edit an Access Policy itself, you are presented with a checkbox list of Permissions pulled from that Policy&#39;s Template. This allows for much easier editing and defining of Access Policies.
+
+You can easily create manager policies, for example, by creating a new Access Policy based on the Administrator Access Policy Template.
+
+Your old Policies will be upgraded into the Administrator Template if they used only Administrator policies. If you had custom Access Policies that used custom Permissions, a custom Access Policy Template will be generated for them.
+
+h2. extension_packages Changes
+
+The setting extension_packages has been changed to a JSON format. The format used to be:
+
+{code}package_name:package_path,another_package:another_path{code}
+
+And is now:
+
+{code}[{&quot;package_name&quot;:{&quot;path&quot;:&quot;package_path&quot;}},{&quot;another_package&quot;:{&quot;path&quot;:&quot;another_path&quot;}}]{code}
+
+This should automatically upgrade without you having to adjust it.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"33587230";s:3:"ver";s:1:"7";s:4:"code";s:3598:"\\
+
+{toc}
+
+h2. Upgrading to Revolution 2.0.5
+
+There are a few changes that have occurred in 2.0.5 that will only apply to certain cases.
+
+This upgrade process applies to you only if you:
+
+* Use Form Customization
+* Have a Custom Access Policy
+* Use the extension_packages setting
+
+If you didn&#39;t employ any of the above on your site you don&#39;t need to read further. If your site was set up by someone else it would be wise to confer with them prior to upgrading to ensure your site doesn&#39;t.
+
+These upgrades should go smoothly; however, if they do not, please [post on the forums|http://modxcms.com/forums] regarding your issue.
+
+{note}It is always recommended to backup your database before upgrading.{note}
+
+h2. Form Customization Updates
+
+Form Customization has been completely rewritten. It now *only works for Resource pages*. If you have FC rules that are not Resource-page targeted, *they will be erased*. Why did we do this? Well, for one, 95% of FC rules were targeted at the Resource pages. The UI prior to 2.0.5 for managing FC rules, while powerful, was confusing and complex. We decided to simplify the UI; however, this required restricting FC&#39;s scope to just the Resource pages.
+
+An FC &quot;Set&quot; now is a collection of Rules that apply to one page (either create or update Resource). Constraints are now set-specific instead of rule-specific. Also, Sets can be targeted to specified Templates. Specific sets can be active or inactive.
+
+An FC &quot;Profile&quot; is a collection of Sets. They can be restricted to certain User Groups, and be declared active or inactive.
+
+Also, there are now 4 new tables and classes:
+
+* \[prefix\]_fc_profiles - modFormCustomizationProfile
+* \[prefix\]_fc_profiles_usergroups - modFormCustomizationProfileUserGroup
+* \[prefix\]_fc_sets - modFormCustomizationSet
+* \[prefix\]_actions_fields - modActionField
+
+Your old rules will be separated based on their constraints. If they had any UserGroup restrictions, they will be divided into separate Profiles. Within that, they will be separated into Sets based on their page they targeted (create or update) and any constraints they had - since constraints are now set-based. You can then use a point-and-click interface to edit rules within the set.
+
+h2. Access Policy Updates
+
+Access Policies have been enhanced to have what are now called &quot;Access Policy Templates&quot;. These are what Access Policies used to be in a user interface sense; they have a list of Permissions you can add to or remove from. However, now when you edit an Access Policy itself, you are presented with a checkbox list of Permissions pulled from that Policy&#39;s Template. This allows for much easier editing and defining of Access Policies.
+
+You can easily create manager policies, for example, by creating a new Access Policy based on the Administrator Access Policy Template.
+
+Your old Policies will be upgraded into the Administrator Template if they used only Administrator policies. If you had custom Access Policies that used custom Permissions, a custom Access Policy Template will be generated for them.
+
+h2. extension_packages Changes
+
+The setting extension_packages has been changed to a JSON format. The format used to be:
+
+{code}package_name:package_path,another_package:another_path{code}
+
+And is now:
+
+{code}[{&quot;package_name&quot;:{&quot;path&quot;:&quot;package_path&quot;}},{&quot;another_package&quot;:{&quot;path&quot;:&quot;another_path&quot;}}]{code}
+
+This should automatically upgrade without you having to adjust it.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"33587229";s:3:"ver";s:1:"6";s:4:"code";s:3530:"\\
+
+{toc}
+
+h2. Upgrading to Revolution 2.0.5
+
+There are a few changes that have occurred in 2.0.5 that will only apply to certain cases.
+
+This upgrade process applies to you only if you:
+
+* Use Form Customization
+* Have a Custom Access Policy
+* Use the extension_packages setting
+
+If you didn&#39;t employ any of the above on your site you don&#39;t need to read further. If your site was set up by someone else it would be wise to confer with them prior to upgrading to ensure your site doesn&#39;t.
+
+These upgrades should go smoothly; however, if they do not, please [post on the forums|http://modxcms.com/forums] regarding your issue.
+
+{note}It is always recommended to backup your database before upgrading.{note}
+
+h2. Form Customization Updates
+
+Form Customization has been completely rewritten. It now *only works for Resource pages*. If you have FC rules that are not Resource-page targeted, *they will be erased*. Why did we do this? Well, for one, 95% of FC rules were targeted at the Resource pages. The UI prior to 2.0.5 for managing FC rules, while powerful, was confusing and complex. We decided to simplify the UI; however, this required restricting FC&#39;s scope to just the Resource pages.
+
+An FC &quot;Set&quot; now is a collection of Rules that apply to one page (either create or update Resource). Constraints are now set-specific instead of rule-specific. Also, Sets can be targeted to specified Templates. Specific sets can be active or inactive.
+
+An FC &quot;Profile&quot; is a collection of Sets. They can be restricted to certain User Groups, and be declared active or inactive.
+
+Also, there are now 4 new tables and classes:
+
+* \[prefix\]_fc_profiles - modFormCustomizationProfile
+* \[prefix\]_fc_profiles_usergroups - modFormCustomizationProfileUserGroup
+* \[prefix\]_fc_sets - modFormCustomizationSet
+* \[prefix\]_actions_fields - modActionField
+
+Your old rules will be separated based on their constraints. If they had any UserGroup restrictions, they will be divided into separate Profiles. Within that, they will be separated into Sets based on their page they targeted (create or update) and any constraints they had - since constraints are now set-based. You can then use a point-and-click interface to edit rules within the set.
+
+h2. Access Policy Updates
+
+Access Policies have been enhanced to have what are now called &quot;Access Policy Templates&quot;. These are what Access Policies used to be in a user interface sense; they have a list of Permissions you can add to or remove from. However, now when you edit an Access Policy itself, you are presented with a checkbox list of Permissions pulled from that Policy&#39;s Template. This allows for much easier editing and defining of Access Policies.
+
+You can easily create manager policies, for example, by creating a new Access Policy based on the Administrator Access Policy Template.
+
+Your old Policies will be upgraded into the Administrator Template if they used only Administrator policies. If you had custom Access Policies that used custom Permissions, a custom Access Policy Template will be generated for them.
+
+h2. extension_packages Changes
+
+The setting extension_packages has been changed to a JSON format. The format used to be:
+
+{code}package_name:package_path,another_package:another_path{code}
+
+And is now:
+
+{code}[{&quot;package_name&quot;:{&quot;path&quot;:&quot;package_path&quot;}},{&quot;another_package&quot;:{&quot;path&quot;:&quot;another_path&quot;}}]{code}
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"33587228";s:3:"ver";s:1:"5";s:4:"code";s:3266:"\\
+
+{toc}
+
+h2. Upgrading to Revolution 2.0.5
+
+There are a few changes that have occurred in 2.0.5 that will only apply to certain cases.
+
+This upgrade process applies to you only if you:
+
+* Use Form Customization
+* Have a Custom Access Policy
+* Use the extension_packages setting
+
+If you didn&#39;t employ any of the above on your site you don&#39;t need to read further. If your site was set up by someone else it would be wise to confer with them prior to upgrading to ensure your site doesn&#39;t.
+
+These upgrades should go smoothly; however, if they do not, please [post on the forums|http://modxcms.com/forums] regarding your issue.
+
+{note}It is always recommended to backup your database before upgrading.{note}
+
+h2. Form Customization Updates
+
+Form Customization has been completely rewritten. It now *only works for Resource pages*. If you have FC rules that are not Resource-page targeted, *they will be erased*. Why did we do this? Well, for one, 95% of FC rules were targeted at the Resource pages. The UI prior to 2.0.5 for managing FC rules, while powerful, was confusing and complex. We decided to simplify the UI; however, this required restricting FC&#39;s scope to just the Resource pages.
+
+An FC &quot;Set&quot; now is a collection of Rules that apply to one page (either create or update Resource). Constraints are now set-specific instead of rule-specific. Also, Sets can be targeted to specified Templates. Specific sets can be active or inactive.
+
+An FC &quot;Profile&quot; is a collection of Sets. They can be restricted to certain User Groups, and be declared active or inactive.
+
+Also, there are now 4 new tables and classes:
+
+* \[prefix\]_fc_profiles - modFormCustomizationProfile
+* \[prefix\]_fc_profiles_usergroups - modFormCustomizationProfileUserGroup
+* \[prefix\]_fc_sets - modFormCustomizationSet
+* \[prefix\]_actions_fields - modActionField
+
+Your old rules will be separated based on their constraints. If they had any UserGroup restrictions, they will be divided into separate Profiles. Within that, they will be separated into Sets based on their page they targeted (create or update) and any constraints they had - since constraints are now set-based. You can then use a point-and-click interface to edit rules within the set.
+
+h2. Access Policy Updates
+
+Access Policies have been enhanced to have what are now called &quot;Access Policy Templates&quot;. These are what Access Policies used to be in a user interface sense; they have a list of Permissions you can add to or remove from. However, now when you edit an Access Policy itself, you are presented with a checkbox list of Permissions pulled from that Policy&#39;s Template. This allows for much easier editing and defining of Access Policies.
+
+You can easily create manager policies, for example, by creating a new Access Policy based on the Administrator Access Policy Template.
+
+Your old Policies will be upgraded into the Administrator Template if they used only Administrator policies. If you had custom Access Policies that used custom Permissions, a custom Access Policy Template will be generated for them.
+
+h2. extension_packages Changes
+
+The setting extension_packages has been changed to a JSON format.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"33587226";s:3:"ver";s:1:"4";s:4:"code";s:3269:"\\
+
+{toc}
+
+h2. Upgrading to Revolution 2.0.5
+
+There are a few changes that have occurred in 2.0.5 that will only apply to certain cases.
+
+This upgrade process applies to you only if you:
+
+* Use Form Customization
+* Have a Custom Access Policy
+* Use the extension_packages setting
+
+If you didn&#39;t employ either of the above on your site you don&#39;t need to read further. If your site was set up by someone else it would be wise to confer with them prior to upgrading to ensure your site doesn&#39;t.
+
+These upgrades should go smoothly; however, if they do not, please [post on the forums|http://modxcms.com/forums] regarding your issue.
+
+{note}It is always recommended to backup your database before upgrading.{note}
+
+h2. Form Customization Updates
+
+Form Customization has been completely rewritten. It now *only works for Resource pages*. If you have FC rules that are not Resource-page targeted, *they will be erased*. Why did we do this? Well, for one, 95% of FC rules were targeted at the Resource pages. The UI prior to 2.0.5 for managing FC rules, while powerful, was confusing and complex. We decided to simplify the UI; however, this required restricting FC&#39;s scope to just the Resource pages.
+
+An FC &quot;Set&quot; now is a collection of Rules that apply to one page (either create or update Resource). Constraints are now set-specific instead of rule-specific. Also, Sets can be targeted to specified Templates. Specific sets can be active or inactive.
+
+An FC &quot;Profile&quot; is a collection of Sets. They can be restricted to certain User Groups, and be declared active or inactive.
+
+Also, there are now 4 new tables and classes:
+
+* \[prefix\]_fc_profiles - modFormCustomizationProfile
+* \[prefix\]_fc_profiles_usergroups - modFormCustomizationProfileUserGroup
+* \[prefix\]_fc_sets - modFormCustomizationSet
+* \[prefix\]_actions_fields - modActionField
+
+Your old rules will be separated based on their constraints. If they had any UserGroup restrictions, they will be divided into separate Profiles. Within that, they will be separated into Sets based on their page they targeted (create or update) and any constraints they had - since constraints are now set-based. You can then use a point-and-click interface to edit rules within the set.
+
+h2. Access Policy Updates
+
+Access Policies have been enhanced to have what are now called &quot;Access Policy Templates&quot;. These are what Access Policies used to be in a user interface sense; they have a list of Permissions you can add to or remove from. However, now when you edit an Access Policy itself, you are presented with a checkbox list of Permissions pulled from that Policy&#39;s Template. This allows for much easier editing and defining of Access Policies.
+
+You can easily create manager policies, for example, by creating a new Access Policy based on the Administrator Access Policy Template.
+
+Your old Policies will be upgraded into the Administrator Template if they used only Administrator policies. If you had custom Access Policies that used custom Permissions, a custom Access Policy Template will be generated for them.
+
+h2. extension_packages Changes
+
+The setting extension_packages has been changed to a JSON format.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"33587225";s:3:"ver";s:1:"3";s:4:"code";s:3056:"\\
+
+{toc}
+
+h2. Upgrading to Revolution 2.0.5
+
+There are a few changes that have occurred in 2.0.5 that will only apply to certain cases. If you did not:
+
+* Use Form Customization
+* Have a Custom Access Policy
+* Use the extension_packages setting
+
+then you do not have to read this document.
+
+These upgrades should go smoothly; however, if they do not, please [post on the forums|http://modxcms.com/forums] regarding your issue.
+
+{note}It is always recommended to backup your database before upgrading.{note}
+
+h2. Form Customization Updates
+
+Form Customization has been completely rewritten. It now *only works for Resource pages*. If you have FC rules that are not Resource-page targeted, *they will be erased*. Why did we do this? Well, for one, 95% of FC rules were targeted at the Resource pages. The UI prior to 2.0.5 for managing FC rules, while powerful, was confusing and complex. We decided to simplify the UI; however, this required restricting FC&#39;s scope to just the Resource pages.
+
+An FC &quot;Set&quot; now is a collection of Rules that apply to one page (either create or update Resource). Constraints are now set-specific instead of rule-specific. Also, Sets can be targeted to specified Templates. Specific sets can be active or inactive.
+
+An FC &quot;Profile&quot; is a collection of Sets. They can be restricted to certain User Groups, and be declared active or inactive.
+
+Also, there are now 4 new tables and classes:
+
+* \[prefix\]_fc_profiles - modFormCustomizationProfile
+* \[prefix\]_fc_profiles_usergroups - modFormCustomizationProfileUserGroup
+* \[prefix\]_fc_sets - modFormCustomizationSet
+* \[prefix\]_actions_fields - modActionField
+
+Your old rules will be separated based on their constraints. If they had any UserGroup restrictions, they will be divided into separate Profiles. Within that, they will be separated into Sets based on their page they targeted (create or update) and any constraints they had - since constraints are now set-based. You can then use a point-and-click interface to edit rules within the set.
+
+h2. Access Policy Updates
+
+Access Policies have been enhanced to have what are now called &quot;Access Policy Templates&quot;. These are what Access Policies used to be in a user interface sense; they have a list of Permissions you can add to or remove from. However, now when you edit an Access Policy itself, you are presented with a checkbox list of Permissions pulled from that Policy&#39;s Template. This allows for much easier editing and defining of Access Policies.
+
+You can easily create manager policies, for example, by creating a new Access Policy based on the Administrator Access Policy Template.
+
+Your old Policies will be upgraded into the Administrator Template if they used only Administrator policies. If you had custom Access Policies that used custom Permissions, a custom Access Policy Template will be generated for them.
+
+h2. extension_packages Changes
+
+The setting extension_packages has been changed to a JSON format.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"33587223";s:3:"ver";s:1:"2";s:4:"code";s:2920:"\\
+
+{toc}
+
+h2. Upgrading to Revolution 2.0.5
+
+There are a few changes that have occurred in 2.0.5 that will only apply to certain cases. If you did not:
+
+* Use Form Customization
+* Have a Custom Access Policy
+
+then you do not have to read this document.
+
+These upgrades should go smoothly; however, if they do not, please [post on the forums|http://modxcms.com/forums] regarding your issue.
+
+{note}It is always recommended to backup your database before upgrading.{note}
+
+h2. Form Customization Updates
+
+Form Customization has been completely rewritten. It now *only works for Resource pages*. If you have FC rules that are not Resource-page targeted, *they will be erased*. Why did we do this? Well, for one, 95% of FC rules were targeted at the Resource pages. The UI prior to 2.0.5 for managing FC rules, while powerful, was confusing and complex. We decided to simplify the UI; however, this required restricting FC&#39;s scope to just the Resource pages.
+
+An FC &quot;Set&quot; now is a collection of Rules that apply to one page (either create or update Resource). Constraints are now set-specific instead of rule-specific. Also, Sets can be targeted to specified Templates. Specific sets can be active or inactive.
+
+An FC &quot;Profile&quot; is a collection of Sets. They can be restricted to certain User Groups, and be declared active or inactive.
+
+Also, there are now 4 new tables and classes:
+
+* \[prefix\]_fc_profiles - modFormCustomizationProfile
+* \[prefix\]_fc_profiles_usergroups - modFormCustomizationProfileUserGroup
+* \[prefix\]_fc_sets - modFormCustomizationSet
+* \[prefix\]_actions_fields - modActionField
+
+Your old rules will be separated based on their constraints. If they had any UserGroup restrictions, they will be divided into separate Profiles. Within that, they will be separated into Sets based on their page they targeted (create or update) and any constraints they had - since constraints are now set-based. You can then use a point-and-click interface to edit rules within the set.
+
+h2. Access Policy Updates
+
+Access Policies have been enhanced to have what are now called &quot;Access Policy Templates&quot;. These are what Access Policies used to be in a user interface sense; they have a list of Permissions you can add to or remove from. However, now when you edit an Access Policy itself, you are presented with a checkbox list of Permissions pulled from that Policy&#39;s Template. This allows for much easier editing and defining of Access Policies.
+
+You can easily create manager policies, for example, by creating a new Access Policy based on the Administrator Access Policy Template.
+
+Your old Policies will be upgraded into the Administrator Template if they used only Administrator policies. If you had custom Access Policies that used custom Permissions, a custom Access Policy Template will be generated for them.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:8;a:3:{s:2:"id";s:8:"33587219";s:3:"ver";s:1:"1";s:4:"code";s:2912:"\\
+
+{toc}
+
+h2. Upgrading to Revolution 2.0.5
+
+There are a few changes that have occurred in 2.0.5 that will only apply to certain cases. If you did not:
+
+* Use Form Customization
+* Have a Custom Access Policy
+
+then you do not have to read this document.
+
+These upgrades should go smoothly; however, if they do not, please [post on the forums|http://modxcms.com/forums] regarding your issue.
+
+{note}It is always recommended to backup your database before upgrading.{note}
+
+h2. Form Customization Updates
+
+Form Customization has been completely rewritten. It now *only works for Resource pages*. If you have FC rules that are not Resource-page targeted, *they will be erased*. Why did we do this? Well, for one, 95% of FC rules were targeted at the Resource pages. The UI prior to 2.0.5 for managing FC rules, while powerful, was confusing and complex. We decided to simplify the UI; however, this required restricting FC&#39;s scope to just the Resource pages.
+
+An FC &quot;Set&quot; now is a collection of Rules that apply to one page (either create or update Resource). Constraints are now set-specific instead of rule-specific. Also, Sets can be targeted to specified Templates. Specific sets can be active or inactive.
+
+An FC &quot;Profile&quot; is a collection of Sets. They can be restricted to certain User Groups, and be declared active or inactive.
+
+Also, there are now 4 new tables and classes:
+
+* [prefix]_fc_profiles - modFormCustomizationProfile
+* [prefix]_fc_profiles_usergroups - modFormCustomizationProfileUserGroup
+* [prefix]_fc_sets - modFormCustomizationSet
+* [prefix]_actions_fields - modActionField
+
+Your old rules will be separated based on their constraints. If they had any UserGroup restrictions, they will be divided into separate Profiles. Within that, they will be separated into Sets based on their page they targeted (create or update) and any constraints they had - since constraints are now set-based. You can then use a point-and-click interface to edit rules within the set.
+
+h2. Access Policy Updates
+
+Access Policies have been enhanced to have what are now called &quot;Access Policy Templates&quot;. These are what Access Policies used to be in a user interface sense; they have a list of Permissions you can add to or remove from. However, now when you edit an Access Policy itself, you are presented with a checkbox list of Permissions pulled from that Policy&#39;s Template. This allows for much easier editing and defining of Access Policies.
+
+You can easily create manager policies, for example, by creating a new Access Policy based on the Administrator Access Policy Template.
+
+Your old Policies will be upgraded into the Administrator Template if they used only Administrator policies. If you had custom Access Policies that used custom Permissions, a custom Access Policy Template will be generated for them.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}}}

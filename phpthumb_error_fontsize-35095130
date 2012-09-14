@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"35095130";s:4:"info";a:4:{s:6:"Title:";s:23:"phpthumb_error_fontsize";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:38:"[revolution20:phpthumb_error_fontsize]";}s:6:"parent";s:8:"18678127";s:6:"source";s:217:"h2. phpthumb_error_fontsize
+
+*Name*: phpThumb Error Font Size
+*Type*: textfield
+*Default*: 1
+*Available In:* 2.0.8\+
+
+An em value indicating a font size to use for text appearing in phpThumb error output.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095130";s:3:"ver";s:1:"1";s:4:"code";s:217:"h2. phpthumb_error_fontsize
+
+*Name*: phpThumb Error Font Size
+*Type*: textfield
+*Default*: 1
+*Available In:* 2.0.8\+
+
+An em value indicating a font size to use for text appearing in phpThumb error output.
+
+{scrollbar}";}}}

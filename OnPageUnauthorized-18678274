@@ -1,0 +1,43 @@
+a:5:{s:2:"id";s:8:"18678274";s:4:"info";a:4:{s:6:"Title:";s:18:"OnPageUnauthorized";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:33:"[revolution20:OnPageUnauthorized]";}s:6:"parent";s:8:"18678228";s:6:"source";s:637:"\\
+
+h2. Event: OnPageUnauthorized
+
+Fires immediately before the user is forwarded to the unauthorized page if attempting to view a non-accessible Resource.
+
+Service: 1 - Parser Service Events
+Group: None
+
+h2. Event Parameters
+
+||Name||Description||
+|response_code|The response code to send. Defaults to &quot;HTTP/1.1 401 Unauthorized&quot;|
+|error_type|The type. Defaults to 401.|
+|error_header|The header being sent: Defaults to &quot;HTTP/1.1 401 Unauthorized&quot;|
+|error_pagetitle|The pagetitle of the unauthorized page.|
+|error_message|The message being sent in the unauthorized page.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678274";s:3:"ver";s:1:"1";s:4:"code";s:637:"\\
+
+h2. Event: OnPageUnauthorized
+
+Fires immediately before the user is forwarded to the unauthorized page if attempting to view a non-accessible Resource.
+
+Service: 1 - Parser Service Events
+Group: None
+
+h2. Event Parameters
+
+||Name||Description||
+|response_code|The response code to send. Defaults to &quot;HTTP/1.1 401 Unauthorized&quot;|
+|error_type|The type. Defaults to 401.|
+|error_header|The header being sent: Defaults to &quot;HTTP/1.1 401 Unauthorized&quot;|
+|error_pagetitle|The pagetitle of the unauthorized page.|
+|error_message|The message being sent in the unauthorized page.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

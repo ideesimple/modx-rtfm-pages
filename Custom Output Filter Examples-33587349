@@ -1,0 +1,1041 @@
+a:5:{s:2:"id";s:8:"33587349";s:4:"info";a:4:{s:6:"Title:";s:29:"Custom Output Filter Examples";s:7:"Author:";s:12:"Mark Hamstra";s:16:"Last Changed by:";s:0:"";s:12:"Wiki Markup:";s:44:"[revolution20:Custom Output Filter Examples]";}s:6:"parent";s:8:"18678207";s:6:"source";s:5341:"{toc}
+
+h2. Introduction
+
+Custom Output Filters are simply MODx Snippets dedicated to formatting placeholder output. If a raw placeholder, e.g. {code}[[*pagetitle]]{code} returns a string of text, you can modify it via a custom Output Filter, e.g. {code}[[*pagetitle:myOutputFilter]]{code} simply by creating a Snippet named *myOutputFilter*
+
+This page serves as a place where some basic custom output filters can be found. These are not included in the core package, however you need to add these yourself.
+
+You can find [more information on the built-in output filters|Input and Output Filters (Output Modifiers)], if that is what you&#39;re looking.
+
+
+h2. Creating a Custom Output Modifier
+
+A custom output filter is simply a [Snippet|Snippets] that is earmarked to modify content. Simply put the [Snippet|Snippets] name instead of the modifier. Example with a snippet named &#39;makeDownloadLink&#39;:
+
+{code}[[+file:makeDownloadLink=`notitle`]]{code}
+
+This will pass these properties to the snippet:
+|| Param || Value || Example Result ||
+| input | The element&#39;s value. | The value of \[\[+file\]\] |
+| options | Any value passed to the modifier. | &#39;notitle&#39; |
+| token | The type of the parent element. | + (the token on `file`) |
+| name | The name of the parent element. | file |
+| tag | The complete parent tag. | \[\[\+[file:makeDownloadLink=]`notitle`\]\] |
+
+The most important (and perhaps the most obvious) of these parameters is the *$input* parameter.  Your Snippet could do something as simple as this:
+
+{code}return strtolower($input);{code}
+
+h2. Porting PHx to Custom Output Filters
+
+PHx is a very popular MODX Evolution extra that offers similar functionality as output filters in Revolution, however they are not exactly the same. The most important thing to remember when porting PHx code to a custom output filter in Revolution is probably that the input (the tag&#39;s content being processed) is now available in the $input variable, contrary to the $output one which was the case in PHx.
+
+That said, you can have a look at [this page with PHx examples|http://wiki.modxcms.com/index.php/PHx/CustomModifiers] and convert them to Revolution easily when needed. Could you add them to this page when you did that, too? Thanks\! \:)
+
+
+
+h2. Examples
+
+As the examples to be found below are not included in the core, you will need to add these yourself. Luckily, MODx makes this ridiculously easy. You can simply use snippets as output filters, so the process of adding a custom output filter is merely adding a new snippet\! To use the output filter, you reference the snippet name.
+
+To documentation contributors: please add examples in alphabetical order.
+
+
+h3. alternateClass
+
+alternateClass simply checks if an integer (for example, a counting placeholder) passed can be divided by two. If that is possible, it returns the class you specify as the output filter&#39;s property.
+
+{code}&lt;?php
+/*
+ * Based on phx:alternateClass by Smashingred
+ * Updated for Revolution by Mark Hamstra
+ */
+if ($input % 2) {
+  return $options;
+} else {
+  return &#39;&#39;; // Could set another class here
+}
+?&gt;
+{code}
+
+Use like this:
+
+{code}
+[[+component.idx:alternateClass=`alt`]]
+{code}
+
+h3. parseLinks
+
+The parseLinks output filter finds links, and replaces them with a html &lt;a&gt; attribute.
+{code}
+&lt;?php
+/*
+ * Based on phx:parseLinks
+ */
+$t = $input;
+$t = ereg_replace(&quot;[a-zA-Z]+://([.]?[a-zA-Z0-9_/-])*&quot;, &quot;&lt;a href=\&quot;\\0\&quot;&gt;\\0&lt;/a&gt;&quot;, $t);
+$t = ereg_replace(&quot;(^| |\n)(www([.]?[a-zA-Z0-9_/-])*)&quot;, &quot;\\1&lt;a href=\&quot;http://\\2\&quot;&gt;\\2&lt;/a&gt;&quot;, $t);
+return $t;
+{code}
+
+h3. parseTags
+
+This parseTags takes input as a comma delimited list, and makes all individual tags a link to resource 9 with tag=tagname query parameter appended to the link.
+
+{code}
+&lt;?php
+/*
+ * parseTags output filter
+ * by Mark Hamstra (http://www.markhamstra.nl)
+ * free to use / modify / distribute to your will
+ */
+if ($input == &#39;&#39;) { return &#39;&#39;; } // Output filters are also processed when the input is empty, so check for that.
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of comma-space.
+  foreach ($tags as $key =&gt; $value) { // Process them individually
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;;
+  }
+  return implode(&#39;, &#39;,$output); // Delimite again with a comma-space
+{code}
+
+h3. shorten
+
+This shortens the input like :ellipsis but it does not truncate words. Defaults to the length of max. 50 characters. Based on code by gOmp.
+
+{code}&lt;?php
+$output = &#39;&#39;;
+$options = !empty($options)?$options:50;
+
+if (!empty($input) &amp;&amp; !empty($options)) {
+  if (strlen($input) &gt; $options) {
+    $output = substr($input, 0, strrpos(substr($input, 0, $options), &#39; &#39;)).&#39; &amp;hellip;&#39;;
+  }
+  else{
+    $output = $input;
+  }
+}
+return $output;
+?&gt;
+{code}
+
+h3. substring
+
+Get a substring of the input.
+
+{code}&lt;?php
+$options=explode(&#39;,&#39;,$options);
+return count($options)&gt;1 ? substr($input,$options[0],$options[1]) : substr($input,$options[0]);
+?&gt;
+{code}
+
+Example:
+
+{code}
+&lt;span&gt;[[*introtext:substring=`0,1`]]&lt;/span&gt;[[*introtext:substring=`1`]]
+{code}
+
+";s:8:"versions";a:10:{i:0;a:3:{s:2:"id";s:8:"33587349";s:3:"ver";s:1:"1";s:4:"code";s:5341:"{toc}
+
+h2. Introduction
+
+Custom Output Filters are simply MODx Snippets dedicated to formatting placeholder output. If a raw placeholder, e.g. {code}[[*pagetitle]]{code} returns a string of text, you can modify it via a custom Output Filter, e.g. {code}[[*pagetitle:myOutputFilter]]{code} simply by creating a Snippet named *myOutputFilter*
+
+This page serves as a place where some basic custom output filters can be found. These are not included in the core package, however you need to add these yourself.
+
+You can find [more information on the built-in output filters|Input and Output Filters (Output Modifiers)], if that is what you&#39;re looking.
+
+
+h2. Creating a Custom Output Modifier
+
+A custom output filter is simply a [Snippet|Snippets] that is earmarked to modify content. Simply put the [Snippet|Snippets] name instead of the modifier. Example with a snippet named &#39;makeDownloadLink&#39;:
+
+{code}[[+file:makeDownloadLink=`notitle`]]{code}
+
+This will pass these properties to the snippet:
+|| Param || Value || Example Result ||
+| input | The element&#39;s value. | The value of \[\[+file\]\] |
+| options | Any value passed to the modifier. | &#39;notitle&#39; |
+| token | The type of the parent element. | + (the token on `file`) |
+| name | The name of the parent element. | file |
+| tag | The complete parent tag. | \[\[\+[file:makeDownloadLink=]`notitle`\]\] |
+
+The most important (and perhaps the most obvious) of these parameters is the *$input* parameter.  Your Snippet could do something as simple as this:
+
+{code}return strtolower($input);{code}
+
+h2. Porting PHx to Custom Output Filters
+
+PHx is a very popular MODX Evolution extra that offers similar functionality as output filters in Revolution, however they are not exactly the same. The most important thing to remember when porting PHx code to a custom output filter in Revolution is probably that the input (the tag&#39;s content being processed) is now available in the $input variable, contrary to the $output one which was the case in PHx.
+
+That said, you can have a look at [this page with PHx examples|http://wiki.modxcms.com/index.php/PHx/CustomModifiers] and convert them to Revolution easily when needed. Could you add them to this page when you did that, too? Thanks\! \:)
+
+
+
+h2. Examples
+
+As the examples to be found below are not included in the core, you will need to add these yourself. Luckily, MODx makes this ridiculously easy. You can simply use snippets as output filters, so the process of adding a custom output filter is merely adding a new snippet\! To use the output filter, you reference the snippet name.
+
+To documentation contributors: please add examples in alphabetical order.
+
+
+h3. alternateClass
+
+alternateClass simply checks if an integer (for example, a counting placeholder) passed can be divided by two. If that is possible, it returns the class you specify as the output filter&#39;s property.
+
+{code}&lt;?php
+/*
+ * Based on phx:alternateClass by Smashingred
+ * Updated for Revolution by Mark Hamstra
+ */
+if ($input % 2) {
+  return $options;
+} else {
+  return &#39;&#39;; // Could set another class here
+}
+?&gt;
+{code}
+
+Use like this:
+
+{code}
+[[+component.idx:alternateClass=`alt`]]
+{code}
+
+h3. parseLinks
+
+The parseLinks output filter finds links, and replaces them with a html &lt;a&gt; attribute.
+{code}
+&lt;?php
+/*
+ * Based on phx:parseLinks
+ */
+$t = $input;
+$t = ereg_replace(&quot;[a-zA-Z]+://([.]?[a-zA-Z0-9_/-])*&quot;, &quot;&lt;a href=\&quot;\\0\&quot;&gt;\\0&lt;/a&gt;&quot;, $t);
+$t = ereg_replace(&quot;(^| |\n)(www([.]?[a-zA-Z0-9_/-])*)&quot;, &quot;\\1&lt;a href=\&quot;http://\\2\&quot;&gt;\\2&lt;/a&gt;&quot;, $t);
+return $t;
+{code}
+
+h3. parseTags
+
+This parseTags takes input as a comma delimited list, and makes all individual tags a link to resource 9 with tag=tagname query parameter appended to the link.
+
+{code}
+&lt;?php
+/*
+ * parseTags output filter
+ * by Mark Hamstra (http://www.markhamstra.nl)
+ * free to use / modify / distribute to your will
+ */
+if ($input == &#39;&#39;) { return &#39;&#39;; } // Output filters are also processed when the input is empty, so check for that.
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of comma-space.
+  foreach ($tags as $key =&gt; $value) { // Process them individually
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;;
+  }
+  return implode(&#39;, &#39;,$output); // Delimite again with a comma-space
+{code}
+
+h3. shorten
+
+This shortens the input like :ellipsis but it does not truncate words. Defaults to the length of max. 50 characters. Based on code by gOmp.
+
+{code}&lt;?php
+$output = &#39;&#39;;
+$options = !empty($options)?$options:50;
+
+if (!empty($input) &amp;&amp; !empty($options)) {
+  if (strlen($input) &gt; $options) {
+    $output = substr($input, 0, strrpos(substr($input, 0, $options), &#39; &#39;)).&#39; &amp;hellip;&#39;;
+  }
+  else{
+    $output = $input;
+  }
+}
+return $output;
+?&gt;
+{code}
+
+h3. substring
+
+Get a substring of the input.
+
+{code}&lt;?php
+$options=explode(&#39;,&#39;,$options);
+return count($options)&gt;1 ? substr($input,$options[0],$options[1]) : substr($input,$options[0]);
+?&gt;
+{code}
+
+Example:
+
+{code}
+&lt;span&gt;[[*introtext:substring=`0,1`]]&lt;/span&gt;[[*introtext:substring=`1`]]
+{code}
+
+";}i:1;a:3:{s:2:"id";s:8:"37683905";s:3:"ver";s:1:"9";s:4:"code";s:5016:"{toc}
+
+h2. Introduction
+
+Custom Output Filters are simply MODx Snippets dedicated to formatting placeholder output. If a raw placeholder, e.g. {code}[[*pagetitle]]{code} returns a string of text, you can modify it via a custom Output Filter, e.g. {code}[[*pagetitle:myOutputFilter]]{code} simply by creating a Snippet named *myOutputFilter*
+
+This page serves as a place where some basic custom output filters can be found. These are not included in the core package, however you need to add these yourself.
+
+You can find [more information on the built-in output filters|Input and Output Filters (Output Modifiers)], if that is what you&#39;re looking.
+
+
+h2. Creating a Custom Output Modifier
+
+A custom output filter is simply a [Snippet|Snippets] that is earmarked to modify content. Simply put the [Snippet|Snippets] name instead of the modifier. Example with a snippet named &#39;makeDownloadLink&#39;:
+
+{code}[[+file:makeDownloadLink=`notitle`]]{code}
+
+This will pass these properties to the snippet:
+|| Param || Value || Example Result ||
+| input | The element&#39;s value. | The value of \[\[+file\]\] |
+| options | Any value passed to the modifier. | &#39;notitle&#39; |
+| token | The type of the parent element. | + (the token on `file`) |
+| name | The name of the parent element. | file |
+| tag | The complete parent tag. | \[\[\+[file:makeDownloadLink=]`notitle`\]\] |
+
+The most important (and perhaps the most obvious) of these parameters is the *$input* parameter.  Your Snippet could do something as simple as this:
+
+{code}return strtolower($input);{code}
+
+h2. Porting PHx to Custom Output Filters
+
+PHx is a very popular MODX Evolution extra that offers similar functionality as output filters in Revolution, however they are not exactly the same. The most important thing to remember when porting PHx code to a custom output filter in Revolution is probably that the input (the tag&#39;s content being processed) is now available in the $input variable, contrary to the $output one which was the case in PHx.
+
+That said, you can have a look at [this page with PHx examples|http://wiki.modxcms.com/index.php/PHx/CustomModifiers] and convert them to Revolution easily when needed. Could you add them to this page when you did that, too? Thanks\! \:)
+
+
+
+h2. Examples
+
+As the examples to be found below are not included in the core, you will need to add these yourself. Luckily, MODx makes this ridiculously easy. You can simply use snippets as output filters, so the process of adding a custom output filter is merely adding a new snippet\! To use the output filter, you reference the snippet name.
+
+To documentation contributors: please add examples in alphabetical order.
+
+
+h3. alternateClass
+
+alternateClass simply checks if an integer (for example, a counting placeholder) passed can be divided by two. If that is possible, it returns the class you specify as the output filter&#39;s property.
+
+{code}&lt;?php
+/*
+ * Based on phx:alternateClass by Smashingred
+ * Updated for Revolution by Mark Hamstra
+ */
+if ($input % 2) {
+  return $options;
+} else {
+  return &#39;&#39;; // Could set another class here
+}
+?&gt;
+{code}
+
+Use like this:
+
+{code}
+[[+component.idx:alternateClass=`alt`]]
+{code}
+
+h3. parseLinks
+
+The parseLinks output filter finds links, and replaces them with a html &lt;a&gt; attribute.
+{code}
+&lt;?php
+/*
+ * Based on phx:parseLinks
+ */
+$t = $input;
+$t = ereg_replace(&quot;[a-zA-Z]+://([.]?[a-zA-Z0-9_/-])*&quot;, &quot;&lt;a href=\&quot;\\0\&quot;&gt;\\0&lt;/a&gt;&quot;, $t);
+$t = ereg_replace(&quot;(^| |\n)(www([.]?[a-zA-Z0-9_/-])*)&quot;, &quot;\\1&lt;a href=\&quot;http://\\2\&quot;&gt;\\2&lt;/a&gt;&quot;, $t);
+return $t;
+{code}
+
+h3. parseTags
+
+This parseTags takes input as a comma delimited list, and makes all individual tags a link to resource 9 with tag=tagname query parameter appended to the link.
+
+{code}
+&lt;?php
+/*
+ * parseTags output filter
+ * by Mark Hamstra (http://www.markhamstra.nl)
+ * free to use / modify / distribute to your will
+ */
+if ($input == &#39;&#39;) { return &#39;&#39;; } // Output filters are also processed when the input is empty, so check for that.
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of comma-space.
+  foreach ($tags as $key =&gt; $value) { // Process them individually
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;;
+  }
+  return implode(&#39;, &#39;,$output); // Delimite again with a comma-space
+{code}
+
+h3. shorten
+
+This shortens the input like :ellipsis but it does not truncate words. Defaults to the length of max. 50 characters. Based on code by gOmp.
+
+{code}&lt;?php
+$output = &#39;&#39;;
+$options = !empty($options)?$options:50;
+
+if (!empty($input) &amp;&amp; !empty($options)) {
+  if (strlen($input) &gt; $options) {
+    $output = substr($input, 0, strrpos(substr($input, 0, $options), &#39; &#39;)).&#39; &amp;hellip;&#39;;
+  }
+  else{
+    $output = $input;
+  }
+}
+return $output;
+?&gt;
+{code}";}i:2;a:3:{s:2:"id";s:8:"35586232";s:3:"ver";s:1:"8";s:4:"code";s:4100:"{toc}
+
+h2. Introduction
+
+Custom Output Filters are simply MODx Snippets dedicated to formatting placeholder output. If a raw placeholder, e.g. {code}[[*pagetitle]]{code} returns a string of text, you can modify it via a custom Output Filter, e.g. {code}[[*pagetitle:myOutputFilter]]{code} simply by creating a Snippet named *myOutputFilter*
+
+This page serves as a place where some basic custom output filters can be found. These are not included in the core package, however you need to add these yourself.
+
+You can find [more information on the built-in output filters|Input and Output Filters (Output Modifiers)], if that is what you&#39;re looking.
+
+h2. Porting PHx to Custom Output Filters
+
+PHx is a very popular MODX Evolution extra that offers similar functionality as output filters in Revolution, however they are not exactly the same. The most important thing to remember when porting PHx code to a custom output filter in Revolution is probably that the input (the tag&#39;s content being processed) is now available in the $input variable, contrary to the $output one which was the case in PHx.
+
+That said, you can have a look at [this page with PHx examples|http://wiki.modxcms.com/index.php/PHx/CustomModifiers] and convert them to Revolution easily when needed. Could you add them to this page when you did that, too? Thanks\! \:)
+
+
+
+h2. Examples
+
+As the examples to be found below are not included in the core, you will need to add these yourself. Luckily, MODx makes this ridiculously easy. You can simply use snippets as output filters, so the process of adding a custom output filter is merely adding a new snippet\! To use the output filter, you reference the snippet name.
+
+To documentation contributors: please add examples in alphabetical order.
+
+
+h3. alternateClass
+
+alternateClass simply checks if an integer (for example, a counting placeholder) passed can be divided by two. If that is possible, it returns the class you specify as the output filter&#39;s property.
+
+{code}&lt;?php
+/*
+ * Based on phx:alternateClass by Smashingred
+ * Updated for Revolution by Mark Hamstra
+ */
+if ($input % 2) {
+  return $options;
+} else {
+  return &#39;&#39;; // Could set another class here
+}
+?&gt;
+{code}
+
+Use like this:
+
+{code}
+[[+component.idx:alternateClass=`alt`]]
+{code}
+
+h3. parseLinks
+
+The parseLinks output filter finds links, and replaces them with a html &lt;a&gt; attribute.
+{code}
+&lt;?php
+/*
+ * Based on phx:parseLinks
+ */
+$t = $input;
+$t = ereg_replace(&quot;[a-zA-Z]+://([.]?[a-zA-Z0-9_/-])*&quot;, &quot;&lt;a href=\&quot;\\0\&quot;&gt;\\0&lt;/a&gt;&quot;, $t);
+$t = ereg_replace(&quot;(^| |\n)(www([.]?[a-zA-Z0-9_/-])*)&quot;, &quot;\\1&lt;a href=\&quot;http://\\2\&quot;&gt;\\2&lt;/a&gt;&quot;, $t);
+return $t;
+{code}
+
+h3. parseTags
+
+This parseTags takes input as a comma delimited list, and makes all individual tags a link to resource 9 with tag=tagname query parameter appended to the link.
+
+{code}
+&lt;?php
+/*
+ * parseTags output filter
+ * by Mark Hamstra (http://www.markhamstra.nl)
+ * free to use / modify / distribute to your will
+ */
+if ($input == &#39;&#39;) { return &#39;&#39;; } // Output filters are also processed when the input is empty, so check for that.
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of comma-space.
+  foreach ($tags as $key =&gt; $value) { // Process them individually
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;;
+  }
+  return implode(&#39;, &#39;,$output); // Delimite again with a comma-space
+{code}
+
+h3. shorten
+
+This shortens the input like :ellipsis but it does not truncate words. Defaults to the length of max. 50 characters. Based on code by gOmp.
+
+{code}&lt;?php
+$output = &#39;&#39;;
+$options = !empty($options)?$options:50;
+
+if (!empty($input) &amp;&amp; !empty($options)) {
+  if (strlen($input) &gt; $options) {
+    $output = substr($input, 0, strrpos(substr($input, 0, $options), &#39; &#39;)).&#39; &amp;hellip;&#39;;
+  }
+  else{
+    $output = $input;
+  }
+}
+return $output;
+?&gt;
+{code}";}i:3;a:3:{s:2:"id";s:8:"35095291";s:3:"ver";s:1:"7";s:4:"code";s:3932:"{toc}
+
+h2. Introduction
+
+Custom Output Filters are simply MODx Snippets dedicated to formatting placeholder output. If a raw placeholder, e.g. {code}[[*pagetitle]]{code} returns a string of text, you can modify it via a custom Output Filter, e.g. {code}[[*pagetitle:myOutputFilter]]{code} simply by creating a Snippet named *myOutputFilter*
+
+This page serves as a place where some basic custom output filters can be found. These are not included in the core package, however you need to add these yourself.
+
+You can find [more information on the built-in output filters|Input and Output Filters (Output Modifiers)], if that is what you&#39;re looking.
+
+h2. Porting PHx to Custom Output Filters
+
+The most important thing to remember when porting PHx to a custom output filter in Revolution is probably that the input (the tag&#39;s content being processed) is in the $input variable, and not in the $output one, which was the case in PHx.
+
+That said, you can have a look at [this page with PHx examples|http://wiki.modxcms.com/index.php/PHx/CustomModifiers] and convert them to Revolution easily when needed. Could you add them to this page when you did that, too? Thanks\! \:)
+
+
+
+h2. Examples
+
+As the examples to be found below are not included in the core, you will need to add these yourself. Luckily, MODx makes this ridiculously easy. You can simply use snippets as output filters, so the process of adding a custom output filter is merely adding a new snippet\! To use the output filter, you reference the snippet name.
+
+To documentation contributors: please add examples in alphabetical order.
+
+
+h3. alternateClass
+
+alternateClass simply checks if an integer (for example, a counting placeholder) passed can be divided by two. If that is possible, it returns the class you specify as the output filter&#39;s property.
+
+{code}&lt;?php
+/*
+ * Based on phx:alternateClass by Smashingred
+ * Updated for Revolution by Mark Hamstra
+ */
+if ($input % 2) {
+  return $options;
+} else {
+  return &#39;&#39;; // Could set another class here
+}
+?&gt;
+{code}
+
+Use like this:
+
+{code}
+[[+component.idx:alternateClass=`alt`]]
+{code}
+
+h3. parseLinks
+
+The parseLinks output filter finds links, and replaces them with a html &lt;a&gt; attribute.
+{code}
+&lt;?php
+/*
+ * Based on phx:parseLinks
+ */
+$t = $input;
+$t = ereg_replace(&quot;[a-zA-Z]+://([.]?[a-zA-Z0-9_/-])*&quot;, &quot;&lt;a href=\&quot;\\0\&quot;&gt;\\0&lt;/a&gt;&quot;, $t);
+$t = ereg_replace(&quot;(^| |\n)(www([.]?[a-zA-Z0-9_/-])*)&quot;, &quot;\\1&lt;a href=\&quot;http://\\2\&quot;&gt;\\2&lt;/a&gt;&quot;, $t);
+return $t;
+{code}
+
+h3. parseTags
+
+This parseTags takes input as a comma delimited list, and makes all individual tags a link to resource 9 with tag=tagname query parameter appended to the link.
+
+{code}
+&lt;?php
+/*
+ * parseTags output filter
+ * by Mark Hamstra (http://www.markhamstra.nl)
+ * free to use / modify / distribute to your will
+ */
+if ($input == &#39;&#39;) { return &#39;&#39;; } // Output filters are also processed when the input is empty, so check for that.
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of comma-space.
+  foreach ($tags as $key =&gt; $value) { // Process them individually
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;;
+  }
+  return implode(&#39;, &#39;,$output); // Delimite again with a comma-space
+{code}
+
+h3. shorten
+
+This shortens the input like :ellipsis but it does not truncate words. Defaults to the length of max. 50 characters. Based on code by gOmp.
+
+{code}&lt;?php
+$output = &#39;&#39;;
+$options = !empty($options)?$options:50;
+
+if (!empty($input) &amp;&amp; !empty($options)) {
+  if (strlen($input) &gt; $options) {
+    $output = substr($input, 0, strrpos(substr($input, 0, $options), &#39; &#39;)).&#39; &amp;hellip;&#39;;
+  }
+  else{
+    $output = $input;
+  }
+}
+return $output;
+?&gt;
+{code}";}i:4;a:3:{s:2:"id";s:8:"35095283";s:3:"ver";s:1:"6";s:4:"code";s:3762:"{toc}
+
+h2. Introduction
+
+Custom Output Filters are simply snippets which can be used to do anything with output from snippets, chunks, template variables and placeholders. This page serves as a place where some basic custom output filters can be found. These are not included in the core package, however you need to add these yourself.
+
+You can find [more information on the built-in output filters|Input and Output Filters (Output Modifiers)], if that is what you&#39;re looking.
+
+h2. Porting PHx to Custom Output Filters
+
+The most important thing to remember when porting PHx to a custom output filter in Revolution is probably that the input (the tag&#39;s content being processed) is in the $input variable, and not in the $output one, which was the case in PHx.
+
+That said, you can have a look at [this page with PHx examples|http://wiki.modxcms.com/index.php/PHx/CustomModifiers] and convert them to Revolution easily when needed. Could you add them to this page when you did that, too? Thanks\! \:)
+
+
+
+h2. Examples
+
+As the examples to be found below are not included in the core, you will need to add these yourself. Luckily, MODx makes this ridiculously easy. You can simply use snippets as output filters, so the process of adding a custom output filter is merely adding a new snippet\! To use the output filter, you reference the snippet name.
+
+To documentation contributors: please add examples in alphabetical order.
+
+
+h3. alternateClass
+
+alternateClass simply checks if an integer (for example, a counting placeholder) passed can be divided by two. If that is possible, it returns the class you specify as the output filter&#39;s property.
+
+{code}&lt;?php
+/*
+ * Based on phx:alternateClass by Smashingred
+ * Updated for Revolution by Mark Hamstra
+ */
+if ($input % 2) {
+  return $options;
+} else {
+  return &#39;&#39;; // Could set another class here
+}
+?&gt;
+{code}
+
+Use like this:
+
+{code}
+[[+component.idx:alternateClass=`alt`]]
+{code}
+
+h3. parseLinks
+
+The parseLinks output filter finds links, and replaces them with a html &lt;a&gt; attribute.
+{code}
+&lt;?php
+/*
+ * Based on phx:parseLinks
+ */
+$t = $input;
+$t = ereg_replace(&quot;[a-zA-Z]+://([.]?[a-zA-Z0-9_/-])*&quot;, &quot;&lt;a href=\&quot;\\0\&quot;&gt;\\0&lt;/a&gt;&quot;, $t);
+$t = ereg_replace(&quot;(^| |\n)(www([.]?[a-zA-Z0-9_/-])*)&quot;, &quot;\\1&lt;a href=\&quot;http://\\2\&quot;&gt;\\2&lt;/a&gt;&quot;, $t);
+return $t;
+{code}
+
+h3. parseTags
+
+This parseTags takes input as a comma delimited list, and makes all individual tags a link to resource 9 with tag=tagname query parameter appended to the link.
+
+{code}
+&lt;?php
+/*
+ * parseTags output filter
+ * by Mark Hamstra (http://www.markhamstra.nl)
+ * free to use / modify / distribute to your will
+ */
+if ($input == &#39;&#39;) { return &#39;&#39;; } // Output filters are also processed when the input is empty, so check for that.
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of comma-space.
+  foreach ($tags as $key =&gt; $value) { // Process them individually
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;;
+  }
+  return implode(&#39;, &#39;,$output); // Delimite again with a comma-space
+{code}
+
+h3. shorten
+
+This shortens the input like :ellipsis but it does not truncate words. Defaults to the length of max. 50 characters. Based on code by gOmp.
+
+{code}&lt;?php
+$output = &#39;&#39;;
+$options = !empty($options)?$options:50;
+
+if (!empty($input) &amp;&amp; !empty($options)) {
+  if (strlen($input) &gt; $options) {
+    $output = substr($input, 0, strrpos(substr($input, 0, $options), &#39; &#39;)).&#39; &amp;hellip;&#39;;
+  }
+  else{
+    $output = $input;
+  }
+}
+return $output;
+?&gt;
+{code}";}i:5;a:3:{s:2:"id";s:8:"33948015";s:3:"ver";s:1:"5";s:4:"code";s:3756:"{toc}
+
+h2. Introduction
+
+Custom Output Filters are simply snippets which can be used to do anything with output from snippets, chunks, template variables and placeholders. This page serves as a place where some basic custom output filters can be found. These are not included in the core package, however you need to add these yourself.
+
+You can find [more information on the built-in output filters|revolution20:Input and Output Filters], if that is what you&#39;re looking.
+
+h2. Porting PHx to Custom Output Filters
+
+The most important thing to remember when porting PHx to a custom output filter in Revolution is probably that the input (the tag&#39;s content being processed) is in the $input variable, and not in the $output one, which was the case in PHx.
+
+That said, you can have a look at [this page with PHx examples|http://wiki.modxcms.com/index.php/PHx/CustomModifiers] and convert them to Revolution easily when needed. Could you add them to this page when you did that, too? Thanks\! \:)
+
+
+
+h2. Examples
+
+As the examples to be found below are not included in the core, you will need to add these yourself. Luckily, MODx makes this ridiculously easy. You can simply use snippets as output filters, so the process of adding a custom output filter is merely adding a new snippet\! To use the output filter, you reference the snippet name.
+
+To documentation contributors: please add examples in alphabetical order.
+
+
+h3. alternateClass
+
+alternateClass simply checks if an integer (for example, a counting placeholder) passed can be divided by two. If that is possible, it returns the class you specify as the output filter&#39;s property.
+
+{code}&lt;?php
+/*
+ * Based on phx:alternateClass by Smashingred
+ * Updated for Revolution by Mark Hamstra
+ */
+if ($input % 2) {
+  return $options;
+} else {
+  return &#39;&#39;; // Could set another class here
+}
+?&gt;
+{code}
+
+Use like this:
+
+{code}
+[[+component.idx:alternateClass=`alt`]]
+{code}
+
+h3. parseLinks
+
+The parseLinks output filter finds links, and replaces them with a html &lt;a&gt; attribute.
+{code}
+&lt;?php
+/*
+ * Based on phx:parseLinks
+ */
+$t = $input;
+$t = ereg_replace(&quot;[a-zA-Z]+://([.]?[a-zA-Z0-9_/-])*&quot;, &quot;&lt;a href=\&quot;\\0\&quot;&gt;\\0&lt;/a&gt;&quot;, $t);
+$t = ereg_replace(&quot;(^| |\n)(www([.]?[a-zA-Z0-9_/-])*)&quot;, &quot;\\1&lt;a href=\&quot;http://\\2\&quot;&gt;\\2&lt;/a&gt;&quot;, $t);
+return $t;
+{code}
+
+h3. parseTags
+
+This parseTags takes input as a comma delimited list, and makes all individual tags a link to resource 9 with tag=tagname query parameter appended to the link.
+
+{code}
+&lt;?php
+/*
+ * parseTags output filter
+ * by Mark Hamstra (http://www.markhamstra.nl)
+ * free to use / modify / distribute to your will
+ */
+if ($input == &#39;&#39;) { return &#39;&#39;; } // Output filters are also processed when the input is empty, so check for that.
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of comma-space.
+  foreach ($tags as $key =&gt; $value) { // Process them individually
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;;
+  }
+  return implode(&#39;, &#39;,$output); // Delimite again with a comma-space
+{code}
+
+h3. shorten
+
+This shortens the input like :ellipsis but it does not truncate words. Defaults to the length of max. 50 characters. Based on code by gOmp.
+
+{code}&lt;?php
+$output = &#39;&#39;;
+$options = !empty($options)?$options:50;
+
+if (!empty($input) &amp;&amp; !empty($options)) {
+  if (strlen($input) &gt; $options) {
+    $output = substr($input, 0, strrpos(substr($input, 0, $options), &#39; &#39;)).&#39; &amp;hellip;&#39;;
+  }
+  else{
+    $output = $input;
+  }
+}
+return $output;
+?&gt;
+{code}";}i:6;a:3:{s:2:"id";s:8:"33947817";s:3:"ver";s:1:"4";s:4:"code";s:3766:"{toc}
+
+h2. Introduction
+
+Custom Output Filters are simply snippets which can be used to do anything with output from snippets, chunks, template variables and placeholders. This page serves as a place where some basic custom output filters can be found. These are not included in the core package, however you need to add these yourself.
+
+You can find [more information on the built-in output filters|revolution20:Input and Output Filters], if that is what you&#39;re looking.
+
+h2. Porting PHx to Custom Output Filters
+
+The most important thing to remember when porting PHx to a custom output filter in Revolution is probably that the input (the tag&#39;s content being processed) is in the $input variable, and not in the $output one, which was the case in PHx.
+
+That said, you can have a look at [this page with PHx examples|http://wiki.modxcms.com/index.php/PHx/CustomModifiers] and convert them to Revolution easily when needed. Could you add them to this page when you did that, too? Thanks\! \:)
+
+
+
+h2. Examples
+
+As the examples to be found below are not included in the core, you will need to add these yourself. Luckily, MODx makes this ridiculously easy. You can simply use snippets as output filters, so the process of adding a custom output filter is merely adding a new snippet\! To use the output filter, you reference the snippet name.
+
+To documentation contributors: please add examples in alphabetical order.
+
+
+h3. alternateClass
+
+alternateClass simply checks if an integer (for example, a counting placeholder) passed can be divided by two. If that is possible, it returns the class you specify as the output filter&#39;s property.
+
+{code}&lt;?php
+/*
+ * Based on phx:alternateClass by Smashingred
+ * Updated for Revolution by Mark Hamstra
+ */
+if ($input % 2) {
+  return $options;
+} else {
+  return &#39;&#39;; // Could set another class here
+}
+?&gt;
+{code}
+
+Use like this:
+
+{code}
+[[+component.idx:alternateClass=`alt`]]
+{code}
+
+h3. parseLinks
+
+The parseLinks output filter finds links, and replaces them with a html &lt;a&gt; attribute.
+{code}
+&lt;?php
+/*
+ * Based on phx:parseLinks
+ */
+$t = $input;
+$t = ereg_replace(&quot;[a-zA-Z]+://([.]?[a-zA-Z0-9_/-])*&quot;, &quot;&lt;a href=\&quot;\\0\&quot;&gt;\\0&lt;/a&gt;&quot;, $t);
+$t = ereg_replace(&quot;(^| |\n)(www([.]?[a-zA-Z0-9_/-])*)&quot;, &quot;\\1&lt;a href=\&quot;http://\\2\&quot;&gt;\\2&lt;/a&gt;&quot;, $t);
+return $t;
+{code}
+
+h3. parseTags
+
+This parseTags takes input as a comma delimited list, and makes all individual tags a link to resource 9 with tag=tagname query parameter appended to the link.
+
+{code}
+&lt;?php
+/*
+ * parseTags output filter
+ * by Mark Hamstra (http://www.markhamstra.nl)
+ * free to use / modify / distribute to your will
+ */
+if ($input == &#39;&#39;) { return &#39;&#39;; } // Output filters are also processed when the input is empty, so check for that.
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of comma-space.
+  foreach ($tags as $key =&gt; $value) { // Process them individually
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;;
+  }
+  return implode(&#39;, &#39;,$output); // Delimite again with a comma-space
+{code}
+h3. shorten
+
+This shortens the input like :ellipsis but it does not truncate words. Defaults to the length of max. 50 characters. Based on code by smooth-graphics.
+
+{code}&lt;?php
+$output = &#39;&#39;;
+$options = !empty($options)?$options:50;
+
+if (!empty($input) &amp;&amp; !empty($options)) {
+  if (strlen($input) &gt; $options) {
+    $output = substr($input, 0, strrpos(substr($input, 0, $options), &#39; &#39;)).&#39; &amp;hellip;&#39;;
+  }
+  else{
+    $output = $input;
+  }
+}
+return $output;
+?&gt;
+{code}";}i:7;a:3:{s:2:"id";s:8:"33947816";s:3:"ver";s:1:"3";s:4:"code";s:3257:"{toc}
+
+h2. Introduction
+
+Custom Output Filters are simply snippets which can be used to do anything with output from snippets, chunks, template variables and placeholders. This page serves as a place where some basic custom output filters can be found. These are not included in the core package, however you need to add these yourself.
+
+You can find [more information on the built-in output filters|revolution20:Input and Output Filters], if that is what you&#39;re looking.
+
+h2. Porting PHx to Custom Output Filters
+
+The most important thing to remember when porting PHx to a custom output filter in Revolution is probably that the input (the tag&#39;s content being processed) is in the $input variable, and not in the $output one, which was the case in PHx.
+
+That said, you can have a look at [this page with PHx examples|http://wiki.modxcms.com/index.php/PHx/CustomModifiers] and convert them to Revolution easily when needed. Could you add them to this page when you did that, too? Thanks\! \:)
+
+
+
+h2. Examples
+
+As the examples to be found below are not included in the core, you will need to add these yourself. Luckily, MODx makes this ridiculously easy. You can simply use snippets as output filters, so the process of adding a custom output filter is merely adding a new snippet\! To use the output filter, you reference the snippet name.
+
+To documentation contributors: please add examples in alphabetical order.
+
+
+h3. alternateClass
+
+alternateClass simply checks if an integer (for example, a counting placeholder) passed can be divided by two. If that is possible, it returns the class you specify as the output filter&#39;s property.
+
+{code}&lt;?php
+/*
+ * Based on phx:alternateClass by Smashingred
+ * Updated for Revolution by Mark Hamstra
+ */
+if ($input % 2) {
+  return $options;
+} else {
+  return &#39;&#39;; // Could set another class here
+}
+?&gt;
+{code}
+
+Use like this:
+
+{code}
+[[+component.idx:alternateClass=`alt`]]
+{code}
+
+h3. parseLinks
+
+The parseLinks output filter finds links, and replaces them with a html &lt;a&gt; attribute.
+{code}
+&lt;?php
+/*
+ * Based on phx:parseLinks
+ */
+$t = $input;
+$t = ereg_replace(&quot;[a-zA-Z]+://([.]?[a-zA-Z0-9_/-])*&quot;, &quot;&lt;a href=\&quot;\\0\&quot;&gt;\\0&lt;/a&gt;&quot;, $t);
+$t = ereg_replace(&quot;(^| |\n)(www([.]?[a-zA-Z0-9_/-])*)&quot;, &quot;\\1&lt;a href=\&quot;http://\\2\&quot;&gt;\\2&lt;/a&gt;&quot;, $t);
+return $t;
+{code}
+
+h3. parseTags
+
+This parseTags takes input as a comma delimited list, and makes all individual tags a link to resource 9 with tag=tagname query parameter appended to the link.
+
+{code}
+&lt;?php
+/*
+ * parseTags output filter
+ * by Mark Hamstra (http://www.markhamstra.nl)
+ * free to use / modify / distribute to your will
+ */
+if ($input == &#39;&#39;) { return &#39;&#39;; } // Output filters are also processed when the input is empty, so check for that.
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of comma-space.
+  foreach ($tags as $key =&gt; $value) { // Process them individually
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;;
+  }
+  return implode(&#39;, &#39;,$output); // Delimite again with a comma-space
+{code}";}i:8;a:3:{s:2:"id";s:8:"33587353";s:3:"ver";s:1:"2";s:4:"code";s:2135:"{toc}
+
+h2. Introduction
+
+Custom Output Filters are simply snippets which can be used to do anything with output from snippets, chunks, template variables and placeholders. This page serves as a place where some basic custom output filters can be found. These are not included in the core package, however you need to add these yourself.
+
+You can find [more information on the built-in output filters|revolution20:Input and Output Filters], if that is what you&#39;re looking.
+
+h2. Examples
+
+As the examples to be found below are not included in the core, you will need to add these yourself. Luckily, MODx makes this ridiculously easy. You can simply use snippets as output filters, so the process of adding a custom output filter is merely adding a new snippet\! To use the output filter, you reference the snippet name.
+
+h3. parseLinks
+
+The parseLinks output filter finds links, and replaces them with a html &lt;a&gt; attribute.
+{code}
+&lt;?php
+/*
+ * Based on phx:parseLinks
+ */
+$t = $input;
+$t = ereg_replace(&quot;[a-zA-Z]+://([.]?[a-zA-Z0-9_/-])*&quot;, &quot;&lt;a href=\&quot;\\0\&quot;&gt;\\0&lt;/a&gt;&quot;, $t);
+$t = ereg_replace(&quot;(^| |\n)(www([.]?[a-zA-Z0-9_/-])*)&quot;, &quot;\\1&lt;a href=\&quot;http://\\2\&quot;&gt;\\2&lt;/a&gt;&quot;, $t);
+return $t;
+{code}
+
+h3. parseTags
+
+This parseTags takes input as a comma delimited list, and makes all individual tags a link to resource 9 with tag=tagname query parameter appended to the link.
+
+{code}
+&lt;?php
+/*
+ * parseTags output filter
+ * by Mark Hamstra (http://www.markhamstra.nl)
+ * free to use / modify / distribute to your will
+ */
+if ($input == &#39;&#39;) { return &#39;&#39;; } // Output filters are also processed when the input is empty, so check for that.
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of comma-space.
+  foreach ($tags as $key =&gt; $value) { // Process them individually
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;;
+  }
+  return implode(&#39;, &#39;,$output); // Delimite again with a comma-space
+{code}";}i:9;a:3:{s:2:"id";s:8:"33587351";s:3:"ver";s:1:"1";s:4:"code";s:2165:"{toc}
+
+h2. Introduction
+
+Custom Output Filters are simply snippets which can be used to do anything with output from snippets, chunks, template variables and placeholders. This page serves as a place where some basic custom output filters can be found. These are not included in the core package, however you need to add these yourself.
+
+You can find [more information on the built-in output filters|revolution20:Input and Output Filters], if that is what you&#39;re looking.
+
+h2. Examples
+
+As the examples to be found below are not included in the core, you will need to add these yourself. Luckily, MODx makes this ridiculously easy. You can simply use snippets as output filters, so the process of adding a custom output filter is merely adding a new snippet\! To use the output filter, you reference the snippet name.
+
+h3. parseLinks
+
+The parseLinks output filter finds links, and replaces them with a html &lt;a&gt; attribute.
+{code}
+&lt;?php
+/*
+ * Based on phx:parseLinks
+ */
+$t = $input;
+$t = ereg_replace(&quot;[a-zA-Z]+://([.]?[a-zA-Z0-9_/-])*&quot;, &quot;&lt;a href=\&quot;\\0\&quot;&gt;\\0&lt;/a&gt;&quot;, $t);
+$t = ereg_replace(&quot;(^| |\n)(www([.]?[a-zA-Z0-9_/-])*)&quot;, &quot;\\1&lt;a href=\&quot;http://\\2\&quot;&gt;\\2&lt;/a&gt;&quot;, $t);
+return $t;
+{code}
+
+h3. parseTags
+
+This parseTags takes input as a comma delimited list, and makes all individual tags a link to resource 9 with tag={tagname} appended to the link. In a way this can replace part of tagLister.
+{code}
+&lt;?php
+/*
+ * parseTags output filter
+ * by Mark Hamstra (http://www.markhamstra.nl)
+ * free to use / modify / distribute to your will
+ */
+if ($input == &#39;&#39;) { return &#39;&#39;; } // Output filters are also processed when the input is empty, so check for that.
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of comma-space.
+  foreach ($tags as $key =&gt; $value) { // Process them individually
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;;
+  }
+  return implode(&#39;, &#39;,$output); // Delimite again with a comma-space
+{code}";}}}

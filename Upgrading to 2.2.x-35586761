@@ -1,0 +1,618 @@
+a:5:{s:2:"id";s:8:"35586761";s:4:"info";a:4:{s:6:"Title:";s:18:"Upgrading to 2.2.x";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:11:"Mike Schell";s:12:"Wiki Markup:";s:33:"[revolution20:Upgrading to 2.2.x]";}s:6:"parent";s:8:"18678122";s:6:"source";s:5306:"{toc}
+
+h2. Introduction
+
+This article describes the major changes to MODX Revolution in the 2.2 release. Please review these changes when upgrading your sites to 2.2 from a prior MODX Revolution install.
+
+h2. Media Sources
+
+A large change in 2.2 is the introduction of [Media Sources]. These abstract the &quot;Files&quot; tab in MODX to allow multiple sources for the Files tree, such as the filesystem, an S3 bucket, or other source types. They integrate directly into most of the MODX manager, including the MODx.Browser, [Template Variables], and general file manipulations. What does this mean for an upgrade?
+
+It means that *all filemanager_\* Settings* *{_}and{_}* *basePath/baseUrl TV input options are deprecated*. None of them are in active use by the MODX manager anymore. Sources now determine the basePath and baseUrl of the tree, rather than the Settings or TV input options. This &quot;source-centric&quot; approach allows much more stable scalability and usage.
+
+MODX will attempt to create new Media Sources for any filemanager_\* settings and any custom image/file TVs that had a custom basePath. In the case of filemanager_\* system settings, the default Source will have its baseUrl and basePath altered. In the case of TV input options with custom basePath parameters, there will be new Sources that automatically associate with those TVs.
+
+Any filemanager_\* User Settings will need to be manually migrated, as the idea of User-specific source basePaths no longer exist. Please use ACLs on the Media Source with a User Group, which you can [learn how to do so here|Securing a Media Source].
+
+h2. Static Elements
+
+MODX 2.2 introduces &quot;Static&quot; Elements, which are Elements that are located on the filesystem, through a Media Source. To use a Static Element, simply create an Element (Chunk/Snippet/Template/etc), and then check the &quot;Is Static&quot; box. This will then popup two fields:
+
+* *Static Source* \- This field specifies the Media Source to use when looking up the Static File. Select None to specify an absolute path to the file.
+* *Static File* \- This field is the path to the file, relative to the media source you selected (or None for absolute paths). You can use tags in this field, such as System Settings, as well.
+
+For example, if you selected a File System Media Source with a relative base path of &#39;assets/&#39;, and then specify the Source File as &quot;templates/test.tpl&quot;, it will look for the Template file in &quot;/path/to/my/modx/assets/templates/test.tpl&quot;.
+
+h2. Dashboards
+
+You will note that your main Dashboard will look slightly different. The basic widgets and functionality will be the same; however, you will now be able to create Custom Dashboards for different User Groups, and rearrange and assign Widgets to them. Please refer to the [Dashboards] documentation.
+
+h2. Other Notables
+
+h3. Sorting Contexts in the Tree
+
+Sorting of Contexts is now available in the Resources tree; however, this is off by default. To turn it on, set the &quot;context_tree_sort&quot; System Setting to Yes, and then change the &quot;context_tree_sortby&quot; field to &quot;rank&quot;. This will allow you to drag/drop sort the Contexts in the tree.
+
+h3. Primary User Group
+
+Users can now have a &quot;Primary&quot; User Group that they belong to. This is the User Group that they are assigned to with rank of 0. If they are only in one User Group, that group will be their Primary Group.
+
+h3. Minify in the Manager
+
+The MODX manager now uses [Google Minify|http://code.google.com/p/minify/] to automatically compress the CSS and JS in the manager. By default this is on; if, however, you would like to turn it off, you can do so by setting the &quot;compress_js&quot; and &quot;compress_css&quot; System Settings to 0.
+
+h3. Form Customization Tweaks
+
+Due to the new user interface improvements on the Resource Editing screen, Form Customization can now target specific columns in tabs to move TVs to. Their IDs are now listed under the &quot;Tabs&quot; tab when editing a Form Customization Set.
+
+h3. Comment Tags
+
+MODX users can now use comment tags in their content:
+
+{code}[[- comment goes here]]{code}
+
+Anything within one of these tags will be removed prior to the page rendering.
+
+h3. Moving TVs Below the Content Panel
+
+In 2.2, you can also move Template Variables below the Content panel when editing them in a Resource. This is done by simply changing the _tvs_below_content_ setting to &quot;Yes&quot;.
+
+h3. Upgrading/Installing via Command Line
+
+In 2.2, MODX is installable and upgradable from the command line. See [Command Line Installation] for more information.
+
+h3. Pre-processing Element Default Properties and Property Sets
+
+MODX developers and users can now tell specific Elements to pre-process any MODX tags in default property and property set values. When checked on the Properties tab of an Element, the Element will attempt to parse all tags that appear in default property values or values assigned by property sets so that the behavior is the same as if the property was set in the tag string itself. Otherwise, the behavior is the same: tags in default property values or property set values are passed directly to the Element without being processed.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";s:8:"versions";a:9:{i:0;a:3:{s:2:"id";s:8:"35586761";s:3:"ver";s:1:"9";s:4:"code";s:5306:"{toc}
+
+h2. Introduction
+
+This article describes the major changes to MODX Revolution in the 2.2 release. Please review these changes when upgrading your sites to 2.2 from a prior MODX Revolution install.
+
+h2. Media Sources
+
+A large change in 2.2 is the introduction of [Media Sources]. These abstract the &quot;Files&quot; tab in MODX to allow multiple sources for the Files tree, such as the filesystem, an S3 bucket, or other source types. They integrate directly into most of the MODX manager, including the MODx.Browser, [Template Variables], and general file manipulations. What does this mean for an upgrade?
+
+It means that *all filemanager_\* Settings* *{_}and{_}* *basePath/baseUrl TV input options are deprecated*. None of them are in active use by the MODX manager anymore. Sources now determine the basePath and baseUrl of the tree, rather than the Settings or TV input options. This &quot;source-centric&quot; approach allows much more stable scalability and usage.
+
+MODX will attempt to create new Media Sources for any filemanager_\* settings and any custom image/file TVs that had a custom basePath. In the case of filemanager_\* system settings, the default Source will have its baseUrl and basePath altered. In the case of TV input options with custom basePath parameters, there will be new Sources that automatically associate with those TVs.
+
+Any filemanager_\* User Settings will need to be manually migrated, as the idea of User-specific source basePaths no longer exist. Please use ACLs on the Media Source with a User Group, which you can [learn how to do so here|Securing a Media Source].
+
+h2. Static Elements
+
+MODX 2.2 introduces &quot;Static&quot; Elements, which are Elements that are located on the filesystem, through a Media Source. To use a Static Element, simply create an Element (Chunk/Snippet/Template/etc), and then check the &quot;Is Static&quot; box. This will then popup two fields:
+
+* *Static Source* \- This field specifies the Media Source to use when looking up the Static File. Select None to specify an absolute path to the file.
+* *Static File* \- This field is the path to the file, relative to the media source you selected (or None for absolute paths). You can use tags in this field, such as System Settings, as well.
+
+For example, if you selected a File System Media Source with a relative base path of &#39;assets/&#39;, and then specify the Source File as &quot;templates/test.tpl&quot;, it will look for the Template file in &quot;/path/to/my/modx/assets/templates/test.tpl&quot;.
+
+h2. Dashboards
+
+You will note that your main Dashboard will look slightly different. The basic widgets and functionality will be the same; however, you will now be able to create Custom Dashboards for different User Groups, and rearrange and assign Widgets to them. Please refer to the [Dashboards] documentation.
+
+h2. Other Notables
+
+h3. Sorting Contexts in the Tree
+
+Sorting of Contexts is now available in the Resources tree; however, this is off by default. To turn it on, set the &quot;context_tree_sort&quot; System Setting to Yes, and then change the &quot;context_tree_sortby&quot; field to &quot;rank&quot;. This will allow you to drag/drop sort the Contexts in the tree.
+
+h3. Primary User Group
+
+Users can now have a &quot;Primary&quot; User Group that they belong to. This is the User Group that they are assigned to with rank of 0. If they are only in one User Group, that group will be their Primary Group.
+
+h3. Minify in the Manager
+
+The MODX manager now uses [Google Minify|http://code.google.com/p/minify/] to automatically compress the CSS and JS in the manager. By default this is on; if, however, you would like to turn it off, you can do so by setting the &quot;compress_js&quot; and &quot;compress_css&quot; System Settings to 0.
+
+h3. Form Customization Tweaks
+
+Due to the new user interface improvements on the Resource Editing screen, Form Customization can now target specific columns in tabs to move TVs to. Their IDs are now listed under the &quot;Tabs&quot; tab when editing a Form Customization Set.
+
+h3. Comment Tags
+
+MODX users can now use comment tags in their content:
+
+{code}[[- comment goes here]]{code}
+
+Anything within one of these tags will be removed prior to the page rendering.
+
+h3. Moving TVs Below the Content Panel
+
+In 2.2, you can also move Template Variables below the Content panel when editing them in a Resource. This is done by simply changing the _tvs_below_content_ setting to &quot;Yes&quot;.
+
+h3. Upgrading/Installing via Command Line
+
+In 2.2, MODX is installable and upgradable from the command line. See [Command Line Installation] for more information.
+
+h3. Pre-processing Element Default Properties and Property Sets
+
+MODX developers and users can now tell specific Elements to pre-process any MODX tags in default property and property set values. When checked on the Properties tab of an Element, the Element will attempt to parse all tags that appear in default property values or values assigned by property sets so that the behavior is the same as if the property was set in the tag string itself. Otherwise, the behavior is the same: tags in default property values or property set values are passed directly to the Element without being processed.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"37683471";s:3:"ver";s:1:"8";s:4:"code";s:5302:"{toc}
+
+Introduction
+
+This article describes the major changes to MODX Revolution in the 2.2 release. Please review these changes when upgrading your sites to 2.2 from a prior MODX Revolution install.
+
+h2. Media Sources
+
+A large change in 2.2 is the introduction of [Media Sources]. These abstract the &quot;Files&quot; tab in MODX to allow multiple sources for the Files tree, such as the filesystem, an S3 bucket, or other source types. They integrate directly into most of the MODX manager, including the MODx.Browser, [Template Variables], and general file manipulations. What does this mean for an upgrade?
+
+It means that *all filemanager_\* Settings* *{_}and{_}* *basePath/baseUrl TV input options are deprecated*. None of them are in active use by the MODX manager anymore. Sources now determine the basePath and baseUrl of the tree, rather than the Settings or TV input options. This &quot;source-centric&quot; approach allows much more stable scalability and usage.
+
+MODX will attempt to create new Media Sources for any filemanager_\* settings and any custom image/file TVs that had a custom basePath. In the case of filemanager_\* system settings, the default Source will have its baseUrl and basePath altered. In the case of TV input options with custom basePath parameters, there will be new Sources that automatically associate with those TVs.
+
+Any filemanager_\* User Settings will need to be manually migrated, as the idea of User-specific source basePaths no longer exist. Please use ACLs on the Media Source with a User Group, which you can [learn how to do so here|Securing a Media Source].
+
+h2. Static Elements
+
+MODX 2.2 introduces &quot;Static&quot; Elements, which are Elements that are located on the filesystem, through a Media Source. To use a Static Element, simply create an Element (Chunk/Snippet/Template/etc), and then check the &quot;Is Static&quot; box. This will then popup two fields:
+
+* *Static Source* \- This field specifies the Media Source to use when looking up the Static File. Select None to specify an absolute path to the file.
+* *Static File* \- This field is the path to the file, relative to the media source you selected (or None for absolute paths). You can use tags in this field, such as System Settings, as well.
+
+For example, if you selected a File System Media Source with a relative base path of &#39;assets/&#39;, and then specify the Source File as &quot;templates/test.tpl&quot;, it will look for the Template file in &quot;/path/to/my/modx/assets/templates/test.tpl&quot;.
+
+h2. Dashboards
+
+You will note that your main Dashboard will look slightly different. The basic widgets and functionality will be the same; however, you will now be able to create Custom Dashboards for different User Groups, and rearrange and assign Widgets to them. Please refer to the [Dashboards] documentation.
+
+h2. Other Notables
+
+h3. Sorting Contexts in the Tree
+
+Sorting of Contexts is now available in the Resources tree; however, this is off by default. To turn it on, set the &quot;context_tree_sort&quot; System Setting to Yes, and then change the &quot;context_tree_sortby&quot; field to &quot;rank&quot;. This will allow you to drag/drop sort the Contexts in the tree.
+
+h3. Primary User Group
+
+Users can now have a &quot;Primary&quot; User Group that they belong to. This is the User Group that they are assigned to with rank of 0. If they are only in one User Group, that group will be their Primary Group.
+
+h3. Minify in the Manager
+
+The MODX manager now uses [Google Minify|http://code.google.com/p/minify/] to automatically compress the CSS and JS in the manager. By default this is on; if, however, you would like to turn it off, you can do so by setting the &quot;compress_js&quot; and &quot;compress_css&quot; System Settings to 0.
+
+h3. Form Customization Tweaks
+
+Due to the new user interface improvements on the Resource Editing screen, Form Customization can now target specific columns in tabs to move TVs to. Their IDs are now listed under the &quot;Tabs&quot; tab when editing a Form Customization Set.
+
+h3. Comment Tags
+
+MODX users can now use comment tags in their content:
+
+{code}[[- comment goes here]]{code}
+
+Anything within one of these tags will be removed prior to the page rendering.
+
+h3. Moving TVs Below the Content Panel
+
+In 2.2, you can also move Template Variables below the Content panel when editing them in a Resource. This is done by simply changing the _tvs_below_content_ setting to &quot;Yes&quot;.
+
+h3. Upgrading/Installing via Command Line
+
+In 2.2, MODX is installable and upgradable from the command line. See [Command Line Installation] for more information.
+
+h3. Pre-processing Element Default Properties and Property Sets
+
+MODX developers and users can now tell specific Elements to pre-process any MODX tags in default property and property set values. When checked on the Properties tab of an Element, the Element will attempt to parse all tags that appear in default property values or values assigned by property sets so that the behavior is the same as if the property was set in the tag string itself. Otherwise, the behavior is the same: tags in default property values or property set values are passed directly to the Element without being processed.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"37683470";s:3:"ver";s:1:"7";s:4:"code";s:5381:"{toc}
+
+{note}This document is a work in progress, as 2.2 has not yet been released.{note}
+
+h2. Introduction
+
+This article describes the major changes to MODX Revolution in the 2.2 release. Please review these changes when upgrading your sites to 2.2 from a prior MODX Revolution install.
+
+h2. Media Sources
+
+A large change in 2.2 is the introduction of [Media Sources]. These abstract the &quot;Files&quot; tab in MODX to allow multiple sources for the Files tree, such as the filesystem, an S3 bucket, or other source types. They integrate directly into most of the MODX manager, including the MODx.Browser, [Template Variables], and general file manipulations. What does this mean for an upgrade?
+
+It means that *all filemanager_\* Settings _and_ basePath/baseUrl TV input options are deprecated*. None of them are in active use by the MODX manager anymore. Sources now determine the basePath and baseUrl of the tree, rather than the Settings or TV input options. This &quot;source-centric&quot; approach allows much more stable scalability and usage.
+
+MODX will attempt to create new Media Sources for any filemanager_\* settings and any custom image/file TVs that had a custom basePath. In the case of filemanager_* system settings, the default Source will have its baseUrl and basePath altered. In the case of TV input options with custom basePath parameters, there will be new Sources that automatically associate with those TVs.
+
+Any filemanager_\* User Settings will need to be manually migrated, as the idea of User-specific source basePaths no longer exist. Please use ACLs on the Media Source with a User Group, which you can [learn how to do so here|Securing a Media Source].
+
+h2. Static Elements
+
+MODX 2.2 introduces &quot;Static&quot; Elements, which are Elements that are located on the filesystem, through a Media Source. To use a Static Element, simply create an Element (Chunk/Snippet/Template/etc), and then check the &quot;Is Static&quot; box. This will then popup two fields:
+
+* *Static Source* - This field specifies the Media Source to use when looking up the Static File. Select None to specify an absolute path to the file.
+* *Static File* - This field is the path to the file, relative to the media source you selected (or None for absolute paths). You can use tags in this field, such as System Settings, as well.
+
+For example, if you selected a File System Media Source with a relative base path of &#39;assets/&#39;, and then specify the Source File as &quot;templates/test.tpl&quot;, it will look for the Template file in &quot;/path/to/my/modx/assets/templates/test.tpl&quot;.
+
+h2. Dashboards
+
+You will note that your main Dashboard will look slightly different. The basic widgets and functionality will be the same; however, you will now be able to create Custom Dashboards for different User Groups, and rearrange and assign Widgets to them. Please refer to the [Dashboards] documentation.
+
+h2. Other Notables
+
+h3. Sorting Contexts in the Tree
+
+Sorting of Contexts is now available in the Resources tree; however, this is off by default. To turn it on, set the &quot;context_tree_sort&quot; System Setting to Yes, and then change the &quot;context_tree_sortby&quot; field to &quot;rank&quot;. This will allow you to drag/drop sort the Contexts in the tree.
+
+h3. Primary User Group
+
+Users can now have a &quot;Primary&quot; User Group that they belong to. This is the User Group that they are assigned to with rank of 0. If they are only in one User Group, that group will be their Primary Group.
+
+h3. Minify in the Manager
+
+The MODX manager now uses [Google Minify|http://code.google.com/p/minify/] to automatically compress the CSS and JS in the manager. By default this is on; if, however, you would like to turn it off, you can do so by setting the &quot;compress_js&quot; and &quot;compress_css&quot; System Settings to 0.
+
+h3. Form Customization Tweaks
+
+Due to the new user interface improvements on the Resource Editing screen, Form Customization can now target specific columns in tabs to move TVs to. Their IDs are now listed under the &quot;Tabs&quot; tab when editing a Form Customization Set.
+
+h3. Comment Tags
+
+MODX users can now use comment tags in their content:
+
+{code}[[- comment goes here]]{code}
+
+Anything within one of these tags will be removed prior to the page rendering.
+
+h3. Moving TVs Below the Content Panel
+
+In 2.2, you can also move Template Variables below the Content panel when editing them in a Resource. This is done by simply changing the _tvs_below_content_ setting to &quot;Yes&quot;.
+
+h3. Upgrading/Installing via Command Line
+
+In 2.2, MODX is installable and upgradable from the command line. See [Command Line Installation] for more information.
+
+h3. Pre-processing Element Default Properties and Property Sets
+
+MODX developers and users can now tell specific Elements to pre-process any MODX tags in default property and property set values. When checked on the Properties tab of an Element, the Element will attempt to parse all tags that appear in default property values or values assigned by property sets so that the behavior is the same as if the property was set in the tag string itself. Otherwise, the behavior is the same: tags in default property values or property set values are passed directly to the Element without being processed.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar} 
+";}i:3;a:3:{s:2:"id";s:8:"36634801";s:3:"ver";s:1:"6";s:4:"code";s:4779:"{toc}
+
+{note}This document is a work in progress, as 2.2 has not yet been released.{note}
+
+h2. Introduction
+
+This article describes the major changes to MODX Revolution in the 2.2 release. Please review these changes when upgrading your sites to 2.2 from a prior MODX Revolution install.
+
+h2. Media Sources
+
+A large change in 2.2 is the introduction of [Media Sources]. These abstract the &quot;Files&quot; tab in MODX to allow multiple sources for the Files tree, such as the filesystem, an S3 bucket, or other source types. They integrate directly into most of the MODX manager, including the MODx.Browser, [Template Variables], and general file manipulations. What does this mean for an upgrade?
+
+It means that *all filemanager_\* Settings _and_ basePath/baseUrl TV input options are deprecated*. None of them are in active use by the MODX manager anymore. Sources now determine the basePath and baseUrl of the tree, rather than the Settings or TV input options. This &quot;source-centric&quot; approach allows much more stable scalability and usage.
+
+MODX will attempt to create new Media Sources for any filemanager_\* settings and any custom image/file TVs that had a custom basePath. In the case of filemanager_* system settings, the default Source will have its baseUrl and basePath altered. In the case of TV input options with custom basePath parameters, there will be new Sources that automatically associate with those TVs.
+
+Any filemanager_\* User Settings will need to be manually migrated, as the idea of User-specific source basePaths no longer exist. Please use ACLs on the Media Source with a User Group, which you can [learn how to do so here|Securing a Media Source].
+
+h2. Static Elements
+
+MODX 2.2 introduces &quot;Static&quot; Elements, which are Elements that are located on the filesystem, through a Media Source. To use a Static Element, simply create an Element (Chunk/Snippet/Template/etc), and then check the &quot;Is Static&quot; box. This will then popup two fields:
+
+* *Static Source* - This field specifies the Media Source to use when looking up the Static File. Select None to specify an absolute path to the file.
+* *Static File* - This field is the path to the file, relative to the media source you selected (or None for absolute paths). You can use tags in this field, such as System Settings, as well.
+
+For example, if you selected a File System Media Source with a relative base path of &#39;assets/&#39;, and then specify the Source File as &quot;templates/test.tpl&quot;, it will look for the Template file in &quot;/path/to/my/modx/assets/templates/test.tpl&quot;.
+
+h2. Dashboards
+
+You will note that your main Dashboard will look slightly different. The basic widgets and functionality will be the same; however, you will now be able to create Custom Dashboards for different User Groups, and rearrange and assign Widgets to them. Please refer to the [Dashboards] documentation.
+
+h2. Other Notables
+
+h3. Sorting Contexts in the Tree
+
+Sorting of Contexts is now available in the Resources tree; however, this is off by default. To turn it on, set the &quot;context_tree_sort&quot; System Setting to Yes, and then change the &quot;context_tree_sortby&quot; field to &quot;rank&quot;. This will allow you to drag/drop sort the Contexts in the tree.
+
+h3. Primary User Group
+
+Users can now have a &quot;Primary&quot; User Group that they belong to. This is the User Group that they are assigned to with rank of 0. If they are only in one User Group, that group will be their Primary Group.
+
+h3. Minify in the Manager
+
+The MODX manager now uses [Google Minify|http://code.google.com/p/minify/] to automatically compress the CSS and JS in the manager. By default this is on; if, however, you would like to turn it off, you can do so by setting the &quot;compress_js&quot; and &quot;compress_css&quot; System Settings to 0.
+
+h3. Form Customization Tweaks
+
+Due to the new user interface improvements on the Resource Editing screen, Form Customization can now target specific columns in tabs to move TVs to. Their IDs are now listed under the &quot;Tabs&quot; tab when editing a Form Customiziation Set.
+
+h3. Comment Tags
+
+MODX users can now use comment tags in their content:
+
+{code}[[- comment goes here]]{code}
+
+Anything within one of these tags will be removed prior to the page rendering.
+
+h3. Moving TVs Below the Content Panel
+
+In 2.2, you can also move Template Variables below the Content panel when editing them in a Resource. This is done by simply changing the _tvs_below_content_ setting to &quot;Yes&quot;.
+
+h3. Upgrading/Installing via Command Line
+
+In 2.2, MODX is installable and upgradable from the command line. See [Command Line Installation] for more information.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar} 
+";}i:4;a:3:{s:2:"id";s:8:"36634736";s:3:"ver";s:1:"5";s:4:"code";s:4615:"{toc}
+
+{note}This document is a work in progress, as 2.2 has not yet been released.{note}
+
+h2. Introduction
+
+This article describes the major changes to MODX Revolution in the 2.2 release. Please review these changes when upgrading your sites to 2.2 from a prior MODX Revolution install.
+
+h2. Media Sources
+
+A large change in 2.2 is the introduction of [Media Sources]. These abstract the &quot;Files&quot; tab in MODX to allow multiple sources for the Files tree, such as the filesystem, an S3 bucket, or other source types. They integrate directly into most of the MODX manager, including the MODx.Browser, [Template Variables], and general file manipulations. What does this mean for an upgrade?
+
+It means that *all filemanager_\* Settings _and_ basePath/baseUrl TV input options are deprecated*. None of them are in active use by the MODX manager anymore. Sources now determine the basePath and baseUrl of the tree, rather than the Settings or TV input options. This &quot;source-centric&quot; approach allows much more stable scalability and usage.
+
+MODX will attempt to create new Media Sources for any filemanager_\* settings and any custom image/file TVs that had a custom basePath. In the case of filemanager_* system settings, the default Source will have its baseUrl and basePath altered. In the case of TV input options with custom basePath parameters, there will be new Sources that automatically associate with those TVs.
+
+Any filemanager_\* User Settings will need to be manually migrated, as the idea of User-specific source basePaths no longer exist. Please use ACLs on the Media Source with a User Group, which you can [learn how to do so here|Securing a Media Source].
+
+h2. Static Elements
+
+MODX 2.2 introduces &quot;Static&quot; Elements, which are Elements that are located on the filesystem, through a Media Source. To use a Static Element, simply create an Element (Chunk/Snippet/Template/etc), and then check the &quot;Is Static&quot; box. This will then popup two fields:
+
+* *Static Source* - This field specifies the Media Source to use when looking up the Static File. Select None to specify an absolute path to the file.
+* *Static File* - This field is the path to the file, relative to the media source you selected (or None for absolute paths). You can use tags in this field, such as System Settings, as well.
+
+For example, if you selected a File System Media Source with a relative base path of &#39;assets/&#39;, and then specify the Source File as &quot;templates/test.tpl&quot;, it will look for the Template file in &quot;/path/to/my/modx/assets/templates/test.tpl&quot;.
+
+h2. Dashboards
+
+You will note that your main Dashboard will look slightly different. The basic widgets and functionality will be the same; however, you will now be able to create Custom Dashboards for different User Groups, and rearrange and assign Widgets to them. Please refer to the [Dashboards] documentation.
+
+h2. Other Notables
+
+h3. Sorting Contexts in the Tree
+
+Sorting of Contexts is now available in the Resources tree; however, this is off by default. To turn it on, set the &quot;context_tree_sort&quot; System Setting to Yes, and then change the &quot;context_tree_sortby&quot; field to &quot;rank&quot;. This will allow you to drag/drop sort the Contexts in the tree.
+
+h3. Primary User Group
+
+Users can now have a &quot;Primary&quot; User Group that they belong to. This is the User Group that they are assigned to with rank of 0. If they are only in one User Group, that group will be their Primary Group.
+
+h3. Minify in the Manager
+
+The MODX manager now uses [Google Minify|http://code.google.com/p/minify/] to automatically compress the CSS and JS in the manager. By default this is on; if, however, you would like to turn it off, you can do so by setting the &quot;compress_js&quot; and &quot;compress_css&quot; System Settings to 0.
+
+h3. Form Customization Tweaks
+
+Due to the new user interface improvements on the Resource Editing screen, Form Customization can now target specific columns in tabs to move TVs to. Their IDs are now listed under the &quot;Tabs&quot; tab when editing a Form Customiziation Set.
+
+h3. Comment Tags
+
+MODX users can now use comment tags in their content:
+
+{code}[[- comment goes here]]{code}
+
+Anything within one of these tags will be removed prior to the page rendering.
+
+h3. Moving TVs Below the Content Panel
+
+In 2.2, you can also move Template Variables below the Content panel when editing them in a Resource. This is done by simply changing the _tvs_below_content_ setting to &quot;Yes&quot;.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar} 
+";}i:5;a:3:{s:2:"id";s:8:"36339731";s:3:"ver";s:1:"4";s:4:"code";s:4388:"{toc}
+
+{note}This document is a work in progress, as 2.2 has not yet been released.{note}
+
+h2. Introduction
+
+This article describes the major changes to MODX Revolution in the 2.2 release. Please review these changes when upgrading your sites to 2.2 from a prior MODX Revolution install.
+
+h2. Media Sources
+
+A large change in 2.2 is the introduction of [Media Sources]. These abstract the &quot;Files&quot; tab in MODX to allow multiple sources for the Files tree, such as the filesystem, an S3 bucket, or other source types. They integrate directly into most of the MODX manager, including the MODx.Browser, [Template Variables], and general file manipulations. What does this mean for an upgrade?
+
+It means that *all filemanager_\* Settings _and_ basePath/baseUrl TV input options are deprecated*. None of them are in active use by the MODX manager anymore. Sources now determine the basePath and baseUrl of the tree, rather than the Settings or TV input options. This &quot;source-centric&quot; approach allows much more stable scalability and usage.
+
+MODX will attempt to create new Media Sources for any filemanager_\* settings and any custom image/file TVs that had a custom basePath. In the case of filemanager_* system settings, the default Source will have its baseUrl and basePath altered. In the case of TV input options with custom basePath parameters, there will be new Sources that automatically associate with those TVs.
+
+Any filemanager_\* User Settings will need to be manually migrated, as the idea of User-specific source basePaths no longer exist. Please use ACLs on the Media Source with a User Group, which you can [learn how to do so here|Securing a Media Source].
+
+h2. Static Elements
+
+MODX 2.2 introduces &quot;Static&quot; Elements, which are Elements that are located on the filesystem, through a Media Source. To use a Static Element, simply create an Element (Chunk/Snippet/Template/etc), and then check the &quot;Is Static&quot; box. This will then popup two fields:
+
+* *Static Source* - This field specifies the Media Source to use when looking up the Static File. Select None to specify an absolute path to the file.
+* *Static File* - This field is the path to the file, relative to the media source you selected (or None for absolute paths). You can use tags in this field, such as System Settings, as well.
+
+For example, if you selected a File System Media Source with a relative base path of &#39;assets/&#39;, and then specify the Source File as &quot;templates/test.tpl&quot;, it will look for the Template file in &quot;/path/to/my/modx/assets/templates/test.tpl&quot;.
+
+h2. Dashboards
+
+You will note that your main Dashboard will look slightly different. The basic widgets and functionality will be the same; however, you will now be able to create Custom Dashboards for different User Groups, and rearrange and assign Widgets to them. Please refer to the [Dashboards] documentation.
+
+h2. Other Notables
+
+h3. Sorting Contexts in the Tree
+
+Sorting of Contexts is now available in the Resources tree; however, this is off by default. To turn it on, set the &quot;context_tree_sort&quot; System Setting to Yes, and then change the &quot;context_tree_sortby&quot; field to &quot;rank&quot;. This will allow you to drag/drop sort the Contexts in the tree.
+
+h3. Primary User Group
+
+Users can now have a &quot;Primary&quot; User Group that they belong to. This is the User Group that they are assigned to with rank of 0. If they are only in one User Group, that group will be their Primary Group.
+
+h3. Minify in the Manager
+
+The MODX manager now uses [Google Minify|http://code.google.com/p/minify/] to automatically compress the CSS and JS in the manager. By default this is on; if, however, you would like to turn it off, you can do so by setting the &quot;compress_js&quot; and &quot;compress_css&quot; System Settings to 0.
+
+h3. Form Customization Tweaks
+
+Due to the new user interface improvements on the Resource Editing screen, Form Customization can now target specific columns in tabs to move TVs to. Their IDs are now listed under the &quot;Tabs&quot; tab when editing a Form Customiziation Set.
+
+h3. Comment Tags
+
+MODX users can now use comment tags in their content:
+
+{code}[[- comment goes here]]{code}
+
+Anything within one of these tags will be removed prior to the page rendering.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar} 
+";}i:6;a:3:{s:2:"id";s:8:"36339729";s:3:"ver";s:1:"3";s:4:"code";s:3920:"{toc}
+
+{note}This document is a work in progress, as 2.2 has not yet been released.{note}
+
+h2. Introduction
+
+This article describes the major changes to MODX Revolution in the 2.2 release. Please review these changes when upgrading your sites to 2.2 from a prior MODX Revolution install.
+
+h2. Media Sources
+
+A large change in 2.2 is the introduction of [Media Sources]. These abstract the &quot;Files&quot; tab in MODX to allow multiple sources for the Files tree, such as the filesystem, an S3 bucket, or other source types. They integrate directly into most of the MODX manager, including the MODx.Browser, [Template Variables], and general file manipulations. What does this mean for an upgrade?
+
+It means that *all filemanager_\* Settings _and_ basePath/baseUrl TV input options are deprecated*. None of them are in active use by the MODX manager anymore. Sources now determine the basePath and baseUrl of the tree, rather than the Settings or TV input options. This &quot;source-centric&quot; approach allows much more stable scalability and usage.
+
+MODX will attempt to create new Media Sources for any filemanager_\* settings and any custom image/file TVs that had a custom basePath. In the case of filemanager_* system settings, the default Source will have its baseUrl and basePath altered. In the case of TV input options with custom basePath parameters, there will be new Sources that automatically associate with those TVs.
+
+Any filemanager_\* User Settings will need to be manually migrated, as the idea of User-specific source basePaths no longer exist. Please use ACLs on the Media Source with a User Group, which you can [learn how to do so here|Securing a Media Source].
+
+h2. Static Elements
+
+MODX 2.2 introduces &quot;Static&quot; Elements, which are Elements that are located on the filesystem, through a Media Source. To use a Static Element, simply create an Element (Chunk/Snippet/Template/etc), and then check the &quot;Is Static&quot; box. This will then popup two fields:
+
+* *Static Source* - This field specifies the Media Source to use when looking up the Static File. Select None to specify an absolute path to the file.
+* *Static File* - This field is the path to the file, relative to the media source you selected (or None for absolute paths). You can use tags in this field, such as System Settings, as well.
+
+For example, if you selected a File System Media Source with a relative base path of &#39;assets/&#39;, and then specify the Source File as &quot;templates/test.tpl&quot;, it will look for the Template file in &quot;/path/to/my/modx/assets/templates/test.tpl&quot;.
+
+h2. Dashboards
+
+You will note that your main Dashboard will look slightly different. The basic widgets and functionality will be the same; however, you will now be able to create Custom Dashboards for different User Groups, and rearrange and assign Widgets to them. Please refer to the [Dashboards] documentation.
+
+h2. Other Notables
+
+h3. Sorting Contexts in the Tree
+
+Sorting of Contexts is now available in the Resources tree; however, this is off by default. To turn it on, set the &quot;context_tree_sort&quot; System Setting to Yes, and then change the &quot;context_tree_sortby&quot; field to &quot;rank&quot;. This will allow you to drag/drop sort the Contexts in the tree.
+
+h3. Primary User Group
+
+Users can now have a &quot;Primary&quot; User Group that they belong to. This is the User Group that they are assigned to with rank of 0. If they are only in one User Group, that group will be their Primary Group.
+
+h3. Minify in the Manager
+
+The MODX manager now uses [Google Minify|http://code.google.com/p/minify/] to automatically compress the CSS and JS in the manager. By default this is on; if, however, you would like to turn it off, you can do so by setting the &quot;compress_js&quot; and &quot;compress_css&quot; System Settings to 0.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar} 
+";}i:7;a:3:{s:2:"id";s:8:"36339727";s:3:"ver";s:1:"2";s:4:"code";s:3000:"{toc}
+
+{note}This document is a work in progress, as 2.2 has not yet been released.{note}
+
+h2. Introduction
+
+This article describes the major changes to MODX Revolution in the 2.2 release. Please review these changes when upgrading your sites to 2.2 from a prior MODX Revolution install.
+
+h2. Media Sources
+
+A large change in 2.2 is the introduction of [Media Sources]. These abstract the &quot;Files&quot; tab in MODX to allow multiple sources for the Files tree, such as the filesystem, an S3 bucket, or other source types. They integrate directly into most of the MODX manager, including the MODx.Browser, [Template Variables], and general file manipulations. What does this mean for an upgrade?
+
+It means that *all filemanager_\* Settings _and_ basePath/baseUrl TV input options are deprecated*. None of them are in active use by the MODX manager anymore. Sources now determine the basePath and baseUrl of the tree, rather than the Settings or TV input options. This &quot;source-centric&quot; approach allows much more stable scalability and usage.
+
+MODX will attempt to create new Media Sources for any filemanager_\* settings and any custom image/file TVs that had a custom basePath. In the case of filemanager_* system settings, the default Source will have its baseUrl and basePath altered. In the case of TV input options with custom basePath parameters, there will be new Sources that automatically associate with those TVs.
+
+Any filemanager_\* User Settings will need to be manually migrated, as the idea of User-specific source basePaths no longer exist. Please use ACLs on the Media Source with a User Group, which you can [learn how to do so here|Securing a Media Source].
+
+h2. Dashboards
+
+You will note that your main Dashboard will look slightly different. The basic widgets and functionality will be the same; however, you will now be able to create Custom Dashboards for different User Groups, and rearrange and assign Widgets to them. Please refer to the [Dashboards] documentation.
+
+h2. Other Notables
+
+h3. Sorting Contexts in the Tree
+
+Sorting of Contexts is now available in the Resources tree; however, this is off by default. To turn it on, set the &quot;context_tree_sort&quot; System Setting to Yes, and then change the &quot;context_tree_sortby&quot; field to &quot;rank&quot;. This will allow you to drag/drop sort the Contexts in the tree.
+
+h3. Primary User Group
+
+Users can now have a &quot;Primary&quot; User Group that they belong to. This is the User Group that they are assigned to with rank of 0. If they are only in one User Group, that group will be their Primary Group.
+
+h3. Minify in the Manager
+
+The MODX manager now uses [Google Minify|http://code.google.com/p/minify/] to automatically compress the CSS and JS in the manager. By default this is on; if, however, you would like to turn it off, you can do so by setting the &quot;compress_js&quot; and &quot;compress_css&quot; System Settings to 0.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar} 
+";}i:8;a:3:{s:2:"id";s:8:"35586762";s:3:"ver";s:1:"1";s:4:"code";s:3025:"{toc}
+
+{note}This document is a work in progress, as 2.2 has not yet been released.{note}
+
+h2. Introduction
+
+This article describes the major changes to MODX Revolution in the 2.2 release. Please review these changes when upgrading your sites to 2.2 from a prior MODX Revolution install.
+
+h2. Media Sources
+
+A large change in 2.2 is the introduction of [Media Sources]. These abstract the &quot;Files&quot; tab in MODX to allow multiple sources for the Files tree, such as the filesystem, an S3 bucket, or other source types. They integrate directly into most of the MODX manager, including the MODx.Browser, [Template Variables], and general file manipulations. What does this mean for an upgrade?
+
+It means that *all filemanager_\* Settings _and_ basePath/baseUrl TV input options are deprecated*. None of them are in active use by the MODX manager anymore. Sources now determine the basePath and baseUrl of the tree, rather than the Settings or TV input options. This &quot;source-centric&quot; approach allows much more stable scalability and usage.
+
+MODX will attempt to create new Media Sources for any filemanager_\* settings and any custom image/file TVs that had a custom basePath. In the case of filemanager_* system settings, the default Source will have its baseUrl and basePath altered. In the case of TV input options with custom basePath parameters, there will be new Sources that automatically associate with those TVs.
+
+Any filemanager_\* User Settings will need to be manually migrated, as the idea of User-specific source basePaths no longer exist. Please use ACLs on the Media Source with a User Group, which you can [learn how to do so here|Securing a Media Source].
+
+h2. Dashboards
+
+You will note that your main Dashboard will look slightly different. The basic widgets and functionality will be the same; however, you will now be able to create Custom Dashboards for different User Groups, and rearrange and assign Widgets to them. Please refer to the [Dashboards] documentation.
+
+h2. Other Notables
+
+h3. Sorting Contexts in the Tree
+
+Sorting of Contexts is now available in the Resources tree; however, this is off by default. To turn it on, set the &quot;context_tree_sort&quot; System Setting to Yes, and then change the &quot;context_tree_sortby&quot; field to &quot;rank&quot;. This will allow you to drag/drop sort the Contexts in the tree.
+
+h3. Primary User Group
+
+Users can now have a &quot;Primary&quot; User Group that they belong to. This is the User Group that they are assigned to with rank of 0. If they are only in one User Group, that group will be their Primary Group.
+
+h3. Minify in the Manager
+
+The MODX manager now uses [Google Minify|http://code.google.com/p/minify/] to automatically compress the CSS and JS in the manager. By default this is on; if, however, you would like to turn it off, you can do so by adding back in the &quot;compress_js&quot; and &quot;compress_css&quot; System Settings, and setting them to 0.
+
+h2. See Also
+
+{pagetree:root=Upgrading MODx}
+
+{scrollbar} 
+";}}}

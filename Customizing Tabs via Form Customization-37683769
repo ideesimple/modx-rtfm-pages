@@ -1,0 +1,97 @@
+a:5:{s:2:"id";s:8:"37683769";s:4:"info";a:4:{s:6:"Title:";s:39:"Customizing Tabs via Form Customization";s:7:"Author:";s:17:"Everett Griffiths";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:54:"[revolution20:Customizing Tabs via Form Customization]";}s:6:"parent";s:8:"33227029";s:6:"source";s:1286:"\\
+
+When you use Form Customization to customize the forms in the MODX manager, you can either allow/disallow access to specific fields, or you can allow/disallow access to entire tabs or _parts_ of tabs.
+
+{note:title=When a Tab is not a Tab}
+When setting up Form Customization rules under *Security --&gt; Form Customization*, then editing a behavior set, there is a list of &quot;Tabs&quot;, but the list doesn&#39;t correspond directly to the familiar &quot;Document&quot;, &quot;Settings&quot;, &quot;Template Variables&quot;, and &quot;Resource Groups&quot;.  Rather, the tab ids listed here refer to entire tabs or _parts_ of tabs.
+{note}
+
+{toc}
+
+h2. Tab Regions
+
+These are the various tab regions whose visibility can be toggled.
+
+||ID||Default Tab Title|| Description||
+|modx-resource-settings| Document| A primary tab|
+|modx-resource-main-left| | |
+|modx-resource-main-right| | |
+|modx-page-settings| Settings| A primary tab|
+|modx-page-settings-left| | |
+|modx-page-settings-right| | |
+|modx-page-settings-right-box-left| | |
+|modx-page-settings-right-box-right| | |
+|modx-panel-resource-tv| Template Variables| A primary tab|
+|modx-resource-access-permissions| Resource Groups| A primary tab|
+
+
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"37683769";s:3:"ver";s:1:"2";s:4:"code";s:1286:"\\
+
+When you use Form Customization to customize the forms in the MODX manager, you can either allow/disallow access to specific fields, or you can allow/disallow access to entire tabs or _parts_ of tabs.
+
+{note:title=When a Tab is not a Tab}
+When setting up Form Customization rules under *Security --&gt; Form Customization*, then editing a behavior set, there is a list of &quot;Tabs&quot;, but the list doesn&#39;t correspond directly to the familiar &quot;Document&quot;, &quot;Settings&quot;, &quot;Template Variables&quot;, and &quot;Resource Groups&quot;.  Rather, the tab ids listed here refer to entire tabs or _parts_ of tabs.
+{note}
+
+{toc}
+
+h2. Tab Regions
+
+These are the various tab regions whose visibility can be toggled.
+
+||ID||Default Tab Title|| Description||
+|modx-resource-settings| Document| A primary tab|
+|modx-resource-main-left| | |
+|modx-resource-main-right| | |
+|modx-page-settings| Settings| A primary tab|
+|modx-page-settings-left| | |
+|modx-page-settings-right| | |
+|modx-page-settings-right-box-left| | |
+|modx-page-settings-right-box-right| | |
+|modx-panel-resource-tv| Template Variables| A primary tab|
+|modx-resource-access-permissions| Resource Groups| A primary tab|
+
+
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"37683771";s:3:"ver";s:1:"1";s:4:"code";s:791:"\\
+
+When you use Form Customization to customize the forms in the MODX manager, you can either allow/disallow access to specific fields, or you can allow/disallow access to entire tabs or _parts_ of tabs.
+
+{note:title=When a Tab is not a Tab}
+
+{note}
+
+{toc}
+
+h2. Tab Regions
+
+These are the various tab regions whose visibility can be toggled.
+
+||ID||Default Tab Title|| Description||
+|modx-resource-settings| | |
+|modx-resource-main-left| | |
+|modx-resource-main-right| | |
+|modx-page-settings| | |
+|modx-page-settings-left| | |
+|modx-page-settings-right| | |
+|modx-page-settings-right-box-left| | |
+|modx-page-settings-right-box-right| | |
+|modx-panel-resource-tv| | |
+|modx-resource-access-permissions| | |
+
+
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}}}

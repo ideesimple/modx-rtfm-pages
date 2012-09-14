@@ -1,0 +1,17 @@
+a:5:{s:2:"id";s:8:"20119829";s:4:"info";a:4:{s:6:"Title:";s:12:"mail_charset";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:27:"[revolution20:mail_charset]";}s:6:"parent";s:8:"18678127";s:6:"source";s:165:"h2. mail_charset
+
+*Name*: Mail Charset
+*Type*: String
+*Default*: UTF-8
+
+The (default) charset for e-mails, e.g. &#39;iso-8859-1&#39; or &#39;UTF-8&#39;.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"20119829";s:3:"ver";s:1:"1";s:4:"code";s:165:"h2. mail_charset
+
+*Name*: Mail Charset
+*Type*: String
+*Default*: UTF-8
+
+The (default) charset for e-mails, e.g. &#39;iso-8859-1&#39; or &#39;UTF-8&#39;.
+
+{scrollbar}";}}}

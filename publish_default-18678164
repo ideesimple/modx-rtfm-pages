@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678164";s:4:"info";a:4:{s:6:"Title:";s:15:"publish_default";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:30:"[revolution20:publish_default]";}s:6:"parent";s:8:"18678127";s:6:"source";s:144:"h2. publish_default
+
+*Name*: Published Default
+*Type*: Yes/No
+*Default*: No
+
+If true, makes all new resources published by default.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678164";s:3:"ver";s:1:"2";s:4:"code";s:144:"h2. publish_default
+
+*Name*: Published Default
+*Type*: Yes/No
+*Default*: No
+
+If true, makes all new resources published by default.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119700";s:3:"ver";s:1:"1";s:4:"code";s:311:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Published Default{zone-data}
+{zone-data:key}publish_default{zone-data}
+{zone-data:type}boolean{zone-data}
+{zone-data:default}false{zone-data}
+{zone-data:desc}If true, makes all new resources published by default.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

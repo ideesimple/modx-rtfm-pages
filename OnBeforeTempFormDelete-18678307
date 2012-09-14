@@ -1,0 +1,37 @@
+a:5:{s:2:"id";s:8:"18678307";s:4:"info";a:4:{s:6:"Title:";s:22:"OnBeforeTempFormDelete";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:37:"[revolution20:OnBeforeTempFormDelete]";}s:6:"parent";s:8:"18678228";s:6:"source";s:311:"\\
+
+h2. Event: OnBeforeTempFormDelete
+
+Fires before a Template is deleted in the manager.
+
+Service: 1 - Parser Service Events
+Group: Templates
+
+h2. Event Parameters
+
+||Name||Description||
+|template|A reference to the modTemplate object.|
+|id|The ID of the Template.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678307";s:3:"ver";s:1:"1";s:4:"code";s:311:"\\
+
+h2. Event: OnBeforeTempFormDelete
+
+Fires before a Template is deleted in the manager.
+
+Service: 1 - Parser Service Events
+Group: Templates
+
+h2. Event Parameters
+
+||Name||Description||
+|template|A reference to the modTemplate object.|
+|id|The ID of the Template.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

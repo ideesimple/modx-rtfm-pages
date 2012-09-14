@@ -1,0 +1,103 @@
+a:5:{s:2:"id";s:8:"18678391";s:4:"info";a:4:{s:6:"Title:";s:17:"modX.getParentIds";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:32:"[revolution20:modX.getParentIds]";}s:6:"parent";s:8:"18678386";s:6:"source";s:977:"\\
+
+h2. modX::getParentIds
+
+Gets all of the parent resource ids for a given resource.
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/modx/modX.html#getParentIds]
+
+{code}
+array getParentIds ([integer $id = null], [integer $height = 10], [array $options = array()] )
+{code}
+
+h2. Example
+
+Get all of the parent IDs for the Resource with ID 23.
+
+{code}
+$parentIds = $modx-&gt;getParentIds(23);
+{code}
+{note}
+
+Important\! This method makes use of the context cache to get the parent IDs. If you don&#39;t specify the context in the options (third) parameter it will use the current context. *In a plugin or external application that is often &quot;mgr&quot;.*&amp;nbsp;When this method returns an empty array, it is most likely looking in the wrong context so you will have to specify the third parameter.
+
+Example:
+
+{code}
+$pids = $modx-&gt;getParentIds($id, 10, array(&#39;context&#39; =&gt; &#39;web&#39;));
+{code}
+{note}
+
+
+h2. See Also
+
+* [modX]
+* [modX.getChildIds]
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678391";s:3:"ver";s:1:"2";s:4:"code";s:977:"\\
+
+h2. modX::getParentIds
+
+Gets all of the parent resource ids for a given resource.
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/modx/modX.html#getParentIds]
+
+{code}
+array getParentIds ([integer $id = null], [integer $height = 10], [array $options = array()] )
+{code}
+
+h2. Example
+
+Get all of the parent IDs for the Resource with ID 23.
+
+{code}
+$parentIds = $modx-&gt;getParentIds(23);
+{code}
+{note}
+
+Important\! This method makes use of the context cache to get the parent IDs. If you don&#39;t specify the context in the options (third) parameter it will use the current context. *In a plugin or external application that is often &quot;mgr&quot;.*&amp;nbsp;When this method returns an empty array, it is most likely looking in the wrong context so you will have to specify the third parameter.
+
+Example:
+
+{code}
+$pids = $modx-&gt;getParentIds($id, 10, array(&#39;context&#39; =&gt; &#39;web&#39;));
+{code}
+{note}
+
+
+h2. See Also
+
+* [modX]
+* [modX.getChildIds]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"36110389";s:3:"ver";s:1:"1";s:4:"code";s:421:"\\
+
+h2. modX::getParentIds
+
+Gets all of the parent resource ids for a given resource.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getParentIds
+
+{code}
+array getParentIds ([integer $id = null], [integer $height = 10])
+{code}
+
+h2. Example
+
+Get all of the parent IDs for the Resource with ID 23.
+{code}
+$parentIds = $modx-&gt;getParentIds(23);
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.getChildIds]
+
+{scrollbar}";}}}

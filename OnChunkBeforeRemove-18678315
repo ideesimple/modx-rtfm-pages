@@ -1,0 +1,35 @@
+a:5:{s:2:"id";s:8:"18678315";s:4:"info";a:4:{s:6:"Title:";s:19:"OnChunkBeforeRemove";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:34:"[revolution20:OnChunkBeforeRemove]";}s:6:"parent";s:8:"18678228";s:6:"source";s:260:"\\
+
+h2. Event: OnChunkBeforeRemove
+
+Fires right before a Chunk is removed.
+
+Service: 1 - Parser Service Events
+Group: modChunk
+
+h2. Event Parameters
+
+||Name||Description||
+|chunk|A reference to the modChunk object.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678315";s:3:"ver";s:1:"1";s:4:"code";s:260:"\\
+
+h2. Event: OnChunkBeforeRemove
+
+Fires right before a Chunk is removed.
+
+Service: 1 - Parser Service Events
+Group: modChunk
+
+h2. Event Parameters
+
+||Name||Description||
+|chunk|A reference to the modChunk object.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

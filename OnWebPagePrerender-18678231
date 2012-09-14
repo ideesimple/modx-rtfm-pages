@@ -1,0 +1,37 @@
+a:5:{s:2:"id";s:8:"18678231";s:4:"info";a:4:{s:6:"Title:";s:18:"OnWebPagePrerender";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:33:"[revolution20:OnWebPagePrerender]";}s:6:"parent";s:8:"18678228";s:6:"source";s:298:"\\
+
+h2. Event: OnWebPagePrerender
+
+Fired after a Resource is parsed, but before it is rendered.
+
+Content Type headers have not yet been sent, nor has the output been flushed.
+
+Service: 5 - Template Service Events
+Group: None
+
+h2. Event Parameters
+
+None.
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678231";s:3:"ver";s:1:"1";s:4:"code";s:298:"\\
+
+h2. Event: OnWebPagePrerender
+
+Fired after a Resource is parsed, but before it is rendered.
+
+Content Type headers have not yet been sent, nor has the output been flushed.
+
+Service: 5 - Template Service Events
+Group: None
+
+h2. Event Parameters
+
+None.
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

@@ -1,0 +1,114 @@
+a:5:{s:2:"id";s:8:"18678386";s:4:"info";a:4:{s:6:"Title:";s:16:"modX.getChildIds";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:14:"James Rotering";s:12:"Wiki Markup:";s:31:"[revolution20:modX.getChildIds]";}s:6:"parent";s:8:"18678391";s:6:"source";s:774:"h2. modX::getChildIds
+
+Gets all of the child resource ids for a given resource.
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/modx/modX.html#getChildIds]
+
+
+{code}
+array getChildIds ([integer $id = null], [integer $depth = 10], [array $options = array()])
+{code}
+
+h2. Example
+
+Get all the children IDs for the Resource 23. Limit to 6 levels deep. Only in the web context.
+
+{code}
+$array_ids = $modx-&gt;getChildIds(23,6,array(&#39;context&#39; =&gt; &#39;web&#39;));
+{code}
+
+Note that when using this method in the manager (to collect input options for a TV for example), you need to define the context with the third options parameter as it&amp;nbsp; defaults to the current context (in that scenario the manager).
+
+
+h2. See Also
+
+* [modX]
+* [modX.getParentIds]
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678386";s:3:"ver";s:1:"3";s:4:"code";s:774:"h2. modX::getChildIds
+
+Gets all of the child resource ids for a given resource.
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/modx/modX.html#getChildIds]
+
+
+{code}
+array getChildIds ([integer $id = null], [integer $depth = 10], [array $options = array()])
+{code}
+
+h2. Example
+
+Get all the children IDs for the Resource 23. Limit to 6 levels deep. Only in the web context.
+
+{code}
+$array_ids = $modx-&gt;getChildIds(23,6,array(&#39;context&#39; =&gt; &#39;web&#39;));
+{code}
+
+Note that when using this method in the manager (to collect input options for a TV for example), you need to define the context with the third options parameter as it&amp;nbsp; defaults to the current context (in that scenario the manager).
+
+
+h2. See Also
+
+* [modX]
+* [modX.getParentIds]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"37683570";s:3:"ver";s:1:"2";s:4:"code";s:773:"h2. modX::getChildIds
+
+Gets all of the child resource ids for a given resource.
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/modx/modX.html#getChildIds]
+
+
+{code}
+array getChildIds ([integer $id = null], [integer $depth = 10], [array $options = array()])
+{code}
+
+h2. Example
+
+Get all the children IDs for the Resource 23. Limit to 6 levels deep. Only in the web context.
+
+{code}
+$array_ids = $modx-&gt;getChildIds(23,6,array(&#39;context&#39; =&gt; &#39;web&#39;);
+{code}
+
+Note that when using this method in the manager (to collect input options for a TV for example), you need to define the context with the third options parameter as it&amp;nbsp; defaults to the current context (in that scenario the manager).
+
+
+h2. See Also
+
+* [modX]
+* [modX.getParentIds]
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"36634627";s:3:"ver";s:1:"1";s:4:"code";s:433:"\\
+
+h2. modX::getChildIds
+
+Gets all of the child resource ids for a given resource.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getChildIds
+
+{code}
+array getChildIds ([integer $id = null], [integer $depth = 10])
+{code}
+
+h2. Example
+
+Get all the children IDs for the Resource 23. Limit to 6 levels deep.
+{code}
+$array_ids = $modx-&gt;getChildIds(23,6);
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.getParentIds]
+
+{scrollbar}";}}}

@@ -1,0 +1,51 @@
+a:5:{s:2:"id";s:8:"18678372";s:4:"info";a:4:{s:6:"Title:";s:13:"modX.setDebug";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:28:"[revolution20:modX.setDebug]";}s:6:"parent";s:8:"18678361";s:6:"source";s:453:"\\
+
+h2. modX::setDebug
+
+Sets the debugging features of the modX instance.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#setDebug
+
+{code}
+boolean|int setDebug ([boolean|int $debug = true], [boolean $stopOnNotice = false])
+{code}
+
+h2. Example
+
+Turn debug mode on, and tell the process to stop if Notices occur:
+{code}
+$modx-&gt;setDebug(true);
+{code}
+
+h2. See Also
+
+{contentbylabel:labels=debug|showLabels=false|showSpace=false}
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678372";s:3:"ver";s:1:"1";s:4:"code";s:453:"\\
+
+h2. modX::setDebug
+
+Sets the debugging features of the modX instance.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#setDebug
+
+{code}
+boolean|int setDebug ([boolean|int $debug = true], [boolean $stopOnNotice = false])
+{code}
+
+h2. Example
+
+Turn debug mode on, and tell the process to stop if Notices occur:
+{code}
+$modx-&gt;setDebug(true);
+{code}
+
+h2. See Also
+
+{contentbylabel:labels=debug|showLabels=false|showSpace=false}
+
+{scrollbar}";}}}

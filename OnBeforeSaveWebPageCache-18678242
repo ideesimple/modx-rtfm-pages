@@ -1,0 +1,33 @@
+a:5:{s:2:"id";s:8:"18678242";s:4:"info";a:4:{s:6:"Title:";s:24:"OnBeforeSaveWebPageCache";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:39:"[revolution20:OnBeforeSaveWebPageCache]";}s:6:"parent";s:8:"18678228";s:6:"source";s:346:"\\
+
+h2. Event: OnBeforeSaveWebPageCache
+
+Fired after the Resource is loaded and before the Resource is cached. If the Resource is not cacheable, this event will not fire.
+
+Service: 4 - Cache Service Events
+Group: None
+
+h2. Event Parameters
+
+None. The resource can be referenced via $modx-&gt;resource.
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678242";s:3:"ver";s:1:"1";s:4:"code";s:346:"\\
+
+h2. Event: OnBeforeSaveWebPageCache
+
+Fired after the Resource is loaded and before the Resource is cached. If the Resource is not cacheable, this event will not fire.
+
+Service: 4 - Cache Service Events
+Group: None
+
+h2. Event Parameters
+
+None. The resource can be referenced via $modx-&gt;resource.
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

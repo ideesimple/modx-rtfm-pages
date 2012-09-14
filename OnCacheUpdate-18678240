@@ -1,0 +1,39 @@
+a:5:{s:2:"id";s:8:"18678240";s:4:"info";a:4:{s:6:"Title:";s:13:"OnCacheUpdate";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:28:"[revolution20:OnCacheUpdate]";}s:6:"parent";s:8:"18678228";s:6:"source";s:369:"\\
+
+h2. Event: OnCacheUpdate
+
+Fired after the cache is cleared at any time.
+
+Service: 4 - Cache Service Events
+Group: None
+
+h2. Event Parameters
+
+||Name||Description||
+|results|The results of the clearing.|
+|paths|An array of paths that were to be cleared.|
+|options|An array of options passed to the cache clearing method.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678240";s:3:"ver";s:1:"1";s:4:"code";s:369:"\\
+
+h2. Event: OnCacheUpdate
+
+Fired after the cache is cleared at any time.
+
+Service: 4 - Cache Service Events
+Group: None
+
+h2. Event Parameters
+
+||Name||Description||
+|results|The results of the clearing.|
+|paths|An array of paths that were to be cleared.|
+|options|An array of options passed to the cache clearing method.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

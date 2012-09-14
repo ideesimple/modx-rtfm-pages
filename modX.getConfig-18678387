@@ -1,0 +1,51 @@
+a:5:{s:2:"id";s:8:"18678387";s:4:"info";a:4:{s:6:"Title:";s:14:"modX.getConfig";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:29:"[revolution20:modX.getConfig]";}s:6:"parent";s:8:"18678361";s:6:"source";s:297:"\\
+
+h2. modX::getConfig
+
+Get the configuration for the site.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getConfig
+
+{code}
+array getConfig ()
+{code}
+
+h2. Example
+
+Get the site config into an array.
+{code}
+$config = $modx-&gt;getConfig();
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678387";s:3:"ver";s:1:"1";s:4:"code";s:297:"\\
+
+h2. modX::getConfig
+
+Get the configuration for the site.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getConfig
+
+{code}
+array getConfig ()
+{code}
+
+h2. Example
+
+Get the site config into an array.
+{code}
+$config = $modx-&gt;getConfig();
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";}}}

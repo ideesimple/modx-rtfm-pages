@@ -1,0 +1,495 @@
+a:5:{s:2:"id";s:8:"18678212";s:4:"info";a:4:{s:6:"Title:";s:14:"SELECT Binding";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:29:"[revolution20:SELECT Binding]";}s:6:"parent";s:8:"33227172";s:6:"source";s:8492:"\\
+
+h2. What is the @SELECT Binding?
+
+The @SELECT binding calls a database query based on the provided value and returns the result.
+
+h2. Syntax
+
+{code}@SELECT `pagetitle` AS `name`,`id` FROM `[[+PREFIX]]site_content` WHERE `published` = 1 AND `deleted` = 0{code}
+
+To write one of these, you need to be familiar with [MySQL syntax|http://dev.mysql.com/doc/refman/5.1/en/].  It is recommended that you first write a functional MySQL statement that executes without error in the MySQL command line (see errors, below for some pit-falls).  Once you&#39;ve verified that your query works, then you can create a @SELECT binding with it.
+
+All you need to do is after you&#39;ve got a working MySQL query is:
+* add an &#39;@&#39; symbol in front of your SELECT
+* omit the final semi-colon and any comments
+* put the query on a single line (no returns\!)
+
+You can place this binding in one of two places:
+* On a page (edit the page in the manager).  The page where you want to put this binding must be using a valid template, and that template must have the correct template variable(s) associated with it.  If you&#39;ve created the [Template Variable|Template Variables] and associated it with a [Template|Templates], and the page you&#39;re working on is using that [Template|Templates], then you&#39;ll have a place to enter in some text for that variable when you edit the page.  Paste the &quot;@SELECT ...&quot; stuff in there.  It sounds more complicated than it is, but this section is written verbosely for the sake of clear documentation.
+* You can also place the query into the &quot;Default Value&quot; box for the Template Variable.  If you replace the default text of a Template Variable that&#39;s already in use, be careful, because your pages might require a specific type of output, e.g. the output type that a @SELECT binding returns.
+
+{warning}REMEMBER: The query must be on ONE LINE.  No returns\!{warning}
+
+You&#39;ll need to select only 2 columns - the first being the display value, the second being the value of each row (the input value).
+
+For example, to grab a list of active users in a SELECT box:
+
+{code}@SELECT `username` AS `name`,`id` FROM `[[+PREFIX]]users` WHERE `active` = 1{code}
+
+h2. Alternatives
+
+Before we get any more complicated, consider doing this a different way.  A [Snippet|Snippets] might do the job more easily than a binding.
+
+If your query needs to work with template variables and you need specialized formatting for the output, the @SELECT binding is probably not the way to go.  Pretty much everything that&#39;s done with the bindings is also possible with [Snippets]; the bindings just provide a shortcut.  When you start over-using the shortcut, you may run into headaches.
+
+h2. More Complex Example: Template Variables
+
+What if you need to write a query that accesses the template variables associated with a particular page?  Those variables aren&#39;t directly stored in the _site_content_ table, they are stored in other tables.  This forces you to write a JOIN statement.  Here&#39;s a more tangible example: let&#39;s say all the pages in a particular folder have a template variable for _opening_date_... that field doesn&#39;t exist in the &quot;site_content&quot; table.  Hold onto your butts, because this gets complicated.  You have to look at MODx&#39;s gory plumbing in order to pull this off.  You have to understand how MODx extends the data stored in the &quot;site_content&quot; table and makes use of the custom fields known as &quot;Template Variables&quot;.   This is open to some debate, but unfortunately, MODx&#39;s database schema doesn&#39;t follow the strict best practices for foreign keys... it&#39;s not always clear which table is being referenced by a particular column... it&#39;s not even always clear that a column &#39;&#39;is&#39;&#39; a foreign key, but rest assured, it is possible... it just takes a bit of patience to figure out.
+
+First, have a look at the following tables (you may have prefixes to your table names):
+
+* _site_templates_ \- contains the actual template code used for the site (lots of HTML appears in the content field).
+* _site_tmplvars_ \- contains the name of template variable.  The &quot;name&quot; field is what triggers the substitution.  E.g. A name of &quot;my_template_variable&quot; should be used as &quot;\[\[*my_template_variable\]\]&quot;.  If you care to think of this architecturally, this table defines the variable class: the name and type of variable that a series of pages will have.
+* _site_tmplvar_contentvalues_ \- contains the values of the template variables for each page that uses them.  The database table has 4 fields: id, tmplvarid (foreign key back to site_tmplvars.id), contentid (foreign key back to site_content.id), value (a text field).  Architecturally, this table represents _instances_ of the particular class.  In other words, one row in the _site_tmplvars_ table might have multiple rows in this table (one row for each instance of the variable).
+* _site_tmplvar_templates_ \- This is a mapping table which associates a Template Variable with a Template (maps site_template:id to site_tmplvars:id).  Contains 3 fields: tmplvarid, templateid, rank.
+
+In our example, we want to filter based on a custom date field named &quot;opening_date&quot;, but if you look closely, the site_tmplvar_contentvalues.value field is a _text_ field.  MySQL won&#39;t automatically recognize arbitrary text as a date value, so you&#39;ll have to make use of MySQL&#39;s [str_to_date()|http://dev.mysql.com/doc/refman/5.0/en/date-and-time-functions.html#function_str-to-date] function.  You may think that the site_tmplvars.display_params is a savior here, but it&#39;s not... you end up smashing your nose directly into the nasty truth that the formats used by PHP&#39;s [strftime()|http://www.php.net/strftime] (stored in site_tmplvars.display_params) are *not* the same as what MySQL can use in its STR_TO_DATE() function.  There may be a way to automatically do this, but it&#39;s easier to just hard-code it.  You might end up with a query like this:
+
+{code}
+SELECT
+page.alias,
+tv_val.value,
+DATE_FORMAT(STR_TO_DATE(tv_val.value, &#39;%d-%m-%Y %H:%i:%s&#39;), &#39;%Y-%m-%d %H:%i:%s&#39;) as `Formatted Opening Date`,
+
+FROM site_content as page
+JOIN site_tmplvar_contentvalues as tv_val ON page.id=tv_val.id
+WHERE
+page.parent=&#39;95&#39;
+AND tv_val.tmplvarid=&#39;6&#39; /* 6 is the opening_date */
+ AND DATE_FORMAT(STR_TO_DATE(tv_val.value, &#39;%d-%m-%Y %H:%i:%s&#39;), &#39;%Y-%m-%d %H:%i:%s&#39;)&gt;&#39;2008-10-24 13:04:57&#39;
+;
+{code}
+
+{note}MODx uses the MyISAM table engine, not InnoDB, so it does not rigidly enforce the foreign key constraints that are inferred by the table structure.{note}
+
+h2. Errors
+
+What if your MySQL statement executes perfectly, but once you put it in your SELECT binding, it fails?  Well, there are some pit-falls.  The implementation isn&#39;t perfect.  Pay close attention to the following:
+* Your query *MUST* appear on one line.  Newline characters cause the @SELECT binding to choke.
+* Delete all MySQL comments /\* this style \*/  and \-\- this style
+* Make sure you have entered the table names correctly\!  Many sites use table-prefixes, so it is imperative that you test your queries before trying to use them in a @SELECT Binding.  If your query has an error, MODx will log the error to the error log.
+
+h2. Next Step: Formatting
+
+Ok, so you can return a bunch of data from the database... now what?  If you need to format it intelligently, you might get some mileage out of the Output Renders, but you might find the available options limiting to you.  You can write your own [Snippet|Snippets] that formats the value of a Template Variable.
+
+h2. Security
+
+Does this binding let you execute UPDATE, INSERT, or DELETE queries (or, *gasp*, DROP TABLE statements)?  Even if it doesn&#39;t _directly_ support this, you may be able to construct and execute a complex query that SELECT&#39;s the result of a such a destructive query.  At the very least, a user could construct a query to select another user&#39;s password hash or to see documents that the user isn&#39;t supposed to have access to.  A lot of the CMS&#39;s out there give *full* access to the database (including DROP and DELETE statements) with the database handle used by the application.  That&#39;s dangerous, and the @SELECT binding may expose some of those same vulnerabilities.
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";s:8:"versions";a:5:{i:0;a:3:{s:2:"id";s:8:"18678212";s:3:"ver";s:1:"5";s:4:"code";s:8492:"\\
+
+h2. What is the @SELECT Binding?
+
+The @SELECT binding calls a database query based on the provided value and returns the result.
+
+h2. Syntax
+
+{code}@SELECT `pagetitle` AS `name`,`id` FROM `[[+PREFIX]]site_content` WHERE `published` = 1 AND `deleted` = 0{code}
+
+To write one of these, you need to be familiar with [MySQL syntax|http://dev.mysql.com/doc/refman/5.1/en/].  It is recommended that you first write a functional MySQL statement that executes without error in the MySQL command line (see errors, below for some pit-falls).  Once you&#39;ve verified that your query works, then you can create a @SELECT binding with it.
+
+All you need to do is after you&#39;ve got a working MySQL query is:
+* add an &#39;@&#39; symbol in front of your SELECT
+* omit the final semi-colon and any comments
+* put the query on a single line (no returns\!)
+
+You can place this binding in one of two places:
+* On a page (edit the page in the manager).  The page where you want to put this binding must be using a valid template, and that template must have the correct template variable(s) associated with it.  If you&#39;ve created the [Template Variable|Template Variables] and associated it with a [Template|Templates], and the page you&#39;re working on is using that [Template|Templates], then you&#39;ll have a place to enter in some text for that variable when you edit the page.  Paste the &quot;@SELECT ...&quot; stuff in there.  It sounds more complicated than it is, but this section is written verbosely for the sake of clear documentation.
+* You can also place the query into the &quot;Default Value&quot; box for the Template Variable.  If you replace the default text of a Template Variable that&#39;s already in use, be careful, because your pages might require a specific type of output, e.g. the output type that a @SELECT binding returns.
+
+{warning}REMEMBER: The query must be on ONE LINE.  No returns\!{warning}
+
+You&#39;ll need to select only 2 columns - the first being the display value, the second being the value of each row (the input value).
+
+For example, to grab a list of active users in a SELECT box:
+
+{code}@SELECT `username` AS `name`,`id` FROM `[[+PREFIX]]users` WHERE `active` = 1{code}
+
+h2. Alternatives
+
+Before we get any more complicated, consider doing this a different way.  A [Snippet|Snippets] might do the job more easily than a binding.
+
+If your query needs to work with template variables and you need specialized formatting for the output, the @SELECT binding is probably not the way to go.  Pretty much everything that&#39;s done with the bindings is also possible with [Snippets]; the bindings just provide a shortcut.  When you start over-using the shortcut, you may run into headaches.
+
+h2. More Complex Example: Template Variables
+
+What if you need to write a query that accesses the template variables associated with a particular page?  Those variables aren&#39;t directly stored in the _site_content_ table, they are stored in other tables.  This forces you to write a JOIN statement.  Here&#39;s a more tangible example: let&#39;s say all the pages in a particular folder have a template variable for _opening_date_... that field doesn&#39;t exist in the &quot;site_content&quot; table.  Hold onto your butts, because this gets complicated.  You have to look at MODx&#39;s gory plumbing in order to pull this off.  You have to understand how MODx extends the data stored in the &quot;site_content&quot; table and makes use of the custom fields known as &quot;Template Variables&quot;.   This is open to some debate, but unfortunately, MODx&#39;s database schema doesn&#39;t follow the strict best practices for foreign keys... it&#39;s not always clear which table is being referenced by a particular column... it&#39;s not even always clear that a column &#39;&#39;is&#39;&#39; a foreign key, but rest assured, it is possible... it just takes a bit of patience to figure out.
+
+First, have a look at the following tables (you may have prefixes to your table names):
+
+* _site_templates_ \- contains the actual template code used for the site (lots of HTML appears in the content field).
+* _site_tmplvars_ \- contains the name of template variable.  The &quot;name&quot; field is what triggers the substitution.  E.g. A name of &quot;my_template_variable&quot; should be used as &quot;\[\[*my_template_variable\]\]&quot;.  If you care to think of this architecturally, this table defines the variable class: the name and type of variable that a series of pages will have.
+* _site_tmplvar_contentvalues_ \- contains the values of the template variables for each page that uses them.  The database table has 4 fields: id, tmplvarid (foreign key back to site_tmplvars.id), contentid (foreign key back to site_content.id), value (a text field).  Architecturally, this table represents _instances_ of the particular class.  In other words, one row in the _site_tmplvars_ table might have multiple rows in this table (one row for each instance of the variable).
+* _site_tmplvar_templates_ \- This is a mapping table which associates a Template Variable with a Template (maps site_template:id to site_tmplvars:id).  Contains 3 fields: tmplvarid, templateid, rank.
+
+In our example, we want to filter based on a custom date field named &quot;opening_date&quot;, but if you look closely, the site_tmplvar_contentvalues.value field is a _text_ field.  MySQL won&#39;t automatically recognize arbitrary text as a date value, so you&#39;ll have to make use of MySQL&#39;s [str_to_date()|http://dev.mysql.com/doc/refman/5.0/en/date-and-time-functions.html#function_str-to-date] function.  You may think that the site_tmplvars.display_params is a savior here, but it&#39;s not... you end up smashing your nose directly into the nasty truth that the formats used by PHP&#39;s [strftime()|http://www.php.net/strftime] (stored in site_tmplvars.display_params) are *not* the same as what MySQL can use in its STR_TO_DATE() function.  There may be a way to automatically do this, but it&#39;s easier to just hard-code it.  You might end up with a query like this:
+
+{code}
+SELECT
+page.alias,
+tv_val.value,
+DATE_FORMAT(STR_TO_DATE(tv_val.value, &#39;%d-%m-%Y %H:%i:%s&#39;), &#39;%Y-%m-%d %H:%i:%s&#39;) as `Formatted Opening Date`,
+
+FROM site_content as page
+JOIN site_tmplvar_contentvalues as tv_val ON page.id=tv_val.id
+WHERE
+page.parent=&#39;95&#39;
+AND tv_val.tmplvarid=&#39;6&#39; /* 6 is the opening_date */
+ AND DATE_FORMAT(STR_TO_DATE(tv_val.value, &#39;%d-%m-%Y %H:%i:%s&#39;), &#39;%Y-%m-%d %H:%i:%s&#39;)&gt;&#39;2008-10-24 13:04:57&#39;
+;
+{code}
+
+{note}MODx uses the MyISAM table engine, not InnoDB, so it does not rigidly enforce the foreign key constraints that are inferred by the table structure.{note}
+
+h2. Errors
+
+What if your MySQL statement executes perfectly, but once you put it in your SELECT binding, it fails?  Well, there are some pit-falls.  The implementation isn&#39;t perfect.  Pay close attention to the following:
+* Your query *MUST* appear on one line.  Newline characters cause the @SELECT binding to choke.
+* Delete all MySQL comments /\* this style \*/  and \-\- this style
+* Make sure you have entered the table names correctly\!  Many sites use table-prefixes, so it is imperative that you test your queries before trying to use them in a @SELECT Binding.  If your query has an error, MODx will log the error to the error log.
+
+h2. Next Step: Formatting
+
+Ok, so you can return a bunch of data from the database... now what?  If you need to format it intelligently, you might get some mileage out of the Output Renders, but you might find the available options limiting to you.  You can write your own [Snippet|Snippets] that formats the value of a Template Variable.
+
+h2. Security
+
+Does this binding let you execute UPDATE, INSERT, or DELETE queries (or, *gasp*, DROP TABLE statements)?  Even if it doesn&#39;t _directly_ support this, you may be able to construct and execute a complex query that SELECT&#39;s the result of a such a destructive query.  At the very least, a user could construct a query to select another user&#39;s password hash or to see documents that the user isn&#39;t supposed to have access to.  A lot of the CMS&#39;s out there give *full* access to the database (including DROP and DELETE statements) with the database handle used by the application.  That&#39;s dangerous, and the @SELECT binding may expose some of those same vulnerabilities.
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"27918347";s:3:"ver";s:1:"4";s:4:"code";s:8474:"\\
+
+h2. What is the @SELECT Binding?
+
+The @SELECT binding calls a database query based on the provided value and returns the result.
+
+h2. Syntax
+
+{code}@SELECT `pagetitle` AS `name`,`id` FROM `[[+PREFIX]]site_content` WHERE `published` = 1{code}
+
+To write one of these, you need to be familiar with [MySQL syntax|http://dev.mysql.com/doc/refman/5.1/en/].  It is recommended that you first write a functional MySQL statement that executes without error in the MySQL command line (see errors, below for some pit-falls).  Once you&#39;ve verified that your query works, then you can create a @SELECT binding with it.
+
+All you need to do is after you&#39;ve got a working MySQL query is:
+* add an &#39;@&#39; symbol in front of your SELECT
+* omit the final semi-colon and any comments
+* put the query on a single line (no returns\!)
+
+You can place this binding in one of two places:
+* On a page (edit the page in the manager).  The page where you want to put this binding must be using a valid template, and that template must have the correct template variable(s) associated with it.  If you&#39;ve created the [Template Variable|Template Variables] and associated it with a [Template|Templates], and the page you&#39;re working on is using that [Template|Templates], then you&#39;ll have a place to enter in some text for that variable when you edit the page.  Paste the &quot;@SELECT ...&quot; stuff in there.  It sounds more complicated than it is, but this section is written verbosely for the sake of clear documentation.
+* You can also place the query into the &quot;Default Value&quot; box for the Template Variable.  If you replace the default text of a Template Variable that&#39;s already in use, be careful, because your pages might require a specific type of output, e.g. the output type that a @SELECT binding returns.
+
+{warning}REMEMBER: The query must be on ONE LINE.  No returns\!{warning}
+
+You&#39;ll need to select only 2 columns - the first being the display value, the second being the value of each row (the input value).
+
+For example, to grab a list of active users in a SELECT box:
+
+{code}@SELECT `username` AS `name`,`id` FROM `[[+PREFIX]]users` WHERE `active` = 1{code}
+
+h2. Alternatives
+
+Before we get any more complicated, consider doing this a different way.  A [Snippet|Snippets] might do the job more easily than a binding.
+
+If your query needs to work with template variables and you need specialized formatting for the output, the @SELECT binding is probably not the way to go.  Pretty much everything that&#39;s done with the bindings is also possible with [Snippets]; the bindings just provide a shortcut.  When you start over-using the shortcut, you may run into headaches.
+
+h2. More Complex Example: Template Variables
+
+What if you need to write a query that accesses the template variables associated with a particular page?  Those variables aren&#39;t directly stored in the _site_content_ table, they are stored in other tables.  This forces you to write a JOIN statement.  Here&#39;s a more tangible example: let&#39;s say all the pages in a particular folder have a template variable for _opening_date_... that field doesn&#39;t exist in the &quot;site_content&quot; table.  Hold onto your butts, because this gets complicated.  You have to look at MODx&#39;s gory plumbing in order to pull this off.  You have to understand how MODx extends the data stored in the &quot;site_content&quot; table and makes use of the custom fields known as &quot;Template Variables&quot;.   This is open to some debate, but unfortunately, MODx&#39;s database schema doesn&#39;t follow the strict best practices for foreign keys... it&#39;s not always clear which table is being referenced by a particular column... it&#39;s not even always clear that a column &#39;&#39;is&#39;&#39; a foreign key, but rest assured, it is possible... it just takes a bit of patience to figure out.
+
+First, have a look at the following tables (you may have prefixes to your table names):
+
+* _site_templates_ \- contains the actual template code used for the site (lots of HTML appears in the content field).
+* _site_tmplvars_ \- contains the name of template variable.  The &quot;name&quot; field is what triggers the substitution.  E.g. A name of &quot;my_template_variable&quot; should be used as &quot;\[\[*my_template_variable\]\]&quot;.  If you care to think of this architecturally, this table defines the variable class: the name and type of variable that a series of pages will have.
+* _site_tmplvar_contentvalues_ \- contains the values of the template variables for each page that uses them.  The database table has 4 fields: id, tmplvarid (foreign key back to site_tmplvars.id), contentid (foreign key back to site_content.id), value (a text field).  Architecturally, this table represents _instances_ of the particular class.  In other words, one row in the _site_tmplvars_ table might have multiple rows in this table (one row for each instance of the variable).
+* _site_tmplvar_templates_ \- This is a mapping table which associates a Template Variable with a Template (maps site_template:id to site_tmplvars:id).  Contains 3 fields: tmplvarid, templateid, rank.
+
+In our example, we want to filter based on a custom date field named &quot;opening_date&quot;, but if you look closely, the site_tmplvar_contentvalues.value field is a _text_ field.  MySQL won&#39;t automatically recognize arbitrary text as a date value, so you&#39;ll have to make use of MySQL&#39;s [str_to_date()|http://dev.mysql.com/doc/refman/5.0/en/date-and-time-functions.html#function_str-to-date] function.  You may think that the site_tmplvars.display_params is a savior here, but it&#39;s not... you end up smashing your nose directly into the nasty truth that the formats used by PHP&#39;s [strftime()|http://www.php.net/strftime] (stored in site_tmplvars.display_params) are *not* the same as what MySQL can use in its STR_TO_DATE() function.  There may be a way to automatically do this, but it&#39;s easier to just hard-code it.  You might end up with a query like this:
+
+{code}
+SELECT
+page.alias,
+tv_val.value,
+DATE_FORMAT(STR_TO_DATE(tv_val.value, &#39;%d-%m-%Y %H:%i:%s&#39;), &#39;%Y-%m-%d %H:%i:%s&#39;) as `Formatted Opening Date`,
+
+FROM site_content as page
+JOIN site_tmplvar_contentvalues as tv_val ON page.id=tv_val.id
+WHERE
+page.parent=&#39;95&#39;
+AND tv_val.tmplvarid=&#39;6&#39; /* 6 is the opening_date */
+ AND DATE_FORMAT(STR_TO_DATE(tv_val.value, &#39;%d-%m-%Y %H:%i:%s&#39;), &#39;%Y-%m-%d %H:%i:%s&#39;)&gt;&#39;2008-10-24 13:04:57&#39;
+;
+{code}
+
+{note}MODx uses the MyISAM table engine, not InnoDB, so it does not rigidly enforce the foreign key constraints that are inferred by the table structure.{note}
+
+h2. Errors
+
+What if your MySQL statement executes perfectly, but once you put it in your SELECT binding, it fails?  Well, there are some pit-falls.  The implementation isn&#39;t perfect.  Pay close attention to the following:
+* Your query *MUST* appear on one line.  Newline characters cause the @SELECT binding to choke.
+* Delete all MySQL comments /\* this style \*/  and \-\- this style
+* Make sure you have entered the table names correctly\!  Many sites use table-prefixes, so it is imperative that you test your queries before trying to use them in a @SELECT Binding.  If your query has an error, MODx will log the error to the error log.
+
+h2. Next Step: Formatting
+
+Ok, so you can return a bunch of data from the database... now what?  If you need to format it intelligently, you might get some mileage out of the Output Renders, but you might find the available options limiting to you.  You can write your own [Snippet|Snippets] that formats the value of a Template Variable.
+
+h2. Security
+
+Does this binding let you execute UPDATE, INSERT, or DELETE queries (or, *gasp*, DROP TABLE statements)?  Even if it doesn&#39;t _directly_ support this, you may be able to construct and execute a complex query that SELECT&#39;s the result of a such a destructive query.  At the very least, a user could construct a query to select another user&#39;s password hash or to see documents that the user isn&#39;t supposed to have access to.  A lot of the CMS&#39;s out there give *full* access to the database (including DROP and DELETE statements) with the database handle used by the application.  That&#39;s dangerous, and the @SELECT binding may expose some of those same vulnerabilities.
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"27918346";s:3:"ver";s:1:"3";s:4:"code";s:8414:"\\
+
+h2. What is the @SELECT Binding?
+
+The @SELECT binding calls a database query based on the provided value and returns the result.
+
+h2. Syntax
+
+{code}@SELECT * FROM site_content{code}
+
+To write one of these, you need to be familiar with [MySQL syntax|http://dev.mysql.com/doc/refman/5.1/en/].  It is recommended that you first write a functional MySQL statement that executes without error in the MySQL command line (see errors, below for some pit-falls).  Once you&#39;ve verified that your query works, then you can create a @SELECT binding with it.
+
+All you need to do is after you&#39;ve got a working MySQL query is:
+* add an &#39;@&#39; symbol in front of your SELECT
+* omit the final semi-colon and any comments
+* put the query on a single line (no returns\!)
+
+You can place this binding in one of two places:
+* On a page (edit the page in the manager).  The page where you want to put this binding must be using a valid template, and that template must have the correct template variable(s) associated with it.  If you&#39;ve created the [Template Variable|Template Variables] and associated it with a [Template|Templates], and the page you&#39;re working on is using that [Template|Templates], then you&#39;ll have a place to enter in some text for that variable when you edit the page.  Paste the &quot;@SELECT ...&quot; stuff in there.  It sounds more complicated than it is, but this section is written verbosely for the sake of clear documentation.
+* You can also place the query into the &quot;Default Value&quot; box for the Template Variable.  If you replace the default text of a Template Variable that&#39;s already in use, be careful, because your pages might require a specific type of output, e.g. the output type that a @SELECT binding returns.
+
+{warning}REMEMBER: The query must be on ONE LINE.  No returns\!{warning}
+
+You&#39;ll need to select only 2 columns - the first being the display value, the second being the value of each row (the input value).
+
+For example, to grab a list of active users in a SELECT box:
+
+{code}@SELECT `username` AS `name`,`id` FROM `[[+PREFIX]]users` WHERE `active` = 1{code}
+
+h2. Alternatives
+
+Before we get any more complicated, consider doing this a different way.  A [Snippet|Snippets] might do the job more easily than a binding.
+
+If your query needs to work with template variables and you need specialized formatting for the output, the @SELECT binding is probably not the way to go.  Pretty much everything that&#39;s done with the bindings is also possible with [Snippets]; the bindings just provide a shortcut.  When you start over-using the shortcut, you may run into headaches.
+
+h2. More Complex Example: Template Variables
+
+What if you need to write a query that accesses the template variables associated with a particular page?  Those variables aren&#39;t directly stored in the _site_content_ table, they are stored in other tables.  This forces you to write a JOIN statement.  Here&#39;s a more tangible example: let&#39;s say all the pages in a particular folder have a template variable for _opening_date_... that field doesn&#39;t exist in the &quot;site_content&quot; table.  Hold onto your butts, because this gets complicated.  You have to look at MODx&#39;s gory plumbing in order to pull this off.  You have to understand how MODx extends the data stored in the &quot;site_content&quot; table and makes use of the custom fields known as &quot;Template Variables&quot;.   This is open to some debate, but unfortunately, MODx&#39;s database schema doesn&#39;t follow the strict best practices for foreign keys... it&#39;s not always clear which table is being referenced by a particular column... it&#39;s not even always clear that a column &#39;&#39;is&#39;&#39; a foreign key, but rest assured, it is possible... it just takes a bit of patience to figure out.
+
+First, have a look at the following tables (you may have prefixes to your table names):
+
+* _site_templates_ \- contains the actual template code used for the site (lots of HTML appears in the content field).
+* _site_tmplvars_ \- contains the name of template variable.  The &quot;name&quot; field is what triggers the substitution.  E.g. A name of &quot;my_template_variable&quot; should be used as &quot;\[\[*my_template_variable\]\]&quot;.  If you care to think of this architecturally, this table defines the variable class: the name and type of variable that a series of pages will have.
+* _site_tmplvar_contentvalues_ \- contains the values of the template variables for each page that uses them.  The database table has 4 fields: id, tmplvarid (foreign key back to site_tmplvars.id), contentid (foreign key back to site_content.id), value (a text field).  Architecturally, this table represents _instances_ of the particular class.  In other words, one row in the _site_tmplvars_ table might have multiple rows in this table (one row for each instance of the variable).
+* _site_tmplvar_templates_ \- This is a mapping table which associates a Template Variable with a Template (maps site_template:id to site_tmplvars:id).  Contains 3 fields: tmplvarid, templateid, rank.
+
+In our example, we want to filter based on a custom date field named &quot;opening_date&quot;, but if you look closely, the site_tmplvar_contentvalues.value field is a _text_ field.  MySQL won&#39;t automatically recognize arbitrary text as a date value, so you&#39;ll have to make use of MySQL&#39;s [str_to_date()|http://dev.mysql.com/doc/refman/5.0/en/date-and-time-functions.html#function_str-to-date] function.  You may think that the site_tmplvars.display_params is a savior here, but it&#39;s not... you end up smashing your nose directly into the nasty truth that the formats used by PHP&#39;s [strftime()|http://www.php.net/strftime] (stored in site_tmplvars.display_params) are *not* the same as what MySQL can use in its STR_TO_DATE() function.  There may be a way to automatically do this, but it&#39;s easier to just hard-code it.  You might end up with a query like this:
+
+{code}
+SELECT
+page.alias,
+tv_val.value,
+DATE_FORMAT(STR_TO_DATE(tv_val.value, &#39;%d-%m-%Y %H:%i:%s&#39;), &#39;%Y-%m-%d %H:%i:%s&#39;) as `Formatted Opening Date`,
+
+FROM site_content as page
+JOIN site_tmplvar_contentvalues as tv_val ON page.id=tv_val.id
+WHERE
+page.parent=&#39;95&#39;
+AND tv_val.tmplvarid=&#39;6&#39; /* 6 is the opening_date */
+ AND DATE_FORMAT(STR_TO_DATE(tv_val.value, &#39;%d-%m-%Y %H:%i:%s&#39;), &#39;%Y-%m-%d %H:%i:%s&#39;)&gt;&#39;2008-10-24 13:04:57&#39;
+;
+{code}
+
+{note}MODx uses the MyISAM table engine, not InnoDB, so it does not rigidly enforce the foreign key constraints that are inferred by the table structure.{note}
+
+h2. Errors
+
+What if your MySQL statement executes perfectly, but once you put it in your SELECT binding, it fails?  Well, there are some pit-falls.  The implementation isn&#39;t perfect.  Pay close attention to the following:
+* Your query *MUST* appear on one line.  Newline characters cause the @SELECT binding to choke.
+* Delete all MySQL comments /\* this style \*/  and \-\- this style
+* Make sure you have entered the table names correctly\!  Many sites use table-prefixes, so it is imperative that you test your queries before trying to use them in a @SELECT Binding.  If your query has an error, MODx will log the error to the error log.
+
+h2. Next Step: Formatting
+
+Ok, so you can return a bunch of data from the database... now what?  If you need to format it intelligently, you might get some mileage out of the Output Renders, but you might find the available options limiting to you.  You can write your own [Snippet|Snippets] that formats the value of a Template Variable.
+
+h2. Security
+
+Does this binding let you execute UPDATE, INSERT, or DELETE queries (or, *gasp*, DROP TABLE statements)?  Even if it doesn&#39;t _directly_ support this, you may be able to construct and execute a complex query that SELECT&#39;s the result of a such a destructive query.  At the very least, a user could construct a query to select another user&#39;s password hash or to see documents that the user isn&#39;t supposed to have access to.  A lot of the CMS&#39;s out there give *full* access to the database (including DROP and DELETE statements) with the database handle used by the application.  That&#39;s dangerous, and the @SELECT binding may expose some of those same vulnerabilities.
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"27918344";s:3:"ver";s:1:"2";s:4:"code";s:8125:"\\
+
+h2. What is the @SELECT Binding?
+
+The @SELECT binding calls a database query based on the provided value and returns the result.
+
+h2. Syntax
+
+{code}@SELECT * FROM site_content{code}
+
+To write one of these, you need to be familiar with [MySQL syntax|http://dev.mysql.com/doc/refman/5.1/en/].  It is recommended that you first write a functional MySQL statement that executes without error in the MySQL command line (see errors, below for some pit-falls).  Once you&#39;ve verified that your query works, then you can create a @SELECT binding with it.
+
+All you need to do is after you&#39;ve got a working MySQL query is:
+* add an &#39;@&#39; symbol in front of your SELECT
+* omit the final semi-colon and any comments
+* put the query on a single line (no returns\!)
+
+You can place this binding in one of two places:
+* On a page (edit the page in the manager).  The page where you want to put this binding must be using a valid template, and that template must have the correct template variable(s) associated with it.  If you&#39;ve created the [Template Variable|Template Variables] and associated it with a [Template|Templates], and the page you&#39;re working on is using that [Template|Templates], then you&#39;ll have a place to enter in some text for that variable when you edit the page.  Paste the &quot;@SELECT ...&quot; stuff in there.  It sounds more complicated than it is, but this section is written verbosely for the sake of clear documentation.
+* You can also place the query into the &quot;Default Value&quot; box for the Template Variable.  If you replace the default text of a Template Variable that&#39;s already in use, be careful, because your pages might require a specific type of output, e.g. the output type that a @SELECT binding returns.
+
+{warning}REMEMBER: The query must be on ONE LINE.  No returns\!{warning}
+
+h2. Alternatives
+
+Before we get any more complicated, consider doing this a different way.  A [Snippet|Snippets] might do the job more easily than a binding.
+
+If your query needs to work with template variables and you need specialized formatting for the output, the @SELECT binding is probably not the way to go.  Pretty much everything that&#39;s done with the bindings is also possible with [Snippets]; the bindings just provide a shortcut.  When you start over-using the shortcut, you may run into headaches.
+
+h2. More Complex Example: Template Variables
+
+What if you need to write a query that accesses the template variables associated with a particular page?  Those variables aren&#39;t directly stored in the _site_content_ table, they are stored in other tables.  This forces you to write a JOIN statement.  Here&#39;s a more tangible example: let&#39;s say all the pages in a particular folder have a template variable for _opening_date_... that field doesn&#39;t exist in the &quot;site_content&quot; table.  Hold onto your butts, because this gets complicated.  You have to look at MODx&#39;s gory plumbing in order to pull this off.  You have to understand how MODx extends the data stored in the &quot;site_content&quot; table and makes use of the custom fields known as &quot;Template Variables&quot;.   This is open to some debate, but unfortunately, MODx&#39;s database schema doesn&#39;t follow the strict best practices for foreign keys... it&#39;s not always clear which table is being referenced by a particular column... it&#39;s not even always clear that a column &#39;&#39;is&#39;&#39; a foreign key, but rest assured, it is possible... it just takes a bit of patience to figure out.
+
+First, have a look at the following tables (you may have prefixes to your table names):
+
+* _site_templates_ \- contains the actual template code used for the site (lots of HTML appears in the content field).
+* _site_tmplvars_ \- contains the name of template variable.  The &quot;name&quot; field is what triggers the substitution.  E.g. A name of &quot;my_template_variable&quot; should be used as &quot;\[\[*my_template_variable\]\]&quot;.  If you care to think of this architecturally, this table defines the variable class: the name and type of variable that a series of pages will have.
+* _site_tmplvar_contentvalues_ \- contains the values of the template variables for each page that uses them.  The database table has 4 fields: id, tmplvarid (foreign key back to site_tmplvars.id), contentid (foreign key back to site_content.id), value (a text field).  Architecturally, this table represents _instances_ of the particular class.  In other words, one row in the _site_tmplvars_ table might have multiple rows in this table (one row for each instance of the variable).
+* _site_tmplvar_templates_ \- This is a mapping table which associates a Template Variable with a Template (maps site_template:id to site_tmplvars:id).  Contains 3 fields: tmplvarid, templateid, rank.
+
+In our example, we want to filter based on a custom date field named &quot;opening_date&quot;, but if you look closely, the site_tmplvar_contentvalues.value field is a _text_ field.  MySQL won&#39;t automatically recognize arbitrary text as a date value, so you&#39;ll have to make use of MySQL&#39;s [str_to_date()|http://dev.mysql.com/doc/refman/5.0/en/date-and-time-functions.html#function_str-to-date] function.  You may think that the site_tmplvars.display_params is a savior here, but it&#39;s not... you end up smashing your nose directly into the nasty truth that the formats used by PHP&#39;s [strftime()|http://www.php.net/strftime] (stored in site_tmplvars.display_params) are *not* the same as what MySQL can use in its STR_TO_DATE() function.  There may be a way to automatically do this, but it&#39;s easier to just hard-code it.  You might end up with a query like this:
+
+{code}
+SELECT
+page.alias,
+tv_val.value,
+DATE_FORMAT(STR_TO_DATE(tv_val.value, &#39;%d-%m-%Y %H:%i:%s&#39;), &#39;%Y-%m-%d %H:%i:%s&#39;) as `Formatted Opening Date`,
+
+FROM site_content as page
+JOIN site_tmplvar_contentvalues as tv_val ON page.id=tv_val.id
+WHERE
+page.parent=&#39;95&#39;
+AND tv_val.tmplvarid=&#39;6&#39; /* 6 is the opening_date */
+ AND DATE_FORMAT(STR_TO_DATE(tv_val.value, &#39;%d-%m-%Y %H:%i:%s&#39;), &#39;%Y-%m-%d %H:%i:%s&#39;)&gt;&#39;2008-10-24 13:04:57&#39;
+;
+{code}
+
+{note}MODx uses the MyISAM table engine, not InnoDB, so it does not rigidly enforce the foreign key constraints that are inferred by the table structure.{note}
+
+h2. Errors
+
+What if your MySQL statement executes perfectly, but once you put it in your SELECT binding, it fails?  Well, there are some pit-falls.  The implementation isn&#39;t perfect.  Pay close attention to the following:
+* Your query *MUST* appear on one line.  Newline characters cause the @SELECT binding to choke.
+* Delete all MySQL comments /\* this style \*/  and \-\- this style
+* Make sure you have entered the table names correctly\!  Many sites use table-prefixes, so it is imperative that you test your queries before trying to use them in a @SELECT Binding.  If your query has an error, MODx will log the error to the error log.
+
+h2. Next Step: Formatting
+
+Ok, so you can return a bunch of data from the database... now what?  If you need to format it intelligently, you might get some mileage out of the Output Renders, but you might find the available options limiting to you.  You can write your own [Snippet|Snippets] that formats the value of a Template Variable.
+
+h2. Security
+
+Does this binding let you execute UPDATE, INSERT, or DELETE queries (or, *gasp*, DROP TABLE statements)?  Even if it doesn&#39;t _directly_ support this, you may be able to construct and execute a complex query that SELECT&#39;s the result of a such a destructive query.  At the very least, a user could construct a query to select another user&#39;s password hash or to see documents that the user isn&#39;t supposed to have access to.  A lot of the CMS&#39;s out there give *full* access to the database (including DROP and DELETE statements) with the database handle used by the application.  That&#39;s dangerous, and the @SELECT binding may expose some of those same vulnerabilities.
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"21659676";s:3:"ver";s:1:"1";s:4:"code";s:8036:"\\
+
+h2. What is the @SELECT Binding?
+
+The @SELECT binding calls a database query based on the provided value and returns the result.
+
+h2. Syntax
+
+{code}@SELECT * FROM site_content{code}
+
+To write one of these, you need to be familiar with [MySQL syntax|http://dev.mysql.com/doc/refman/5.1/en/].  It is recommended that you first write a functional MySQL statement that executes without error in the MySQL command line (see errors, below for some pit-falls).  Once you&#39;ve verified that your query works, then you can create a @SELECT binding with it.  
+
+All you need to do is after you&#39;ve got a working MySQL query is:
+* add an &#39;@&#39; symbol in front of your SELECT
+* omit the final semi-colon and any comments
+* put the query on a single line (no returns!)
+
+You can place this binding in one of two places:
+* On a page (edit the page in the manager).  The page where you want to put this binding must be using a valid template, and that template must have the correct template variable(s) associated with it.  If you&#39;ve created the [Template Variable|Template Variables] and associated it with a [Template|Templates], and the page you&#39;re working on is using that [Template|Templates], then you&#39;ll have a place to enter in some text for that variable when you edit the page.  Paste the &quot;@SELECT ...&quot; stuff in there.  It sounds more complicated than it is, but this section is written verbosely for the sake of clear documentation.
+* You can also place the query into the &quot;Default Value&quot; box for the Template Variable.  If you replace the default text of a Template Variable that&#39;s already in use, be careful, because your pages might require a specific type of output, e.g. the output type that a @SELECT binding returns.
+
+{warning}REMEMBER: The query must be on ONE LINE.  No returns!{warning}
+
+h2. Alternatives
+Before we get any more complicated, consider doing this a different way.  A [Snippet|Snippets] might do the job more easily than a binding.
+
+If your query needs to work with template variables and you need specialized formatting for the output, the @SELECT binding is probably not the way to go.  Pretty much everything that&#39;s done with the bindings is also possible with [Snippets]; the bindings just provide a shortcut.  When you start over-using the shortcut, you may run into headaches.
+
+h2. More Complex Example: Template Variables
+
+What if you need to write a query that accesses the template variables associated with a particular page?  Those variables aren&#39;t directly stored in the _site\_content_ table, they are stored in other tables.  This forces you to write a JOIN statement.  Here&#39;s a more tangible example: let&#39;s say all the pages in a particular folder have a template variable for _opening\_date_... that field doesn&#39;t exist in the &quot;site_content&quot; table.  Hold onto your butts, because this gets complicated.  You have to look at MODx&#39;s gory plumbing in order to pull this off.  You have to understand how MODx extends the data stored in the &quot;site_content&quot; table and makes use of the custom fields known as &quot;Template Variables&quot;.   This is open to some debate, but unfortunately, MODx&#39;s database schema doesn&#39;t follow the strict best practices for foreign keys... it&#39;s not always clear which table is being referenced by a particular column... it&#39;s not even always clear that a column &#39;&#39;is&#39;&#39; a foreign key, but rest assured, it is possible... it just takes a bit of patience to figure out.
+
+First, have a look at the following tables (you may have prefixes to your table names):
+
+* _site\_templates_ - contains the actual template code used for the site (lots of HTML appears in the content field).
+* _site\_tmplvars_ - contains the name of template variable.  The &quot;name&quot; field is what triggers the substitution.  E.g. A name of &quot;my_template_variable&quot; should be used as &quot;\[*my_template_variable]&quot;.  If you care to think of this architecturally, this table defines the variable class.
+* _site\_tmplvar\_contentvalues_ - contains the content stored in the template variables.  The database table has 4 fields: id, tmplvarid (foreign key back to site_tmplvars.id), contentid (foreign key back to site_content.id), value (a text field).  Architecturally, this table represents _instances_ of the particular class.  In other words, one row in the _site\_tmplvars_ table might have multiple rows in this table (one row for each instance of the variable).
+* _site\_tmplvar\_templates_ - This is a mapping table which associates a Template Variable with a Template (maps site_template:id to site_tmplvars:id).  Contains 3 fields: tmplvarid, templateid, rank.
+
+In our example, we want to filter off of a custom date field named &quot;opening_date&quot;, but if you look closely, the site_tmplvar_contentvalues.value field is a _text_ field.  MySQL won&#39;t automatically recognize arbitrary text as a date value, so you&#39;ll have to make use of MySQL&#39;s [str_to_date()|http://dev.mysql.com/doc/refman/5.0/en/date-and-time-functions.html#function_str-to-date] function.  You may think that the site_tmplvars.display_params is a savior here, but it&#39;s not... you end up smashing your nose directly into the nasty truth that the formats used by PHP&#39;s [strftime()|http://www.php.net/strftime] (stored in site_tmplvars.display_params) are *not* the same as what MySQL can use in its str_to_date() function.  There may be a way to automatically do this, but it&#39;s easier to just hard-code it.  You might end up with a query like this:
+
+{code}
+SELECT 
+page.alias, 
+tv_val.value, 
+DATE_FORMAT(STR_TO_DATE(tv_val.value, &#39;%d-%m-%Y %H:%i:%s&#39;), &#39;%Y-%m-%d %H:%i:%s&#39;) as `Formatted Opening Date`,
+
+FROM site_content as page
+JOIN site_tmplvar_contentvalues as tv_val ON page.id=tv_val.id
+WHERE 
+page.parent=&#39;95&#39;
+AND tv_val.tmplvarid=&#39;6&#39; /* 6 is the opening_date */
+ AND DATE_FORMAT(STR_TO_DATE(tv_val.value, &#39;%d-%m-%Y %H:%i:%s&#39;), &#39;%Y-%m-%d %H:%i:%s&#39;)&gt;&#39;2008-10-24 13:04:57&#39;
+;
+{code}
+
+{note}MODx uses the MyISAM table engine, not InnoDB, so it does not rigidly enforce the foreign key constraints that are inferred by the table structure.{note}
+
+h2. Errors
+What if your MySQL statement executes perfectly, but once you put it in your SELECT binding, it fails?  Well, there are some pit-falls.  The implementation isn&#39;t perfect.  Pay close attention to the following:
+* Your query *MUST* appear on one line.  Newline characters cause the @SELECT binding to choke. 
+* Delete all MySQL comments /\* this style \*/  and -- this style
+* Make sure you have entered the table names correctly!  Many sites use table-prefixes, so it is imperative that you test your queries before trying to use them in a @SELECT Binding.  If your query has an error, MODx will log the error to the error log.
+
+h2. Next Step: Formatting
+Ok, so you can return a bunch of data from the database... now what?  If you need to format it intelligently, you might get some mileage out of the Output Renders, but you might find the available options limiting to you.  You can write your own [Snippet|Snippets] that formats the value of a Template Variable.
+
+h2. Security
+Does this binding let you execute UPDATE, INSERT, or DELETE queries (or, *gasp*, DROP TABLE statements)?  Even if it doesn&#39;t _directly_ support this, you may be able to construct and execute a complex query that SELECT&#39;s the result of a such a destructive query.  At the very least, a user could construct a query to select another user&#39;s password hash or to see documents that the user isn&#39;t supposed to have access to.  A lot of the CMS&#39;s out there give *full* access to the database (including DROP and DELETE statements) with the database handle used by the application.  That&#39;s dangerous, and the @SELECT binding may expose some of those same vulnerabilities.
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";}}}

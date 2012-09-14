@@ -1,0 +1,90 @@
+a:5:{s:2:"id";s:8:"18678423";s:4:"info";a:4:{s:6:"Title:";s:23:"modUser.isAuthenticated";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:38:"[revolution20:modUser.isAuthenticated]";}s:6:"parent";s:8:"18678416";s:6:"source";s:697:"\\
+
+h2. modUser::isAuthenticated
+
+Determines if this user is authenticated in a specific context.
+
+Separate session contexts can allow users to login/out of specific sub-sites individually (or in collections).
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/modx/modUser.html#isAuthenticated]
+
+
+{code}
+boolean isAuthenticated ([string $sessionContext = &#39;web&#39;])
+{code}
+
+h2. Example
+
+See if the User is logged into the &#39;web&#39; context. If not, deny access and send to Unauthorized Page.
+{code}
+if (!$modx-&gt;user-&gt;isAuthenticated(&#39;web&#39;)) {
+   $modx-&gt;sendUnauthorizedPage();
+}
+{code}
+
+h2. See Also
+
+{contentbylabel:labels=user|showLabels=false|showSpace=false}
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678423";s:3:"ver";s:1:"2";s:4:"code";s:697:"\\
+
+h2. modUser::isAuthenticated
+
+Determines if this user is authenticated in a specific context.
+
+Separate session contexts can allow users to login/out of specific sub-sites individually (or in collections).
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/modx/modUser.html#isAuthenticated]
+
+
+{code}
+boolean isAuthenticated ([string $sessionContext = &#39;web&#39;])
+{code}
+
+h2. Example
+
+See if the User is logged into the &#39;web&#39; context. If not, deny access and send to Unauthorized Page.
+{code}
+if (!$modx-&gt;user-&gt;isAuthenticated(&#39;web&#39;)) {
+   $modx-&gt;sendUnauthorizedPage();
+}
+{code}
+
+h2. See Also
+
+{contentbylabel:labels=user|showLabels=false|showSpace=false}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35094870";s:3:"ver";s:1:"1";s:4:"code";s:685:"\\
+
+h2. modUser::isAuthenticated
+
+Determines if this user is authenticated in a specific context.
+
+Separate session contexts can allow users to login/out of specific sub-sites individually (or in collections).
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modUser.html#isAuthenticated
+
+{code}
+boolean isAuthenticated ([string $sessionContext = &#39;web&#39;])
+{code}
+
+h2. Example
+
+See if the User is logged into the &#39;web&#39; context. If not, deny access and send to Unauthorized Page.
+{code}
+if (!$modx-&gt;isAuthenticated(&#39;web&#39;)) {
+   $modx-&gt;sendUnauthorizedPage();
+}
+{code}
+
+h2. See Also
+
+{contentbylabel:labels=user|showLabels=false|showSpace=false}
+
+{scrollbar}";}}}

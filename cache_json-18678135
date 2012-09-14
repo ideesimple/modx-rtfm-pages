@@ -1,0 +1,26 @@
+a:5:{s:2:"id";s:8:"18678135";s:4:"info";a:4:{s:6:"Title:";s:10:"cache_json";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:25:"[revolution20:cache_json]";}s:6:"parent";s:8:"18678127";s:6:"source";s:126:"h2. cache_json
+
+*Name*: Cache JSON Data
+*Type*: Yes/No
+*Default*: No
+
+If Yes, caching will be stored JSON format.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678135";s:3:"ver";s:1:"2";s:4:"code";s:126:"h2. cache_json
+
+*Name*: Cache JSON Data
+*Type*: Yes/No
+*Default*: No
+
+If Yes, caching will be stored JSON format.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119652";s:3:"ver";s:1:"1";s:4:"code";s:304:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Cache JSON Data{zone-data}
+{zone-data:key}cache_json{zone-data}
+{zone-data:type}boolean{zone-data}
+{zone-data:default}false{zone-data}
+{zone-data:desc}&amp;nbsp;If true indicates cacheing is in JSON format.{zone-data}
+{zone-template-instance}
+{scrollbar}";}}}

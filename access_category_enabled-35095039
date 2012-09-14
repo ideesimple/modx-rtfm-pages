@@ -1,0 +1,36 @@
+a:5:{s:2:"id";s:8:"35095039";s:4:"info";a:4:{s:6:"Title:";s:23:"access_category_enabled";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:38:"[revolution20:access_category_enabled]";}s:6:"parent";s:8:"18678127";s:6:"source";s:308:"h2. access_category_enabled
+
+*Name*: Check Category Access
+*Type*: Yes/No
+*Default*: Yes
+*Available In*: Revolution 2.1+
+
+Use this to enable or disable Category ACL checks (per Context). 
+
+{warning}NOTE: If this option is set to no then ALL Category Access Permissions will be ignored!{warning}
+
+{scrollbar}
+";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"35095039";s:3:"ver";s:1:"2";s:4:"code";s:308:"h2. access_category_enabled
+
+*Name*: Check Category Access
+*Type*: Yes/No
+*Default*: Yes
+*Available In*: Revolution 2.1+
+
+Use this to enable or disable Category ACL checks (per Context). 
+
+{warning}NOTE: If this option is set to no then ALL Category Access Permissions will be ignored!{warning}
+
+{scrollbar}
+";}i:1;a:3:{s:2:"id";s:8:"35095044";s:3:"ver";s:1:"1";s:4:"code";s:276:"h2. access_category_enabled
+
+*Name*: Check Category Access
+*Type*: Yes/No
+*Default*: Yes
+
+Use this to enable or disable Category ACL checks (per Context). 
+
+{warning}NOTE: If this option is set to no then ALL Category Access Permissions will be ignored!{warning}
+
+{scrollbar}
+";}}}

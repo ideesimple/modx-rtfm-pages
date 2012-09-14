@@ -1,0 +1,830 @@
+a:5:{s:2:"id";s:8:"18678338";s:4:"info";a:4:{s:6:"Title:";s:7:"modMail";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:10:"Mark Ernst";s:12:"Wiki Markup:";s:22:"[revolution20:modMail]";}s:6:"parent";s:8:"35586205";s:6:"source";s:3168:"\\
+
+h2. What is modMail?
+
+modMail is an abstract class that can be extended to provide mail services for Revolution. It cannot be run by itself, but must be extended with an implementation class (such as PHPMailer).
+
+h3. What is modPHPMailer?
+
+modPHPMailer is a class that extends modMail to provide an implementation for the open source PHPMailer class.
+
+h3. Other modMail Implementations
+
+* [modSwiftMailer|ADDON:modSwiftMailer] - Can be downloaded through Package Management.
+
+h2. Usage
+
+The following example is based on the +native+ modPHPMailer which comes with MODX Revolution.
+
+Let&#39;s say we have an email template in the Chunk &#39;myEmailTemplate&#39;. We want to send it via mail to user@example.com, with the From address being &#39;me@example.org&#39;. We also want it to be an HTML email. Here&#39;s how we&#39;d do it:
+
+{code}
+$message = $modx-&gt;getChunk(&#39;myEmailTemplate&#39;);
+
+$modx-&gt;getService(&#39;mail&#39;, &#39;mail.modPHPMailer&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_BODY,$message);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM,&#39;me@example.org&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM_NAME,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SENDER,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SUBJECT,&#39;Check out my new email template!&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;reply-to&#39;,&#39;me@xexample.org&#39;);
+$modx-&gt;mail-&gt;setHTML(true);
+if (!$modx-&gt;mail-&gt;send()) {
+    $modx-&gt;log(modX::LOG_LEVEL_ERROR,&#39;An error occurred while trying to send the email: &#39;.$modx-&gt;mail-&gt;mailer-&gt;ErrorInfo);
+}
+$modx-&gt;mail-&gt;reset();
+{code}
+
+Simple, no?
+
+Note that we have to reset() if we want to send mail again; this resets all the fields to blank. Also, the fields above are _optional_ (just like PHPMailer), so that if you didn&#39;t want to specify a &#39;reply-to&#39; (though we recommend it\!) you can.
+
+Also, if you want to send the email to multiple addresses, you can simply call address(&#39;to&#39;) again, like so:
+
+{code}
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;mom@example.org&#39;);
+{code}
+
+And finally, the example code above will send a message to our error.log if the mail isn&#39;t sent for some reason (usually a server misconfiguration).
+
+h2. Placeholders in your Chunk
+
+In the example above, [modX.getChunk] was used as the mail message.  See the documentation on that function for how to use its optional second argument. As far as modMail is concerned, the placeholders used are entirely up to you; you don&#39;t even have to use getChunk at all.  You could just as easily pass the *modMail::MAIL_BODY* setting a static string.
+
+h2. What if I want to use another email class?
+
+Simple - just extend modMail with that class, then load your class via [getService|modX.getService]. You&#39;ll get all the modMail functionality, but you will have to provide the wrapper class (like modPHPMailer) to do so.
+
+h2. See Also
+
+* [MODx Services]
+* [modX.getService]
+* [ADDON:modSwiftMailer]
+
+{scrollbar}";s:8:"versions";a:12:{i:0;a:3:{s:2:"id";s:8:"18678338";s:3:"ver";s:1:"1";s:4:"code";s:3168:"\\
+
+h2. What is modMail?
+
+modMail is an abstract class that can be extended to provide mail services for Revolution. It cannot be run by itself, but must be extended with an implementation class (such as PHPMailer).
+
+h3. What is modPHPMailer?
+
+modPHPMailer is a class that extends modMail to provide an implementation for the open source PHPMailer class.
+
+h3. Other modMail Implementations
+
+* [modSwiftMailer|ADDON:modSwiftMailer] - Can be downloaded through Package Management.
+
+h2. Usage
+
+The following example is based on the +native+ modPHPMailer which comes with MODX Revolution.
+
+Let&#39;s say we have an email template in the Chunk &#39;myEmailTemplate&#39;. We want to send it via mail to user@example.com, with the From address being &#39;me@example.org&#39;. We also want it to be an HTML email. Here&#39;s how we&#39;d do it:
+
+{code}
+$message = $modx-&gt;getChunk(&#39;myEmailTemplate&#39;);
+
+$modx-&gt;getService(&#39;mail&#39;, &#39;mail.modPHPMailer&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_BODY,$message);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM,&#39;me@example.org&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM_NAME,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SENDER,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SUBJECT,&#39;Check out my new email template!&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;reply-to&#39;,&#39;me@xexample.org&#39;);
+$modx-&gt;mail-&gt;setHTML(true);
+if (!$modx-&gt;mail-&gt;send()) {
+    $modx-&gt;log(modX::LOG_LEVEL_ERROR,&#39;An error occurred while trying to send the email: &#39;.$modx-&gt;mail-&gt;mailer-&gt;ErrorInfo);
+}
+$modx-&gt;mail-&gt;reset();
+{code}
+
+Simple, no?
+
+Note that we have to reset() if we want to send mail again; this resets all the fields to blank. Also, the fields above are _optional_ (just like PHPMailer), so that if you didn&#39;t want to specify a &#39;reply-to&#39; (though we recommend it\!) you can.
+
+Also, if you want to send the email to multiple addresses, you can simply call address(&#39;to&#39;) again, like so:
+
+{code}
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;mom@example.org&#39;);
+{code}
+
+And finally, the example code above will send a message to our error.log if the mail isn&#39;t sent for some reason (usually a server misconfiguration).
+
+h2. Placeholders in your Chunk
+
+In the example above, [modX.getChunk] was used as the mail message.  See the documentation on that function for how to use its optional second argument. As far as modMail is concerned, the placeholders used are entirely up to you; you don&#39;t even have to use getChunk at all.  You could just as easily pass the *modMail::MAIL_BODY* setting a static string.
+
+h2. What if I want to use another email class?
+
+Simple - just extend modMail with that class, then load your class via [getService|modX.getService]. You&#39;ll get all the modMail functionality, but you will have to provide the wrapper class (like modPHPMailer) to do so.
+
+h2. See Also
+
+* [MODx Services]
+* [modX.getService]
+* [ADDON:modSwiftMailer]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35586257";s:3:"ver";s:1:"1";s:4:"code";s:3133:"\\
+
+h2. What is modMail?
+
+modMail is an abstract class that can be extended to provide mail services for Revolution. It cannot be run by itself, but must be extended with an implementation class (such as PHPMailer).
+
+h3. What is modPHPMailer?
+
+modPHPMailer is a class that extends modMail to provide an implementation for the open source PHPMailer class.
+
+h3. Other modMail Implementations
+
+* [modSwiftMailer|ADDON:modSwiftMailer] - Can be downloaded through Package Management.
+
+h2. Usage
+
+The following example is based on the +native+ modPHPMailer which comes with MODX Revolution.
+
+Let&#39;s say we have an email template in the Chunk &#39;myEmailTemplate&#39;. We want to send it via mail to user@example.com, with the From address being &#39;me@example.org&#39;. We also want it to be an HTML email. Here&#39;s how we&#39;d do it:
+
+{code}
+$message = $modx-&gt;getChunk(&#39;myEmailTemplate&#39;);
+
+$modx-&gt;getService(&#39;mail&#39;, &#39;mail.modPHPMailer&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_BODY,$message);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM,&#39;me@example.org&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM_NAME,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SENDER,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SUBJECT,&#39;Check out my new email template!&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;reply-to&#39;,&#39;me@xexample.org&#39;);
+$modx-&gt;mail-&gt;setHTML(true);
+if (!$modx-&gt;mail-&gt;send()) {
+    $modx-&gt;log(modX::LOG_LEVEL_ERROR,&#39;An error occurred while trying to send the email: &#39;.$err);
+}
+$modx-&gt;mail-&gt;reset();
+{code}
+
+Simple, no?
+
+Note that we have to reset() if we want to send mail again; this resets all the fields to blank. Also, the fields above are _optional_ (just like PHPMailer), so that if you didn&#39;t want to specify a &#39;reply-to&#39; (though we recommend it\!) you can.
+
+Also, if you want to send the email to multiple addresses, you can simply call address(&#39;to&#39;) again, like so:
+
+{code}
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;mom@example.org&#39;);
+{code}
+
+And finally, the example code above will send a message to our error.log if the mail isn&#39;t sent for some reason (usually a server misconfiguration).
+
+h2. Placeholders in your Chunk
+
+In the example above, [modX.getChunk] was used as the mail message.  See the documentation on that function for how to use its optional second argument. As far as modMail is concerned, the placeholders used are entirely up to you; you don&#39;t even have to use getChunk at all.  You could just as easily pass the *modMail::MAIL_BODY* setting a static string.
+
+h2. What if I want to use another email class?
+
+Simple - just extend modMail with that class, then load your class via [getService|modX.getService]. You&#39;ll get all the modMail functionality, but you will have to provide the wrapper class (like modPHPMailer) to do so.
+
+h2. See Also
+
+* [MODx Services]
+* [modX.getService]
+* [ADDON:modSwiftMailer]
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35586256";s:3:"ver";s:1:"1";s:4:"code";s:3142:"\\
+
+h2. What is modMail?
+
+modMail is an abstract class that can be extended to provide mail services for Revolution. It cannot be run by itself, but must be extended with an implementation class (such as PHPMailer).
+
+h3. What is modPHPMailer?
+
+modPHPMailer is a class that extends modMail to provide an implementation for the open source PHPMailer class.
+
+h3. Other modMail Implementations
+
+* [modSwiftMailer|ADDON:modSwiftMailer] - Can be downloaded through Package Management.
+
+h2. Usage
+
+The following example is based on the +native+ modPHPMailer which comes with MODX Revolution.
+
+Let&#39;s say we have an email template in the Chunk &#39;myEmailTemplate&#39;. We want to send it via mail to user@example.com, with the From address being &#39;me@example.org&#39;. We also want it to be an HTML email. Here&#39;s how we&#39;d do it:
+
+{code}
+$message = $modx-&gt;getChunk(&#39;myEmailTemplate&#39;);
+
+$modx-&gt;getService(&#39;mail&#39;, &#39;mail.modPHPMailer&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_BODY,$message);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM,&#39;me@example.org&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM_NAME,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SENDER,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SUBJECT,&#39;Check out my new email template!&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;reply-to&#39;,&#39;me@xexample.org&#39;);
+$modx-&gt;mail-&gt;setHTML(true);
+if (!$modx-&gt;mail-&gt;send()) {
+    $modx-&gt;log(modX::LOG_LEVEL_ERROR,&#39;An error occurred while trying to send the email: &#39;.$err);
+}
+$modx-&gt;mail-&gt;reset();literally
+{code}
+
+Simple, no?
+
+Note that we have to reset() if we want to send mail again; this resets all the fields to blank. Also, the fields above are _optional_ (just like PHPMailer), so that if you didn&#39;t want to specify a &#39;reply-to&#39; (though we recommend it\!) you can.
+
+Also, if you want to send the email to multiple addresses, you can simply call address(&#39;to&#39;) again, like so:
+
+{code}
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;mom@example.org&#39;);
+{code}
+
+And finally, the example code above will send a message to our error.log if the mail isn&#39;t sent for some reason (usually a server misconfiguration).
+
+h2. Placeholders in your Chunk
+
+In the example above, [modX.getChunk] was used as the mail message.  See the documentation on that function for how to use its optional second argument. As far as modMail is concerned, the placeholders used are entirely up to you; you don&#39;t even have to use getChunk at all.  You could just as easily pass the *modMail::MAIL_BODY* setting a static string.
+
+h2. What if I want to use another email class?
+
+Simple - just extend modMail with that class, then load your class via [getService|modX.getService]. You&#39;ll get all the modMail functionality, but you will have to provide the wrapper class (like modPHPMailer) to do so.
+
+h2. See Also
+
+* [MODx Services]
+* [modX.getService]
+* [ADDON:modSwiftMailer]
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"35586234";s:3:"ver";s:1:"9";s:4:"code";s:3920:"\\
+
+h2. What is modMail?
+
+modMail is an abstract class that can be extended to provide mail services for Revolution. It cannot be run by itself, but must be extended with an implementation class (such as PHPMailer).
+
+h3. What is modPHPMailer?
+
+modPHPMailer is a class that extends modMail to provide an implementation for the open source PHPMailer class.
+
+h3. What is modSwiftMailer?
+
+[modSwiftMailer |ADDON:modSwiftMailer]is a {+}3rd-party core add-on{+} by Mark Ernst that extends the [modMail |revolution20:modMail]functionality and provides a much more configurable implementation of the native modMail (in combination with PHPMailer) class. &amp;nbsp;modSwiftMailer is based on [Swift Mailer|http://swiftmailer.org/] which is an open-source library by Chris Corbyn.&amp;nbsp;Although the usage of modSwiftMailer is almost exactly the same as modPHPMailer in core functionality, it provides a couple of differences and advantages. Please refer to the modSwiftMailer documentation for more information, installation\- and usage instructions.
+
+{*}Note:* If you want to use modSwiftMailer, please download it from the [MODX Extras repository|http://modx.com/extras/package/modswiftmailer] in your browser or in your MODX [revolution20:Package Management].
+
+h2. Usage
+
+The following example is based on the +native+ modPHPMailer which comes with MODX Revolution.
+
+Let&#39;s say we have an email template in the Chunk &#39;myEmailTemplate&#39;. We want to send it via mail to user@example.com, with the From address being &#39;me@example.org&#39;. We also want it to be an HTML email. Here&#39;s how we&#39;d do it:
+
+{code}
+$message = $modx-&gt;getChunk(&#39;myEmailTemplate&#39;);
+
+$modx-&gt;getService(&#39;mail&#39;, &#39;mail.modPHPMailer&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_BODY,$message);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM,&#39;me@example.org&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM_NAME,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SENDER,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SUBJECT,&#39;Check out my new email template!&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;reply-to&#39;,&#39;me@xexample.org&#39;);
+$modx-&gt;mail-&gt;setHTML(true);
+if (!$modx-&gt;mail-&gt;send()) {
+    $modx-&gt;log(modX::LOG_LEVEL_ERROR,&#39;An error occurred while trying to send the email: &#39;.$err);
+}
+$modx-&gt;mail-&gt;reset();literally
+{code}
+
+Simple, no?
+
+Note that we have to reset() if we want to send mail again; this resets all the fields to blank. Also, the fields above are _optional_ (just like PHPMailer), so that if you didn&#39;t want to specify a &#39;reply-to&#39; (though we recommend it\!) you can.
+
+Also, if you want to send the email to multiple addresses, you can simply call address(&#39;to&#39;) again, like so:
+
+{code}
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;mom@example.org&#39;);
+{code}
+
+And finally, the example code above will send a message to our error.log if the mail isn&#39;t sent for some reason (usually a server misconfiguration).
+
+h2. Placeholders in your Chunk
+
+In the example above, [modX.getChunk] was used as the mail message.  See the documentation on that function for how to use its optional second argument. As far as modMail is concerned, the placeholders used are entirely up to you; you don&#39;t even have to use getChunk at all.  You could just as easily pass the *modMail::MAIL_BODY* setting a static string.
+
+h2. What if I want to use another email class?
+
+Simple - just extend modMail with that class, then load your class via [getService|modX.getService]. You&#39;ll get all the modMail functionality, but you will have to provide the wrapper class (like modPHPMailer) to do so.
+
+h2. See Also
+
+* [MODx Services]
+* [modX.getService]
+* [ADDON:modSwiftMailer]
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"35586229";s:3:"ver";s:1:"8";s:4:"code";s:3889:"\\
+
+h2. What is modMail?
+
+modMail is an abstract class that can be extended to provide mail services for Revolution. It cannot be run by itself, but must be extended with an implementation class (such as PHPMailer).
+
+h3. What is modPHPMailer?
+
+modPHPMailer is a class that extends modMail to provide an implementation for the open source PHPMailer class.
+
+h3. What is modSwiftMailer?
+
+[modSwiftMailer |ADDON:modSwiftMailer]is a {+}3rd-party core add-on{+} by Mark Ernst that extends the [modMail |revolution20:modMail]functionality and provides a much more configurable implementation of the native modMail (in combination with PHPMailer) class. &amp;nbsp;modSwiftMailer is based on [Swift Mailer|http://swiftmailer.org/] which is an open-source library by Chris Corbyn.&amp;nbsp;Although the usage of modSwiftMailer is almost exactly the same as modPHPMailer in core functionality, it provides a couple of differences and advantages. Please refer to the modSwiftMailer documentation for more information, installation\- and usage instructions.
+
+{*}Note:* If you want to use modSwiftMailer, please download it from the [MODX Extras repository|http://modx.com/extras/] in your browser or in your MODX [revolution20:Package Management].
+
+h2. Usage
+
+The following example is based on the +native+ modPHPMailer which comes with MODX Revolution.
+
+Let&#39;s say we have an email template in the Chunk &#39;myEmailTemplate&#39;. We want to send it via mail to user@example.com, with the From address being &#39;me@example.org&#39;. We also want it to be an HTML email. Here&#39;s how we&#39;d do it:
+
+{code}
+$message = $modx-&gt;getChunk(&#39;myEmailTemplate&#39;);
+
+$modx-&gt;getService(&#39;mail&#39;, &#39;mail.modPHPMailer&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_BODY,$message);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM,&#39;me@example.org&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM_NAME,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SENDER,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SUBJECT,&#39;Check out my new email template!&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;reply-to&#39;,&#39;me@xexample.org&#39;);
+$modx-&gt;mail-&gt;setHTML(true);
+if (!$modx-&gt;mail-&gt;send()) {
+    $modx-&gt;log(modX::LOG_LEVEL_ERROR,&#39;An error occurred while trying to send the email: &#39;.$err);
+}
+$modx-&gt;mail-&gt;reset();
+{code}
+
+Simple, no?
+
+Note that we have to reset() if we want to send mail again; this resets all the fields to blank. Also, the fields above are _optional_ (just like PHPMailer), so that if you didn&#39;t want to specify a &#39;reply-to&#39; (though we recommend it\!) you can.
+
+Also, if you want to send the email to multiple addresses, you can simply call address(&#39;to&#39;) again, like so:
+
+{code}
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;mom@example.org&#39;);
+{code}
+
+And finally, the example code above will send a message to our error.log if the mail isn&#39;t sent for some reason (usually a server misconfiguration).
+
+h2. Placeholders in your Chunk
+
+In the example above, [modX.getChunk] was used as the mail message.  See the documentation on that function for how to use its optional second argument. As far as modMail is concerned, the placeholders used are entirely up to you; you don&#39;t even have to use getChunk at all.  You could just as easily pass the *modMail::MAIL_BODY* setting a static string.
+
+h2. What if I want to use another email class?
+
+Simple - just extend modMail with that class, then load your class via [getService|modX.getService]. You&#39;ll get all the modMail functionality, but you will have to provide the wrapper class (like modPHPMailer) to do so.
+
+h2. See Also
+
+* [MODx Services]
+* [modX.getService]
+* [ADDON:modSwiftMailer]
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"35586218";s:3:"ver";s:1:"7";s:4:"code";s:4267:"\\
+
+h2. What is modMail?
+
+modMail is an abstract class that can be extended to provide mail services for Revolution. It cannot be run by itself, but must be extended with an implementation class (such as PHPMailer).
+
+h3. What is modPHPMailer?
+
+{color:#333333}modPHPMailer is a class that extends modMail to provide an implementation for the open source PHPMailer class.{color}
+
+h3. {color:#333333}{*}What is modSwiftMailer?*{color}
+
+{color:#333333}[modSwiftMailer |ADDON:modSwiftMailer]{color}{color:#333333}is a{color} {color:#333333}{+}3rd-party core add-on{+}{color} {color:#333333}by Mark Ernst that extends the{color} {color:#333333}[modMail |revolution20:modMail]{color}{color:#333333}functionality and provides a much more configurable implementation of the native modMail (in combination with PHPMailer) class. &amp;nbsp;modSwiftMailer is based on{color} {color:#333333}[Swift Mailer|http://swiftmailer.org/]{color} {color:#333333}which is an open-source library by Chris Corbyn.&amp;nbsp;{color}{color:#333333}Although the usage of modSwiftMailer is almost exactly the same as modPHPMailer in core functionality, it provides a couple of differences and advantages. Please refer to the modSwiftMailer documentation for more information, installation\- and usage instructions.{color}
+
+{color:#333333}{*}Note:*{color} {color:#333333}If you want to use modSwiftMailer, please download it from the{color} {color:#333333}[MODX Extras repository|http://modx.com/extras/]{color} {color:#333333}in your browser or in your MODX{color} {color:#333333}[revolution20:Package Management]{color}{color:#333333}.{color}
+
+h2. Usage
+
+The following example is based on the +native+ modPHPMailer which comes with MODX Revolution.
+
+Let&#39;s say we have an email template in the Chunk &#39;myEmailTemplate&#39;. We want to send it via mail to user@example.com, with the From address being &#39;me@example.org&#39;. We also want it to be an HTML email. Here&#39;s how we&#39;d do it:
+
+{code}
+$message = $modx-&gt;getChunk(&#39;myEmailTemplate&#39;);
+
+$modx-&gt;getService(&#39;mail&#39;, &#39;mail.modPHPMailer&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_BODY,$message);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM,&#39;me@example.org&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM_NAME,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SENDER,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SUBJECT,&#39;Check out my new email template!&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;reply-to&#39;,&#39;me@xexample.org&#39;);
+$modx-&gt;mail-&gt;setHTML(true);
+if (!$modx-&gt;mail-&gt;send()) {
+    $modx-&gt;log(modX::LOG_LEVEL_ERROR,&#39;An error occurred while trying to send the email: &#39;.$err);
+}
+$modx-&gt;mail-&gt;reset();
+{code}
+
+Simple, no?
+
+Note that we have to reset() if we want to send mail again; this resets all the fields to blank. Also, the fields above are _optional_ (just like PHPMailer), so that if you didn&#39;t want to specify a &#39;reply-to&#39; (though we recommend it\!) you can.
+
+Also, if you want to send the email to multiple addresses, you can simply call address(&#39;to&#39;) again, like so:
+
+{code}
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;mom@example.org&#39;);
+{code}
+
+And finally, the example code above will send a message to our error.log if the mail isn&#39;t sent for some reason (usually a server misconfiguration).
+
+h2. Placeholders in your Chunk
+
+In the example above, [modX.getChunk] was used as the mail message.  See the documentation on that function for how to use its optional second argument. As far as modMail is concerned, the placeholders used are entirely up to you; you don&#39;t even have to use getChunk at all.  You could just as easily pass the *modMail::MAIL_BODY* setting a static string.
+
+h2. What if I want to use another email class?
+
+Simple - just extend modMail with that class, then load your class via [getService|modX.getService]. You&#39;ll get all the modMail functionality, but you will have to provide the wrapper class (like modPHPMailer) to do so.
+
+h2. See Also
+
+* [MODx Services]
+* [modX.getService]
+* [ADDON:modSwiftMailer]
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"35586210";s:3:"ver";s:1:"6";s:4:"code";s:4267:"\\
+
+h2. What is modMail?
+
+modMail is an abstract class that can be extended to provide mail services for Revolution. It cannot be run by itself, but must be extended with an implementation class (such as PHPMailer).
+
+h3. What is modPHPMailer?
+
+{color:#333333}modPHPMailer is a class that extends modMail to provide an implementation for the open source PHPMailer class.{color}
+
+h3. {color:#000000}{*}What is modSwiftMailer?*{color}
+
+{color:#333333}[modSwiftMailer |ADDON:modSwiftMailer]{color}{color:#333333}is a{color} {color:#333333}{+}3rd-party core add-on{+}{color} {color:#333333}by Mark Ernst that extends the{color} {color:#333333}[modMail |revolution20:modMail]{color}{color:#333333}functionality and provides a much more configurable implementation of the native modMail (in combination with PHPMailer) class. &amp;nbsp;modSwiftMailer is based on{color} {color:#333333}[Swift Mailer|http://swiftmailer.org/]{color} {color:#333333}which is an open-source library by Chris Corbyn.&amp;nbsp;{color}{color:#333333}Although the usage of modSwiftMailer is almost exactly the same as modPHPMailer in core functionality, it provides a couple of differences and advantages. Please refer to the modSwiftMailer documentation for more information, installation\- and usage instructions.{color}
+
+{color:#333333}{*}Note:*{color} {color:#333333}If you want to use modSwiftMailer, please download it from the{color} {color:#333333}[MODX Extras repository|http://modx.com/extras/]{color} {color:#333333}in your browser or in your MODX{color} {color:#333333}[revolution20:Package Management]{color}{color:#333333}.{color}
+
+h2. Usage
+
+The following example is based on the +native+ modPHPMailer which comes with MODX Revolution.
+
+Let&#39;s say we have an email template in the Chunk &#39;myEmailTemplate&#39;. We want to send it via mail to user@example.com, with the From address being &#39;me@example.org&#39;. We also want it to be an HTML email. Here&#39;s how we&#39;d do it:
+
+{code}
+$message = $modx-&gt;getChunk(&#39;myEmailTemplate&#39;);
+
+$modx-&gt;getService(&#39;mail&#39;, &#39;mail.modPHPMailer&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_BODY,$message);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM,&#39;me@example.org&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM_NAME,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SENDER,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SUBJECT,&#39;Check out my new email template!&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;reply-to&#39;,&#39;me@xexample.org&#39;);
+$modx-&gt;mail-&gt;setHTML(true);
+if (!$modx-&gt;mail-&gt;send()) {
+    $modx-&gt;log(modX::LOG_LEVEL_ERROR,&#39;An error occurred while trying to send the email: &#39;.$err);
+}
+$modx-&gt;mail-&gt;reset();
+{code}
+
+Simple, no?
+
+Note that we have to reset() if we want to send mail again; this resets all the fields to blank. Also, the fields above are _optional_ (just like PHPMailer), so that if you didn&#39;t want to specify a &#39;reply-to&#39; (though we recommend it\!) you can.
+
+Also, if you want to send the email to multiple addresses, you can simply call address(&#39;to&#39;) again, like so:
+
+{code}
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;mom@example.org&#39;);
+{code}
+
+And finally, the example code above will send a message to our error.log if the mail isn&#39;t sent for some reason (usually a server misconfiguration).
+
+h2. Placeholders in your Chunk
+
+In the example above, [modX.getChunk] was used as the mail message.  See the documentation on that function for how to use its optional second argument. As far as modMail is concerned, the placeholders used are entirely up to you; you don&#39;t even have to use getChunk at all.  You could just as easily pass the *modMail::MAIL_BODY* setting a static string.
+
+h2. What if I want to use another email class?
+
+Simple - just extend modMail with that class, then load your class via [getService|modX.getService]. You&#39;ll get all the modMail functionality, but you will have to provide the wrapper class (like modPHPMailer) to do so.
+
+h2. See Also
+
+* [MODx Services]
+* [modX.getService]
+* [ADDON:modSwiftMailer]
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"35586209";s:3:"ver";s:1:"5";s:4:"code";s:4221:"\\
+
+h2. What is modMail?
+
+modMail is an abstract class that can be extended to provide mail services for Revolution. It cannot be run by itself, but must be extended with an implementation class (such as PHPMailer).
+
+h3. What is modPHPMailer?
+
+modPHPMailer is a class that extends modMail to provide an implementation for the open source PHPMailer class.
+
+h3. {color:#000000}{*}What is modPHPMailer?*{color}
+
+{color:#333333}[modSwiftMailer |ADDON:modSwiftMailer]{color}{color:#333333}is a{color} {color:#333333}{+}3rd-party core add-on{+}{color} {color:#333333}by Mark Ernst that extends the{color} {color:#333333}[modMail |revolution20:modMail]{color}{color:#333333}functionality and provides a much more configurable implementation of the native modMail (in combination with PHPMailer) class. &amp;nbsp;modSwiftMailer is based on{color} {color:#333333}[Swift Mailer|http://swiftmailer.org/]{color} {color:#333333}which is an open-source library by Chris Corbyn.&amp;nbsp;{color}Although the usage of modSwiftMailer is almost exactly the same as modPHPMailer in core functionality, it provides a couple of differences and advantages. Please refer to the modSwiftMailer documentation for more information, installation\- and usage instructions.
+
+{color:#333333}{*}Note:*{color} {color:#333333}If you want to use modSwiftMailer, please download it from the{color} {color:#333333}[MODX Extras repository|http://modx.com/extras/]{color} {color:#333333}in your browser or in your MODX{color} {color:#333333}[revolution20:Package Management]{color}{color:#333333}.{color}
+
+h2. Usage
+
+The following example is based on the +native+ modPHPMailer which comes with MODX Revolution.
+
+Let&#39;s say we have an email template in the Chunk &#39;myEmailTemplate&#39;. We want to send it via mail to user@example.com, with the From address being &#39;me@example.org&#39;. We also want it to be an HTML email. Here&#39;s how we&#39;d do it:
+
+{code}
+$message = $modx-&gt;getChunk(&#39;myEmailTemplate&#39;);
+
+$modx-&gt;getService(&#39;mail&#39;, &#39;mail.modPHPMailer&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_BODY,$message);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM,&#39;me@example.org&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM_NAME,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SENDER,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SUBJECT,&#39;Check out my new email template!&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;reply-to&#39;,&#39;me@xexample.org&#39;);
+$modx-&gt;mail-&gt;setHTML(true);
+if (!$modx-&gt;mail-&gt;send()) {
+    $modx-&gt;log(modX::LOG_LEVEL_ERROR,&#39;An error occurred while trying to send the email: &#39;.$err);
+}
+$modx-&gt;mail-&gt;reset();
+{code}
+
+Simple, no?
+
+Note that we have to reset() if we want to send mail again; this resets all the fields to blank. Also, the fields above are _optional_ (just like PHPMailer), so that if you didn&#39;t want to specify a &#39;reply-to&#39; (though we recommend it\!) you can.
+
+Also, if you want to send the email to multiple addresses, you can simply call address(&#39;to&#39;) again, like so:
+
+{code}
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;mom@example.org&#39;);
+{code}
+
+And finally, the example code above will send a message to our error.log if the mail isn&#39;t sent for some reason (usually a server misconfiguration).
+
+h2. Placeholders in your Chunk
+
+In the example above, [modX.getChunk] was used as the mail message.  See the documentation on that function for how to use its optional second argument. As far as modMail is concerned, the placeholders used are entirely up to you; you don&#39;t even have to use getChunk at all.  You could just as easily pass the *modMail::MAIL_BODY* setting a static string.
+
+h2. What if I want to use another email class?
+
+Simple - just extend modMail with that class, then load your class via [getService|modX.getService]. You&#39;ll get all the modMail functionality, but you will have to provide the wrapper class (like modPHPMailer) to do so.
+
+h2. See Also
+
+* [MODx Services]
+* [modX.getService]
+* [ADDON:modSwiftMailer]
+
+{scrollbar}";}i:8;a:3:{s:2:"id";s:8:"35586207";s:3:"ver";s:1:"4";s:4:"code";s:4236:"\\
+
+h2. What is modMail?
+
+modMail is an abstract class that can be extended to provide mail services for Revolution. It cannot be run by itself, but must be extended with an implementation class (such as PHPMailer).
+
+h3. What is modPHPMailer?
+
+modPHPMailer is a class that extends modMail to provide an implementation for the open source PHPMailer class.
+
+h3. {color:#000000}{*}What is modSwiftMailer?*{color}
+
+{color:#333333}[modSwiftMailer |ADDON:modSwiftMailer]{color}{color:#333333}is a{color} {color:#333333}{+}3rd-party core add-on{+}{color} {color:#333333}by Mark Ernst that extends the{color} {color:#333333}[modMail |revolution20:modMail]{color}{color:#333333}functionality and provides a much more configurable implementation of the native modMail (in combination with PHPMailer) class. &amp;nbsp;modSwiftMailer is based on{color} {color:#333333}[Swift Mailer|http://swiftmailer.org/]{color} {color:#333333}which is an open-source library by Chris Corbyn.{color}
+{color:#333333}Although the usage of modSwiftMailer is almost exactly the same as modPHPMailer in core functionality, it provides a couple of differences and advantages. Please refer to the modSwiftMailer documentation for more information, installation\- and usage instructions.{color}
+
+{color:#333333}{*}Note:*{color} {color:#333333}If you want to use modSwiftMailer, please download it from the{color} {color:#333333}[MODX Extras repository|http://modx.com/extras/]{color} {color:#333333}in your browser or in your MODX{color} {color:#333333}[revolution20:Package Management]{color}{color:#333333}.{color}
+
+h2. Usage
+
+The following example is based on the +native+ modPHPMailer which comes with MODX Revolution.
+
+Let&#39;s say we have an email template in the Chunk &#39;myEmailTemplate&#39;. We want to send it via mail to user@example.com, with the From address being &#39;me@example.org&#39;. We also want it to be an HTML email. Here&#39;s how we&#39;d do it:
+
+{code}
+$message = $modx-&gt;getChunk(&#39;myEmailTemplate&#39;);
+
+$modx-&gt;getService(&#39;mail&#39;, &#39;mail.modPHPMailer&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_BODY,$message);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM,&#39;me@example.org&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM_NAME,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SENDER,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SUBJECT,&#39;Check out my new email template!&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;reply-to&#39;,&#39;me@xexample.org&#39;);
+$modx-&gt;mail-&gt;setHTML(true);
+if (!$modx-&gt;mail-&gt;send()) {
+    $modx-&gt;log(modX::LOG_LEVEL_ERROR,&#39;An error occurred while trying to send the email: &#39;.$err);
+}
+$modx-&gt;mail-&gt;reset();
+{code}
+
+Simple, no?
+
+Note that we have to reset() if we want to send mail again; this resets all the fields to blank. Also, the fields above are _optional_ (just like PHPMailer), so that if you didn&#39;t want to specify a &#39;reply-to&#39; (though we recommend it\!) you can.
+
+Also, if you want to send the email to multiple addresses, you can simply call address(&#39;to&#39;) again, like so:
+
+{code}
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;mom@example.org&#39;);
+{code}
+
+And finally, the example code above will send a message to our error.log if the mail isn&#39;t sent for some reason (usually a server misconfiguration).
+
+h2. Placeholders in your Chunk
+
+In the example above, [modX.getChunk] was used as the mail message.  See the documentation on that function for how to use its optional second argument. As far as modMail is concerned, the placeholders used are entirely up to you; you don&#39;t even have to use getChunk at all.  You could just as easily pass the *modMail::MAIL_BODY* setting a static string.
+
+h2. What if I want to use another email class?
+
+Simple - just extend modMail with that class, then load your class via [getService|modX.getService]. You&#39;ll get all the modMail functionality, but you will have to provide the wrapper class (like modPHPMailer) to do so.
+
+h2. See Also
+
+* [MODx Services]
+* [modX.getService]
+* [ADDON:modSwiftMailer]
+
+{scrollbar}";}i:9;a:3:{s:2:"id";s:8:"35586206";s:3:"ver";s:1:"3";s:4:"code";s:2888:"\\
+
+h2. What is modMail?
+
+modMail is an abstract class that can be extended to provide mail services for Revolution. It cannot be run by itself, but must be extended with an implementation class (such as PHPMailer).
+
+h3. What is modPHPMailer?
+
+modPHPMailer is a class that extends modMail to provide an implementation for the open source PHPMailer class.
+
+h2. Usage
+
+Let&#39;s say we have an email template in the Chunk &#39;myEmailTemplate&#39;. We want to send it via mail to user@example.com, with the From address being &#39;me@example.org&#39;. We also want it to be an HTML email. Here&#39;s how we&#39;d do it:
+
+{code}
+$message = $modx-&gt;getChunk(&#39;myEmailTemplate&#39;);
+
+$modx-&gt;getService(&#39;mail&#39;, &#39;mail.modPHPMailer&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_BODY,$message);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM,&#39;me@example.org&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM_NAME,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SENDER,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SUBJECT,&#39;Check out my new email template!&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;reply-to&#39;,&#39;me@xexample.org&#39;);
+$modx-&gt;mail-&gt;setHTML(true);
+if (!$modx-&gt;mail-&gt;send()) {
+    $modx-&gt;log(modX::LOG_LEVEL_ERROR,&#39;An error occurred while trying to send the email: &#39;.$err);
+}
+$modx-&gt;mail-&gt;reset();
+{code}
+
+Simple, no?
+
+Note that we have to reset() if we want to send mail again; this resets all the fields to blank. Also, the fields above are _optional_ (just like PHPMailer), so that if you didn&#39;t want to specify a &#39;reply-to&#39; (though we recommend it!) you can.
+
+Also, if you want to send the email to multiple addresses, you can simply call address(&#39;to&#39;) again, like so:
+
+{code}
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;mom@example.org&#39;);
+{code}
+
+And finally, the example code above will send a message to our error.log if the mail isn&#39;t sent for some reason (usually a server misconfiguration).
+
+h2. Placeholders in your Chunk
+
+In the example above, [modX.getChunk] was used as the mail message.  See the documentation on that function for how to use its optional second argument. As far as modMail is concerned, the placeholders used are entirely up to you; you don&#39;t even have to use getChunk at all.  You could just as easily pass the *modMail::MAIL_BODY* setting a static string.
+
+h2. What if I want to use another email class?
+
+Simple - just extend modMail with that class, then load your class via [getService|modX.getService]. You&#39;ll get all the modMail functionality, but you will have to provide the wrapper class (like modPHPMailer) to do so.
+
+h2. See Also
+
+* [MODx Services]
+* [modX.getService]
+
+{scrollbar}";}i:10;a:3:{s:2:"id";s:8:"35095336";s:3:"ver";s:1:"2";s:4:"code";s:2495:"\\
+
+h2. What is modMail?
+
+modMail is an abstract class that can be extended to provide mail services for Revolution. It cannot be run by itself, but must be extended with an implementation class (such as PHPMailer).
+
+h3. What is modPHPMailer?
+
+modPHPMailer is a class that extends modMail to provide an implementation for the open source PHPMailer class.
+
+h2. Usage
+
+Let&#39;s say we have an email template in the Chunk &#39;myEmailTemplate&#39;. We want to send it via mail to user@example.com, with the From address being &#39;me@example.org&#39;. We also want it to be an HTML email. Here&#39;s how we&#39;d do it:
+
+{code}
+$message = $modx-&gt;getChunk(&#39;myEmailTemplate&#39;);
+
+$modx-&gt;getService(&#39;mail&#39;, &#39;mail.modPHPMailer&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_BODY,$message);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM,&#39;me@example.org&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM_NAME,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SENDER,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SUBJECT,&#39;Check out my new email template!&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;reply-to&#39;,&#39;me@xexample.org&#39;);
+$modx-&gt;mail-&gt;setHTML(true);
+if (!$modx-&gt;mail-&gt;send()) {
+    $modx-&gt;log(modX::LOG_LEVEL_ERROR,&#39;An error occurred while trying to send the email: &#39;.$err);
+}
+$modx-&gt;mail-&gt;reset();
+{code}
+
+Simple, no?
+
+Note that we have to reset() if we want to send mail again; this resets all the fields to blank. Also, the fields above are _optional_ (just like PHPMailer), so that if you didn&#39;t want to specify a &#39;reply-to&#39; (though we recommend it!) you can.
+
+Also, if you want to send the email to multiple addresses, you can simply call address(&#39;to&#39;) again, like so:
+
+{code}
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;user@example.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;mom@example.org&#39;);
+{code}
+
+And finally, the example code above will send a message to our error.log if the mail isn&#39;t sent for some reason (usually a server misconfiguration).
+
+h2. What if I want to use another email class?
+
+Simple - just extend modMail with that class, then load your class via [getService|modX.getService]. You&#39;ll get all the modMail functionality, but you will have to provide the wrapper class (like modPHPMailer) to do so.
+
+h2. See Also
+
+* [MODx Services]
+* [modX.getService]
+
+{scrollbar}";}i:11;a:3:{s:2:"id";s:8:"33947811";s:3:"ver";s:1:"1";s:4:"code";s:2497:"\\
+
+h2. What is modMail?
+
+modMail is an abstract class that can be extended to provide mail services for Revolution. It cannot be run by itself, but must be extended with an implementation class (such as PHPMailer).
+
+h3. What is modPHPMailer?
+
+modPHPMailer is a class that extends modMail to provide an implementation for the open source PHPMailer class.
+
+h2. Usage
+
+Let&#39;s say we have an email template in the Chunk &#39;myEmailTemplate&#39;. We want to send it via mail to marketing@modxcms.com, with the From address being &#39;me@xpdo.org&#39;. We also want it to be an HTML email. Here&#39;s how we&#39;d do it:
+
+{code}
+$message = $modx-&gt;getChunk(&#39;myEmailTemplate&#39;);
+
+$modx-&gt;getService(&#39;mail&#39;, &#39;mail.modPHPMailer&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_BODY,$message);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM,&#39;me@xpdo.org&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_FROM_NAME,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SENDER,&#39;Johnny Tester&#39;);
+$modx-&gt;mail-&gt;set(modMail::MAIL_SUBJECT,&#39;Check out my new email template!&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;marketing@modxcms.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;reply-to&#39;,&#39;me@xpdo.org&#39;);
+$modx-&gt;mail-&gt;setHTML(true);
+if (!$modx-&gt;mail-&gt;send()) {
+    $modx-&gt;log(modX::LOG_LEVEL_ERROR,&#39;An error occurred while trying to send the email: &#39;.$err);
+}
+$modx-&gt;mail-&gt;reset();
+{code}
+
+Simple, no?
+
+Note that we have to reset() if we want to send mail again; this resets all the fields to blank. Also, the fields above are _optional_ (just like PHPMailer), so that if you didn&#39;t want to specify a &#39;reply-to&#39; (though we recommend it!) you can.
+
+Also, if you want to send the email to multiple addresses, you can simply call address(&#39;to&#39;) again, like so:
+
+{code}
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;marketing@modxcms.com&#39;);
+$modx-&gt;mail-&gt;address(&#39;to&#39;,&#39;mom@home.com&#39;);
+{code}
+
+And finally, the example code above will send a message to our error.log if the mail isn&#39;t sent for some reason (usually a server misconfiguration).
+
+h2. What if I want to use another email class?
+
+Simple - just extend modMail with that class, then load your class via [getService|modX.getService]. You&#39;ll get all the modMail functionality, but you will have to provide the wrapper class (like modPHPMailer) to do so.
+
+h2. See Also
+
+* [MODx Services]
+* [modX.getService]
+
+{scrollbar}";}}}

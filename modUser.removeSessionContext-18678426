@@ -1,0 +1,53 @@
+a:5:{s:2:"id";s:8:"18678426";s:4:"info";a:4:{s:6:"Title:";s:28:"modUser.removeSessionContext";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:43:"[revolution20:modUser.removeSessionContext]";}s:6:"parent";s:8:"18678416";s:6:"source";s:415:"\\
+
+h2. modUser::removeSessionContext
+
+Removes a user session context.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modUser.html#removeSessionContext
+
+{code}
+void removeSessionContext (string|array $context)
+{code}
+
+h2. Example
+
+Remove the session for the User in the &#39;sports&#39; Context.
+{code}
+$user-&gt;removeSessionContext(&#39;sports&#39;);
+{code}
+
+h2. See Also
+
+* [modUser]
+* [Contexts]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678426";s:3:"ver";s:1:"1";s:4:"code";s:415:"\\
+
+h2. modUser::removeSessionContext
+
+Removes a user session context.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modUser.html#removeSessionContext
+
+{code}
+void removeSessionContext (string|array $context)
+{code}
+
+h2. Example
+
+Remove the session for the User in the &#39;sports&#39; Context.
+{code}
+$user-&gt;removeSessionContext(&#39;sports&#39;);
+{code}
+
+h2. See Also
+
+* [modUser]
+* [Contexts]
+
+{scrollbar}";}}}

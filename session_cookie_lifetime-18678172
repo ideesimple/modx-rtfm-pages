@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678172";s:4:"info";a:4:{s:6:"Title:";s:23:"session_cookie_lifetime";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:38:"[revolution20:session_cookie_lifetime]";}s:6:"parent";s:8:"39355094";s:6:"source";s:298:"h2. session_cookie_lifetime
+
+*Name*: Session Cookie Lifetime
+*Type*: Number
+*Default*: 604800
+
+Use this setting to customize the session cookie lifetime in seconds.  This is used to set the lifetime of a client session cookie when they choose the &#39;remember me&#39; option on login.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678172";s:3:"ver";s:1:"2";s:4:"code";s:298:"h2. session_cookie_lifetime
+
+*Name*: Session Cookie Lifetime
+*Type*: Number
+*Default*: 604800
+
+Use this setting to customize the session cookie lifetime in seconds.  This is used to set the lifetime of a client session cookie when they choose the &#39;remember me&#39; option on login.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119712";s:3:"ver";s:1:"1";s:4:"code";s:461:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Session Cookie Lifetime{zone-data}
+{zone-data:key}session_cookie_lifetime{zone-data}
+{zone-data:type}number{zone-data}
+{zone-data:default}604800{zone-data}
+{zone-data:desc}Use this setting to customize the session cookie lifetime in seconds.  This is used to set the lifetime of a client session cookie when they choose the &#39;remember me&#39; option on login.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

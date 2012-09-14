@@ -1,0 +1,85 @@
+a:5:{s:2:"id";s:8:"18678100";s:4:"info";a:4:{s:6:"Title:";s:14:"Move TV to Tab";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:29:"[revolution20:Move TV to Tab]";}s:6:"parent";s:8:"18678090";s:6:"source";s:733:"\\
+
+h2. The Move TV to Tab Rule
+
+The Move TV to Tab rule will move any TV to the tab you specify.
+
+h2. Usage
+
+Specify the ID of the tab to move to in the &quot;name&quot; field of the Rule. Then specify the TV&#39;s ID prefixed with &#39;tv&#39; in the &quot;value&quot; field.
+
+The list of available tabs is:
+
+||ID||Description||
+|modx-resource-settings|The first tab, or Create/Edit resource tab.|
+|modx-page-settings|The second tab, or Page Settings tab.|
+
+You can also create a tab with the [New Tab] rule and move a TV there.
+
+h2. Examples
+
+An example rule for moving the TV 1 to the first tab in the Resource create page would look like so:
+
+!rule-tvMove.png!
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager}
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678100";s:3:"ver";s:1:"2";s:4:"code";s:733:"\\
+
+h2. The Move TV to Tab Rule
+
+The Move TV to Tab rule will move any TV to the tab you specify.
+
+h2. Usage
+
+Specify the ID of the tab to move to in the &quot;name&quot; field of the Rule. Then specify the TV&#39;s ID prefixed with &#39;tv&#39; in the &quot;value&quot; field.
+
+The list of available tabs is:
+
+||ID||Description||
+|modx-resource-settings|The first tab, or Create/Edit resource tab.|
+|modx-page-settings|The second tab, or Page Settings tab.|
+
+You can also create a tab with the [New Tab] rule and move a TV there.
+
+h2. Examples
+
+An example rule for moving the TV 1 to the first tab in the Resource create page would look like so:
+
+!rule-tvMove.png!
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119587";s:3:"ver";s:1:"1";s:4:"code";s:728:"\\
+
+h2. The Move TV to Tab Rule
+
+The Move TV to Tab rule will move any TV to the tab you specify.
+
+h2. Usage
+
+Specify the ID of the tab to move to in the &quot;name&quot; field of the Rule. Then specify the TV&#39;s ID prefixed with &#39;tv&#39; in the &quot;value&quot; field.
+
+The list of available tabs is:
+
+||ID||Description||
+|modx-resource-settings|The first tab, or Create/Edit resource tab.|
+|modx-page-settings|The second tab, or Page Settings tab.|
+
+You can also create a tab with the [New Tab] rule and move a TV there.
+
+h2. Examples
+
+An example rule for moving the TV 1 to the first tab in the Resource create page would look like so:
+
+!rule-tvMove.png!
+
+h2. See Also
+
+{pagetree:root=Form Customization}
+
+{scrollbar}";}}}

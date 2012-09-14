@@ -1,0 +1,21 @@
+a:5:{s:2:"id";s:8:"35095107";s:4:"info";a:4:{s:6:"Title:";s:30:"friendly_alias_word_delimiters";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:45:"[revolution20:friendly_alias_word_delimiters]";}s:6:"parent";s:8:"18678127";s:6:"source";s:332:"h2. friendly_alias_word_delimiters
+
+*Name*: FURL Alias Word Delimiters
+*Type*: Textfield
+*Default*: -_
+*Available In*: Revolution 2.0.8+
+
+Characters which represent word delimiters when processing friendly URL alias slugs. These characters will be converted and consolidated to the preferred FURL alias word delimiter.
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095107";s:3:"ver";s:1:"1";s:4:"code";s:332:"h2. friendly_alias_word_delimiters
+
+*Name*: FURL Alias Word Delimiters
+*Type*: Textfield
+*Default*: -_
+*Available In*: Revolution 2.0.8+
+
+Characters which represent word delimiters when processing friendly URL alias slugs. These characters will be converted and consolidated to the preferred FURL alias word delimiter.
+
+{scrollbar}
+";}}}

@@ -1,0 +1,435 @@
+a:5:{s:2:"id";s:8:"18678541";s:4:"info";a:4:{s:6:"Title:";s:12:"Installation";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:27:"[revolution20:Installation]";}s:6:"parent";s:8:"18678114";s:6:"source";s:2575:"{alias:Fresh Installation}
+\\
+
+{note}This page is for New Installations only. If you&#39;re looking to upgrade, see [Upgrading MODx].{note}
+{note}
+Before attempting an installation, you may want to make sure your server meets the [revolution20:Server Requirements].
+{note}
+
+h2. Downloading MODx
+
+First off, you&#39;ll want to download MODx Revolution 2.x. Currently, there are two ways you can do so:
+
+h3. From the MODx Site
+
+The quickest way to get your Revolution site up and running is to grab a copy directly from the [MODx Downloads|http://modxcms.com/download/] page. There you will find downloads for MODx Revolution.
+
+It&#39;s worth noting that these packages are basically snapshots from Git, our version control software, at the time they were packaged. A lot may have changed since then, including bugfixes and the addition of new features. Note the release date for each package. Git will always have the latest up-to-date snapshot of Revolution.
+
+h4. &quot;Traditional&quot; vs. &quot;Advanced&quot;
+
+You have probably noticed that there are a few different _types_ of packages to choose from. Some are labeled as &quot;Advanced,&quot; others are just a plain old &quot;modx-2.1.0-xxxx-#.zip&quot;. So what do these labels mean?
+
+* Traditional - These packages are pre-built snapshots from Git. You can simply extract the files to your server and follow the [Basic Installation] guide to install MODx. Most users should choose this version.
+
+* Advanced - These packages are slightly less than half the size of the &quot;Traditional&quot; downloads, since the &quot;core&quot; contents are compressed. MODx Setup will try to unpack or &quot;build&quot; this package during install. It&#39;s recommended you only use this if you plan to move the core, manager or connectors directories, and you have SSH access and are familiar with making folders writable. Please follow the [Advanced Installation] document for this distribution.
+
+h3. From Git
+
+MODx Revolution is managed on [GitHub|http://github.com/modxcms]. Please read the [Git Installation] document to learn how to use MODx Revolution from Git.
+
+h2. Installing MODx
+
+MODx comes with multiple distributions for download. Installation steps will differ in each distribution, so please select the distribution&#39;s installation guide below:
+
+* Traditional Distribution: [Basic Installation]
+* Advanced Distribution: [Advanced Installation]
+* Building from Git: [Git Installation]
+
+After finishing installation, if you are still having issues, please read the [Troubleshooting Installation] page.
+
+{scrollbar}";s:8:"versions";a:12:{i:0;a:3:{s:2:"id";s:8:"18678541";s:3:"ver";s:1:"1";s:4:"code";s:2575:"{alias:Fresh Installation}
+\\
+
+{note}This page is for New Installations only. If you&#39;re looking to upgrade, see [Upgrading MODx].{note}
+{note}
+Before attempting an installation, you may want to make sure your server meets the [revolution20:Server Requirements].
+{note}
+
+h2. Downloading MODx
+
+First off, you&#39;ll want to download MODx Revolution 2.x. Currently, there are two ways you can do so:
+
+h3. From the MODx Site
+
+The quickest way to get your Revolution site up and running is to grab a copy directly from the [MODx Downloads|http://modxcms.com/download/] page. There you will find downloads for MODx Revolution.
+
+It&#39;s worth noting that these packages are basically snapshots from Git, our version control software, at the time they were packaged. A lot may have changed since then, including bugfixes and the addition of new features. Note the release date for each package. Git will always have the latest up-to-date snapshot of Revolution.
+
+h4. &quot;Traditional&quot; vs. &quot;Advanced&quot;
+
+You have probably noticed that there are a few different _types_ of packages to choose from. Some are labeled as &quot;Advanced,&quot; others are just a plain old &quot;modx-2.1.0-xxxx-#.zip&quot;. So what do these labels mean?
+
+* Traditional - These packages are pre-built snapshots from Git. You can simply extract the files to your server and follow the [Basic Installation] guide to install MODx. Most users should choose this version.
+
+* Advanced - These packages are slightly less than half the size of the &quot;Traditional&quot; downloads, since the &quot;core&quot; contents are compressed. MODx Setup will try to unpack or &quot;build&quot; this package during install. It&#39;s recommended you only use this if you plan to move the core, manager or connectors directories, and you have SSH access and are familiar with making folders writable. Please follow the [Advanced Installation] document for this distribution.
+
+h3. From Git
+
+MODx Revolution is managed on [GitHub|http://github.com/modxcms]. Please read the [Git Installation] document to learn how to use MODx Revolution from Git.
+
+h2. Installing MODx
+
+MODx comes with multiple distributions for download. Installation steps will differ in each distribution, so please select the distribution&#39;s installation guide below:
+
+* Traditional Distribution: [Basic Installation]
+* Advanced Distribution: [Advanced Installation]
+* Building from Git: [Git Installation]
+
+After finishing installation, if you are still having issues, please read the [Troubleshooting Installation] page.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35095204";s:3:"ver";s:1:"1";s:4:"code";s:2581:"{alias:Fresh Installation}
+\\
+
+{note}This page is for New Installations only. If you&#39;re looking to upgrade, see [Upgrading MODx].{note}
+{note}
+Before attempting an installation, you may want to make sure your server meets the [revolution20:Server Requirements].
+{note}
+
+h2. Downloading MODx
+
+First off, you&#39;ll want to download MODx Revolution 2.0. Currently, there are two ways you can do so:
+
+h3. From the MODx Site
+
+The quickest way to get your Revolution site up and running is to grab a copy directly from the [MODx Downloads|http://modxcms.com/download/] page. There you will find downloads for MODx Revolution.
+
+It&#39;s worth noting that these packages are basically snapshots from Git, our version control software, at the time they were packaged. A lot may have changed since then, including bugfixes and the addition of new features. Note the release date for each package. Git will always have the latest up-to-date snapshot of Revolution.
+
+h4. &quot;Traditional&quot; vs. &quot;Advanced&quot;
+
+You have probably noticed that there are a few different _types_ of packages to choose from. Some are labeled as &quot;Advanced,&quot; others are just a plain old &quot;modx-2.0.0-xxxx-#.zip&quot;. So what do these labels mean?
+
+* Traditional - These packages are pre-built snapshots from Git. You can simply extract the files to your server and follow the [Basic Installation] guide to install MODx. Most users should choose this version.
+
+* Advanced - These packages are slightly less than half the size of the &quot;Traditional&quot; downloads, since the &quot;core&quot; contents are compressed. MODx Setup will try to unpack or &quot;build&quot; this package during install. It&#39;s recommended you only use this if you plan to move the core, manager or connectors directories, and you have SSH access and are familiar with making folders writable. Please follow the [Advanced Installation] document for this distribution.
+
+h3. From Git
+
+MODx Revolution 2.0.0 is managed on [GitHub|http://github.com/modxcms]. Please read the [Git Installation] document to learn how to use MODx Revolution from Git.
+
+h2. Installing MODx
+
+MODx comes with multiple distributions for download. Installation steps will differ in each distribution, so please select the distribution&#39;s installation guide below:
+
+* Traditional Distribution: [Basic Installation]
+* Advanced Distribution: [Advanced Installation]
+* Building from Git: [Git Installation]
+
+After finishing installation, if you are still having issues, please read the [Troubleshooting Installation] page.
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35094869";s:3:"ver";s:1:"1";s:4:"code";s:2449:"{alias:Fresh Installation}
+\\
+
+{note}This page is for New Installations only. If you&#39;re looking to upgrade, see [Upgrading MODx].{note}
+
+h2. Downloading MODx
+
+First off, you&#39;ll want to download MODx Revolution 2.0. Currently, there are two ways you can do so:
+
+h3. From the MODx Site
+
+The quickest way to get your Revolution site up and running is to grab a copy directly from the [MODx Downloads|http://modxcms.com/download/] page. There you will find downloads for MODx Revolution.
+
+It&#39;s worth noting that these packages are basically snapshots from Git, our version control software, at the time they were packaged. A lot may have changed since then, including bugfixes and the addition of new features. Note the release date for each package. Git will always have the latest up-to-date snapshot of Revolution.
+
+h4. &quot;Traditional&quot; vs. &quot;Advanced&quot;
+
+You have probably noticed that there are a few different _types_ of packages to choose from. Some are labeled as &quot;Advanced,&quot; others are just a plain old &quot;modx-2.0.0-xxxx-#.zip&quot;. So what do these labels mean?
+
+* Traditional - These packages are pre-built snapshots from Git. You can simply extract the files to your server and follow the [Basic Installation] guide to install MODx. Most users should choose this version.
+
+* Advanced - These packages are slightly less than half the size of the &quot;Traditional&quot; downloads, since the &quot;core&quot; contents are compressed. MODx Setup will try to unpack or &quot;build&quot; this package during install. It&#39;s recommended you only use this if you plan to move the core, manager or connectors directories, and you have SSH access and are familiar with making folders writable. Please follow the [Advanced Installation] document for this distribution. 
+
+h3. From Git
+
+MODx Revolution 2.0.0 is managed on [GitHub|http://github.com/modxcms]. Please read the [Git Installation] document to learn how to use MODx Revolution from Git.
+
+h2. Installing MODx
+
+MODx comes with multiple distributions for download. Installation steps will differ in each distribution, so please select the distribution&#39;s installation guide below:
+
+* Traditional Distribution: [Basic Installation]
+* Advanced Distribution: [Advanced Installation]
+* Building from Git: [Git Installation]
+
+After finishing installation, if you are still having issues, please read the [Troubleshooting Installation] page.
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"28082178";s:3:"ver";s:1:"9";s:4:"code";s:2430:"{alias:Fresh Installation}
+\\
+
+{note}This page is for New Installations only. If you&#39;re looking to upgrade, see [Upgrading MODx].{note}
+
+h2. Downloading MODx
+
+First off, you&#39;ll want to download MODx Revolution 2.0. Currently, there are two ways you can do so:
+
+h3. From the MODx Site
+
+The quickest way to get your Revolution site up and running is to grab a copy directly from the [MODx Downloads|http://modxcms.com/download/] page. There you will find downloads for MODx Revolution.
+
+It&#39;s worth noting that these packages are basically snapshots from Git, our version control software, at the time they were packaged. A lot may have changed since then, including bugfixes and the addition of new features. Note the release date for each package. Git will always have the latest up-to-date snapshot of Revolution.
+
+h4. &quot;Normal&quot; vs. &quot;Advanced&quot;
+
+You have probably noticed that there are a few different _types_ of packages to choose from. Some are labeled as &quot;Advanced,&quot; others are just a plain old &quot;modx-2.0.0-xxxx-#.zip&quot;. So what do these labels mean?
+
+* Normal - These packages are pre-built snapshots from Git. You can simply extract the files to your server and follow the [Basic Installation] guide to install MODx. Most users should choose this version.
+
+* Advanced - These packages are slightly less than half the size of the &quot;Regular&quot; downloads, since the &quot;core&quot; contents are compressed. MODx Setup will try to unpack or &quot;build&quot; this package during install. It&#39;s recommended you only use this if you plan to move the core, manager or connectors directories, and you have SSH access and are familiar with making folders writable. Please follow the [Advanced Installation] document for this distribution. 
+
+h3. From Git
+
+MODx Revolution 2.0.0 is managed on [GitHub|http://github.com/modxcms]. Please read the [Git Installation] document to learn how to use MODx Revolution from Git.
+
+h2. Installing MODx
+
+MODx comes with multiple distributions for download. Installation steps will differ in each distribution, so please select the distribution&#39;s installation guide below:
+
+* Normal Distribution: [Basic Installation]
+* Advanced Distribution: [Advanced Installation]
+* Building from Git: [Git Installation]
+
+After finishing installation, if you are still having issues, please read the [Troubleshooting Installation] page.
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"23330818";s:3:"ver";s:1:"8";s:4:"code";s:2425:"{alias:Fresh Installation}
+\\
+
+{note}This page is for New Installations only. If you&#39;re looking to upgrade, see [Upgrading].{note}
+
+h2. Downloading MODx
+
+First off, you&#39;ll want to download MODx Revolution 2.0. Currently, there are two ways you can do so:
+
+h3. From the MODx Site
+
+The quickest way to get your Revolution site up and running is to grab a copy directly from the [MODx Downloads|http://modxcms.com/download/] page. There you will find downloads for MODx Revolution.
+
+It&#39;s worth noting that these packages are basically snapshots from Git, our version control software, at the time they were packaged. A lot may have changed since then, including bugfixes and the addition of new features. Note the release date for each package. Git will always have the latest up-to-date snapshot of Revolution.
+
+h4. &quot;Normal&quot; vs. &quot;Advanced&quot;
+
+You have probably noticed that there are a few different _types_ of packages to choose from. Some are labeled as &quot;Advanced,&quot; others are just a plain old &quot;modx-2.0.0-xxxx-#.zip&quot;. So what do these labels mean?
+
+* Normal - These packages are pre-built snapshots from Git. You can simply extract the files to your server and follow the [Basic Installation] guide to install MODx. Most users should choose this version.
+
+* Advanced - These packages are slightly less than half the size of the &quot;Regular&quot; downloads, since the &quot;core&quot; contents are compressed. MODx Setup will try to unpack or &quot;build&quot; this package during install. It&#39;s recommended you only use this if you plan to move the core, manager or connectors directories, and you have SSH access and are familiar with making folders writable. Please follow the [Advanced Installation] document for this distribution. 
+
+h3. From Git
+
+MODx Revolution 2.0.0 is managed on [GitHub|http://github.com/modxcms]. Please read the [Git Installation] document to learn how to use MODx Revolution from Git.
+
+h2. Installing MODx
+
+MODx comes with multiple distributions for download. Installation steps will differ in each distribution, so please select the distribution&#39;s installation guide below:
+
+* Normal Distribution: [Basic Installation]
+* Advanced Distribution: [Advanced Installation]
+* Building from Git: [Git Installation]
+
+After finishing installation, if you are still having issues, please read the [Troubleshooting Installation] page.
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"23330817";s:3:"ver";s:1:"7";s:4:"code";s:2320:"{alias:Fresh Installation}
+\\
+
+h2. Downloading MODx
+
+First off, you&#39;ll want to download MODx Revolution 2.0. Currently, there are two ways you can do so:
+
+h3. From the MODx Site
+
+The quickest way to get your Revolution site up and running is to grab a copy directly from the [MODx Downloads|http://modxcms.com/download/] page. There you will find downloads for MODx Revolution.
+
+It&#39;s worth noting that these packages are basically snapshots from Git, our version control software, at the time they were packaged. A lot may have changed since then, including bugfixes and the addition of new features. Note the release date for each package. Git will always have the latest up-to-date snapshot of Revolution.
+
+h4. &quot;Normal&quot; vs. &quot;Advanced&quot;
+
+You have probably noticed that there are a few different _types_ of packages to choose from. Some are labeled as &quot;Advanced,&quot; others are just a plain old &quot;modx-2.0.0-xxxx-#.zip&quot;. So what do these labels mean?
+
+* Normal - These packages are pre-built snapshots from Git. You can simply extract the files to your server and follow the [Basic Installation] guide to install MODx. Most users should choose this version.
+
+* Advanced - These packages are slightly less than half the size of the &quot;Regular&quot; downloads, since the &quot;core&quot; contents are compressed. MODx Setup will try to unpack or &quot;build&quot; this package during install. It&#39;s recommended you only use this if you plan to move the core, manager or connectors directories, and you have SSH access and are familiar with making folders writable. Please follow the [Advanced Installation] document for this distribution. 
+
+h3. From Git
+
+MODx Revolution 2.0.0 is managed on [GitHub|http://github.com/modxcms]. Please read the [Git Installation] document to learn how to use MODx Revolution from Git.
+
+h2. Installing MODx
+
+MODx comes with multiple distributions for download. Installation steps will differ in each distribution, so please select the distribution&#39;s installation guide below:
+
+* Normal Distribution: [Basic Installation]
+* Advanced Distribution: [Advanced Installation]
+* Building from Git: [Git Installation]
+
+After finishing installation, if you are still having issues, please read the [Troubleshooting Installation] page.
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"19136566";s:3:"ver";s:1:"6";s:4:"code";s:2293:"\\
+
+h2. Downloading MODx
+
+First off, you&#39;ll want to download MODx Revolution 2.0. Currently, there are two ways you can do so:
+
+h3. From the MODx Site
+
+The quickest way to get your Revolution site up and running is to grab a copy directly from the [MODx Downloads|http://modxcms.com/download/] page. There you will find downloads for MODx Revolution.
+
+It&#39;s worth noting that these packages are basically snapshots from Git, our version control software, at the time they were packaged. A lot may have changed since then, including bugfixes and the addition of new features. Note the release date for each package. Git will always have the latest up-to-date snapshot of Revolution.
+
+h4. &quot;Normal&quot; vs. &quot;Advanced&quot;
+
+You have probably noticed that there are a few different _types_ of packages to choose from. Some are labeled as &quot;Advanced,&quot; others are just a plain old &quot;modx-2.0.0-xxxx-#.zip&quot;. So what do these labels mean?
+
+* Normal - These packages are pre-built snapshots from Git. You can simply extract the files to your server and follow the [Basic Installation] guide to install MODx. Most users should choose this version.
+
+* Advanced - These packages are slightly less than half the size of the &quot;Regular&quot; downloads, since the &quot;core&quot; contents are compressed. MODx Setup will try to unpack or &quot;build&quot; this package during install. It&#39;s recommended you only use this if you plan to move the core, manager or connectors directories, and you have SSH access and are familiar with making folders writable. Please follow the [Advanced Installation] document for this distribution. 
+
+h3. From Git
+
+MODx Revolution 2.0.0 is managed on [GitHub|http://github.com/modxcms]. Please read the [Git Installation] document to learn how to use MODx Revolution from Git.
+
+h2. Installing MODx
+
+MODx comes with multiple distributions for download. Installation steps will differ in each distribution, so please select the distribution&#39;s installation guide below:
+
+* Normal Distribution: [Basic Installation]
+* Advanced Distribution: [Advanced Installation]
+* Building from Git: [Git Installation]
+
+After finishing installation, if you are still having issues, please read the [Troubleshooting Installation] page.
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"19136527";s:3:"ver";s:1:"5";s:4:"code";s:2357:"\\
+
+{info}TODO: wget notes, cleanup formatting and structure{info}
+
+h2. Downloading MODx
+
+First off, you&#39;ll want to download MODx Revolution 2.0. Currently, there are two ways you can do so:
+
+h3. From the MODx Site
+
+The quickest way to get your Revolution site up and running is to grab a copy directly from the [MODx Downloads|http://modxcms.com/download/] page. There you will find downloads for MODx Revolution.
+
+It&#39;s worth noting that these packages are basically snapshots from Git, our version control software, at the time they were packaged. A lot may have changed since then, including bugfixes and the addition of new features. Note the release date for each package. Git will always have the latest up-to-date snapshot of Revolution.
+
+h4. &quot;Normal&quot; vs. &quot;Advanced&quot;
+
+You have probably noticed that there are a few different _types_ of packages to choose from. Some are labeled as &quot;Advanced,&quot; others are just a plain old &quot;modx-2.0.0-xxxx-#.zip&quot;. So what do these labels mean?
+
+* Normal - These packages are pre-built snapshots from Git. You can simply extract the files to your server and follow the [Basic Installation] guide to install MODx. Most users should choose this version.
+
+* Advanced - These packages are slightly less than half the size of the &quot;Regular&quot; downloads, since the &quot;core&quot; contents are compressed. MODx Setup will try to unpack or &quot;build&quot; this package during install. It&#39;s recommended you only use this if you plan to move the core, manager or connectors directories, and you have SSH access and are familiar with making folders writable. Please follow the [Advanced Installation] document for this distribution. 
+
+h3. From Git
+
+MODx Revolution 2.0.0 is managed on [GitHub|http://github.com/modxcms]. Please read the [Git Installation] document to learn how to use MODx Revolution from Git.
+
+h2. Installing MODx
+
+MODx comes with multiple distributions for download. Installation steps will differ in each distribution, so please select the distribution&#39;s installation guide below:
+
+* Normal Distribution: [Basic Installation]
+* Advanced Distribution: [Advanced Installation]
+* Building from Git: [Git Installation]
+
+After finishing installation, if you are still having issues, please read the [Troubleshooting Installation] page.
+
+{scrollbar}";}i:8;a:3:{s:2:"id";s:8:"18678586";s:3:"ver";s:1:"4";s:4:"code";s:2518:"\\
+
+{info}TODO: wget notes, cleanup formatting and structure{info}
+
+h2. Downloading MODx
+
+First off, you&#39;ll want to download MODx Revolution 2.0. Currently, there are two ways you can do so:
+
+h3. From the MODx Site
+
+The quickest way to get your Revolution site up and running is to grab a copy directly from the [MODx Downloads|http://modxcms.com/download/] page. There you will find downloads for MODx Revolution.
+
+It&#39;s worth noting that these packages are basically snapshots from Git, our version control software, at the time they were packaged. A lot may have changed since then, including bugfixes and the addition of new features. Note the release date for each package. Git will always have the latest up-to-date snapshot of Revolution.
+
+h4. &quot;Normal&quot; vs. &quot;Advanced&quot;
+
+You have probably noticed that there are a few different _types_ of packages to choose from. Some are labeled as &quot;Advanced,&quot; others are just a plain old &quot;modx-2.0.0-xxxx-#.zip&quot;. So what do these labels mean?
+
+* Normal - These packages are pre-built snapshots from Git. You can simply extract the files to your server and follow the [Basic Installation] guide to install MODx. Most users should choose this version.
+
+* Advanced - These packages are slightly less than half the size of the &quot;Regular&quot; downloads, since the &quot;core&quot; contents are compressed. MODx Setup will try to unpack or &quot;build&quot; this package during install. It&#39;s recommended you only use this if you plan to move the core, manager or connectors directories, and you have SSH access and are familiar with making folders writable. Please follow the [Advanced Installation] document for this distribution. 
+
+h3. From Git
+
+MODx Revolution 2.0.0 is managed on [GitHub|http://github.com/modxcms]. Please read the [Git Installation] document to learn how to use MODx Revolution from Git.
+
+h2. Installing MODx
+
+MODx comes with multiple distributions for download. Installation steps will differ in each distribution, so please select the distribution&#39;s installation guide below:
+
+* Normal Distribution: [Basic Installation]
+* Advanced Distribution: [Advanced Installation]
+* Building from Git: [Git Installation]
+
+After finishing installation, if you are still having issues, please read the [Troubleshooting Installation] page.
+
+Currently there are two methods available for getting a copy of MODx Revolution: you can download a copy from the official MODx site, or clone a copy from Git.
+
+{scrollbar}";}i:9;a:3:{s:2:"id";s:8:"18678585";s:3:"ver";s:1:"3";s:4:"code";s:2468:"\\
+
+{info}TODO: wget notes, cleanup formatting and structure{info}
+
+h2. Downloading MODx
+
+First off, you&#39;ll want to download MODx Revolution 2.0. Currently, there are two ways you can do so:
+
+h3. From the MODx Site
+
+The quickest way to get your Revolution site up and running is to grab a copy directly from the [MODx Downloads|http://modxcms.com/download/] page. Here you will find downloads for both MODx Revolution and Evolution.
+
+It&#39;s worth noting that these packages are basically snapshots from Git at the time they were packaged. A lot may have changed since then, including bugfixes and the addition of new features. Note the release date for each package. Git will always have the latest up-to-date snapshot of Revolution.
+
+h4. &quot;Regular&quot; vs. &quot;Advanced&quot;
+
+You have probably noticed that there are a few different _types_ of packages to choose from. Some are labeled as &quot;Advanced,&quot; others are just a plain old &quot;modx-2.0.0-xxxx-#.zip&quot;. So what do these labels mean?
+
+* Regular - These packages are pre-built snapshots from Git. You can simply extract the files to your server and follow the [Basic Installation] guide to install MODx.
+
+* Advanced - These packages are slightly less than half the size of the &quot;Regular&quot; downloads, since the &quot;core&quot; contents are compressed. MODx Setup will try to unpack or &quot;build&quot; this package during install. It&#39;s recommended you only use this if you plan to move the core, manager or connectors directories, and you have SSH access and are familiar with making folders writable. Please follow the [Advanced Installation] document for this distribution. 
+
+h3. From Git
+
+MODx Revolution 2.0.0 is managed on [GitHub|http://github.com/modxcms]. Please read the [Git Installation] document to learn how to use MODx Revolution from Git.
+
+h2. Installing MODx
+
+MODx comes with multiple distributions for download. Installation steps will differ in each distribution, so please select the distribution&#39;s installation guide below:
+
+* Normal Distribution: [Basic Installation]
+* Advanced Distribution: [Advanced Installation]
+* Building from Git: [Git Installation]
+
+After finishing installation, if you are still having issues, please read the [Troubleshooting Installation] page.
+
+Currently there are two methods available for getting a copy of MODx Revolution: you can download a copy from the official MODx site, or clone a copy from Git.
+
+{scrollbar}";}i:10;a:3:{s:2:"id";s:8:"18678583";s:3:"ver";s:1:"2";s:4:"code";s:459:"\\
+
+h2. Installing MODx
+
+MODx comes with multiple distributions for download. Installation steps will differ in each distribution, so please select the distribution&#39;s installation guide below:
+
+* Normal Distribution: [Basic Installation]
+* Advanced Distribution: [Advanced Installation]
+* Building from Git: [Git Installation]
+
+After finishing installation, if you are still having issues, please read the [Troubleshooting Installation] page.
+
+{scrollbar}";}i:11;a:3:{s:2:"id";s:8:"18678572";s:3:"ver";s:1:"1";s:4:"code";s:343:"\\
+
+h2. Installing MODx
+
+MODx comes with multiple distributions for download. Installation steps will differ in each distribution, so please select the distribution&#39;s installation guide below:
+
+* Normal Distribution: [Basic Installation]
+* Advanced Distribution: [Advanced Installation]
+* Building from Git: [Git Installation]
+
+{scrollbar}";}}}

@@ -1,0 +1,64 @@
+a:5:{s:2:"id";s:8:"20119599";s:4:"info";a:4:{s:6:"Title:";s:30:"Template Variable Output Types";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:45:"[revolution20:Template Variable Output Types]";}s:6:"parent";s:8:"18678062";s:6:"source";s:916:"\\
+
+h2. Output Types for TVs
+
+Output Types (also called Renders) on [Template Variables] allow you to format the value of a TV to any different kind of output - such as a URL, image, date, or anything else you can think of.
+
+For example, say you have a TV that uses a Textbox as its Input Type. The user would then choose an Image through the TV input on their Resource. That&#39;s great - except your TV only outputs the URL of the image! You want it to output the image itself. So you&#39;d then choose the Output Render of the TV to be an Image, and boom! Your image TV now outputs the image directly! Sweet, huh?
+
+MODx Revolution comes packaged with a few default Output Types. You can also [create your own|Adding a Custom TV Output Type], if you know a little PHP. The list of pre-packaged ones are:
+
+{pagetree:root=Template Variable Output Types}
+
+h2. See Also
+
+{pagetree:root=Template Variables}
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"20119599";s:3:"ver";s:1:"3";s:4:"code";s:916:"\\
+
+h2. Output Types for TVs
+
+Output Types (also called Renders) on [Template Variables] allow you to format the value of a TV to any different kind of output - such as a URL, image, date, or anything else you can think of.
+
+For example, say you have a TV that uses a Textbox as its Input Type. The user would then choose an Image through the TV input on their Resource. That&#39;s great - except your TV only outputs the URL of the image! You want it to output the image itself. So you&#39;d then choose the Output Render of the TV to be an Image, and boom! Your image TV now outputs the image directly! Sweet, huh?
+
+MODx Revolution comes packaged with a few default Output Types. You can also [create your own|Adding a Custom TV Output Type], if you know a little PHP. The list of pre-packaged ones are:
+
+{pagetree:root=Template Variable Output Types}
+
+h2. See Also
+
+{pagetree:root=Template Variables}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119601";s:3:"ver";s:1:"2";s:4:"code";s:911:"\\
+
+h2. Output Types for TVs
+
+Output Types (also called Renders) on [Template Variables] allow you to format the value of a TV to any different kind of output - such as a URL, image, date, or anything else you can think of.
+
+For example, say you have a TV that uses a Textbox as its Input Type. The user would then choose an Image through the TV input on their Resource. That&#39;s great - except your TV only outputs the URL of the image! You want it to output the image itself. So you&#39;d then choose the Output Render of the TV to be an Image, and boom! Your image TV now outputs the image directly! Sweet, huh?
+
+MODx Revolution comes packaged with a few default Output Types. You can also [create your own|Adding a Custom TV Output Type], if you know a little PHP. The list of pre-packaged ones are:
+
+{pagetree:Template Variable Output Types}
+
+h2. See Also
+
+{pagetree:root=Template Variables}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"20119600";s:3:"ver";s:1:"1";s:4:"code";s:869:"\\
+
+h2. Output Types for TVs
+
+Output Types (also called Renders) on [Template Variables] allow you to format the value of a TV to any different kind of output - such as a URL, image, date, or anything else you can think of.
+
+For example, say you have a TV that uses a Textbox as its Input Type. The user would then choose an Image through the TV input on their Resource. That&#39;s great - except your TV only outputs the URL of the image! You want it to output the image itself. So you&#39;d then choose the Output Render of the TV to be an Image, and boom! Your image TV now outputs the image directly! Sweet, huh?
+
+MODx Revolution comes packaged with a few default Output Types. You can also [create your own|Adding a Custom TV Output Type], if you know a little PHP. The list of pre-packaged ones are:
+
+
+h2. See Also
+
+{pagetree:root=Template Variables}
+
+{scrollbar}";}}}

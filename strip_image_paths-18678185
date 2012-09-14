@@ -1,0 +1,31 @@
+a:5:{s:2:"id";s:8:"18678185";s:4:"info";a:4:{s:6:"Title:";s:17:"strip_image_paths";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:32:"[revolution20:strip_image_paths]";}s:6:"parent";s:8:"18678127";s:6:"source";s:525:"h2. strip_image_paths
+
+*Name*: Rewrite Browser Paths
+*Type*: Yes/No
+*Default*: Yes
+
+If this is set to &#39;No&#39;, MODx  will write file browser resource src&#39;s (images, files, flash, etc.) as absolute URLs. Relative URLs are helpful should you wish to move your MODx install, e.g., from a staging site to a production site. If you have no idea what this means, it&#39;s best just to leave it set to &#39;Yes&#39;.
+
+{warning}This setting is *deprecated* in MODx Revolution and is no longer in use.{warning}
+\\
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678185";s:3:"ver";s:1:"2";s:4:"code";s:525:"h2. strip_image_paths
+
+*Name*: Rewrite Browser Paths
+*Type*: Yes/No
+*Default*: Yes
+
+If this is set to &#39;No&#39;, MODx  will write file browser resource src&#39;s (images, files, flash, etc.) as absolute URLs. Relative URLs are helpful should you wish to move your MODx install, e.g., from a staging site to a production site. If you have no idea what this means, it&#39;s best just to leave it set to &#39;Yes&#39;.
+
+{warning}This setting is *deprecated* in MODx Revolution and is no longer in use.{warning}
+\\
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119737";s:3:"ver";s:1:"1";s:4:"code";s:596:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Rewrite Browser Paths{zone-data}
+{zone-data:key}strip_image_paths{zone-data}
+{zone-data:type}boolean{zone-data}
+{zone-data:default}true{zone-data}
+{zone-data:desc}If this is set to &#39;No&#39;, MODx  will write file browser resource src&#39;s (images, files, flash, etc.) as absolute URLs. Relative URLs are helpful should you wish to move your MODx install, e.g., from a staging site to a production site. If you have no idea what this means, it&#39;s best just to leave it set to &#39;Yes&#39;.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

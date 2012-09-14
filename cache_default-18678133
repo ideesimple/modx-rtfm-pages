@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678133";s:4:"info";a:4:{s:6:"Title:";s:13:"cache_default";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:28:"[revolution20:cache_default]";}s:6:"parent";s:8:"18678127";s:6:"source";s:134:"h2. cache_default
+
+*Name*: Cacheable Default
+*Type*: Yes/No
+*Default*: Yes
+
+Makes all new resources cacheable by default.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678133";s:3:"ver";s:1:"2";s:4:"code";s:134:"h2. cache_default
+
+*Name*: Cacheable Default
+*Type*: Yes/No
+*Default*: Yes
+
+Makes all new resources cacheable by default.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119648";s:3:"ver";s:1:"1";s:4:"code";s:299:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Cacheable default{zone-data}
+{zone-data:key}cache_default{zone-data}
+{zone-data:type}boolean{zone-data}
+{zone-data:default}true{zone-data}
+{zone-data:desc}Makes all new resources cacheable by default.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

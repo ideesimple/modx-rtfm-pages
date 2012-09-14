@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"35095095";s:4:"info";a:4:{s:6:"Title:";s:37:"friendly_alias_restrict_chars_pattern";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:52:"[revolution20:friendly_alias_restrict_chars_pattern]";}s:6:"parent";s:8:"18678127";s:6:"source";s:351:"h2. friendly_alias_restrict_chars_pattern
+
+*Name*: FURL Alias Character Restriction Pattern
+*Type*: Textfield
+*Default*: (See Below)
+*Available In*: Revolution 2.0.6+
+
+A valid RegEx pattern for restricting characters used in a Resource alias.
+
+Default: 
+{code}/[\0\x0B\t\n\r\f\a&amp;=+%#&lt;&gt;&quot;~:`@\?\[\]\{\}\|\^\&#39;\\\\]/{code}
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095095";s:3:"ver";s:1:"1";s:4:"code";s:351:"h2. friendly_alias_restrict_chars_pattern
+
+*Name*: FURL Alias Character Restriction Pattern
+*Type*: Textfield
+*Default*: (See Below)
+*Available In*: Revolution 2.0.6+
+
+A valid RegEx pattern for restricting characters used in a Resource alias.
+
+Default: 
+{code}/[\0\x0B\t\n\r\f\a&amp;=+%#&lt;&gt;&quot;~:`@\?\[\]\{\}\|\^\&#39;\\\\]/{code}
+
+{scrollbar}
+";}}}

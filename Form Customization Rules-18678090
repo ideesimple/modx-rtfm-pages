@@ -1,0 +1,266 @@
+a:5:{s:2:"id";s:8:"18678090";s:4:"info";a:4:{s:6:"Title:";s:24:"Form Customization Rules";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:10:"Zaigham R.";s:12:"Wiki Markup:";s:39:"[revolution20:Form Customization Rules]";}s:6:"parent";s:8:"33226817";s:6:"source";s:2593:"\\
+
+{toc}
+
+h2. What is a Rule?
+
+Rules in MODx Revolution are simply generic rules that apply to any Action (manager page). They also can be tied to User Groups, wherein a Rule will only be applied if the User is part of that User Group.
+
+h2. What are the Rules available?
+
+The available Rules are:
+
+{pagetree:root=Form Customization Rules}
+
+h2. Creating a Rule
+
+First off, go to the Form Customization page, under the Security main menu. From there, click &quot;Add&quot; in the grid&#39;s toolbar. You&#39;ll be presented with a window:
+
+!fc-createRule.png!
+
+Let&#39;s go into the fields.
+
+||Field||Description||Optional||
+|Action|This field lets you select any available [Action|Actions and Menus]. The rule will only apply to that Action, and no other.|{color:red}No{color}|
+|User Group|Here you can optionally choose a [User Group|User Groups] to tie this Rule to. If a User Group is chosen, the Rule will only apply to [Users] of that User Group.|{color:green}Yes{color}|
+|Description|An optional, for you, description of the Rule.|{color:green}Yes{color}|
+|Field|The name of the field or tab to apply the Rule to.|{color:red}No{color}|
+|Containing Panel|The name of the containing panel that the Field or Tab exists in. Most all Rules will need this value.|{color:red}No{color}|
+|Value|The value you&#39;d like to set the Rule to. The type of value can vary depending on the Rule.|{color:red}No{color}|
+|Constraint Class|If set, will restrict the Rule to a field value (via Constraint Field and Constraint) on this class. Example: modResource for the Resource Update screen.|{color:green}Yes{color}|
+|Constraint Field|If set, will restrict the Rule to the field specified, with the value of Constraint|{color:green}Yes{color}|
+|Constraint|If set, will restrict the Rule to the value of the field in the object specified in the constraint options.|{color:green}Yes{color}|
+
+h2. Constraints
+
+Rule Constraints are special abilities that let you restrict the Rule to a certain value on an object&#39;s field. Let&#39;s say you want to restrict a Rule for resource/update to only occur on Resource&#39;s with a Template ID of 4. You&#39;d simply set the Constraints like so:
+
+* *Constraint Class*: modResource
+* *Constraint Field*: template
+* *Constraint*: 4
+
+Or, further, if you wanted to restrict the Rule to Resources with a menutitle of &quot;boo&quot;:
+
+* *Constraint Class*: modResource
+* *Constraint Field*: menutitle
+* *Constraint*: boo
+
+Constraints allow a superior level of flexibity to [Form Customization Rules].
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager}
+
+{scrollbar}";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"18678090";s:3:"ver";s:1:"4";s:4:"code";s:2593:"\\
+
+{toc}
+
+h2. What is a Rule?
+
+Rules in MODx Revolution are simply generic rules that apply to any Action (manager page). They also can be tied to User Groups, wherein a Rule will only be applied if the User is part of that User Group.
+
+h2. What are the Rules available?
+
+The available Rules are:
+
+{pagetree:root=Form Customization Rules}
+
+h2. Creating a Rule
+
+First off, go to the Form Customization page, under the Security main menu. From there, click &quot;Add&quot; in the grid&#39;s toolbar. You&#39;ll be presented with a window:
+
+!fc-createRule.png!
+
+Let&#39;s go into the fields.
+
+||Field||Description||Optional||
+|Action|This field lets you select any available [Action|Actions and Menus]. The rule will only apply to that Action, and no other.|{color:red}No{color}|
+|User Group|Here you can optionally choose a [User Group|User Groups] to tie this Rule to. If a User Group is chosen, the Rule will only apply to [Users] of that User Group.|{color:green}Yes{color}|
+|Description|An optional, for you, description of the Rule.|{color:green}Yes{color}|
+|Field|The name of the field or tab to apply the Rule to.|{color:red}No{color}|
+|Containing Panel|The name of the containing panel that the Field or Tab exists in. Most all Rules will need this value.|{color:red}No{color}|
+|Value|The value you&#39;d like to set the Rule to. The type of value can vary depending on the Rule.|{color:red}No{color}|
+|Constraint Class|If set, will restrict the Rule to a field value (via Constraint Field and Constraint) on this class. Example: modResource for the Resource Update screen.|{color:green}Yes{color}|
+|Constraint Field|If set, will restrict the Rule to the field specified, with the value of Constraint|{color:green}Yes{color}|
+|Constraint|If set, will restrict the Rule to the value of the field in the object specified in the constraint options.|{color:green}Yes{color}|
+
+h2. Constraints
+
+Rule Constraints are special abilities that let you restrict the Rule to a certain value on an object&#39;s field. Let&#39;s say you want to restrict a Rule for resource/update to only occur on Resource&#39;s with a Template ID of 4. You&#39;d simply set the Constraints like so:
+
+* *Constraint Class*: modResource
+* *Constraint Field*: template
+* *Constraint*: 4
+
+Or, further, if you wanted to restrict the Rule to Resources with a menutitle of &quot;boo&quot;:
+
+* *Constraint Class*: modResource
+* *Constraint Field*: menutitle
+* *Constraint*: boo
+
+Constraints allow a superior level of flexibity to [Form Customization Rules].
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33947825";s:3:"ver";s:1:"3";s:4:"code";s:2651:"\\
+
+{toc}
+
+h2. What is a Rule?
+
+Rules in MODx Revolution are simply generic rules that apply to any Action (manager page). They also can be tied to User Groups, wherein a Rule will only be applied if the User is part of that User Group.
+
+h2. What are the Rules available?
+
+The available Rules are:
+
+{pagetree:root=Form Customization Rules}
+
+h2. Creating a Rule
+
+First off, go to the Form Customization page, under the Security main menu. From there, click &quot;Add&quot; in the grid&#39;s toolbar. You&#39;ll be presented with a window:
+
+!fc-createRule.png!
+
+Let&#39;s go into the fields.
+
+||Field||Description||Optional||
+|Action|This field lets you select any available [Action|Actions and Menus]. The rule will only apply to that Action, and no other.|{color:red}No{color}|
+|User Group|Here you can optionally choose a [User Group|User Groups] to tie this Rule to. If a User Group is chosen, the Rule will only apply to [Users] of that User Group.|{color:green}Yes{color}|
+|Description|An optional, for you, description of the Rule.|{color:green}Yes{color}|
+|Field|The name of the field or tab to apply the Rule to.|{color:red}No{color}|
+|Containing Panel|The name of the containing panel that the Field or Tab exists in. Most all Rules will need this value.|{color:red}No{color}|
+|Value|The value you&#39;d like to set the Rule to. The type of value can vary depending on the Rule.|{color:red}No{color}|
+|Constraint Class|If set, will restrict the Rule to a field value (via Constraint Field and Constraint) on this class. Example: modResource for the Resource Update screen.|{color:green}Yes{color}|
+|Constraint Field|If set, will restrict the Rule to the field specified, with the value of Constraint|{color:green}Yes{color}|
+|Constraint|If set, will restrict the Rule to the value of the field in the object specified in the constraint options. Accepts multiple values in comma delimited form eg. 1,2,3|{color:green}Yes{color}|
+
+h2. Constraints
+
+Rule Constraints are special abilities that let you restrict the Rule to a certain value on an object&#39;s field. Let&#39;s say you want to restrict a Rule for resource/update to only occur on Resource&#39;s with a Template ID of 4. You&#39;d simply set the Constraints like so:
+
+* *Constraint Class*: modResource
+* *Constraint Field*: template
+* *Constraint*: 4
+
+Or, further, if you wanted to restrict the Rule to Resources with a menutitle of &quot;boo&quot;:
+
+* *Constraint Class*: modResource
+* *Constraint Field*: menutitle
+* *Constraint*: boo
+
+Constraints allow a superior level of flexibity to [Form Customization Rules].
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"33947824";s:3:"ver";s:1:"2";s:4:"code";s:2593:"\\
+
+{toc}
+
+h2. What is a Rule?
+
+Rules in MODx Revolution are simply generic rules that apply to any Action (manager page). They also can be tied to User Groups, wherein a Rule will only be applied if the User is part of that User Group.
+
+h2. What are the Rules available?
+
+The available Rules are:
+
+{pagetree:root=Form Customization Rules}
+
+h2. Creating a Rule
+
+First off, go to the Form Customization page, under the Security main menu. From there, click &quot;Add&quot; in the grid&#39;s toolbar. You&#39;ll be presented with a window:
+
+!fc-createRule.png!
+
+Let&#39;s go into the fields.
+
+||Field||Description||Optional||
+|Action|This field lets you select any available [Action|Actions and Menus]. The rule will only apply to that Action, and no other.|{color:red}No{color}|
+|User Group|Here you can optionally choose a [User Group|User Groups] to tie this Rule to. If a User Group is chosen, the Rule will only apply to [Users] of that User Group.|{color:green}Yes{color}|
+|Description|An optional, for you, description of the Rule.|{color:green}Yes{color}|
+|Field|The name of the field or tab to apply the Rule to.|{color:red}No{color}|
+|Containing Panel|The name of the containing panel that the Field or Tab exists in. Most all Rules will need this value.|{color:red}No{color}|
+|Value|The value you&#39;d like to set the Rule to. The type of value can vary depending on the Rule.|{color:red}No{color}|
+|Constraint Class|If set, will restrict the Rule to a field value (via Constraint Field and Constraint) on this class. Example: modResource for the Resource Update screen.|{color:green}Yes{color}|
+|Constraint Field|If set, will restrict the Rule to the field specified, with the value of Constraint|{color:green}Yes{color}|
+|Constraint|If set, will restrict the Rule to the value of the field in the object specified in the constraint options.|{color:green}Yes{color}|
+
+h2. Constraints
+
+Rule Constraints are special abilities that let you restrict the Rule to a certain value on an object&#39;s field. Let&#39;s say you want to restrict a Rule for resource/update to only occur on Resource&#39;s with a Template ID of 4. You&#39;d simply set the Constraints like so:
+
+* *Constraint Class*: modResource
+* *Constraint Field*: template
+* *Constraint*: 4
+
+Or, further, if you wanted to restrict the Rule to Resources with a menutitle of &quot;boo&quot;:
+
+* *Constraint Class*: modResource
+* *Constraint Field*: menutitle
+* *Constraint*: boo
+
+Constraints allow a superior level of flexibity to [Form Customization Rules].
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"20774918";s:3:"ver";s:1:"1";s:4:"code";s:2588:"\\
+
+{toc}
+
+h2. What is a Rule?
+
+Rules in MODx Revolution are simply generic rules that apply to any Action (manager page). They also can be tied to User Groups, wherein a Rule will only be applied if the User is part of that User Group.
+
+h2. What are the Rules available?
+
+The available Rules are:
+
+{pagetree:root=Form Customization Rules}
+
+h2. Creating a Rule
+
+First off, go to the Form Customization page, under the Security main menu. From there, click &quot;Add&quot; in the grid&#39;s toolbar. You&#39;ll be presented with a window:
+
+!fc-createRule.png!
+
+Let&#39;s go into the fields.
+
+||Field||Description||Optional||
+|Action|This field lets you select any available [Action|Actions and Menus]. The rule will only apply to that Action, and no other.|{color:red}No{color}|
+|User Group|Here you can optionally choose a [User Group|User Groups] to tie this Rule to. If a User Group is chosen, the Rule will only apply to [Users] of that User Group.|{color:green}Yes{color}|
+|Description|An optional, for you, description of the Rule.|{color:green}Yes{color}|
+|Field|The name of the field or tab to apply the Rule to.|{color:red}No{color}|
+|Containing Panel|The name of the containing panel that the Field or Tab exists in. Most all Rules will need this value.|{color:red}No{color}|
+|Value|The value you&#39;d like to set the Rule to. The type of value can vary depending on the Rule.|{color:red}No{color}|
+|Constraint Class|If set, will restrict the Rule to a field value (via Constraint Field and Constraint) on this class. Example: modResource for the Resource Update screen.|{color:green}Yes{color}|
+|Constraint Field|If set, will restrict the Rule to the field specified, with the value of Constraint|{color:green}Yes{color}|
+|Constraint|If set, will restrict the Rule to the value of the field in the object specified in the constraint options.|{color:green}Yes{color}|
+
+h2. Constraints
+
+Rule Constraints are special abilities that let you restrict the Rule to a certain value on an object&#39;s field. Let&#39;s say you want to restrict a Rule for resource/update to only occur on Resource&#39;s with a Template ID of 4. You&#39;d simply set the Constraints like so:
+
+* *Constraint Class*: modResource
+* *Constraint Field*: template
+* *Constraint*: 4
+
+Or, further, if you wanted to restrict the Rule to Resources with a menutitle of &quot;boo&quot;:
+
+* *Constraint Class*: modResource
+* *Constraint Field*: menutitle
+* *Constraint*: boo
+
+Constraints allow a superior level of flexibity to [Form Customization Rules].
+
+h2. See Also
+
+{pagetree:root=Form Customization}
+
+{scrollbar}";}}}

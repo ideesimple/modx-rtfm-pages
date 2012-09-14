@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678154";s:4:"info";a:4:{s:6:"Title:";s:17:"manager_direction";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:32:"[revolution20:manager_direction]";}s:6:"parent";s:8:"18678127";s:6:"source";s:195:"h2. manager_text_direction
+
+*Name*: Manager Text Direction
+*Type*: String
+*Default*: ltr
+
+The direction that the text will be rendered in the Manager, left to right or right to left.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678154";s:3:"ver";s:1:"2";s:4:"code";s:195:"h2. manager_text_direction
+
+*Name*: Manager Text Direction
+*Type*: String
+*Default*: ltr
+
+The direction that the text will be rendered in the Manager, left to right or right to left.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119691";s:3:"ver";s:1:"1";s:4:"code";s:353:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Manager Text Direction{zone-data}
+{zone-data:key}manager_direction{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}ltr{zone-data}
+{zone-data:desc}The direction that the text will be rendered in the Manager, left to right or right to left.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

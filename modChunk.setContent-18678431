@@ -1,0 +1,51 @@
+a:5:{s:2:"id";s:8:"18678431";s:4:"info";a:4:{s:6:"Title:";s:19:"modChunk.setContent";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:34:"[revolution20:modChunk.setContent]";}s:6:"parent";s:8:"18678429";s:6:"source";s:374:"\\
+
+h2. modChunk::setContent
+
+Sets the content of this Chunk.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modChunk.html#
+
+{code}
+void setContent ( $content, [ $options = array()])
+{code}
+
+h2. Example
+
+
+{code}
+$chunk-&gt;setContent(&#39;&lt;h2&gt;Hello!&lt;/h2&gt;&#39;);
+{code}
+
+h2. See Also
+
+{contentbylabel:labels=chunk|showLabels=false|showSpace=false}
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678431";s:3:"ver";s:1:"1";s:4:"code";s:374:"\\
+
+h2. modChunk::setContent
+
+Sets the content of this Chunk.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modChunk.html#
+
+{code}
+void setContent ( $content, [ $options = array()])
+{code}
+
+h2. Example
+
+
+{code}
+$chunk-&gt;setContent(&#39;&lt;h2&gt;Hello!&lt;/h2&gt;&#39;);
+{code}
+
+h2. See Also
+
+{contentbylabel:labels=chunk|showLabels=false|showSpace=false}
+
+{scrollbar}";}}}

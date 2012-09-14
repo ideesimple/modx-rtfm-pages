@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678155";s:4:"info";a:4:{s:6:"Title:";s:22:"manager_lang_attribute";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:37:"[revolution20:manager_lang_attribute]";}s:6:"parent";s:8:"18678127";s:6:"source";s:268:"h2. manager_lang_attribute
+
+*Name*: Manager HTML and XML Language Attribute
+*Type*: String
+*Default*: en
+
+The language code that best fits with your chosen manager language. This will ensure that the browser can present content in the best format for you.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678155";s:3:"ver";s:1:"2";s:4:"code";s:268:"h2. manager_lang_attribute
+
+*Name*: Manager HTML and XML Language Attribute
+*Type*: String
+*Default*: en
+
+The language code that best fits with your chosen manager language. This will ensure that the browser can present content in the best format for you.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119692";s:3:"ver";s:1:"1";s:4:"code";s:431:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Manager HTML and XML Language Attribute{zone-data}
+{zone-data:key}manager_lang_attribute{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}en{zone-data}
+{zone-data:desc}The language code that best fits with your chosen manager language, this will ensure that the browser can present content in the best format for you.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

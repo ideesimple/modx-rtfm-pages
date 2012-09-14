@@ -1,0 +1,378 @@
+a:5:{s:2:"id";s:8:"18678082";s:4:"info";a:4:{s:6:"Title:";s:11:"MODx.Window";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:26:"[revolution20:MODx.Window]";}s:6:"parent";s:8:"18678079";s:6:"source";s:2849:"{toc}
+
+h2. MODx.Window
+
+*Extends:* Ext.Window
+*Key Features:* Drag-and-drop functionality; connector functionality for saving.
+
+!modx-window.png!
+
+MODExt Windows are a convenient way to display record data from a Grid or AJAX request for editing. Windows automatically include a FormPanel which you can add form fields (and other components) to. Submitting/saving a Window actually submits the FormPanel, and initiates an AJAX request to your connector.
+
+h2. Unique Parameters
+
+||Name||Description||Default||
+|action|If baseParams is not set, will use this as the action to the controller.| |
+|allowDrop|Whether or not to allow dropping of tree items onto the form fields.|1|
+|baseParams|An object of parameters to send along with the window form on save.|\{\}|
+|blankValues|If true, will reset the values of the form each time it is shown.|0|
+|cancelBtnText|The text of the cancel button for the window.|Cancel|
+|fields|An array of fields for the form, similar to Ext.form.FormPanel&#39;s fields definition.|[]|
+|fileUpload|If true, the form will be built to accept files.|0|
+|formFrame|Whether or not to add a ext-style frame to the window.|1|
+|labelAlign|The alignment of the labels on the form.|right|
+|labelWidth|The width, in pixels, of the labels on the form.|100|
+|record|A JSON object of default values (in name: value format) to set to the form when first loading the window.|\{\}|
+|saveBtnText|The text of the save button for the window.|Save|
+|url|The URL of the connector to submit the window form to.| |
+
+h2. Custom Events
+
+||Name||Description||
+|success|If the form submission returns a success response.|
+|failure|If the form submission returns a failure response.|
+|beforeSubmit|Before the form submits its values to the connector, but after validation passes.|
+
+h2. Unique Functionality
+
+h4. Firing the submit method
+
+You can manually fire the submission of the Window&#39;s form by running the submit() method, which has an optional &quot;close&quot; parameter (1/0) that, if 1, will close the window on success. Example:
+
+{code}var w = Ext.getCmp(&#39;my-window-id&#39;);
+w.submit(true); /* submit and then close window */{code}
+
+h4. setValues
+
+The MODx.Window class comes with a setValues method, that will set the form values of the window:
+
+{code}var w = Ext.getCmp(&#39;my-window-id&#39;);
+w.setValues({ 
+  name: &#39;John&#39;
+  ,email: &#39;my@email.com&#39;
+});{code}
+
+h4. reset
+
+You can run the reset method to empty (reset) all the fields on the form:
+
+{code}var w = Ext.getCmp(&#39;my-window-id&#39;);
+w.reset();{code}
+
+h4. Hiding and Showing Fields
+
+MODx.Window comes with a few assistance methods for making fields in its forms visible or hidden:
+
+{code}var w = Ext.getCmp(&#39;my-window-id&#39;);
+w.hideField(&#39;email&#39;);
+w.showField(&#39;comments&#39;);{code}
+
+h2. See Also
+
+{pagetree:root=MODExt}
+
+{scrollbar}";s:8:"versions";a:6:{i:0;a:3:{s:2:"id";s:8:"18678082";s:3:"ver";s:1:"6";s:4:"code";s:2849:"{toc}
+
+h2. MODx.Window
+
+*Extends:* Ext.Window
+*Key Features:* Drag-and-drop functionality; connector functionality for saving.
+
+!modx-window.png!
+
+MODExt Windows are a convenient way to display record data from a Grid or AJAX request for editing. Windows automatically include a FormPanel which you can add form fields (and other components) to. Submitting/saving a Window actually submits the FormPanel, and initiates an AJAX request to your connector.
+
+h2. Unique Parameters
+
+||Name||Description||Default||
+|action|If baseParams is not set, will use this as the action to the controller.| |
+|allowDrop|Whether or not to allow dropping of tree items onto the form fields.|1|
+|baseParams|An object of parameters to send along with the window form on save.|\{\}|
+|blankValues|If true, will reset the values of the form each time it is shown.|0|
+|cancelBtnText|The text of the cancel button for the window.|Cancel|
+|fields|An array of fields for the form, similar to Ext.form.FormPanel&#39;s fields definition.|[]|
+|fileUpload|If true, the form will be built to accept files.|0|
+|formFrame|Whether or not to add a ext-style frame to the window.|1|
+|labelAlign|The alignment of the labels on the form.|right|
+|labelWidth|The width, in pixels, of the labels on the form.|100|
+|record|A JSON object of default values (in name: value format) to set to the form when first loading the window.|\{\}|
+|saveBtnText|The text of the save button for the window.|Save|
+|url|The URL of the connector to submit the window form to.| |
+
+h2. Custom Events
+
+||Name||Description||
+|success|If the form submission returns a success response.|
+|failure|If the form submission returns a failure response.|
+|beforeSubmit|Before the form submits its values to the connector, but after validation passes.|
+
+h2. Unique Functionality
+
+h4. Firing the submit method
+
+You can manually fire the submission of the Window&#39;s form by running the submit() method, which has an optional &quot;close&quot; parameter (1/0) that, if 1, will close the window on success. Example:
+
+{code}var w = Ext.getCmp(&#39;my-window-id&#39;);
+w.submit(true); /* submit and then close window */{code}
+
+h4. setValues
+
+The MODx.Window class comes with a setValues method, that will set the form values of the window:
+
+{code}var w = Ext.getCmp(&#39;my-window-id&#39;);
+w.setValues({ 
+  name: &#39;John&#39;
+  ,email: &#39;my@email.com&#39;
+});{code}
+
+h4. reset
+
+You can run the reset method to empty (reset) all the fields on the form:
+
+{code}var w = Ext.getCmp(&#39;my-window-id&#39;);
+w.reset();{code}
+
+h4. Hiding and Showing Fields
+
+MODx.Window comes with a few assistance methods for making fields in its forms visible or hidden:
+
+{code}var w = Ext.getCmp(&#39;my-window-id&#39;);
+w.hideField(&#39;email&#39;);
+w.showField(&#39;comments&#39;);{code}
+
+h2. See Also
+
+{pagetree:root=MODExt}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35094609";s:3:"ver";s:1:"5";s:4:"code";s:2849:"{toc}
+
+h4. MODx.Window
+
+*Extends:* Ext.Window
+*Key Features:* Drag-and-drop functionality; connector functionality for saving.
+
+!modx-window.png!
+
+MODExt Windows are a convenient way to display record data from a Grid or AJAX request for editing. Windows automatically include a FormPanel which you can add form fields (and other components) to. Submitting/saving a Window actually submits the FormPanel, and initiates an AJAX request to your connector.
+
+h2. Unique Parameters
+
+||Name||Description||Default||
+|action|If baseParams is not set, will use this as the action to the controller.| |
+|allowDrop|Whether or not to allow dropping of tree items onto the form fields.|1|
+|baseParams|An object of parameters to send along with the window form on save.|\{\}|
+|blankValues|If true, will reset the values of the form each time it is shown.|0|
+|cancelBtnText|The text of the cancel button for the window.|Cancel|
+|fields|An array of fields for the form, similar to Ext.form.FormPanel&#39;s fields definition.|[]|
+|fileUpload|If true, the form will be built to accept files.|0|
+|formFrame|Whether or not to add a ext-style frame to the window.|1|
+|labelAlign|The alignment of the labels on the form.|right|
+|labelWidth|The width, in pixels, of the labels on the form.|100|
+|record|A JSON object of default values (in name: value format) to set to the form when first loading the window.|\{\}|
+|saveBtnText|The text of the save button for the window.|Save|
+|url|The URL of the connector to submit the window form to.| |
+
+h2. Custom Events
+
+||Name||Description||
+|success|If the form submission returns a success response.|
+|failure|If the form submission returns a failure response.|
+|beforeSubmit|Before the form submits its values to the connector, but after validation passes.|
+
+h2. Unique Functionality
+
+h4. Firing the submit method
+
+You can manually fire the submission of the Window&#39;s form by running the submit() method, which has an optional &quot;close&quot; parameter (1/0) that, if 1, will close the window on success. Example:
+
+{code}var w = Ext.getCmp(&#39;my-window-id&#39;);
+w.submit(true); /* submit and then close window */{code}
+
+h4. setValues
+
+The MODx.Window class comes with a setValues method, that will set the form values of the window:
+
+{code}var w = Ext.getCmp(&#39;my-window-id&#39;);
+w.setValues({ 
+  name: &#39;John&#39;
+  ,email: &#39;my@email.com&#39;
+});{code}
+
+h4. reset
+
+You can run the reset method to empty (reset) all the fields on the form:
+
+{code}var w = Ext.getCmp(&#39;my-window-id&#39;);
+w.reset();{code}
+
+h4. Hiding and Showing Fields
+
+MODx.Window comes with a few assistance methods for making fields in its forms visible or hidden:
+
+{code}var w = Ext.getCmp(&#39;my-window-id&#39;);
+w.hideField(&#39;email&#39;);
+w.showField(&#39;comments&#39;);{code}
+
+h2. See Also
+
+{pagetree:root=MODExt}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35094608";s:3:"ver";s:1:"4";s:4:"code";s:2865:"{toc}
+
+h4. MODx.Window
+
+*Extends:* Ext.Window
+*Key Features:* Drag-and-drop functionality; connector functionality for saving.
+
+!modext_window_with_tabpanel.png!
+
+MODExt Windows are a convenient way to display record data from a Grid or AJAX request for editing. Windows automatically include a FormPanel which you can add form fields (and other components) to. Submitting/saving a Window actually submits the FormPanel, and initiates an AJAX request to your connector.
+
+h2. Unique Parameters
+
+||Name||Description||Default||
+|action|If baseParams is not set, will use this as the action to the controller.| |
+|allowDrop|Whether or not to allow dropping of tree items onto the form fields.|1|
+|baseParams|An object of parameters to send along with the window form on save.|\{\}|
+|blankValues|If true, will reset the values of the form each time it is shown.|0|
+|cancelBtnText|The text of the cancel button for the window.|Cancel|
+|fields|An array of fields for the form, similar to Ext.form.FormPanel&#39;s fields definition.|[]|
+|fileUpload|If true, the form will be built to accept files.|0|
+|formFrame|Whether or not to add a ext-style frame to the window.|1|
+|labelAlign|The alignment of the labels on the form.|right|
+|labelWidth|The width, in pixels, of the labels on the form.|100|
+|record|A JSON object of default values (in name: value format) to set to the form when first loading the window.|\{\}|
+|saveBtnText|The text of the save button for the window.|Save|
+|url|The URL of the connector to submit the window form to.| |
+
+h2. Custom Events
+
+||Name||Description||
+|success|If the form submission returns a success response.|
+|failure|If the form submission returns a failure response.|
+|beforeSubmit|Before the form submits its values to the connector, but after validation passes.|
+
+h2. Unique Functionality
+
+h4. Firing the submit method
+
+You can manually fire the submission of the Window&#39;s form by running the submit() method, which has an optional &quot;close&quot; parameter (1/0) that, if 1, will close the window on success. Example:
+
+{code}var w = Ext.getCmp(&#39;my-window-id&#39;);
+w.submit(true); /* submit and then close window */{code}
+
+h4. setValues
+
+The MODx.Window class comes with a setValues method, that will set the form values of the window:
+
+{code}var w = Ext.getCmp(&#39;my-window-id&#39;);
+w.setValues({ 
+  name: &#39;John&#39;
+  ,email: &#39;my@email.com&#39;
+});{code}
+
+h4. reset
+
+You can run the reset method to empty (reset) all the fields on the form:
+
+{code}var w = Ext.getCmp(&#39;my-window-id&#39;);
+w.reset();{code}
+
+h4. Hiding and Showing Fields
+
+MODx.Window comes with a few assistance methods for making fields in its forms visible or hidden:
+
+{code}var w = Ext.getCmp(&#39;my-window-id&#39;);
+w.hideField(&#39;email&#39;);
+w.showField(&#39;comments&#39;);{code}
+
+h2. See Also
+
+{pagetree:root=MODExt}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"35094607";s:3:"ver";s:1:"3";s:4:"code";s:1842:"\\
+
+h4. MODx.Window
+
+*Extends:* Ext.Window
+*Key Features:* Drag-and-drop functionality; connector functionality for saving.
+
+!modext_window_with_tabpanel.png!
+
+MODExt Windows are a convenient way to display record data from a Grid or AJAX request for editing. Windows automatically include a FormPanel which you can add form fields (and other components) to. Submitting/saving a Window actually submits the FormPanel, and initiates an AJAX request to your connector.
+
+h2. Unique Parameters
+
+||Name||Description||Default||
+|action|If baseParams is not set, will use this as the action to the controller.| |
+|allowDrop|Whether or not to allow dropping of tree items onto the form fields.|1|
+|baseParams|An object of parameters to send along with the window form on save.|\{\}|
+|blankValues|If true, will reset the values of the form each time it is shown.|0|
+|cancelBtnText|The text of the cancel button for the window.|Cancel|
+|fields|An array of fields for the form, similar to Ext.form.FormPanel&#39;s fields definition.|[]|
+|fileUpload|If true, the form will be built to accept files.|0|
+|formFrame|Whether or not to add a ext-style frame to the window.|1|
+|labelAlign|The alignment of the labels on the form.|right|
+|labelWidth|The width, in pixels, of the labels on the form.|100|
+|record|A JSON object of default values (in name: value format) to set to the form when first loading the window.|\{\}|
+|saveBtnText|The text of the save button for the window.|Save|
+|url|The URL of the connector to submit the window form to.| |
+
+h2. Custom Events
+
+||Name||Description||
+|success|If the form submission returns a success response.|
+|failure|If the form submission returns a failure response.|
+|beforeSubmit|Before the form submits its values to the connector, but after validation passes.|
+
+h2. See Also
+
+{pagetree:root=MODExt}
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"35094605";s:3:"ver";s:1:"2";s:4:"code";s:1804:"\\
+
+h4. MODx.Window
+
+*Extends:* Ext.Window
+*Key Features:* Drag-and-drop functionality; connector functionality for saving.
+
+!modext_window_with_tabpanel.png!
+
+MODExt Windows are a convenient way to display record data from a Grid or AJAX request for editing. Windows automatically include a FormPanel which you can add form fields (and other components) to. Submitting/saving a Window actually submits the FormPanel, and initiates an AJAX request to your connector.
+
+h2. Unique Parameters
+
+||Name||Description||Default||
+|action|If baseParams is not set, will use this as the action to the controller.| |
+|allowDrop|Whether or not to allow dropping of tree items onto the form fields.|1|
+|baseParams|An object of parameters to send along with the window form on save.|\{\}|
+|blankValues|If true, will reset the values of the form each time it is shown.|0|
+|cancelBtnText|The text of the cancel button for the window.|Cancel|
+|fields|An array of fields for the form, similar to Ext.form.FormPanel&#39;s fields definition.|[]|
+|fileUpload|If true, the form will be built to accept files.|0|
+|formFrame|Whether or not to add a ext-style frame to the window.|1|
+|labelAlign|The alignment of the labels on the form.|right|
+|labelWidth|The width, in pixels, of the labels on the form.|100|
+|record|A JSON object of default values (in name: value format) to set to the form when first loading the window.|\{\}|
+|saveBtnText|The text of the save button for the window.|Save|
+|url|The URL of the connector to submit the window form to.| |
+
+h2. Custom Events
+
+||Name||Description||
+|success|If the form submission returns a success response.|
+|failure|If the form submission returns a failure response.|
+|beforeSubmit|Before the form submits its values to the connector, but after validation passes.|
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"35094604";s:3:"ver";s:1:"1";s:4:"code";s:479:"\\
+
+h4. MODx.Window
+
+*Extends:* Ext.Window
+*Key Features:* Drag-and-drop functionality; connector functionality for saving.
+
+!modext_window_with_tabpanel.png!
+
+MODExt Windows are a convenient way to display record data from a Grid or AJAX request for editing. Windows automatically include a FormPanel which you can add form fields (and other components) to. Submitting/saving a Window actually submits the FormPanel, and initiates an AJAX request to your connector.
+
+{scrollbar}";}}}

@@ -1,0 +1,1547 @@
+a:5:{s:2:"id";s:8:"18678114";s:4:"info";a:4:{s:6:"Title:";s:28:"Troubleshooting Installation";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:43:"[revolution20:Troubleshooting Installation]";}s:6:"parent";s:8:"36634926";s:6:"source";s:6074:"\\
+
+{toc}
+
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions [here|Installation] for your distribution.
+* You are using at least PHP 5.1.1+, but not 5.1.6 or 5.2.0
+* You are using MySQL later than 4.1.20, but not any iteration of MySQL 5.0.51 (including 5.0.51a).
+* Clear the core/cache/ directory entirely before starting setup; sometimes improper file permissions can cause issues.
+
+
+h2. PDO Error Messages
+
+If you are getting PDO-related error messages during install, before proceeding to specific error messages as below, please confirm that your PDO configuration is setup correctly. You can do so by running this code (replace user/password/database/host with your setup):
+
+{code}&lt;?php
+/* Connect to an ODBC database using driver invocation */
+$dsn = &#39;mysql:dbname=testdb;host=localhost&#39;;
+$user = &#39;dbuser&#39;;
+$password = &#39;dbpass&#39;;
+
+try {
+  $dbh = new PDO($dsn, $user, $password);
+} catch (PDOException $e) {
+  echo &#39;Connection failed: &#39; . $e-&gt;getMessage();
+}
+?&gt;
+{code}
+If this fails, then your PDO setup is not configured correctly.
+
+h2. Common Error Messages
+
+Here are some common problems that might occur during installation and their solutions:
+
+h3. &quot;I get a blank white screen instead of the options page\!&quot;
+
+You probably copied config.inc.tpl to config.inc.php, which is incorrect. Make the config.inc.php file an empty, writable file.
+
+If you renamed the config.inc.tpl to config.inc.php, rename it back to config.inc.tpl and create a blank file named config.inc.php that is writable.
+
+h3. &quot;I clicked install and got a blank white screen\!&quot;
+
+Make sure your &#39;memory_limit&#39; setting in php.ini is set to at least 32M. For slower servers, you might need to up it to 64M.
+
+h3. &quot;Cannot connect to database&quot; in the database options page
+
+One of the common causes of this problem is that you&#39;re using a non-standard port for MySQL. Try putting this syntax into the hostname field (replacing the data with your mysql server&#39;s host and port):
+
+{quote}my.database.com;port=3307{quote}
+
+h3. Warning: PDO::__construct() \[pdo.--construct\]: \[2002\] Argument invalid (trying to connect via unix://) OR &quot;Checking database:Could not connect to the mysql server.&quot;
+
+This means your MySQL socket is incorrectly configured. Usually this can be remedied by adding to (or updating) your php.ini:
+
+{code}mysql.default_socket=/path/to/my/mysql.sock
+mysqli.default_socket=/path/to/my/mysql.sock
+pdo_mysql.default_socket=/path/to/my/mysql.sock
+{code}
+
+h3. The login page keeps redirecting me back to the login screen with no error
+
+This can happen with older Revolution beta installs. To fix it, delete the following 3 system settings from the DB table `[prefix]\_system_settings` (where prefix is your table prefix):
+
+* session_name
+* session_cookie_path
+* session_cookie_domain
+
+Then delete the core/cache/config.cache.php file.
+
+Unless, of course, you&#39;ve changed these explicitly for some purpose of your own.
+
+h3. Things sometimes don&#39;t load, the page flakes out, etc (eAccelerator)
+
+Are you running eAccelerator? In some server configurations, this can cause problems. You might need to disable it. You can do so via your php.ini:
+
+{code}eaccelerator.enable = 0;
+eaccelerator.optimizer = 0;
+eaccelerator.debug = 0;
+{code}
+or in your .htaccess in the modx root directory, if your server supports php_flag server directives:
+
+{code}php_flag eaccelerator.enable 0
+php_flag eaccelerator.optimizer 0
+php_flag eaccelerator.debug 0
+{code}
+
+h3. Resource / Elements / File tree not appearing
+
+Additional, page &quot;flake outs&quot; may stem from items stored within your own browser&#39;s cache, which may result with the resource / elements / file tree not appearing due to old versions of javascript and other files being utilized on the client side.&amp;nbsp; This can be verified by accessing the manager with a browser not previously utilized in doing so.&amp;nbsp;
+
+The simple fix: clear your browser&#39;s cache, and log back into the manager.
+
+A more complete solution:&amp;nbsp;
+# {color:#000000}Under System Clear Cache{color}
+# {color:#000000}Under Security Flush Permissions and then Flush Sessions{color}
+# {color:#000000}This will dump everything and log you out{color}
+# {color:#000000}Last step Clear your browser cache{color}
+
+h3. I can&#39;t login to the manager after installing\!
+
+If you&#39;re redirecting back to the login screen every time, try setting this in your .htaccess file in the root of your MODx install:
+
+{code}php_value session.auto_start 0{code}
+
+h3. Could not connect to the database server. Check the connection properties and try again. Access Denied...
+
+Often on shared hosting, if you create a username for your database with an underscore (_) in it, it will cause problems. Ensure your database username does not contain an underscore, and try again.
+
+{info}More common issues to come...{info}
+
+h2. JS Errors in the Manager due to Error 400 Javascript Issues
+
+If your MODX manager is not loading due to 400 errors in the manager when trying to load the Google Minify-compressed JavaScript code, this is likely due to a server misconfiguration on your end. If this cannot be rectified from a server angle, you can manually disable JS and CSS compression the following way:
+
+# Go into the DB and find the \[table_prefix\]_system_settings table (table_prefix is usually modx).
+# Find the rows with key &quot;compress_js&quot; and &quot;compress_css&quot; and set their value to 0.
+# Empty your core/cache/ directory.
+# Reload the manager.
+
+This will allow you to use the manager without JS and CSS compression.
+
+h2. Still Having Issues?
+
+If you&#39;re still having problems, post your error and your server environment information in [our forums here|http://modxcms.com/forums/index.php/board,378.0.html], and we&#39;ll try and address your issue as soon as possible.
+
+{scrollbar}";s:8:"versions";a:13:{i:0;a:3:{s:2:"id";s:8:"18678114";s:3:"ver";s:1:"1";s:4:"code";s:6074:"\\
+
+{toc}
+
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions [here|Installation] for your distribution.
+* You are using at least PHP 5.1.1+, but not 5.1.6 or 5.2.0
+* You are using MySQL later than 4.1.20, but not any iteration of MySQL 5.0.51 (including 5.0.51a).
+* Clear the core/cache/ directory entirely before starting setup; sometimes improper file permissions can cause issues.
+
+
+h2. PDO Error Messages
+
+If you are getting PDO-related error messages during install, before proceeding to specific error messages as below, please confirm that your PDO configuration is setup correctly. You can do so by running this code (replace user/password/database/host with your setup):
+
+{code}&lt;?php
+/* Connect to an ODBC database using driver invocation */
+$dsn = &#39;mysql:dbname=testdb;host=localhost&#39;;
+$user = &#39;dbuser&#39;;
+$password = &#39;dbpass&#39;;
+
+try {
+  $dbh = new PDO($dsn, $user, $password);
+} catch (PDOException $e) {
+  echo &#39;Connection failed: &#39; . $e-&gt;getMessage();
+}
+?&gt;
+{code}
+If this fails, then your PDO setup is not configured correctly.
+
+h2. Common Error Messages
+
+Here are some common problems that might occur during installation and their solutions:
+
+h3. &quot;I get a blank white screen instead of the options page\!&quot;
+
+You probably copied config.inc.tpl to config.inc.php, which is incorrect. Make the config.inc.php file an empty, writable file.
+
+If you renamed the config.inc.tpl to config.inc.php, rename it back to config.inc.tpl and create a blank file named config.inc.php that is writable.
+
+h3. &quot;I clicked install and got a blank white screen\!&quot;
+
+Make sure your &#39;memory_limit&#39; setting in php.ini is set to at least 32M. For slower servers, you might need to up it to 64M.
+
+h3. &quot;Cannot connect to database&quot; in the database options page
+
+One of the common causes of this problem is that you&#39;re using a non-standard port for MySQL. Try putting this syntax into the hostname field (replacing the data with your mysql server&#39;s host and port):
+
+{quote}my.database.com;port=3307{quote}
+
+h3. Warning: PDO::__construct() \[pdo.--construct\]: \[2002\] Argument invalid (trying to connect via unix://) OR &quot;Checking database:Could not connect to the mysql server.&quot;
+
+This means your MySQL socket is incorrectly configured. Usually this can be remedied by adding to (or updating) your php.ini:
+
+{code}mysql.default_socket=/path/to/my/mysql.sock
+mysqli.default_socket=/path/to/my/mysql.sock
+pdo_mysql.default_socket=/path/to/my/mysql.sock
+{code}
+
+h3. The login page keeps redirecting me back to the login screen with no error
+
+This can happen with older Revolution beta installs. To fix it, delete the following 3 system settings from the DB table `[prefix]\_system_settings` (where prefix is your table prefix):
+
+* session_name
+* session_cookie_path
+* session_cookie_domain
+
+Then delete the core/cache/config.cache.php file.
+
+Unless, of course, you&#39;ve changed these explicitly for some purpose of your own.
+
+h3. Things sometimes don&#39;t load, the page flakes out, etc (eAccelerator)
+
+Are you running eAccelerator? In some server configurations, this can cause problems. You might need to disable it. You can do so via your php.ini:
+
+{code}eaccelerator.enable = 0;
+eaccelerator.optimizer = 0;
+eaccelerator.debug = 0;
+{code}
+or in your .htaccess in the modx root directory, if your server supports php_flag server directives:
+
+{code}php_flag eaccelerator.enable 0
+php_flag eaccelerator.optimizer 0
+php_flag eaccelerator.debug 0
+{code}
+
+h3. Resource / Elements / File tree not appearing
+
+Additional, page &quot;flake outs&quot; may stem from items stored within your own browser&#39;s cache, which may result with the resource / elements / file tree not appearing due to old versions of javascript and other files being utilized on the client side.&amp;nbsp; This can be verified by accessing the manager with a browser not previously utilized in doing so.&amp;nbsp;
+
+The simple fix: clear your browser&#39;s cache, and log back into the manager.
+
+A more complete solution:&amp;nbsp;
+# {color:#000000}Under System Clear Cache{color}
+# {color:#000000}Under Security Flush Permissions and then Flush Sessions{color}
+# {color:#000000}This will dump everything and log you out{color}
+# {color:#000000}Last step Clear your browser cache{color}
+
+h3. I can&#39;t login to the manager after installing\!
+
+If you&#39;re redirecting back to the login screen every time, try setting this in your .htaccess file in the root of your MODx install:
+
+{code}php_value session.auto_start 0{code}
+
+h3. Could not connect to the database server. Check the connection properties and try again. Access Denied...
+
+Often on shared hosting, if you create a username for your database with an underscore (_) in it, it will cause problems. Ensure your database username does not contain an underscore, and try again.
+
+{info}More common issues to come...{info}
+
+h2. JS Errors in the Manager due to Error 400 Javascript Issues
+
+If your MODX manager is not loading due to 400 errors in the manager when trying to load the Google Minify-compressed JavaScript code, this is likely due to a server misconfiguration on your end. If this cannot be rectified from a server angle, you can manually disable JS and CSS compression the following way:
+
+# Go into the DB and find the \[table_prefix\]_system_settings table (table_prefix is usually modx).
+# Find the rows with key &quot;compress_js&quot; and &quot;compress_css&quot; and set their value to 0.
+# Empty your core/cache/ directory.
+# Reload the manager.
+
+This will allow you to use the manager without JS and CSS compression.
+
+h2. Still Having Issues?
+
+If you&#39;re still having problems, post your error and your server environment information in [our forums here|http://modxcms.com/forums/index.php/board,378.0.html], and we&#39;ll try and address your issue as soon as possible.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"38994009";s:3:"ver";s:1:"1";s:4:"code";s:5953:"\\
+
+{toc}
+
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions [here|Installation] for your distribution.
+* You are using at least PHP 5.1.1+, but not 5.1.6 or 5.2.0
+* You are using MySQL later than 4.1.20, but not any iteration of MySQL 5.0.51 (including 5.0.51a).
+
+h2. PDO Error Messages
+
+If you are getting PDO-related error messages during install, before proceeding to specific error messages as below, please confirm that your PDO configuration is setup correctly. You can do so by running this code (replace user/password/database/host with your setup):
+
+{code}&lt;?php
+/* Connect to an ODBC database using driver invocation */
+$dsn = &#39;mysql:dbname=testdb;host=localhost&#39;;
+$user = &#39;dbuser&#39;;
+$password = &#39;dbpass&#39;;
+
+try {
+  $dbh = new PDO($dsn, $user, $password);
+} catch (PDOException $e) {
+  echo &#39;Connection failed: &#39; . $e-&gt;getMessage();
+}
+?&gt;
+{code}
+If this fails, then your PDO setup is not configured correctly.
+
+h2. Common Error Messages
+
+Here are some common problems that might occur during installation and their solutions:
+
+h3. &quot;I get a blank white screen instead of the options page\!&quot;
+
+You probably copied config.inc.tpl to config.inc.php, which is incorrect. Make the config.inc.php file an empty, writable file.
+
+If you renamed the config.inc.tpl to config.inc.php, rename it back to config.inc.tpl and create a blank file named config.inc.php that is writable.
+
+h3. &quot;I clicked install and got a blank white screen\!&quot;
+
+Make sure your &#39;memory_limit&#39; setting in php.ini is set to at least 32M. For slower servers, you might need to up it to 64M.
+
+h3. &quot;Cannot connect to database&quot; in the database options page
+
+One of the common causes of this problem is that you&#39;re using a non-standard port for MySQL. Try putting this syntax into the hostname field (replacing the data with your mysql server&#39;s host and port):
+
+{quote}my.database.com;port=3307{quote}
+
+h3. Warning: PDO::__construct() \[pdo.--construct\]: \[2002\] Argument invalid (trying to connect via unix://) OR &quot;Checking database:Could not connect to the mysql server.&quot;
+
+This means your MySQL socket is incorrectly configured. Usually this can be remedied by adding to (or updating) your php.ini:
+
+{code}mysql.default_socket=/path/to/my/mysql.sock
+mysqli.default_socket=/path/to/my/mysql.sock
+pdo_mysql.default_socket=/path/to/my/mysql.sock
+{code}
+
+h3. The login page keeps redirecting me back to the login screen with no error
+
+This can happen with older Revolution beta installs. To fix it, delete the following 3 system settings from the DB table `[prefix]\_system_settings` (where prefix is your table prefix):
+
+* session_name
+* session_cookie_path
+* session_cookie_domain
+
+Then delete the core/cache/config.cache.php file.
+
+Unless, of course, you&#39;ve changed these explicitly for some purpose of your own.
+
+h3. Things sometimes don&#39;t load, the page flakes out, etc (eAccelerator)
+
+Are you running eAccelerator? In some server configurations, this can cause problems. You might need to disable it. You can do so via your php.ini:
+
+{code}eaccelerator.enable = 0;
+eaccelerator.optimizer = 0;
+eaccelerator.debug = 0;
+{code}
+or in your .htaccess in the modx root directory, if your server supports php_flag server directives:
+
+{code}php_flag eaccelerator.enable 0
+php_flag eaccelerator.optimizer 0
+php_flag eaccelerator.debug 0
+{code}
+
+h3. Resource / Elements / File tree not appearing
+
+Additional, page &quot;flake outs&quot; may stem from items stored within your own browser&#39;s cache, which may result with the resource / elements / file tree not appearing due to old versions of javascript and other files being utilized on the client side.&amp;nbsp; This can be verified by accessing the manager with a browser not previously utilized in doing so.&amp;nbsp;
+
+The simple fix: clear your browser&#39;s cache, and log back into the manager.
+
+A more complete solution:&amp;nbsp;
+# {color:#000000}Under System Clear Cache{color}
+# {color:#000000}Under Security Flush Permissions and then Flush Sessions{color}
+# {color:#000000}This will dump everything and log you out{color}
+# {color:#000000}Last step Clear your browser cache{color}
+
+h3. I can&#39;t login to the manager after installing\!
+
+If you&#39;re redirecting back to the login screen every time, try setting this in your .htaccess file in the root of your MODx install:
+
+{code}php_value session.auto_start 0{code}
+
+h3. Could not connect to the database server. Check the connection properties and try again. Access Denied...
+
+Often on shared hosting, if you create a username for your database with an underscore (_) in it, it will cause problems. Ensure your database username does not contain an underscore, and try again.
+
+{info}More common issues to come...{info}
+
+h2. JS Errors in the Manager due to Error 400 Javascript Issues
+
+If your MODX manager is not loading due to 400 errors in the manager when trying to load the Google Minify-compressed JavaScript code, this is likely due to a server misconfiguration on your end. If this cannot be rectified from a server angle, you can manually disable JS and CSS compression the following way:
+
+# Go into the DB and find the \[table_prefix\]_system_settings table (table_prefix is usually modx).
+# Find the rows with key &quot;compress_js&quot; and &quot;compress_css&quot; and set their value to 0.
+# Empty your core/cache/ directory.
+# Reload the manager.
+
+This will allow you to use the manager without JS and CSS compression.
+
+h2. Still Having Issues?
+
+If you&#39;re still having problems, post your error and your server environment information in [our forums here|http://modxcms.com/forums/index.php/board,378.0.html], and we&#39;ll try and address your issue as soon as possible.
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"37683258";s:3:"ver";s:1:"1";s:4:"code";s:5239:"\\
+
+{toc}
+
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions [here|Installation] for your distribution.
+* You are using at least PHP 5.1.1+, but not 5.1.6 or 5.2.0
+* You are using MySQL later than 4.1.20, but not any iteration of MySQL 5.0.51 (including 5.0.51a).
+
+h2. PDO Error Messages
+
+If you are getting PDO-related error messages during install, before proceeding to specific error messages as below, please confirm that your PDO configuration is setup correctly. You can do so by running this code (replace user/password/database/host with your setup):
+
+{code}&lt;?php
+/* Connect to an ODBC database using driver invocation */
+$dsn = &#39;mysql:dbname=testdb;host=localhost&#39;;
+$user = &#39;dbuser&#39;;
+$password = &#39;dbpass&#39;;
+
+try {
+  $dbh = new PDO($dsn, $user, $password);
+} catch (PDOException $e) {
+  echo &#39;Connection failed: &#39; . $e-&gt;getMessage();
+}
+?&gt;
+{code}
+If this fails, then your PDO setup is not configured correctly.
+
+h2. Common Error Messages
+
+Here are some common problems that might occur during installation and their solutions:
+
+h3. &quot;I get a blank white screen instead of the options page\!&quot;
+
+You probably copied config.inc.tpl to config.inc.php, which is incorrect. Make the config.inc.php file an empty, writable file.
+
+If you renamed the config.inc.tpl to config.inc.php, rename it back to config.inc.tpl and create a blank file named config.inc.php that is writable.
+
+h3. &quot;I clicked install and got a blank white screen\!&quot;
+
+Make sure your &#39;memory_limit&#39; setting in php.ini is set to at least 32M. For slower servers, you might need to up it to 64M.
+
+h3. &quot;Cannot connect to database&quot; in the database options page
+
+One of the common causes of this problem is that you&#39;re using a non-standard port for MySQL. Try putting this syntax into the hostname field (replacing the data with your mysql server&#39;s host and port):
+
+{quote}my.database.com;port=3307{quote}
+
+h3. Warning: PDO::__construct() \[pdo.--construct\]: \[2002\] Argument invalid (trying to connect via unix://) OR &quot;Checking database:Could not connect to the mysql server.&quot;
+
+This means your MySQL socket is incorrectly configured. Usually this can be remedied by adding to (or updating) your php.ini:
+
+{code}mysql.default_socket=/path/to/my/mysql.sock
+mysqli.default_socket=/path/to/my/mysql.sock
+pdo_mysql.default_socket=/path/to/my/mysql.sock
+{code}
+
+h3. The login page keeps redirecting me back to the login screen with no error
+
+This can happen with older Revolution beta installs. To fix it, delete the following 3 system settings from the DB table `[prefix]\_system_settings` (where prefix is your table prefix):
+
+* session_name
+* session_cookie_path
+* session_cookie_domain
+
+Then delete the core/cache/config.cache.php file.
+
+Unless, of course, you&#39;ve changed these explicitly for some purpose of your own.
+
+h3. Things sometimes don&#39;t load, the page flakes out, etc (eAccelerator)
+
+Are you running eAccelerator? In some server configurations, this can cause problems. You might need to disable it. You can do so via your php.ini:
+
+{code}eaccelerator.enable = 0;
+eaccelerator.optimizer = 0;
+eaccelerator.debug = 0;
+{code}
+or in your .htaccess in the modx root directory, if your server supports php_flag server directives:
+
+{code}php_flag eaccelerator.enable 0
+php_flag eaccelerator.optimizer 0
+php_flag eaccelerator.debug 0
+{code}
+
+h3. Resource / Elements / File tree not appearing
+
+Additional, page &quot;flake outs&quot; may stem from items stored within your own browser&#39;s cache, which may result with the resource / elements / file tree not appearing due to old versions of javascript and other files being utilized on the client side.&amp;nbsp; This can be verified by accessing the manager with a browser not previously utilized in doing so.&amp;nbsp;
+
+The simple fix: clear your browser&#39;s cache, and log back into the manager.
+
+A more complete solution:&amp;nbsp;
+# {color:#000000}Under System Clear Cache{color}
+# {color:#000000}Under Security Flush Permissions and then Flush Sessions{color}
+# {color:#000000}This will dump everything and log you out{color}
+# {color:#000000}Last step Clear your browser cache{color}
+
+h3. I can&#39;t login to the manager after installing\!
+
+If you&#39;re redirecting back to the login screen every time, try setting this in your .htaccess file in the root of your MODx install:
+
+{code}php_value session.auto_start 0{code}
+
+h3. Could not connect to the database server. Check the connection properties and try again. Access Denied...
+
+Often on shared hosting, if you create a username for your database with an underscore (_) in it, it will cause problems. Ensure your database username does not contain an underscore, and try again.
+
+{info}More common issues to come...{info}
+
+h2. Still Having Issues?
+
+If you&#39;re still having problems, post your error and your server environment information in [our forums here|http://modxcms.com/forums/index.php/board,378.0.html], and we&#39;ll try and address your issue as soon as possible.
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"27918338";s:3:"ver";s:1:"1";s:4:"code";s:4929:"\\
+
+{toc}
+
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions [here|Installation] for your distribution.
+* You are using at least PHP 5.1.1+, but not 5.1.6 or 5.2.0
+* You are using MySQL later than 4.1.20, but not any iteration of MySQL 5.0.51 (including 5.0.51a).
+
+h2. PDO Error Messages
+
+If you are getting PDO-related error messages during install, before proceeding to specific error messages as below, please confirm that your PDO configuration is setup correctly. You can do so by running this code (replace user/password/database/host with your setup):
+
+{code}&lt;?php
+/* Connect to an ODBC database using driver invocation */
+$dsn = &#39;mysql:dbname=testdb;host=localhost&#39;;
+$user = &#39;dbuser&#39;;
+$password = &#39;dbpass&#39;;
+
+try {
+  $dbh = new PDO($dsn, $user, $password);
+} catch (PDOException $e) {
+  echo &#39;Connection failed: &#39; . $e-&gt;getMessage();
+}
+?&gt;
+{code}
+If this fails, then your PDO setup is not configured correctly.
+
+h2. Common Error Messages
+
+Here are some common problems that might occur during installation and their solutions:
+
+h3. &quot;I get a blank white screen instead of the options page\!&quot;
+
+You probably copied config.inc.tpl to config.inc.php, which is incorrect. Make the config.inc.php file an empty, writable file.
+
+If you renamed the config.inc.tpl to config.inc.php, rename it back to config.inc.tpl and create a blank file named config.inc.php that is writable.
+
+h3. &quot;I clicked install and got a blank white screen\!&quot;
+
+Make sure your &#39;memory_limit&#39; setting in php.ini is set to at least 32M. For slower servers, you might need to up it to 64M.
+
+h3. &quot;Cannot connect to database&quot; in the database options page
+
+One of the common causes of this problem is that you&#39;re using a non-standard port for MySQL. Try putting this syntax into the hostname field (replacing the data with your mysql server&#39;s host and port):
+
+{quote}my.database.com;port=3307{quote}
+
+h3. Warning: PDO::__construct() \[pdo.--construct\]: \[2002\] Argument invalid (trying to connect via unix://) OR &quot;Checking database:Could not connect to the mysql server.&quot;
+
+This means your MySQL socket is incorrectly configured. Usually this can be remedied by adding to (or updating) your php.ini:
+
+{code}mysql.default_socket=/path/to/my/mysql.sock
+mysqli.default_socket=/path/to/my/mysql.sock
+pdo_mysql.default_socket=/path/to/my/mysql.sock
+{code}
+
+h3. The login page keeps redirecting me back to the login screen with no error
+
+This can happen with older Revolution beta installs. To fix it, delete the following 3 system settings from the DB table `[prefix]\_system_settings` (where prefix is your table prefix):
+
+* session_name
+* session_cookie_path
+* session_cookie_domain
+
+Then delete the core/cache/config.cache.php file.
+
+Unless, of course, you&#39;ve changed these explicitly for some purpose of your own.
+
+h3. Things sometimes don&#39;t load, the page flakes out, etc (eAccelerator)
+
+Are you running eAccelerator? In some server configurations, this can cause problems. You might need to disable it. You can do so via your php.ini:
+
+{code}eaccelerator.enable = 0;
+eaccelerator.optimizer = 0;
+eaccelerator.debug = 0;
+{code}
+or in your .htaccess in the modx root directory, if your server supports php_flag server directives:
+
+{code}php_flag eaccelerator.enable 0
+php_flag eaccelerator.optimizer 0
+php_flag eaccelerator.debug 0
+{code}
+
+h3. Resource / Elements / File tree not appearing
+
+Additional, page &quot;flake outs&quot; may stem from items stored within your own browser&#39;s cache, which may result with the resource / elements / file tree not appearing due to old versions of javascript and other files being utilized on the client side.&amp;nbsp; This can be verified by accessing the manager with a browser not previously utilized in doing so.&amp;nbsp;
+
+The simple fix: clear your browser&#39;s cache, and log back into the manager.
+
+A more complete solution:&amp;nbsp;
+# {color:#000000}Under System Clear Cache{color}
+# {color:#000000}Under Security Flush Permissions and then Flush Sessions{color}
+# {color:#000000}This will dump everything and log you out{color}
+# {color:#000000}Last step Clear your browser cache{color}
+
+h3. I can&#39;t login to the manager after installing\!
+
+If you&#39;re redirecting back to the login screen every time, try setting this in your .htaccess file in the root of your MODx install:
+
+{code}php_value session.auto_start 0{code}
+
+
+{info}More common issues to come...{info}
+
+h2. Still Having Issues?
+
+If you&#39;re still having problems, post your error and your server environment information in [our forums here|http://modxcms.com/forums/index.php/board,378.0.html], and we&#39;ll try and address your issue as soon as possible.
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"24772620";s:3:"ver";s:1:"9";s:4:"code";s:4939:"\\
+
+{toc}
+
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions [here|Installation] for your distribution.
+* You are using at least PHP 5.1.1+, but not 5.1.6 or 5.2.0
+* You are using MySQL later than 4.1.20, but not any iteration of MySQL 5.0.51 (including 5.0.51a).
+
+h2. PDO Error Messages
+
+If you are getting PDO-related error messages during install, before proceeding to specific error messages as below, please confirm that your PDO configuration is setup correctly. You can do so by running this code (replace user/password/database/host with your setup):
+
+{code}&lt;?php
+/* Connect to an ODBC database using driver invocation */
+$dsn = &#39;mysql:dbname=testdb;host=localhost&#39;;
+$user = &#39;dbuser&#39;;
+$password = &#39;dbpass&#39;;
+
+try {
+  $dbh = new PDO($dsn, $user, $password);
+} catch (PDOException $e) {
+  echo &#39;Connection failed: &#39; . $e-&gt;getMessage();
+}
+?&gt;
+{code}
+If this fails, then your PDO setup is not configured correctly.
+
+h2. Common Error Messages
+
+Here are some common problems that might occur during installation and their solutions:
+
+h3. &quot;I get a blank white screen instead of the options page\!&quot;
+
+You probably copied config.inc.tpl to config.inc.php, which is incorrect. Make the config.inc.php file an empty, writable file.
+
+If you renamed the config.inc.tpl to config.inc.php, rename it back to config.inc.tpl and create a blank file named config.inc.php that is writable.
+
+h3. &quot;I clicked install and got a blank white screen\!&quot;
+
+Make sure your &#39;memory_limit&#39; setting in php.ini is set to at least 32M. For slower servers, you might need to up it to 64M.
+
+h3. &quot;Cannot connect to database&quot; in the database options page
+
+One of the common causes of this problem is that you&#39;re using a non-standard port for MySQL. Try putting this syntax into the hostname field (replacing the data with your mysql server&#39;s host and port):
+
+{quote}my.database.com;port=3307{quote}
+
+h3. Warning: PDO::__construct() \[pdo.--construct\]: \[2002\] Argument invalid (trying to connect via unix://) OR &quot;Checking database:Could not connect to the mysql server.&quot;
+
+This means your MySQL socket is incorrectly configured. Usually this can be remedied by adding to (or updating) your php.ini:
+
+{code}mysql.default_socket=/path/to/my/mysql.sock
+mysqli.default_socket=/path/to/my/mysql.sock
+pdo_mysql.default_socket=/path/to/my/mysql.sock
+{code}
+
+h3. The login page keeps redirecting me back to the login screen with no error
+
+This can happen with older Revolution beta installs. To fix it, delete the following 3 system settings from the DB table `[prefix]\_system_settings` (where prefix is your table prefix):
+
+* session_name
+* session_cookie_path
+* session_cookie_domain
+
+Then delete the core/cache/config.cache.php file.
+
+Unless, of course, you&#39;ve changed these explicitly for some purpose of your own.
+
+h3. Things sometimes don&#39;t load, the page flakes out, etc (eAccelerator)
+
+Are you running eAccelerator? In some server configurations, this can cause problems. You might need to disable it. You can do so via your php.ini:
+
+{code}eaccelerator.enable = 0;
+eaccelerator.optimizer = 0;
+eaccelerator.debug = 0;
+{code}
+or in your .htaccess in the modx root directory, if your server supports php_flag server directives:
+
+{code}php_flag eaccelerator.enable 0
+php_flag eaccelerator.optimizer 0
+php_flag eaccelerator.debug 0
+{code}
+
+h3. Resource / Elements / File tree not appearing
+
+Additional, page &quot;flake outs&quot; may stem from items stored within your own browser&#39;s cache, which may result with the resource / elements / file tree not appearing due to old versions of javascript and other files being utilized on the client side.&amp;nbsp; This can be verified by accessing the manager with a browser not previously utilized in doing so.&amp;nbsp;
+
+The simple fix: clear your browser&#39;s cache, and log back into the manager.
+
+A more complete solution:&amp;nbsp;
+# {color:#000000}Under System Clear Cache{color}
+# {color:#000000}Under Security Flush Permissions and then Flush Sessions{color}
+# [|#wshawn]{color:#000000}This will dump everything and log you out{color}
+# {color:#000000}Last step Clear your browser cache{color}
+
+h3. I can&#39;t login to the manager after installing\!
+
+If you&#39;re redirecting back to the login screen every time, try setting this in your .htaccess file in the root of your MODx install:
+
+{code}php_value session.auto_start 0{code}
+
+
+{info}More common issues to come...{info}
+
+h2. Still Having Issues?
+
+If you&#39;re still having problems, post your error and your server environment information in [our forums here|http://modxcms.com/forums/index.php/board,378.0.html], and we&#39;ll try and address your issue as soon as possible.
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"24772619";s:3:"ver";s:1:"8";s:4:"code";s:4938:"\\
+
+{toc}
+
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions [here|Installation] for your distribution.
+* You are using at least PHP 5.1.1+, but not 5.1.6 or 5.2.0
+* You are using MySQL later than 4.1.20, but not any iteration of MySQL 5.0.51 (including 5.0.51a).
+
+h2. PDO Error Messages
+
+If you are getting PDO-related error messages during install, before proceeding to specific error messages as below, please confirm that your PDO configuration is setup correctly. You can do so by running this code (replace user/password/database/host with your setup):
+
+{code}&lt;?php
+/* Connect to an ODBC database using driver invocation */
+$dsn = &#39;mysql:dbname=testdb;host=localhost&#39;;
+$user = &#39;dbuser&#39;;
+$password = &#39;dbpass&#39;;
+
+try {
+  $dbh = new PDO($dsn, $user, $password);
+} catch (PDOException $e) {
+  echo &#39;Connection failed: &#39; . $e-&gt;getMessage();
+}
+?&gt;
+{code}
+If this fails, then your PDO setup is not configured correctly.
+
+h2. Common Error Messages
+
+Here are some common problems that might occur during installation and their solutions:
+
+h3. &quot;I get a blank white screen instead of the options page\!&quot;
+
+You probably copied config.inc.tpl to config.inc.php, which is incorrect. Make the config.inc.php file an empty, writable file.
+
+If you renamed the config.inc.tpl to config.inc.php, rename it back to config.inc.tpl and create a blank file named config.inc.php that is writable.
+
+h3. &quot;I clicked install and got a blank white screen\!&quot;
+
+Make sure your &#39;memory_limit&#39; setting in php.ini is set to at least 32M. For slower servers, you might need to up it to 64M.
+
+h3. &quot;Cannot connect to database&quot; in the database options page
+
+One of the common causes of this problem is that you&#39;re using a non-standard port for MySQL. Try putting this syntax into the hostname field (replacing the data with your mysql server&#39;s host and port):
+
+{quote}my.database.com;port=3307{quote}
+
+h3. Warning: PDO::__construct() \[pdo.--construct\]: \[2002\] Argument invalid (trying to connect via unix://) OR &quot;Checking database:Could not connect to the mysql server.&quot;
+
+This means your MySQL socket is incorrectly configured. Usually this can be remedied by adding to (or updating) your php.ini:
+
+{code}mysql.default_socket=/path/to/my/mysql.sock
+mysqli.default_socket=/path/to/my/mysql.sock
+pdo_mysql.default_socket=/path/to/my/mysql.sock
+{code}
+
+h3. The login page keeps redirecting me back to the login screen with no error
+
+This can happen with older Revolution beta installs. To fix it, delete the following 3 system settings from the DB table `[prefix]\_system_settings` (where prefix is your table prefix):
+
+* session_name
+* session_cookie_path
+* session_cookie_domain
+
+Then delete the core/cache/config.cache.php file.
+
+Unless, of course, you&#39;ve changed these explicitly for some purpose of your own.
+
+h3. Things sometimes don&#39;t load, the page flakes out, etc (eAccelerator)
+
+Are you running eAccelerator? In some server configurations, this can cause problems. You might need to disable it. You can do so via your php.ini:
+
+{code}eaccelerator.enable = 0;
+eaccelerator.optimizer = 0;
+eaccelerator.debug = 0;
+{code}
+or in your .htaccess in the modx root directory, if your server supports php_flag server directives:
+
+{code}php_flag eaccelerator.enable 0
+php_flag eaccelerator.optimizer 0
+php_flag eaccelerator.debug 0
+{code}
+
+h3. Resource / Elements / File tree not appearing
+Additional, page &quot;flake outs&quot; may stem from items stored within your own browser&#39;s cache, which may result with the resource / elements / file tree not appearing due to old versions of javascript and other files being utilized on the client side.&amp;nbsp; This can be verified by accessing the manager with a browser not previously utilized in doing so.&amp;nbsp;
+
+The simple fix: clear your browser&#39;s cache, and log back into the manager.
+
+A more complete solution:&amp;nbsp;
+# {color:#000000}Under System Clear Cache{color}
+# {color:#000000}Under Security Flush Permissions and then Flush Sessions{color}
+# [|#wshawn]{color:#000000}This will dump everything and log you out{color}
+# {color:#000000}Last step Clear your browser cache{color}
+
+h3. I can&#39;t login to the manager after installing\!
+
+If you&#39;re redirecting back to the login screen every time, try setting this in your .htaccess file in the root of your MODx install:
+
+{code}php_value session.auto_start 0{code}
+
+
+{info}More common issues to come...{info}
+
+h2. Still Having Issues?
+
+If you&#39;re still having problems, post your error and your server environment information in [our forums here|http://modxcms.com/forums/index.php/board,378.0.html], and we&#39;ll try and address your issue as soon as possible.
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"24772617";s:3:"ver";s:1:"7";s:4:"code";s:4900:"\\
+
+{toc}
+
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions [here|Installation] for your distribution.
+* You are using at least PHP 5.1.1+, but not 5.1.6 or 5.2.0
+* You are using MySQL later than 4.1.20, but not any iteration of MySQL 5.0.51 (including 5.0.51a).
+
+h2. PDO Error Messages
+
+If you are getting PDO-related error messages during install, before proceeding to specific error messages as below, please confirm that your PDO configuration is setup correctly. You can do so by running this code (replace user/password/database/host with your setup):
+
+{code}&lt;?php
+/* Connect to an ODBC database using driver invocation */
+$dsn = &#39;mysql:dbname=testdb;host=localhost&#39;;
+$user = &#39;dbuser&#39;;
+$password = &#39;dbpass&#39;;
+
+try {
+  $dbh = new PDO($dsn, $user, $password);
+} catch (PDOException $e) {
+  echo &#39;Connection failed: &#39; . $e-&gt;getMessage();
+}
+?&gt;
+{code}
+If this fails, then your PDO setup is not configured correctly.
+
+h2. Common Error Messages
+
+Here are some common problems that might occur during installation and their solutions:
+
+h3. &quot;I get a blank white screen instead of the options page\!&quot;
+
+You probably copied config.inc.tpl to config.inc.php, which is incorrect. Make the config.inc.php file an empty, writable file.
+
+If you renamed the config.inc.tpl to config.inc.php, rename it back to config.inc.tpl and create a blank file named config.inc.php that is writable.
+
+h3. &quot;I clicked install and got a blank white screen\!&quot;
+
+Make sure your &#39;memory_limit&#39; setting in php.ini is set to at least 32M. For slower servers, you might need to up it to 64M.
+
+h3. &quot;Cannot connect to database&quot; in the database options page
+
+One of the common causes of this problem is that you&#39;re using a non-standard port for MySQL. Try putting this syntax into the hostname field (replacing the data with your mysql server&#39;s host and port):
+
+{quote}my.database.com;port=3307{quote}
+
+h3. Warning: PDO::__construct() \[pdo.--construct\]: \[2002\] Argument invalid (trying to connect via unix://) OR &quot;Checking database:Could not connect to the mysql server.&quot;
+
+This means your MySQL socket is incorrectly configured. Usually this can be remedied by adding to (or updating) your php.ini:
+
+{code}mysql.default_socket=/path/to/my/mysql.sock
+mysqli.default_socket=/path/to/my/mysql.sock
+pdo_mysql.default_socket=/path/to/my/mysql.sock
+{code}
+
+h3. The login page keeps redirecting me back to the login screen with no error
+
+This can happen with older Revolution beta installs. To fix it, delete the following 3 system settings from the DB table `[prefix]\_system_settings` (where prefix is your table prefix):
+
+* session_name
+* session_cookie_path
+* session_cookie_domain
+
+Then delete the core/cache/config.cache.php file.
+
+Unless, of course, you&#39;ve changed these explicitly for some purpose of your own.
+
+h3. Things sometimes don&#39;t load, the page flakes out, etc (eAccelerator)
+
+Are you running eAccelerator? In some server configurations, this can cause problems. You might need to disable it. You can do so via your php.ini:
+
+{code}eaccelerator.enable = 0;
+eaccelerator.optimizer = 0;
+eaccelerator.debug = 0;
+{code}
+or in your .htaccess in the modx root directory, if your server supports php_flag server directives:
+
+{code}php_flag eaccelerator.enable 0
+php_flag eaccelerator.optimizer 0
+php_flag eaccelerator.debug 0
+{code}
+
+{note}Additional, page &quot;flake outs&quot; may stem from items stored within your own browser&#39;s cache, which may result with the resource / elements / file tree not appearing due to old versions of javascript and other files being utilized on the client side.&amp;nbsp; This can be verified by accessing the manager with a browser not previously utilized in doing so.&amp;nbsp;
+
+The simple fix: clear your browser&#39;s cache, and log back into the manager.
+
+A more complete solution:&amp;nbsp;
+# {color:#000000}Under System Clear Cache{color}
+# {color:#000000}Under Security Flush Permissions and then Flush Sessions{color}
+# [|#wshawn]{color:#000000}This will dump everything and log you out{color}
+# {color:#000000}Last step Clear your browser cache{color}{note}
+
+h3. I can&#39;t login to the manager after installing\!
+
+If you&#39;re redirecting back to the login screen every time, try setting this in your .htaccess file in the root of your MODx install:
+
+{code}php_value session.auto_start 0{code}
+
+
+{info}More common issues to come...{info}
+
+h2. Still Having Issues?
+
+If you&#39;re still having problems, post your error and your server environment information in [our forums here|http://modxcms.com/forums/index.php/board,378.0.html], and we&#39;ll try and address your issue as soon as possible.
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"24772615";s:3:"ver";s:1:"6";s:4:"code";s:4597:"\\
+
+{toc}
+
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions [here|Installation] for your distribution.
+* You are using at least PHP 5.1.1+, but not 5.1.6 or 5.2.0
+* You are using MySQL later than 4.1.20, but not any iteration of MySQL 5.0.51 (including 5.0.51a).
+
+h2. PDO Error Messages
+
+If you are getting PDO-related error messages during install, before proceeding to specific error messages as below, please confirm that your PDO configuration is setup correctly. You can do so by running this code (replace user/password/database/host with your setup):
+
+{code}&lt;?php
+/* Connect to an ODBC database using driver invocation */
+$dsn = &#39;mysql:dbname=testdb;host=localhost&#39;;
+$user = &#39;dbuser&#39;;
+$password = &#39;dbpass&#39;;
+
+try {
+  $dbh = new PDO($dsn, $user, $password);
+} catch (PDOException $e) {
+  echo &#39;Connection failed: &#39; . $e-&gt;getMessage();
+}
+?&gt;
+{code}
+If this fails, then your PDO setup is not configured correctly.
+
+h2. Common Error Messages
+
+Here are some common problems that might occur during installation and their solutions:
+
+h3. &quot;I get a blank white screen instead of the options page\!&quot;
+
+You probably copied config.inc.tpl to config.inc.php, which is incorrect. Make the config.inc.php file an empty, writable file.
+
+If you renamed the config.inc.tpl to config.inc.php, rename it back to config.inc.tpl and create a blank file named config.inc.php that is writable.
+
+h3. &quot;I clicked install and got a blank white screen\!&quot;
+
+Make sure your &#39;memory_limit&#39; setting in php.ini is set to at least 32M. For slower servers, you might need to up it to 64M.
+
+h3. &quot;Cannot connect to database&quot; in the database options page
+
+One of the common causes of this problem is that you&#39;re using a non-standard port for MySQL. Try putting this syntax into the hostname field (replacing the data with your mysql server&#39;s host and port):
+
+{quote}my.database.com;port=3307{quote}
+
+h3. Warning: PDO::__construct() \[pdo.--construct\]: \[2002\] Argument invalid (trying to connect via unix://) OR &quot;Checking database:Could not connect to the mysql server.&quot;
+
+This means your MySQL socket is incorrectly configured. Usually this can be remedied by adding to (or updating) your php.ini:
+
+{code}mysql.default_socket=/path/to/my/mysql.sock
+mysqli.default_socket=/path/to/my/mysql.sock
+pdo_mysql.default_socket=/path/to/my/mysql.sock
+{code}
+
+h3. The login page keeps redirecting me back to the login screen with no error
+
+This can happen with older Revolution beta installs. To fix it, delete the following 3 system settings from the DB table `[prefix]\_system_settings` (where prefix is your table prefix):
+
+* session_name
+* session_cookie_path
+* session_cookie_domain
+
+Then delete the core/cache/config.cache.php file.
+
+Unless, of course, you&#39;ve changed these explicitly for some purpose of your own.
+
+h3. Things sometimes don&#39;t load, the page flakes out, etc (eAccelerator)
+
+Are you running eAccelerator? In some server configurations, this can cause problems. You might need to disable it. You can do so via your php.ini:
+
+{code}eaccelerator.enable = 0;
+eaccelerator.optimizer = 0;
+eaccelerator.debug = 0;
+{code}
+or in your .htaccess in the modx root directory, if your server supports php_flag server directives:
+
+{code}php_flag eaccelerator.enable 0
+php_flag eaccelerator.optimizer 0
+php_flag eaccelerator.debug 0
+{code}
+
+{note}Additional, page &quot;flake outs&quot; may stem from items stored within your own browser&#39;s cache, which may result with the resource / elements / file tree not appearing due to old versions of javascript and other files being utilized on the client side.&amp;nbsp; This can be verified by accessing the manager with a browser not previously utilized in doing so.&amp;nbsp; The simple fix: clear your browser&#39;s cache, and log back into the manager.{note}
+
+h3. I can&#39;t login to the manager after installing\!
+
+If you&#39;re redirecting back to the login screen every time, try setting this in your .htaccess file in the root of your MODx install:
+
+{code}php_value session.auto_start 0{code}
+
+
+{info}More common issues to come...{info}
+
+h2. Still Having Issues?
+
+If you&#39;re still having problems, post your error and your server environment information in [our forums here|http://modxcms.com/forums/index.php/board,378.0.html], and we&#39;ll try and address your issue as soon as possible.
+
+{scrollbar}";}i:8;a:3:{s:2:"id";s:8:"24772613";s:3:"ver";s:1:"5";s:4:"code";s:4592:"\\
+
+{toc}
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions [here|Installation] for your distribution.
+* You are using at least PHP 5.1.1+, but not 5.1.6 or 5.2.0
+* You are using MySQL later than 4.1.20, but not any iteration of MySQL 5.0.51 (including 5.0.51a).
+
+h2. PDO Error Messages
+
+If you are getting PDO-related error messages during install, before proceeding to specific error messages as below, please confirm that your PDO configuration is setup correctly. You can do so by running this code (replace user/password/database/host with your setup):
+
+{code}&lt;?php
+/* Connect to an ODBC database using driver invocation */
+$dsn = &#39;mysql:dbname=testdb;host=127.0.0.1&#39;;
+$user = &#39;dbuser&#39;;
+$password = &#39;dbpass&#39;;
+
+try {
+  $dbh = new PDO($dsn, $user, $password);
+} catch (PDOException $e) {
+  echo &#39;Connection failed: &#39; . $e-&gt;getMessage();
+}
+?&gt;
+{code}
+If this fails, then your PDO setup is not configured correctly.
+
+h2. Common Error Messages
+
+Here are some common problems that might occur during installation and their solutions:
+
+h3. &quot;I get a blank white screen instead of the options page\!&quot;
+
+You probably copied config.inc.tpl to config.inc.php, which is incorrect. Make the config.inc.php file an empty, writable file.
+
+If you renamed the config.inc.tpl to config.inc.php, rename it back to config.inc.tpl and create a blank file named config.inc.php that is writable.
+
+h3. &quot;I clicked install and got a blank white screen\!&quot;
+
+Make sure your &#39;memory_limit&#39; setting in php.ini is set to at least 32M. For slower servers, you might need to up it to 64M.
+
+h3. &quot;Cannot connect to database&quot; in the database options page
+
+One of the common causes of this problem is that you&#39;re using a non-standard port for MySQL. Try putting this syntax into the hostname field (replacing the data with your mysql server&#39;s host and port):
+
+{quote}my.database.com;port=3307{quote}
+h3. Warning: PDO::__construct() \[pdo.--construct\]: \[2002\] Argument invalid (trying to connect via unix://) OR &quot;Checking database:Could not connect to the mysql server.&quot;
+
+This means your MySQL socket is incorrectly configured. Usually this can be remedied by adding to (or updating) your php.ini:
+
+{code}mysql.default_socket=/path/to/my/mysql.sock
+mysqli.default_socket=/path/to/my/mysql.sock
+pdo_mysql.default_socket=/path/to/my/mysql.sock
+{code}
+h3. The login page keeps redirecting me back to the login screen with no error
+
+This can happen with older Revolution beta installs. To fix it, delete the following 3 system settings from the DB table `[prefix]\_system_settings` (where prefix is your table prefix):
+
+* session_name
+* session_cookie_path
+* session_cookie_domain
+
+Then delete the core/cache/config.cache.php file.
+
+Unless, of course, you&#39;ve changed these explicitly for some purpose of your own.
+
+h3. Things sometimes don&#39;t load, the page flakes out, etc (eAccelerator)
+
+Are you running eAccelerator? In some server configurations, this can cause problems. You might need to disable it. You can do so via your php.ini:
+
+{code}eaccelerator.enable = 0;
+eaccelerator.optimizer = 0;
+eaccelerator.debug = 0;
+{code}
+or in your .htaccess in the modx root directory, if your server supports php_flag server directives:
+
+{code}php_flag eaccelerator.enable 0
+php_flag eaccelerator.optimizer 0
+php_flag eaccelerator.debug 0
+{code}
+
+{note}Additional, page &quot;flake outs&quot; may stem from items stored within your own browser&#39;s cache, which may result with the resource / elements / file tree not appearing due to old versions of javascript and other files being utilized on the client side.&amp;nbsp; This can be verified by accessing the manager with a browser not previously utilized in doing so.&amp;nbsp; The simple fix: clear your browser&#39;s cache, and log back into the manager.{note}
+
+h3. I can&#39;t login to the manager after installing!
+
+If you&#39;re redirecting back to the login screen every time, try setting this in your .htaccess file in the root of your MODx install:
+
+{code}php_value session.auto_start 0{code}
+
+
+{info}More common issues to come...{info}
+h2. Still Having Issues?
+
+If you&#39;re still having problems, post your error and your server environment information in [our forums here|http://modxcms.com/forums/index.php/board,378.0.html], and we&#39;ll try and address your issue as soon as possible.
+
+{scrollbar}";}i:9;a:3:{s:2:"id";s:8:"20578313";s:3:"ver";s:1:"4";s:4:"code";s:4888:"\\
+
+{toc}
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions [here|Installation] for your distribution.
+* You are using at least PHP 5.1.1+, but not 5.1.6 or 5.2.0
+* You are using MySQL later than 4.1.20, but not any iteration of MySQL 5.0.51 (including 5.0.51a).
+
+h2. PDO Error Messages
+
+If you are getting PDO-related error messages during install, before proceeding to specific error messages as below, please confirm that your PDO configuration is setup correctly. You can do so by running this code (replace user/password/database/host with your setup):
+
+{code}&lt;?php
+/* Connect to an ODBC database using driver invocation */
+$dsn = &#39;mysql:dbname=testdb;host=127.0.0.1&#39;;
+$user = &#39;dbuser&#39;;
+$password = &#39;dbpass&#39;;
+
+try {
+  $dbh = new PDO($dsn, $user, $password);
+} catch (PDOException $e) {
+  echo &#39;Connection failed: &#39; . $e-&gt;getMessage();
+}
+?&gt;
+{code}
+If this fails, then your PDO setup is not configured correctly.
+
+h2. Common Error Messages
+
+Here are some common problems that might occur during installation and their solutions:
+
+h3. Notice: Undefined index: HTTPS in .../setup/index.php on line 44
+
+If running a server with E_NOTICE set to true, you will have to apply the patch described here: [http://svn.modxcms.com/jira/browse/MODX-1778], or edit your php.ini settings to set the error_reporting to at least \~E_NOTICE.
+
+h3. &quot;I get a blank white screen instead of the options page\!&quot;
+
+You probably copied config.inc.tpl to config.inc.php, which is incorrect. Make the config.inc.php file an empty, writable file.
+
+If you renamed the config.inc.tpl to config.inc.php, rename it back to config.inc.tpl and create a blank file named config.inc.php that is writable.
+
+h3. &quot;I clicked install and got a blank white screen\!&quot;
+
+Make sure your &#39;memory_limit&#39; setting in php.ini is set to at least 32M. For slower servers, you might need to up it to 64M.
+
+h3. &quot;Cannot connect to database&quot; in the database options page
+
+One of the common causes of this problem is that you&#39;re using a non-standard port for MySQL. Try putting this syntax into the hostname field (replacing the data with your mysql server&#39;s host and port):
+
+{quote}my.database.com;port=3307{quote}
+h3. Warning: PDO::__construct() \[pdo.--construct\]: \[2002\] Argument invalid (trying to connect via unix://) OR &quot;Checking database:Could not connect to the mysql server.&quot;
+
+This means your MySQL socket is incorrectly configured. Usually this can be remedied by adding to (or updating) your php.ini:
+
+{code}mysql.default_socket=/path/to/my/mysql.sock
+mysqli.default_socket=/path/to/my/mysql.sock
+pdo_mysql.default_socket=/path/to/my/mysql.sock
+{code}
+h3. The login page keeps redirecting me back to the login screen with no error
+
+This can happen with older Revolution beta installs. To fix it, delete the following 3 system settings from the DB table `[prefix]\_system_settings` (where prefix is your table prefix):
+
+* session_name
+* session_cookie_path
+* session_cookie_domain
+
+Then delete the core/cache/config.cache.php file.
+
+Unless, of course, you&#39;ve changed these explicitly for some purpose of your own.
+
+h3. Things sometimes don&#39;t load, the page flakes out, etc (eAccelerator)
+
+Are you running eAccelerator? In some server configurations, this can cause problems. You might need to disable it. You can do so via your php.ini:
+
+{code}eaccelerator.enable = 0;
+eaccelerator.optimizer = 0;
+eaccelerator.debug = 0;
+{code}
+or in your .htaccess in the modx root directory, if your server supports php_flag server directives:
+
+{code}php_flag eaccelerator.enable 0
+php_flag eaccelerator.optimizer 0
+php_flag eaccelerator.debug 0
+{code}
+
+{note}Additional, page &quot;flake outs&quot; may stem from items stored within your own browser&#39;s cache, which may result with the resource / elements / file tree not appearing due to old versions of javascript and other files being utilized on the client side.&amp;nbsp; This can be verified by accessing the manager with a browser not previously utilized in doing so.&amp;nbsp; The simple fix: clear your browser&#39;s cache, and log back into the manager.{note}
+
+h3. I can&#39;t login to the manager after installing!
+
+If you&#39;re redirecting back to the login screen every time, try setting this in your .htaccess file in the root of your MODx install:
+
+{code}php_value session.auto_start 0{code}
+
+
+{info}More common issues to come...{info}
+h2. Still Having Issues?
+
+If you&#39;re still having problems, post your error and your server environment information in [our forums here|http://modxcms.com/forums/index.php/board,378.0.html], and we&#39;ll try and address your issue as soon as possible.
+
+{scrollbar}";}i:10;a:3:{s:2:"id";s:8:"18678605";s:3:"ver";s:1:"3";s:4:"code";s:4650:"\\
+
+{toc}
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions [here|Installation] for your distribution.
+* You are using at least PHP 5.1.1+, but not 5.1.6 or 5.2.0
+* You are using MySQL later than 4.1.20, but not any iteration of MySQL 5.0.51 (including 5.0.51a).
+
+h2. PDO Error Messages
+
+If you are getting PDO-related error messages during install, before proceeding to specific error messages as below, please confirm that your PDO configuration is setup correctly. You can do so by running this code (replace user/password/database/host with your setup):
+
+{code}&lt;?php
+/* Connect to an ODBC database using driver invocation */
+$dsn = &#39;mysql:dbname=testdb;host=127.0.0.1&#39;;
+$user = &#39;dbuser&#39;;
+$password = &#39;dbpass&#39;;
+
+try {
+  $dbh = new PDO($dsn, $user, $password);
+} catch (PDOException $e) {
+  echo &#39;Connection failed: &#39; . $e-&gt;getMessage();
+}
+?&gt;
+{code}
+If this fails, then your PDO setup is not configured correctly.
+
+h2. Common Error Messages
+
+Here are some common problems that might occur during installation and their solutions:
+
+h3. Notice: Undefined index: HTTPS in .../setup/index.php on line 44
+
+If running a server with E_NOTICE set to true, you will have to apply the patch described here: [http://svn.modxcms.com/jira/browse/MODX-1778], or edit your php.ini settings to set the error_reporting to at least \~E_NOTICE.
+
+h3. &quot;I get a blank white screen instead of the options page\!&quot;
+
+You probably copied config.inc.tpl to config.inc.php, which is incorrect. Make the config.inc.php file an empty, writable file.
+
+If you renamed the config.inc.tpl to config.inc.php, rename it back to config.inc.tpl and create a blank file named config.inc.php that is writable.
+
+h3. &quot;I clicked install and got a blank white screen\!&quot;
+
+Make sure your &#39;memory_limit&#39; setting in php.ini is set to at least 32M. For slower servers, you might need to up it to 64M.
+
+h3. &quot;Cannot connect to database&quot; in the database options page
+
+One of the common causes of this problem is that you&#39;re using a non-standard port for MySQL. Try putting this syntax into the hostname field (replacing the data with your mysql server&#39;s host and port):
+
+{quote}my.database.com;port=3307{quote}
+h3. Warning: PDO::__construct() \[pdo.--construct\]: \[2002\] Argument invalid (trying to connect via unix://) OR &quot;Checking database:Could not connect to the mysql server.&quot;
+
+This means your MySQL socket is incorrectly configured. Usually this can be remedied by adding to (or updating) your php.ini:
+
+{code}mysql.default_socket=/path/to/my/mysql.sock
+mysqli.default_socket=/path/to/my/mysql.sock
+pdo_mysql.default_socket=/path/to/my/mysql.sock
+{code}
+h3. The login page keeps redirecting me back to the login screen with no error
+
+This can happen with older Revolution beta installs. To fix it, delete the following 3 system settings from the DB table `[prefix]\_system_settings` (where prefix is your table prefix):
+
+* session_name
+* session_cookie_path
+* session_cookie_domain
+
+Then delete the core/cache/config.cache.php file.
+
+Unless, of course, you&#39;ve changed these explicitly for some purpose of your own.
+
+h3. Things sometimes don&#39;t load, the page flakes out, etc (eAccelerator)
+
+Are you running eAccelerator? In some server configurations, this can cause problems. You might need to disable it. You can do so via your php.ini:
+
+{code}eaccelerator.enable = 0;
+eaccelerator.optimizer = 0;
+eaccelerator.debug = 0;
+{code}
+or in your .htaccess in the modx root directory, if your server supports php_flag server directives:
+
+{code}php_flag eaccelerator.enable 0
+php_flag eaccelerator.optimizer 0
+php_flag eaccelerator.debug 0
+{code}
+
+{note}Additional, page &quot;flake outs&quot; may stem from items stored within your own browser&#39;s cache, which may result with the resource / elements / file tree not appearing due to old versions of javascript and other files being utilized on the client side.&amp;nbsp; This can be verified by accessing the manager with a browser not previously utilized in doing so.&amp;nbsp; The simple fix: clear your browser&#39;s cache, and log back into the manager.{note}
+
+
+{info}More common issues to come...{info}
+h2. Still Having Issues?
+
+If you&#39;re still having problems, post your error and your server environment information in [our forums here|http://modxcms.com/forums/index.php/board,378.0.html], and we&#39;ll try and address your issue as soon as possible.
+
+{scrollbar}";}i:11;a:3:{s:2:"id";s:8:"18678543";s:3:"ver";s:1:"2";s:4:"code";s:4639:"\\
+
+{toc}
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions [here|Installation] for your distribution.
+* You are using at least PHP 5.1.1+, but not 5.1.6 or 5.2.0
+* You are using MySQL 4.1.20, but not any iteration of MySQL 5.0.51 (including 5.0.51a).
+
+h2. PDO Error Messages
+
+If you are getting PDO-related error messages during install, before proceeding to specific error messages as below, please confirm that your PDO configuration is setup correctly. You can do so by running this code (replace user/password/database/host with your setup):
+
+{code}&lt;?php
+/* Connect to an ODBC database using driver invocation */
+$dsn = &#39;mysql:dbname=testdb;host=127.0.0.1&#39;;
+$user = &#39;dbuser&#39;;
+$password = &#39;dbpass&#39;;
+
+try {
+  $dbh = new PDO($dsn, $user, $password);
+} catch (PDOException $e) {
+  echo &#39;Connection failed: &#39; . $e-&gt;getMessage();
+}
+?&gt;
+{code}
+If this fails, then your PDO setup is not configured correctly.
+
+h2. Common Error Messages
+
+Here are some common problems that might occur during installation and their solutions:
+
+h3. Notice: Undefined index: HTTPS in .../setup/index.php on line 44
+
+If running a server with E_NOTICE set to true, you will have to apply the patch described here: [http://svn.modxcms.com/jira/browse/MODX-1778], or edit your php.ini settings to set the error_reporting to at least \~E_NOTICE.
+
+h3. &quot;I get a blank white screen instead of the options page\!&quot;
+
+You probably copied config.inc.tpl to config.inc.php, which is incorrect. Make the config.inc.php file an empty, writable file.
+
+If you renamed the config.inc.tpl to config.inc.php, rename it back to config.inc.tpl and create a blank file named config.inc.php that is writable.
+
+h3. &quot;I clicked install and got a blank white screen\!&quot;
+
+Make sure your &#39;memory_limit&#39; setting in php.ini is set to at least 32M. For slower servers, you might need to up it to 64M.
+
+h3. &quot;Cannot connect to database&quot; in the database options page
+
+One of the common causes of this problem is that you&#39;re using a non-standard port for MySQL. Try putting this syntax into the hostname field (replacing the data with your mysql server&#39;s host and port):
+
+{quote}my.database.com;port=3307{quote}
+h3. Warning: PDO::__construct() \[pdo.--construct\]: \[2002\] Argument invalid (trying to connect via unix://) OR &quot;Checking database:Could not connect to the mysql server.&quot;
+
+This means your MySQL socket is incorrectly configured. Usually this can be remedied by adding to (or updating) your php.ini:
+
+{code}mysql.default_socket=/path/to/my/mysql.sock
+mysqli.default_socket=/path/to/my/mysql.sock
+pdo_mysql.default_socket=/path/to/my/mysql.sock
+{code}
+h3. The login page keeps redirecting me back to the login screen with no error
+
+This can happen with older Revolution beta installs. To fix it, delete the following 3 system settings from the DB table `[prefix]\_system_settings` (where prefix is your table prefix):
+
+* session_name
+* session_cookie_path
+* session_cookie_domain
+
+Then delete the core/cache/config.cache.php file.
+
+Unless, of course, you&#39;ve changed these explicitly for some purpose of your own.
+
+h3. Things sometimes don&#39;t load, the page flakes out, etc (eAccelerator)
+
+Are you running eAccelerator? In some server configurations, this can cause problems. You might need to disable it. You can do so via your php.ini:
+
+{code}eaccelerator.enable = 0;
+eaccelerator.optimizer = 0;
+eaccelerator.debug = 0;
+{code}
+or in your .htaccess in the modx root directory, if your server supports php_flag server directives:
+
+{code}php_flag eaccelerator.enable 0
+php_flag eaccelerator.optimizer 0
+php_flag eaccelerator.debug 0
+{code}
+
+{note}Additional, page &quot;flake outs&quot; may stem from items stored within your own browser&#39;s cache, which may result with the resource / elements / file tree not appearing due to old versions of javascript and other files being utilized on the client side.&amp;nbsp; This can be verified by accessing the manager with a browser not previously utilized in doing so.&amp;nbsp; The simple fix: clear your browser&#39;s cache, and log back into the manager.{note}
+
+
+{info}More common issues to come...{info}
+h2. Still Having Issues?
+
+If you&#39;re still having problems, post your error and your server environment information in [our forums here|http://modxcms.com/forums/index.php/board,378.0.html], and we&#39;ll try and address your issue as soon as possible.
+
+{scrollbar}";}i:12;a:3:{s:2:"id";s:8:"18678542";s:3:"ver";s:1:"1";s:4:"code";s:4603:"\\
+
+{toc}
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions [here|Fresh Installation].
+* You are using at least PHP 5.1.1+, but not 5.1.6 or 5.2.0
+* You are using MySQL 4.1.20, but not any iteration of MySQL 5.0.51.
+
+h2. PDO Error Messages
+
+If you are getting PDO-related error messages during install, before proceeding to specific error messages as below, please confirm that your PDO configuration is setup correctly. You can do so by running this code (replace user/password/database/host with your setup):
+
+{code}&lt;?php
+/* Connect to an ODBC database using driver invocation */
+$dsn = &#39;mysql:dbname=testdb;host=127.0.0.1&#39;;
+$user = &#39;dbuser&#39;;
+$password = &#39;dbpass&#39;;
+
+try {
+  $dbh = new PDO($dsn, $user, $password);
+} catch (PDOException $e) {
+  echo &#39;Connection failed: &#39; . $e-&gt;getMessage();
+}
+?&gt;
+{code}
+If this fails, then your PDO setup is not configured correctly.
+
+h2. Common Error Messages
+
+Here are some common problems that might occur during installation and their solutions:
+
+h3. Notice: Undefined index: HTTPS in .../setup/index.php on line 44
+
+If running a server with E_NOTICE set to true, you will have to apply the patch described here: [http://svn.modxcms.com/jira/browse/MODX-1778], or edit your php.ini settings to set the error_reporting to at least \~E_NOTICE.
+
+h3. &quot;I get a blank white screen instead of the options page\!&quot;
+
+You probably copied config.inc.tpl to config.inc.php, which is incorrect. Make the config.inc.php file an empty, writable file.
+
+If you renamed the config.inc.tpl to config.inc.php, rename it back to config.inc.tpl and create a blank file named config.inc.php that is writable.
+
+h3. &quot;I clicked install and got a blank white screen\!&quot;
+
+Make sure your &#39;memory_limit&#39; setting in php.ini is set to at least 32M. For slower servers, you might need to up it to 64M.
+
+h3. &quot;Cannot connect to database&quot; in the database options page
+
+One of the common causes of this problem is that you&#39;re using a non-standard port for MySQL. Try putting this syntax into the hostname field (replacing the data with your mysql server&#39;s host and port):
+
+{quote}my.database.com;port=3307{quote}
+h3. Warning: PDO::__construct() \[pdo.--construct\]: \[2002\] Argument invalid (trying to connect via unix://) OR &quot;Checking database:Could not connect to the mysql server.&quot;
+
+This means your MySQL socket is incorrectly configured. Usually this can be remedied by adding to (or updating) your php.ini:
+
+{code}mysql.default_socket=/path/to/my/mysql.sock
+mysqli.default_socket=/path/to/my/mysql.sock
+pdo_mysql.default_socket=/path/to/my/mysql.sock
+{code}
+h3. The login page keeps redirecting me back to the login screen with no error
+
+This can happen with older Revolution beta installs. To fix it, delete the following 3 system settings from the DB table `[prefix]\_system_settings` (where prefix is your table prefix):
+
+* session_name
+* session_cookie_path
+* session_cookie_domain
+
+Then delete the core/cache/config.cache.php file.
+
+Unless, of course, you&#39;ve changed these explicitly for some purpose of your own.
+
+h3. Things sometimes don&#39;t load, the page flakes out, etc (eAccelerator)
+
+Are you running eAccelerator? In some server configurations, this can cause problems. You might need to disable it. You can do so via your php.ini:
+
+{code}eaccelerator.enable = 0;
+eaccelerator.optimizer = 0;
+eaccelerator.debug = 0;
+{code}
+or in your .htaccess in the modx root directory, if your server supports php_flag server directives:
+
+{code}php_flag eaccelerator.enable 0
+php_flag eaccelerator.optimizer 0
+php_flag eaccelerator.debug 0
+{code}
+
+{note}Additional, page &quot;flake outs&quot; may stem from items stored within your own browser&#39;s cache, which may result with the resource / elements / file tree not appearing due to old versions of javascript and other files being utilized on the client side.&amp;nbsp; This can be verified by accessing the manager with a browser not previously utilized in doing so.&amp;nbsp; The simple fix: clear your browser&#39;s cache, and log back into the manager.{note}
+
+
+{info}More common issues to come...{info}
+h2. Still Having Issues?
+
+If you&#39;re still having problems, post your error and your server environment information in [our forums here|http://modxcms.com/forums/index.php/board,378.0.html], and we&#39;ll try and address your issue as soon as possible.
+
+{scrollbar}";}}}

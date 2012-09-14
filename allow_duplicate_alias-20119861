@@ -1,0 +1,36 @@
+a:5:{s:2:"id";s:8:"20119861";s:4:"info";a:4:{s:6:"Title:";s:21:"allow_duplicate_alias";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:36:"[revolution20:allow_duplicate_alias]";}s:6:"parent";s:8:"18678127";s:6:"source";s:317:"h2. allow_duplicate_alias
+
+*Name*: Allow Duplicate Aliases
+*Type*: Yes/No
+*Default*: No
+
+If set to &#39;yes&#39;, this will allow duplicate aliases to be saved. 
+
+{note}This option should be used with [use_alias_path] set to &#39;Yes&#39; in order to avoid problems when referencing a resource.{note}
+\\
+
+{scrollbar}
+";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"20119861";s:3:"ver";s:1:"2";s:4:"code";s:317:"h2. allow_duplicate_alias
+
+*Name*: Allow Duplicate Aliases
+*Type*: Yes/No
+*Default*: No
+
+If set to &#39;yes&#39;, this will allow duplicate aliases to be saved. 
+
+{note}This option should be used with [use_alias_path] set to &#39;Yes&#39; in order to avoid problems when referencing a resource.{note}
+\\
+
+{scrollbar}
+";}i:1;a:3:{s:2:"id";s:8:"20119862";s:3:"ver";s:1:"1";s:4:"code";s:316:"h2. allow_duplicate_alias
+
+*Name*: Allow Duplicate Aliases
+*Type*: Yes/No
+*Default*: No
+
+If set to &#39;yes&#39;, this will allow duplicate aliases to be saved. 
+
+{note}This option should be used with [use_alias_path] set to \&#39;Yes\&#39; in order to avoid problems when referencing a resource.{note}
+
+{scrollbar}
+";}}}

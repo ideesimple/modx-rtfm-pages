@@ -1,0 +1,101 @@
+a:5:{s:2:"id";s:8:"18678065";s:4:"info";a:4:{s:6:"Title:";s:23:"Using Resource Symlinks";s:7:"Author:";s:18:"W. Shawn Wilkerson";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:38:"[revolution20:Using Resource Symlinks]";}s:6:"parent";s:8:"18678066";s:6:"source";s:1776:"\\
+
+h1. Understanding a Symlink
+
+A MODx Revolution symlink simply takes the content of one resource and displays it in another.  You can add a new template or what ever changes you may want to the symlink, and you can place it anywhere within the site,&amp;nbsp; but you can not add additional content to it. You can create multiple Symlinks that point to the same resource, but each Symlink will have its own unique URL. Another way to think of this feature is to imagine that you have added a normal resource to MODx, but you&#39;ve pasted a Snippet into the content -- the Snippet grabs only the content from the other page. 
+
+h3. How do I use this feature?
+
+1) Create the symlink with a name, an alias and a reference to the &quot;master&quot; document itself.&amp;nbsp;
+2) If you do not see it \-\- try clearing the site cache / document cache.
+
+h3. Example:
+
+!Revolution_Symlink.png|align=center!
+
+For my site this example would feed the contents of my college degrees page to the me.html
+
+h3. Why Symlink?
+
+* A document needs moved in the structure and google has it listed at the old location
+* A document may actually and logically belong in more than one place in a site
+* You quickly and simply want to provide a short and simple url to a document located many levels deep in a site
+* You want to deal with various spellings of a document: foursquare, 4square, forsquare and have them all point to the same content (each of these would be a separate symlink)
+* Most web site host control panels allow for subdomains.&amp;nbsp; By creating a subdomain in the control panel and then a symlink in the root of the website to content burried further down, you could create a &quot;doorway&quot; page or a fast means to getting to a group of related content.
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678065";s:3:"ver";s:1:"3";s:4:"code";s:1776:"\\
+
+h1. Understanding a Symlink
+
+A MODx Revolution symlink simply takes the content of one resource and displays it in another.  You can add a new template or what ever changes you may want to the symlink, and you can place it anywhere within the site,&amp;nbsp; but you can not add additional content to it. You can create multiple Symlinks that point to the same resource, but each Symlink will have its own unique URL. Another way to think of this feature is to imagine that you have added a normal resource to MODx, but you&#39;ve pasted a Snippet into the content -- the Snippet grabs only the content from the other page. 
+
+h3. How do I use this feature?
+
+1) Create the symlink with a name, an alias and a reference to the &quot;master&quot; document itself.&amp;nbsp;
+2) If you do not see it \-\- try clearing the site cache / document cache.
+
+h3. Example:
+
+!Revolution_Symlink.png|align=center!
+
+For my site this example would feed the contents of my college degrees page to the me.html
+
+h3. Why Symlink?
+
+* A document needs moved in the structure and google has it listed at the old location
+* A document may actually and logically belong in more than one place in a site
+* You quickly and simply want to provide a short and simple url to a document located many levels deep in a site
+* You want to deal with various spellings of a document: foursquare, 4square, forsquare and have them all point to the same content (each of these would be a separate symlink)
+* Most web site host control panels allow for subdomains.&amp;nbsp; By creating a subdomain in the control panel and then a symlink in the root of the website to content burried further down, you could create a &quot;doorway&quot; page or a fast means to getting to a group of related content.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33947663";s:3:"ver";s:1:"2";s:4:"code";s:1569:"\\
+
+h1. Understanding a Symlink
+
+A MODx Revolution symlink simply takes the content of one resource and displays it in another.  You can add a new template or what ever changes you may want to the symlink, and you can place it anywhere within the site,&amp;nbsp; but you can not add additional content to it. You can create multiple Symlinks that point to the same resource, but each Symlink will have its own unique URL.
+
+h3. How do I use this feature?
+
+1) Create the symlink with a name, an alias and a reference to the &quot;master&quot; document itself.&amp;nbsp;
+2) If you do not see it \-\- try clearing the site cache / document cache.
+
+h3. Example:
+
+!Revolution_Symlink.png|align=center!
+
+For my site this example would feed the contents of my college degrees page to the me.html
+
+h3. Why Symlink?
+
+* A document needs moved in the structure and google has it listed at the old location
+* A document may actually and logically belong in more than one place in a site
+* You quickly and simply want to provide a short and simple url to a document located many levels deep in a site
+* You want to deal with various spellings of a document: foursquare, 4square, forsquare and have them all point to the same content (each of these would be a separate symlink)
+* Most web site host control panels allow for subdomains.&amp;nbsp; By creating a subdomain in the control panel and then a symlink in the root of the website to content burried further down, you could create a &quot;doorway&quot; page or a fast means to getting to a group of related content.
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"33947661";s:3:"ver";s:1:"1";s:4:"code";s:1465:"\\
+
+h1. Understanding a Symlink
+
+A MODx Revolution symlink simply takes the content of one resource and displays it in another.&amp;nbsp; You can add a new template or what ever changes you may want to the symlink, and you can place it anywhere within the site,&amp;nbsp; but you can not add additional content to it.
+
+h3. How do I use this feature?
+
+1) Create the symlink with a name, an alias and a reference to the &quot;master&quot; document itself.&amp;nbsp;
+2) If you do not see it \-\- try clearing the site cache / document cache.
+
+h3. Example:
+
+!Revolution_Symlink.png|align=center!
+
+For my site this example would feed the contents of my college degrees page to the me.html
+
+h3. Why Symlink?
+
+* A document needs moved in the structure and google has it listed at the old location
+* A document may actually and logically belong in more than one place in a site
+* You quickly and simply want to provide a short and simple url to a document located many levels deep in a site
+* You want to deal with various spellings of a document: foursquare, 4square, forsquare and have them all point to the same content (each of these would be a separate symlink)
+* Most web site host control panels allow for subdomains.&amp;nbsp; By creating a subdomain in the control panel and then a symlink in the root of the website to content burried further down, you could create a &quot;doorway&quot; page or a fast means to getting to a group of related content.
+
+{scrollbar}";}}}

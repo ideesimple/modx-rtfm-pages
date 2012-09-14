@@ -1,0 +1,17 @@
+a:5:{s:2:"id";s:8:"20119839";s:4:"info";a:4:{s:6:"Title:";s:23:"custom_resource_classes";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:38:"[revolution20:custom_resource_classes]";}s:6:"parent";s:8:"18678127";s:6:"source";s:531:"h2. custom_resource_classes
+
+*Name*: Custom Resource Classes
+*Type*: String
+*Default*: 
+
+A comma-separated list of custom Resource classes. Specify with lowercase_lexicon_key:className (Ex: wiki_resource:WikiResource). All custom Resource classes must extend modResource. To specify the controller location for each class, add a setting with \[nameOfClassLowercase\]_delegate_path with the directory path of the create/update php files. Ex: wikiresource_delegate_path for a class WikiResource that extends modResource.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"20119839";s:3:"ver";s:1:"1";s:4:"code";s:531:"h2. custom_resource_classes
+
+*Name*: Custom Resource Classes
+*Type*: String
+*Default*: 
+
+A comma-separated list of custom Resource classes. Specify with lowercase_lexicon_key:className (Ex: wiki_resource:WikiResource). All custom Resource classes must extend modResource. To specify the controller location for each class, add a setting with \[nameOfClassLowercase\]_delegate_path with the directory path of the create/update php files. Ex: wikiresource_delegate_path for a class WikiResource that extends modResource.
+
+{scrollbar}";}}}

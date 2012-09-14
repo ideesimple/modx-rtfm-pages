@@ -1,0 +1,61 @@
+a:5:{s:2:"id";s:8:"18678366";s:4:"info";a:4:{s:6:"Title:";s:20:"modX.setPlaceholders";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:10:"Ben Carney";s:12:"Wiki Markup:";s:35:"[revolution20:modX.setPlaceholders]";}s:6:"parent";s:8:"18678370";s:6:"source";s:1053:"\\
+
+h2. modX::setPlaceholders
+
+Sets a collection of placeholders stored in an array or as object vars.
+An optional namespace parameter can be prepended to each placeholder key in the collection, to isolate the collection of placeholders.
+
+Note that unlike [modX.toPlaceholders], this function does not add separators between the namespace and the placeholder key. Use toPlaceholders() when working with multi-dimensional arrays or objects with variables other than scalars so each level gets delimited by a separator.
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/modx/modX.html#setPlaceholders]
+
+{code}void setPlaceholders (array|object  $placeholders, [string $namespace = &#39;&#39;])
+{code}
+h2. Example
+
+Add an array of placeholders, and prefix &#39;my.&#39; to their key.
+{code}$modx-&gt;setPlaceholders(array(
+   &#39;name&#39; =&gt; &#39;John&#39;,
+   &#39;email&#39; =&gt; &#39;jdoe@gmail.com&#39;,
+),&#39;my.&#39;);
+{code}
+h2. See Also
+
+* [modX.toPlaceholder]
+* [modX.toPlaceholders]
+* [modX.setPlaceholder]
+* [modX.getPlaceholder]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678366";s:3:"ver";s:1:"1";s:4:"code";s:1053:"\\
+
+h2. modX::setPlaceholders
+
+Sets a collection of placeholders stored in an array or as object vars.
+An optional namespace parameter can be prepended to each placeholder key in the collection, to isolate the collection of placeholders.
+
+Note that unlike [modX.toPlaceholders], this function does not add separators between the namespace and the placeholder key. Use toPlaceholders() when working with multi-dimensional arrays or objects with variables other than scalars so each level gets delimited by a separator.
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/modx/modX.html#setPlaceholders]
+
+{code}void setPlaceholders (array|object  $placeholders, [string $namespace = &#39;&#39;])
+{code}
+h2. Example
+
+Add an array of placeholders, and prefix &#39;my.&#39; to their key.
+{code}$modx-&gt;setPlaceholders(array(
+   &#39;name&#39; =&gt; &#39;John&#39;,
+   &#39;email&#39; =&gt; &#39;jdoe@gmail.com&#39;,
+),&#39;my.&#39;);
+{code}
+h2. See Also
+
+* [modX.toPlaceholder]
+* [modX.toPlaceholders]
+* [modX.setPlaceholder]
+* [modX.getPlaceholder]
+
+{scrollbar}";}}}

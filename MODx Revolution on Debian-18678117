@@ -1,0 +1,51 @@
+a:5:{s:2:"id";s:8:"18678117";s:4:"info";a:4:{s:6:"Title:";s:25:"MODx Revolution on Debian";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:40:"[revolution20:MODx Revolution on Debian]";}s:6:"parent";s:8:"18678053";s:6:"source";s:783:"\\
+
+h2. MODx Revolution on Debian
+
+Debian packages in old versions of MySQL drivers in, so to get it up-to-date and working with the PDO drivers in MODx Revolution, you&#39;ll have to do the following:
+
+# Update the server MySQL drivers. You can do this manually on debian, or use apt-get.
+# Update the client MySQL drivers. The easiest way to do this is by updating PHP, like so:
+
+{code}
+vi /etc/apt/sources.list (you can choose a different mirror):
+   deb http://packages.dotdeb.org stable all
+   deb-src http://packages.dotdeb.org stable all
+   deb http://php53.dotdeb.org stable all
+   deb-src http://php53.dotdeb.org stable all
+
+apt-get update
+apt-get upgrade php5
+
+vi /etc/php5/apache2/php.ini
+   date.timezone = Europe/Amsterdam
+
+/etc/init.d/apache2 reload
+{code}
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678117";s:3:"ver";s:1:"1";s:4:"code";s:783:"\\
+
+h2. MODx Revolution on Debian
+
+Debian packages in old versions of MySQL drivers in, so to get it up-to-date and working with the PDO drivers in MODx Revolution, you&#39;ll have to do the following:
+
+# Update the server MySQL drivers. You can do this manually on debian, or use apt-get.
+# Update the client MySQL drivers. The easiest way to do this is by updating PHP, like so:
+
+{code}
+vi /etc/apt/sources.list (you can choose a different mirror):
+   deb http://packages.dotdeb.org stable all
+   deb-src http://packages.dotdeb.org stable all
+   deb http://php53.dotdeb.org stable all
+   deb-src http://php53.dotdeb.org stable all
+
+apt-get update
+apt-get upgrade php5
+
+vi /etc/php5/apache2/php.ini
+   date.timezone = Europe/Amsterdam
+
+/etc/init.d/apache2 reload
+{code}
+
+{scrollbar}";}}}

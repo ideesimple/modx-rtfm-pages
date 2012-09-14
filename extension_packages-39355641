@@ -1,0 +1,123 @@
+a:5:{s:2:"id";s:8:"39355641";s:4:"info";a:4:{s:6:"Title:";s:18:"extension_packages";s:7:"Author:";s:17:"Everett Griffiths";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:33:"[revolution20:extension_packages]";}s:6:"parent";s:8:"22183951";s:6:"source";s:1360:"\\
+
+h2. extension_packages
+
+*Name*: Extension Packages
+*Type*: String (a JSON encoded array of key value pairs)
+*Default*: Yes
+
+Use this setting to autoload packages that extend core classes, e.g. if you are extending modUser.  The format should be a JSON array of key/value pairs where the key is the namespace (i.e. the package name) and the value is the path to its model.
+
+This effect here is similar to other frameworks, e.g. CodeIgniter, which allows core classes to be overridden via use of a special classname prefix &quot;MY_&quot;.
+
+{note}
+Use this only when you are extending core classes that are used during *initialize()*
+{note}
+
+h3. Sample value
+
+{code}
+[{&quot;extendeduser&quot;:{&quot;path&quot;:&quot;[[++core_path]]components/extendeduser/model/&quot;}},{&quot;articles&quot;:{&quot;path&quot;:&quot;[[++core_path]]components/articles/model/&quot;}}]
+{code}
+
+You can make use of the {code}[[++core_path]]{code} placeholders.
+
+h3. Another Example
+
+If your extension uses a different table prefix, you should list this in your JSON by using the *table_prefix* key, e.g.
+
+{code}
+[{&quot;extendeduser&quot;:{&quot;path&quot;:&quot;[[++core_path]]components/extendeduser/model/&quot;,&quot;table_prefix&quot;:&quot;ext_&quot;}},{&quot;articles&quot;:{&quot;path&quot;:&quot;[[++core_path]]components/articles/model/&quot;}}]
+{code}
+
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"39355641";s:3:"ver";s:1:"3";s:4:"code";s:1360:"\\
+
+h2. extension_packages
+
+*Name*: Extension Packages
+*Type*: String (a JSON encoded array of key value pairs)
+*Default*: Yes
+
+Use this setting to autoload packages that extend core classes, e.g. if you are extending modUser.  The format should be a JSON array of key/value pairs where the key is the namespace (i.e. the package name) and the value is the path to its model.
+
+This effect here is similar to other frameworks, e.g. CodeIgniter, which allows core classes to be overridden via use of a special classname prefix &quot;MY_&quot;.
+
+{note}
+Use this only when you are extending core classes that are used during *initialize()*
+{note}
+
+h3. Sample value
+
+{code}
+[{&quot;extendeduser&quot;:{&quot;path&quot;:&quot;[[++core_path]]components/extendeduser/model/&quot;}},{&quot;articles&quot;:{&quot;path&quot;:&quot;[[++core_path]]components/articles/model/&quot;}}]
+{code}
+
+You can make use of the {code}[[++core_path]]{code} placeholders.
+
+h3. Another Example
+
+If your extension uses a different table prefix, you should list this in your JSON by using the *table_prefix* key, e.g.
+
+{code}
+[{&quot;extendeduser&quot;:{&quot;path&quot;:&quot;[[++core_path]]components/extendeduser/model/&quot;,&quot;table_prefix&quot;:&quot;ext_&quot;}},{&quot;articles&quot;:{&quot;path&quot;:&quot;[[++core_path]]components/articles/model/&quot;}}]
+{code}
+
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"39355738";s:3:"ver";s:1:"2";s:4:"code";s:1359:"\\
+
+h2. extension_packages
+
+*Name*: Extension Packages
+*Type*: String (a JSON encoded array of key value pairs)
+*Default*: Yes
+
+Use this setting to autoload packages that extend core classes, e.g. if you are extending modUser.  The format should be a JSON array of key/value pairs where the key is the namespace (i.e. the package name) and the value is the path to its model.
+
+This effect here is similar to other frameworks, e.g. CodeIgniter, which allows core classes to be overridden via use of a special classname prefix &quot;MY_&quot;.
+
+h3. Sample value
+
+{code}
+[{&quot;extendeduser&quot;:{&quot;path&quot;:&quot;[[++core_path]]components/extendeduser/model/&quot;}},{&quot;articles&quot;:{&quot;path&quot;:&quot;[[++core_path]]components/articles/model/&quot;}}]
+{code}
+
+You can make use of the {code}[[++core_path]]{code} placeholders.
+
+h3. Another Example
+
+If your extension uses a different table prefix, you should list this in your JSON by using the *table_prefix* key, e.g.
+
+{code}
+[{&quot;extendeduser&quot;:{&quot;path&quot;:&quot;[[++core_path]]components/extendeduser/model/&quot;,&quot;table_prefix&quot;:&quot;ext_&quot;}},{&quot;articles&quot;:{&quot;path&quot;:&quot;[[++core_path]]components/articles/model/&quot;}}]
+{code}
+
+{note}
+Use this only when you are extending core classes that are used during *initialize()*
+{note}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"39355733";s:3:"ver";s:1:"1";s:4:"code";s:957:"\\
+
+h2. extension_packages
+
+*Name*: Extension Packages
+*Type*: String (a JSON encoded array of key value pairs)
+*Default*: Yes
+
+Use this setting to autoload packages that extend core classes, e.g. if you are extending modUser.  The format should be a JSON array of key/value pairs where the key is the namespace (i.e. the package name) and the value is the path to its model.
+
+This effect here is similar to other frameworks, e.g. CodeIgniter, which allows core classes to be overridden via use of a special classname prefix &quot;MY_&quot;.
+
+h3. Sample value
+
+{code}
+[{&quot;extendeduser&quot;:{&quot;path&quot;:&quot;[[++core_path]]components/extendeduser/model/&quot;}},{&quot;articles&quot;:{&quot;path&quot;:&quot;[[++core_path]]components/articles/model/&quot;}}]
+{code}
+
+You can make use of the {code}[[++core_path]]{code} placeholders.
+
+{note}
+Use this only when you are extending core classes that are used during *initialize()*
+{note}
+
+{scrollbar}";}}}

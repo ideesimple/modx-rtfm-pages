@@ -1,0 +1,525 @@
+a:5:{s:2:"id";s:8:"18678089";s:4:"info";a:4:{s:6:"Title:";s:23:"Customizing the Manager";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:38:"[revolution20:Customizing the Manager]";}s:6:"parent";s:8:"18678342";s:6:"source";s:1507:"{alias:Form Customization}
+\\
+
+{toc}
+
+h2. What is Form Customization?
+
+Form Customization is a new feature that allows users to create Rules, which govern how manager pages render their forms in the MODX Revolution Manager. It is similar to ManagerManager in MODX Evolution.
+
+{widget:url=http://www.youtube.com/watch?v=iJB_IXg7NNc|width=500|height=350}
+
+
+h2. How Does it Work?
+
+Currently, Form Customization has 3 layers:
+
+{quote}Profile -&gt; Sets -&gt; Rules{quote}
+
+A Profile is a collection of Sets, and Sets are collections of Rules. Profiles can be restricted to specific User Groups.
+
+A Set is a collection of Rules, and is tied to a certain view. Normally, you would have a Set for the Resource/Create page, and a Set for the Resource/Update page. Sets can also be tied to specific [Templates] (meaning they load only when the Resource is using that Template). They can also have a &#39;Constraint&#39; set, which limits the Set&#39;s execution to the restriction made in the Constraint.
+
+A Rule is all the variations applied in a Set. Rules are hidden from view in MODX Revolution, but are instead shown as fields on the Set Editing page.
+
+More information about each of the parts of Form Customization can be found in each part&#39;s respective page:
+
+{pagetree:root=Customizing the Manager}
+
+h3. What Forms can I Customize?
+
+The Resource Create and Update pages can be customized at this time in Form Customization.
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";s:8:"versions";a:13:{i:0;a:3:{s:2:"id";s:8:"18678089";s:3:"ver";s:1:"1";s:4:"code";s:1507:"{alias:Form Customization}
+\\
+
+{toc}
+
+h2. What is Form Customization?
+
+Form Customization is a new feature that allows users to create Rules, which govern how manager pages render their forms in the MODX Revolution Manager. It is similar to ManagerManager in MODX Evolution.
+
+{widget:url=http://www.youtube.com/watch?v=iJB_IXg7NNc|width=500|height=350}
+
+
+h2. How Does it Work?
+
+Currently, Form Customization has 3 layers:
+
+{quote}Profile -&gt; Sets -&gt; Rules{quote}
+
+A Profile is a collection of Sets, and Sets are collections of Rules. Profiles can be restricted to specific User Groups.
+
+A Set is a collection of Rules, and is tied to a certain view. Normally, you would have a Set for the Resource/Create page, and a Set for the Resource/Update page. Sets can also be tied to specific [Templates] (meaning they load only when the Resource is using that Template). They can also have a &#39;Constraint&#39; set, which limits the Set&#39;s execution to the restriction made in the Constraint.
+
+A Rule is all the variations applied in a Set. Rules are hidden from view in MODX Revolution, but are instead shown as fields on the Set Editing page.
+
+More information about each of the parts of Form Customization can be found in each part&#39;s respective page:
+
+{pagetree:root=Customizing the Manager}
+
+h3. What Forms can I Customize?
+
+The Resource Create and Update pages can be customized at this time in Form Customization.
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35095247";s:3:"ver";s:1:"1";s:4:"code";s:1507:"{alias:Form Customization}
+\\
+
+{toc}
+
+h2. What is Form Customization?
+
+Form Customization is a new feature that allows users to create Rules, which govern how manager pages render their forms in the MODX Revolution Manager. It is similar to ManagerManager in MODX Evolution.
+
+{widget:url=http://www.youtube.com/watch?v=iJB_IXg7NNc|width=500|height=400}
+
+
+h2. How Does it Work?
+
+Currently, Form Customization has 3 layers:
+
+{quote}Profile -&gt; Sets -&gt; Rules{quote}
+
+A Profile is a collection of Sets, and Sets are collections of Rules. Profiles can be restricted to specific User Groups.
+
+A Set is a collection of Rules, and is tied to a certain view. Normally, you would have a Set for the Resource/Create page, and a Set for the Resource/Update page. Sets can also be tied to specific [Templates] (meaning they load only when the Resource is using that Template). They can also have a &#39;Constraint&#39; set, which limits the Set&#39;s execution to the restriction made in the Constraint.
+
+A Rule is all the variations applied in a Set. Rules are hidden from view in MODX Revolution, but are instead shown as fields on the Set Editing page.
+
+More information about each of the parts of Form Customization can be found in each part&#39;s respective page:
+
+{pagetree:root=Customizing the Manager}
+
+h3. What Forms can I Customize?
+
+The Resource Create and Update pages can be customized at this time in Form Customization.
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35095246";s:3:"ver";s:1:"1";s:4:"code";s:1604:"{alias:Form Customization}
+\\
+
+{toc}
+
+h2. What is Form Customization?
+
+Form Customization is a new feature that allows users to create Rules, which govern how manager pages render their forms in the MODX Revolution Manager. It is similar to ManagerManager in MODX Evolution.
+
+&lt;iframe width=&quot;425&quot; height=&quot;349&quot; src=&quot;http://www.youtube.com/embed/iJB_IXg7NNc&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+
+h2. How Does it Work?
+
+Currently, Form Customization has 3 layers:
+
+{quote}Profile -&gt; Sets -&gt; Rules{quote}
+
+A Profile is a collection of Sets, and Sets are collections of Rules. Profiles can be restricted to specific User Groups.
+
+A Set is a collection of Rules, and is tied to a certain view. Normally, you would have a Set for the Resource/Create page, and a Set for the Resource/Update page. Sets can also be tied to specific [Templates] (meaning they load only when the Resource is using that Template). They can also have a &#39;Constraint&#39; set, which limits the Set&#39;s execution to the restriction made in the Constraint.
+
+A Rule is all the variations applied in a Set. Rules are hidden from view in MODX Revolution, but are instead shown as fields on the Set Editing page.
+
+More information about each of the parts of Form Customization can be found in each part&#39;s respective page:
+
+{pagetree:root=Customizing the Manager}
+
+h3. What Forms can I Customize?
+
+The Resource Create and Update pages can be customized at this time in Form Customization.
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"35095245";s:3:"ver";s:1:"1";s:4:"code";s:1505:"{alias:Form Customization}
+\\
+
+{toc}
+
+h2. What is Form Customization?
+
+Form Customization is a new feature that allows users to create Rules, which govern how manager pages render their forms in the MODX Revolution Manager. It is similar to ManagerManager in MODX Evolution.
+
+{widget:url=http://www.youtube.com/embed/iJB_IXg7NNc|width=780|height=500}
+
+
+h2. How Does it Work?
+
+Currently, Form Customization has 3 layers:
+
+{quote}Profile -&gt; Sets -&gt; Rules{quote}
+
+A Profile is a collection of Sets, and Sets are collections of Rules. Profiles can be restricted to specific User Groups.
+
+A Set is a collection of Rules, and is tied to a certain view. Normally, you would have a Set for the Resource/Create page, and a Set for the Resource/Update page. Sets can also be tied to specific [Templates] (meaning they load only when the Resource is using that Template). They can also have a &#39;Constraint&#39; set, which limits the Set&#39;s execution to the restriction made in the Constraint.
+
+A Rule is all the variations applied in a Set. Rules are hidden from view in MODX Revolution, but are instead shown as fields on the Set Editing page.
+
+More information about each of the parts of Form Customization can be found in each part&#39;s respective page:
+
+{pagetree:root=Customizing the Manager}
+
+h3. What Forms can I Customize?
+
+The Resource Create and Update pages can be customized at this time in Form Customization.
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"35095244";s:3:"ver";s:1:"9";s:4:"code";s:1507:"{alias:Form Customization}
+\\
+
+{toc}
+
+h2. What is Form Customization?
+
+Form Customization is a new feature that allows users to create Rules, which govern how manager pages render their forms in the MODX Revolution Manager. It is similar to ManagerManager in MODX Evolution.
+
+{widget:url=http://www.youtube.com/watch?v=iJB_IXg7NNc|width=780|height=500}
+
+
+h2. How Does it Work?
+
+Currently, Form Customization has 3 layers:
+
+{quote}Profile -&gt; Sets -&gt; Rules{quote}
+
+A Profile is a collection of Sets, and Sets are collections of Rules. Profiles can be restricted to specific User Groups.
+
+A Set is a collection of Rules, and is tied to a certain view. Normally, you would have a Set for the Resource/Create page, and a Set for the Resource/Update page. Sets can also be tied to specific [Templates] (meaning they load only when the Resource is using that Template). They can also have a &#39;Constraint&#39; set, which limits the Set&#39;s execution to the restriction made in the Constraint.
+
+A Rule is all the variations applied in a Set. Rules are hidden from view in MODX Revolution, but are instead shown as fields on the Set Editing page.
+
+More information about each of the parts of Form Customization can be found in each part&#39;s respective page:
+
+{pagetree:root=Customizing the Manager}
+
+h3. What Forms can I Customize?
+
+The Resource Create and Update pages can be customized at this time in Form Customization.
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"35095243";s:3:"ver";s:1:"8";s:4:"code";s:1486:"{alias:Form Customization}
+\\
+
+{toc}
+
+h2. What is Form Customization?
+
+Form Customization is a new feature that allows users to create Rules, which govern how manager pages render their forms in the MODX Revolution Manager. It is similar to ManagerManager in MODX Evolution.
+
+{widget:url=http://www.youtube.com/watch?v=iJB_IXg7NNc}
+
+
+h2. How Does it Work?
+
+Currently, Form Customization has 3 layers:
+
+{quote}Profile -&gt; Sets -&gt; Rules{quote}
+
+A Profile is a collection of Sets, and Sets are collections of Rules. Profiles can be restricted to specific User Groups.
+
+A Set is a collection of Rules, and is tied to a certain view. Normally, you would have a Set for the Resource/Create page, and a Set for the Resource/Update page. Sets can also be tied to specific [Templates] (meaning they load only when the Resource is using that Template). They can also have a &#39;Constraint&#39; set, which limits the Set&#39;s execution to the restriction made in the Constraint.
+
+A Rule is all the variations applied in a Set. Rules are hidden from view in MODX Revolution, but are instead shown as fields on the Set Editing page.
+
+More information about each of the parts of Form Customization can be found in each part&#39;s respective page:
+
+{pagetree:root=Customizing the Manager}
+
+h3. What Forms can I Customize?
+
+The Resource Create and Update pages can be customized at this time in Form Customization.
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"35095242";s:3:"ver";s:1:"7";s:4:"code";s:1428:"{alias:Form Customization}
+\\
+
+{toc}
+
+h2. What is Form Customization?
+
+Form Customization is a new feature that allows users to create Rules, which govern how manager pages render their forms in the MODX Revolution Manager. It is similar to ManagerManager in MODX Evolution.
+
+h2. How Does it Work?
+
+Currently, Form Customization has 3 layers:
+
+{quote}Profile -&gt; Sets -&gt; Rules{quote}
+
+A Profile is a collection of Sets, and Sets are collections of Rules. Profiles can be restricted to specific User Groups.
+
+A Set is a collection of Rules, and is tied to a certain view. Normally, you would have a Set for the Resource/Create page, and a Set for the Resource/Update page. Sets can also be tied to specific [Templates] (meaning they load only when the Resource is using that Template). They can also have a &#39;Constraint&#39; set, which limits the Set&#39;s execution to the restriction made in the Constraint.
+
+A Rule is all the variations applied in a Set. Rules are hidden from view in MODX Revolution, but are instead shown as fields on the Set Editing page.
+
+More information about each of the parts of Form Customization can be found in each part&#39;s respective page:
+
+{pagetree:root=Customizing the Manager}
+
+h3. What Forms can I Customize?
+
+The Resource Create and Update pages can be customized at this time in Form Customization.
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"33587467";s:3:"ver";s:1:"6";s:4:"code";s:1423:"{alias:Form Customization}
+\\
+
+{toc}
+
+h2. What is Form Customization?
+
+Form Customization is a new feature that allows users to create Rules, which govern how manager pages render their forms in the MODX Revolution Manager. It is similar to ManagerManager in MODX Evolution.
+
+h2. How Does it Work?
+
+Currently, Form Customization has 3 layers:
+
+{quote}Profile -&gt; Sets -&gt; Rules{quote}
+
+A Profile is a collection of Sets, and Sets are collections of Rules. Profiles can be restricted to specific User Groups.
+
+A Set is a collection of Rules, and is tied to a certain view. Normally, you would have a Set for the Resource/Create page, and a Set for the Resource/Update page. Sets can also be tied to specific [Templates] (meaning they load only when the Resource is using that Template). They can also have a &#39;Constraint&#39; set, which limits the Set&#39;s execution to the restriction made in the Constraint.
+
+A Rule is all the variations applied in a Set. Rules are hidden from view in MODX Revolution, but are instead shown as fields on the Set Editing page.
+
+More information about each of the parts of Form Customization can be found in each part&#39;s respective page:
+
+{pagetree:Customizing the Manager}
+
+h3. What Forms can I Customize?
+
+The Resource Create and Update pages can be customized at this time in Form Customization.
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:8;a:3:{s:2:"id";s:8:"33587466";s:3:"ver";s:1:"5";s:4:"code";s:1404:"{alias:Form Customization}
+\\
+
+{toc}
+
+h2. What is Form Customization?
+
+Form Customization is a new feature that allows users to create Rules, which govern how manager pages render their forms in the MODX Revolution Manager. It is similar to ManagerManager in MODX Evolution.
+
+h2. How Does it Work?
+
+Currently, Form Customization has 3 layers:
+
+{quote}Profile -&gt; Sets -&gt; Rules{quote}
+
+A Profile is a collection of Sets, and Sets are collections of Rules. Profiles can be restricted to specific User Groups.
+
+A Set is a collection of Rules, and is tied to a certain view. Normally, you would have a Set for the Resource/Create page, and a Set for the Resource/Update page. Sets can also be tied to specific [Templates] (meaning they load only when the Resource is using that Template). They can also have a &#39;Constraint&#39; set, which limits the Set&#39;s execution to the restriction made in the Constraint.
+
+A Rule is all the variations applied in a Set. Rules are hidden from view in MODX Revolution, but are instead shown as fields on the Set Editing page.
+
+More information about each of the parts of Form Customization can be found in each part&#39;s respective page:
+
+{pagetree:root}
+
+h3. What Forms can I Customize?
+
+The Resource Create and Update pages can be customized at this time in Form Customization.
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:9;a:3:{s:2:"id";s:8:"33587465";s:3:"ver";s:1:"4";s:4:"code";s:1442:"{alias:Form Customization}
+\\
+
+{toc}
+
+h2. What is Form Customization?
+
+Form Customization is a new feature that allows users to create Rules, which govern how manager pages render their forms in the MODx Revolution Manager. It is similar to ManagerManager in MODx Evolution.
+
+h2. What are [Rules|Form Customization Rules]?
+
+[Rules|Form Customization Rules] in MODx Revolution are simply generic rules that apply to any [Action|Actions and Menus] (manager page). They also can be tied to User Groups, wherein a Rule will only be applied if the User is part of that User Group.
+
+A rule can be one of the following:
+
+{pagetree:root=Form Customization Rules|startDepth=1}
+
+h2. What Forms can I Customize?
+
+Technically any manager page can be customized. Form Customization bases its methods off of [Actions|Actions and Menus], which are database representations of any MODx Revolution Manager page. This also means that [Custom Manager Pages] can also have Rules applied to them, should the CMPs be using [MODExt].
+
+A full list of documented customizable forms, along with their fields and other info, can be found here:
+
+{pagetree:root=Form Customization Pages|startDepth=1}
+
+h2. Examples
+
+An example set of Rules:
+!rc-grid.png|thumbnail!
+
+will make the Resource Update page look like so:
+!rc-ex1.png|thumbnail!
+
+and TV part look like:
+
+!rc-ex1tv.png|thumbnail!
+
+
+
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:10;a:3:{s:2:"id";s:8:"33226816";s:3:"ver";s:1:"3";s:4:"code";s:1415:"\\
+
+{toc}
+
+h2. What is Form Customization?
+
+Form Customization is a new feature that allows users to create Rules, which govern how manager pages render their forms in the MODx Revolution Manager. It is similar to ManagerManager in MODx Evolution.
+
+h2. What are [Rules|Form Customization Rules]?
+
+[Rules|Form Customization Rules] in MODx Revolution are simply generic rules that apply to any [Action|Actions and Menus] (manager page). They also can be tied to User Groups, wherein a Rule will only be applied if the User is part of that User Group.
+
+A rule can be one of the following:
+
+{pagetree:root=Form Customization Rules|startDepth=1}
+
+h2. What Forms can I Customize?
+
+Technically any manager page can be customized. Form Customization bases its methods off of [Actions|Actions and Menus], which are database representations of any MODx Revolution Manager page. This also means that [Custom Manager Pages] can also have Rules applied to them, should the CMPs be using [MODExt].
+
+A full list of documented customizable forms, along with their fields and other info, can be found here:
+
+{pagetree:root=Form Customization Pages|startDepth=1}
+
+h2. Examples
+
+An example set of Rules:
+!rc-grid.png|thumbnail!
+
+will make the Resource Update page look like so:
+!rc-ex1.png|thumbnail!
+
+and TV part look like:
+
+!rc-ex1tv.png|thumbnail!
+
+
+
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:11;a:3:{s:2:"id";s:8:"20119612";s:3:"ver";s:1:"2";s:4:"code";s:1410:"\\
+
+{toc}
+
+h2. What is Form Customization?
+
+Form Customization is a new feature that allows users to create Rules, which govern how manager pages render their forms in the MODx Revolution Manager. It is similar to ManagerManager in MODx Evolution.
+
+h2. What are [Rules|Form Customization Rules]?
+
+[Rules|Form Customization Rules] in MODx Revolution are simply generic rules that apply to any [Action|Actions and Menus] (manager page). They also can be tied to User Groups, wherein a Rule will only be applied if the User is part of that User Group.
+
+A rule can be one of the following:
+
+{pagetree:root=Form Customization Rules|startDepth=1}
+
+h2. What Forms can I Customize?
+
+Technically any manager page can be customized. Form Customization bases its methods off of [Actions|Actions and Menus], which are database representations of any MODx Revolution Manager page. This also means that [Custom Manager Pages] can also have Rules applied to them, should the CMPs be using [MODExt].
+
+A full list of documented customizable forms, along with their fields and other info, can be found here:
+
+{pagetree:root=Form Customization Pages|startDepth=1}
+
+h2. Examples
+
+An example set of Rules:
+!rc-grid.png|thumbnail!
+
+will make the Resource Update page look like so:
+!rc-ex1.png|thumbnail!
+
+and TV part look like:
+
+!rc-ex1tv.png|thumbnail!
+
+
+
+
+h2. See Also
+
+{pagetree:root=Form Customization|startDepth=1}
+
+{scrollbar}";}i:12;a:3:{s:2:"id";s:8:"18678513";s:3:"ver";s:1:"1";s:4:"code";s:1410:"\\
+
+{toc}
+
+h2. What is Form Customization?
+
+Form Customization is a new feature that allows users to create Rules, which govern how manager pages render their forms in the MODx Revolution Manager. It is similar to ManagerManager in MODx Evolution.
+
+h2. What are [Rules|Form Customization Rules]?
+
+[Rules|Form Customization Rules] in MODx Revolution are simply generic rules that apply to any [Action|Actions and Menus] (manager page). They also can be tied to User Groups, wherein a Rule will only be applied if the User is part of that User Group.
+
+A rule can be one of the following:
+
+{pagetree:root=Form Customization Rules|startDepth=1}
+
+h2. What Forms can I Customize?
+
+Technically any manager page can be customized. Form Customization bases its methods off of [Actions|Actions and Menus], which are database representations of any MODx Revolution Manager page. This also means that [Custom Manager Pages] can also have Rules applied to them, should the CMPs be using [MODExt].
+
+A full list of documented customizable forms, along with their fields and other info, can be found here:
+
+{pagetree:root=Form Customization Pages|startDepth=1}
+
+h2. Examples
+
+An example set of Rules:
+!rc-grid.png|thumbnail!
+
+will make the Resource Update page look like so:
+!rc-ex1.png|thumbnail!
+
+and TV part look like:
+
+!rc-ex1tv.png|thumbnail!
+
+
+
+
+h2. See Also
+
+{pagetree:root=Form Customization|startDepth=1}
+
+{scrollbar}";}}}

@@ -1,0 +1,29 @@
+a:5:{s:2:"id";s:8:"35586584";s:4:"info";a:4:{s:6:"Title:";s:31:"Dashboard Widget Type - Snippet";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:46:"[revolution20:Dashboard Widget Type - Snippet]";}s:6:"parent";s:8:"35586587";s:6:"source";s:401:"The Snippet Dashboard Widget Type runs a MODX Snippet and places the return value in the widget panel.
+
+h2. Usage
+
+Simply place the name of the Snippet (no tags) you would like to run in the content of the widget, ie:
+
+{code}MyCustomDashboardSnippet{code}
+
+The output returned by the Snippet will be displayed in the dashboard widget.
+
+h2. See Also
+
+{pagetree:root=Dashboard Widget Types}
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35586584";s:3:"ver";s:1:"1";s:4:"code";s:401:"The Snippet Dashboard Widget Type runs a MODX Snippet and places the return value in the widget panel.
+
+h2. Usage
+
+Simply place the name of the Snippet (no tags) you would like to run in the content of the widget, ie:
+
+{code}MyCustomDashboardSnippet{code}
+
+The output returned by the Snippet will be displayed in the dashboard widget.
+
+h2. See Also
+
+{pagetree:root=Dashboard Widget Types}
+
+{scrollbar}";}}}

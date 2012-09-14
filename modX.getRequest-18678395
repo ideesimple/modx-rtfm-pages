@@ -1,0 +1,51 @@
+a:5:{s:2:"id";s:8:"18678395";s:4:"info";a:4:{s:6:"Title:";s:15:"modX.getRequest";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:30:"[revolution20:modX.getRequest]";}s:6:"parent";s:8:"18678361";s:6:"source";s:526:"\\
+
+h2. modX::getRequest
+
+Attempt to load the request handler class, if not already loaded. Defaults to modRequest.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getRequest
+
+{code}
+boolean getRequest ([$string $class = &#39;modRequest&#39;], [$path $path = &#39;&#39;])
+{code}
+
+h2. Example
+
+Load a custom Request handler class called &#39;myRequest&#39; from &#39;/path/to/myrequest.class.php&#39;:
+{code}
+$modx-&gt;getRequest(&#39;myRequest&#39;,&#39;/path/to/&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678395";s:3:"ver";s:1:"1";s:4:"code";s:526:"\\
+
+h2. modX::getRequest
+
+Attempt to load the request handler class, if not already loaded. Defaults to modRequest.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getRequest
+
+{code}
+boolean getRequest ([$string $class = &#39;modRequest&#39;], [$path $path = &#39;&#39;])
+{code}
+
+h2. Example
+
+Load a custom Request handler class called &#39;myRequest&#39; from &#39;/path/to/myrequest.class.php&#39;:
+{code}
+$modx-&gt;getRequest(&#39;myRequest&#39;,&#39;/path/to/&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";}}}

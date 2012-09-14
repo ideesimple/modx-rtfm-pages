@@ -1,0 +1,185 @@
+a:5:{s:2:"id";s:8:"33227029";s:4:"info";a:4:{s:6:"Title:";s:23:"Form Customization Sets";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:38:"[revolution20:Form Customization Sets]";}s:6:"parent";s:8:"33227027";s:6:"source";s:3426:"{toc}
+
+h2. What is a Form Customization Set?
+
+A Form Customization Set is a collection of Rules that occur for a specific page (action) in the Manager. Currently, Sets can apply to either the Resource Create or Update pages. Think of them like a way of collecting all your &quot;Whenever the Create Resource page loads, all these fields change.&quot; rules. Sets can also be marked &#39;inactive&#39; to not load.
+
+h3. Restricting to a Template
+
+You can select a Template that the Set is restricted to load to. If a Resource (or on Create Resource, the parent&#39;s template or &quot;default_template&quot; setting) has this as its Template, this Set will run. Not setting a Template will assume that the Set should run for all Resources.
+
+Also, setting a Template restricts the list of Template Variables that are shown to be editable to the Template Variables assigned to that Template.
+
+h3. Using Constraints
+
+A Constraint can be set on the Set to restrict to a certain value. For example, setting a Constraint to a field of &#39;parent&#39; and value of &#39;123&#39; will apply this Set to all direct children of parent 123. A Constraint for field &#39;class_key&#39; and value &#39;modWebLink&#39; will apply this Set to all WebLinks for the Set&#39;s page.
+
+h2. Making Set Rules
+
+Rules can be adjusted in a set by using the grids and tabs in the Set editing page. When you&#39;re done editing the fields, use the &quot;Save&quot; button on the top right to save the set.
+
+h3. Adjusting Fields
+
+Fields are found on the first tab in the Set editing page. You can change the visibility of a field, the Label given to the field, or its default value. (Note: default value changes only apply to &#39;Create&#39; pages.) To revert back to the normal label or default value for a field, simply leave the field blank.
+
+h3. Hiding or Renaming Tabs
+
+Tabs are found in the 2nd tab in the Set editing page. You can change their visibility, as well as their title. You can also create new tabs to show up on the editing page.
+
+When creating a new tab, you&#39;ll be presented with both ID and Title fields. The Title field is what will show as the text of the new tab; whereas the ID is what is used when moving TVs into the tab.
+
+See [Customizing Tabs via Form Customization] for more information.
+
+h3. Adjusting Template Variables
+
+TVs are found in the 3rd tab in the Set editing page. You can adjust their Label, default value, visibility, or what tab they reside on.
+
+If you want to change what Tab a TV resides on, simply change the tab field to the ID of the tab you want to move it to. The &#39;Tab Rank&#39; column allows you to adjust the order in which the TV is put into the Tab with regard to other TVs being moved into that Tab.
+
+h2. Editing Sets via XML
+
+Sets can be exported to XML files by right-clicking on a Set in the Profile&#39;s editing page. MODX will export the Set to an XML file and prompt you to download it. From there, you can edit the XML file directly, and when finished, &#39;import&#39; it back via the button on the Sets grid. This can be useful if you do not want to use the UI, or want to have common Sets that you use across multiple sites.
+
+{note}Importing a Set from XML will create a *new* Set, not override any existing ones. After you&#39;ve imported the Set from XML, you may deactivate any older Sets.{note}
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"33227029";s:3:"ver";s:1:"4";s:4:"code";s:3426:"{toc}
+
+h2. What is a Form Customization Set?
+
+A Form Customization Set is a collection of Rules that occur for a specific page (action) in the Manager. Currently, Sets can apply to either the Resource Create or Update pages. Think of them like a way of collecting all your &quot;Whenever the Create Resource page loads, all these fields change.&quot; rules. Sets can also be marked &#39;inactive&#39; to not load.
+
+h3. Restricting to a Template
+
+You can select a Template that the Set is restricted to load to. If a Resource (or on Create Resource, the parent&#39;s template or &quot;default_template&quot; setting) has this as its Template, this Set will run. Not setting a Template will assume that the Set should run for all Resources.
+
+Also, setting a Template restricts the list of Template Variables that are shown to be editable to the Template Variables assigned to that Template.
+
+h3. Using Constraints
+
+A Constraint can be set on the Set to restrict to a certain value. For example, setting a Constraint to a field of &#39;parent&#39; and value of &#39;123&#39; will apply this Set to all direct children of parent 123. A Constraint for field &#39;class_key&#39; and value &#39;modWebLink&#39; will apply this Set to all WebLinks for the Set&#39;s page.
+
+h2. Making Set Rules
+
+Rules can be adjusted in a set by using the grids and tabs in the Set editing page. When you&#39;re done editing the fields, use the &quot;Save&quot; button on the top right to save the set.
+
+h3. Adjusting Fields
+
+Fields are found on the first tab in the Set editing page. You can change the visibility of a field, the Label given to the field, or its default value. (Note: default value changes only apply to &#39;Create&#39; pages.) To revert back to the normal label or default value for a field, simply leave the field blank.
+
+h3. Hiding or Renaming Tabs
+
+Tabs are found in the 2nd tab in the Set editing page. You can change their visibility, as well as their title. You can also create new tabs to show up on the editing page.
+
+When creating a new tab, you&#39;ll be presented with both ID and Title fields. The Title field is what will show as the text of the new tab; whereas the ID is what is used when moving TVs into the tab.
+
+See [Customizing Tabs via Form Customization] for more information.
+
+h3. Adjusting Template Variables
+
+TVs are found in the 3rd tab in the Set editing page. You can adjust their Label, default value, visibility, or what tab they reside on.
+
+If you want to change what Tab a TV resides on, simply change the tab field to the ID of the tab you want to move it to. The &#39;Tab Rank&#39; column allows you to adjust the order in which the TV is put into the Tab with regard to other TVs being moved into that Tab.
+
+h2. Editing Sets via XML
+
+Sets can be exported to XML files by right-clicking on a Set in the Profile&#39;s editing page. MODX will export the Set to an XML file and prompt you to download it. From there, you can edit the XML file directly, and when finished, &#39;import&#39; it back via the button on the Sets grid. This can be useful if you do not want to use the UI, or want to have common Sets that you use across multiple sites.
+
+{note}Importing a Set from XML will create a *new* Set, not override any existing ones. After you&#39;ve imported the Set from XML, you may deactivate any older Sets.{note}
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"37683773";s:3:"ver";s:1:"3";s:4:"code";s:3357:"{toc}
+
+h2. What is a Form Customization Set?
+
+A Form Customization Set is a collection of Rules that occur for a specific page (action) in the Manager. Currently, Sets can apply to either the Resource Create or Update pages. Think of them like a way of collecting all your &quot;Whenever the Create Resource page loads, all these fields change.&quot; rules. Sets can also be marked &#39;inactive&#39; to not load.
+
+h3. Restricting to a Template
+
+You can select a Template that the Set is restricted to load to. If a Resource (or on Create Resource, the parent&#39;s template or &quot;default_template&quot; setting) has this as its Template, this Set will run. Not setting a Template will assume that the Set should run for all Resources.
+
+Also, setting a Template restricts the list of Template Variables that are shown to be editable to the Template Variables assigned to that Template.
+
+h3. Using Constraints
+
+A Constraint can be set on the Set to restrict to a certain value. For example, setting a Constraint to a field of &#39;parent&#39; and value of &#39;123&#39; will apply this Set to all direct children of parent 123. A Constraint for field &#39;class_key&#39; and value &#39;modWebLink&#39; will apply this Set to all WebLinks for the Set&#39;s page.
+
+h2. Making Set Rules
+
+Rules can be adjusted in a set by using the grids and tabs in the Set editing page. When you&#39;re done editing the fields, use the &quot;Save&quot; button on the top right to save the set.
+
+h3. Adjusting Fields
+
+Fields are found on the first tab in the Set editing page. You can change the visibility of a field, the Label given to the field, or its default value. (Note: default value changes only apply to &#39;Create&#39; pages.) To revert back to the normal label or default value for a field, simply leave the field blank.
+
+h3. Hiding or Renaming Tabs
+
+Tabs are found in the 2nd tab in the Set editing page. You can change their visibility, as well as their title. You can also create new tabs to show up on the editing page.
+
+When creating a new tab, you&#39;ll be presented with both ID and Title fields. The Title field is what will show as the text of the new tab; whereas the ID is what is used when moving TVs into the tab.
+
+h3. Adjusting Template Variables
+
+TVs are found in the 3rd tab in the Set editing page. You can adjust their Label, default value, visibility, or what tab they reside on.
+
+If you want to change what Tab a TV resides on, simply change the tab field to the ID of the tab you want to move it to. The &#39;Tab Rank&#39; column allows you to adjust the order in which the TV is put into the Tab with regard to other TVs being moved into that Tab.
+
+h2. Editing Sets via XML
+
+Sets can be exported to XML files by right-clicking on a Set in the Profile&#39;s editing page. MODX will export the Set to an XML file and prompt you to download it. From there, you can edit the XML file directly, and when finished, &#39;import&#39; it back via the button on the Sets grid. This can be useful if you do not want to use the UI, or want to have common Sets that you use across multiple sites.
+
+{note}Importing a Set from XML will create a *new* Set, not override any existing ones. After you&#39;ve imported the Set from XML, you may deactivate any older Sets.{note}
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"33587476";s:3:"ver";s:1:"2";s:4:"code";s:2747:"{toc}
+
+h2. What is a Form Customization Set?
+
+A Form Customization Set is a collection of Rules that occur for a specific page (action) in the Manager. Currently, Sets can apply to either the Resource Create or Update pages. Think of them like a way of collecting all your &quot;Whenever the Create Resource page loads, all these fields change.&quot; rules. Sets can also be marked &#39;inactive&#39; to not load.
+
+h3. Restricting to a Template
+
+You can select a Template that the Set is restricted to load to. If a Resource (or on Create Resource, the parent&#39;s template or &quot;default_template&quot; setting) has this as its Template, this Set will run. Not setting a Template will assume that the Set should run for all Resources.
+
+Also, setting a Template restricts the list of Template Variables that are shown to be editable to the Template Variables assigned to that Template.
+
+h3. Using Constraints
+
+A Constraint can be set on the Set to restrict to a certain value. For example, setting a Constraint to a field of &#39;parent&#39; and value of &#39;123&#39; will apply this Set to all direct children of parent 123. A Constraint for field &#39;class_key&#39; and value &#39;modWebLink&#39; will apply this Set to all WebLinks for the Set&#39;s page.
+
+h2. Making Set Rules
+
+Rules can be adjusted in a set by using the grids and tabs in the Set editing page. When you&#39;re done editing the fields, use the &quot;Save&quot; button on the top right to save the set.
+
+h3. Adjusting Fields
+
+Fields are found on the first tab in the Set editing page. You can change the visibility of a field, the Label given to the field, or its default value. (Note: default value changes only apply to &#39;Create&#39; pages.) To revert back to the normal label or default value for a field, simply leave the field blank.
+
+h3. Hiding or Renaming Tabs
+
+Tabs are found in the 2nd tab in the Set editing page. You can change their visibility, as well as their title. You can also create new tabs to show up on the editing page.
+
+When creating a new tab, you&#39;ll be presented with both ID and Title fields. The Title field is what will show as the text of the new tab; whereas the ID is what is used when moving TVs into the tab.
+
+h3. Adjusting Template Variables
+
+TVs are found in the 3rd tab in the Set editing page. You can adjust their Label, default value, visibility, or what tab they reside on.
+
+If you want to change what Tab a TV resides on, simply change the tab field to the ID of the tab you want to move it to. The &#39;Tab Rank&#39; column allows you to adjust the order in which the TV is put into the Tab with regard to other TVs being moved into that Tab.
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"33587474";s:3:"ver";s:1:"1";s:4:"code";s:43:"{note}Under construction{note}
+
+{scrollbar}";}}}

@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"20119801";s:4:"info";a:4:{s:6:"Title:";s:14:"mail_smtp_user";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:29:"[revolution20:mail_smtp_user]";}s:6:"parent";s:8:"20119821";s:6:"source";s:121:"h2. mail_smtp_user
+
+*Name*: SMTP User
+*Type*: String
+*Default*: 
+
+The user to authenticate to SMTP against.
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"20119801";s:3:"ver";s:1:"1";s:4:"code";s:121:"h2. mail_smtp_user
+
+*Name*: SMTP User
+*Type*: String
+*Default*: 
+
+The user to authenticate to SMTP against.
+
+{scrollbar}
+";}}}

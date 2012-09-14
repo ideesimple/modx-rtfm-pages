@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"35095138";s:4:"info";a:4:{s:6:"Title:";s:32:"phpthumb_nohotlink_valid_domains";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:47:"[revolution20:phpthumb_nohotlink_valid_domains]";}s:6:"parent";s:8:"18678127";s:6:"source";s:224:"h2. phpthumb_nohotlink_valid_domains
+
+*Name*: phpThumb Hotlinking Valid Domains
+*Type*: Textfield
+*Default*: \{http_host\}
+*Available In:* 2.0.8\+
+
+A comma-delimited list of hostnames that are valid in src URLs.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095138";s:3:"ver";s:1:"1";s:4:"code";s:224:"h2. phpthumb_nohotlink_valid_domains
+
+*Name*: phpThumb Hotlinking Valid Domains
+*Type*: Textfield
+*Default*: \{http_host\}
+*Available In:* 2.0.8\+
+
+A comma-delimited list of hostnames that are valid in src URLs.
+
+{scrollbar}";}}}

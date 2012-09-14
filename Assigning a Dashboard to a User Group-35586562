@@ -1,0 +1,41 @@
+a:5:{s:2:"id";s:8:"35586562";s:4:"info";a:4:{s:6:"Title:";s:37:"Assigning a Dashboard to a User Group";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:52:"[revolution20:Assigning a Dashboard to a User Group]";}s:6:"parent";s:8:"35586555";s:6:"source";s:726:"{toc}
+
+This article describes how to edit a Dashboard, including on how to assign and arrange Widgets for that Dashboard.
+
+First off, find the User Group that you would like to assign the Dashboard to, and edit it. You can do so by &quot;Security&quot; -&gt; &quot;Access Controls&quot;, then right-clicking on the group in the User Groups tree, and clicking &quot;Update User Group&quot;.
+
+From there, you can simply click on the &quot;Dashboard&quot; dropdown, and select the Dashboard you want to assign to this User Group. All users in this group that have this group as their Primary Group will load that Dashboard instead of the Default now.
+
+!dashboard-assign.png!
+
+h2. See Also
+
+{pagetree:root=Dashboards}
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"35586562";s:3:"ver";s:1:"2";s:4:"code";s:726:"{toc}
+
+This article describes how to edit a Dashboard, including on how to assign and arrange Widgets for that Dashboard.
+
+First off, find the User Group that you would like to assign the Dashboard to, and edit it. You can do so by &quot;Security&quot; -&gt; &quot;Access Controls&quot;, then right-clicking on the group in the User Groups tree, and clicking &quot;Update User Group&quot;.
+
+From there, you can simply click on the &quot;Dashboard&quot; dropdown, and select the Dashboard you want to assign to this User Group. All users in this group that have this group as their Primary Group will load that Dashboard instead of the Default now.
+
+!dashboard-assign.png!
+
+h2. See Also
+
+{pagetree:root=Dashboards}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35586576";s:3:"ver";s:1:"1";s:4:"code";s:713:"{toc}
+
+This article describes how to edit a Dashboard, including on how to assign and arrange Widgets for that Dashboard.
+
+First off, find the User Group that you would like to assign the Dashboard to, and edit it. You can do so by &quot;Security&quot; -&gt; &quot;Access Controls&quot;, then right-clicking on the group in the User Groups tree, and clicking &quot;Update User Group&quot;.
+
+From there, you can simply click on the &quot;Dashboard&quot; dropdown, and select the Dashboard you want to assign to this User Group. All users in this group that have this group as their Primary Group will load that Dashboard instead of the Default now.
+
+!dashboard-assign.png!
+
+h2. See Also
+
+{pagetree:root=Dashboards}";}}}

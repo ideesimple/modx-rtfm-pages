@@ -1,0 +1,31 @@
+a:5:{s:2:"id";s:8:"18678182";s:4:"info";a:4:{s:6:"Title:";s:11:"site_status";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:26:"[revolution20:site_status]";}s:6:"parent";s:8:"18678127";s:6:"source";s:353:"h2. site_status
+
+*Name*: Site Status
+*Type*: Yes/No
+*Default*: Yes
+
+If false, your visitors will see the &#39;Site unavailable message&#39;, and won&#39;t be able to browse the site.
+
+Note that users with the &#39;view_offline&#39; Permission (such as users in the Administrator group) will still be able to browse the site in offline mode.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678182";s:3:"ver";s:1:"2";s:4:"code";s:353:"h2. site_status
+
+*Name*: Site Status
+*Type*: Yes/No
+*Default*: Yes
+
+If false, your visitors will see the &#39;Site unavailable message&#39;, and won&#39;t be able to browse the site.
+
+Note that users with the &#39;view_offline&#39; Permission (such as users in the Administrator group) will still be able to browse the site in offline mode.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119731";s:3:"ver";s:1:"1";s:4:"code";s:441:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Site Status{zone-data}
+{zone-data:key}site_status{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}Online{zone-data}
+{zone-data:desc}Select &#39;Online&#39; to publish your site on the web. If you select &#39;Offline&#39;, your visitors will see the &#39;Site unavailable message&#39;, and won&#39;t be able to browse the site.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

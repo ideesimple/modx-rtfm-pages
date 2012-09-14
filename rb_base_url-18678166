@@ -1,0 +1,33 @@
+a:5:{s:2:"id";s:8:"18678166";s:4:"info";a:4:{s:6:"Title:";s:11:"rb_base_url";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:26:"[revolution20:rb_base_url]";}s:6:"parent";s:8:"18678127";s:6:"source";s:554:"h2. rb_base_url
+
+*Name*: Resource Browser Base URL
+*Type*: String
+*Default*: 
+
+Enter the virtual path to resource directory. This setting is usually automatically generated. If you&#39;re using IIS, however, MODx may not be able to work the URL out on it&#39;s own, causing the Resource Browser to show an error. In that case, you can enter the URL to the images directory here (the URL as you&#39;d enter it on Internet Explorer).
+
+{warning}This setting is *deprecated* in MODx Revolution. Please use [filemanager_path] instead.{warning}
+\\
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678166";s:3:"ver";s:1:"2";s:4:"code";s:554:"h2. rb_base_url
+
+*Name*: Resource Browser Base URL
+*Type*: String
+*Default*: 
+
+Enter the virtual path to resource directory. This setting is usually automatically generated. If you&#39;re using IIS, however, MODx may not be able to work the URL out on it&#39;s own, causing the Resource Browser to show an error. In that case, you can enter the URL to the images directory here (the URL as you&#39;d enter it on Internet Explorer).
+
+{warning}This setting is *deprecated* in MODx Revolution. Please use [filemanager_path] instead.{warning}
+\\
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119705";s:3:"ver";s:1:"1";s:4:"code";s:595:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Resource URL{zone-data}
+{zone-data:key}resource_url{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}{zone-data}
+{zone-data:desc}Enter the virtual path to resource directory. This setting is usually automatically generated. If you&#39;re using IIS, however, MODx may not be able to work the URL out on it&#39;s own, causing the Resource Browser to show an error. In that case, you can enter the URL to the images directory here (the URL as you&#39;d enter it on Internet Explorer).{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

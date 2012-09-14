@@ -1,0 +1,98 @@
+a:5:{s:2:"id";s:8:"18678383";s:4:"info";a:4:{s:6:"Title:";s:21:"modX.executeProcessor";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:36:"[revolution20:modX.executeProcessor]";}s:6:"parent";s:8:"18678361";s:6:"source";s:827:"\\
+
+h2. modX::executeProcessor
+
+{warning}This method is removed in 2.1, and replaced by $modX-&gt;runProcessor{warning}
+
+Executes a specific processor. The only argument is an array, which can take the following values:
+* *action* - The action to take, similar to connector handling.
+* *processors_path* - If specified, will override the default MODx processors path.
+* *location* - A prefix to load processor files from, will prepend to the action parameter.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#executeProcessor
+
+{code}
+mixed executeProcessor (array $options)
+{code}
+
+h2. Example
+
+Execute the Context getList processor:
+{code}
+$modx-&gt;executeProcessor(array(
+    &#39;location&#39; =&gt; &#39;context&#39;,
+    &#39;action&#39; =&gt; &#39;getList&#39;,
+));
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678383";s:3:"ver";s:1:"2";s:4:"code";s:827:"\\
+
+h2. modX::executeProcessor
+
+{warning}This method is removed in 2.1, and replaced by $modX-&gt;runProcessor{warning}
+
+Executes a specific processor. The only argument is an array, which can take the following values:
+* *action* - The action to take, similar to connector handling.
+* *processors_path* - If specified, will override the default MODx processors path.
+* *location* - A prefix to load processor files from, will prepend to the action parameter.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#executeProcessor
+
+{code}
+mixed executeProcessor (array $options)
+{code}
+
+h2. Example
+
+Execute the Context getList processor:
+{code}
+$modx-&gt;executeProcessor(array(
+    &#39;location&#39; =&gt; &#39;context&#39;,
+    &#39;action&#39; =&gt; &#39;getList&#39;,
+));
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35094770";s:3:"ver";s:1:"1";s:4:"code";s:738:"\\
+
+h2. modX::executeProcessor
+
+Executes a specific processor. The only argument is an array, which can take the following values:
+* *action* - The action to take, similar to connector handling.
+* *processors_path* - If specified, will override the default MODx processors path.
+* *location* - A prefix to load processor files from, will prepend to the action parameter.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#executeProcessor
+
+{code}
+mixed executeProcessor (array $options)
+{code}
+
+h2. Example
+
+Execute the Context getList processor:
+{code}
+$modx-&gt;executeProcessor(array(
+    &#39;location&#39; =&gt; &#39;context&#39;,
+    &#39;action&#39; =&gt; &#39;getList&#39;,
+));
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";}}}

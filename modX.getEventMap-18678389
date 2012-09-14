@@ -1,0 +1,51 @@
+a:5:{s:2:"id";s:8:"18678389";s:4:"info";a:4:{s:6:"Title:";s:16:"modX.getEventMap";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:31:"[revolution20:modX.getEventMap]";}s:6:"parent";s:8:"18678361";s:6:"source";s:363:"\\
+
+h2. modX::getEventMap
+
+Gets a map of events and registered plugins for the specified context.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getEventMap
+
+{code}
+array getEventMap (string $contextKey)
+{code}
+
+h2. Example
+
+Get the event map for the current Context.
+{code}
+$map = $modx-&gt;getEventMap();
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678389";s:3:"ver";s:1:"1";s:4:"code";s:363:"\\
+
+h2. modX::getEventMap
+
+Gets a map of events and registered plugins for the specified context.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getEventMap
+
+{code}
+array getEventMap (string $contextKey)
+{code}
+
+h2. Example
+
+Get the event map for the current Context.
+{code}
+$map = $modx-&gt;getEventMap();
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";}}}

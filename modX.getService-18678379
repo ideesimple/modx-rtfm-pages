@@ -1,0 +1,135 @@
+a:5:{s:2:"id";s:8:"18678379";s:4:"info";a:4:{s:6:"Title:";s:15:"modX.getService";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:14:"James Rotering";s:12:"Wiki Markup:";s:30:"[revolution20:modX.getService]";}s:6:"parent";s:8:"33587481";s:6:"source";s:816:"\\
+
+h2. modX::getService
+
+Load and return a named service class instance.
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/xpdo/xPDO.html#methodgetService]
+
+{code}
+object getService (string $name, [string $class = &#39;&#39;], [string $path = &#39;&#39;], [array $params = array ()])
+{code}
+
+h2. Examples
+
+Get the modSmarty service.
+{code}
+$modx-&gt;getService(&#39;smarty&#39;,&#39;smarty.modSmarty&#39;);
+{code}
+
+Get a custom, user-defined service called &#39;modTwitter&#39; from a custom path (&#39;/path/to/modtwitter.class.php&#39;), and pass in some custom parameters.
+{code}
+$modx-&gt;getService(&#39;twitter&#39;,&#39;modTwitter&#39;,&#39;/path/to/&#39;,array(
+  &#39;api_key&#39; =&gt; 3212423,
+));
+$modx-&gt;twitter-&gt;tweet(&#39;Success!&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+* [MODx Services]
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678379";s:3:"ver";s:1:"3";s:4:"code";s:816:"\\
+
+h2. modX::getService
+
+Load and return a named service class instance.
+
+h2. Syntax
+
+API Doc: [http://api.modxcms.com/xpdo/xPDO.html#methodgetService]
+
+{code}
+object getService (string $name, [string $class = &#39;&#39;], [string $path = &#39;&#39;], [array $params = array ()])
+{code}
+
+h2. Examples
+
+Get the modSmarty service.
+{code}
+$modx-&gt;getService(&#39;smarty&#39;,&#39;smarty.modSmarty&#39;);
+{code}
+
+Get a custom, user-defined service called &#39;modTwitter&#39; from a custom path (&#39;/path/to/modtwitter.class.php&#39;), and pass in some custom parameters.
+{code}
+$modx-&gt;getService(&#39;twitter&#39;,&#39;modTwitter&#39;,&#39;/path/to/&#39;,array(
+  &#39;api_key&#39; =&gt; 3212423,
+));
+$modx-&gt;twitter-&gt;tweet(&#39;Success!&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+* [MODx Services]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35586130";s:3:"ver";s:1:"2";s:4:"code";s:807:"\\
+
+h2. modX::getService
+
+Load and return a named service class instance.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getService
+
+{code}
+object getService (string $name, [string $class = &#39;&#39;], [string $path = &#39;&#39;], [array $params = array ()])
+{code}
+
+h2. Examples
+
+Get the modSmarty service.
+{code}
+$modx-&gt;getService(&#39;smarty&#39;,&#39;smarty.modSmarty&#39;);
+{code}
+
+Get a custom, user-defined service called &#39;modTwitter&#39; from a custom path (&#39;/path/to/modtwitter.class.php&#39;), and pass in some custom parameters.
+{code}
+$modx-&gt;getService(&#39;twitter&#39;,&#39;modTwitter&#39;,&#39;/path/to/&#39;,array(
+  &#39;api_key&#39; =&gt; 3212423,
+));
+$modx-&gt;twitter-&gt;tweet(&#39;Success!&#39;);
+{code}
+
+h2. See Also
+* [modX]
+* [MODx Services]
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"20774917";s:3:"ver";s:1:"1";s:4:"code";s:800:"\\
+
+h2. modX::getService
+
+Load and return a named service class instance.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getService
+
+{code}
+object getService (string $name, [string $class = &#39;&#39;], [string $path = &#39;&#39;], [array $params = array ()])
+{code}
+
+h2. Examples
+
+Get the modSmarty service.
+{code}
+$modx-&gt;getService(&#39;smarty&#39;,&#39;modSmarty&#39;);
+{code}
+
+Get a custom, user-defined service called &#39;modTwitter&#39; from a custom path (&#39;/path/to/modtwitter.class.php&#39;), and pass in some custom parameters.
+{code}
+$modx-&gt;getService(&#39;twitter&#39;,&#39;modTwitter&#39;,&#39;/path/to/&#39;,array(
+  &#39;api_key&#39; =&gt; 3212423,
+));
+$modx-&gt;twitter-&gt;tweet(&#39;Success!&#39;);
+{code}
+
+h2. See Also
+* [modX]
+* [MODx Services]
+
+{scrollbar}";}}}

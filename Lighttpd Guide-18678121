@@ -1,0 +1,73 @@
+a:5:{s:2:"id";s:8:"18678121";s:4:"info";a:4:{s:6:"Title:";s:14:"Lighttpd Guide";s:7:"Author:";s:16:"Jonathon Bischof";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:29:"[revolution20:Lighttpd Guide]";}s:6:"parent";s:8:"18678119";s:6:"source";s:2200:"\\
+
+{toc}
+
+h2. Lighttpd Guide for Setup and Friendly URLs.
+{note} 
+* This is still a work in progress, and currently only covers the URL rewriting aspect. 
+* This guide assumes you already have a working lighttpd, mysql, and PHP installation.
+* This guide only covers proper settings and the use of friendly URL Rewriting. {note}
+
+h3. Friendly URL Setup
+{note} lighttpd does not use the same system, or even same idea as Apache does for URL rewriting. All URL rewriting is done in the lighttpd.conf file{note}
+
+* First we need to make sure that the URL rewriting module is enabled. 
+** So open your lighttpd.conf config file (In Linux it is usually located in /etc/lighttpd/lighttpd.conf)
+** Look for the directive server.modules. 
+** Under this directive, look for an entry named &quot;mod_rewrite&quot;,. 
+** By default it has a # in front of it. This is a comment symbol. Please remove the # from the line and save the file.
+
+* Next we need to find the location in which to put the friendly URL code.
+** So lets search for something that looks like this: 
+   {code}
+   $SERVER[&quot;socket&quot;] == &quot;:80&quot; {
+  $HTTP[&quot;host&quot;] =~ &quot;yourdomainname.com&quot; {
+    server.document-root = &quot;/path/to/your/doc/root&quot;
+    server.name = &quot;yourservername&quot;
+    {code}
+** Directly under this you should add the following code.
+{code}url.rewrite-once = ( &quot;^/(assets|manager|core|connectors)(.*)$&quot; =&gt; &quot;/$1/$2&quot;,
+                         &quot;^/(?!index(?:-ajax)?\.php)(.*)\?(.*)$&quot; =&gt; &quot;/index.php?q=$1&amp;$2&quot;,
+                         &quot;^/(?!index(?:-ajax)?\.php)(.*)$&quot; =&gt; &quot;/index.php?q=$1&quot;
+                   ){code}
+
+{note} This does not mean you are done! Lighttpd handles url-rewrites a bit differently. You HAVE to exclude any files or folders you do not want rewritten in the config file. Excluded dirs/files in the example above are (assets|manager|core|connectors). If you wish to add more to these, simple add another | followed by the folder or filename you wish to omit from url rewriting. {note}
+{tip} After this is done, you will have working friendly URLs again in lighttpd. {tip}
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678121";s:3:"ver";s:1:"1";s:4:"code";s:2200:"\\
+
+{toc}
+
+h2. Lighttpd Guide for Setup and Friendly URLs.
+{note} 
+* This is still a work in progress, and currently only covers the URL rewriting aspect. 
+* This guide assumes you already have a working lighttpd, mysql, and PHP installation.
+* This guide only covers proper settings and the use of friendly URL Rewriting. {note}
+
+h3. Friendly URL Setup
+{note} lighttpd does not use the same system, or even same idea as Apache does for URL rewriting. All URL rewriting is done in the lighttpd.conf file{note}
+
+* First we need to make sure that the URL rewriting module is enabled. 
+** So open your lighttpd.conf config file (In Linux it is usually located in /etc/lighttpd/lighttpd.conf)
+** Look for the directive server.modules. 
+** Under this directive, look for an entry named &quot;mod_rewrite&quot;,. 
+** By default it has a # in front of it. This is a comment symbol. Please remove the # from the line and save the file.
+
+* Next we need to find the location in which to put the friendly URL code.
+** So lets search for something that looks like this: 
+   {code}
+   $SERVER[&quot;socket&quot;] == &quot;:80&quot; {
+  $HTTP[&quot;host&quot;] =~ &quot;yourdomainname.com&quot; {
+    server.document-root = &quot;/path/to/your/doc/root&quot;
+    server.name = &quot;yourservername&quot;
+    {code}
+** Directly under this you should add the following code.
+{code}url.rewrite-once = ( &quot;^/(assets|manager|core|connectors)(.*)$&quot; =&gt; &quot;/$1/$2&quot;,
+                         &quot;^/(?!index(?:-ajax)?\.php)(.*)\?(.*)$&quot; =&gt; &quot;/index.php?q=$1&amp;$2&quot;,
+                         &quot;^/(?!index(?:-ajax)?\.php)(.*)$&quot; =&gt; &quot;/index.php?q=$1&quot;
+                   ){code}
+
+{note} This does not mean you are done! Lighttpd handles url-rewrites a bit differently. You HAVE to exclude any files or folders you do not want rewritten in the config file. Excluded dirs/files in the example above are (assets|manager|core|connectors). If you wish to add more to these, simple add another | followed by the folder or filename you wish to omit from url rewriting. {note}
+{tip} After this is done, you will have working friendly URLs again in lighttpd. {tip}
+
+{scrollbar}";}}}

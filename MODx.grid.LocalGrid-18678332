@@ -1,0 +1,61 @@
+a:5:{s:2:"id";s:8:"18678332";s:4:"info";a:4:{s:6:"Title:";s:19:"MODx.grid.LocalGrid";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:34:"[revolution20:MODx.grid.LocalGrid]";}s:6:"parent";s:8:"18678078";s:6:"source";s:477:"\\
+
+h2. MODx.grid.LocalGrid
+
+*Extends:* Ext.grid.EditorGridPanel
+*Key Features:* Similar to MODx.grid.Grid.
+
+The MODExt LocalGrid class is similar to the [MODx.grid.Grid] class, however rather than using a connector to populate it with data, it must be loaded through a local store.
+
+When instantiating this into a tabbed interface, it&#39;s recommended to set preventRender: true in its config to prevent JS rendering issues.
+
+h2. See Also
+
+{pagetree:root=MODExt}
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678332";s:3:"ver";s:1:"3";s:4:"code";s:477:"\\
+
+h2. MODx.grid.LocalGrid
+
+*Extends:* Ext.grid.EditorGridPanel
+*Key Features:* Similar to MODx.grid.Grid.
+
+The MODExt LocalGrid class is similar to the [MODx.grid.Grid] class, however rather than using a connector to populate it with data, it must be loaded through a local store.
+
+When instantiating this into a tabbed interface, it&#39;s recommended to set preventRender: true in its config to prevent JS rendering issues.
+
+h2. See Also
+
+{pagetree:root=MODExt}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"34636284";s:3:"ver";s:1:"2";s:4:"code";s:482:"\\
+
+h2. MODx.grid.LocalGrid
+
+*Extends:* Ext.grid.EditorGridPanel
+*Key Features:* Similar to MODx.grid.Grid.
+
+The MODExt LocalGrid class is similar to the MODx.grid.Grid class, however rather than using a connector to populate it with data, it must be loaded through a local store.
+
+When instantiating this into a tabbed interface, it&#39;s recommended to set preventRender: true in its config to prevent JS rendering issues.
+
+h2. See Also
+
+* [MODx.grid.Grid]
+* [MODExt]
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"32964613";s:3:"ver";s:1:"1";s:4:"code";s:338:"\\
+
+h2. MODx.grid.LocalGrid
+
+*Extends:* Ext.grid.EditorGridPanel
+*Key Features:* Similar to MODx.grid.Grid.
+
+The MODExt LocalGrid class is similar to the MODx.grid.Grid class, however rather than using a connector to populate it with data, it must be loaded through a local store.
+
+h2. See Also
+
+* [MODx.grid.Grid]
+* [MODExt]
+
+{scrollbar}";}}}

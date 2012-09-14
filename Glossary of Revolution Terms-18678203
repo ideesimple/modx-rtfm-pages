@@ -1,0 +1,881 @@
+a:5:{s:2:"id";s:8:"18678203";s:4:"info";a:4:{s:6:"Title:";s:28:"Glossary of Revolution Terms";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:0:"";s:12:"Wiki Markup:";s:43:"[revolution20:Glossary of Revolution Terms]";}s:6:"parent";s:8:"18678329";s:6:"source";s:8633:"\\
+{scrollbar}
+{toc}
+----
+h3. Add-on
+
+A MODx Third-party Component (3PC) that does not modify the Core or extend any of its classes, but yet still provides extra functionality to the MODx instance.
+
+----
+h3. Asset
+
+Any type of file resource that is usually located in the /assets directory, as defined by the constant MODX_ASSETS_PATH; can include Third-party Components, libraries, image files, css files, JavaScript files, class files, etc.
+
+----
+h3. Back-end
+
+A synonym for the MODx manager interface.
+
+----
+h3. Category
+
+An optional classifying name that can be attached to any Element or PropertySet (and other objects in later versions of Revolution) that separates it from other similar objects.
+
+----
+h3. Chunk Tags
+
+Tags in the form \[\[$ChunkName\]\] that can be used in reference to Chunks.
+
+----
+h3. Component
+
+Also called &quot;Third-party Component&quot;, or 3PC, a Component usually provides extra functionality to MODx, usually in the form of an Add-on, Core Extension, or Template.
+
+----
+h3. Content Type
+
+Sets the extension, mime-type and binary setting for any Resource.
+
+----
+h3. Context
+
+A delineator of resources and settings that can be used for a variety of reasons; usually used to create multiple-context sites, such as subdomains, multi-language sites, etc.
+
+----
+h3. Context Setting
+
+A single setting for that Context that either creates a new setting or overrides a System Setting.
+
+----
+h3. Core Workspace
+
+Each unique MODx Core is represented by a named Workspace. When you install Revolution initially, the MODx Core used by the setup application is recorded into the MODx database as the Default MODx Workspace. In future MODx Revolution releases, there will be an ability to manage multiple Workspaces from a single database, directly from the manager application. This will make it easy to isolate upgrades to the MODx Core; by quickly adding a new Core Workspace and selecting a menu option, you&#39;ll be able to apply an entire new MODx Core installation to production sites after testing on a staging site, or quickly revert to a previous Core Workspace you know works. This will be especially important for multi-site configurations running on shared MODx Core installations.
+
+----
+h3. Document
+
+A specific type of Resource, usually pertaining to a normal website page.
+
+----
+h3. Document Identifier
+
+See Resource Identifier.
+
+----
+h3. Element
+
+Also called &quot;Content Elements&quot;, a single Template, Template Variable, Chunk, Snippet, Plugin, Category, or Property Set visible in the Manager Elements tree.
+
+----
+h3. Extension
+
+Also called &quot;Core Extension&quot;. A MODx&amp;nbsp;Third-party Component that modifies the MODx Core, such as a custom User or authentication class, caching mechanisms, or context manipulation classes.
+
+----
+h3. File Resolver
+
+A type of xPDOVehicle Resolver that copies files from the source location to the target location in a Transport Package.
+
+----
+h3. Language Tags
+
+Tags in the form \[\[%LanguageStringKey\]\] that reference MODx Lexicon entries.
+
+----
+h3. Lexicon
+
+A Lexicon is a dictionary of words and phrases organized by Culture (more specific than language, i.e. en-UK) that is used to internationalize the manager application and can be used by Add-On and Core Extension developers to provide localization facilities for their own components. This replaces the legacy MODx language files and allows customization of the entries directly from the manager application.
+
+----
+h3. Lexicon Topic (formerly Foci)
+
+A set of Lexicon Entries focused on a particular subject. Revolution only loads Lexicon Entries as it needs them, by their Topic, to reduce load times.
+
+----
+h3. Link Tags
+
+Tags in the form \[\[~ResourceId\]\] that reference the URL of a particular Resource.
+
+----
+h3. Manager
+
+The back-end of the MODx interface.
+
+----
+h3. Namespace
+
+An organizational tag for Components to use to identify Lexicon Entries, Settings, and other objects related to the Component in a Revolution site. Also specifies an absolute path in which the Component may be found.
+
+----
+h3. Placeholder Tags
+
+Tags in the form \[\[+PlaceholderName\]\] that reference MODx Placeholders, usually set with $modx-&gt;setPlaceholder(&#39;placeholderName&#39;,&#39;value&#39;) in a Snippet or Plugin.
+
+----
+h3. Resource&amp;nbsp;Field
+
+Any of the fields of the site_content table, such as pagetitle, longtitle, introtext, alias, menuindex, etc. Some fields are available on the Document Create/Edit screen and via Resource Tags; Others can only be accessed via the documentObject.
+
+----
+h3. Property
+
+A single variable for an Element; used to set a specific parameter for the Element.
+
+----
+h3. Property Set
+
+A collection of variables used for a particular purpose with an Element. Property Sets are attached to Elements and pass in the Properties that they carry as parameters to the Element. An example is a custom Property Set for a Snippet that passes in specific parameters to the Element, overriding the default behavior.
+
+----
+h3. Resource
+
+A type of container that is interpreted by the Parser to fetch content. Can have any number of derivative classes; the most common is a Document.
+
+----
+h3. Resource Identifier
+
+Also called a Document ID, Resource ID, or&amp;nbsp;Document Identifier; the number in parenthesis in the MODx Resource Tree in the Manager that uniquely identifies the Resource specified.
+
+----
+h3. Resource Tags
+
+Tags in the form \[\[*ResourceField/TV\]\], which can be used to refer to&amp;nbsp;Resource Fields, or Template Variables.
+
+
+----
+h3. Resolver (for xPDOVehicles)
+
+Post-processor: a script or predefined action that is evaluated after a Vehicle is installed or uninstalled. Resolvers always occur after the vehicle&#39;s object is save()&#39;d, and can then perform actions on MODx before anything else happens in the install/uninstall process.
+
+An example of a PHP Resolver is one that attaches Plugin Events to a newly-installed Plugin.
+
+An example of a file Resolver is one that copies the assets/ditto directory in the xPDOVehicle path to /modx/assets/ditto.
+
+----
+h3. Setting Tags
+
+Tags in the form \[\[++SettingName\]\] that reference MODx System Settings, Context Settings, and User Settings.
+
+----
+h3. Snippet Tags
+
+Tags in the form \[\[SnippetName\]\], also referred to as Snippet Calls.
+
+----
+h3. Static Resource
+
+A specific type of Resource that is a direct reference to a specific file on the MODx site. The content is replaced with the contents of that file.
+
+----
+h3. Symlink
+
+A type of Resource that references a single, local MODx Resource; the Resource&#39;s content will replace the Symlink&#39;s content.
+
+----
+h3. System Setting
+
+A site-wide variable accessible to the MODx site. Can be overridden by Context Settings and User Settings.
+
+----
+h3. Template Variables
+
+Custom&amp;nbsp;Resource Fields created by the user on the Document Create/Edit Screen and referenced using Content Tags.
+
+----
+h3. Transport Package
+
+A packaged and zipped collection of Transport Vehicles, that can be easily distributed (&quot;transported&quot;) from one Core Workspace to another.
+
+----
+h3. Transport Provider (formerly Provisioner)
+
+A web service that enables remote installation of Transport Packages directly from the MODx manager application.
+
+----
+h3. Transport Vehicles
+
+An intelligent container that encapsulates any artifact that can be distributed in a Transport Package. Transport Vehicles store their payloads in a portable format.
+
+----
+h3. User Setting
+
+A user-specific setting that either creates a new setting or overrides the similar Context Setting and System Setting. Used to provide unique settings to that user.
+
+----
+h3. Weblink
+
+A type of Resource that references a specific URL or MODx Resource, redirecting the visitor to that URL or Resource.
+
+----
+h3. Validator (for xPDOVehicles)
+
+Pre-processor: a script or predefined action that executes prior to the vehicle being installed or uninstalled. If the validator returns true, the install/uninstall action will proceed as normal. If the validator returns false, MODx will not uninstall or install the package.
+
+A Validator could be used to determine if a directory exists and is writable, to see if other modx elements are already installed, or to determine if a certain version of MySQL and PHP are used on a server.
+
+----
+h3. xPDOVehicle
+
+The base Transport Vehicle class, xPDOVehicle, stores xPDOObject instances (which represent a row of data in a table) in it&#39;s payload, along with various attributes that control how the object is installed/uninstalled in a Core Workspace (see xPDOVehicle Validators and xPDOVehicle Resolvers).
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678203";s:3:"ver";s:1:"3";s:4:"code";s:8633:"\\
+{scrollbar}
+{toc}
+----
+h3. Add-on
+
+A MODx Third-party Component (3PC) that does not modify the Core or extend any of its classes, but yet still provides extra functionality to the MODx instance.
+
+----
+h3. Asset
+
+Any type of file resource that is usually located in the /assets directory, as defined by the constant MODX_ASSETS_PATH; can include Third-party Components, libraries, image files, css files, JavaScript files, class files, etc.
+
+----
+h3. Back-end
+
+A synonym for the MODx manager interface.
+
+----
+h3. Category
+
+An optional classifying name that can be attached to any Element or PropertySet (and other objects in later versions of Revolution) that separates it from other similar objects.
+
+----
+h3. Chunk Tags
+
+Tags in the form \[\[$ChunkName\]\] that can be used in reference to Chunks.
+
+----
+h3. Component
+
+Also called &quot;Third-party Component&quot;, or 3PC, a Component usually provides extra functionality to MODx, usually in the form of an Add-on, Core Extension, or Template.
+
+----
+h3. Content Type
+
+Sets the extension, mime-type and binary setting for any Resource.
+
+----
+h3. Context
+
+A delineator of resources and settings that can be used for a variety of reasons; usually used to create multiple-context sites, such as subdomains, multi-language sites, etc.
+
+----
+h3. Context Setting
+
+A single setting for that Context that either creates a new setting or overrides a System Setting.
+
+----
+h3. Core Workspace
+
+Each unique MODx Core is represented by a named Workspace. When you install Revolution initially, the MODx Core used by the setup application is recorded into the MODx database as the Default MODx Workspace. In future MODx Revolution releases, there will be an ability to manage multiple Workspaces from a single database, directly from the manager application. This will make it easy to isolate upgrades to the MODx Core; by quickly adding a new Core Workspace and selecting a menu option, you&#39;ll be able to apply an entire new MODx Core installation to production sites after testing on a staging site, or quickly revert to a previous Core Workspace you know works. This will be especially important for multi-site configurations running on shared MODx Core installations.
+
+----
+h3. Document
+
+A specific type of Resource, usually pertaining to a normal website page.
+
+----
+h3. Document Identifier
+
+See Resource Identifier.
+
+----
+h3. Element
+
+Also called &quot;Content Elements&quot;, a single Template, Template Variable, Chunk, Snippet, Plugin, Category, or Property Set visible in the Manager Elements tree.
+
+----
+h3. Extension
+
+Also called &quot;Core Extension&quot;. A MODx&amp;nbsp;Third-party Component that modifies the MODx Core, such as a custom User or authentication class, caching mechanisms, or context manipulation classes.
+
+----
+h3. File Resolver
+
+A type of xPDOVehicle Resolver that copies files from the source location to the target location in a Transport Package.
+
+----
+h3. Language Tags
+
+Tags in the form \[\[%LanguageStringKey\]\] that reference MODx Lexicon entries.
+
+----
+h3. Lexicon
+
+A Lexicon is a dictionary of words and phrases organized by Culture (more specific than language, i.e. en-UK) that is used to internationalize the manager application and can be used by Add-On and Core Extension developers to provide localization facilities for their own components. This replaces the legacy MODx language files and allows customization of the entries directly from the manager application.
+
+----
+h3. Lexicon Topic (formerly Foci)
+
+A set of Lexicon Entries focused on a particular subject. Revolution only loads Lexicon Entries as it needs them, by their Topic, to reduce load times.
+
+----
+h3. Link Tags
+
+Tags in the form \[\[~ResourceId\]\] that reference the URL of a particular Resource.
+
+----
+h3. Manager
+
+The back-end of the MODx interface.
+
+----
+h3. Namespace
+
+An organizational tag for Components to use to identify Lexicon Entries, Settings, and other objects related to the Component in a Revolution site. Also specifies an absolute path in which the Component may be found.
+
+----
+h3. Placeholder Tags
+
+Tags in the form \[\[+PlaceholderName\]\] that reference MODx Placeholders, usually set with $modx-&gt;setPlaceholder(&#39;placeholderName&#39;,&#39;value&#39;) in a Snippet or Plugin.
+
+----
+h3. Resource&amp;nbsp;Field
+
+Any of the fields of the site_content table, such as pagetitle, longtitle, introtext, alias, menuindex, etc. Some fields are available on the Document Create/Edit screen and via Resource Tags; Others can only be accessed via the documentObject.
+
+----
+h3. Property
+
+A single variable for an Element; used to set a specific parameter for the Element.
+
+----
+h3. Property Set
+
+A collection of variables used for a particular purpose with an Element. Property Sets are attached to Elements and pass in the Properties that they carry as parameters to the Element. An example is a custom Property Set for a Snippet that passes in specific parameters to the Element, overriding the default behavior.
+
+----
+h3. Resource
+
+A type of container that is interpreted by the Parser to fetch content. Can have any number of derivative classes; the most common is a Document.
+
+----
+h3. Resource Identifier
+
+Also called a Document ID, Resource ID, or&amp;nbsp;Document Identifier; the number in parenthesis in the MODx Resource Tree in the Manager that uniquely identifies the Resource specified.
+
+----
+h3. Resource Tags
+
+Tags in the form \[\[*ResourceField/TV\]\], which can be used to refer to&amp;nbsp;Resource Fields, or Template Variables.
+
+
+----
+h3. Resolver (for xPDOVehicles)
+
+Post-processor: a script or predefined action that is evaluated after a Vehicle is installed or uninstalled. Resolvers always occur after the vehicle&#39;s object is save()&#39;d, and can then perform actions on MODx before anything else happens in the install/uninstall process.
+
+An example of a PHP Resolver is one that attaches Plugin Events to a newly-installed Plugin.
+
+An example of a file Resolver is one that copies the assets/ditto directory in the xPDOVehicle path to /modx/assets/ditto.
+
+----
+h3. Setting Tags
+
+Tags in the form \[\[++SettingName\]\] that reference MODx System Settings, Context Settings, and User Settings.
+
+----
+h3. Snippet Tags
+
+Tags in the form \[\[SnippetName\]\], also referred to as Snippet Calls.
+
+----
+h3. Static Resource
+
+A specific type of Resource that is a direct reference to a specific file on the MODx site. The content is replaced with the contents of that file.
+
+----
+h3. Symlink
+
+A type of Resource that references a single, local MODx Resource; the Resource&#39;s content will replace the Symlink&#39;s content.
+
+----
+h3. System Setting
+
+A site-wide variable accessible to the MODx site. Can be overridden by Context Settings and User Settings.
+
+----
+h3. Template Variables
+
+Custom&amp;nbsp;Resource Fields created by the user on the Document Create/Edit Screen and referenced using Content Tags.
+
+----
+h3. Transport Package
+
+A packaged and zipped collection of Transport Vehicles, that can be easily distributed (&quot;transported&quot;) from one Core Workspace to another.
+
+----
+h3. Transport Provider (formerly Provisioner)
+
+A web service that enables remote installation of Transport Packages directly from the MODx manager application.
+
+----
+h3. Transport Vehicles
+
+An intelligent container that encapsulates any artifact that can be distributed in a Transport Package. Transport Vehicles store their payloads in a portable format.
+
+----
+h3. User Setting
+
+A user-specific setting that either creates a new setting or overrides the similar Context Setting and System Setting. Used to provide unique settings to that user.
+
+----
+h3. Weblink
+
+A type of Resource that references a specific URL or MODx Resource, redirecting the visitor to that URL or Resource.
+
+----
+h3. Validator (for xPDOVehicles)
+
+Pre-processor: a script or predefined action that executes prior to the vehicle being installed or uninstalled. If the validator returns true, the install/uninstall action will proceed as normal. If the validator returns false, MODx will not uninstall or install the package.
+
+A Validator could be used to determine if a directory exists and is writable, to see if other modx elements are already installed, or to determine if a certain version of MySQL and PHP are used on a server.
+
+----
+h3. xPDOVehicle
+
+The base Transport Vehicle class, xPDOVehicle, stores xPDOObject instances (which represent a row of data in a table) in it&#39;s payload, along with various attributes that control how the object is installed/uninstalled in a Core Workspace (see xPDOVehicle Validators and xPDOVehicle Resolvers).
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35586090";s:3:"ver";s:1:"2";s:4:"code";s:8629:"\\
+{scrollbar}
+{toc}
+----
+h3. Add-on
+
+A MODx Third-party Component (3PC) that does not modify the Core or extend any of its classes, but yet still provides extra functionality to the MODx instance.
+
+----
+h3. Asset
+
+Any type of file resource that is usually located in the /assets directory, as defined by the constant MODX_ASSETS_PATH; can include Third-party Components, libraries, image files, css files, JavaScript files, class files, etc.
+
+----
+h3. Back-end
+
+A synonym for the MODx manager interface.
+
+----
+h3. Category
+
+An optional classifying name that can be attached to any Element or PropertySet (and other objects in later versions of Revolution) that separates it from other similar objects.
+
+----
+h3. Chunk Tags
+
+Tags in the form \[\[$ChunkName\]\] that can be used in reference to Chunks.
+
+----
+h3. Component
+
+Also called &quot;Third-party Component&quot;, or 3PC, a Component usually provides extra functionality to MODx, usually in the form of an Add-on, Core Extension, or Template.
+
+----
+h3. Content Type
+
+Sets the extension, mime-type and binary setting for any Resource.
+
+----
+h3. Context
+
+A delineator of resources and settings that can be used for a variety of reasons; usually used to create multiple-context sites, such as subdomains, multi-language sites, etc.
+
+----
+h3. Context Setting
+
+A single setting for that Context that either creates a new setting or overrides a System Setting.
+
+----
+h3. Core Workspace
+
+Each unique MODx Core is represented by a named Workspace. When you install Revolution initially, the MODx Core used by the setup application is recorded into the MODx database as the Default MODx Workspace. In future MODx Revolution releases, there will be an ability to manage multiple Workspaces from a single database, directly from the manager application. This will make it easy to isolate upgrades to the MODx Core; by quickly adding a new Core Workspace and selecting a menu option, you&#39;ll be able to apply an entire new MODx Core installation to production sites after testing on a staging site, or quickly revert to a previous Core Workspace you know works. This will be especially important for multi-site configurations running on shared MODx Core installations.
+
+----
+h3. Document
+
+A specific type of Resource, usually pertaining to a normal website page.
+
+----
+h3. Document Identifier
+
+See Resource Identifier.
+
+----
+h3. Element
+
+Also called &quot;Content Elements&quot;, a single Template, Template Variable, Chunk, Snippet, Plugin, Category, or Property Set visible in the Manager Elements tree.
+
+----
+h3. Extension
+
+Also called &quot;Core Extension&quot;. A MODx&amp;nbsp;Third-party Component that modifies the MODx Core, such as a custom User or authentication class, caching mechanisms, or context manipulation classes.
+
+----
+h3. File Resolver
+
+A type of xPDOVehicle Resolver that copies files from the source location to the target location in a Transport Package.
+
+----
+h3. Language Tags
+
+Tags in the form \[\[%LanguageStringKey\]\] that reference MODx Lexicon entries.
+
+----
+h3. Lexicon
+
+A Lexicon is a dictionary of words and phrases organized by Culture (more specific than language, i.e. en-UK) that is used to internationalize the manager application and can be used by Add-On and Core Extension developers to provide localization facilities for their own components. This replaces the legacy MODx language files and allows customization of the entries directly from the manager application.
+
+----
+h3. Lexicon Topic (formerly Foci)
+
+A set of Lexicon Entries focused on a particular subject. Revolution only loads Lexicon Entries as it needs them, by their Topic, to reduce load times.
+
+----
+h3. Link Tags
+
+Tags in the form \[\[~ResourceId\]\] that reference the URL of a particular Resource.
+
+----
+h3. Manager
+
+The back-end of the MODx interface.
+
+----
+h3. Namespace
+
+An organizational tag for Components to use to identify Lexicon Entries, Settings, and other objects related to the Component in a Revolution site. Also specifies an absolute path in which the Component may be found.
+
+----
+h3. Placeholder Tags
+
+Tags in the form \[\[+PlaceholderName\]\] that reference MODx Placeholders, usually set with $modx-&gt;setPlaceholder(&#39;placeholderName&#39;,&#39;value&#39;) in a Snippet or Plugin.
+
+----
+h3. Resource&amp;nbsp;Field
+
+Any of the fields of the site_content table, such as title, longtitle, introtext, alias, menuindex, etc. Some fields are available on the Document Create/Edit screen and via Resource Tags; Others can only be accessed via the documentObject.
+
+----
+h3. Property
+
+A single variable for an Element; used to set a specific parameter for the Element.
+
+----
+h3. Property Set
+
+A collection of variables used for a particular purpose with an Element. Property Sets are attached to Elements and pass in the Properties that they carry as parameters to the Element. An example is a custom Property Set for a Snippet that passes in specific parameters to the Element, overriding the default behavior.
+
+----
+h3. Resource
+
+A type of container that is interpreted by the Parser to fetch content. Can have any number of derivative classes; the most common is a Document.
+
+----
+h3. Resource Identifier
+
+Also called a Document ID, Resource ID, or&amp;nbsp;Document Identifier; the number in parenthesis in the MODx Resource Tree in the Manager that uniquely identifies the Resource specified.
+
+----
+h3. Resource Tags
+
+Tags in the form \[\[*ResourceField/TV\]\], which can be used to refer to&amp;nbsp;Resource Fields, or Template Variables.
+
+
+----
+h3. Resolver (for xPDOVehicles)
+
+Post-processor: a script or predefined action that is evaluated after a Vehicle is installed or uninstalled. Resolvers always occur after the vehicle&#39;s object is save()&#39;d, and can then perform actions on MODx before anything else happens in the install/uninstall process.
+
+An example of a PHP Resolver is one that attaches Plugin Events to a newly-installed Plugin.
+
+An example of a file Resolver is one that copies the assets/ditto directory in the xPDOVehicle path to /modx/assets/ditto.
+
+----
+h3. Setting Tags
+
+Tags in the form \[\[++SettingName\]\] that reference MODx System Settings, Context Settings, and User Settings.
+
+----
+h3. Snippet Tags
+
+Tags in the form \[\[SnippetName\]\], also referred to as Snippet Calls.
+
+----
+h3. Static Resource
+
+A specific type of Resource that is a direct reference to a specific file on the MODx site. The content is replaced with the contents of that file.
+
+----
+h3. Symlink
+
+A type of Resource that references a single, local MODx Resource; the Resource&#39;s content will replace the Symlink&#39;s content.
+
+----
+h3. System Setting
+
+A site-wide variable accessible to the MODx site. Can be overridden by Context Settings and User Settings.
+
+----
+h3. Template Variables
+
+Custom&amp;nbsp;Resource Fields created by the user on the Document Create/Edit Screen and referenced using Content Tags.
+
+----
+h3. Transport Package
+
+A packaged and zipped collection of Transport Vehicles, that can be easily distributed (&quot;transported&quot;) from one Core Workspace to another.
+
+----
+h3. Transport Provider (formerly Provisioner)
+
+A web service that enables remote installation of Transport Packages directly from the MODx manager application.
+
+----
+h3. Transport Vehicles
+
+An intelligent container that encapsulates any artifact that can be distributed in a Transport Package. Transport Vehicles store their payloads in a portable format.
+
+----
+h3. User Setting
+
+A user-specific setting that either creates a new setting or overrides the similar Context Setting and System Setting. Used to provide unique settings to that user.
+
+----
+h3. Weblink
+
+A type of Resource that references a specific URL or MODx Resource, redirecting the visitor to that URL or Resource.
+
+----
+h3. Validator (for xPDOVehicles)
+
+Pre-processor: a script or predefined action that executes prior to the vehicle being installed or uninstalled. If the validator returns true, the install/uninstall action will proceed as normal. If the validator returns false, MODx will not uninstall or install the package.
+
+A Validator could be used to determine if a directory exists and is writable, to see if other modx elements are already installed, or to determine if a certain version of MySQL and PHP are used on a server.
+
+----
+h3. xPDOVehicle
+
+The base Transport Vehicle class, xPDOVehicle, stores xPDOObject instances (which represent a row of data in a table) in it&#39;s payload, along with various attributes that control how the object is installed/uninstalled in a Core Workspace (see xPDOVehicle Validators and xPDOVehicle Resolvers).
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"33227123";s:3:"ver";s:1:"1";s:4:"code";s:8633:"\\
+{scrollbar}
+{toc}
+----
+h3. Add-on
+
+A MODx Third-party Component (3PC) that does not modify the Core or extend any of its classes, but yet still provides extra functionality to the MODx instance.
+
+----
+h3. Asset
+
+Any type of file resource that is usually located in the /assets directory, as defined by the constant MODX_ASSETS_PATH; can include Third-party Components, libraries, image files, css files, JavaScript files, class files, etc.
+
+----
+h3. Back-end
+
+A synonym for the MODx manager interface.
+
+----
+h3. Category
+
+An optional classifying name that can be attached to any Element or PropertySet (and other objects in later versions of Revolution) that separates it from other similar objects.
+
+----
+h3. Chunk Tags
+
+Tags in the form \[\[$ChunkName\]\] that can be used in reference to Chunks.
+
+----
+h3. Component
+
+Also called &quot;Third-party Component&quot;, or 3PC, a Component usually provides extra functionality to MODx, usually in the form of an Add-on, Core Extension, or Template.
+
+----
+h3. Content Element
+
+Also called just &quot;Element&quot;, a single Template, Template Variable, Chunk, Snippet, Plugin, Category, or Property Set visible in the Manager Elements tree.
+
+----
+h3. Content Type
+
+Sets the extension, mime-type and binary setting for any Resource.
+
+----
+h3. Context
+
+A delineator of resources and settings that can be used for a variety of reasons; usually used to create multiple-context sites, such as subdomains, multi-language sites, etc.
+
+----
+h3. Context Setting
+
+A single setting for that Context that either creates a new setting or overrides a System Setting.
+
+----
+h3. Core Workspace
+
+Each unique MODx Core is represented by a named Workspace. When you install Revolution initially, the MODx Core used by the setup application is recorded into the MODx database as the Default MODx Workspace. In future MODx Revolution releases, there will be an ability to manage multiple Workspaces from a single database, directly from the manager application. This will make it easy to isolate upgrades to the MODx Core; by quickly adding a new Core Workspace and selecting a menu option, you&#39;ll be able to apply an entire new MODx Core installation to production sites after testing on a staging site, or quickly revert to a previous Core Workspace you know works. This will be especially important for multi-site configurations running on shared MODx Core installations.
+
+----
+h3. Document
+
+A specific type of Resource, usually pertaining to a normal website page.
+
+----
+h3. Document Identifier
+
+See Resource Identifier.
+
+----
+h3. Extension
+
+Also called &quot;Core Extension&quot;. A MODx&amp;nbsp;Third-party Component that modifies the MODx Core, such as a custom User or authentication class, caching mechanisms, or context manipulation classes.
+
+----
+h3. File Resolver
+
+A type of xPDOVehicle Resolver that copies files from the source location to the target location in a Transport Package.
+
+----
+h3. Language Tags
+
+Tags in the form \[\[%LanguageStringKey\]\] that reference MODx Lexicon entries.
+
+----
+h3. Lexicon
+
+A Lexicon is a dictionary of words and phrases organized by Culture (more specific than language, i.e. en-UK) that is used to internationalize the manager application and can be used by Add-On and Core Extension developers to provide localization facilities for their own components. This replaces the legacy MODx language files and allows customization of the entries directly from the manager application.
+
+----
+h3. Lexicon Topic (formerly Foci)
+
+A set of Lexicon Entries focused on a particular subject. Revolution only loads Lexicon Entries as it needs them, by their Topic, to reduce load times.
+
+----
+h3. Link Tags
+
+Tags in the form \[\[~ResourceId\]\] that reference the URL of a particular Resource.
+
+----
+h3. Manager
+
+The back-end of the MODx interface.
+
+----
+h3. Namespace
+
+An organizational tag for Components to use to identify Lexicon Entries, Settings, and other objects related to the Component in a Revolution site. Also specifies an absolute path in which the Component may be found.
+
+----
+h3. Placeholder Tags
+
+Tags in the form \[\[+PlaceholderName\]\] that reference MODx Placeholders, usually set with $modx-&gt;setPlaceholder(&#39;placeholderName&#39;,&#39;value&#39;) in a Snippet or Plugin.
+
+----
+h3. Resource&amp;nbsp;Field
+
+Any of the fields of the site_content table, such as title, longtitle, introtext, alias, menuindex, etc. Some fields are available on the Document Create/Edit screen and via Resource Tags; Others can only be accessed via the documentObject.
+
+----
+h3. Property
+
+A single variable for an Element; used to set a specific parameter for the Element.
+
+----
+h3. Property Set
+
+A collection of variables used for a particular purpose with an Element. Property Sets are attached to Elements and pass in the Properties that they carry as parameters to the Element. An example is a custom Property Set for a Snippet that passes in specific parameters to the Element, overriding the default behavior.
+
+----
+h3. Resource
+
+A type of container that is interpreted by the Parser to fetch content. Can have any number of derivative classes; the most common is a Document.
+
+----
+h3. Resource Identifier
+
+Also called a Document ID, Resource ID, or&amp;nbsp;Document Identifier; the number in parenthesis in the MODx Resource Tree in the Manager that uniquely identifies the Resource specified.
+
+----
+h3. Resource Tags
+
+Tags in the form \[\[*ResourceField/TV\]\], which can be used to refer to&amp;nbsp;Resource Fields, or Template Variables.
+
+
+----
+h3. Resolver (for xPDOVehicles)
+
+Post-processor: a script or predefined action that is evaluated after a Vehicle is installed or uninstalled. Resolvers always occur after the vehicle&#39;s object is save()&#39;d, and can then perform actions on MODx before anything else happens in the install/uninstall process.
+
+An example of a PHP Resolver is one that attaches Plugin Events to a newly-installed Plugin.
+
+An example of a file Resolver is one that copies the assets/ditto directory in the xPDOVehicle path to /modx/assets/ditto.
+
+----
+h3. Setting Tags
+
+Tags in the form \[\[++SettingName\]\] that reference MODx System Settings, Context Settings, and User Settings.
+
+----
+h3. Snippet Tags
+
+Tags in the form \[\[SnippetName\]\], also referred to as Snippet Calls.
+
+----
+h3. Static Resource
+
+A specific type of Resource that is a direct reference to a specific file on the MODx site. The content is replaced with the contents of that file.
+
+----
+h3. Symlink
+
+A type of Resource that references a single, local MODx Resource; the Resource&#39;s content will replace the Symlink&#39;s content.
+
+----
+h3. System Setting
+
+A site-wide variable accessible to the MODx site. Can be overridden by Context Settings and User Settings.
+
+----
+h3. Template Variables
+
+Custom&amp;nbsp;Resource Fields created by the user on the Document Create/Edit Screen and referenced using Content Tags.
+
+----
+h3. Transport Package
+
+A packaged and zipped collection of Transport Vehicles, that can be easily distributed (&quot;transported&quot;) from one Core Workspace to another.
+
+----
+h3. Transport Provider (formerly Provisioner)
+
+A web service that enables remote installation of Transport Packages directly from the MODx manager application.
+
+----
+h3. Transport Vehicles
+
+An intelligent container that encapsulates any artifact that can be distributed in a Transport Package. Transport Vehicles store their payloads in a portable format.
+
+----
+h3. User Setting
+
+A user-specific setting that either creates a new setting or overrides the similar Context Setting and System Setting. Used to provide unique settings to that user.
+
+----
+h3. Weblink
+
+A type of Resource that references a specific URL or MODx Resource, redirecting the visitor to that URL or Resource.
+
+----
+h3. Validator (for xPDOVehicles)
+
+Pre-processor: a script or predefined action that executes prior to the vehicle being installed or uninstalled. If the validator returns true, the install/uninstall action will proceed as normal. If the validator returns false, MODx will not uninstall or install the package.
+
+A Validator could be used to determine if a directory exists and is writable, to see if other modx elements are already installed, or to determine if a certain version of MySQL and PHP are used on a server.
+
+----
+h3. xPDOVehicle
+
+The base Transport Vehicle class, xPDOVehicle, stores xPDOObject instances (which represent a row of data in a table) in it&#39;s payload, along with various attributes that control how the object is installed/uninstalled in a Core Workspace (see xPDOVehicle Validators and xPDOVehicle Resolvers).
+
+{scrollbar}";}}}

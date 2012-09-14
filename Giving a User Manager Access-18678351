@@ -1,0 +1,101 @@
+a:5:{s:2:"id";s:8:"18678351";s:4:"info";a:4:{s:6:"Title:";s:28:"Giving a User Manager Access";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:43:"[revolution20:Giving a User Manager Access]";}s:6:"parent";s:8:"33226828";s:6:"source";s:1135:"\\
+
+h2. The Problem
+
+You want a User to have manager editing access, but not have all the [Permissions] of an Administrator user. This tutorial, partially written by BobRay, will help you through that.
+
+h2. The Solution
+
+First off, create your user. Then:
+
+# Create a new role (say, Editor) with an authority of say, 10.
+# Add the User to the &quot;Administrator&quot; group with a role of &quot;Editor&quot;
+# In Access Controls | Policies, duplicate the administrator policy and rename it to whatever you want, say &quot;Editor&quot;.
+# Edit the AdminLite Policy to use whatever [Permissions] you want the User to have.
+# In Access Controls | User Groups, right click on the &quot;Administrator&quot; group and select &quot;Update Group.&quot;
+# On the Context Access tab, add two new entries to the grid:
+## Context: &#39;mgr&#39;  Minimum Role: &#39;Editor&#39;, Access Policy &#39;AdminLite&#39;
+## Context: &#39;web&#39;  Minimum Role: &#39;Editor&#39;, Access Policy &#39;Load, List and View&#39;
+# Click on Security -&gt; Flush Sessions and re-login.
+
+h2. See Also
+
+{pagetree:root=Security Tutorials|startDepth=2}
+
+{scrollbar}
+";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678351";s:3:"ver";s:1:"3";s:4:"code";s:1135:"\\
+
+h2. The Problem
+
+You want a User to have manager editing access, but not have all the [Permissions] of an Administrator user. This tutorial, partially written by BobRay, will help you through that.
+
+h2. The Solution
+
+First off, create your user. Then:
+
+# Create a new role (say, Editor) with an authority of say, 10.
+# Add the User to the &quot;Administrator&quot; group with a role of &quot;Editor&quot;
+# In Access Controls | Policies, duplicate the administrator policy and rename it to whatever you want, say &quot;Editor&quot;.
+# Edit the AdminLite Policy to use whatever [Permissions] you want the User to have.
+# In Access Controls | User Groups, right click on the &quot;Administrator&quot; group and select &quot;Update Group.&quot;
+# On the Context Access tab, add two new entries to the grid:
+## Context: &#39;mgr&#39;  Minimum Role: &#39;Editor&#39;, Access Policy &#39;AdminLite&#39;
+## Context: &#39;web&#39;  Minimum Role: &#39;Editor&#39;, Access Policy &#39;Load, List and View&#39;
+# Click on Security -&gt; Flush Sessions and re-login.
+
+h2. See Also
+
+{pagetree:root=Security Tutorials|startDepth=2}
+
+{scrollbar}
+";}i:1;a:3:{s:2:"id";s:8:"35095026";s:3:"ver";s:1:"2";s:4:"code";s:1090:"\\
+
+h2. The Problem
+
+You want a User to have manager editing access, but not have all the [Permissions] of an Administrator user. This tutorial, partially written by BobRay, will help you through that.
+
+h2. The Solution
+
+First off, create your user. Then:
+
+# Create a new role (say, Editor) with an authority of say, 10.
+# Add the User to the admin group with a role of Editor
+# In Access Controls | Policies, duplicate the administrator policy and rename it to whatever you want, say &quot;AdminLite&quot;.
+# Edit the AdminLite Policy to use whatever [Permissions] you want the User to have.
+# In Access Controls | User Groups, right click on the admin group and select &quot;Update Group.&quot;
+# On the Context Access tab, add two new ACL entries to the grid:
+## Context: &#39;mgr&#39;  Minimum Role: &#39;Editor&#39;, Access Policy &#39;AdminLite&#39;
+## Context: &#39;web&#39;  Minimum Role: &#39;Editor&#39;, Access Policy &#39;Load, List and View&#39;
+# Click on Security -&gt; Flush Sessions and re-login.
+
+h2. See Also
+
+{pagetree:root=Security Tutorials|startDepth=2}
+
+{scrollbar}
+";}i:2;a:3:{s:2:"id";s:8:"35095024";s:3:"ver";s:1:"1";s:4:"code";s:1080:"\\
+
+h2. The Problem
+
+You want a User to have manager editing access, but not have all the [Permissions] of an Administrator user. This tutorial, partially written by BobRay, will help you through that.
+
+h2. The Solution
+
+First off, create your user. Then:
+
+# Create a new role (say, Editor) with an authority of say, 10.
+# Add the User to the admin group with a role of Editor
+# In Access Controls | Policies, duplicate the administrator policy and rename it to whatever you want, say &quot;AdminLite&quot;.
+# Edit the AdminLite Policy to use whatever [Permissions] you want the User to have.
+# In Access Controls | User Groups, right click on the admin group and select &quot;Update Group.&quot;
+# On the Context Access tab, add two new ACL entries to the grid:
+## Context: &#39;mgr&#39;  Minimum Role: &#39;Editor&#39;, Access Policy &#39;AdminLite&#39;
+## Context: &#39;web&#39;  Minimum Role: &#39;Editor&#39;, Access Policy &#39;AdminLite&#39;
+# Click on Security -&gt; Flush Sessions and re-login.
+
+h2. See Also
+
+{pagetree:root=Security Tutorials|startDepth=2}
+
+{scrollbar}
+";}}}

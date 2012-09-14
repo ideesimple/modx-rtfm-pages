@@ -1,0 +1,17 @@
+a:5:{s:2:"id";s:8:"20119758";s:4:"info";a:4:{s:6:"Title:";s:14:"welcome_screen";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:29:"[revolution20:welcome_screen]";}s:6:"parent";s:8:"18678127";s:6:"source";s:217:"h2. welcome_screen
+
+*Name*: Show Welcome Screen
+*Type*: Yes/No
+*Default*: No
+
+If set to true, the welcome screen will show on the next successful loading of the welcome page, and then not show after that.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"20119758";s:3:"ver";s:1:"1";s:4:"code";s:217:"h2. welcome_screen
+
+*Name*: Show Welcome Screen
+*Type*: Yes/No
+*Default*: No
+
+If set to true, the welcome screen will show on the next successful loading of the welcome page, and then not show after that.
+
+{scrollbar}";}}}

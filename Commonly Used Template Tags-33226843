@@ -1,0 +1,808 @@
+a:5:{s:2:"id";s:8:"33226843";s:4:"info";a:4:{s:6:"Title:";s:27:"Commonly Used Template Tags";s:7:"Author:";s:17:"Everett Griffiths";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:42:"[revolution20:Commonly Used Template Tags]";}s:6:"parent";s:8:"11042890";s:6:"source";s:7234:"\\
+
+{toc}
+
+This page lists the most commonly used MODx Revolution tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. These are frequently referred to as &quot;tags&quot; or &quot;placeholders&quot; (and sometimes &quot;template variables&quot;), so we mention those terms here as an aid to searching, although technically speaking they are *not* placeholders or template variables: they are MODx tags. Yes, it can be confusing for the newcomer, so just remember that there are different flavors of these tags, each with its own purpose and name. [Placeholders] are set in code and are displayed with placeholder tags. [Template Variables] are extra resource content fields created by the user; they can be thought of as custom fields. Neither placeholders, not template variables are pre-set by the MODx core.
+
+h2. Default Resource Content Field Tags
+
+In MODx Revolution, each page will always have the following content fields that you can use when constructing your templates. Except for the Resource ID and the parent field, they are all supplied by the user when editing the resource and may be empty if the user did not fill them in:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the Resource ID of the page (set by MODx when the page is created. | Often used in conjunction with the link syntax, e.g. {{&lt;a href=&quot;\[\[~\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the Title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the Long Title of the page | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*alias\]\]* | the page alias. | _Used to construct the URL of the page_ |
+| *\[\[*description\]\]* | the page Description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the Introductory Text field (a.k.a. the summary). | Often used by Snippets to summarize posts, e.g. [ADDON:Ditto] {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any). Set by MODx when the page is created. Can be altered by the user. | Often used in conjunction with the link syntax, e.g. {{&lt;a href=&quot;\[\[~\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the Title used when the page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[++site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[++site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[++site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | Often used in conjunction with the link syntax, e.g. {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~\[\[++site_start\]\]\]\]&quot;&gt;Home&lt;/a&gt;}} |
+| *\[\[$chunk\]\]* | This references a chunk by name. Chunks are any bit of reusable content. | Common chunks might be for _header_ or _footer_ |
+| *\[\[~link\]\]* | Use this syntax to build links to pages by referencing their unique id (visible in parentheses next to the page&#39;s name in the resource tree). These links will not break if pages are moved or renamed. | {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~1\]\]&quot;&gt;Home&lt;/a&gt;}} |
+
+h2. All Tags
+
+As you increase your understanding of how MODx templates work, you&#39;ll want to have at your disposal the complete list of available content fields.  Here is the complete list of all tags, gleaned from this [blog post|http://modxcms.com/forums/index.php/topic,63481.0/topicseen.html].
+
+|| Tag || Data Type || Description || Example Usage ||
+| *\[\[*alias\]\]* | text | Alias | Normally, you will use the _id_ to generate the URL, e.g. {{&lt;a href=&quot;\[\[~\[\[*id\]\]\]\]&quot;&gt;Click Here\!&lt;/a&gt;}}, but this lets you print out the alias parameter. |
+| *\[\[*cacheable\]\]* | int 0/1 | Cacheable | |
+| *\[\[*class_key\]\]* | int | Class Key of the Resource, e.g. _modDocument_ | |
+| *\[\[*content\]\]* | text | Resource Content | |
+| *\[\[*content_type\]\]* | int | Content Type | |
+| *\[\[*createdon\]\]* | date | Created On date, e.g. _2011-04-14 20:40:50_, often used in conjunction with the _strtotime_ output filter | {{\[\[*createdon:strtotime:date=`%a %b %e, %Y`\]\]}} See [Date Formats].|
+| *\[\[*createdby\]\]* | int | Created By User ID Number | |
+| *\[\[*deleted\]\]* | int 0/1 | Deleted | |
+| *\[\[*deletedby\]\]* | int | Deleted By User ID Number | |
+| *\[\[*deletedon\]\]* | date | Date of Deletions | {{\[\[*deletedon:strtotime:date=`%a %b %e, %Y`\]\]}} See [Date Formats].|
+| *\[\[*description\]\]* | text | Description | |
+| *\[\[*editedon\]\]* | date | Edited On date, e.g. _2011-04-18 09:06:08_ | {{\[\[*editedon:strtotime:date=`%a %b %e, %Y`\]\]}} See [Date Formats]. |
+| *\[\[*editedby\]\]* | int | Edited By User ID number | |
+| *\[\[*hidemenu\]\]* | int 0/1 | Hide From Menus; this attribute is read by many Snippets, e.g. WayFinder | |
+| *\[\[*id\]\]* | int | Resource ID | Used frequently to generate links to this page. |
+| *\[\[*introtext\]\]* | text | Summary | |
+| *\[\[*isfolder\]\]* | int 0/1 | Container | |
+| *\[\[*link_attributes\]\]* | text | Link attributes; these are inserted automatically when you use the \[\[~123\]\] syntax | |
+| *\[\[*longtitle\]\]* | text | Long Title | |
+| *\[\[*menuindex\]\]* | int | Menu Index | |
+| *\[\[*menutitle\]\]* | text | Menu Title | |
+| *\[\[*pagetitle\]\]* | text | Page Title | |
+| *\[\[*parent\]\]* | int | Parent Resource | |
+| *\[\[*pub_date\]\]* | date ---Publish Date | |
+| *\[\[*published\]\]* | int 0/1 | Published | |
+| *\[\[*publishedby\]\]* | int | Published By User ID Number | |
+| *\[\[*publishedon\]\]* | date | Published On | {{\[\[*publishedon:strtotime:date=`%a %b %e, %Y`\]\]}} See [Date Formats].|
+| *\[\[*richtext\]\]* | int 0/1 | Rich Text |
+| *\[\[*searchable\]\]* | int 0/1 | Searchable | |
+| *\[\[*template\]\]* | int | Template ID number | |
+| *\[\[*unpub_date\]\]* | date -- Unpublish Date | {{\[\[*unpub_date:strtotime:date=`%a %b %e, %Y`\]\]}} See [Date Formats].|
+| *\[\[*uri_override\]\]* | int 0/1 | Freeze URI | |
+| *\[\[*uri\]\]* | string | URI | |
+
+{note}
+Just to clarify on pub_date -- it&#39;s only set when the user sets a future date for publication in the Publish On field. And when the doc is actually published, it&#39;s zeroed out.
+
+The publishedon field always contains the most recent date that the resource changed form unpublished to published (or the date a new doc was saved with Publish checked).
+{note}
+
+h2. See Also
+
+* [Date Formats] : shows how to format date fields.
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";s:8:"versions";a:17:{i:0;a:3:{s:2:"id";s:8:"33226843";s:3:"ver";s:1:"1";s:4:"code";s:7234:"\\
+
+{toc}
+
+This page lists the most commonly used MODx Revolution tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. These are frequently referred to as &quot;tags&quot; or &quot;placeholders&quot; (and sometimes &quot;template variables&quot;), so we mention those terms here as an aid to searching, although technically speaking they are *not* placeholders or template variables: they are MODx tags. Yes, it can be confusing for the newcomer, so just remember that there are different flavors of these tags, each with its own purpose and name. [Placeholders] are set in code and are displayed with placeholder tags. [Template Variables] are extra resource content fields created by the user; they can be thought of as custom fields. Neither placeholders, not template variables are pre-set by the MODx core.
+
+h2. Default Resource Content Field Tags
+
+In MODx Revolution, each page will always have the following content fields that you can use when constructing your templates. Except for the Resource ID and the parent field, they are all supplied by the user when editing the resource and may be empty if the user did not fill them in:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the Resource ID of the page (set by MODx when the page is created. | Often used in conjunction with the link syntax, e.g. {{&lt;a href=&quot;\[\[~\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the Title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the Long Title of the page | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*alias\]\]* | the page alias. | _Used to construct the URL of the page_ |
+| *\[\[*description\]\]* | the page Description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the Introductory Text field (a.k.a. the summary). | Often used by Snippets to summarize posts, e.g. [ADDON:Ditto] {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any). Set by MODx when the page is created. Can be altered by the user. | Often used in conjunction with the link syntax, e.g. {{&lt;a href=&quot;\[\[~\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the Title used when the page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[++site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[++site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[++site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | Often used in conjunction with the link syntax, e.g. {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~\[\[++site_start\]\]\]\]&quot;&gt;Home&lt;/a&gt;}} |
+| *\[\[$chunk\]\]* | This references a chunk by name. Chunks are any bit of reusable content. | Common chunks might be for _header_ or _footer_ |
+| *\[\[~link\]\]* | Use this syntax to build links to pages by referencing their unique id (visible in parentheses next to the page&#39;s name in the resource tree). These links will not break if pages are moved or renamed. | {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~1\]\]&quot;&gt;Home&lt;/a&gt;}} |
+
+h2. All Tags
+
+As you increase your understanding of how MODx templates work, you&#39;ll want to have at your disposal the complete list of available content fields.  Here is the complete list of all tags, gleaned from this [blog post|http://modxcms.com/forums/index.php/topic,63481.0/topicseen.html].
+
+|| Tag || Data Type || Description || Example Usage ||
+| *\[\[*alias\]\]* | text | Alias | Normally, you will use the _id_ to generate the URL, e.g. {{&lt;a href=&quot;\[\[~\[\[*id\]\]\]\]&quot;&gt;Click Here\!&lt;/a&gt;}}, but this lets you print out the alias parameter. |
+| *\[\[*cacheable\]\]* | int 0/1 | Cacheable | |
+| *\[\[*class_key\]\]* | int | Class Key of the Resource, e.g. _modDocument_ | |
+| *\[\[*content\]\]* | text | Resource Content | |
+| *\[\[*content_type\]\]* | int | Content Type | |
+| *\[\[*createdon\]\]* | date | Created On date, e.g. _2011-04-14 20:40:50_, often used in conjunction with the _strtotime_ output filter | {{\[\[*createdon:strtotime:date=`%a %b %e, %Y`\]\]}} See [Date Formats].|
+| *\[\[*createdby\]\]* | int | Created By User ID Number | |
+| *\[\[*deleted\]\]* | int 0/1 | Deleted | |
+| *\[\[*deletedby\]\]* | int | Deleted By User ID Number | |
+| *\[\[*deletedon\]\]* | date | Date of Deletions | {{\[\[*deletedon:strtotime:date=`%a %b %e, %Y`\]\]}} See [Date Formats].|
+| *\[\[*description\]\]* | text | Description | |
+| *\[\[*editedon\]\]* | date | Edited On date, e.g. _2011-04-18 09:06:08_ | {{\[\[*editedon:strtotime:date=`%a %b %e, %Y`\]\]}} See [Date Formats]. |
+| *\[\[*editedby\]\]* | int | Edited By User ID number | |
+| *\[\[*hidemenu\]\]* | int 0/1 | Hide From Menus; this attribute is read by many Snippets, e.g. WayFinder | |
+| *\[\[*id\]\]* | int | Resource ID | Used frequently to generate links to this page. |
+| *\[\[*introtext\]\]* | text | Summary | |
+| *\[\[*isfolder\]\]* | int 0/1 | Container | |
+| *\[\[*link_attributes\]\]* | text | Link attributes; these are inserted automatically when you use the \[\[~123\]\] syntax | |
+| *\[\[*longtitle\]\]* | text | Long Title | |
+| *\[\[*menuindex\]\]* | int | Menu Index | |
+| *\[\[*menutitle\]\]* | text | Menu Title | |
+| *\[\[*pagetitle\]\]* | text | Page Title | |
+| *\[\[*parent\]\]* | int | Parent Resource | |
+| *\[\[*pub_date\]\]* | date ---Publish Date | |
+| *\[\[*published\]\]* | int 0/1 | Published | |
+| *\[\[*publishedby\]\]* | int | Published By User ID Number | |
+| *\[\[*publishedon\]\]* | date | Published On | {{\[\[*publishedon:strtotime:date=`%a %b %e, %Y`\]\]}} See [Date Formats].|
+| *\[\[*richtext\]\]* | int 0/1 | Rich Text |
+| *\[\[*searchable\]\]* | int 0/1 | Searchable | |
+| *\[\[*template\]\]* | int | Template ID number | |
+| *\[\[*unpub_date\]\]* | date -- Unpublish Date | {{\[\[*unpub_date:strtotime:date=`%a %b %e, %Y`\]\]}} See [Date Formats].|
+| *\[\[*uri_override\]\]* | int 0/1 | Freeze URI | |
+| *\[\[*uri\]\]* | string | URI | |
+
+{note}
+Just to clarify on pub_date -- it&#39;s only set when the user sets a future date for publication in the Publish On field. And when the doc is actually published, it&#39;s zeroed out.
+
+The publishedon field always contains the most recent date that the resource changed form unpublished to published (or the date a new doc was saved with Publish checked).
+{note}
+
+h2. See Also
+
+* [Date Formats] : shows how to format date fields.
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35094694";s:3:"ver";s:1:"1";s:4:"code";s:6863:"\\
+
+{toc}
+
+This page lists the most commonly used MODx Revolution tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. These are frequently referred to as &quot;tags&quot; or &quot;placeholders&quot; (and sometimes &quot;template variables&quot;), so we mention those terms here as an aid to searching, although technically speaking they are *not* placeholders or template variables: they are MODx tags. Yes, it can be confusing for the newcomer, so just remember that there are different flavors of these tags, each with its own purpose and name. [Placeholders] are set in code and are displayed with placeholder tags. [Template Variables] are extra resource content fields created by the user; they can be thought of as custom fields. Neither placeholders, not template variables are pre-set by the MODx core.
+
+h2. Default Resource Content Field Tags
+
+In MODx Revolution, each page will always have the following content fields that you can use when constructing your templates. Except for the Resource ID and the parent field, they are all supplied by the user when editing the resource and may be empty if the user did not fill them in:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the Resource ID of the page (set by MODx when the page is created. | Often used in conjunction with the link syntax, e.g. {{&lt;a href=&quot;\[\[~\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the Title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the Long Title of the page | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*alias\]\]* | the page alias. | _Used to construct the URL of the page_ |
+| *\[\[*description\]\]* | the page Description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the Introductory Text field (a.k.a. the summary). | Often used by Snippets to summarize posts, e.g. [ADDON:Ditto] {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any). Set by MODx when the page is created. Can be altered by the user. | Often used in conjunction with the link syntax, e.g. {{&lt;a href=&quot;\[\[~\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the Title used when the page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[++site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[++site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[++site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | Often used in conjunction with the link syntax, e.g. {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~\[\[++site_start\]\]\]\]&quot;&gt;Home&lt;/a&gt;}} |
+| *\[\[$chunk\]\]* | This references a chunk by name. Chunks are any bit of reusable content. | Common chunks might be for _header_ or _footer_ |
+| *\[\[~link\]\]* | Use this syntax to build links to pages by referencing their unique id (visible in parentheses next to the page&#39;s name in the resource tree). These links will not break if pages are moved or renamed. | {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~1\]\]&quot;&gt;Home&lt;/a&gt;}} |
+
+h2. All Tags
+
+As you increase your understanding of how MODx templates work, you&#39;ll want to have at your disposal the complete list of available content fields.  Here is the complete list of all tags, gleaned from this [blog post|http://modxcms.com/forums/index.php/topic,63481.0/topicseen.html].
+
+|| Tag || Data Type || Description || Example Usage ||
+| *\[\[*alias\]\]* | text | Alias | Normally, you will use the _id_ to generate the URL, e.g. {{&lt;a href=&quot;\[\[~\[\[*id\]\]\]\]&quot;&gt;Click Here\!&lt;/a&gt;}}, but this lets you print out the alias parameter. |
+| *\[\[*cacheable\]\]* | int 0/1 | Cacheable | |
+| *\[\[*class_key\]\]* | int | Class Key of the Resource, e.g. _modDocument_ | |
+| *\[\[*content\]\]* | text | Resource Content | |
+| *\[\[*content_type\]\]* | int | Content Type | |
+| *\[\[*createdon\]\]* | date | Created On date, e.g. _2011-04-14 20:40:50_, often used in conjunction with the _strtotime_ output filter | {{\[\[*createdon:strtotime:date=`%a %b %e, %Y`\]\]}} See [Date Formats].|
+| *\[\[*createdby\]\]* | int | Created By User ID Number | |
+| *\[\[*deleted\]\]* | int 0/1 | Deleted | |
+| *\[\[*deletedby\]\]* | int | Deleted By User ID Number | |
+| *\[\[*deletedon\]\]* | date | Date of Deletions | {{\[\[*deletedon:strtotime:date=`%a %b %e, %Y`\]\]}} See [Date Formats].|
+| *\[\[*description\]\]* | text | Description | |
+| *\[\[*editedon\]\]* | date | Edited On date, e.g. _2011-04-18 09:06:08_ | {{\[\[*editedon:strtotime:date=`%a %b %e, %Y`\]\]}} See [Date Formats]. |
+| *\[\[*editedby\]\]* | int | Edited By User ID number | |
+| *\[\[*hidemenu\]\]* | int 0/1 | Hide From Menus; this attribute is read by many Snippets, e.g. WayFinder | |
+| *\[\[*id\]\]* | int | Resource ID | Used frequently to generate links to this page. |
+| *\[\[*introtext\]\]* | text | Summary | |
+| *\[\[*isfolder\]\]* | int 0/1 | Container | |
+| *\[\[*link_attributes\]\]* | text | Link attributes; these are inserted automatically when you use the \[\[~123\]\] syntax | |
+| *\[\[*longtitle\]\]* | text | Long Title | |
+| *\[\[*menuindex\]\]* | int | Menu Index | |
+| *\[\[*menutitle\]\]* | text | Menu Title | |
+| *\[\[*pagetitle\]\]* | text | Page Title | |
+| *\[\[*parent\]\]* | int | Parent Resource | |
+| *\[\[*pub_date\]\]* | date ---Publish Date | |
+| *\[\[*published\]\]* | int 0/1 | Published | |
+| *\[\[*publishedby\]\]* | int | Published By User ID Number | |
+| *\[\[*publishedon\]\]* | date | Published On | {{\[\[*publishedon:strtotime:date=`%a %b %e, %Y`\]\]}} See [Date Formats].|
+| *\[\[*richtext\]\]* | int 0/1 | Rich Text |
+| *\[\[*searchable\]\]* | int 0/1 | Searchable | |
+| *\[\[*template\]\]* | int | Template ID number | |
+| *\[\[*unpub_date\]\]* | date -- Unpublish Date | {{\[\[*unpub_date:strtotime:date=`%a %b %e, %Y`\]\]}} See [Date Formats].|
+| *\[\[*uri_override\]\]* | int 0/1 | Freeze URI | |
+| *\[\[*uri\]\]* | string | URI | |
+
+h2. See Also
+
+* [Date Formats] : shows how to format date fields.
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35094561";s:3:"ver";s:1:"1";s:4:"code";s:6343:"\\
+
+{toc}
+
+This page lists the most commonly used MODx Revolution tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. These are frequently referred to as &quot;tags&quot; or &quot;placeholders&quot; (and sometimes &quot;template variables&quot;), so we mention those terms here as an aid to searching, although technically speaking they are *not* placeholders or template variables: they are MODx tags. Yes, it can be confusing for the newcomer, so just remember that there are different flavors of these tags, each with its own purpose and name.  [Placeholders] are set in code and are displayed with placeholder tags. [Template Variables] are extra resource content fields created by the user; they can be thought of as custom fields. Neither placeholders, not template variables are pre-set by the MODx core.
+
+h2. Default Resource Content Field Tags
+
+In MODx Revolution, each page will always have the following content fields that you can use when constructing your templates. Except for the Resource ID and the parent field, they are all supplied by the user when editing the resource and may be empty if the user did not fill them in:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the Resource ID of the page (set by MODx when the page is created. | Often used in conjunction with the link syntax, e.g. {{&lt;a href=&quot;\[\[~\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the Title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the Long Title of the page | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*alias\]\]* | the page alias. | _Used to construct the URL of the page_ |
+| *\[\[*description\]\]* | the page Description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the Introductory Text field (a.k.a. the summary). | Often used by Snippets to summarize posts, e.g. [ADDON:Ditto] {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any). Set by MODx when the page is created. Can be altered by the user. | Often used in conjunction with the link syntax, e.g. {{&lt;a href=&quot;\[\[~\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the Title used when the page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[++site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[++site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[++site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | Often used in conjunction with the link syntax, e.g. {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~\[\[++site_start\]\]\]\]&quot;&gt;Home&lt;/a&gt;}} |
+| *\[\[$chunk\]\]* | This references a chunk by name. Chunks are any bit of reusable content. | Common chunks might be for _header_ or _footer_ |
+| *\[\[~link\]\]* | Use this syntax to build links to pages by referencing their unique id (visible in parentheses next to the page&#39;s name in the resource tree). These links will not break if pages are moved or renamed. | {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~1\]\]&quot;&gt;Home&lt;/a&gt;}} |
+
+h2. All Tags
+
+As you increase your understanding of how MODx templates work, you&#39;ll want to have at your disposal the complete list of available content fields.  Here is the complete list of all tags, gleaned from this [blog post|http://modxcms.com/forums/index.php/topic,63481.0/topicseen.html].
+
+||Tag||Data Type||Description||Example Usage||
+| *\[\[*alias\]\]* |text|Alias| Normally, you will use the _id_ to generate the URL, e.g. {{&lt;a href=&quot;\[\[~\[\[*id\]\]\]\]&quot;&gt;Click Here\!&lt;/a&gt;}}, but this lets you print out the alias parameter.|
+| *\[\[*cacheable\]\]* |int 0/1|Cacheable| |
+| *\[\[*class_key\]\]* |int|Class Key of the Resource, e.g. _modDocument_ | |
+| *\[\[*content\]\]* |text|Resource Content| |
+| *\[\[*content_type\]\]* |int|Content Type| |
+| *\[\[*createdon\]\]* |date|Created On date, e.g. _2011-04-14 20:40:50_, often used in conjunction with the _strtotime_ output filter| {{\[\[\*createdon:date=`%a %b %e, %Y`\]\]}} |
+| *\[\[*createdby\]\]* |int|Created By User ID Number| |
+| *\[\[*deleted\]\]* |int 0/1|Deleted| |
+| *\[\[*deletedby\]\]* |int|Deleted By User ID Number| |
+| *\[\[*deletedon\]\]* |date|Date of Deletions| |
+| *\[\[*description\]\]* |text|Description| |
+| *\[\[*editedon\]\]* |date|Edited On date, e.g. _2011-04-18 09:06:08_ | |
+| *\[\[*editedby\]\]* |int|Edited By User ID number| |
+| *\[\[*hidemenu\]\]* |int 0/1|Hide From Menus; this attribute is read by many Snippets, e.g. WayFinder| |
+| *\[\[*id\]\]* |int|Resource ID| Used frequently to generate links to this page.|
+| *\[\[*introtext\]\]* |text|Summary| |
+| *\[\[*isfolder\]\]* |int 0/1|Container| |
+| *\[\[*link_attributes\]\]* |text|Link attributes; these are inserted automatically when you use the \[\[\~123\]\] syntax| |
+| *\[\[*longtitle\]\]* |text|Long Title| |
+| *\[\[*menuindex\]\]* |int|Menu Index| |
+| *\[\[*menutitle\]\]* |text|Menu Title| |
+| *\[\[*pagetitle\]\]* |text|Page Title| |
+| *\[\[*parent\]\]* |int|Parent Resource| |
+| *\[\[*pub_date\]\]* |date —Publish Date| |
+| *\[\[*published\]\]* |int 0/1|Published| |
+| *\[\[*publishedby\]\]* |int|Published By User ID Number| |
+| *\[\[*publishedon\]\]* |date|Published On| |
+| *\[\[*richtext\]\]* |int 0/1|Rich Text
+| *\[\[*searchable\]\]* |int 0/1|Searchable| |
+| *\[\[*template\]\]* |int|Template ID number| |
+| *\[\[*unpub_date\]\]* |date -- Unpublish Date| |
+| *\[\[*uri_override\]\]* |int 0/1|Freeze URI| |
+| *\[\[*uri\]\]* |string|URI| |
+
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"35094555";s:3:"ver";s:1:"1";s:4:"code";s:3872:"\\
+
+{toc}
+
+This page lists the most commonly used MODx Revolution tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. Occasionally these are referred to as &quot;tags&quot; or &quot;placeholders&quot;, and sometimes &quot;template variables&quot; so we mention those terms here as an aid to searching although they are *not* placeholders or template variables. They are MODx tags. [Placeholders] are set in code and are displayed with placeholder tags. Template variables are extra resource content fields created by the user. Neither placeholders, not template variables are pre-set by the MODx core.
+
+h2. Default Resource Content Field Tags
+
+In MODx Revolution, each page will always have the following content fields that you can use when constructing your templates. Except for the Resource ID and the parent field, they are all supplied by the user when editing the resource and may be empty if the user did not fill them in:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the Resource ID of the page (set by MODx when the page is created. | Often used in conjunction with the link syntax, e.g. {{&lt;a href=&quot;\[\[~\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the Title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the Long Title of the page | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*alias\]\]* | the page alias. | _Used to construct the URL of the page_ |
+| *\[\[*description\]\]* | the page Description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the Introductory Text field (a.k.a. the summary). | Often used by Snippets to summarize posts, e.g. [ADDON:Ditto] {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any). Set by MODx when the page is created. Can be altered by the user. | Often used in conjunction with the link syntax, e.g. {{&lt;a href=&quot;\[\[~\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the Title used when the page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[++site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[++site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[++site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | Often used in conjunction with the link syntax, e.g. {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~\[\[++site_start\]\]\]\]&quot;&gt;Home&lt;/a&gt;}} |
+| *\[\[$chunk\]\]* | This references a chunk by name. Chunks are any bit of reusable content. | Common chunks might be for _header_ or _footer_ |
+| *\[\[~link\]\]* | Use this syntax to build links to pages by referencing their unique id (visible in parentheses next to the page&#39;s name in the resource tree). These links will not break if pages are moved or renamed. | {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~1\]\]&quot;&gt;Home&lt;/a&gt;}} |
+
+h2. All Tags
+
+The list is not yet complete, but here&#39;s a blog post listing a nearly complete list:
+http://modxcms.com/forums/index.php/topic,63481.0/topicseen.html
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"35094552";s:3:"ver";s:1:"1";s:4:"code";s:3705:"\\
+
+{toc}
+
+This page lists the most commonly used MODx Revolution tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. Occasionally these are referred to as &quot;tags&quot; or &quot;placeholders&quot;, and sometimes &quot;template variables&quot; so we mention those terms here as an aid to searching although they are *not* placeholders or template variables. They are MODx tags. [Placeholders] are set in code and are displayed with placeholder tags. Template variables are extra resource content fields created by the user. Neither placeholders, not template variables are pre-set by the MODx core.
+
+h2. Default Resource Content Field Tags
+
+In MODx Revolution, each page will always have the following content fields that you can use when constructing your templates. Except for the Resource ID and the parent field, they are all supplied by the user when editing the resource and may be empty if the user did not fill them in:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the Resource ID of the page (set by MODx when the page is created. | Often used in conjunction with the link syntax, e.g. {{&lt;a href=&quot;\[\[\~\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the Title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the Long Title of the page | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*alias\]\]* | the page alias. | _Used to construct the URL of the page_ |
+| *\[\[*description\]\]* | the page Description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the Introductory Text field (a.k.a. the summary). | Often used by Snippets to summarize posts, e.g. [ADDON:Ditto] {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any). Set by MODx when the page is created. Can be altered by the user. | Often used in conjunction with the link syntax, e.g. {{&lt;a href=&quot;\[\[\~\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the Title used when the page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[++site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[++site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[++site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | Often used in conjunction with the link syntax, e.g. {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~\[\[++site_start\]\]\]\]&quot;&gt;Home&lt;/a&gt;}} |
+| *\[\[$chunk\]\]* | This references a chunk by name. Chunks are any bit of reusable content. | Common chunks might be for _header_ or _footer_ |
+| *\[\[~link\]\]* | Use this syntax to build links to pages by referencing their unique id (visible in parentheses next to the page&#39;s name in the resource tree). These links will not break if pages are moved or renamed. | {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~1\]\]&quot;&gt;Home&lt;/a&gt;}} |
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"33226987";s:3:"ver";s:1:"1";s:4:"code";s:3731:"\\
+
+{toc}
+
+This page lists the most commonly used MODx Revolution tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. Occasionally these are referred to as &quot;tags&quot; or &quot;placeholders&quot;, and sometimes &quot;template variables&quot; so we mention those terms here as an aid to searching although they are *not* placeholders or template variables. They are MODx tags. [Placeholders] are set in code and are displayed with placeholder tags. Template variables are extra resource content fields created by the user. Neither placeholders, not template variables are pre-set by the MODx core.
+
+h2. Default Resource Content Field Tags
+
+In MODx Revolution, each page will always have the following content fields that you can use when constructing your templates. Except for the Resource ID and the parent field, they are all supplied by the user when editing the resource and may be empty if the user did not fill them in:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the Resource ID of the page (set by MODx when the page is created. | Often used in conjunction with the \[\[~link\]\] syntax, e.g. {{&lt;a href=&quot;\[\[~\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the Title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the Long Title of the page | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*alias\]\]* | the page alias. | _Used to construct the URL of the page_ |
+| *\[\[*description\]\]* | the page Description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the Introductory Text field (a.k.a. the summary). | Often used by Snippets to summarize posts, e.g. [ADDON:Ditto] {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any). Set by MODx when the page is created. Can be altered by the user. | Often used in conjunction with the \[\[~link\]\] syntax, e.g. {{&lt;a href=&quot;\[\[~\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the Title used when the page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[++site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[++site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[++site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | Often used in conjunction with the \[\[~link\]\] syntax, e.g. {{&lt;a id=&quot;logo&quot; href=&quot;\[\[\~\[\[++site_start\]\]\]\]&quot;&gt;Home&lt;/a&gt;}} |
+| *\[\[$chunk\]\]* | This references a chunk by name. Chunks are any bit of reusable content. | Common chunks might be for _header_ or _footer_ |
+| *\[\[~link\]\]* | Use this syntax to build links to pages by referencing their unique id (visible in parentheses next to the page&#39;s name in the resource tree). These links will not break if pages are moved or renamed. | {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~1\]\]&quot;&gt;Home&lt;/a&gt;}} |
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"33226985";s:3:"ver";s:1:"1";s:4:"code";s:3733:"\\
+
+{toc}
+
+This page lists the most commonly used MODx Revolution tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. Occasionally these are referred to as &quot;tags&quot; or &quot;placeholders&quot;, and sometimes &quot;template variables&quot; so we mention those terms here as an aid to searching although they are *not* placeholders or template variables. They are MODx tags. [Placeholders] are set in code and are displayed with placeholder tags. Template variables are extra resource content fields created by the user. Neither placeholders, not template variables are pre-set by the MODx core.
+
+h2. Default Resource Content Field Tags
+
+In MODx Revolution, each page will always have the following content fields that you can use when constructing your templates. Except for the Resource ID and the parent field, they are all supplied by the user when editing the resource and may be empty if the user did not fill them in:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the Resource ID of the page (set by MODx when the page is created. | Often used in conjunction with the \[\[\~link\]\] syntax, e.g. {{&lt;a href=&quot;\[\[\~\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the Title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the Long Title of the page | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*alias\]\]* | the page alias. | _Used to construct the URL of the page_ |
+| *\[\[*description\]\]* | the page Description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the Introductory Text field (a.k.a. the summary). | Often used by Snippets to summarize posts, e.g. [ADDON:Ditto] {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any). Set by MODx when the page is created. Can be altered by the user. | Often used in conjunction with the \[\[\~link\]\] syntax, e.g. {{&lt;a href=&quot;\[\[\~\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the Title used when the page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[++site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[++site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[++site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | Often used in conjunction with the \[\[~link\]\] syntax, e.g. {{&lt;a id=&quot;logo&quot; href=&quot;\[\[\[\[++site_start\]\]\]\]&quot;&gt;Home&lt;/a&gt;}} |
+| *\[\[$chunk\]\]* | This references a chunk by name. Chunks are any bit of reusable content. | Common chunks might be for _header_ or _footer_ |
+| *\[\[~link\]\]* | Use this syntax to build links to pages by referencing their unique id (visible in parentheses next to the page&#39;s name in the resource tree). These links will not break if pages are moved or renamed. | {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~1\]\]&quot;&gt;Home&lt;/a&gt;}} |
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"33226983";s:3:"ver";s:1:"1";s:4:"code";s:3754:"\\
+
+{toc}
+
+This page lists the most commonly used MODx Revolution tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. Occasionally these are referred to as &quot;tags&quot; or &quot;placeholders&quot;, and sometimes &quot;template variables&quot; so we mention those terms here as an aid to searching although they are *not* placeholders or template variables. They are MODx tags. [Placeholders] are set in code and are displayed with placeholder tags. Template variables are extra resource content fields created by the user. Neither placeholders, not template variables are pre-set by the MODx core.
+
+h2. Default Resource Content Field Tags
+
+In MODx Revolution, each page will always have the following content fields that you can use when constructing your templates. Except for the Resource ID and the parent field, they are all supplied by the user when editing the resource and may be empty if the user did not fill them in:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the Resource ID of the page (set by MODx when the page is created. | _Often used in conjunction with the \[\[_{_}{~}link\]\] syntax, e.g.~_ {{&lt;a href=&quot;\[\[\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the Title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the Long Title of the page | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*alias\]\]* | the page alias. | _Used to construct the URL of the page_ |
+| *\[\[*description\]\]* | the page Description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the Introductory Text field (a.k.a. the summary). | _Often used by Snippets to summarize posts, e.g._ _[ADDON:Ditto]_ {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any). Set by MODx when the page is created. Can be altered by the user. | _Often used in conjunction with the \[\[_{_}{~}link\]\] syntax, e.g.~_ {{&lt;a href=&quot;\[\[\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the Title used when the page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[++site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[++site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[++site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | _Often used in conjunction with the \[\[\~link\]\] syntax, e.g.~_ {{&lt;a id=&quot;logo&quot; href=&quot;\[\[\[\[++site_start\]\]\]\]&quot;&gt;Home&lt;/a&gt;}} |
+| *\[\[$chunk\]\]* | This references a chunk by name. Chunks are any bit of reusable content. | Common chunks might be for _header_ or _footer_ |
+| *\[\[\~link\]\]* | Use this syntax to build links to pages by referencing their unique id (visible in parentheses next to the page&#39;s name in the resource tree). These links will not break if pages are moved or renamed. | {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~1\]\]&quot;&gt;Home&lt;/a&gt;}} |
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}i:8;a:3:{s:2:"id";s:8:"33226981";s:3:"ver";s:1:"9";s:4:"code";s:3762:"\\
+
+{toc}
+
+This page lists the most commonly used MODx Revolution tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. Occasionally these are referred to as &quot;tags&quot; or &quot;placeholders&quot;, and sometimes &quot;template variables&quot; so we mention those terms here as an aid to searching although they are *not* placeholders or template variables. They are MODx tags. [Placeholders] are set in code and are displayed with placeholder tags. Template variables are extra resource content fields created by the user. Neither placeholders, not template variables are pre-set by the MODx core.
+
+h2. Default Resource Content Field Tags
+
+In MODx Revolution, each page will always have the following content fields that you can use when constructing your templates. Except for the Resource ID and the parent field, they are all supplied by the user when editing the resource and may be empty if the user did not fill them in:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the Resource ID of the page (set by MODx when the page is created. | _Often used in conjunction with the \[\[_{_}{~}link\]\] syntax, e.g.~_ {{&lt;a href=&quot;\[\[\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the Title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the Long Title of the page | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*alias\]\]* | the page alias. | _Used to construct the URL of the page_ |
+| *\[\[*description\]\]* | the page Description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the Introductory Text field (a.k.a. the summary). | _Often used by Snippets to summarize posts, e.g._ _[ADDON:Ditto]_ {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any). Set by MODx when the page is created. Can be altered by the user. | _Often used in conjunction with the \[\[_{_}{~}link\]\] syntax, e.g.~_ {{&lt;a href=&quot;\[\[\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the Title used when the page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[++site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[++site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[++site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | _Often used in conjunction with the \[\[_{~}link_\]\] syntax, e.g.~_ {{&lt;a id=&quot;logo&quot; href=&quot;\[\[\[\[++site_start\]\]\]\]&quot;&gt;Home&lt;/a&gt;}} |
+| *\[\[$chunk\]\]* | This references a chunk by name. Chunks are any bit of reusable content. | Common chunks might be for _header_ or _footer_ |
+| *[\[_{_}{~}link\]\]]* | Use this syntax to build links to pages by referencing their unique id (visible in parentheses next to the page&#39;s name in the resource tree). These links will not break if pages are moved or renamed. | {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~1\]\]&quot;&gt;Home&lt;/a&gt;}} |
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}i:9;a:3:{s:2:"id";s:8:"33226979";s:3:"ver";s:1:"8";s:4:"code";s:3643:"\\
+
+{toc}
+
+This page lists the most commonly used MODx Revolution tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. Occasionally these are referred to as &quot;tags&quot; or &quot;placeholders&quot;, and sometimes &quot;template variables&quot; so we mention those terms here as an aid to searching although they are *not* placeholders or template variables. They are MODx tags. [Placeholders] are set in code and are displayed with placeholder tags. Template variables are extra resource content fields created by the user. Neither placeholders, not template variables are pre-set by the MODx core.
+
+h2. Default Resource Content Field Tags
+
+In MODx Revolution, each page will always have the following content fields that you can use when constructing your templates. Except for the Resource ID and the parent field, they are all supplied by the user when editing the resource and may be empty if the user did not fill them in:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the Resource ID of the page (set by MODx when the page is created. | _Often used in conjunction with the \[\[_{_}{~}link\]\] syntax, e.g.~_ {{&lt;a href=&quot;\[\[\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the Title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the Long Title of the page | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*alias\]\]* | the page alias. | _Used to construct the URL of the page_ |
+| *\[\[*description\]\]* | the page Description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the Introductory Text field (a.k.a. the summary). | _Often used by Snippets to summarize posts, e.g._ _[ADDON:Ditto]_ {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any). Set by MODx when the page is created. Can be altered by the user. | _Often used in conjunction with the \[\[_{_}{~}link\]\] syntax, e.g.~_ {{&lt;a href=&quot;\[\[\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the Title used when the page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[++site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[++site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[++site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | _Often used in conjunction with the \[\[_~link_\]\] syntax, e.g.~_ {{&lt;a id=&quot;logo&quot; href=&quot;\[\[\[\[++site_start\]\]\]\]&quot;&gt;Home&lt;/a&gt;}} |
+| *\[\[$chunk\]\]* | This references a chunk by name. Chunks are any bit of reusable content. | Common chunks might be for _header_ or _footer_ |
+| *\[\[\~*{*}{_}link{_}{*}*\]\]* | Use this syntax in building links to pages. | Reference the page&#39;s id, e.g. {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~1\]\]&quot;&gt;Home&lt;/a&gt;}} |
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}i:10;a:3:{s:2:"id";s:8:"33226977";s:3:"ver";s:1:"7";s:4:"code";s:3635:"\\
+
+{toc}
+
+This page lists the most commonly used MODx Revolution tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. Occasionally these are referred to as &quot;tags&quot; or &quot;placeholders&quot;, and sometimes &quot;template variables&quot; so we mention those terms here as an aid to searching although they are *not* placeholders or template variables. They are MODx tags. [Placeholders] are set in code and are displayed with placeholder tags. Template variables are extra resource content fields created by the user. Neither placeholders, not template variables are pre-set by the MODx core.
+
+h2. Default Resource Content Field Tags
+
+In MODx Revolution, each page will always have the following content fields that you can use when constructing your templates. Except for the Resource ID and the parent field, they are all supplied by the user when editing the resource and may be empty if the user did not fill them in:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the Resource ID of the page (set by MODx when the page is created. | _Often used in conjunction with the \[\[_{_}{~}link\]\] syntax, e.g.~_ {{&lt;a href=&quot;\[\[\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the Title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the Long Title of the page | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*alias\]\]* | the page alias. | _Used to construct the URL of the page_ |
+| *\[\[*description\]\]* | the page Description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the Introductory Text field (a.k.a. the summary). | _Often used by Snippets to summarize posts, e.g._ _[ADDON:Ditto]_ {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any). Set by MODx when the page is created. Can be altered by the user. | _Often used in conjunction with the \[\[_{_}{~}link\]\] syntax, e.g.~_ {{&lt;a href=&quot;\[\[\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the Title used when the page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[++site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[++site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[++site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | _Often used in conjunction with the \[\[_{_}{~}link\]\] syntax, e.g.~_ {{&lt;a id=&quot;logo&quot; href=&quot;\[\[\[\[++site_start\]\]\]\]&quot;&gt;Home&lt;/a&gt;}} |
+| *\[\[$chunk*\]\]* | This references a chunk by name. Chunks are any bit of reusable content. | Common chunks might be for _header_ or _footer_ |
+| *\[\[~_link_\]\]* | Use this syntax in building links to pages. | Reference the page&#39;s id, e.g. {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~1\]\]&quot;&gt;Home&lt;/a&gt;}} |
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}i:11;a:3:{s:2:"id";s:8:"33226975";s:3:"ver";s:1:"6";s:4:"code";s:3634:"\\
+
+{toc}
+
+This page lists the most commonly used MODx Revolution tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. Occasionally these are referred to as &quot;tags&quot; or &quot;placeholders&quot;, and sometimes &quot;template variables&quot; so we mention those terms here as an aid to searching although they are *not* placeholders or template variables. They are MODx tags. [Placeholders] are set in code and are displayed with placeholder tags. Template variables are extra resource content fields created by the user. Neither placeholders, not template variables are pre-set by the MODx core.
+
+h2. Default Resource Content Field Tags
+
+In MODx Revolution, each page will always have the following content fields that you can use when constructing your templates. Except for the Resource ID and the parent field, they are all supplied by the user when editing the resource and may be empty if the user did not fill them in:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the Resource ID of the page (set by MODx when the page is created. | _Often used in conjunction with the \[\[_{_}{~}link\]\] syntax, e.g.~_ {{&lt;a href=&quot;\[\[\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the Title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the Long Title of the page | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*alias\]\]* | the page alias. | _Used to construct the URL of the page_ |
+| *\[\[*description\]\]* | the page Description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the Introductory Text field (a.k.a. the summary). | _Often used by Snippets to summarize posts, e.g._ _[ADDON:Ditto]_ {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any). Set by MODx when the page is created. Can be altered by the user. | _Often used in conjunction with the \[\[_{_}{~}link\]\] syntax, e.g.~_ {{&lt;a href=&quot;\[\[\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the Title used when the page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[++site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[++site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[++site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | _Often used in conjunction with the \[\[_{_}{~}link\]\] syntax, e.g.~_ {{&lt;a id=&quot;logo&quot; href=&quot;\[\[\[\[++site_start\]\]\]\]&quot;&gt;Home&lt;/a&gt;}} |
+| *\[\[$_chunk_\]\]* | This references a chunk by name. Chunks are any bit of reusable content. | Common chunks might be for _header_ or _footer_ |
+| *\[\[~link\]\]* | Use this syntax in building links to pages. |Reference the page&#39;s id, e.g. {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~\1\]\]&quot;&gt;Home&lt;/a&gt;}} |
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}i:12;a:3:{s:2:"id";s:8:"33226973";s:3:"ver";s:1:"5";s:4:"code";s:3631:"\\
+
+{toc}
+
+This page lists the most commonly used MODx Revolution tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. Occasionally these are referred to as &quot;tags&quot; or &quot;placeholders&quot;, and sometimes &quot;template variables&quot; so we mention those terms here as an aid to searching although they are *not* placeholders or template variables. They are MODx tags. [Placeholders] are set in code and are displayed with placeholder tags. Template variables are extra resource content fields created by the user. Neither placeholders, not template variables are pre-set by the MODx core.
+
+h2. Default Resource Content Field Tags
+
+In MODx Revolution, each page will always have the following content fields that you can use when constructing your templates. Except for the Resource ID and the parent field, they are all supplied by the user when editing the resource and may be empty if the user did not fill them in:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the Resource ID of the page (set by MODx when the page is created. | _Often used in conjunction with the \[\[~link\]\] syntax, e.g._ {{&lt;a href=&quot;\[\[~\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the Title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the Long Title of the page | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*alias\]\]* | the page alias. | _Used to construct the URL of the page_ |
+| *\[\[*description\]\]* | the page Description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the Introductory Text field (a.k.a. the summary). | _Often used by Snippets to summarize posts, e.g._ _[ADDON:Ditto]_ {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any). Set by MODx when the page is created. Can be altered by the user. | _Often used in conjunction with the \[\[~link\]\] syntax, e.g._ {{&lt;a href=&quot;\[\[~\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the Title used when the page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[++site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[++site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[++site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | _Often used in conjunction with the \[\[~link\]\] syntax, e.g._ {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~\[\[++site_start\]\]\]\]&quot;&gt;Home&lt;/a&gt;}} |
+| *\[\[$_chunk_\]\]* | This references a chunk by name.  Chunks are any bit of reusable content. Common chunks might be for _header_ or _footer_|
+| *\[\[~link\]\]* | Use this syntax in building links to pages. Reference the page&#39;s id, e.g. {{&lt;a id=&quot;logo&quot; href=&quot;\[\[~\[\[++site_start\]\]\]\]&quot;&gt;Home&lt;/a&gt;}} |
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}i:13;a:3:{s:2:"id";s:8:"33226971";s:3:"ver";s:1:"4";s:4:"code";s:3357:"\\
+
+{toc}
+
+This page lists the most commonly used MODx Revolution tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. Occasionally these are referred to as &quot;tags&quot; or &quot;placeholders&quot;, and sometimes &quot;template variables&quot; so we mention those terms here as an aid to searching although they are *not* placeholders or template variables. They are MODx tags. [Placeholders] are set in code and are displayed with placeholder tags. Template variables are extra resource content fields created by the user. Neither placeholders, not template variables are pre-set by the MODx core.
+
+h2. Default Resource Content Field Tags
+
+In MODx Revolution, each page will always have the following content fields that you can use when constructing your templates. Except for the Resource ID and the parent field, they are all supplied by the user when editing the resource and may be empty if the user did not fill them in:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the Resource ID of the page (set by MODx when the page is created. | _Often used in conjunction with the \[\[\~link\]\] syntax, e.g._ {{&lt;a href=&quot;\[\[\~\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the Title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the Long Title of the page | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*alias\]\]* | the page alias. | _Used to construct the URL of the page_ |
+| *\[\[*description\]\]* | the page Description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the Introductory Text field (a.k.a. the summary). | _Often used by Snippets to summarize posts, e.g._ _[ADDON:Ditto]_ {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any). Set by MODx when the page is created. Can be altered by the user. | _Often used in conjunction with the \[\[\~link\]\] syntax, e.g._ {{&lt;a href=&quot;\[\[\~\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the Title used when the page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[+\+site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[+\+site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[+\+site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | _Often used in conjunction with the \[\[\~link\]\] syntax, e.g._ {{&lt;h1&gt;&lt;a id=&quot;logo&quot; href=&quot;\[\[\~\[\[++site_start\]\]\]\]&quot;&gt;&lt;img src=&quot;my/logo.jpg&quot;/&gt;&lt;/a&gt;&lt;/h1&gt;}} |
+
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}i:14;a:3:{s:2:"id";s:8:"33226938";s:3:"ver";s:1:"3";s:4:"code";s:2616:"\\
+
+{toc}
+
+This page lists the most commonly used template tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. Frequently these are referred to as &quot;tags&quot; or &quot;placeholders&quot;, so we mention those terms here as an aid to searching.
+
+h2. Default Template Variable Tags
+
+In MODx Revolution, each page will always have the following variables that you can use when constructing your templates:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the ID of the page. | _Often used in conjunction with the \[\[\~link\]\] syntax, e.g._ {{&lt;a href=&quot;\[\[\~\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the long title | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*description\]\]* | the description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the introductory text (a.k.a. the summary). | _Often used by Snippets to summarize posts, e.g._ _[ADDON:Ditto]_ {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any) | _Often used in conjunction with the \[\[\~link\]\] syntax, e.g._ {{&lt;a href=&quot;\[\[\~\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the title used when this page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[+\+site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[+\+site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[+\+site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | _Often used in conjunction with the \[\[\~link\]\] syntax, e.g._ {{&lt;h1&gt;&lt;a id=&quot;logo&quot; href=&quot;\[\[\~\[\[++site_start\]\]\]\]&quot;&gt;&lt;img src=&quot;my/logo.jpg&quot;/&gt;&lt;/a&gt;&lt;/h1&gt;}} |
+
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}i:15;a:3:{s:2:"id";s:8:"33226848";s:3:"ver";s:1:"2";s:4:"code";s:2618:"\\
+
+{toc}
+
+This page lists the most commonly used template tags as an aid to anyone converting HTML/CSS layouts into MODx [Templates]. Frequently these are referred to as &quot;tags&quot; or &quot;placeholders&quot;, so we mention those terms here as an aid to searching.
+
+h2. Default Template Variable Tags
+
+In MODx Revolution, each page will always have the following variables that you can use when constructing your templates:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the ID of the page. | _Often used in conjunction with the \[\[_{_}{~}link\]\] syntax, e.g.~_ {{&lt;a href=&quot;\[\[\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the long title | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*description\]\]* | the description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the introductory text (a.k.a. the summary). | _Often used by Snippets to summarize posts, e.g._ _[ADDON:Ditto]_ {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any) | _Often used in conjunction with the \[\[_{_}{~}link\]\] syntax, e.g.~_ {{&lt;a href=&quot;\[\[\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the title used when this page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*.
+
+|| Tag || Description || Example Usage ||
+| *\[\[++site_url\]\]* | Contains the URL for your site, e.g. [http://www.yoursite.com/] | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[++site_url\]\]&quot; /&gt;}} |
+| *\[\[++site_name\]\]* | Name of the site | {{&lt;title&gt;\[\[++site_name\]\] \| \[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[++site_start\]\]* | Contains the ID of the page designated as your &quot;home&quot; page. | _Often used in conjunction with the \[\[~link\]\] syntax, e.g._{{&lt;h1&gt;&lt;a id=&quot;logo&quot; href=&quot;\[\[~\[\[++site_start\]\]\]\]&quot;&gt;&lt;img src=&quot;my/logo.jpg&quot;/&gt;&lt;/a&gt;&lt;/h1&gt;}} |
+
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}i:16;a:3:{s:2:"id";s:8:"33226846";s:3:"ver";s:1:"1";s:4:"code";s:2348:"\\
+
+{toc}
+
+h2. Default Template Variable Tags
+
+In MODx Revolution, each page will always have the following variables that you can use when constructing your templates:
+
+|| Tag || Description || Example Usage ||
+| *\[\[*id\]\]* | the ID of the page. | _Often used in conjunction with the \[\[~link\]\] syntax, e.g._ {{&lt;a href=&quot;\[\[~\[\[*id\]\]\]\]&quot;&gt;Bookmark this page\!&lt;/a&gt;}} |
+| *\[\[*pagetitle\]\]* | the title of the page. | {{&lt;title&gt;\[\[*pagetitle\]\]&lt;/title&gt;}} |
+| *\[\[*longtitle\]\]* | the long title | {{&lt;h1&gt;\[\[*longtitle\]\]&lt;/h1&gt;}} |
+| *\[\[*description\]\]* | the description | {{&lt;meta name=&quot;description&quot; content=&quot;\[\[*description\]\]&quot;/&gt;}} |
+| *\[\[*introtext\]\]* | the introductory text (a.k.a. the summary). | _Often used by Snippets to summarize posts, e.g._ _[ADDON:Ditto]_ {{&lt;div id=&quot;summary&quot;&gt;\[\[*introtext\]\]&lt;/div&gt;}} |
+| *\[\[*parent\]\]* | the ID of the parent page (if any) | _Often used in conjunction with the \[\[~link\]\] syntax, e.g._ {{&lt;a href=&quot;\[\[~\[\[*parent\]\]\]\]&quot;&gt;Up to parent page&lt;/a&gt;}} |
+| *\[\[*menutitle\]\]* | the title used when this page appears in menus. | _Most frequently used by Snippets such as_ _[ADDON:Wayfinder]_ _when dynamically constructing menus_ |
+| *\[\[*content\]\]* | the content of the page. | {{&lt;body&gt;\[\[*content\]\]&lt;/body&gt;}} |
+
+
+h2. Other Common Tags
+
+These tags represent system settings, which are editable under the *System* menu \-&gt; *System Settings*. 
+
+|| Tag || Description || Example Usage ||
+| *\[\[\+\+site_url\]\]*| Contains the URL for your site, e.g. http://www.yoursite.com/ | With many CMS&#39;s that rely on Apache rewrites, it&#39;s common practice to include a base tag in your HTML head: {{&lt;base href=&quot;\[\[\+\+site_url\]\]&quot; /&gt;}}|
+| *\[\[\+\+site_name\]\]*|Name of the site | {{&lt;title&gt;\[\[\+\+site_name\]\] \| \[\[\*pagetitle\]\]&lt;/title&gt;}}
+| *\[\[\+\+site_start\]\]* |Contains the ID of the page designated as your &quot;home&quot; page.|_Often used in conjunction with the \[\[~link\]\] syntax, e.g._{{&lt;h1&gt;&lt;a id=&quot;logo&quot; href=&quot;\[\[\~\[\[\+\+site_start\]\]\]\]&quot;&gt;&lt;img src=&quot;my/logo.jpg&quot;/&gt;&lt;/a&gt;&lt;/h1&gt;}}| 
+
+
+{pagetree:root=Structuring Your Site}
+
+{scrollbar}";}}}

@@ -1,0 +1,653 @@
+a:5:{s:2:"id";s:8:"18678126";s:4:"info";a:4:{s:6:"Title:";s:8:"Settings";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:23:"[revolution20:Settings]";}s:6:"parent";s:8:"35094612";s:6:"source";s:4404:"\\
+
+h2. What are Settings?
+
+Settings are site-wide variables that can be used by either the MODx Core or by 3rd-Party Components to provide site, context, or user-level customization.  The trick here is the override behavior that applies in the hierarchy:  [Contextual Settings|revolution20:Contexts] (if present), override any of the System Settings.  [User Settings|Users#Users-UserSettings] (if present) override any of the Context or System settings obeying the hierarchy of *System \-&gt; Context \-&gt; User*
+
+See the following for more information:
+
+* [System Settings|revolution20:System Settings]
+* [Context Settings|revolution20:Contexts]
+* [User Settings|Users#Users-UserSettings]
+
+h2. Usage
+
+They can be referenced at any point via their Tag, for example, for the &#39;site_start&#39; Setting:
+
+{code}
+[[++site_start]]
+{code}
+
+System Settings can be overridden by Context Settings, which are specific to each [Context|revolution20:Contexts]. Context Settings can in turn be overridden by [User Settings|Users#Users-UserSettings]. 
+
+The hierarchy to remember is:
+
+{panel}
+System Setting \-&gt; Context Setting \-&gt; User Setting
+{panel}
+
+Let&#39;s say I set the System Setting named &#39;use_editor&#39; to 0. However, I created a Context Setting called &#39;use_editor&#39; for the &#39;mgr&#39; context and set it to 1. This would mean that any time I&#39;m in the mgr context, the setting would be 1, overriding the System Setting.
+
+Further, I&#39;ve got a user named &#39;johndoe&#39; who I don&#39;t want to use the editor. I create a User Setting &#39;use_editor&#39; for his user and set it to 0. Now, John Doe&#39;s &quot;use_editor&quot; setting will be 0, overriding the Context Setting.
+
+Settings can also be specific to [Namespaces], as well. This allows you to easily group your settings for each of your different Components.
+
+h2. Retrieving Settings in PHP
+
+Getting settings is simple in MODx Revolution; simply use [getOption|xPDO10:xPDO.getOption]. For example, to get the setting &#39;site_start&#39;, simply:
+
+{code}
+$siteStartId = $modx-&gt;getOption(&#39;site_start&#39;);
+{code}
+
+Now, all settings are overridable by Context and User, as described above, and getOption respects that. So, if in the above code example, if you had set site_start as a Context Setting that overrode the System Setting, getOption will respect that - but only if you&#39;re executing the PHP in that Context that has the Setting.
+
+For example, if I were using that code block in a Context called &#39;boo&#39;, and I had added a Context Setting for site_start in the &#39;boo&#39; Context, and set it to 3, the above code would output &#39;3&#39;.
+
+Now if I were in the &#39;web&#39; context, and site_start was still &#39;1&#39; (from the System Setting), getOption would return 1.
+
+
+h3. Default values with getOption
+
+getOption supports 3 parameters:
+
+1. The key of the setting
+2. An array to search first before looking for the setting
+3. A default value should the setting not be found.
+
+So, for example, if I were in a Snippet and wanted some default properties at the top, I could use getOption. [Snippets] automatically pass in an array of all the Properties attached to that snippet (or specified in the Tag call) via the $scriptProperties array. So, you can use that array to check for default properties. This example sets a default value to the &#39;showPublished&#39; property should it not be specified:
+
+{code}
+$showPublished = $modx-&gt;getOption(&#39;showPublished&#39;,$scriptProperties,true);
+{code}
+
+Now, assuming the Snippet doesnt have showPublished as a [default property|Properties and Property Sets], if you called the Snippet via the tag call:
+
+{quote}\[\[mySnippet\]\]{quote}
+
+showPublished will be set to true. If it did have the default Property attached to it that set the value to 0, or the showPublished property was specified as 0 in the tag, then showPublished would be 0.
+
+h2. Additional Information
+
+* Only use getOption if you&#39;re reading an existing setting from the DB, not if you need to update the option.
+* getOption uses the settings cache (it&#39;s much faster)
+* getOption will also check User \-&gt; Context \-&gt; System settings (allowing you to override system settings with context and further with user settings)
+
+h2. See Also
+
+[System Settings|revolution20:System Settings]
+{pagetree:root=Settings|startDepth=1|sort=position}
+
+{scrollbar}";s:8:"versions";a:8:{i:0;a:3:{s:2:"id";s:8:"18678126";s:3:"ver";s:1:"8";s:4:"code";s:4404:"\\
+
+h2. What are Settings?
+
+Settings are site-wide variables that can be used by either the MODx Core or by 3rd-Party Components to provide site, context, or user-level customization.  The trick here is the override behavior that applies in the hierarchy:  [Contextual Settings|revolution20:Contexts] (if present), override any of the System Settings.  [User Settings|Users#Users-UserSettings] (if present) override any of the Context or System settings obeying the hierarchy of *System \-&gt; Context \-&gt; User*
+
+See the following for more information:
+
+* [System Settings|revolution20:System Settings]
+* [Context Settings|revolution20:Contexts]
+* [User Settings|Users#Users-UserSettings]
+
+h2. Usage
+
+They can be referenced at any point via their Tag, for example, for the &#39;site_start&#39; Setting:
+
+{code}
+[[++site_start]]
+{code}
+
+System Settings can be overridden by Context Settings, which are specific to each [Context|revolution20:Contexts]. Context Settings can in turn be overridden by [User Settings|Users#Users-UserSettings]. 
+
+The hierarchy to remember is:
+
+{panel}
+System Setting \-&gt; Context Setting \-&gt; User Setting
+{panel}
+
+Let&#39;s say I set the System Setting named &#39;use_editor&#39; to 0. However, I created a Context Setting called &#39;use_editor&#39; for the &#39;mgr&#39; context and set it to 1. This would mean that any time I&#39;m in the mgr context, the setting would be 1, overriding the System Setting.
+
+Further, I&#39;ve got a user named &#39;johndoe&#39; who I don&#39;t want to use the editor. I create a User Setting &#39;use_editor&#39; for his user and set it to 0. Now, John Doe&#39;s &quot;use_editor&quot; setting will be 0, overriding the Context Setting.
+
+Settings can also be specific to [Namespaces], as well. This allows you to easily group your settings for each of your different Components.
+
+h2. Retrieving Settings in PHP
+
+Getting settings is simple in MODx Revolution; simply use [getOption|xPDO10:xPDO.getOption]. For example, to get the setting &#39;site_start&#39;, simply:
+
+{code}
+$siteStartId = $modx-&gt;getOption(&#39;site_start&#39;);
+{code}
+
+Now, all settings are overridable by Context and User, as described above, and getOption respects that. So, if in the above code example, if you had set site_start as a Context Setting that overrode the System Setting, getOption will respect that - but only if you&#39;re executing the PHP in that Context that has the Setting.
+
+For example, if I were using that code block in a Context called &#39;boo&#39;, and I had added a Context Setting for site_start in the &#39;boo&#39; Context, and set it to 3, the above code would output &#39;3&#39;.
+
+Now if I were in the &#39;web&#39; context, and site_start was still &#39;1&#39; (from the System Setting), getOption would return 1.
+
+
+h3. Default values with getOption
+
+getOption supports 3 parameters:
+
+1. The key of the setting
+2. An array to search first before looking for the setting
+3. A default value should the setting not be found.
+
+So, for example, if I were in a Snippet and wanted some default properties at the top, I could use getOption. [Snippets] automatically pass in an array of all the Properties attached to that snippet (or specified in the Tag call) via the $scriptProperties array. So, you can use that array to check for default properties. This example sets a default value to the &#39;showPublished&#39; property should it not be specified:
+
+{code}
+$showPublished = $modx-&gt;getOption(&#39;showPublished&#39;,$scriptProperties,true);
+{code}
+
+Now, assuming the Snippet doesnt have showPublished as a [default property|Properties and Property Sets], if you called the Snippet via the tag call:
+
+{quote}\[\[mySnippet\]\]{quote}
+
+showPublished will be set to true. If it did have the default Property attached to it that set the value to 0, or the showPublished property was specified as 0 in the tag, then showPublished would be 0.
+
+h2. Additional Information
+
+* Only use getOption if you&#39;re reading an existing setting from the DB, not if you need to update the option.
+* getOption uses the settings cache (it&#39;s much faster)
+* getOption will also check User \-&gt; Context \-&gt; System settings (allowing you to override system settings with context and further with user settings)
+
+h2. See Also
+
+[System Settings|revolution20:System Settings]
+{pagetree:root=Settings|startDepth=1|sort=position}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"37126186";s:3:"ver";s:1:"7";s:4:"code";s:4126:"\\
+
+h2. What are Settings?
+
+Settings are site-wide variables that can be used by either the MODx Core or by 3rd-Party Components to provide site, context, or user-level customization.  The trick here is the override behavior that applies in the hierarchy:  [User Settings| revolution20/Users#Users-UserSettings] (if present) override any 
+
+
+See [System Settings|revolution20:System Settings] for more information.
+
+h2. Usage
+
+They can be referenced at any point via their Tag, for example, for the &#39;site_start&#39; Setting:
+
+{code}
+[[++site_start]]
+{code}
+
+System Settings can be overridden by Context Settings, which are specific to each [Context|revolution20:Contexts]. Context Settings can in turn be overridden by [User Settings|Users#Users-UserSettings]. 
+
+The hierarchy to remember is:
+
+{panel}
+System Setting \-&gt; Context Setting \-&gt; User Setting
+{panel}
+
+Let&#39;s say I set the System Setting named &#39;use_editor&#39; to 0. However, I created a Context Setting called &#39;use_editor&#39; for the &#39;mgr&#39; context and set it to 1. This would mean that any time I&#39;m in the mgr context, the setting would be 1, overriding the System Setting.
+
+Further, I&#39;ve got a user named &#39;johndoe&#39; who I don&#39;t want to use the editor. I create a User Setting &#39;use_editor&#39; for his user and set it to 0. Now, John Doe&#39;s &quot;use_editor&quot; setting will be 0, overriding the Context Setting.
+
+Settings can also be specific to [Namespaces], as well. This allows you to easily group your settings for each of your different Components.
+
+h2. Retrieving Settings in PHP
+
+Getting settings is simple in MODx Revolution; simply use [getOption|xPDO10:xPDO.getOption]. For example, to get the setting &#39;site_start&#39;, simply:
+
+{code}
+$siteStartId = $modx-&gt;getOption(&#39;site_start&#39;);
+{code}
+
+Now, all settings are overridable by Context and User, as described above, and getOption respects that. So, if in the above code example, if you had set site_start as a Context Setting that overrode the System Setting, getOption will respect that - but only if you&#39;re executing the PHP in that Context that has the Setting.
+
+For example, if I were using that code block in a Context called &#39;boo&#39;, and I had added a Context Setting for site_start in the &#39;boo&#39; Context, and set it to 3, the above code would output &#39;3&#39;.
+
+Now if I were in the &#39;web&#39; context, and site_start was still &#39;1&#39; (from the System Setting), getOption would return 1.
+
+
+h3. Default values with getOption
+
+getOption supports 3 parameters:
+
+1. The key of the setting
+2. An array to search first before looking for the setting
+3. A default value should the setting not be found.
+
+So, for example, if I were in a Snippet and wanted some default properties at the top, I could use getOption. [Snippets] automatically pass in an array of all the Properties attached to that snippet (or specified in the Tag call) via the $scriptProperties array. So, you can use that array to check for default properties. This example sets a default value to the &#39;showPublished&#39; property should it not be specified:
+
+{code}
+$showPublished = $modx-&gt;getOption(&#39;showPublished&#39;,$scriptProperties,true);
+{code}
+
+Now, assuming the Snippet doesnt have showPublished as a [default property|Properties and Property Sets], if you called the Snippet via the tag call:
+
+{quote}\[\[mySnippet\]\]{quote}
+
+showPublished will be set to true. If it did have the default Property attached to it that set the value to 0, or the showPublished property was specified as 0 in the tag, then showPublished would be 0.
+
+h2. Additional Information
+
+* Only use getOption if you&#39;re reading an existing setting from the DB, not if you need to update the option.
+* getOption uses the settings cache (it&#39;s much faster)
+* getOption will also check User \-&gt; Context \-&gt; System settings (allowing you to override system settings with context and further with user settings)
+
+h2. See Also
+
+[System Settings|revolution20:System Settings]
+{pagetree:root=Settings|startDepth=1|sort=position}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"37126184";s:3:"ver";s:1:"6";s:4:"code";s:3968:"\\
+
+h2. What are Settings?
+
+Settings are site-wide variables that can be used by either the MODx Core or by 3rd-Party Components to provide site, context, or user-level customization.
+
+See [System Settings|revolution20:System Settings] for more information.
+
+h2. Usage
+
+They can be referenced at any point via their Tag, for example, for the &#39;site_start&#39; Setting:
+
+{code}
+[[++site_start]]
+{code}
+
+System Settings can also be overridden by Context Settings, which are specific to each [Context|revolution:Contexts]. Context Settings can be overridden by User Settings, which are specific to each user. So, the order of relevance is:
+{panel}
+System Setting \-&gt; Context Setting \-&gt; User Setting
+{panel}
+Let&#39;s say I set the System Setting named &#39;use_editor&#39; to 0. However, I created a Context Setting called &#39;use_editor&#39; for the &#39;mgr&#39; context and set it to 1. This would mean that any time I&#39;m in the mgr context, the setting would be 1, overriding the System Setting.
+
+Further, I&#39;ve got a user named &#39;johndoe&#39; who I don&#39;t want to use the editor. I create a User Setting &#39;use_editor&#39; for his user and set it to 0. Now, John Doe&#39;s &quot;use_editor&quot; setting will be 0, overriding the Context Setting.
+
+Settings can also be specific to [Namespaces], as well. This allows you to easily group your settings for each of your different Components.
+
+h2. Retrieving Settings in PHP
+
+Getting settings is simple in MODx Revolution; simply use [getOption|xPDO10:xPDO.getOption]. For example, to get the setting &#39;site_start&#39;, simply:
+
+{code}
+$siteStartId = $modx-&gt;getOption(&#39;site_start&#39;);
+{code}
+
+Now, all settings are overridable by Context and User, as described above, and getOption respects that. So, if in the above code example, if you had set site_start as a Context Setting that overrode the System Setting, getOption will respect that - but only if you&#39;re executing the PHP in that Context that has the Setting.
+
+For example, if I were using that code block in a Context called &#39;boo&#39;, and I had added a Context Setting for site_start in the &#39;boo&#39; Context, and set it to 3, the above code would output &#39;3&#39;.
+
+Now if I were in the &#39;web&#39; context, and site_start was still &#39;1&#39; (from the System Setting), getOption would return 1.
+
+
+h3. Default values with getOption
+
+getOption supports 3 parameters:
+
+1. The key of the setting
+2. An array to search first before looking for the setting
+3. A default value should the setting not be found.
+
+So, for example, if I were in a Snippet and wanted some default properties at the top, I could use getOption. [Snippets] automatically pass in an array of all the Properties attached to that snippet (or specified in the Tag call) via the $scriptProperties array. So, you can use that array to check for default properties. This example sets a default value to the &#39;showPublished&#39; property should it not be specified:
+
+{code}
+$showPublished = $modx-&gt;getOption(&#39;showPublished&#39;,$scriptProperties,true);
+{code}
+
+Now, assuming the Snippet doesnt have showPublished as a [default property|Properties and Property Sets], if you called the Snippet via the tag call:
+
+{quote}\[\[mySnippet\]\]{quote}
+
+showPublished will be set to true. If it did have the default Property attached to it that set the value to 0, or the showPublished property was specified as 0 in the tag, then showPublished would be 0.
+
+h2. Additional Information
+
+* Only use getOption if you&#39;re reading an existing setting from the DB, not if you need to update the option.
+* getOption uses the settings cache (it&#39;s much faster)
+* getOption will also check User \-&gt; Context \-&gt; System settings (allowing you to override system settings with context and further with user settings)
+
+h2. See Also
+
+[System Settings|revolution20:System Settings]
+{pagetree:root=Settings|startDepth=1|sort=position}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"35586339";s:3:"ver";s:1:"5";s:4:"code";s:3964:"\\
+
+h2. What are Settings?
+
+Settings are site-wide variables that can be used by either the MODx Core or by 3rd-Party Components to provide site, context, or user-level customization.  
+
+See [System Settings|revolution20:System Settings] for more information.
+
+h2. Usage
+
+They can be referenced at any point via their Tag, for example, for the &#39;site_start&#39; Setting:
+
+{code}
+[[++site_start]]
+{code}
+
+System Settings can also be overridden by Context Settings, which are specific to each [Context|revolution:Contexts]. Context Settings can be overridden by User Settings, which are specific to each user. So, the order of relevance is:
+{panel}
+System Setting \-&gt; Context Setting \-&gt; User Setting
+{panel}
+Let&#39;s say I set the System Setting named &#39;use_editor&#39; to 0. However, I created a Context Setting called &#39;use_editor&#39; for the &#39;mgr&#39; context and set it to 1. This would mean that any time I&#39;m in the mgr context, the setting would be 1, overriding the System Setting.
+
+Further, I&#39;ve got a user named &#39;johndoe&#39; who I don&#39;t want to use the editor. I create a User Setting &#39;use_editor&#39; for his user and set it to 0. Now, John Doe&#39;s &quot;use_editor&quot; setting will be 0, overriding the Context Setting.
+
+Settings can also be specific to [Namespaces], as well. This allows you to easily group your settings for each of your different Components.
+
+h2. Retrieving Settings in PHP
+
+Getting settings is simple in MODx Revolution; simply use [getOption|xPDO10:xPDO.getOption]. For example, to get the setting &#39;site_start&#39;, simply:
+
+{code}
+$siteStartId = $modx-&gt;getOption(&#39;site_start&#39;);
+{code}
+
+Now, all settings are overridable by Context and User, as described above, and getOption respects that. So, if in the above code example, if you had set site_start as a Context Setting that overrode the System Setting, getOption will respect that - but only if you&#39;re executing the PHP in that Context that has the Setting.
+
+For example, if I were using that code block in a Context called &#39;boo&#39;, and I had added a Context Setting for site_start in the &#39;boo&#39; Context, and set it to 3, the above code would output &#39;3&#39;.
+
+Now if I were in the &#39;web&#39; context, and site_start was still &#39;1&#39; (from the System Setting), getOption would return 1.
+
+
+h3. Default values with getOption
+
+getOption supports 3 parameters:
+
+1. The key of the setting
+2. An array to search first before looking for the setting
+3. A default value should the setting not be found.
+
+So, for example, if I were in a Snippet and wanted some default properties at the top, I could use getOption. [Snippets] automatically pass in an array of all the Properties attached to that snippet (or specified in the Tag call) via the $scriptProperties array. So, you can use that array to check for default properties. This example sets a default value to the &#39;showPublished&#39; property should it not be specified:
+
+{code}
+$showPublished = $modx-&gt;getOption(&#39;showPublished&#39;,$scriptProperties,true);
+{code}
+
+Now, assuming the Snippet doesnt have showPublished as a [default property|Properties and Property Sets], if you called the Snippet via the tag call:
+
+{quote}\[\[mySnippet\]\]{quote}
+
+showPublished will be set to true. If it did have the default Property attached to it that set the value to 0, or the showPublished property was specified as 0 in the tag, then showPublished would be 0.
+
+h2. Additional Information
+
+* Only use getObject if you&#39;re reading an existing setting from the DB, not if you need to update the option.
+* getOption uses the settings cache (its much faster)
+* getOption will also check User \-&gt; Context \-&gt; System settings (allowing you to override system settings with context and further with user settings)
+
+h2. See Also
+[System Settings|revolution20:System Settings]
+{pagetree:root=Settings|startDepth=1|sort=position}
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"35094736";s:3:"ver";s:1:"4";s:4:"code";s:3888:"\\
+
+h2. What are Settings?
+
+Settings are site-wide variables that can be used by either the MODx Core or by 3rd-Party Components to provide site, context, or user-level customization.
+
+h2. Usage
+
+They can be referenced at any point via their Tag, for example, for the &#39;site_start&#39; Setting:
+
+{code}
+[[++site_start]]
+{code}
+
+System Settings can also be overridden by Context Settings, which are specific to each [Context|revolution:Contexts]. Context Settings can be overridden by User Settings, which are specific to each user. So, the order of relevance is:
+{panel}
+System Setting \-&gt; Context Setting \-&gt; User Setting
+{panel}
+Let&#39;s say I set the System Setting named &#39;use_editor&#39; to 0. However, I created a Context Setting called &#39;use_editor&#39; for the &#39;mgr&#39; context and set it to 1. This would mean that any time I&#39;m in the mgr context, the setting would be 1, overriding the System Setting.
+
+Further, I&#39;ve got a user named &#39;johndoe&#39; who I don&#39;t want to use the editor. I create a User Setting &#39;use_editor&#39; for his user and set it to 0. Now, John Doe&#39;s &quot;use_editor&quot; setting will be 0, overriding the Context Setting.
+
+Settings can also be specific to [Namespaces], as well. This allows you to easily group your settings for each of your different Components.
+
+h2. Retrieving Settings in PHP
+
+Getting settings is simple in MODx Revolution; simply use [getOption|xPDO10:xPDO.getOption]. For example, to get the setting &#39;site_start&#39;, simply:
+
+{code}
+$siteStartId = $modx-&gt;getOption(&#39;site_start&#39;);
+{code}
+
+Now, all settings are overridable by Context and User, as described above, and getOption respects that. So, if in the above code example, if you had set site_start as a Context Setting that overrode the System Setting, getOption will respect that - but only if you&#39;re executing the PHP in that Context that has the Setting.
+
+For example, if I were using that code block in a Context called &#39;boo&#39;, and I had added a Context Setting for site_start in the &#39;boo&#39; Context, and set it to 3, the above code would output &#39;3&#39;.
+
+Now if I were in the &#39;web&#39; context, and site_start was still &#39;1&#39; (from the System Setting), getOption would return 1.
+
+
+h3. Default values with getOption
+
+getOption supports 3 parameters:
+
+1. The key of the setting
+2. An array to search first before looking for the setting
+3. A default value should the setting not be found.
+
+So, for example, if I were in a Snippet and wanted some default properties at the top, I could use getOption. [Snippets] automatically pass in an array of all the Properties attached to that snippet (or specified in the Tag call) via the $scriptProperties array. So, you can use that array to check for default properties. This example sets a default value to the &#39;showPublished&#39; property should it not be specified:
+
+{code}
+$showPublished = $modx-&gt;getOption(&#39;showPublished&#39;,$scriptProperties,true);
+{code}
+
+Now, assuming the Snippet doesnt have showPublished as a [default property|Properties and Property Sets], if you called the Snippet via the tag call:
+
+{quote}\[\[mySnippet\]\]{quote}
+
+showPublished will be set to true. If it did have the default Property attached to it that set the value to 0, or the showPublished property was specified as 0 in the tag, then showPublished would be 0.
+
+h2. Additional Information
+
+* Only use getObject if you&#39;re reading an existing setting from the DB, not if you need to update the option.
+* getOption uses the settings cache (its much faster)
+* getOption will also check User \-&gt; Context \-&gt; System settings (allowing you to override system settings with context and further with user settings)
+
+h2. See Also
+[System Settings|revolution20:System Settings]
+{pagetree:root=Settings|startDepth=1|sort=position}
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"35094717";s:3:"ver";s:1:"3";s:4:"code";s:3883:"\\
+
+h2. What are Settings?
+
+Settings are site-wide variables that can be used by either the MODx Core or by 3rd-Party Components to provide site, context, or user-level customization.
+
+h2. Usage
+
+They can be referenced at any point via their Tag, for example, for the &#39;site_start&#39; Setting:
+
+{code}
+[[++site_start]]
+{code}
+
+System Settings can also be overridden by Context Settings, which are specific to each [Context|revolution:Contexts]. Context Settings can be overridden by User Settings, which are specific to each user. So, the order of relevance is:
+{panel}
+System Setting \-&gt; Context Setting \-&gt; User Setting
+{panel}
+Let&#39;s say I set the System Setting named &#39;use_editor&#39; to 0. However, I created a Context Setting called &#39;use_editor&#39; for the &#39;mgr&#39; context and set it to 1. This would mean that any time I&#39;m in the mgr context, the setting would be 1, overriding the System Setting.
+
+Further, I&#39;ve got a user named &#39;johndoe&#39; who I don&#39;t want to use the editor. I create a User Setting &#39;use_editor&#39; for his user and set it to 0. Now, John Doe&#39;s &quot;use_editor&quot; setting will be 0, overriding the Context Setting.
+
+Settings can also be specific to [Namespaces], as well. This allows you to easily group your settings for each of your different Components.
+
+h2. Retrieving Settings in PHP
+
+Getting settings is simple in MODx Revolution; simply use [getOption|xPDO10:xPDO.getOption]. For example, to get the setting &#39;site_start&#39;, simply:
+
+{code}
+$siteStartId = $modx-&gt;getOption(&#39;site_start&#39;);
+{code}
+
+Now, all settings are overridable by Context and User, as described above, and getOption respects that. So, if in the above code example, if you had set site_start as a Context Setting that overrode the System Setting, getOption will respect that - but only if you&#39;re executing the PHP in that Context that has the Setting.
+
+For example, if I were using that code block in a Context called &#39;boo&#39;, and I had added a Context Setting for site_start in the &#39;boo&#39; Context, and set it to 3, the above code would output &#39;3&#39;.
+
+Now if I were in the &#39;web&#39; context, and site_start was still &#39;1&#39; (from the System Setting), getOption would return 1.
+
+
+h3. Default values with getOption
+
+getOption supports 3 parameters:
+
+1. The key of the setting
+2. An array to search first before looking for the setting
+3. A default value should the setting not be found.
+
+So, for example, if I were in a Snippet and wanted some default properties at the top, I could use getOption. [Snippets] automatically pass in an array of all the Properties attached to that snippet (or specified in the Tag call) via the $scriptProperties array. So, you can use that array to check for default properties. This example sets a default value to the &#39;showPublished&#39; property should it not be specified:
+
+{code}
+$showPublished = $modx-&gt;getOption(&#39;showPublished&#39;,$scriptProperties,true);
+{code}
+
+Now, assuming the Snippet doesnt have showPublished as a [default property|Properties and Property Sets], if you called the Snippet via the tag call:
+
+{quote}\[\[mySnippet\]\]{quote}
+
+showPublished will be set to true. If it did have the default Property attached to it that set the value to 0, or the showPublished property was specified as 0 in the tag, then showPublished would be 0.
+
+h2. Additional Information
+
+* Only use getObject if you&#39;re checking for an existing setting in the DB because you want to create one
+* getOption uses the settings cache (its much faster)
+* getOption will also check User \-&gt; Context \-&gt; System settings (allowing you to override system settings with context and further with user settings)
+
+h2. See Also
+[System Settings|revolution20:System Settings]
+{pagetree:root=Settings|startDepth=1|sort=position}
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"35094715";s:3:"ver";s:1:"2";s:4:"code";s:3837:"\\
+
+h2. What are Settings?
+
+Settings are site-wide variables that can be used by either the MODx Core or by 3rd-Party Components to provide site, context, or user-level customization.
+
+h2. Usage
+
+They can be referenced at any point via their Tag, for example, for the &#39;site_start&#39; Setting:
+
+{code}
+[[++site_start]]
+{code}
+
+System Settings can also be overridden by Context Settings, which are specific to each [Context|revolution:Contexts]. Context Settings can be overridden by User Settings, which are specific to each user. So, the order of relevance is:
+{panel}
+System Setting \-&gt; Context Setting \-&gt; User Setting
+{panel}
+Let&#39;s say I set the System Setting named &#39;use_editor&#39; to 0. However, I created a Context Setting called &#39;use_editor&#39; for the &#39;mgr&#39; context and set it to 1. This would mean that any time I&#39;m in the mgr context, the setting would be 1, overriding the System Setting.
+
+Further, I&#39;ve got a user named &#39;johndoe&#39; who I don&#39;t want to use the editor. I create a User Setting &#39;use_editor&#39; for his user and set it to 0. Now, John Doe&#39;s &quot;use_editor&quot; setting will be 0, overriding the Context Setting.
+
+Settings can also be specific to [Namespaces], as well. This allows you to easily group your settings for each of your different Components.
+
+h2. Retrieving Settings in PHP
+
+Getting settings is simple in MODx Revolution; simply use [getOption|xPDO10:xPDO.getOption]. For example, to get the setting &#39;site_start&#39;, simply:
+
+{code}
+$siteStartId = $modx-&gt;getOption(&#39;site_start&#39;);
+{code}
+
+Now, all settings are overridable by Context and User, as described above, and getOption respects that. So, if in the above code example, if you had set site_start as a Context Setting that overrode the System Setting, getOption will respect that - but only if you&#39;re executing the PHP in that Context that has the Setting.
+
+For example, if I were using that code block in a Context called &#39;boo&#39;, and I had added a Context Setting for site_start in the &#39;boo&#39; Context, and set it to 3, the above code would output &#39;3&#39;.
+
+Now if I were in the &#39;web&#39; context, and site_start was still &#39;1&#39; (from the System Setting), getOption would return 1.
+
+
+h3. Default values with getOption
+
+getOption supports 3 parameters:
+
+1. The key of the setting
+2. An array to search first before looking for the setting
+3. A default value should the setting not be found.
+
+So, for example, if I were in a Snippet and wanted some default properties at the top, I could use getOption. [Snippets] automatically pass in an array of all the Properties attached to that snippet (or specified in the Tag call) via the $scriptProperties array. So, you can use that array to check for default properties. This example sets a default value to the &#39;showPublished&#39; property should it not be specified:
+
+{code}
+$showPublished = $modx-&gt;getOption(&#39;showPublished&#39;,$scriptProperties,true);
+{code}
+
+Now, assuming the Snippet doesnt have showPublished as a [default property|Properties and Property Sets], if you called the Snippet via the tag call:
+
+{quote}\[\[mySnippet\]\]{quote}
+
+showPublished will be set to true. If it did have the default Property attached to it that set the value to 0, or the showPublished property was specified as 0 in the tag, then showPublished would be 0.
+
+h2. Additional Information
+
+* Only use getObject if you&#39;re checking for an existing setting in the DB because you want to create one
+* getOption uses the settings cache (its much faster)
+* getOption will also check User \-&gt; Context \-&gt; System settings (allowing you to override system settings with context and further with user settings)
+
+h2. See Also
+
+{pagetree:root=Settings|startDepth=1|sort=position}
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"21397522";s:3:"ver";s:1:"1";s:4:"code";s:3490:"\\
+
+h2. What are Settings?
+
+Settings are site-wide variables that can be used by either the MODx Core or by 3rd-Party Components to provide site, context, or user-level customization.
+
+h2. Usage 
+
+They can be referenced at any point via their Tag, for example, for the &#39;site_start&#39; Setting:
+
+{code}
+[[++site_start]]
+{code}
+
+System Settings can also be overridden by Context Settings, which are specific to each [Context|revolution:Contexts]. Context Settings can be overridden by User Settings, which are specific to each user. So, the order of relevance is:
+{panel}
+System Setting \-&gt; Context Setting \-&gt; User Setting
+{panel}
+Let&#39;s say I set the System Setting named &#39;use_editor&#39; to 0. However, I created a Context Setting called &#39;use_editor&#39; for the &#39;mgr&#39; context and set it to 1. This would mean that any time I&#39;m in the mgr context, the setting would be 1, overriding the System Setting.
+
+Further, I&#39;ve got a user named &#39;johndoe&#39; who I don&#39;t want to use the editor. I create a User Setting &#39;use_editor&#39; for his user and set it to 0. Now, John Doe&#39;s &quot;use_editor&quot; setting will be 0, overriding the Context Setting.
+
+Settings can also be specific to [Namespaces], as well. This allows you to easily group your settings for each of your different Components.
+
+h2. Retrieving Settings in PHP
+
+Getting settings is simple in MODx Revolution; simply use [getOption|xPDO10:xPDO.getOption]. For example, to get the setting &#39;site_start&#39;, simply:
+
+{code}
+$siteStartId = $modx-&gt;getOption(&#39;site_start&#39;);
+{code}
+
+Now, all settings are overridable by Context and User, as described above, and getOption respects that. So, if in the above code example, if you had set site_start as a Context Setting that overrode the System Setting, getOption will respect that - but only if you&#39;re executing the PHP in that Context that has the Setting.
+
+For example, if I were using that code block in a Context called &#39;boo&#39;, and I had added a Context Setting for site_start in the &#39;boo&#39; Context, and set it to 3, the above code would output &#39;3&#39;.
+
+Now if I were in the &#39;web&#39; context, and site_start was still &#39;1&#39; (from the System Setting), getOption would return 1.
+
+
+h3. Default values with getOption
+
+getOption supports 3 parameters:
+
+1. The key of the setting
+2. An array to search first before looking for the setting
+3. A default value should the setting not be found.
+
+So, for example, if I were in a Snippet and wanted some default properties at the top, I could use getOption. [Snippets] automatically pass in an array of all the Properties attached to that snippet (or specified in the Tag call) via the $scriptProperties array. So, you can use that array to check for default properties. This example sets a default value to the &#39;showPublished&#39; property should it not be specified:
+
+{code}
+$showPublished = $modx-&gt;getOption(&#39;showPublished&#39;,$scriptProperties,true);
+{code}
+
+Now, assuming the Snippet doesnt have showPublished as a [default property|Properties and Property Sets], if you called the Snippet via the tag call:
+
+{quote}\[\[mySnippet\]\]{quote}
+
+showPublished will be set to true. If it did have the default Property attached to it that set the value to 0, or the showPublished property was specified as 0 in the tag, then showPublished would be 0.
+
+h2. See Also
+
+{pagetree:root=Settings|startDepth=1|sort=position}
+
+{scrollbar}
+
+";}}}

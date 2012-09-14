@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"20119845";s:4:"info";a:4:{s:6:"Title:";s:28:"cache_noncore_lexicon_topics";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:43:"[revolution20:cache_noncore_lexicon_topics]";}s:6:"parent";s:8:"18678127";s:6:"source";s:237:"h2. cache_noncore_lexicon_topics
+
+*Name*: Cache Non-Core Lexicon Topics
+*Type*: Yes/No
+*Default*: Yes
+
+When disabled, non-core Lexicon Topics will be not be cached. This is useful to disable when developing your own Extras.
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"20119845";s:3:"ver";s:1:"1";s:4:"code";s:237:"h2. cache_noncore_lexicon_topics
+
+*Name*: Cache Non-Core Lexicon Topics
+*Type*: Yes/No
+*Default*: Yes
+
+When disabled, non-core Lexicon Topics will be not be cached. This is useful to disable when developing your own Extras.
+
+{scrollbar}
+";}}}

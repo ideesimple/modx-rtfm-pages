@@ -1,0 +1,31 @@
+a:5:{s:2:"id";s:8:"35095073";s:4:"info";a:4:{s:6:"Title:";s:25:"filemanager_path_relative";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:40:"[revolution20:filemanager_path_relative]";}s:6:"parent";s:8:"18678149";s:6:"source";s:331:"h2. filemanager_path_relative
+
+*Name*: Is File Manager Path Relative?
+*Type*: Yes/No
+*Default*: Yes
+*Available In*: Revolution 2.0.8+
+
+To be used in combination with [filemanager_path]. If set to No, will assume the value in [filemanager_path] is an absolute path. If yes, will build the path from the MODX base path.
+
+{scrollbar}
+";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"35095073";s:3:"ver";s:1:"2";s:4:"code";s:331:"h2. filemanager_path_relative
+
+*Name*: Is File Manager Path Relative?
+*Type*: Yes/No
+*Default*: Yes
+*Available In*: Revolution 2.0.8+
+
+To be used in combination with [filemanager_path]. If set to No, will assume the value in [filemanager_path] is an absolute path. If yes, will build the path from the MODX base path.
+
+{scrollbar}
+";}i:1;a:3:{s:2:"id";s:8:"35095078";s:3:"ver";s:1:"1";s:4:"code";s:318:"h2. filemanager_path_relative
+
+*Name*: File Manager Path
+*Type*: Yes/No
+*Default*: Yes
+*Available In*: Revolution 2.0.8+
+
+To be used in combination with [filemanager_path]. If set to No, will assume the value in [filemanager_path] is an absolute path. If yes, will build the path from the MODX base path.
+
+{scrollbar}
+";}}}

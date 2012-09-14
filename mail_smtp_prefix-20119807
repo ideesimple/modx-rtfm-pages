@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"20119807";s:4:"info";a:4:{s:6:"Title:";s:16:"mail_smtp_prefix";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:31:"[revolution20:mail_smtp_prefix]";}s:6:"parent";s:8:"18678127";s:6:"source";s:180:"h2. mail_smtp_prefix
+
+*Name*: SMTP Connection Prefix
+*Type*: String
+*Default*: 
+
+Sets connection prefix. Options are &quot;&quot;, &quot;ssl&quot; or &quot;tls&quot;.
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"20119807";s:3:"ver";s:1:"1";s:4:"code";s:180:"h2. mail_smtp_prefix
+
+*Name*: SMTP Connection Prefix
+*Type*: String
+*Default*: 
+
+Sets connection prefix. Options are &quot;&quot;, &quot;ssl&quot; or &quot;tls&quot;.
+
+{scrollbar}
+";}}}

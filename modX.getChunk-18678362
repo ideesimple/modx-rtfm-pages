@@ -1,0 +1,165 @@
+a:5:{s:2:"id";s:8:"18678362";s:4:"info";a:4:{s:6:"Title:";s:13:"modX.getChunk";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:28:"[revolution20:modX.getChunk]";}s:6:"parent";s:8:"18678401";s:6:"source";s:1450:"\\
+
+h2. modX::getChunk
+
+Processes and returns the output from an HTML chunk by name.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getChunk
+
+{code}
+string getChunk (string $chunkName, [array $properties = array ()])
+{code}
+
+h2. Examples
+
+h3. Simple Example 
+
+Lets process this chunk and output its value. We have this Chunk, called &quot;WelcomeChunk&quot;:
+{code}&lt;p&gt;Welcome [[+name]]!&lt;/p&gt;{code}
+
+We&#39;ll put this in our Snippet:
+{code}
+$output = $modx-&gt;getChunk(&#39;WelcomeChunk&#39;,array(
+   &#39;name&#39; =&gt; &#39;John&#39;,
+));
+return $output;
+{code}
+
+So every key in the associative array passed to the *getChunk* method corresponds to an available placeholder inside the chunk, e.g. \[\[\+name\]\]
+
+This code outputs this:
+{code}&lt;p&gt;Welcome John!&lt;/p&gt;{code}
+
+
+h3. Used in a Snippet 
+
+Often, MODX Chunks are used as [formatting string|http://php.net/manual/en/function.sprintf.php] by Snippets.  To that end, you can make good use of xPDO&#39;s [toArray()|xPDO20:toArray] method.
+
+Imagine a Chunk named *single_user*:
+{code}
+Username: [[+username]]&lt;br/&gt;
+Active?:  [[+active]]&lt;br/&gt;
+&lt;hr/&gt;
+{code}
+
+Then in your Snippet:
+
+{code}
+$userlist = $modx-&gt;getCollection(&#39;modUser&#39;);
+
+$output = &#39;&#39;;
+foreach ($userlist as $user) {
+    $output .= $modx-&gt;getChunk(&#39;single_user&#39;, $user-&gt;toArray() );
+}
+
+return $output;
+{code}
+
+
+
+h2. See Also
+
+* [Chunks]
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678362";s:3:"ver";s:1:"2";s:4:"code";s:1450:"\\
+
+h2. modX::getChunk
+
+Processes and returns the output from an HTML chunk by name.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getChunk
+
+{code}
+string getChunk (string $chunkName, [array $properties = array ()])
+{code}
+
+h2. Examples
+
+h3. Simple Example 
+
+Lets process this chunk and output its value. We have this Chunk, called &quot;WelcomeChunk&quot;:
+{code}&lt;p&gt;Welcome [[+name]]!&lt;/p&gt;{code}
+
+We&#39;ll put this in our Snippet:
+{code}
+$output = $modx-&gt;getChunk(&#39;WelcomeChunk&#39;,array(
+   &#39;name&#39; =&gt; &#39;John&#39;,
+));
+return $output;
+{code}
+
+So every key in the associative array passed to the *getChunk* method corresponds to an available placeholder inside the chunk, e.g. \[\[\+name\]\]
+
+This code outputs this:
+{code}&lt;p&gt;Welcome John!&lt;/p&gt;{code}
+
+
+h3. Used in a Snippet 
+
+Often, MODX Chunks are used as [formatting string|http://php.net/manual/en/function.sprintf.php] by Snippets.  To that end, you can make good use of xPDO&#39;s [toArray()|xPDO20:toArray] method.
+
+Imagine a Chunk named *single_user*:
+{code}
+Username: [[+username]]&lt;br/&gt;
+Active?:  [[+active]]&lt;br/&gt;
+&lt;hr/&gt;
+{code}
+
+Then in your Snippet:
+
+{code}
+$userlist = $modx-&gt;getCollection(&#39;modUser&#39;);
+
+$output = &#39;&#39;;
+foreach ($userlist as $user) {
+    $output .= $modx-&gt;getChunk(&#39;single_user&#39;, $user-&gt;toArray() );
+}
+
+return $output;
+{code}
+
+
+
+h2. See Also
+
+* [Chunks]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"39354557";s:3:"ver";s:1:"1";s:4:"code";s:677:"\\
+
+h2. modX::getChunk
+
+Processes and returns the output from an HTML chunk by name.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getChunk
+
+{code}
+string getChunk (string $chunkName, [array $properties = array ()])
+{code}
+
+h2. Example
+
+Lets process this chunk and output its value. We have this Chunk, called &quot;WelcomeChunk&quot;:
+{code}&lt;p&gt;Welcome [[+name]]!&lt;/p&gt;{code}
+
+We&#39;ll put this in our Snippet:
+{code}
+$output = $modx-&gt;getChunk(&#39;WelcomeChunk&#39;,array(
+   &#39;name&#39; =&gt; &#39;John&#39;,
+));
+return $output;
+{code}
+
+This code outputs this:
+{code}&lt;p&gt;Welcome John!&lt;/p&gt;{code}
+
+h2. See Also
+
+* [Chunks]
+
+{scrollbar}";}}}

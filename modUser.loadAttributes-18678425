@@ -1,0 +1,51 @@
+a:5:{s:2:"id";s:8:"18678425";s:4:"info";a:4:{s:6:"Title:";s:22:"modUser.loadAttributes";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:37:"[revolution20:modUser.loadAttributes]";}s:6:"parent";s:8:"18678416";s:6:"source";s:489:"\\
+
+h2. modUser::loadAttributes
+
+Loads the principal attributes that define a modUser security profile.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modUser.html#loadAttributes
+
+{code}
+void loadAttributes ( $target, [ $context = &#39;&#39;], [ $reload = false])
+{code}
+
+h2. Example
+
+Load attributes for the &#39;sports&#39; context and the modResource target.
+{code}
+$user-&gt;loadAttributes(&#39;modResource&#39;,&#39;sports&#39;,true);
+{code}
+
+h2. See Also
+
+* [modUser]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678425";s:3:"ver";s:1:"1";s:4:"code";s:489:"\\
+
+h2. modUser::loadAttributes
+
+Loads the principal attributes that define a modUser security profile.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modUser.html#loadAttributes
+
+{code}
+void loadAttributes ( $target, [ $context = &#39;&#39;], [ $reload = false])
+{code}
+
+h2. Example
+
+Load attributes for the &#39;sports&#39; context and the modResource target.
+{code}
+$user-&gt;loadAttributes(&#39;modResource&#39;,&#39;sports&#39;,true);
+{code}
+
+h2. See Also
+
+* [modUser]
+
+{scrollbar}";}}}

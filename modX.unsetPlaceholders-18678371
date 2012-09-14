@@ -1,0 +1,69 @@
+a:5:{s:2:"id";s:8:"18678371";s:4:"info";a:4:{s:6:"Title:";s:22:"modX.unsetPlaceholders";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:37:"[revolution20:modX.unsetPlaceholders]";}s:6:"parent";s:8:"18678370";s:6:"source";s:672:"\\
+
+h2. modX::unsetPlaceholders
+
+Unset multiple placeholders, either by prefix or an array of keys.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#unsetPlaceholders
+
+{code}
+void unsetPlaceholders (string|array $keys)
+{code}
+
+h2. Example
+
+Unset the &#39;my.name&#39; and &#39;my.email&#39; Placeholders.
+{code}
+$modx-&gt;unsetPlaceholders(array(&#39;my.name&#39;,&#39;my.email&#39;));
+{code}
+
+Unset all Placeholders that are prefixed with &#39;my.&#39;
+{code}
+$modx-&gt;unsetPlaceholders(&#39;my.&#39;);
+{code}
+
+h2. See Also
+
+* [modX.unsetPlaceholder]
+* [modX.setPlaceholder]
+* [modX.setPlaceholders]
+* [modX.toPlaceholder]
+* [modX.toPlaceholders]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678371";s:3:"ver";s:1:"1";s:4:"code";s:672:"\\
+
+h2. modX::unsetPlaceholders
+
+Unset multiple placeholders, either by prefix or an array of keys.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#unsetPlaceholders
+
+{code}
+void unsetPlaceholders (string|array $keys)
+{code}
+
+h2. Example
+
+Unset the &#39;my.name&#39; and &#39;my.email&#39; Placeholders.
+{code}
+$modx-&gt;unsetPlaceholders(array(&#39;my.name&#39;,&#39;my.email&#39;));
+{code}
+
+Unset all Placeholders that are prefixed with &#39;my.&#39;
+{code}
+$modx-&gt;unsetPlaceholders(&#39;my.&#39;);
+{code}
+
+h2. See Also
+
+* [modX.unsetPlaceholder]
+* [modX.setPlaceholder]
+* [modX.setPlaceholders]
+* [modX.toPlaceholder]
+* [modX.toPlaceholders]
+
+{scrollbar}";}}}

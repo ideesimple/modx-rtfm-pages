@@ -1,0 +1,53 @@
+a:5:{s:2:"id";s:8:"18678131";s:4:"info";a:4:{s:6:"Title:";s:8:"cache_db";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:23:"[revolution20:cache_db]";}s:6:"parent";s:8:"18678127";s:6:"source";s:322:"h2. cache_db
+
+*Name*: Enable Database Cache
+*Type*: Yes/No
+*Default*: No
+
+When enabled, objects and raw result sets from SQL queries are cached to significantly reduce database loads.
+
+{note}This can take up a good amount of hard drive space. Only do this if you have enough space to scale the requests.{note}
+
+{scrollbar}";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"18678131";s:3:"ver";s:1:"4";s:4:"code";s:322:"h2. cache_db
+
+*Name*: Enable Database Cache
+*Type*: Yes/No
+*Default*: No
+
+When enabled, objects and raw result sets from SQL queries are cached to significantly reduce database loads.
+
+{note}This can take up a good amount of hard drive space. Only do this if you have enough space to scale the requests.{note}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119647";s:3:"ver";s:1:"3";s:4:"code";s:326:"\\
+
+h2. cache_db
+
+*Name*: Enable Database Cache
+*Type*: Yes/No
+*Default*: No
+
+When enabled, objects and raw result sets from SQL queries are cached to significantly reduce database loads.
+
+{note}This can take up a good amount of hard drive space. Only do this if you have enough space to scale the requests.{note}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"20119644";s:3:"ver";s:1:"2";s:4:"code";s:200:"\\
+
+h2. cache_db
+
+*Name*: Enable Database Cache
+*Type*: Yes/No
+*Default*: No
+
+When enabled, objects and raw result sets from SQL queries are cached to significantly reduce database loads.
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"20119643";s:3:"ver";s:1:"1";s:4:"code";s:363:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Enable Database Cache{zone-data}
+{zone-data:key}cache_db{zone-data}
+{zone-data:type}boolean{zone-data}
+{zone-data:default}false{zone-data}
+{zone-data:desc}When enabled, objects and raw result sets from SQL queries are cached to significantly reduce database loads.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

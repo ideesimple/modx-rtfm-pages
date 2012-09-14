@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678168";s:4:"info";a:4:{s:6:"Title:";s:14:"search_default";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:29:"[revolution20:search_default]";}s:6:"parent";s:8:"18678127";s:6:"source";s:145:"h2. search_default
+
+*Name*: Published Default
+*Type*: Yes/No
+*Default*: Yes
+
+If true, makes all new resources searchable by default.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678168";s:3:"ver";s:1:"2";s:4:"code";s:145:"h2. search_default
+
+*Name*: Published Default
+*Type*: Yes/No
+*Default*: Yes
+
+If true, makes all new resources searchable by default.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119706";s:3:"ver";s:1:"1";s:4:"code";s:302:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Searchable Default{zone-data}
+{zone-data:key}search_default{zone-data}
+{zone-data:type}boolean{zone-data}
+{zone-data:default}true{zone-data}
+{zone-data:desc}Makes all new resources searchable by default.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

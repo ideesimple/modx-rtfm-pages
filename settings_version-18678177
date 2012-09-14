@@ -1,0 +1,31 @@
+a:5:{s:2:"id";s:8:"18678177";s:4:"info";a:4:{s:6:"Title:";s:16:"settings_version";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:31:"[revolution20:settings_version]";}s:6:"parent";s:8:"18678127";s:6:"source";s:222:"h2. settings_version
+
+*Name*: MODx Version
+*Type*: String
+*Default*: modx-2.0.0-pl
+
+The current version of MODx.
+
+{warning}Do *not* change this value! Changing it could seriously affect your system.{warning}
+\\
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678177";s:3:"ver";s:1:"2";s:4:"code";s:222:"h2. settings_version
+
+*Name*: MODx Version
+*Type*: String
+*Default*: modx-2.0.0-pl
+
+The current version of MODx.
+
+{warning}Do *not* change this value! Changing it could seriously affect your system.{warning}
+\\
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119721";s:3:"ver";s:1:"1";s:4:"code";s:291:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Settings Version{zone-data}
+{zone-data:key}settings_version{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}2.0.0-beta-2{zone-data}
+{zone-data:desc}The current version of MODx.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

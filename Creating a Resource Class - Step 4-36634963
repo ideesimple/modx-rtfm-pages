@@ -1,0 +1,228 @@
+a:5:{s:2:"id";s:8:"36634963";s:4:"info";a:4:{s:6:"Title:";s:34:"Creating a Resource Class - Step 4";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:49:"[revolution20:Creating a Resource Class - Step 4]";}s:6:"parent";s:8:"36634952";s:6:"source";s:3048:"{panel}This tutorial is part of a Series:
+* [Part I: Creating a Custom Resource Class|Creating a Resource Class]
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* [Part III: Customizing the Controllers|Creating a Resource Class - Step 3]
+* Part IV: Customizing the Processors{panel}
+
+h2. Extending the Processors for our CRC
+
+Extending the Processors for our CopyrightedResource is fairly simple. Load up your copyrightedresource.class.php file that contains your main class, and at the top, put this:
+
+{code}
+require_once MODX_CORE_PATH.&#39;model/modx/modprocessor.class.php&#39;;
+require_once MODX_CORE_PATH.&#39;model/modx/processors/resource/create.class.php&#39;;
+require_once MODX_CORE_PATH.&#39;model/modx/processors/resource/update.class.php&#39;;
+{code}
+
+This tells MODX to load some base classes that we&#39;ll need. Then, after your CopyrightedResource class, put this:
+
+{code}
+class CopyrightedResourceCreateProcessor extends modResourceCreateProcessor {
+}
+class CopyrightedResourceUpdateProcessor extends modResourceUpdateProcessor {
+}
+{code}
+
+Now we&#39;ve overridden the processors for our class; MODX will automatically use these classes as the processor class when creating or updating our CRC. We can then override methods to provide custom functionality for our CopyrightedResource class. For example, here is a stub for our CopyrightedResource class and the Update processor that shows some methods that you could override:
+
+{code}
+class CopyrightedResourceUpdateProcessor extends modResourceUpdateProcessor {
+    /**
+     * Do any processing before the fields are set
+     * @return boolean
+     */
+    public function beforeSet() {
+        $beforeSet = parent::beforeSet();
+        /* force all Copyrighted Page CRCs to be cacheable always */
+        $this-&gt;setProperty(&#39;cacheable&#39;,true);
+        return $beforeSet;
+    }
+
+    /**
+     * Do any processing before the save of the Resource but after fields are set.
+     * @return boolean
+     */
+    public function beforeSave() {
+        $beforeSave = parent::beforeSave();
+        if ($this-&gt;object-&gt;get(&#39;longtitle&#39;) == &#39;Send an Error&#39;) {
+            $this-&gt;addFieldError(&#39;longtitle&#39;,&#39;Specify a different longtitle!&#39;);
+        }
+        
+        /* force CopyrightedResource objects to always be non-folders */
+        $this-&gt;object-&gt;set(&#39;isfolder&#39;,false);
+        return $beforeSave;
+    }
+
+    /**
+     * Do any custom after save processing
+     * @return boolean
+     */
+    public function afterSave() {
+        $afterSave = parent::afterSave();
+        $this-&gt;modx-&gt;log(modX::LOG_LEVEL_DEBUG,&#39;Saving a Copyrighted Page!&#39;);
+        return $afterSave;
+    }
+}
+{code}
+
+Obviously this logic is a bit useless, but you get the idea.
+
+h2. Conclusion
+
+And that&#39;s about it! There&#39;s obviously tons of possibilities with CRCs, and you can really go nuts on the customization that you can apply to them and their processing and rendering logic. Have fun!
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"36634963";s:3:"ver";s:1:"3";s:4:"code";s:3048:"{panel}This tutorial is part of a Series:
+* [Part I: Creating a Custom Resource Class|Creating a Resource Class]
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* [Part III: Customizing the Controllers|Creating a Resource Class - Step 3]
+* Part IV: Customizing the Processors{panel}
+
+h2. Extending the Processors for our CRC
+
+Extending the Processors for our CopyrightedResource is fairly simple. Load up your copyrightedresource.class.php file that contains your main class, and at the top, put this:
+
+{code}
+require_once MODX_CORE_PATH.&#39;model/modx/modprocessor.class.php&#39;;
+require_once MODX_CORE_PATH.&#39;model/modx/processors/resource/create.class.php&#39;;
+require_once MODX_CORE_PATH.&#39;model/modx/processors/resource/update.class.php&#39;;
+{code}
+
+This tells MODX to load some base classes that we&#39;ll need. Then, after your CopyrightedResource class, put this:
+
+{code}
+class CopyrightedResourceCreateProcessor extends modResourceCreateProcessor {
+}
+class CopyrightedResourceUpdateProcessor extends modResourceUpdateProcessor {
+}
+{code}
+
+Now we&#39;ve overridden the processors for our class; MODX will automatically use these classes as the processor class when creating or updating our CRC. We can then override methods to provide custom functionality for our CopyrightedResource class. For example, here is a stub for our CopyrightedResource class and the Update processor that shows some methods that you could override:
+
+{code}
+class CopyrightedResourceUpdateProcessor extends modResourceUpdateProcessor {
+    /**
+     * Do any processing before the fields are set
+     * @return boolean
+     */
+    public function beforeSet() {
+        $beforeSet = parent::beforeSet();
+        /* force all Copyrighted Page CRCs to be cacheable always */
+        $this-&gt;setProperty(&#39;cacheable&#39;,true);
+        return $beforeSet;
+    }
+
+    /**
+     * Do any processing before the save of the Resource but after fields are set.
+     * @return boolean
+     */
+    public function beforeSave() {
+        $beforeSave = parent::beforeSave();
+        if ($this-&gt;object-&gt;get(&#39;longtitle&#39;) == &#39;Send an Error&#39;) {
+            $this-&gt;addFieldError(&#39;longtitle&#39;,&#39;Specify a different longtitle!&#39;);
+        }
+        
+        /* force CopyrightedResource objects to always be non-folders */
+        $this-&gt;object-&gt;set(&#39;isfolder&#39;,false);
+        return $beforeSave;
+    }
+
+    /**
+     * Do any custom after save processing
+     * @return boolean
+     */
+    public function afterSave() {
+        $afterSave = parent::afterSave();
+        $this-&gt;modx-&gt;log(modX::LOG_LEVEL_DEBUG,&#39;Saving a Copyrighted Page!&#39;);
+        return $afterSave;
+    }
+}
+{code}
+
+Obviously this logic is a bit useless, but you get the idea.
+
+h2. Conclusion
+
+And that&#39;s about it! There&#39;s obviously tons of possibilities with CRCs, and you can really go nuts on the customization that you can apply to them and their processing and rendering logic. Have fun!
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"36634974";s:3:"ver";s:1:"2";s:4:"code";s:2876:"{panel}This tutorial is part of a Series:
+* [Part I: Creating a Custom Resource Class|Creating a Resource Class]
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* [Part III: Customizing the Controllers|Creating a Resource Class - Step 3]
+* Part IV: Customizing the Processors{panel}
+
+h2. Extending the Processors for our CRC
+
+Extending the Processors for our CopyrightedResource is fairly simple. Load up your copyrightedresource.class.php file that contains your main class, and at the top, put this:
+
+{code}
+require_once MODX_CORE_PATH.&#39;model/modx/modprocessor.class.php&#39;;
+require_once MODX_CORE_PATH.&#39;model/modx/processors/resource/create.class.php&#39;;
+require_once MODX_CORE_PATH.&#39;model/modx/processors/resource/update.class.php&#39;;
+{code}
+
+This tells MODX to load some base classes that we&#39;ll need. Then, after your CopyrightedResource class, put this:
+
+{code}
+class CopyrightedResourceCreateProcessor extends modResourceCreateProcessor {
+}
+class CopyrightedResourceUpdateProcessor extends modResourceUpdateProcessor {
+}
+{code}
+
+Now we&#39;ve overridden the processors for our class; MODX will automatically use these classes as the processor class when creating or updating our CRC. We can then override methods to provide custom functionality for our CopyrightedResource class. For example, here is a stub for our CopyrightedResource class and the Update processor that shows some methods that you could override:
+
+{code}
+class CopyrightedResourceUpdateProcessor extends modResourceUpdateProcessor {
+    /**
+     * Do any processing before the fields are set
+     * @return boolean
+     */
+    public function beforeSet() {
+        $beforeSet = parent::beforeSet();
+        /**
+        if ($this-&gt;getProperty(&#39;shouldBeTrue&#39;) == false) {
+          $this-&gt;addFieldError(&#39;fieldname&#39;,&#39;The error message&#39;);
+        }
+        */
+
+        return $beforeSet;
+    }
+
+    /**
+     * Do any processing before the save of the Resource but after fields are set.
+     * @return boolean
+     */
+    public function beforeSave() {
+        $beforeSave = parent::beforeSave();
+        if ($this-&gt;object-&gt;get(&#39;longtitle&#39;) == &#39;Send an Error&#39;) {
+            $this-&gt;addFieldError(&#39;longtitle&#39;,&#39;Specify a different longtitle!&#39;);
+        }
+        return $beforeSave;
+    }
+
+    /**
+     * Do any custom after save processing
+     * @return boolean
+     */
+    public function afterSave() {
+        $afterSave = parent::afterSave();
+        return $afterSave;
+    }
+}
+{code}
+
+Obviously this logic is a bit useless, but you get the idea.
+
+h2. Conclusion
+
+And that&#39;s about it! There&#39;s obviously tons of possibilities with CRCs, and you can really go nuts on the customization that you can apply to them and their processing and rendering logic. Have fun!
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"36634972";s:3:"ver";s:1:"1";s:4:"code";s:327:"{panel}This tutorial is part of a Series:
+* [Part I: Creating a Custom Resource Class|Creating a Resource Class]
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* [Part III: Customizing the Controllers|Creating a Resource Class - Step 3]
+* Part IV: Customizing the Processors{panel}
+
+h2. 
+
+{scrollbar}";}}}

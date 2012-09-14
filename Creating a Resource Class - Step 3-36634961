@@ -1,0 +1,151 @@
+a:5:{s:2:"id";s:8:"36634961";s:4:"info";a:4:{s:6:"Title:";s:34:"Creating a Resource Class - Step 3";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:49:"[revolution20:Creating a Resource Class - Step 3]";}s:6:"parent";s:8:"36634952";s:6:"source";s:2169:"{panel}This tutorial is part of a Series:
+* [Part I: Creating a Custom Resource Class|Creating a Resource Class]
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* Part III: Customizing the Controllers
+* [Part IV: Customizing the Processors|Creating a Resource Class - Step 4]{panel}
+
+h2. Creating the Resource Controllers
+
+Okay, remember how in [Step 1|Creating a Resource Class] we told MODX where our controllers/ directory was, via the &quot;getControllerPath&quot; method? Well, we&#39;re going to put two files in that directory:
+
+First off, add create.class.php:
+{code}
+&lt;?php
+class CopyrightedResourceCreateManagerController extends ResourceCreateManagerController {
+    public function getLanguageTopics() {
+        return array(&#39;resource&#39;,&#39;copyrightedresource:default&#39;);
+    }
+}
+{code}
+
+And add update.class.php:
+{code}
+&lt;?php
+class CopyrightedResourceUpdateManagerController extends ResourceUpdateManagerController {
+    public function getLanguageTopics() {
+        return array(&#39;resource&#39;,&#39;copyrightedresource:default&#39;);
+    }
+}
+{code}
+
+And that&#39;s all we need to get our custom controllers up and running. You don&#39;t even have to include the getLanguageTopics call, but we did so we can load our custom Lexicon for the page. Any method in the ResourceUpdateManagerController or ResourceCreateManagerController can be overridden - a common one to override is &quot;loadCustomCssJs&quot;, which would allow you to add in your own custom CSS/JS and such for your own custom UI for your CRC.
+
+Now you can go to the Resource tree, and create a &quot;Copyrighted Page&quot;, and it will load the Resource editing panel. Note, since we didn&#39;t override anything in the controller, it will look _exactly_ like the normal Resource editing panel. But, after you create your page and view it in the front-end, you&#39;ll note that the copyright is automatically appended:
+
+!fe-view.png!
+
+Wonderful! That&#39;s pretty much it - you could stop there - but we&#39;ll go on a little bit further to describe how to [extend the processors for your CRC|Creating a Resource Class - Step 4].
+
+
+{scrollbar}";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"36634961";s:3:"ver";s:1:"4";s:4:"code";s:2169:"{panel}This tutorial is part of a Series:
+* [Part I: Creating a Custom Resource Class|Creating a Resource Class]
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* Part III: Customizing the Controllers
+* [Part IV: Customizing the Processors|Creating a Resource Class - Step 4]{panel}
+
+h2. Creating the Resource Controllers
+
+Okay, remember how in [Step 1|Creating a Resource Class] we told MODX where our controllers/ directory was, via the &quot;getControllerPath&quot; method? Well, we&#39;re going to put two files in that directory:
+
+First off, add create.class.php:
+{code}
+&lt;?php
+class CopyrightedResourceCreateManagerController extends ResourceCreateManagerController {
+    public function getLanguageTopics() {
+        return array(&#39;resource&#39;,&#39;copyrightedresource:default&#39;);
+    }
+}
+{code}
+
+And add update.class.php:
+{code}
+&lt;?php
+class CopyrightedResourceUpdateManagerController extends ResourceUpdateManagerController {
+    public function getLanguageTopics() {
+        return array(&#39;resource&#39;,&#39;copyrightedresource:default&#39;);
+    }
+}
+{code}
+
+And that&#39;s all we need to get our custom controllers up and running. You don&#39;t even have to include the getLanguageTopics call, but we did so we can load our custom Lexicon for the page. Any method in the ResourceUpdateManagerController or ResourceCreateManagerController can be overridden - a common one to override is &quot;loadCustomCssJs&quot;, which would allow you to add in your own custom CSS/JS and such for your own custom UI for your CRC.
+
+Now you can go to the Resource tree, and create a &quot;Copyrighted Page&quot;, and it will load the Resource editing panel. Note, since we didn&#39;t override anything in the controller, it will look _exactly_ like the normal Resource editing panel. But, after you create your page and view it in the front-end, you&#39;ll note that the copyright is automatically appended:
+
+!fe-view.png!
+
+Wonderful! That&#39;s pretty much it - you could stop there - but we&#39;ll go on a little bit further to describe how to [extend the processors for your CRC|Creating a Resource Class - Step 4].
+
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"36634984";s:3:"ver";s:1:"3";s:4:"code";s:1973:"{panel}This tutorial is part of a Series:
+* [Part I: Creating a Custom Resource Class|Creating a Resource Class]
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* Part III: Customizing the Controllers
+* [Part IV: Customizing the Processors|Creating a Resource Class - Step 4]{panel}
+
+h2. Creating the Resource Controllers
+
+Okay, remember how in [Step 1|Creating a Resource Class] we told MODX where our controllers/ directory was, via the &quot;getControllerPath&quot; method? Well, we&#39;re going to put two files in that directory:
+
+First off, add create.class.php:
+{code}
+&lt;?php
+class CopyrightedResourceCreateManagerController extends ResourceCreateManagerController {
+    public function getLanguageTopics() {
+        return array(&#39;resource&#39;,&#39;copyrightedresource:default&#39;);
+    }
+}
+{code}
+
+And add update.class.php:
+{code}
+&lt;?php
+class CopyrightedResourceUpdateManagerController extends ResourceUpdateManagerController {
+    public function getLanguageTopics() {
+        return array(&#39;resource&#39;,&#39;copyrightedresource:default&#39;);
+    }
+}
+{code}
+
+And that&#39;s all we need to get our custom controllers up and running. You don&#39;t even have to include the getLanguageTopics call, but we did so we can load our custom Lexicon for the page. Any method in the ResourceUpdateManagerController or ResourceCreateManagerController can be overridden - a common one to override is &quot;loadCustomCssJs&quot;, which would allow you to add in your own custom CSS/JS and such for your own custom UI for your CRC.
+
+Now you can go to the Resource tree, and create a &quot;Copyrighted Page&quot;, and it will load the Resource editing panel. Note, since we didn&#39;t override anything in the controller, it will look _exactly_ like the normal Resource editing panel. But, after you create your page and view it in the front-end, you&#39;ll note that the copyright is automatically appended:
+
+!fe-view.png!
+
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"36634976";s:3:"ver";s:1:"2";s:4:"code";s:1329:"{panel}This tutorial is part of a Series:
+* [Part I: Creating a Custom Resource Class|Creating a Resource Class]
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* Part III: Customizing the Controllers
+* [Part IV: Customizing the Processors|Creating a Resource Class - Step 4]{panel}
+
+h2. Creating the Resource Controllers
+
+Okay, remember how in [Step 1|Creating a Resource Class] we told MODX where our controllers/ directory was, via the &quot;getControllerPath&quot; method? Well, we&#39;re going to put two files in that directory:
+
+First off, add create.class.php:
+{code}&lt;?php
+class CopyrightedResourceCreateManagerController extends ResourceCreateManagerController {
+
+}{code}
+
+And add update.class.php:
+{code}&lt;?php
+class CopyrightedResourceUpdateManagerController extends ResourceUpdateManagerController {
+
+}{code}
+
+And that&#39;s all we need to get our custom controllers up and running. Now you can go to the Resource tree, and create a &quot;Copyrighted Page&quot;, and it will load the Resource editing panel. Note, since we didn&#39;t override anything in the controller, it will look _exactly_ like the normal Resource editing panel. But, after you create your page and view it in the front-end, you&#39;ll note that the copyright is automatically appended:
+
+!fe-view.png!
+
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"36634970";s:3:"ver";s:1:"1";s:4:"code";s:327:"{panel}This tutorial is part of a Series:
+* [Part I: Creating a Custom Resource Class|Creating a Resource Class]
+* [Part II: Handling our CRC Behavior|Creating a Resource Class - Step 2]
+* Part III: Customizing the Controllers
+* [Part IV: Customizing the Processors|Creating a Resource Class - Step 4]{panel}
+
+h2. 
+
+{scrollbar}";}}}

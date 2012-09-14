@@ -1,0 +1,21 @@
+a:5:{s:2:"id";s:8:"35094623";s:4:"info";a:4:{s:6:"Title:";s:13:"ui_debug_mode";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:28:"[revolution20:ui_debug_mode]";}s:6:"parent";s:8:"35094612";s:6:"source";s:365:"h2. ui_debug_mode
+
+*Name*: UI Debug Mode
+*Type*: Yes/No
+*Default*: No
+
+(2.1+ only)
+
+When enabled, all calls to the JS function MODx.debug(msg) will be outputted with console.log(). This is useful for debugging [Custom Manager Pages] and other custom code without breaking a production site, as it will suppress logging should this setting be set to No.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35094623";s:3:"ver";s:1:"1";s:4:"code";s:365:"h2. ui_debug_mode
+
+*Name*: UI Debug Mode
+*Type*: Yes/No
+*Default*: No
+
+(2.1+ only)
+
+When enabled, all calls to the JS function MODx.debug(msg) will be outputted with console.log(). This is useful for debugging [Custom Manager Pages] and other custom code without breaking a production site, as it will suppress logging should this setting be set to No.
+
+{scrollbar}";}}}

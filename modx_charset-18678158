@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678158";s:4:"info";a:4:{s:6:"Title:";s:12:"modx_charset";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:27:"[revolution20:modx_charset]";}s:6:"parent";s:8:"20119756";s:6:"source";s:169:"h2. modx_charset
+
+*Name*: Character Encoding
+*Type*: string
+*Default*: UTF-8
+
+The character encoding used. Please note that MODx primarily works with UTF-8.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678158";s:3:"ver";s:1:"2";s:4:"code";s:169:"h2. modx_charset
+
+*Name*: Character Encoding
+*Type*: string
+*Default*: UTF-8
+
+The character encoding used. Please note that MODx primarily works with UTF-8.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119697";s:3:"ver";s:1:"1";s:4:"code";s:455:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Character Encoding{zone-data}
+{zone-data:key}modx_charset{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}UTF-8{zone-data}
+{zone-data:desc}The character encoding used in the manager. Please note that MODx has been tested with a number of these encodings, but not all of them. For most languages, the default setting of UTF-8 is preferrable.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

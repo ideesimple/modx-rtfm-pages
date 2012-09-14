@@ -1,0 +1,57 @@
+a:5:{s:2:"id";s:8:"18678343";s:4:"info";a:4:{s:6:"Title:";s:29:"Permissions - Resource Policy";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:44:"[revolution20:Permissions - Resource Policy]";}s:6:"parent";s:8:"18678084";s:6:"source";s:426:"\\
+
+h2. The Resource Policy
+
+This policy is packaged into MODx and is given to users on any context who want to have basic object access to content. The Permissions are generic and apply across all MODx objects.
+
+h2. Default Permissions
+
+||Name||
+|add_children|
+|create|
+|delete|
+|list|
+|load|
+|move|
+|publish|
+|remove|
+|save|
+|steal_lock|
+|undelete|
+|unpublish|
+|view|
+
+
+h2. See Also
+
+{pagetree:root=Permissions}
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678343";s:3:"ver";s:1:"1";s:4:"code";s:426:"\\
+
+h2. The Resource Policy
+
+This policy is packaged into MODx and is given to users on any context who want to have basic object access to content. The Permissions are generic and apply across all MODx objects.
+
+h2. Default Permissions
+
+||Name||
+|add_children|
+|create|
+|delete|
+|list|
+|load|
+|move|
+|publish|
+|remove|
+|save|
+|steal_lock|
+|undelete|
+|unpublish|
+|view|
+
+
+h2. See Also
+
+{pagetree:root=Permissions}
+
+{scrollbar}";}}}

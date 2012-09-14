@@ -1,0 +1,37 @@
+a:5:{s:2:"id";s:8:"18678262";s:4:"info";a:4:{s:6:"Title:";s:24:"OnRichTextEditorRegister";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:39:"[revolution20:OnRichTextEditorRegister]";}s:6:"parent";s:8:"18678228";s:6:"source";s:470:"\\
+
+h2. Event: OnRichTextEditorRegister
+
+Renders during any dropdown or select for available richtext editors for MODx.
+
+If you are developing a custom RTE, simply return the name of the RTE that you are developing. This will then be matched to the System Setting &#39;which_editor&#39;, which will allow users to select your RTE to use.
+
+Service: 1 - Parser Service Events
+Group: Richtext Editor
+
+h2. Event Parameters
+
+None.
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678262";s:3:"ver";s:1:"1";s:4:"code";s:470:"\\
+
+h2. Event: OnRichTextEditorRegister
+
+Renders during any dropdown or select for available richtext editors for MODx.
+
+If you are developing a custom RTE, simply return the name of the RTE that you are developing. This will then be matched to the System Setting &#39;which_editor&#39;, which will allow users to select your RTE to use.
+
+Service: 1 - Parser Service Events
+Group: Richtext Editor
+
+h2. Event Parameters
+
+None.
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

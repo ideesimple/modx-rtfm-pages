@@ -1,0 +1,1306 @@
+a:5:{s:2:"id";s:8:"18678057";s:4:"info";a:4:{s:6:"Title:";s:19:"Using Friendly URLs";s:7:"Author:";s:18:"W. Shawn Wilkerson";s:16:"Last Changed by:";s:12:"Jason Coward";s:12:"Wiki Markup:";s:34:"[revolution20:Using Friendly URLs]";}s:6:"parent";s:8:"18678453";s:6:"source";s:4341:"h1. Description:
+
+You can have friendly URLs fully functioning in under two minutes by following a simple four step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will be ignored by the server until you rename it to .htaccess. The .htaccess file can be anywhere above the MODx installation but the usual location is in the MODX site root (where the Manager directory is).  You can also simply create your own .htaccess file in any text editor, paste in the following code, save it in the MODX site root, and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!shawnwilkerson_09_01.jpg|border=1!
+{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working. The majority of comments have been removed and most of what remains is not required for Friendly URLS to function.
+
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+{note}If you do not see all of Revolution&#39;s FURL settings, simply change the &quot;Area&quot; drop-down box to Friendly URL as I did.{note}
+{note}
+
+You will not find friendly_url_prefix and friendly_url_suffix among the settings in the image below - these have been deprecated in favor of extensions defined by [revolution20:Content Types] and container_suffix (for Container Resources with Content Types having a mime_type of text/html).
+
+{note}
+
+
+!furl_settings.png|border=0!
+{warning}The use_alias_path setting allows the site to display directory structures.&amp;nbsp; There are scenarios where all of the documents on the site might appear as directly off of the root, disregarding the paths. In this scenario you can simply choose not to have the paths utilized when Revolution presents the page.{warning}
+{warning}The friendly_alias_urls setting was removed in MODX 2.1+. Enabling friendly_urls implies you are using friendly_alias_urls in 2.1+ and this setting was no longer useful or necessary.{warning}
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+
+{note}The easiest way to take advantage of using fully qualified Friendly URLs, is to allow MODx Revolution to build the links even within page content. As described at the bottom of [resource tag syntax|revolution20:Resources] to create links to different resources, is easy as &lt;a href=&quot;\[\[~1\]\]&quot; title=&quot;some title&quot;&gt;Some Page&lt;/a&gt; . This has the added benefit of being able to move resources around a web project, without needing to fix a bunch of broken links, as MODx Revolution will simply update links created in this manner automatically.
+{note}
+
+
+
+{scrollbar}";s:8:"versions";a:18:{i:0;a:3:{s:2:"id";s:8:"18678057";s:3:"ver";s:1:"1";s:4:"code";s:4341:"h1. Description:
+
+You can have friendly URLs fully functioning in under two minutes by following a simple four step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will be ignored by the server until you rename it to .htaccess. The .htaccess file can be anywhere above the MODx installation but the usual location is in the MODX site root (where the Manager directory is).  You can also simply create your own .htaccess file in any text editor, paste in the following code, save it in the MODX site root, and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!shawnwilkerson_09_01.jpg|border=1!
+{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working. The majority of comments have been removed and most of what remains is not required for Friendly URLS to function.
+
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+{note}If you do not see all of Revolution&#39;s FURL settings, simply change the &quot;Area&quot; drop-down box to Friendly URL as I did.{note}
+{note}
+
+You will not find friendly_url_prefix and friendly_url_suffix among the settings in the image below - these have been deprecated in favor of extensions defined by [revolution20:Content Types] and container_suffix (for Container Resources with Content Types having a mime_type of text/html).
+
+{note}
+
+
+!furl_settings.png|border=0!
+{warning}The use_alias_path setting allows the site to display directory structures.&amp;nbsp; There are scenarios where all of the documents on the site might appear as directly off of the root, disregarding the paths. In this scenario you can simply choose not to have the paths utilized when Revolution presents the page.{warning}
+{warning}The friendly_alias_urls setting was removed in MODX 2.1+. Enabling friendly_urls implies you are using friendly_alias_urls in 2.1+ and this setting was no longer useful or necessary.{warning}
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+
+{note}The easiest way to take advantage of using fully qualified Friendly URLs, is to allow MODx Revolution to build the links even within page content. As described at the bottom of [resource tag syntax|revolution20:Resources] to create links to different resources, is easy as &lt;a href=&quot;\[\[~1\]\]&quot; title=&quot;some title&quot;&gt;Some Page&lt;/a&gt; . This has the added benefit of being able to move resources around a web project, without needing to fix a bunch of broken links, as MODx Revolution will simply update links created in this manner automatically.
+{note}
+
+
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"37683564";s:3:"ver";s:1:"1";s:4:"code";s:4005:"h1. Description:
+
+You can have friendly URLs fully functioning in under two minutes by following a simple four step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will be ignored by the server until you rename it to .htaccess. The .htaccess file can be anywhere above the MODx installation but the usual location is in the MODX site root (where the Manager directory is).  You can also simply create your own .htaccess file in any text editor, paste in the following code, save it in the MODX site root, and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!shawnwilkerson_09_01.jpg|border=1!
+{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working. The majority of comments have been removed and most of what remains is not required for Friendly URLS to function.
+
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+{note}If you do not see all of Revolution&#39;s FURL settings, simply change the &quot;Area&quot; drop-down box to Friendly URL as I did.{note}
+{note}
+
+In the image below you will see friendly_url_prefix and friendly_url_suffix settings - these have been deprecated in favor of [revolution20:Content Types].
+
+{note}
+
+
+!furl_settings.png|border=1!
+{warning}The use_alias_path setting allows the site to display directory structures.&amp;nbsp; There are scenarios where all of the documents on the site might appear as directly off of the root, disregarding the paths. In this scenario you can simply choose not to have the paths utilized when Revolution presents the page.{warning}
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+
+{note}The easiest way to take advantage of using fully qualified Friendly URLs, is to allow MODx Revolution to build the links even within page content. As described at the bottom of [resource tag syntax|revolution20:Resources] to create links to different resources, is easy as &lt;a href=&quot;\[\[~1\]\]&quot; title=&quot;some title&quot;&gt;Some Page&lt;/a&gt; . This has the added benefit of being able to move resources around a web project, without needing to fix a bunch of broken links, as MODx Revolution will simply update links created in this manner automatically.
+{note}
+
+
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"37486596";s:3:"ver";s:1:"1";s:4:"code";s:3875:"h1. Description:
+
+You can have friendly URLs fully functioning in under two minutes by following a simple four step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will need to renamed to .htaccess when uploaded to the root of your site (can be anywhere above the MODx installation or at the top of the site).  You can also simply cut and paste this one into any text editor and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!shawnwilkerson_09_01.jpg|border=1!
+{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working. The majority of comments have been removed and most of what remains is not required for Friendly URLS to function.
+
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+{note}If you do not see all of Revolution&#39;s FURL settings, simply change the &quot;Area&quot; drop-down box to Friendly URL as I did.{note}
+{note}
+
+In the image below you will see friendly_url_prefix and friendly_url_suffix settings - these have been deprecated in favor of [revolution20:Content Types].
+
+{note}
+
+
+!furl_settings.png|border=1!
+{warning}The use_alias_path setting allows the site to display directory structures.&amp;nbsp; There are scenarios where all of the documents on the site might appear as directly off of the root, disregarding the paths. In this scenario you can simply choose not to have the paths utilized when Revolution presents the page.{warning}
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+
+{note}The easiest way to take advantage of using fully qualified Friendly URLs, is to allow MODx Revolution to build the links even within page content. As described at the bottom of [resource tag syntax|revolution20:Resources] to create links to different resources, is easy as &lt;a href=&quot;\[\[~1\]\]&quot; title=&quot;some title&quot;&gt;Some Page&lt;/a&gt; . This has the added benefit of being able to move resources around a web project, without needing to fix a bunch of broken links, as MODx Revolution will simply update links created in this manner automatically.
+{note}
+
+
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"36634701";s:3:"ver";s:1:"1";s:4:"code";s:3702:"h1. Description:
+
+You can have friendly URLs fully functioning in under two minutes by following a simple four step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will need to renamed to .htaccess when uploaded to the root of your site (can be anywhere above the MODx installation or at the top of the site).  You can also simply cut and paste this one into any text editor and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!shawnwilkerson_09_01.jpg|border=1!
+{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working. The majority of comments have been removed and most of what remains is not required for Friendly URLS to function.
+
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+{note}If you do not see all of Revolution&#39;s FURL settings, simply change the &quot;Area&quot; drop-down box to Friendly URL as I did.{note}
+!furl_settings.png|border=1!
+{warning}The use_alias_path setting allows the site to display directory structures.&amp;nbsp; There are scenarios where all of the documents on the site might appear as directly off of the root, disregarding the paths. In this scenario you can simply choose not to have the paths utilized when Revolution presents the page.{warning}
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+
+{note}The easiest way to take advantage of using fully qualified Friendly URLs, is to allow MODx Revolution to build the links even within page content. As described at the bottom of [resource tag syntax|revolution20:Resources] to create links to different resources, is easy as &lt;a href=&quot;\[\[\~1\]\]&quot; title=&quot;some title&quot;&gt;Some Page&lt;/a&gt; . This has the added benefit of being able to move resources around a web project, without needing to fix a bunch of broken links, as MODx Revolution will simply update links created in this manner automatically.
+{note}
+
+
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"36634660";s:3:"ver";s:1:"1";s:4:"code";s:3707:"h1. Description:
+
+You can have friendly URLs fully functioning in under two minutes by following a simple four step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will need to renamed to .htaccess when uploaded to the root of your site (can be anywhere above the MODx installation or at the top of the site).  You can also simply cut and paste this one into any text editor and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!shawnwilkerson_09_01.jpg|border=1!
+{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working. The majority of comments have been removed and most of what remains is not required for Friendly URLS to function.
+
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+{note}If you do not see all of Revolution&#39;s FURL settings, simply change the &quot;Area&quot; drop-down box to Friendly URL as I did.{note}
+!furl_settings.png|border=1!
+{warning}The use_alias_path setting allows the site to display directory structures.&amp;nbsp; There are scenarios where all of the documents on the site might appear as directly off of the root, disregarding the paths. In this scenario you can simply choose not to have the paths utilized when Revolution presents the page.{warning}
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+
+{note}The easiest way to take advantage of using fully qualified Friendly URLs, is to allow MODx Revolution to build the links even within page content. As described at the bottom of [resource tag syntax|revolution20:Resources] to create links to different resources, is easy as &lt;a href=&quot;\[\[[~ 1|~1]\]\]&quot; title=&quot;some title&quot;&gt;Some Page&lt;/a&gt; . This has the added benefit of being able to move resources around a web project, without needing to fix a bunch of broken links, as MODx Revolution will simply update links created in this manner automatically.
+{note}
+
+
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"33948049";s:3:"ver";s:1:"1";s:4:"code";s:3708:"h1. Description:
+
+You can have firendly URLs fully functioning in under two minutes by following a simple three step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will need to renamed to .htaccess when uploaded to the root of your site (can be anywhere above the MODx installation or at the top of the site).  You can also simply cut and paste this one into any text editor and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!shawnwilkerson_09_01.jpg|border=1!
+{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working. The majority of comments have been removed and most of what remains is not required for Friendly URLS to function.
+
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+{note}If you do not see all of Revolution&#39;s FURL settings, simply change the &quot;Area&quot; drop-down box to Friendly URL as I did.{note}
+!furl_settings.png|border=1!
+{warning}The use_alias_path setting allows the site to display directory structures.&amp;nbsp; There are scenarios where all of the documents on the site might appear as directly off of the root, disregarding the paths. In this scenario you can simply choose not to have the paths utilized when Revolution presents the page.{warning}
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+
+{note}The easiest way to take advantage of using fully qualified Friendly URLs, is to allow MODx Revolution to build the links even within page content. As described at the bottom of [resource tag syntax|revolution20:Resources] to create links to different resources, is easy as &lt;a href=&quot;\[\[[~ 1|~1]\]\]&quot; title=&quot;some title&quot;&gt;Some Page&lt;/a&gt; . This has the added benefit of being able to move resources around a web project, without needing to fix a bunch of broken links, as MODx Revolution will simply update links created in this manner automatically.
+{note}
+
+
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"33948044";s:3:"ver";s:1:"1";s:4:"code";s:3678:"h1. Description:
+
+You can have firendly URLs fully functioning in under two minutes by following a simple three step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will need to renamed to .htaccess when uploaded to the root of your site (can be anywhere above the MODx installation or at the top of the site).  You can also simply cut and paste this one into any text editor and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!shawnwilkerson_09_01.jpg|border=1!
+{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working.  Italicized content left to show entire file, but is not necessary for Friendly URLS.
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+{note}If you do not see all of Revolution&#39;s FURL settings, simply change the &quot;Area&quot; drop-down box to Friendly URL as I did.{note}
+!furl_settings.png|border=1!
+{warning}The use_alias_path setting allows the site to display directory structures.&amp;nbsp; There are scenarios where all of the documents on the site might appear as directly off of the root, disregarding the paths. In this scenario you can simply choose not to have the paths utilized when Revolution presents the page.{warning}
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+
+{note}The easiest way to take advantage of using fully qualified Friendly URLs, is to allow MODx Revolution to build the links even within page content. As described at the bottom of [resource tag syntax|revolution20:Resources] to create links to different resources, is easy as &lt;a href=&quot;\[\[[~ 1|~1]\]\]&quot; title=&quot;some title&quot;&gt;Some Page&lt;/a&gt; . This has the added benefit of being able to move resources around a web project, without needing to fix a bunch of broken links, as MODx Revolution will simply update links created in this manner automatically.
+{note}
+
+
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"33948042";s:3:"ver";s:1:"1";s:4:"code";s:3687:"h1. Description:
+
+You can have firendly URLs fully functioning in under two minutes by following a simple three step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will need to renamed to .htaccess when uploaded to the root of your site (can be anywhere above the MODx installation or at the top of the site).  You can also simply cut and paste this one into any text editor and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!shawnwilkerson_09_01.jpg|border=1!
+{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working.  Italicized content left to show entire file, but is not necessary for Friendly URLS.
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+{note}If you do not see all of Revolution&#39;s FURL settings, simply change the &quot;Area&quot; drop-down box to Friendly URL as I did.{note}
+!furl_settings.png|border=1!
+{warning}The use_alias_path setting allows the site to display directory structures.&amp;nbsp; There are scenarios where all of the documents on the site might appear as directly off of the root, disregarding the paths. In this scenario you can simply choose not to have the paths utilized when Revolution presents the page.{warning}
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+
+{note}The easiest way to take advantage of using fully qualified Friendly URLs, is to allow MODx Revolution to build the links even within page content. As described at the bottom of [resource tag syntax|revolution20:Resources] to create links to different resources, is easy as &lt;a href=&quot;\[\[[&amp;#126; 1|~1]\]\]&quot; &quot;title=some title&quot;&gt;Some Page&lt;/a&gt; . This has the added benefit of being able to move resources around a web project, without needing to fix a bunch of broken links, as MODx Revolution will simply update links created in this manner automatically.
+{note}
+
+
+
+{scrollbar}";}i:8;a:3:{s:2:"id";s:8:"33948041";s:3:"ver";s:1:"1";s:4:"code";s:3686:"h1. Description:
+
+You can have firendly URLs fully functioning in under two minutes by following a simple three step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will need to renamed to .htaccess when uploaded to the root of your site (can be anywhere above the MODx installation or at the top of the site).  You can also simply cut and paste this one into any text editor and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!shawnwilkerson_09_01.jpg|border=1!
+{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working.  Italicized content left to show entire file, but is not necessary for Friendly URLS.
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+{note}If you do not see all of Revolution&#39;s FURL settings, simply change the &quot;Area&quot; drop-down box to Friendly URL as I did.{note}
+!furl_settings.png|border=1!
+{warning}The use_alias_path setting allows the site to display directory structures.&amp;nbsp; There are scenarios where all of the documents on the site might appear as directly off of the root, disregarding the paths. In this scenario you can simply choose not to have the paths utilized when Revolution presents the page.{warning}
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+
+{note}The easiest way to take advantage of using fully qualified Friendly URLs, is to allow MODx Revolution to build the links even within page content. As described at the bottom of [resource tag syntax|revolution20:Resources] to create links to different resources, is easy as &lt;a href=&quot;\[\[[&amp;#126 1|~1]\]\]&quot; &quot;title=some title&quot;&gt;Some Page&lt;/a&gt; . This has the added benefit of being able to move resources around a web project, without needing to fix a bunch of broken links, as MODx Revolution will simply update links created in this manner automatically.
+{note}
+
+
+
+{scrollbar}";}i:9;a:3:{s:2:"id";s:8:"33948040";s:3:"ver";s:1:"9";s:4:"code";s:3695:"h1. Description:
+
+You can have firendly URLs fully functioning in under two minutes by following a simple three step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will need to renamed to .htaccess when uploaded to the root of your site (can be anywhere above the MODx installation or at the top of the site).  You can also simply cut and paste this one into any text editor and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!shawnwilkerson_09_01.jpg|border=1!
+{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working.  Italicized content left to show entire file, but is not necessary for Friendly URLS.
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+{note}If you do not see all of Revolution&#39;s FURL settings, simply change the &quot;Area&quot; drop-down box to Friendly URL as I did.{note}
+!furl_settings.png|border=1!
+{warning}The use_alias_path setting allows the site to display directory structures.&amp;nbsp; There are scenarios where all of the documents on the site might appear as directly off of the root, disregarding the paths. In this scenario you can simply choose not to have the paths utilized when Revolution presents the page.{warning}
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+
+{note}The easiest way to take advantage of using fully qualified Friendly URLs, is to allow MODx Revolution to build the links even within page content. As described at the bottom of [resource tag syntax|revolution20:Resources] to create links to different resources, is easy as &amp;lt;a href=&quot;\[\[[\~1|~1]\]\]&quot; &quot;title=some title&quot;&amp;gt;Some Page&amp;lt;/a&amp;gt; . This has the added benefit of being able to move resources around a web project, without needing to fix a bunch of broken links, as MODx Revolution will simply update links created in this manner automatically.
+
+{note}
+
+
+
+{scrollbar}";}i:10;a:3:{s:2:"id";s:8:"33948039";s:3:"ver";s:1:"8";s:4:"code";s:3662:"h1. Description:
+
+You can have firendly URLs fully functioning in under two minutes by following a simple three step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will need to renamed to .htaccess when uploaded to the root of your site (can be anywhere above the MODx installation or at the top of the site).  You can also simply cut and paste this one into any text editor and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!shawnwilkerson_09_01.jpg|border=1!
+{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working.  Italicized content left to show entire file, but is not necessary for Friendly URLS.
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+{note}If you do not see all of Revolution&#39;s FURL settings, simply change the &quot;Area&quot; drop-down box to Friendly URL as I did.{note}
+!furl_settings.png|border=1!
+{warning}The use_alias_path setting allows the site to display directory structures.&amp;nbsp; There are scenarios where all of the documents on the site might appear as directly off of the root, disregarding the paths. In this scenario you can simply choose not to have the paths utilized when Revolution presents the page.{warning}
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+
+{note}The easiest way to take advantage of using fully qualified Friendly URLs, is to allow MODx Revolution to build the links even within page content. As described at the bottom of [resource tag syntax|revolution20:Resources]  to create links to different resources, is easy as  &lt;a href=&quot;[[~1]]&quot; &quot;title=some title&quot;&gt;Some Page&lt;/a&gt; . This has the added benefit of being able to move resources around a web project, without needing to fix a bunch of broken links, as MODx Revolution will simply update links created in this manner automatically.
+
+
+{scrollbar}";}i:11;a:3:{s:2:"id";s:8:"33948037";s:3:"ver";s:1:"7";s:4:"code";s:3402:"\\
+
+h1. Summary:
+
+You can have firendly URLs fully functioning in under two minutes by following a simple three step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will need to renamed to .htaccess when uploaded to the root of your site (can be anywhere above the MODx installation or at the top of the site).  You can also simply cut and paste this one into any text editor and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!RevolutionhtaccessLocation.png|align=right!{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working.  Italicized content left to show entire file, but is not necessary for Friendly URLS.
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+{note}If you do not see all of Revolution&#39;s FURL settings, simply change the &quot;Area&quot; drop-down box to Friendly URL as I did.{note}
+!furl_settings.png|border=1!
+{warning}The use_alias_path setting allows the site to display directory structures.&amp;nbsp; There are scenarios where all of the documents on the site might appear as directly off of the root, disregarding the paths. In this scenario you can simply choose not to have the paths utilized when Revolution presents the page.{warning}
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+
+When you are using Friendly URLs (but also if you&#39;re not\!) you should always use the MODx [resource tag syntax|revolution20:Resources] (see bottom of that page) to create links to different resources. This will make sure that when a resource alias changes, your link will also be updated to that alias.
+
+
+{scrollbar}";}i:12;a:3:{s:2:"id";s:8:"33587359";s:3:"ver";s:1:"6";s:4:"code";s:3091:"\\
+
+h1. Summary:
+
+You can have firendly URLs fully functioning in under two minutes by following a simple three step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will need to renamed to .htaccess when uploaded to the root of your site (can be anywhere above the MODx installation or at the top of the site).  You can also simply cut and paste this one into any text editor and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!RevolutionhtaccessLocation.png|align=right!{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working.  Italicized content left to show entire file, but is not necessary for Friendly URLS.
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+{note}If you do not see all of Revolution&#39;s FURL settings, simply change the &quot;Area&quot; drop-down box to Friendly URL as I did.{note}
+!furl_settings.png|border=1!
+{warning}The use_alias_path setting allows the site to display directory structures.&amp;nbsp; There are scenarios where all of the documents on the site might appear as directly off of the root, disregarding the paths. In this scenario you can simply choose not to have the paths utilized when Revolution presents the page.{warning}
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+{scrollbar}";}i:13;a:3:{s:2:"id";s:8:"33227163";s:3:"ver";s:1:"5";s:4:"code";s:2757:"\\
+
+h1. Summary:
+
+You can have firendly URLs fully functioning in under two minutes by following a simple three step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will need to renamed to .htaccess when uploaded to the root of your site (can be anywhere above the MODx installation or at the top of the site).  You can also simply cut and paste this one into any text editor and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!RevolutionhtaccessLocation.png|align=right!{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working.  Italicized content left to show entire file, but is not necessary for Friendly URLS.
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+{note}If you do not see all of Revolution&#39;s FURL settings, simply change the &quot;Area&quot; drop-down box to Friendly URL as I did.{note}
+!furl_settings.png|border=1!
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+{scrollbar}";}i:14;a:3:{s:2:"id";s:8:"33227161";s:3:"ver";s:1:"4";s:4:"code";s:2735:"\\
+
+h1. Summary:
+
+You can have firendly URLs fully functioning in under two minutes by following a simple three step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will need to renamed to .htaccess when uploaded to the root of your site (can be anywhere above the MODx installation or at the top of the site).  You can also simply cut and paste this one into any text editor and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!RevolutionhtaccessLocation.png|align=right!{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working.  Italicized content left to show entire file, but is not necessary for Friendly URLS.
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+{note}If you do not see all of Revolution&#39;s settings change &quot;Area&quot; drop box to Friendly URL as I did.{note}
+!furl_settings.png|border=1!
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+{scrollbar}";}i:15;a:3:{s:2:"id";s:8:"33227160";s:3:"ver";s:1:"3";s:4:"code";s:2679:"\\
+
+h1. Summary:
+
+You can have firendly URLs fully functioning in under two minutes by following a simple three step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will need to renamed to .htaccess when uploaded to the root of your site (can be anywhere above the MODx installation or at the top of the site).  You can also simply cut and paste this one into any text editor and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!RevolutionhtaccessLocation.png|align=right!{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working.  Italicized content left to show entire file, but is not necessary for Friendly URLS.
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates, changing the &quot;Automatically generate alias&quot; to YES from the default NO (shown below).
+
+
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+{scrollbar}";}i:16;a:3:{s:2:"id";s:8:"33227158";s:3:"ver";s:1:"2";s:4:"code";s:2999:"\\
+
+h1. Summary:
+
+You can have firendly URLs fully functioning in under two minutes by following a simple three step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will need to renamed to .htaccess when uploaded to the root of your site (can be anywhere above the MODx installation or at the top of the site).  You can also simply cut and paste this one into any text editor and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!RevolutionhtaccessLocation.png|align=right!{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working.  Italicized content left to show entire file, but is not necessary for Friendly URLS.
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates, changing the &quot;Automatically generate alias&quot; to YES from the default NO (shown below).
+
+!furl-grid1.png!
+
+I personally had issues with linking directly to my resume.pdf file so I turned  off _automatically generate alias_.  More than likely it was something I was not doing correctly, as my resume was the first thing I did after turning on Friendly URLS and even before building the first page or templates.
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+{scrollbar}";}i:17;a:3:{s:2:"id";s:8:"20578315";s:3:"ver";s:1:"1";s:4:"code";s:2902:"\\
+
+h1. Summary:
+
+You can have firendly URLs fully functioning in under two minutes by following a simple three step process:
+
+h3. 1) Working .htaccess sample
+
+MODx supplies an ht.access file for you to edit to match your server settings. This file will need to renamed to .htaccess when uploaded to the root of your site (can be anywhere above the MODx installation or at the top of the site).  You can also simply cut and paste this one into any text editor and edit it accordingly:
+
+
+# {color:#0000ff}change the DOMAINNAME to your domain name in lowercase.{color}
+For me: shawnwilkerson
+# {color:#0000ff}change the TLD to the com, net, org, info, whatever you have{color}
+For me: com
+
+!RevolutionhtaccessLocation.png|align=right!{code}# Friendly URLs Part
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} .
+# Force all pages to go to www.domain.com for SEO
+RewriteCond %{HTTP_HOST} !^www\.DOMAINNAME\.TLD [NC]
+RewriteRule (.*) http://www.DOMAINANME.TLD/$1 [R=301,L]
+# Friendly URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+# Additional Settings Follow
+ExpiresActive On
+ExpiresByType image/gif A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+BrowserMatch &quot;MSIE&quot; brokenvary=1
+BrowserMatch &quot;Mozilla/4.[0-9]{2}&quot; brokenvary=1
+BrowserMatch &quot;Opera&quot; !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+{code}
+/htdocs is fine or /public_html or what ever. your server uses
+The .htacess has to be at the same level  as the main index.php or above the document MODx is presenting.
+
+{warning}Be aware some control panels like to write their own .htaccess just above the site level so the best place to put it is where the home page of the site points to (view image above){warning}
+{note}The RewriteBase should end with a /{note}This works fine for Redhat Linux 5 / Apache setups.  If it is not working for you contact your hosting provider \-\- send them this code and ask them what you need to get it working.  Italicized content left to show entire file, but is not necessary for Friendly URLS.
+
+h3. 2) Configure MODx Revolution
+
+Next change the settings in the Friendly URLs Area of the System Settings in the System menu of the Revolution Manager to something like the following image indicates.
+
+!furl-grid1.png!
+
+I personally had issues with linking directly to my resume.pdf file so I turned  off _automatically generate alias_.  More than likely it was something I was not doing correctly, as my resume was the first thing I did after turning on Friendly URLS and even before building the first page or templates.
+
+
+h3. 3) Edit your template(s)
+
+Make sure you have the following between the&amp;nbsp; &lt;head&gt;&lt;/head&gt; tags:
+{code}&lt;base href=&quot;[[!++site_url]]&quot; /&gt;
+{code}
+h3. 4) Clear the MODx Revolution cache
+
+And you&#39;re done\!
+
+{scrollbar}";}}}

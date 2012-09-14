@@ -1,0 +1,53 @@
+a:5:{s:2:"id";s:8:"18678420";s:4:"info";a:4:{s:6:"Title:";s:26:"modUser.getSessionContexts";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:41:"[revolution20:modUser.getSessionContexts]";}s:6:"parent";s:8:"18678416";s:6:"source";s:472:"\\
+
+h2. modUser::getSessionContexts
+
+Returns an array of user session context keys.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modUser.html#getSessionContexts
+
+{code}
+array getSessionContexts ()
+{code}
+
+h2. Example
+
+Get all user seesion contexts for this user that is logged into the web and mgr contexts:
+{code}
+$keys = $user-&gt;getSessionContexts();
+print_r($keys); // prints Array ( &#39;web&#39;, &#39;mgr&#39; );
+{code}
+
+h2. See Also
+
+* [modUser]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678420";s:3:"ver";s:1:"1";s:4:"code";s:472:"\\
+
+h2. modUser::getSessionContexts
+
+Returns an array of user session context keys.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modUser.html#getSessionContexts
+
+{code}
+array getSessionContexts ()
+{code}
+
+h2. Example
+
+Get all user seesion contexts for this user that is logged into the web and mgr contexts:
+{code}
+$keys = $user-&gt;getSessionContexts();
+print_r($keys); // prints Array ( &#39;web&#39;, &#39;mgr&#39; );
+{code}
+
+h2. See Also
+
+* [modUser]
+
+{scrollbar}";}}}

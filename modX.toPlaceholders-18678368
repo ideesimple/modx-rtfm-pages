@@ -1,0 +1,67 @@
+a:5:{s:2:"id";s:8:"18678368";s:4:"info";a:4:{s:6:"Title:";s:19:"modX.toPlaceholders";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:34:"[revolution20:modX.toPlaceholders]";}s:6:"parent";s:8:"18678370";s:6:"source";s:734:"\\
+
+h2. modX::toPlaceholders
+
+Sets placeholders from values stored in arrays and objects.
+
+Each recursive level adds to the prefix, building an access path using an optional separator.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#toPlaceholders
+
+{code}
+void toPlaceholders (array|object  $subject, [string $prefix = &#39;&#39;], [string $separator = &#39;.&#39;])
+{code}
+
+h2. Example
+
+Set an array of placeholders and prefix with &#39;my.&#39;
+{code}
+$modx-&gt;toPlaceholders(array(
+  &#39;name&#39; =&gt; &#39;John&#39;,
+  &#39;email&#39; =&gt; &#39;jdoe@gmail.com&#39;,
+),&#39;my&#39;);
+{code}
+
+h2. See Also
+
+* [modX.toPlaceholder]
+* [modX.setPlaceholder]
+* [modX.setPlaceholders]
+* [modX.getPlaceholder]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678368";s:3:"ver";s:1:"1";s:4:"code";s:734:"\\
+
+h2. modX::toPlaceholders
+
+Sets placeholders from values stored in arrays and objects.
+
+Each recursive level adds to the prefix, building an access path using an optional separator.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#toPlaceholders
+
+{code}
+void toPlaceholders (array|object  $subject, [string $prefix = &#39;&#39;], [string $separator = &#39;.&#39;])
+{code}
+
+h2. Example
+
+Set an array of placeholders and prefix with &#39;my.&#39;
+{code}
+$modx-&gt;toPlaceholders(array(
+  &#39;name&#39; =&gt; &#39;John&#39;,
+  &#39;email&#39; =&gt; &#39;jdoe@gmail.com&#39;,
+),&#39;my&#39;);
+{code}
+
+h2. See Also
+
+* [modX.toPlaceholder]
+* [modX.setPlaceholder]
+* [modX.setPlaceholders]
+* [modX.getPlaceholder]
+
+{scrollbar}";}}}

@@ -1,0 +1,236 @@
+a:5:{s:2:"id";s:8:"18678070";s:4:"info";a:4:{s:6:"Title:";s:18:"Package Management";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:33:"[revolution20:Package Management]";}s:6:"parent";s:8:"18678195";s:6:"source";s:3128:"\\
+
+MODx Revolution introduces what are called [Transport Packages], which are compiled zips of almost anything - from snippets, components, manager templates, to the core itself.
+
+Revolution also has [Providers], which are download locations that allow for downloading packages straight from within the MODx manager itself.
+
+{toc}
+
+h2. Downloading Packages
+
+You have a few options: you can download remotely via the Provider option, by selecting the modxcms.com provider from the menu (or just by clicking &#39;Download Extras&#39; in the grid toolbar).
+
+To download the packages, simply select the package you wish to download and click the &quot;Download&quot; button.
+
+Or, packages can be downloaded directly from a browser via MODx&#39;s Extras section, located at [http://modxcms.com/extras/].  The package zips are loaded simply by uploading them to your core/packages/ directory, and then running the Package Management section of the manager. From there, click on &quot;Add New Package&quot;, and select the &quot;Search Locally for Packages&quot; option. MODx will then scan the core package directory, and add any packages you have.
+
+{note}Downloading Packages requires you to either have cURL or sockets installed on your web server. If you do not have these installed, the list of packages will show blank.{note}
+
+{info}The Official Provider of modxcms.com has a URL of:
+[http://rest.modxcms.com/extras/|http://modxcms.com/assets/provider.js]
+and comes packaged in with MODx Revolution 2.0.0.{info}
+
+h2. Installing Packages
+
+You can easily install packages by right-clicking on the package and clicking &quot;Install&quot;. A console will load showing you the details of the package installation.
+
+If the package should have a License Agreement, you&#39;ll need to agree to it before you can proceed. Also, the package might provide a README file for you to purvey before installing.
+
+Finally, the package may or may not have some pre-install options and settings for you to set, such as:
+
+!pkgsetupopt.png!
+
+The package should then install on your MODx installation.
+
+h2. Updating Packages
+
+You can easily update any package that has been downloaded from a provider. Simply click the &#39;Check for Updates&#39; context menu item (after right-clicking on the package), and MODx will load a window showing any newer versions. Should your package be already up-to-date, a message will appear.
+
+You can then select the version you would like to install, and MODx will download the package and start the install process.
+
+Now, if you want to revert back, you&#39;ll simply uninstall the package, and click the &#39;Revert&#39; option, which will revert back to the prior package that was installed.
+
+h2. Uninstalling Packages
+
+You can click on any package to either remove or uninstall a package. _Removing_ a package removes the zip file entirely from your core/packages directory. Uninstall simply uninstalls it.
+
+Note the three modes when you uninstall a package:
+
+!pkguninstall.png!
+
+Each is self-explanatory.
+
+----
+h2. See Also
+
+[revolution20:Installing a Package]
+{pagetree:root=Package Management}
+
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678070";s:3:"ver";s:1:"3";s:4:"code";s:3128:"\\
+
+MODx Revolution introduces what are called [Transport Packages], which are compiled zips of almost anything - from snippets, components, manager templates, to the core itself.
+
+Revolution also has [Providers], which are download locations that allow for downloading packages straight from within the MODx manager itself.
+
+{toc}
+
+h2. Downloading Packages
+
+You have a few options: you can download remotely via the Provider option, by selecting the modxcms.com provider from the menu (or just by clicking &#39;Download Extras&#39; in the grid toolbar).
+
+To download the packages, simply select the package you wish to download and click the &quot;Download&quot; button.
+
+Or, packages can be downloaded directly from a browser via MODx&#39;s Extras section, located at [http://modxcms.com/extras/].  The package zips are loaded simply by uploading them to your core/packages/ directory, and then running the Package Management section of the manager. From there, click on &quot;Add New Package&quot;, and select the &quot;Search Locally for Packages&quot; option. MODx will then scan the core package directory, and add any packages you have.
+
+{note}Downloading Packages requires you to either have cURL or sockets installed on your web server. If you do not have these installed, the list of packages will show blank.{note}
+
+{info}The Official Provider of modxcms.com has a URL of:
+[http://rest.modxcms.com/extras/|http://modxcms.com/assets/provider.js]
+and comes packaged in with MODx Revolution 2.0.0.{info}
+
+h2. Installing Packages
+
+You can easily install packages by right-clicking on the package and clicking &quot;Install&quot;. A console will load showing you the details of the package installation.
+
+If the package should have a License Agreement, you&#39;ll need to agree to it before you can proceed. Also, the package might provide a README file for you to purvey before installing.
+
+Finally, the package may or may not have some pre-install options and settings for you to set, such as:
+
+!pkgsetupopt.png!
+
+The package should then install on your MODx installation.
+
+h2. Updating Packages
+
+You can easily update any package that has been downloaded from a provider. Simply click the &#39;Check for Updates&#39; context menu item (after right-clicking on the package), and MODx will load a window showing any newer versions. Should your package be already up-to-date, a message will appear.
+
+You can then select the version you would like to install, and MODx will download the package and start the install process.
+
+Now, if you want to revert back, you&#39;ll simply uninstall the package, and click the &#39;Revert&#39; option, which will revert back to the prior package that was installed.
+
+h2. Uninstalling Packages
+
+You can click on any package to either remove or uninstall a package. _Removing_ a package removes the zip file entirely from your core/packages directory. Uninstall simply uninstalls it.
+
+Note the three modes when you uninstall a package:
+
+!pkguninstall.png!
+
+Each is self-explanatory.
+
+----
+h2. See Also
+
+[revolution20:Installing a Package]
+{pagetree:root=Package Management}
+
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33947828";s:3:"ver";s:1:"2";s:4:"code";s:3113:"\\
+
+MODx Revolution introduces what are called [Transport Packages], which are compiled zips of almost anything - from snippets, components, manager templates, to the core itself.
+
+Revolution also has [Providers], which are download locations that allow for downloading packages straight from within the MODx manager itself.
+
+{toc}
+
+h2. Downloading Packages
+
+You have a few options: you can download remotely via the Provider option, by selecting the modxcms.com provider from the menu (or just by clicking &#39;Download Extras&#39; in the grid toolbar).
+
+To download the packages, simply select the package you wish to download and click the &quot;Download&quot; button.
+
+Or, packages can be downloaded directly from a browser via MODx&#39;s Extras section, located at [http://modxcms.com/extras/].  The package zips are loaded simply by uploading them to your core/packages/ directory, and then running the Package Management section of the manager. From there, click on &quot;Add New Package&quot;, and select the &quot;Search Locally for Packages&quot; option. MODx will then scan the core package directory, and add any packages you have.
+
+{note}Downloading Packages requires you to either have cURL or sockets installed on your web server. If you do not have these installed, the list of packages will show blank.{note}
+
+{info}The Official Provider of modxcms.com has a URL of:
+[http://rest.modxcms.com/extras/|http://modxcms.com/assets/provider.js]
+and comes packaged in with MODx Revolution 2.0.0.{info}
+
+h2. Installing Packages
+
+You can easily install packages by right-clicking on the package and clicking &quot;Install&quot;. A console will load showing you the details of the package installation.
+
+If the package should have a License Agreement, you&#39;ll need to agree to it before you can proceed. Also, the package might provide a README file for you to purvey before installing.
+
+Finally, the package may or may not have some pre-install options and settings for you to set, such as:
+
+!pkgsetupopt.png!
+
+The package should then install on your MODx installation.
+
+h2. Updating Packages
+
+You can easily update any package that has been downloaded from a provider. Simply click the &#39;Check for Updates&#39; context menu item (after right-clicking on the package), and MODx will load a window showing any newer versions. Should your package be already up-to-date, a message will appear.
+
+You can then select the version you would like to install, and MODx will download the package and start the install process.
+
+Now, if you want to revert back, you&#39;ll simply uninstall the package, and click the &#39;Revert&#39; option, which will revert back to the prior package that was installed.
+
+h2. Uninstalling Packages
+
+You can click on any package to either remove or uninstall a package. _Removing_ a package removes the zip file entirely from your core/packages directory. Uninstall simply uninstalls it.
+
+Note the three modes when you uninstall a package:
+
+!pkguninstall.png!
+
+Each is self-explanatory.
+
+----
+h2. See Also
+
+Installing a Package
+{pagetree:root=Package Management}
+
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"33947827";s:3:"ver";s:1:"1";s:4:"code";s:3092:"\\
+
+MODx Revolution introduces what are called [Transport Packages], which are compiled zips of almost anything - from snippets, components, manager templates, to the core itself.
+
+Revolution also has [Providers], which are download locations that allow for downloading packages straight from within the MODx manager itself.
+
+{toc}
+
+h2. Downloading Packages
+
+You have a few options: you can download remotely via the Provider option, by selecting the modxcms.com provider from the menu (or just by clicking &#39;Download Extras&#39; in the grid toolbar).
+
+To download the packages, simply select the package you wish to download and click the &quot;Download&quot; button.
+
+Or, packages can be downloaded directly from a browser via MODx&#39;s Extras section, located at [http://modxcms.com/extras/].  The package zips are loaded simply by uploading them to your core/packages/ directory, and then running the Package Management section of the manager. From there, click on &quot;Add New Package&quot;, and select the &quot;Search Locally for Packages&quot; option. MODx will then scan the core package directory, and add any packages you have.
+
+{note}Downloading Packages requires you to either have cURL or sockets installed on your web server. If you do not have these installed, the list of packages will show blank.{note}
+
+{info}The Official Provider of modxcms.com has a URL of:
+[http://rest.modxcms.com/extras/|http://modxcms.com/assets/provider.js]
+and comes packaged in with MODx Revolution 2.0.0.{info}
+
+h2. Installing Packages
+
+You can easily install packages by right-clicking on the package and clicking &quot;Install&quot;. A console will load showing you the details of the package installation.
+
+If the package should have a License Agreement, you&#39;ll need to agree to it before you can proceed. Also, the package might provide a README file for you to purvey before installing.
+
+Finally, the package may or may not have some pre-install options and settings for you to set, such as:
+
+!pkgsetupopt.png!
+
+The package should then install on your MODx installation.
+
+h2. Updating Packages
+
+You can easily update any package that has been downloaded from a provider. Simply click the &#39;Check for Updates&#39; context menu item (after right-clicking on the package), and MODx will load a window showing any newer versions. Should your package be already up-to-date, a message will appear.
+
+You can then select the version you would like to install, and MODx will download the package and start the install process.
+
+Now, if you want to revert back, you&#39;ll simply uninstall the package, and click the &#39;Revert&#39; option, which will revert back to the prior package that was installed.
+
+h2. Uninstalling Packages
+
+You can click on any package to either remove or uninstall a package. _Removing_ a package removes the zip file entirely from your core/packages directory. Uninstall simply uninstalls it.
+
+Note the three modes when you uninstall a package:
+
+!pkguninstall.png!
+
+Each is self-explanatory.
+
+----
+h2. See Also
+
+{pagetree:root=Package Management}
+
+
+{scrollbar}";}}}

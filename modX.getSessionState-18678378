@@ -1,0 +1,59 @@
+a:5:{s:2:"id";s:8:"18678378";s:4:"info";a:4:{s:6:"Title:";s:20:"modX.getSessionState";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:35:"[revolution20:modX.getSessionState]";}s:6:"parent";s:8:"18678361";s:6:"source";s:482:"\\
+
+h2. modX::getSessionState
+
+Returns the state of the SESSION being used by modX.
+
+The possible values for session state are:
+* modX::SESSION_STATE_UNINITIALIZED
+* modX::SESSION_STATE_UNAVAILABLE
+* modX::SESSION_STATE_EXTERNAL
+* modX::SESSION_STATE_INITIALIZED
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getSessionState
+
+{code}
+integer getSessionState ()
+{code}
+
+h2. Example
+
+{code}
+$state = $modx-&gt;getSessionState();
+{code}
+
+h2. See Also
+
+* [modX]
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678378";s:3:"ver";s:1:"1";s:4:"code";s:482:"\\
+
+h2. modX::getSessionState
+
+Returns the state of the SESSION being used by modX.
+
+The possible values for session state are:
+* modX::SESSION_STATE_UNINITIALIZED
+* modX::SESSION_STATE_UNAVAILABLE
+* modX::SESSION_STATE_EXTERNAL
+* modX::SESSION_STATE_INITIALIZED
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getSessionState
+
+{code}
+integer getSessionState ()
+{code}
+
+h2. Example
+
+{code}
+$state = $modx-&gt;getSessionState();
+{code}
+
+h2. See Also
+
+* [modX]
+{scrollbar}";}}}

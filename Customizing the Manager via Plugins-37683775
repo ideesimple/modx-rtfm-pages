@@ -1,0 +1,25 @@
+a:5:{s:2:"id";s:8:"37683775";s:4:"info";a:4:{s:6:"Title:";s:35:"Customizing the Manager via Plugins";s:7:"Author:";s:17:"Everett Griffiths";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:50:"[revolution20:Customizing the Manager via Plugins]";}s:6:"parent";s:8:"18678089";s:6:"source";s:488:"\\
+
+{toc}
+
+h2. System Events
+
+In other content management systems (e.g. WordPress), usually the only way to customize the look and feel or behavior of the manager is via plugins that tie into various [System Events].  MODX offers several other ways of achieving customizations: you can change configuration of the manager forms via [Form Customization], or you can change the [Manager Templates and Themes].
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"37683775";s:3:"ver";s:1:"1";s:4:"code";s:488:"\\
+
+{toc}
+
+h2. System Events
+
+In other content management systems (e.g. WordPress), usually the only way to customize the look and feel or behavior of the manager is via plugins that tie into various [System Events].  MODX offers several other ways of achieving customizations: you can change configuration of the manager forms via [Form Customization], or you can change the [Manager Templates and Themes].
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}}}

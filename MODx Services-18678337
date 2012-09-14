@@ -1,0 +1,51 @@
+a:5:{s:2:"id";s:8:"18678337";s:4:"info";a:4:{s:6:"Title:";s:13:"MODx Services";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:28:"[revolution20:MODx Services]";}s:6:"parent";s:8:"18678379";s:6:"source";s:686:"\\
+
+h2. What is a Service?
+
+A service is any object that is loaded via [$modx-&gt;getService|modX.getService]. It can be a custom class provided by the user, or by MODx itself.
+
+Once an object is loaded with getService, it is accessible via $modx-&gt;(servicename). So, for example:
+
+{code}
+$modx-&gt;getService(&#39;twitter&#39;,&#39;myTwitter&#39;,&#39;/path/to/twitter/model/&#39;,array(  
+  &#39;api_key&#39; =&gt; 3212423,
+));  
+$modx-&gt;twitter-&gt;tweet(&#39;Success!&#39;);  
+{code}
+
+h2. What are the Default Included Services?
+
+A list of the core-included MODx Services is as follows:
+
+{pagetree:root=MODx Services|startDepth=1}
+
+h2. See Also
+
+* [modX.getService]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678337";s:3:"ver";s:1:"1";s:4:"code";s:686:"\\
+
+h2. What is a Service?
+
+A service is any object that is loaded via [$modx-&gt;getService|modX.getService]. It can be a custom class provided by the user, or by MODx itself.
+
+Once an object is loaded with getService, it is accessible via $modx-&gt;(servicename). So, for example:
+
+{code}
+$modx-&gt;getService(&#39;twitter&#39;,&#39;myTwitter&#39;,&#39;/path/to/twitter/model/&#39;,array(  
+  &#39;api_key&#39; =&gt; 3212423,
+));  
+$modx-&gt;twitter-&gt;tweet(&#39;Success!&#39;);  
+{code}
+
+h2. What are the Default Included Services?
+
+A list of the core-included MODx Services is as follows:
+
+{pagetree:root=MODx Services|startDepth=1}
+
+h2. See Also
+
+* [modX.getService]
+
+{scrollbar}";}}}

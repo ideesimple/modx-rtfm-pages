@@ -1,0 +1,29 @@
+a:5:{s:2:"id";s:8:"35095211";s:4:"info";a:4:{s:6:"Title:";s:29:"Upgrading from 2.0.x to 2.1.x";s:7:"Author:";s:11:"Mike Schell";s:16:"Last Changed by:";s:11:"Mike Schell";s:12:"Wiki Markup:";s:44:"[revolution20:Upgrading from 2.0.x to 2.1.x]";}s:6:"parent";s:8:"18678122";s:6:"source";s:1234:"{info}
+
+This page is a work in progress.. If you have any questions about upgrading your 2.0.x site to 2.1.x, you will likely find help in the [Revolution 2.1 support thread|http://modxcms.com/forums/index.php/board,399.0.html] of our forums.
+
+{info}
+
+
+Revolution 2.1 saw the removal of much&amp;nbsp;[legacy code|http://rtfm.modx.com/display/revolution20/Summary+of+Legacy+Code+Removed+in+2.1] that was marked deprecated in pre-2.0 releases. This is partially responsible for the vast improvements in speed and efficiency across the MODX core in this release.
+
+Many of the most common and popular Extras have been upgraded and tested with 2.1 accordingly. While Extras developers have had a long time to start using the more up-to-date object-oriented API and stop using the old Evolution-style API calls, some Extras may still not work as expected or work at all. As a result it is very important to test your site in a safe environment before deploying to ensure changes in the codebase do not cause problems.
+
+{warning}Uploading files for an upgrade overwrites all the core files. You can only go back by restoring your backed up files and database. This is why you should test before upgrading your production/live site.{warning}";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"35095211";s:3:"ver";s:1:"4";s:4:"code";s:1234:"{info}
+
+This page is a work in progress.. If you have any questions about upgrading your 2.0.x site to 2.1.x, you will likely find help in the [Revolution 2.1 support thread|http://modxcms.com/forums/index.php/board,399.0.html] of our forums.
+
+{info}
+
+
+Revolution 2.1 saw the removal of much&amp;nbsp;[legacy code|http://rtfm.modx.com/display/revolution20/Summary+of+Legacy+Code+Removed+in+2.1] that was marked deprecated in pre-2.0 releases. This is partially responsible for the vast improvements in speed and efficiency across the MODX core in this release.
+
+Many of the most common and popular Extras have been upgraded and tested with 2.1 accordingly. While Extras developers have had a long time to start using the more up-to-date object-oriented API and stop using the old Evolution-style API calls, some Extras may still not work as expected or work at all. As a result it is very important to test your site in a safe environment before deploying to ensure changes in the codebase do not cause problems.
+
+{warning}Uploading files for an upgrade overwrites all the core files. You can only go back by restoring your backed up files and database. This is why you should test before upgrading your production/live site.{warning}";}i:1;a:3:{s:2:"id";s:8:"35095220";s:3:"ver";s:1:"3";s:4:"code";s:981:"Revolution 2.1 saw the removal of much&amp;nbsp;[legacy code|http://rtfm.modx.com/display/revolution20/Summary+of+Legacy+Code+Removed+in+2.1] that was marked deprecated in pre-2.0 releases. This is partially responsible for the vast improvements in speed and efficiency across the MODX core in this release.
+
+Many of the most common and popular Extras have been upgraded and tested with 2.1 accordingly. While Extras developers have had a long time to start using the more up-to-date object-oriented API and stop using the old Evolution-style API calls, some Extras may still not work as expected or work at all. As a result it is very important to test your site in a safe environment before deploying to ensure changes in the codebase do not cause problems.
+
+{warning}Uploading files for an upgrade overwrites all the core files. You can only go back by restoring your backed up files and database. This is why you should test before upgrading your production/live site.{warning}";}i:2;a:3:{s:2:"id";s:8:"35095218";s:3:"ver";s:1:"2";s:4:"code";s:539:"Revolution 2.1 saw the removal of [legacy code|http://rtfm.modx.com/display/revolution20/Summary+of+Legacy+Code+Removed+in+2.1] that was marked deprecated in pre-2.0 releases. As a result it is important to test your site in a safe environment before deploying to ensure changes in the codebase do not cause problems.
+
+{warning}Uploading files for an upgrade overwrites all the core files. You can only go back by restoring your backed up files and database. This is why you should test before upgrading your production/live site.{warning}";}i:3;a:3:{s:2:"id";s:8:"35095213";s:3:"ver";s:1:"1";s:4:"code";s:320:"Revolution 2.1 saw the removal of \[legacy code\|http://rtfm.modx.com/display/revolution20/Summary+of+Legacy+Code+Removed+in+2.1\] that was marked deprecated in pre-2.0 releases. As a result it is important to test your site in a safe environment before deploying to ensure changes in the codebase do not cause problems.";}}}

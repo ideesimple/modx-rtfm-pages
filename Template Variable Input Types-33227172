@@ -1,0 +1,4015 @@
+a:5:{s:2:"id";s:8:"33227172";s:4:"info";a:4:{s:6:"Title:";s:29:"Template Variable Input Types";s:7:"Author:";s:17:"Everett Griffiths";s:16:"Last Changed by:";s:6:"YJ Tso";s:12:"Wiki Markup:";s:44:"[revolution20:Template Variable Input Types]";}s:6:"parent";s:8:"34636239";s:6:"source";s:9545:"{toc}
+
+There are a number of built-in template variable types.
+
+h2. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h2. Check Box
+
+h3. Simple Usage
+
+The basic usage of this is to simply define the field as a checkbox. You can control whether or not the box is checked by default or not by manipulating the &quot;Input Option Values&quot; and &quot;Default Value&quot; fields.
+
+*Checked by Default*
+
+* Input Option Values: My Option==1
+* Default Value: 1
+
+*Unchecked by Default:*
+
+* Input Option Values: My Option==1
+* Default Value: 0
+
+The box will be checked by default as long as the value following the &quot;==&quot; matches the default value.
+
+h3. Advanced Usage
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h2. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h2. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h2. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h2. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h2. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h2. HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h2. Image
+
+!tv-image-new.png|border=1!
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager then.
+
+{note}
+In MODX 2.2\+ there are no input options for Image TVs anymore. Instead, head over to the &quot;Media Sources&quot; tab and choose a media source to assign to this TV for every context. You can configure base paths and the like in the [Media Source|revolution20:Media Sources].
+{note}
+
+
+!tv-image-input-options.png|border=1!
+
+1) You can declare a default  value file by specifying the path to the image.
+
+2) If you want to limit the images used for this TV to a specific folder, you can specify (since Revolution 2.1) a base-path and base-url. You can also set relative or absolute paths.&amp;nbsp;Take extra note of relative file paths when using friendly url paths.
+For correct display of images in frontend and backend be sure to have correct settings in base_url and base_path settings\!
+
+3) You can prepend URL if filepath doesn&#39;t begin with a trailing slash.&amp;nbsp;
+
+4) You can specify file extensions that can be selected.
+
+This input type returns the link (to be used as src attribute) to the image. You can also set the whole [html-img-tag as a output-type|revolution20:Image TV Output Type].
+
+
+h2. Listbox (Single-Select)
+
+h2. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h2. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+Note that trailing zeros are truncated, e.g. 4.50 gets trimmed to 4.5; this may make this input type unsuitable for currency fields.
+
+h2. Radio Options
+
+
+h3. Simple Usage
+
+The basic usage of this is to provide a list of radio option.  You can control the default option by  manipulating the &quot;Input Option Values&quot; and &quot;Default Value&quot; fields.
+
+*Selected by Default*
+* Input Option Values: My Option==1
+* Default Value: 1
+
+The option will be selected by default as long as the value following the &quot;==&quot; matches the default value.
+
+h3. Advanced Usage
+
+The radio option can be used to output more than simple numerical values.&amp;nbsp; One such example is using the radio option to determine the chunk used for a sidebar.
+
+Set your input option values using the format *Title==value* the title will show in the manager, and the value will be output on the page.&amp;nbsp; To declare multiple options use two pipes (\|\|) after the value, before the next options title.
+
+*Sidebar Example Evolution{*}Input Option Values: Related=={{related-call\]\]\|\|Content==}}{{[\*sidebar-txt\*|*sidebar-txt*]}}{{\|\|Twitter=={{twitter}}
+Default Value: ?{{related-call}}
+
+Sidebar Example Revolution
+Input Option Values: Related==\[\[\]\]\|\|Content==\[[\*sidebar-txt|*sidebar-txt]\]\|\|Twitter==\[\[\]\]
+Default Value: \[\[\]\]
+In the above examples, you can output a chunk or another Template Variable without the aid of an extra.
+
+
+h2. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+This input type also accepts WHERE conditions to filter by: !Screen Shot 2012-05-18 at 9.04.54 PM.png|border=1!
+Another example:
+
+{code}
+
+[{&quot;pagetitle:!=&quot;:&quot;Home&quot;}]
+{code}
+
+h2. Rich Text
+
+See _HTML Area_.
+
+h2. Tag
+
+This appears to look and act just like a standard text field.
+
+h2. Text
+
+This is a vanilla text field.
+
+As of MODX 2.1, there are three input options you can set for this TV:
+* Allow Blank: yes/no, when &quot;no&quot; the resource cannot be saved without it being filled in.
+* Max length: a number representing the number of characters that can be filled in in this field.
+* Min Length: a number representing the minimum number of characters needed to be filled in. May want to use this with the allow blank option to &quot;no&quot;. !tvinput.png|border=1!
+
+h2. Textarea
+
+This is a standard _textarea_ field, with a height of 15 rows. It&#39;s the same size as the HTML Area fields, but without the WYSIWYG editor.
+
+h2. Textarea (Mini)
+
+This is a smaller _textarea_ field, with a height of only 5 rows.
+
+h2. Textbox
+
+This appears to be exactly the same as the vanilla Text field.
+
+h2. URL
+
+This is a guided text field, which a dropdown option to select the protocol: none, [http://], [https://], ftp://, or [mailto:].  No validation is performed to ensure the correctness of the URL structure.
+
+!URL.jpg|border=1!";s:8:"versions";a:28:{i:0;a:3:{s:2:"id";s:8:"33227172";s:3:"ver";s:1:"2";s:4:"code";s:9545:"{toc}
+
+There are a number of built-in template variable types.
+
+h2. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h2. Check Box
+
+h3. Simple Usage
+
+The basic usage of this is to simply define the field as a checkbox. You can control whether or not the box is checked by default or not by manipulating the &quot;Input Option Values&quot; and &quot;Default Value&quot; fields.
+
+*Checked by Default*
+
+* Input Option Values: My Option==1
+* Default Value: 1
+
+*Unchecked by Default:*
+
+* Input Option Values: My Option==1
+* Default Value: 0
+
+The box will be checked by default as long as the value following the &quot;==&quot; matches the default value.
+
+h3. Advanced Usage
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h2. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h2. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h2. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h2. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h2. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h2. HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h2. Image
+
+!tv-image-new.png|border=1!
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager then.
+
+{note}
+In MODX 2.2\+ there are no input options for Image TVs anymore. Instead, head over to the &quot;Media Sources&quot; tab and choose a media source to assign to this TV for every context. You can configure base paths and the like in the [Media Source|revolution20:Media Sources].
+{note}
+
+
+!tv-image-input-options.png|border=1!
+
+1) You can declare a default  value file by specifying the path to the image.
+
+2) If you want to limit the images used for this TV to a specific folder, you can specify (since Revolution 2.1) a base-path and base-url. You can also set relative or absolute paths.&amp;nbsp;Take extra note of relative file paths when using friendly url paths.
+For correct display of images in frontend and backend be sure to have correct settings in base_url and base_path settings\!
+
+3) You can prepend URL if filepath doesn&#39;t begin with a trailing slash.&amp;nbsp;
+
+4) You can specify file extensions that can be selected.
+
+This input type returns the link (to be used as src attribute) to the image. You can also set the whole [html-img-tag as a output-type|revolution20:Image TV Output Type].
+
+
+h2. Listbox (Single-Select)
+
+h2. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h2. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+Note that trailing zeros are truncated, e.g. 4.50 gets trimmed to 4.5; this may make this input type unsuitable for currency fields.
+
+h2. Radio Options
+
+
+h3. Simple Usage
+
+The basic usage of this is to provide a list of radio option.  You can control the default option by  manipulating the &quot;Input Option Values&quot; and &quot;Default Value&quot; fields.
+
+*Selected by Default*
+* Input Option Values: My Option==1
+* Default Value: 1
+
+The option will be selected by default as long as the value following the &quot;==&quot; matches the default value.
+
+h3. Advanced Usage
+
+The radio option can be used to output more than simple numerical values.&amp;nbsp; One such example is using the radio option to determine the chunk used for a sidebar.
+
+Set your input option values using the format *Title==value* the title will show in the manager, and the value will be output on the page.&amp;nbsp; To declare multiple options use two pipes (\|\|) after the value, before the next options title.
+
+*Sidebar Example Evolution{*}Input Option Values: Related=={{related-call\]\]\|\|Content==}}{{[\*sidebar-txt\*|*sidebar-txt*]}}{{\|\|Twitter=={{twitter}}
+Default Value: ?{{related-call}}
+
+Sidebar Example Revolution
+Input Option Values: Related==\[\[\]\]\|\|Content==\[[\*sidebar-txt|*sidebar-txt]\]\|\|Twitter==\[\[\]\]
+Default Value: \[\[\]\]
+In the above examples, you can output a chunk or another Template Variable without the aid of an extra.
+
+
+h2. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+This input type also accepts WHERE conditions to filter by: !Screen Shot 2012-05-18 at 9.04.54 PM.png|border=1!
+Another example:
+
+{code}
+
+[{&quot;pagetitle:!=&quot;:&quot;Home&quot;}]
+{code}
+
+h2. Rich Text
+
+See _HTML Area_.
+
+h2. Tag
+
+This appears to look and act just like a standard text field.
+
+h2. Text
+
+This is a vanilla text field.
+
+As of MODX 2.1, there are three input options you can set for this TV:
+* Allow Blank: yes/no, when &quot;no&quot; the resource cannot be saved without it being filled in.
+* Max length: a number representing the number of characters that can be filled in in this field.
+* Min Length: a number representing the minimum number of characters needed to be filled in. May want to use this with the allow blank option to &quot;no&quot;. !tvinput.png|border=1!
+
+h2. Textarea
+
+This is a standard _textarea_ field, with a height of 15 rows. It&#39;s the same size as the HTML Area fields, but without the WYSIWYG editor.
+
+h2. Textarea (Mini)
+
+This is a smaller _textarea_ field, with a height of only 5 rows.
+
+h2. Textbox
+
+This appears to be exactly the same as the vanilla Text field.
+
+h2. URL
+
+This is a guided text field, which a dropdown option to select the protocol: none, [http://], [https://], ftp://, or [mailto:].  No validation is performed to ensure the correctness of the URL structure.
+
+!URL.jpg|border=1!";}i:1;a:3:{s:2:"id";s:8:"39355527";s:3:"ver";s:1:"2";s:4:"code";s:9543:"{toc}
+
+There are a number of built-in template variable types.
+
+h2. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h2. Check Box
+
+h3. Simple Usage
+
+The basic usage of this is to simply define the field as a checkbox. You can control whether or not the box is checked by default or not by manipulating the &quot;Input Option Values&quot; and &quot;Default Value&quot; fields.
+
+*Checked by Default*
+
+* Input Option Values: My Option==1
+* Default Value: 1
+
+*Unchecked by Default:*
+
+* Input Option Values: My Option==1
+* Default Value: 0
+
+The box will be checked by default as long as the value following the &quot;==&quot; matches the default value.
+
+h3. Advanced Usage
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h2. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h2. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h2. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h2. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h2. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h2. HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h2. Image
+
+!tv-image-new.png|border=1!
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager then.
+
+{note}
+
+In MODX 2.2\+ there are no input options for Image TVs anymore. Instead, head over to the &quot;Media Sources&quot; tab and choose a media source to assign to this TV for every context. You can configure base paths and the like in the [Media Source|revolution20:Media Sources].
+{note}
+
+
+!tv-image-input-options.png|border=1!
+
+1) You can declare a default  value file by specifying the path to the image.
+
+2) If you want to limit the images used for this TV to a specific folder, you can specify (since Revolution 2.1) a base-path and base-url. You can also set relative or absolute paths.&amp;nbsp;Take extra note of relative file paths when using friendly url paths.
+For correct display of images in frontend and backend be sure to have correct settings in base_url and base_path settings\!
+
+3) You can prepend URL if filepath doesn&#39;t begin with a trailing slash.&amp;nbsp;
+
+4) You can specify file extensions that can be selected.
+
+This input type returns the link (to be used as src attribute) to the image. You can also set the whole [html-img-tag as a output-type|revolution20:Image TV Output Type].
+
+
+h2. Listbox (Single-Select)
+
+h2. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h2. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+Note that trailing zeros are truncated, e.g. 4.50 gets trimmed to 4.5; this may make this input type unsuitable for currency fields.
+
+h2. Radio Options
+
+
+h3. Simple Usage
+
+The basic usage of this is to provide a list of radio option.  You can control the default option by  manipulating the &quot;Input Option Values&quot; and &quot;Default Value&quot; fields.
+
+*Selected by Default*
+* Input Option Values: My Option==1
+* Default Value: 1
+
+The option will be selected by default as long as the value following the &quot;==&quot; matches the default value.
+
+h3. Advanced Usage
+
+The radio option can be used to output more than simple numerical values.&amp;nbsp; One such example is using the radio option to determine the chunk used for a sidebar.
+
+Set your input option values using the format *Title==value* the title will show in the manager, and the value will be output on the page.&amp;nbsp; To declare multiple options use two pipes (\|\|) after the value, before the next options title.
+
+*Sidebar Example Evolution{*}Input Option Values: Related=={{related-call\]\]\|\|Content==}}{{[\*sidebar-txt\*|*sidebar-txt*]}}{{\|\|Twitter=={{twitter}}
+Default Value: ?{{related-call}}
+
+Sidebar Example Revolution
+Input Option Values: Related==\[\[\]\]\|\|Content==\[[\*sidebar-txt|*sidebar-txt]\]\|\|Twitter==\[\[\]\]
+Default Value: \[\[\]\]
+In the above examples, you can output a chunk or another Template Variable without the aid of an extra.
+
+
+h2. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+This input type also accepts WHERE conditions to filter by: !Screen Shot 2012-05-18 at 9.04.54 PM.png|border=1!
+Another example:&amp;nbsp;\[{&quot;pagetitle:\!=&quot;:&quot;Home&quot;}\]
+
+
+h2. Rich Text
+
+See _HTML Area_.
+
+h2. Tag
+
+This appears to look and act just like a standard text field.
+
+h2. Text
+
+This is a vanilla text field.
+
+As of MODX 2.1, there are three input options you can set for this TV:
+* Allow Blank: yes/no, when &quot;no&quot; the resource cannot be saved without it being filled in.
+* Max length: a number representing the number of characters that can be filled in in this field.
+* Min Length: a number representing the minimum number of characters needed to be filled in. May want to use this with the allow blank option to &quot;no&quot;. !tvinput.png|border=1!
+
+h2. Textarea
+
+This is a standard _textarea_ field, with a height of 15 rows. It&#39;s the same size as the HTML Area fields, but without the WYSIWYG editor.
+
+h2. Textarea (Mini)
+
+This is a smaller _textarea_ field, with a height of only 5 rows.
+
+h2. Textbox
+
+This appears to be exactly the same as the vanilla Text field.
+
+h2. URL
+
+This is a guided text field, which a dropdown option to select the protocol: none, [http://], [https://], ftp://, or [mailto:].  No validation is performed to ensure the correctness of the URL structure.
+
+!URL.jpg|border=1!";}i:2;a:3:{s:2:"id";s:8:"39355525";s:3:"ver";s:1:"2";s:4:"code";s:9350:"{toc}
+
+There are a number of built-in template variable types.
+
+h2. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h2. Check Box
+
+h3. Simple Usage
+
+The basic usage of this is to simply define the field as a checkbox. You can control whether or not the box is checked by default or not by manipulating the &quot;Input Option Values&quot; and &quot;Default Value&quot; fields.
+
+*Checked by Default*
+
+* Input Option Values: My Option==1
+* Default Value: 1
+
+*Unchecked by Default:*
+
+* Input Option Values: My Option==1
+* Default Value: 0
+
+The box will be checked by default as long as the value following the &quot;==&quot; matches the default value.
+
+h3. Advanced Usage
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h2. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h2. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h2. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h2. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h2. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h2. HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h2. Image
+
+!tv-image-new.png|border=1!
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager then.
+
+{note}
+
+In MODX 2.2\+ there are no input options for Image TVs anymore. Instead, head over to the &quot;Media Sources&quot; tab and choose a media source to assign to this TV for every context. You can configure base paths and the like in the [Media Source|revolution20:Media Sources].
+
+{note}
+
+
+!tv-image-input-options.png|border=1!
+
+1) You can declare a default  value file by specifying the path to the image.
+
+2) If you want to limit the images used for this TV to a specific folder, you can specify (since Revolution 2.1) a base-path and base-url. You can also set relative or absolute paths.&amp;nbsp;Take extra note of relative file paths when using friendly url paths.
+For correct display of images in frontend and backend be sure to have correct settings in base_url and base_path settings\!
+
+3) You can prepend URL if filepath doesn&#39;t begin with a trailing slash.&amp;nbsp;
+
+4) You can specify file extensions that can be selected.
+
+This input type returns the link (to be used as src attribute) to the image. You can also set the whole [html-img-tag as a output-type|revolution20:Image TV Output Type].
+
+
+h2. Listbox (Single-Select)
+
+h2. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h2. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+Note that trailing zeros are truncated, e.g. 4.50 gets trimmed to 4.5; this may make this input type unsuitable for currency fields.
+
+h2. Radio Options
+
+
+h3. Simple Usage
+
+The basic usage of this is to provide a list of radio option.  You can control the default option by  manipulating the &quot;Input Option Values&quot; and &quot;Default Value&quot; fields.
+
+*Selected by Default*
+* Input Option Values: My Option==1
+* Default Value: 1
+
+The option will be selected by default as long as the value following the &quot;==&quot; matches the default value.
+
+h3. Advanced Usage
+
+The radio option can be used to output more than simple numerical values.&amp;nbsp; One such example is using the radio option to determine the chunk used for a sidebar.
+
+Set your input option values using the format *Title==value* the title will show in the manager, and the value will be output on the page.&amp;nbsp; To declare multiple options use two pipes (\|\|) after the value, before the next options title.
+
+*Sidebar Example Evolution{*}Input Option Values: Related=={{related-call\]\]\|\|Content==}}{{[\*sidebar-txt\*|*sidebar-txt*]}}{{\|\|Twitter=={{twitter}}
+Default Value: ?{{related-call}}
+
+Sidebar Example Revolution
+Input Option Values: Related==\[[]\]\|\|Content==\[[\*sidebar-txt|*sidebar-txt]\]\|\|Twitter==\[[]\]
+Default Value: \[[]\]
+In the above examples, you can output a chunk or another Template Variable without the aid of an extra.
+
+
+h2. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+
+h2. Rich Text
+
+See _HTML Area_.
+
+h2. Tag
+
+This appears to look and act just like a standard text field.
+
+h2. Text
+
+This is a vanilla text field.
+
+As of MODX 2.1, there are three input options you can set for this TV:
+* Allow Blank: yes/no, when &quot;no&quot; the resource cannot be saved without it being filled in.
+* Max length: a number representing the number of characters that can be filled in in this field.
+* Min Length: a number representing the minimum number of characters needed to be filled in. May want to use this with the allow blank option to &quot;no&quot;. !tvinput.png|border=1!
+
+h2. Textarea
+
+This is a standard _textarea_ field, with a height of 15 rows. It&#39;s the same size as the HTML Area fields, but without the WYSIWYG editor.
+
+h2. Textarea (Mini)
+
+This is a smaller _textarea_ field, with a height of only 5 rows.
+
+h2. Textbox
+
+This appears to be exactly the same as the vanilla Text field.
+
+h2. URL
+
+This is a guided text field, which a dropdown option to select the protocol: none, [http://], [https://], ftp://, or [mailto:].  No validation is performed to ensure the correctness of the URL structure.
+
+!URL.jpg|border=1!";}i:3;a:3:{s:2:"id";s:8:"37683569";s:3:"ver";s:1:"2";s:4:"code";s:9032:"{toc}
+
+There are a number of built-in template variable types.
+
+h2. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h2. Check Box
+
+h3. Simple Usage
+
+The basic usage of this is to simply define the field as a checkbox. You can control whether or not the box is checked by default or not by manipulating the &quot;Input Option Values&quot; and &quot;Default Value&quot; fields.
+
+*Checked by Default*
+
+* Input Option Values: My Option==1
+* Default Value: 1
+
+*Unchecked by Default:*
+
+* Input Option Values: My Option==1
+* Default Value: 0
+
+The box will be checked by default as long as the value following the &quot;==&quot; matches the default value.
+
+h3. Advanced Usage
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h2. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h2. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h2. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h2. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h2. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h2. HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h2. Image
+
+!tv-image-new.png|border=1!
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager then.
+
+!tv-image-input-options.png|border=1!
+
+1) You can declare a default  value file by specifying the path to the image.
+
+2) If you want to limit the images used for this TV to a specific folder, you can specify (since Revolution 2.1) a base-path and base-url. You can also set relative or absolute paths.&amp;nbsp;Take extra note of relative file paths when using friendly url paths.
+For correct display of images in frontend and backend be sure to have correct settings in base_url and base_path settings\!
+
+3) You can prepend URL if filepath doesn&#39;t begin with a trailing slash.&amp;nbsp;
+
+4) You can specify file extensions that can be selected.
+
+This input type returns the link (to be used as src attribute) to the image. You can also set the whole [html-img-tag as a output-type|revolution20:Image TV Output Type].
+
+
+h2. Listbox (Single-Select)
+
+h2. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h2. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+Note that trailing zeros are truncated, e.g. 4.50 gets trimmed to 4.5; this may make this input type unsuitable for currency fields.
+
+h2. Radio Options
+
+
+h3. Simple Usage
+
+The basic usage of this is to provide a list of radio option.  You can control the default option by  manipulating the &quot;Input Option Values&quot; and &quot;Default Value&quot; fields.
+
+*Selected by Default*
+* Input Option Values: My Option==1
+* Default Value: 1
+
+The option will be selected by default as long as the value following the &quot;==&quot; matches the default value.
+
+h3. Advanced Usage
+
+The radio option can be used to output more than simple numerical values.&amp;nbsp; One such example is using the radio option to determine the chunk used for a sidebar.
+
+Set your input option values using the format *Title==value* the title will show in the manager, and the value will be output on the page.&amp;nbsp; To declare multiple options use two pipes (\|\|) after the value, before the next options title.
+
+*Sidebar Example Evolution{*}Input Option Values: Related=={{related-call]]||Content==[*sidebar-txt*]||Twitter=={{twitter}}
+Default Value: ?{{related-call}}
+
+Sidebar Example Revolution
+Input Option Values: Related==[[$related-call]]||Content==[[*sidebar-txt]]||Twitter==[[$twitter]]
+Default Value: [[$related-call]]
+In the above examples, you can output a chunk or another Template Variable without the aid of an extra.
+
+
+h2. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+
+h2. Rich Text
+
+See _HTML Area_.
+
+h2. Tag
+
+This appears to look and act just like a standard text field.
+
+h2. Text
+
+This is a vanilla text field.
+
+As of MODX 2.1, there are three input options you can set for this TV:
+* Allow Blank: yes/no, when &quot;no&quot; the resource cannot be saved without it being filled in.
+* Max length: a number representing the number of characters that can be filled in in this field.
+* Min Length: a number representing the minimum number of characters needed to be filled in. May want to use this with the allow blank option to &quot;no&quot;. !tvinput.png|border=1!
+
+h2. Textarea
+
+This is a standard _textarea_ field, with a height of 15 rows. It&#39;s the same size as the HTML Area fields, but without the WYSIWYG editor.
+
+h2. Textarea (Mini)
+
+This is a smaller _textarea_ field, with a height of only 5 rows.
+
+h2. Textbox
+
+This appears to be exactly the same as the vanilla Text field.
+
+h2. URL
+
+This is a guided text field, which a dropdown option to select the protocol: none, [http://], [https://], ftp://, or [mailto:].  No validation is performed to ensure the correctness of the URL structure.
+
+!URL.jpg|border=1!";}i:4;a:3:{s:2:"id";s:8:"37683383";s:3:"ver";s:1:"2";s:4:"code";s:7768:"{toc}
+
+There are a number of built-in template variable types.
+
+h2. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h2. Check Box
+
+h3. Simple Usage
+
+The basic usage of this is to simply define the field as a checkbox. You can control whether or not the box is checked by default or not by manipulating the &quot;Input Option Values&quot; and &quot;Default Value&quot; fields.
+
+*Checked by Default*
+
+* Input Option Values: My Option==1
+* Default Value: 1
+
+*Unchecked by Default:*
+
+* Input Option Values: My Option==1
+* Default Value: 0
+
+The box will be checked by default as long as the value following the &quot;==&quot; matches the default value.
+
+h3. Advanced Usage
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h2. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h2. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h2. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h2. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h2. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h2. HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h2. Image
+
+!tv-image-new.png|border=1!
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager then.
+
+!tv-image-input-options.png|border=1!
+
+1) You can declare a default  value file by specifying the path to the image.
+
+2) If you want to limit the images used for this TV to a specific folder, you can specify (since Revolution 2.1) a base-path and base-url. You can also set relative or absolute paths.&amp;nbsp;Take extra note of relative file paths when using friendly url paths.
+For correct display of images in frontend and backend be sure to have correct settings in base_url and base_path settings\!
+
+3) You can prepend URL if filepath doesn&#39;t begin with a trailing slash.&amp;nbsp;
+
+4) You can specify file extensions that can be selected.
+
+This input type returns the link (to be used as src attribute) to the image. You can also set the whole [html-img-tag as a output-type|revolution20:Image TV Output Type].
+
+
+h2. Listbox (Single-Select)
+
+h2. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h2. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+Note that trailing zeros are truncated, e.g. 4.50 gets trimmed to 4.5; this may make this input type unsuitable for currency fields.
+
+h2. Radio Options
+
+h2. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+
+h2. Rich Text
+
+See _HTML Area_.
+
+h2. Tag
+
+This appears to look and act just like a standard text field.
+
+h2. Text
+
+This is a vanilla text field.
+
+As of MODX 2.1, there are three input options you can set for this TV:
+* Allow Blank: yes/no, when &quot;no&quot; the resource cannot be saved without it being filled in.
+* Max length: a number representing the number of characters that can be filled in in this field.
+* Min Length: a number representing the minimum number of characters needed to be filled in. May want to use this with the allow blank option to &quot;no&quot;. !tvinput.png|border=1!
+
+h2. Textarea
+
+This is a standard _textarea_ field, with a height of 15 rows. It&#39;s the same size as the HTML Area fields, but without the WYSIWYG editor.
+
+h2. Textarea (Mini)
+
+This is a smaller _textarea_ field, with a height of only 5 rows.
+
+h2. Textbox
+
+This appears to be exactly the same as the vanilla Text field.
+
+h2. URL
+
+This is a guided text field, which a dropdown option to select the protocol: none, [http://], [https://], ftp://, or [mailto:].  No validation is performed to ensure the correctness of the URL structure.
+
+!URL.jpg|border=1!";}i:5;a:3:{s:2:"id";s:8:"35586083";s:3:"ver";s:1:"2";s:4:"code";s:7314:"{toc}
+
+There are a number of built-in template variable types.
+
+h2. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h2. Check Box
+
+h3. Simple Usage
+
+The basic usage of this is to simply define the field as a checkbox. You can control whether or not the box is checked by default or not by manipulating the &quot;Input Option Values&quot; and &quot;Default Value&quot; fields.
+
+*Checked by Default*
+
+* Input Option Values: My Option==1
+* Default Value: 1
+
+*Unchecked by Default:*
+
+* Input Option Values: My Option==1
+* Default Value: 0
+
+The box will be checked by default as long as the value following the &quot;==&quot; matches the default value.
+
+h3. Advanced Usage
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h2. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h2. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h2. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h2. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h2. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h2. HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h2. Image
+
+!tv-image-new.png|border=1!
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager then.
+
+!tv-image-input-options.png|border=1!
+
+1) You can declare a default  value file by specifying the path to the image.
+
+2) If you want to limit the images used for this TV to a specific folder, you can specify (since Revolution 2.1) a base-path and base-url. You can also set relative or absolute paths.&amp;nbsp;Take extra note of relative file paths when using friendly url paths.
+For correct display of images in frontend and backend be sure to have correct settings in base_url and base_path settings\!
+
+3) You can prepend URL if filepath doesn&#39;t begin with a trailing slash.&amp;nbsp;
+
+4) You can specify file extensions that can be selected.
+
+This input type returns the link (to be used as src attribute) to the image. You can also set the whole [html-img-tag as a output-type|revolution20:Image TV Output Type].
+
+
+h2. Listbox (Single-Select)
+
+h2. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h2. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+Note that trailing zeros are truncated, e.g. 4.50 gets trimmed to 4.5; this may make this input type unsuitable for currency fields.
+
+h2. Radio Options
+
+h2. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+
+h2. Rich Text
+
+See _HTML Area_.
+
+h2. Tag
+
+This appears to look and act just like a standard text field.
+
+h2. Text
+
+This is a vanilla text field.
+
+h2. Textarea
+
+This is a standard _textarea_ field, with a height of 15 rows. It&#39;s the same size as the HTML Area fields, but without the WYSIWYG editor.
+
+h2. Textarea (Mini)
+
+This is a smaller _textarea_ field, with a height of only 5 rows.
+
+h2. Textbox
+
+This appears to be exactly the same as the vanilla Text field.
+
+h2. URL
+
+This is a guided text field, which a dropdown option to select the protocol: none, [http://], [https://], ftp://, or [mailto:].  No validation is performed to ensure the correctness of the URL structure.
+
+!URL.jpg|border=1!";}i:6;a:3:{s:2:"id";s:8:"35095499";s:3:"ver";s:1:"2";s:4:"code";s:7324:"{toc}
+
+There are a number of built-in template variable types.
+
+h2. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h2. Check Box
+
+h3. Simple Usage
+
+The basic usage of this is to simply define the field as a checkbox. You can control whether or not the box is checked by default or not by manipulating the &quot;Input Option Values&quot; and &quot;Default Value&quot; fields.
+
+*Checked by Default*
+
+* Input Option Values: My Option==1
+* Default Value: 1
+
+*Unchecked by Default:*
+
+* Input Option Values: My Option==1
+* Default Value: 0
+
+The box will be checked by default as long as the value following the &quot;==&quot; matches the default value.
+
+h3. Advanced Usage
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h2. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h2. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h2. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h2. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h2. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h2. HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h2. Image
+
+!tv-image-new.png|border=1!
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager then.
+
+!tv-image-input-options.png|border=1!
+
+1) You can declare a default  value file by specifying the path to the image.
+
+2) If you want to limit the images used for this TV to a specific folder, you can specify (since Revolution 2.1) a base-path and base-url. You can also set relative or absolute paths.&amp;nbsp;Take extra note of relative file paths when using friendly url paths.
+For correct display of images in frontend and backend be sure to have correct settings in base_url and base_path settings\!
+
+3) You can prepend URL if filepath doesn&#39;t begin with a trailing slash.&amp;nbsp;
+
+4) You can specify file extensions that can be selected.
+
+This input type returns the link (to be used as src attribute) to the image. You can also set the whole [html-img-tag as a output-type|revolution20:Template Variable Output Types].
+
+
+h2. Listbox (Single-Select)
+
+h2. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h2. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+Note that trailing zeros are truncated, e.g. 4.50 gets trimmed to 4.5; this may make this input type unsuitable for currency fields.
+
+h2. Radio Options
+
+h2. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+
+h2. Rich Text
+
+See _HTML Area_.
+
+h2. Tag
+
+This appears to look and act just like a standard text field.
+
+h2. Text
+
+This is a vanilla text field.
+
+h2. Textarea
+
+This is a standard _textarea_ field, with a height of 15 rows. It&#39;s the same size as the HTML Area fields, but without the WYSIWYG editor.
+
+h2. Textarea (Mini)
+
+This is a smaller _textarea_ field, with a height of only 5 rows.
+
+h2. Textbox
+
+This appears to be exactly the same as the vanilla Text field.
+
+h2. URL
+
+This is a guided text field, which a dropdown option to select the protocol: none, [http://], [https://], ftp://, or [mailto:].  No validation is performed to ensure the correctness of the URL structure.
+
+!URL.jpg|border=1!";}i:7;a:3:{s:2:"id";s:8:"35095497";s:3:"ver";s:1:"2";s:4:"code";s:6686:"{toc}
+
+There are a number of built-in template variable types.
+
+h2.  Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h2.  Check Box
+
+h3. Simple Usage
+
+The basic usage of this is to simply define the field as a checkbox. You can control whether or not the box is checked by default or not by manipulating the &quot;Input Option Values&quot; and &quot;Default Value&quot; fields.
+
+*Checked by Default*
+
+* Input Option Values: My Option==1
+* Default Value: 1
+
+*Unchecked by Default:*
+
+* Input Option Values: My Option==1
+* Default Value: 0
+
+The box will be checked by default as long as the value following the &quot;==&quot; matches the default value.
+
+h3. Advanced Usage
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h2.  Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h2.  DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h2.  Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h2.  File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h2.  Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h2.  HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h2.  Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h2.  Listbox (Single-Select)
+
+h2.  Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h2.  Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+Note that trailing zeros are truncated, e.g. 4.50 gets trimmed to 4.5; this may make this input type unsuitable for currency fields.
+
+h2.  Radio Options
+
+h2.  Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+
+h2.  Rich Text
+
+See _HTML Area_.
+
+h2.  Tag
+
+This appears to look and act just like a standard text field.
+
+h2.  Text
+
+This is a vanilla text field.
+
+h2.  Textarea
+
+This is a standard _textarea_ field, with a height of 15 rows. It&#39;s the same size as the HTML Area fields, but without the WYSIWYG editor.
+
+h2.  Textarea (Mini)
+
+This is a smaller _textarea_ field, with a height of only 5 rows.
+
+h2.  Textbox
+
+This appears to be exactly the same as the vanilla Text field.
+
+h2.  URL
+
+This is a guided text field, which a dropdown option to select the protocol: none, [http://], [https://], ftp://, or [mailto:].  No validation is performed to ensure the correctness of the URL structure.
+
+!URL.jpg|border=1!";}i:8;a:3:{s:2:"id";s:8:"35095438";s:3:"ver";s:1:"2";s:4:"code";s:6718:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+h4. Simple Usage
+
+The basic usage of this is to simply define the field as a checkbox. You can control whether or not the box is checked by default or not by manipulating the &quot;Input Option Values&quot; and &quot;Default Value&quot; fields.
+
+*Checked by Default*
+
+* Input Option Values: My Option==1
+* Default Value: 1
+
+*Unchecked by Default:*
+
+* Input Option Values: My Option==1
+* Default Value: 0
+
+The box will be checked by default as long as the value following the &quot;==&quot; matches the default value.
+
+h4. Advanced Usage
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h3. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h3. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h3. HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h3. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+Note that trailing zeros are truncated, e.g. 4.50 gets trimmed to 4.5; this may make this input type unsuitable for currency fields.
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+
+h3. Rich Text
+
+See _HTML Area_.
+
+h3. Tag
+
+This appears to look and act just like a standard text field.
+
+h3. Text
+
+This is a vanilla text field.
+
+h3. Textarea
+
+This is a standard _textarea_ field, with a height of 15 rows. It&#39;s the same size as the HTML Area fields, but without the WYSIWYG editor.
+
+h3. Textarea (Mini)
+
+This is a smaller _textarea_ field, with a height of only 5 rows.
+
+h3. Textbox
+
+This appears to be exactly the same as the vanilla Text field.
+
+h3. URL
+
+This is a guided text field, which a dropdown option to select the protocol: none, [http://], [https://], ftp://, or [mailto:].  No validation is performed to ensure the correctness of the URL structure.
+
+!URL.jpg|border=1!";}i:9;a:3:{s:2:"id";s:8:"35095252";s:3:"ver";s:1:"1";s:4:"code";s:6716:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+h4. Simple Usage
+
+The basic usage of this is to simply define the field as a checkbox. You can control whether or not the box is checked by default or not by manipulating the &quot;Input Option Values&quot; and &quot;Default Value&quot; fields.
+
+*Checked by Default*
+
+* Input Option Values: My Option==1
+* Default Value: 1
+
+*Unchecked by Default:*
+
+* Input Option Values: My Option==1
+* Default Value: 0
+
+The box will be checked by default as long as the value following the &quot;==&quot; matches the default value.
+
+h4. Advanced Usage
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h3. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h3. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h3. HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h3. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+Note that trailing zeros are truncated, e.g. 4.50 gets trimmed to 4.5; this may make this input type unsuitable for currency fields.
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+
+h3. Rich Text
+
+See _HTML Area_.
+
+h3. Tag
+
+This appears to look and act just like a standard text field.
+
+h3. Text
+
+This is a vanilla text field.
+
+h3. Textarea
+
+This is a standard _textarea_ field, with a height of 15 rows. It&#39;s the same size as the HTML Area fields, but without the WYSIWYG editor.
+
+h3. Textarea (Mini)
+
+This is a smaller _textarea_ field, with a height of only 5 rows.
+
+h3. Textbox
+
+This appears to be exactly the same as the vanilla Text field.
+
+h3. URL
+
+This is a guided checkbox, which a dropdown option to select the protocol: none, [http://], [https://], ftp://, or [mailto:].  No validation is performed to ensure the correctness of the URL structure.
+
+!URL.jpg|border=1!";}i:10;a:3:{s:2:"id";s:8:"34636255";s:3:"ver";s:1:"1";s:4:"code";s:6515:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+h4. Simple Usage
+
+The basic usage of this is to simply define the field as a checkbox. To make the checkbox checked by default, leave the default value blank. If you want the checkbox to be unchecked by default, put in any value into the default value; this will be the value that is stored when the box is checked.
+
+h4. Advanced Usage
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h3. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h3. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h3. HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h3. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+Note that trailing zeros are truncated, e.g. 4.50 gets trimmed to 4.5; this may make this input type unsuitable for currency fields.
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+
+h3. Rich Text
+
+See _HTML Area_.
+
+h3. Tag
+
+This appears to look and act just like a standard text field.
+
+h3. Text
+
+This is a vanilla text field.
+
+h3. Textarea
+
+This is a standard _textarea_ field, with a height of 15 rows. It&#39;s the same size as the HTML Area fields, but without the WYSIWYG editor.
+
+h3. Textarea (Mini)
+
+This is a smaller _textarea_ field, with a height of only 5 rows.
+
+h3. Textbox
+
+This appears to be exactly the same as the vanilla Text field.
+
+h3. URL
+
+This is a guided checkbox, which a dropdown option to select the protocol: none, [http://], [https://], ftp://, or [mailto:].  No validation is performed to ensure the correctness of the URL structure.
+
+!URL.jpg|border=1!";}i:11;a:3:{s:2:"id";s:8:"34636253";s:3:"ver";s:1:"1";s:4:"code";s:6331:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+h4. Simple Usage
+
+The basic usage of this is to simply define the field as a checkbox. To make the checkbox checked by default....
+
+h4. Advanced Usage
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h3. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h3. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h3. HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h3. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+Note that trailing zeros are truncated, e.g. 4.50 gets trimmed to 4.5; this may make this input type unsuitable for currency fields. 
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+
+h3. Rich Text
+
+See _HTML Area_.
+
+h3. Tag
+
+This appears to look and act just like a standard text field.
+
+h3. Text
+
+This is a vanilla text field.
+
+h3. Textarea
+
+This is a standard _textarea_ field, with a height of 15 rows. It&#39;s the same size as the HTML Area fields, but without the WYSIWYG editor.
+
+h3. Textarea (Mini)
+
+This is a smaller _textarea_ field, with a height of only 5 rows.
+
+h3. Textbox
+
+This appears to be exactly the same as the vanilla Text field.
+
+h3. URL
+
+This is a guided checkbox, which a dropdown option to select the protocol: none, [http://], [https://], ftp://, or [mailto:].  No validation is performed to ensure the correctness of the URL structure.
+
+!URL.jpg|border=1!";}i:12;a:3:{s:2:"id";s:8:"34636251";s:3:"ver";s:1:"1";s:4:"code";s:6195:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+h4. Simple Usage
+
+The basic usage of this is to simply define the field as a checkbox. To make the checkbox checked by default....
+
+h4. Advanced Usage
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h3. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h3. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h3. HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h3. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+
+h3. Rich Text
+
+See _HTML Area_.
+
+h3. Tag
+
+This appears to look and act just like a standard text field.
+
+h3. Text
+
+This is a vanilla text field.
+
+h3. Textarea
+
+This is a standard _textarea_ field, with a height of 15 rows. It&#39;s the same size as the HTML Area fields, but without the WYSIWYG editor.
+
+h3. Textarea (Mini)
+
+This is a smaller _textarea_ field, with a height of only 5 rows.
+
+h3. Textbox
+
+This appears to be exactly the same as the vanilla Text field.
+
+h3. URL
+
+This is a guided checkbox, which a dropdown option to select the protocol: none, [http://], [https://], ftp://, or [mailto:].  No validation is performed to ensure the correctness of the URL structure.
+
+!URL.jpg|border=1!";}i:13;a:3:{s:2:"id";s:8:"33947939";s:3:"ver";s:1:"1";s:4:"code";s:6044:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h3. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h3. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h3. HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h3. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+
+h3. Rich Text
+
+See _HTML Area_.
+
+h3. Tag
+
+This appears to look and act just like a standard text field.
+
+h3. Text
+
+This is a vanilla text field.
+
+h3. Textarea
+
+This is a standard _textarea_ field, with a height of 15 rows. It&#39;s the same size as the HTML Area fields, but without the WYSIWYG editor.
+
+h3. Textarea (Mini)
+
+This is a smaller _textarea_ field, with a height of only 5 rows.
+
+h3. Textbox
+
+This appears to be exactly the same as the vanilla Text field.
+
+h3. URL
+
+This is a guided checkbox, which a dropdown option to select the protocol: none, [http://], [https://], ftp://, or [mailto:].  No validation is performed to ensure the correctness of the URL structure.
+
+!URL.jpg|border=1!";}i:14;a:3:{s:2:"id";s:8:"33947920";s:3:"ver";s:1:"1";s:4:"code";s:5978:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h3. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h3. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h3. HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h3. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+
+h3. Rich Text
+
+See _HTML Area_.
+
+h3. Tag
+
+h3. Text
+
+This is a vanilla text field.
+
+h3. Textarea
+
+This is a standard _textarea_ field, with a height of 15 rows. It&#39;s the same size as the HTML Area fields, but without the WYSIWYG editor.
+
+h3. Textarea (Mini)
+
+This is a smaller _textarea_ field, with a height of only 5 rows.
+
+h3. Textbox
+
+This appears to be exactly the same as the vanilla Text field.
+
+h3. URL
+
+This is a guided checkbox, which a dropdown option to select the protocol: none, http://, https://, ftp://, or mailto:.  No validation is performed to ensure the correctness of the URL structure.
+
+!URL.jpg|border=1!
+
+
+";}i:15;a:3:{s:2:"id";s:8:"33947918";s:3:"ver";s:1:"1";s:4:"code";s:5483:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h3. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h3. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h3. HTML Area
+
+This gives you a small WSYIWYG editor for the field.  It looks exactly like the Richtext fields.
+
+!html_area.jpg|border=1!
+
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h3. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+
+h3. Rich Text
+
+See _HTML Area_.
+
+h3. Tag
+
+h3. Text
+
+This is a vanilla text field.
+
+h3. Textarea
+
+h3. Textarea (Mini)
+
+h3. textbox
+
+h3. URL";}i:16;a:3:{s:2:"id";s:8:"33947916";s:3:"ver";s:1:"1";s:4:"code";s:5339:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h3. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h3. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h3. htmlarea
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+This behaves similar to the checkbox fields: you can select multiple items, and this field can be powered by a @SELECT binding in its &quot;Input Option Values&quot; parameter.  Like checkboxes, you probably want to set the &quot;Output Type&quot; to delimiter so you can distinguish between values.
+
+!Listbox_multi.jpg|border=1!
+
+
+
+h3. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the single selected resource.
+
+!Resource_List.jpg|border=1!
+
+This is similar to using a [@SELECT|SELECT Binding] binding in a DropDown list menu, but the Resource List will traverse the entire resource browser, whereas with a @SELECT binding, you&#39;d have to update your query to list children of each parent.
+
+
+h3. Rich Text
+
+h3. Tag
+
+h3. Text
+
+This is a vanilla text field.
+
+h3. Textarea
+
+h3. Textarea (Mini)
+
+h3. textbox
+
+h3. URL";}i:17;a:3:{s:2:"id";s:8:"33947914";s:3:"ver";s:1:"1";s:4:"code";s:4748:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h3. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h3. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h3. htmlarea
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+h3. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource. The value stored after you&#39;ve made a selection is the ID of the selected resource.
+
+!Resource_List.jpg|border=1!
+
+
+
+h3. Rich Text
+
+h3. Tag
+
+h3. Text
+
+This is a vanilla text field.
+
+h3. Textarea
+
+h3. Textarea (Mini)
+
+h3. textbox
+
+h3. URL";}i:18;a:3:{s:2:"id";s:8:"33947912";s:3:"ver";s:1:"1";s:4:"code";s:4598:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database, e.g. *Input option values:*
+{code}
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=35
+{code}
+
+!checkboxes.jpg|border=1!
+
+If you are using multiple checkboxes like this, you will probably need to set the *Output Type* to &quot;Delimiter&quot; (e.g. a comma) so you can distinguish the values contained in each checkbox.
+
+
+
+h3. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h3. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h3. htmlarea
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+h3. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign \(-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource.
+
+h3. Rich Text
+
+h3. Tag
+
+h3. Text
+
+h3. Textarea
+
+h3. Textarea (Mini)
+
+h3. textbox
+
+h3. URL";}i:19;a:3:{s:2:"id";s:8:"33947910";s:3:"ver";s:1:"9";s:4:"code";s:4340:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database (see and example in the DropDown List Menu).
+
+
+!checkboxes.jpg|border=1!
+
+
+h3. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+You use the [Date TV Output Type] to change the format of the Date returned.
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h3. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h3. htmlarea
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+h3. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign (\-) , and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource.
+
+h3. Rich Text
+
+h3. Tag
+
+h3. Text
+
+h3. Textarea
+
+h3. Textarea (Mini)
+
+h3. textbox
+
+h3. URL";}i:20;a:3:{s:2:"id";s:8:"33947904";s:3:"ver";s:1:"8";s:4:"code";s:4261:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a convenient template variable for using tags when blogging, have multiple categories a resource can belong to, or anytime you need a list of tags that have been used before. Every time you edit or create a resource with access to an auto-tag template variable, you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|). You can use a [@SELECT|SELECT Binding] to select items from your database (see and example in the DropDown List Menu).
+
+
+!checkboxes.jpg|border=1!
+
+
+h3. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h3. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable. Another possibility is to store a Snippet that takes a page&#39;s ID as input.
+
+h3. htmlarea
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+h3. Number
+
+This is another text field with some pre-emptive validation.  You literally cannot type anything but the digits 0 to 9, the minus sign (-), and a period (i.e. a decimal point).  A validation error is triggered if you enter more than one decimal point or minus sign. Complex numbers (e.g. using radicals &quot;^&quot; or &quot;e&quot; are *not* supported).
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource.
+
+h3. Rich Text
+
+h3. Tag
+
+h3. Text
+
+h3. Textarea
+
+h3. Textarea (Mini)
+
+h3. textbox
+
+h3. URL";}i:21;a:3:{s:2:"id";s:8:"33947902";s:3:"ver";s:1:"7";s:4:"code";s:3695:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a really convenient template variable for using tags when blogging, have multiple categories a resource can belong to or anytime you need a list of tags used before. Everytime you edit or create a resource with access to an auto-tag template variable you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|).
+
+
+!checkboxes.jpg|border=1!
+
+
+h3. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT Binding] binding to select 2 columns, e.g.
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h3. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable.
+
+h3. htmlarea
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+h3. Number
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource.
+
+h3. Rich Text
+
+h3. Tag
+
+h3. Text
+
+h3. Textarea
+
+h3. Textarea (Mini)
+
+h3. textbox
+
+h3. URL";}i:22;a:3:{s:2:"id";s:8:"33947671";s:3:"ver";s:1:"6";s:4:"code";s:3696:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a really convenient template variable for using tags when blogging, have multiple categories a resource can belong to or anytime you need a list of tags used before. Everytime you edit or create a resource with access to an auto-tag template variable you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|).
+
+
+!checkboxes.jpg|border=1!
+
+
+h3. Date
+
+This allows you to set both a date and a time.
+
+!date.jpg|border=1!
+
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a [@SELECT|SELECT+Binding] binding to select 2 columns, e.g. 
+{code}
+@SELECT name, value FROM your_table
+{code}
+
+Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h3. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. Hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable.
+
+h3. htmlarea
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+h3. Number
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource.
+
+h3. Rich Text
+
+h3. Tag
+
+h3. Text
+
+h3. Textarea
+
+h3. Textarea (Mini)
+
+h3. textbox
+
+h3. URL";}i:23;a:3:{s:2:"id";s:8:"33947669";s:3:"ver";s:1:"5";s:4:"code";s:3603:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a really convenient template variable for using tags when blogging, have multiple categories a resource can belong to or anytime you need a list of tags used before. Everytime you edit or create a resource with access to an auto-tag template variable you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+The Check Box input type allows multiple checkboxes to be displayed with a single TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|).
+
+
+!checkboxes.jpg|border=1!
+
+
+h3. Date
+
+This allows you to set both a date and a time. 
+
+!date.jpg|border=1!
+
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a @SELECT binding. Also see Resource List TV type.
+
+!dropdown.jpg|border=1!
+
+h3. Email
+
+This is a text field that comes with its own validation: only text that&#39;s in a valid email format will be accepted.
+
+!email.jpg|border=1!
+
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. hidden
+
+A hidden field does not show up in the manager, so it&#39;s rare that you&#39;d use this option.  You can set a default value that can be retrieved on all pages using this variable.
+
+h3. htmlarea
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+h3. Number
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource.
+
+h3. Rich Text
+
+h3. Tag
+
+h3. Text
+
+h3. Textarea
+
+h3. Textarea (Mini)
+
+h3. textbox
+
+h3. URL";}i:24;a:3:{s:2:"id";s:8:"33947667";s:3:"ver";s:1:"4";s:4:"code";s:3164:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS - PLEASE ADD
+
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+Auto-Tag is a really convenient template variable for using tags when blogging, have multiple categories a resource can belong to or anytime you need a list of tags used before. Everytime you edit or create a resource with access to an auto-tag template variable you will see the tags that were used before. You can easily click on priorly used tags to chose them in the list.
+
+To make auto-tag tvs useful in the front end, you will need to set the output type to &quot;Delimiter&quot; and specify a delimiter of your choice, and/or use an output filter to present it in the way you prefer. !autotag.png|border=1!
+To output the tags in such a way that you each tag links to a certain resource and passes the tag in a GET parameter, you can use an output filter (snippet) as follows:
+{code}
+  if ($input == &#39;&#39;) { return &#39;Error&#39;; } // In case the TV is empty
+  $tags = explode(&#39;, &#39;,$input); // Based on a delimiter of &quot;, &quot; this will split each one up in an array
+  foreach ($tags as $key =&gt; $value) { // Loop through the tags
+    $output[] = &#39;&lt;a href=&quot;&#39;.$modx-&gt;makeurl(9, &#39;&#39;, array(&#39;tag&#39; =&gt; $value)).&#39;&quot;&gt;&#39;.$value.&#39;&lt;/a&gt;&#39;; // Add it to an output array, with a link to resource 9 and the get parameter.
+  }
+  return implode(&#39;, &#39;,$output); // Merge the output array and output
+{code}
+
+h3. Check Box
+
+The Check Box input type allows multiple checkboxes to be displayed with merely one TV. Set input option values in the option1==value1\|\|option2==value2 format. To declare default checked checkboxes, supply the default value field with the option names, delimited by two pipes (\|\|).
+
+
+h3. Date
+
+h3. DropDown List Menu
+
+Set input option values in the option1==value1\|\|option2==value2\|\|option3==value3 format. Make sure to choose an output type of delimited (or other of your liking) to be able to present this to the front-end in a certain manner. You can also use a @SELECT binding. Also see Resource List TV type.
+
+
+h3. Email
+
+h3. File
+
+Creates a file input form to browse the server for a file. Files can be uploaded through the MODx File Manager. You can declare a default value file by specifying the path to the file.
+
+Take extra note of relative file paths when using friendly url paths.
+
+
+h3. hidden
+
+h3. htmlarea
+
+h3. Image
+
+Creates an image input form to browse the server for a file. Files can  be uploaded through the MODx File Manager. You can declare a default  value file by specifying the path to the image.
+
+Take extra note of relative file paths when using friendly url paths.
+
+Returns the link (to be used as src attribute) to the image.
+
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+h3. Number
+
+h3. Radio Options
+
+h3. Resource List
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource.
+
+h3. Rich Text
+
+h3. Tag
+
+h3. Tag
+
+h3. Text
+
+h3. Textarea
+
+h3. Textarea (Mini)
+
+h3. textbox
+
+h3. URL";}i:25;a:3:{s:2:"id";s:8:"33587274";s:3:"ver";s:1:"3";s:4:"code";s:574:"{toc}
+
+There are a number of built-in template variable types.
+
+IN-PROGRESS
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+h3. Check Box
+
+h3. Date
+
+h3. DropDown List Menu
+
+h3. Email
+
+h3. File
+
+h3. hidden
+
+h3. htmlarea
+
+h3. Image
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+h3. Number
+
+h3. Radio Options
+
+h3. resourcelist
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource.
+
+h3. Rich Text
+
+h3. Tag
+
+h3. Tag
+
+h3. Text
+
+h3. Textarea
+
+h3. Textarea (Mini)
+
+h3. textbox
+
+h3. URL";}i:26;a:3:{s:2:"id";s:8:"33227175";s:3:"ver";s:1:"2";s:4:"code";s:627:"//
+
+{toc}
+
+There are a number of built-in template variable types. These are also known as &quot;Input Types&quot;.
+
+IN-PROGRESS
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+h3. Check Box
+
+h3. Date
+
+h3. DropDown List Menu
+
+h3. Email
+
+h3. File
+
+h3. hidden
+
+h3. htmlarea
+
+h3. Image
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+h3. Number
+
+h3. Radio Options
+
+h3. resourcelist
+
+Supply the definition with a resource ID, and you&#39;ll end up with a drop down list of all pages/resources that are children of that resource.
+
+h3. Rich Text
+
+h3. Tag
+
+h3. Tag
+
+h3. Text
+
+h3. Textarea
+
+h3. Textarea (Mini)
+
+h3. textbox
+
+h3. URL";}i:27;a:3:{s:2:"id";s:8:"33227173";s:3:"ver";s:1:"1";s:4:"code";s:484:"//
+
+{toc}
+
+There are a number of built-in template variable types. These are also known as &quot;Input Types&quot;.  
+
+IN-PROGRESS
+
+h2. Built-in Input Types
+
+h3. Auto-Tag
+
+h3. Check Box
+
+h3. Date
+
+h3. DropDown List Menu
+
+h3. Email
+
+h3. File
+
+h3. hidden
+
+h3. htmlarea
+
+h3. Image
+
+h3. Listbox (Single-Select)
+
+h3. Listbox (Multi-Select)
+
+h3. Number
+
+h3. Radio Options
+
+h3. resourcelist
+
+h3. Rich Text
+
+h3. Tag
+
+h3. Tag
+
+h3. Text
+
+h3. Textarea
+
+h3. Textarea (Mini)
+
+h3. textbox
+
+h3. URL
+";}}}

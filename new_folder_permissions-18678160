@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678160";s:4:"info";a:4:{s:6:"Title:";s:22:"new_folder_permissions";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:37:"[revolution20:new_folder_permissions]";}s:6:"parent";s:8:"18678127";s:6:"source";s:359:"h2. new_folder_permissions
+
+*Name*: New Folder Permissions
+*Type*: String
+*Default*: 0755
+
+When creating a new folder in the File Manager, the File Manager will attempt to change the folder permissions to those entered in this setting. This may not work on some setups, such as IIS, in which case you will need to manually change the permissions.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678160";s:3:"ver";s:1:"2";s:4:"code";s:359:"h2. new_folder_permissions
+
+*Name*: New Folder Permissions
+*Type*: String
+*Default*: 0755
+
+When creating a new folder in the File Manager, the File Manager will attempt to change the folder permissions to those entered in this setting. This may not work on some setups, such as IIS, in which case you will need to manually change the permissions.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119699";s:3:"ver";s:1:"1";s:4:"code";s:522:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}New Folder Permissions{zone-data}
+{zone-data:key}new_folder_permissions{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}0755{zone-data}
+{zone-data:desc}When creating a new folder in the File Manager, the File Manager will attempt to change the folder permissions to those entered in this setting. This may not work on some setups, such as IIS, in which case you will need to manually change the permissions.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

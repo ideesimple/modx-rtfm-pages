@@ -1,0 +1,55 @@
+a:5:{s:2:"id";s:8:"18678374";s:4:"info";a:4:{s:6:"Title:";s:15:"modX.initialize";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:30:"[revolution20:modX.initialize]";}s:6:"parent";s:8:"18678361";s:6:"source";s:596:"\\
+
+h2. modX::initialize
+
+Initializes the modX engine into a [Context|Contexts].
+
+This includes preparing the session, pre-loading some common classes and objects, the current site and context settings, extension packages used to override session handling, error handling, or other initialization classes.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#initialize
+
+{code}
+void initialize ([string $contextKey = &#39;web&#39;])
+{code}
+
+h2. Example
+
+Initialize the &#39;sports&#39; Context.
+{code}
+$modx-&gt;initialize(&#39;sports&#39;);
+{code}
+
+h2. See Also
+
+* [Contexts]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678374";s:3:"ver";s:1:"1";s:4:"code";s:596:"\\
+
+h2. modX::initialize
+
+Initializes the modX engine into a [Context|Contexts].
+
+This includes preparing the session, pre-loading some common classes and objects, the current site and context settings, extension packages used to override session handling, error handling, or other initialization classes.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#initialize
+
+{code}
+void initialize ([string $contextKey = &#39;web&#39;])
+{code}
+
+h2. Example
+
+Initialize the &#39;sports&#39; Context.
+{code}
+$modx-&gt;initialize(&#39;sports&#39;);
+{code}
+
+h2. See Also
+
+* [Contexts]
+
+{scrollbar}";}}}

@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"20119833";s:4:"info";a:4:{s:6:"Title:";s:22:"feed_modx_news_enabled";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:37:"[revolution20:feed_modx_news_enabled]";}s:6:"parent";s:8:"18678127";s:6:"source";s:187:"h2. feed_modx_news_enabled
+
+*Name*: Enable MODx News Feed
+*Type*: Yes/No
+*Default*: Yes
+
+If &#39;No&#39;, MODx will hide the News feed in the welcome section of the manager.
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"20119833";s:3:"ver";s:1:"1";s:4:"code";s:187:"h2. feed_modx_news_enabled
+
+*Name*: Enable MODx News Feed
+*Type*: Yes/No
+*Default*: Yes
+
+If &#39;No&#39;, MODx will hide the News feed in the welcome section of the manager.
+
+{scrollbar}
+";}}}

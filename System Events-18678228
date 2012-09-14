@@ -1,0 +1,121 @@
+a:5:{s:2:"id";s:8:"18678228";s:4:"info";a:4:{s:6:"Title:";s:13:"System Events";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:7:"Bob Ray";s:12:"Wiki Markup:";s:28:"[revolution20:System Events]";}s:6:"parent";s:8:"18678230";s:6:"source";s:1709:"\\
+
+{toc}
+
+h2. What are System Events?
+
+System Events are the events in MODx that [Plugins] are registered to. They are &#39;fired&#39; throughout the MODx code, allowing Plugins to interact with MODx code and add custom functionality without hacking core code.
+
+h2. The Model of a System Event
+
+The system events table is found under \{table_prefix\}_system_eventnames, and has the following fields:
+
+* *id* - The unique ID of the event.
+* *name* - The name of the event. This is how they are referenced in code, via the [modX.invokeEvent] method.
+* *service* - What type of system event this event is.
+* *groupname* - Used for user interfaces, primarily for filtering, grouping and sorting of events. Not used explicitly in the modx model.
+
+h3. Service Types
+
+The &#39;service&#39; field in the System event is a number; the numbers reference different types of System Events. They are:
+
+* 1 - Parser Service Events
+* 2 - Manager Access Events
+* 3 - Web Access Service Events
+* 4 - Cache Service Events
+* 5 - Template Service Events
+* 6 - User Defined Events
+
+3 is not fired in the &#39;mgr&#39; context; 2 is not fired in any context but &#39;mgr&#39;.
+
+h2. Available Events
+
+{note}This is not an exhaustive list as events are still being documented. Thank you for your patience. The TV, Template and Snippet events are still to be documented. For a complete list, please either view a Plugin in the manager and see the System Events tab, or view [here|https://github.com/modxcms/revolution/blob/develop/_build/data/transport.core.events.php]. Note also that all WUsr (web-user) events have been removed.{note}
+
+{pagetree:root=System Events|sort=bitwise}
+
+h2. See Also
+
+{pagetree:root=Plugins}
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678228";s:3:"ver";s:1:"2";s:4:"code";s:1709:"\\
+
+{toc}
+
+h2. What are System Events?
+
+System Events are the events in MODx that [Plugins] are registered to. They are &#39;fired&#39; throughout the MODx code, allowing Plugins to interact with MODx code and add custom functionality without hacking core code.
+
+h2. The Model of a System Event
+
+The system events table is found under \{table_prefix\}_system_eventnames, and has the following fields:
+
+* *id* - The unique ID of the event.
+* *name* - The name of the event. This is how they are referenced in code, via the [modX.invokeEvent] method.
+* *service* - What type of system event this event is.
+* *groupname* - Used for user interfaces, primarily for filtering, grouping and sorting of events. Not used explicitly in the modx model.
+
+h3. Service Types
+
+The &#39;service&#39; field in the System event is a number; the numbers reference different types of System Events. They are:
+
+* 1 - Parser Service Events
+* 2 - Manager Access Events
+* 3 - Web Access Service Events
+* 4 - Cache Service Events
+* 5 - Template Service Events
+* 6 - User Defined Events
+
+3 is not fired in the &#39;mgr&#39; context; 2 is not fired in any context but &#39;mgr&#39;.
+
+h2. Available Events
+
+{note}This is not an exhaustive list as events are still being documented. Thank you for your patience. The TV, Template and Snippet events are still to be documented. For a complete list, please either view a Plugin in the manager and see the System Events tab, or view [here|https://github.com/modxcms/revolution/blob/develop/_build/data/transport.core.events.php]. Note also that all WUsr (web-user) events have been removed.{note}
+
+{pagetree:root=System Events|sort=bitwise}
+
+h2. See Also
+
+{pagetree:root=Plugins}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"39354571";s:3:"ver";s:1:"1";s:4:"code";s:1712:"\\
+
+{toc}
+
+h2. What are System Events?
+
+System Events are the events in MODx that [Plugins] are registered to. They are &#39;fired&#39; throughout the MODx code, allowing Plugins to interact with MODx code and add custom functionality without hacking core code.
+
+h2. The Model of a System Event
+
+The system events table is found under \{table_prefix\}_system_eventnames, and has the following fields:
+
+* *id* - The unique ID of the event.
+* *name* - The name of the event. This is how they are referenced in code, via the [modX.invokeEvent] method.
+* *service* - What type of system event this event is.
+* *groupname* - Used for user interfaces, primarily for filtering, grouping and sorting of events. Not used explicitly in the modx model.
+
+h3. Service Types
+
+The &#39;service&#39; field in the System event is a number; the numbers reference different types of System Events. They are:
+
+* 1 - Parser Service Events
+* 2 - Manager Access Events
+* 3 - Web Access Service Events
+* 4 - Cache Service Events
+* 5 - Template Service Events
+* 6 - User Defined Events
+
+3 is not fired in the &#39;mgr&#39; context; 2 is not fired in any context but &#39;mgr&#39;.
+
+h2. Available Events
+
+{note}This is not an exhaustive list as events are still being documented. Thank you for your patience. The TV, Template and Snippet events are still to be documented. For a complete list, please either view a Plugin in the manager and see the System Events tab, or view [here|http://svn.modxcms.com/svn/tattoo/tattoo/branches/2.0/_build/data/transport.core.events.php]. Note also that all WUsr (web-user) events have been removed.{note}
+
+{pagetree:root=System Events|sort=bitwise}
+
+h2. See Also
+
+{pagetree:root=Plugins}
+
+{scrollbar}";}}}

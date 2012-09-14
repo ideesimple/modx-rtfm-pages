@@ -1,0 +1,30 @@
+a:5:{s:2:"id";s:8:"35094619";s:4:"info";a:4:{s:6:"Title:";s:25:"clear_cache_refresh_trees";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:40:"[revolution20:clear_cache_refresh_trees]";}s:6:"parent";s:8:"35094612";s:6:"source";s:236:"h2. clear_cache_refresh_trees
+
+*Name*: Refresh Trees on Cache Clear
+*Type*: Yes/No
+*Default*: No
+*Available In*: 2.0.7+
+
+If set to &#39;yes&#39;, this will refresh all active trees when the cache is cleared in the manager.
+
+{scrollbar}
+";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"35094619";s:3:"ver";s:1:"2";s:4:"code";s:236:"h2. clear_cache_refresh_trees
+
+*Name*: Refresh Trees on Cache Clear
+*Type*: Yes/No
+*Default*: No
+*Available In*: 2.0.7+
+
+If set to &#39;yes&#39;, this will refresh all active trees when the cache is cleared in the manager.
+
+{scrollbar}
+";}i:1;a:3:{s:2:"id";s:8:"35095067";s:3:"ver";s:1:"1";s:4:"code";s:213:"h2. clear_cache_refresh_trees
+
+*Name*: Refresh Trees on Cache Clear
+*Type*: Yes/No
+*Default*: No
+
+If set to &#39;yes&#39;, this will refresh all active trees when the cache is cleared in the manager.
+
+{scrollbar}
+";}}}

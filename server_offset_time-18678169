@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678169";s:4:"info";a:4:{s:6:"Title:";s:18:"server_offset_time";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:33:"[revolution20:server_offset_time]";}s:6:"parent";s:8:"18678127";s:6:"source";s:182:"h2. server_offset_time
+
+*Name*: Server Offset Time
+*Type*: Number
+*Default*: 0
+
+Select the number of hours time difference between where you are and where the server is.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678169";s:3:"ver";s:1:"2";s:4:"code";s:182:"h2. server_offset_time
+
+*Name*: Server Offset Time
+*Type*: Number
+*Default*: 0
+
+Select the number of hours time difference between where you are and where the server is.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119707";s:3:"ver";s:1:"1";s:4:"code";s:345:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Server Offset Time{zone-data}
+{zone-data:key}server_offset_time{zone-data}
+{zone-data:type}number{zone-data}
+{zone-data:default}0{zone-data}
+{zone-data:desc}Select the number of hours time difference between where you are and where the server is.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

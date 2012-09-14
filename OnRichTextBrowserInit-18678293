@@ -1,0 +1,37 @@
+a:5:{s:2:"id";s:8:"18678293";s:4:"info";a:4:{s:6:"Title:";s:21:"OnRichTextBrowserInit";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:36:"[revolution20:OnRichTextBrowserInit]";}s:6:"parent";s:8:"18678228";s:6:"source";s:370:"\\
+
+h2. Event: OnRichTextBrowserInit
+
+Used to handle MODx.Browser&#39;s filesystem implementation for custom RTEs.
+
+Simply pass in a Javascript function that will handle the return url for the file selected from MODx.Browser to your RTE.
+
+Service: 1 - Parser Service Events
+Group: Richtext Editor
+
+h2. Event Parameters
+
+None.
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678293";s:3:"ver";s:1:"1";s:4:"code";s:370:"\\
+
+h2. Event: OnRichTextBrowserInit
+
+Used to handle MODx.Browser&#39;s filesystem implementation for custom RTEs.
+
+Simply pass in a Javascript function that will handle the return url for the file selected from MODx.Browser to your RTE.
+
+Service: 1 - Parser Service Events
+Group: Richtext Editor
+
+h2. Event Parameters
+
+None.
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

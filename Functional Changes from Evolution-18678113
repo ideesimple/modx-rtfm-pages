@@ -1,0 +1,130 @@
+a:5:{s:2:"id";s:8:"18678113";s:4:"info";a:4:{s:6:"Title:";s:33:"Functional Changes from Evolution";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:48:"[revolution20:Functional Changes from Evolution]";}s:6:"parent";s:8:"18678112";s:6:"source";s:2683:"\\
+
+h2. Changes from MODx Evolution to MODx Revolution
+
+Much has changed from MODx Evolution in the new Revolution release. This document will attempt to address some of the major ones.
+
+h3. Tag Syntax
+
+Tags have changed their basic syntax. You can view the [Tag Syntax changes here|Tag Syntax].
+
+h3. Parsing Order
+
+In Evolution, pages were parsed via eval and done as a whole - in Revolution, we implemented &quot;Source Order&quot; parsing. This means tags are parsed in the order that they occur.
+
+So what does that mean? Well, a few things:
+
+- _Don&#39;t put Snippet calls that assign placeholders at the end of a Resource, or after the Resource._ The placeholders will simply be blank, since the [Snippet|Snippets] haven&#39;t executed yet. 
+- _Tags can now have tags within their properties._ [[mySnippet? &amp;tag=`test[[call]]`]] is now 100% a-okay.
+- _Using =,?,!,* is now OK in a Snippet property.
+
+h3. No More 5000-Document limit
+
+Although this has been mostly remedied in later versions of Evolution, there is still a performance hit in those versions. This, caching-wise, has been fixed in Revolution.
+
+That said, if you&#39;re creating a site that has over 10,000 Resources, chances are you&#39;re not designing it right. Consider writing custom [Snippets] that pull from custom database tables instead for similar pages (such as inventories or e-commerce).
+
+h3. Security
+
+The access permissions system has been completely rewritten into a new ABAC-based system. You can read more about it [here|Security].
+
+h3. Error Page vs Unauthorized Page
+
+This is a change from MODx Evolution. In Revolution, if a web page is protected in the front end so that only logged-in users can see it, the default behavior is for anonymous users to be redirected to the Error (page not found) page rather than the Unauthorized page when they try to access the resource. In Revolution, if Users don&#39;t have the &quot;load&quot; permission for a resource, it&#39;s as if it doesn&#39;t exist — thus the &quot;page not found&quot; response. If you would like them to be sent to the Unauthorized page instead, you can do the following:
+
+- Create a new Access Policy called &quot;Load&quot; and add a single Permission: Load.
+- Create a new Context Access ACL entry for the anonymous User Group with a Context of &quot;web,&quot; a Role of &quot;member&quot; and an Access Policy of &quot;Load.&quot;
+
+(credit to [Bob&#39;s Guides|http://bobsguides.com/revolution-permissions.html])
+
+h3. FURL Suffixes and Prefixes -&gt; Content Types
+
+The settings friendly_url_prefix and friendly_url_suffix are no longer applicable, as Revolution handles those now through [Content Types].
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678113";s:3:"ver";s:1:"2";s:4:"code";s:2683:"\\
+
+h2. Changes from MODx Evolution to MODx Revolution
+
+Much has changed from MODx Evolution in the new Revolution release. This document will attempt to address some of the major ones.
+
+h3. Tag Syntax
+
+Tags have changed their basic syntax. You can view the [Tag Syntax changes here|Tag Syntax].
+
+h3. Parsing Order
+
+In Evolution, pages were parsed via eval and done as a whole - in Revolution, we implemented &quot;Source Order&quot; parsing. This means tags are parsed in the order that they occur.
+
+So what does that mean? Well, a few things:
+
+- _Don&#39;t put Snippet calls that assign placeholders at the end of a Resource, or after the Resource._ The placeholders will simply be blank, since the [Snippet|Snippets] haven&#39;t executed yet. 
+- _Tags can now have tags within their properties._ [[mySnippet? &amp;tag=`test[[call]]`]] is now 100% a-okay.
+- _Using =,?,!,* is now OK in a Snippet property.
+
+h3. No More 5000-Document limit
+
+Although this has been mostly remedied in later versions of Evolution, there is still a performance hit in those versions. This, caching-wise, has been fixed in Revolution.
+
+That said, if you&#39;re creating a site that has over 10,000 Resources, chances are you&#39;re not designing it right. Consider writing custom [Snippets] that pull from custom database tables instead for similar pages (such as inventories or e-commerce).
+
+h3. Security
+
+The access permissions system has been completely rewritten into a new ABAC-based system. You can read more about it [here|Security].
+
+h3. Error Page vs Unauthorized Page
+
+This is a change from MODx Evolution. In Revolution, if a web page is protected in the front end so that only logged-in users can see it, the default behavior is for anonymous users to be redirected to the Error (page not found) page rather than the Unauthorized page when they try to access the resource. In Revolution, if Users don&#39;t have the &quot;load&quot; permission for a resource, it&#39;s as if it doesn&#39;t exist — thus the &quot;page not found&quot; response. If you would like them to be sent to the Unauthorized page instead, you can do the following:
+
+- Create a new Access Policy called &quot;Load&quot; and add a single Permission: Load.
+- Create a new Context Access ACL entry for the anonymous User Group with a Context of &quot;web,&quot; a Role of &quot;member&quot; and an Access Policy of &quot;Load.&quot;
+
+(credit to [Bob&#39;s Guides|http://bobsguides.com/revolution-permissions.html])
+
+h3. FURL Suffixes and Prefixes -&gt; Content Types
+
+The settings friendly_url_prefix and friendly_url_suffix are no longer applicable, as Revolution handles those now through [Content Types].
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33587478";s:3:"ver";s:1:"1";s:4:"code";s:2683:"\\
+
+h2. Changes from MODx Evolution to MODx Revolution
+
+Much has changed from MODx Evolution in the new Revolution release. This document will attempt to address some of the major ones.
+
+h3. Tag Syntax
+
+Tags have changed their basic syntax. You can view the [Tag Syntax changes here|Tag Syntax].
+
+h3. Parsing Order
+
+In Evolution, pages were parsed via eval and done as a whole - in Revolution, we implemented &quot;Source Order&quot; parsing. This means tags are parsed in the order that they occur.
+
+So what does that mean? Well, a few things:
+
+- _Don&#39;t put Snippet calls that assign placeholders at the end of a Resource, or after the Resource._ The placeholders will simply be blank, since the [Snippet|Snippets] haven&#39;t executed yet. 
+- _Tags can now have tags within their properties._ [[mySnippet? &amp;tag=`test[[call]]`]] is now 100% a-okay.
+- _Using =,?,!,* is now OK in a Snippet property.
+
+h3. No More 5000-Document limit
+
+Although this has been mostly remedied in later versions of Evolution, there is still a performance hit in those versions. This, caching-wise, has been fixed in Revolution.
+
+That said, if you&#39;re creating a site that has over 10,000 Resources, chances are you&#39;re not designing it right. Consider writing custom [Snippets] that pull from custom database tables instead for similar pages (such as inventories or e-commerce).
+
+h3. Security
+
+The access permissions system has been completely rewritten into a new ABAC-based system. You can read more about it [Security|here].
+
+h3. Error Page vs Unauthorized Page
+
+This is a change from MODx Evolution. In Revolution, if a web page is protected in the front end so that only logged-in users can see it, the default behavior is for anonymous users to be redirected to the Error (page not found) page rather than the Unauthorized page when they try to access the resource. In Revolution, if Users don&#39;t have the &quot;load&quot; permission for a resource, it&#39;s as if it doesn&#39;t exist — thus the &quot;page not found&quot; response. If you would like them to be sent to the Unauthorized page instead, you can do the following:
+
+- Create a new Access Policy called &quot;Load&quot; and add a single Permission: Load.
+- Create a new Context Access ACL entry for the anonymous User Group with a Context of &quot;web,&quot; a Role of &quot;member&quot; and an Access Policy of &quot;Load.&quot;
+
+(credit to [Bob&#39;s Guides|http://bobsguides.com/revolution-permissions.html])
+
+h3. FURL Suffixes and Prefixes -&gt; Content Types
+
+The settings friendly_url_prefix and friendly_url_suffix are no longer applicable, as Revolution handles those now through [Content Types].
+
+{scrollbar}";}}}

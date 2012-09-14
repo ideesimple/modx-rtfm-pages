@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"20119764";s:4:"info";a:4:{s:6:"Title:";s:19:"request_param_alias";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:34:"[revolution20:request_param_alias]";}s:6:"parent";s:8:"18678127";s:6:"source";s:187:"h2. request_param_alias
+
+*Name*: Request Alias Parameter
+*Type*: String
+*Default*: q
+
+The name of the GET parameter to identify Resource aliases when redirecting with FURLs.
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"20119764";s:3:"ver";s:1:"1";s:4:"code";s:187:"h2. request_param_alias
+
+*Name*: Request Alias Parameter
+*Type*: String
+*Default*: q
+
+The name of the GET parameter to identify Resource aliases when redirecting with FURLs.
+
+{scrollbar}
+";}}}

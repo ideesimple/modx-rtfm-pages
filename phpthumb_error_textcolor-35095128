@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"35095128";s:4:"info";a:4:{s:6:"Title:";s:24:"phpthumb_error_textcolor";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:39:"[revolution20:phpthumb_error_textcolor]";}s:6:"parent";s:8:"18678127";s:6:"source";s:214:"h2. phpthumb_error_textcolor
+
+*Name*: phpThumb Error Text Color
+*Type*: textfield
+*Default*: FF0000
+*Available In:* 2.0.8\+
+
+A hex value, without the #, indicating text color for phpThumb error output.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095128";s:3:"ver";s:1:"1";s:4:"code";s:214:"h2. phpthumb_error_textcolor
+
+*Name*: phpThumb Error Text Color
+*Type*: textfield
+*Default*: FF0000
+*Available In:* 2.0.8\+
+
+A hex value, without the #, indicating text color for phpThumb error output.
+
+{scrollbar}";}}}

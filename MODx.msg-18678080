@@ -1,0 +1,457 @@
+a:5:{s:2:"id";s:8:"18678080";s:4:"info";a:4:{s:6:"Title:";s:8:"MODx.msg";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:23:"[revolution20:MODx.msg]";}s:6:"parent";s:8:"18678078";s:6:"source";s:3091:"\\
+
+h2. MODx.msg
+
+*Extends:* Ext.Component
+*Key Features:* AJAX connector features.
+
+!confirm.png!
+
+The MODx.msg class provides the functionality of the Ext.MessageBox class, with the added benefit of using an AJAX callback function (for confirmation dialogs). Simply provide a URL and optional parameters and a connector request will be sent after the user confirms the prompt. It defaults to a minimum width of 200px.
+
+h2. Methods
+
+h3. alert
+
+{quote}MODx.msg.alert(title,text,fn,scope){quote}
+
+Used to display an alert dialog box on the page. Example:
+
+{code}MODx.msg.alert(&#39;Warning!&#39;,&#39;You are out of space! We should clear the cache.&#39;,function() {
+  MODx.clearCache();
+},MODx);{code}
+
+h3. confirm
+
+{quote}MODx.msg.confirm(config){quote}
+
+Loads a confirmation dialog that prompts the user for a Yes/No response. If Yes is selected, fires an AJAX request to a specific connector. The properties for the config parameter are:
+
+|| Name || Description ||
+| title | The title of the confirmation box. |
+| text | The text in the confirmation box. |
+| url | The URL to send the AJAX request to. |
+| params | The REQUEST params to send with the AJAX request. |
+| listeners | Any listeners to look for on the request. |
+
+An example:
+
+{code}
+MODx.msg.confirm({
+   title: &#39;Are you sure?&#39;
+   ,text: &#39;Do you want to delete the world? This is irreversible.&#39;
+   ,url: &#39;http://rest.endofdays.com/armageddon/&#39;
+   ,params: {
+      deleteWorld: true
+   }
+   ,listeners: {
+        &#39;success&#39;:{fn: function(r) {
+             MODx.clearCache(); /* clear cache after world destruction, so we dont have latent data */
+        },scope:true);
+   }
+});
+{code}
+
+h4. MODx.msg.confirm Custom Events
+
+MODx.msg.confirm adds a few custom events that fire:
+
+|| Name || Description ||
+| success | Fires on a successful response from the AJAX submission. |
+| failure | Fires on a failed response from the AJAX submission. |
+| cancel | Fires when the user cancels the confirmation dialog. |
+
+h3. status
+
+{code}MODx.msg.status(opt){code}
+
+Loads a temporary status message in the top-right of the screen, that fades away. The properties for the opt parameter are:
+
+|| Name || Description || Default ||
+| title | Optional. The title of the message. | |
+| message | The text of the status message. | |
+| dontHide | If true, will not automatically hide the status message. Will stay until it is clicked. | false |
+| delay | The number of seconds to show the message. | 1.5 |
+
+You could use this in custom manager pages to provide confirmation your object was saved. You could add something like this to your FormPanel definition:
+
+{code}
+        listeners: {
+            &#39;success&#39;: function (res) {
+                MODx.msg.status({
+                    title: _(&#39;save_successful&#39;),
+                    message: res.result[&#39;message&#39;],
+                    delay: 3
+                });
+            }
+        }
+{code}
+
+The &#39;success&#39; listener is part of modExt and comes with [revolution20:MODx.FormPanel].
+
+h2. See Also
+
+{pagetree:root=MODExt}
+
+{scrollbar}";s:8:"versions";a:5:{i:0;a:3:{s:2:"id";s:8:"18678080";s:3:"ver";s:1:"5";s:4:"code";s:3091:"\\
+
+h2. MODx.msg
+
+*Extends:* Ext.Component
+*Key Features:* AJAX connector features.
+
+!confirm.png!
+
+The MODx.msg class provides the functionality of the Ext.MessageBox class, with the added benefit of using an AJAX callback function (for confirmation dialogs). Simply provide a URL and optional parameters and a connector request will be sent after the user confirms the prompt. It defaults to a minimum width of 200px.
+
+h2. Methods
+
+h3. alert
+
+{quote}MODx.msg.alert(title,text,fn,scope){quote}
+
+Used to display an alert dialog box on the page. Example:
+
+{code}MODx.msg.alert(&#39;Warning!&#39;,&#39;You are out of space! We should clear the cache.&#39;,function() {
+  MODx.clearCache();
+},MODx);{code}
+
+h3. confirm
+
+{quote}MODx.msg.confirm(config){quote}
+
+Loads a confirmation dialog that prompts the user for a Yes/No response. If Yes is selected, fires an AJAX request to a specific connector. The properties for the config parameter are:
+
+|| Name || Description ||
+| title | The title of the confirmation box. |
+| text | The text in the confirmation box. |
+| url | The URL to send the AJAX request to. |
+| params | The REQUEST params to send with the AJAX request. |
+| listeners | Any listeners to look for on the request. |
+
+An example:
+
+{code}
+MODx.msg.confirm({
+   title: &#39;Are you sure?&#39;
+   ,text: &#39;Do you want to delete the world? This is irreversible.&#39;
+   ,url: &#39;http://rest.endofdays.com/armageddon/&#39;
+   ,params: {
+      deleteWorld: true
+   }
+   ,listeners: {
+        &#39;success&#39;:{fn: function(r) {
+             MODx.clearCache(); /* clear cache after world destruction, so we dont have latent data */
+        },scope:true);
+   }
+});
+{code}
+
+h4. MODx.msg.confirm Custom Events
+
+MODx.msg.confirm adds a few custom events that fire:
+
+|| Name || Description ||
+| success | Fires on a successful response from the AJAX submission. |
+| failure | Fires on a failed response from the AJAX submission. |
+| cancel | Fires when the user cancels the confirmation dialog. |
+
+h3. status
+
+{code}MODx.msg.status(opt){code}
+
+Loads a temporary status message in the top-right of the screen, that fades away. The properties for the opt parameter are:
+
+|| Name || Description || Default ||
+| title | Optional. The title of the message. | |
+| message | The text of the status message. | |
+| dontHide | If true, will not automatically hide the status message. Will stay until it is clicked. | false |
+| delay | The number of seconds to show the message. | 1.5 |
+
+You could use this in custom manager pages to provide confirmation your object was saved. You could add something like this to your FormPanel definition:
+
+{code}
+        listeners: {
+            &#39;success&#39;: function (res) {
+                MODx.msg.status({
+                    title: _(&#39;save_successful&#39;),
+                    message: res.result[&#39;message&#39;],
+                    delay: 3
+                });
+            }
+        }
+{code}
+
+The &#39;success&#39; listener is part of modExt and comes with [revolution20:MODx.FormPanel].
+
+h2. See Also
+
+{pagetree:root=MODExt}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35586250";s:3:"ver";s:1:"4";s:4:"code";s:3091:"\\
+
+h2. MODx.Msg
+
+*Extends:* Ext.Component
+*Key Features:* AJAX connector features.
+
+!confirm.png!
+
+The MODx.Msg class provides the functionality of the Ext.MessageBox class, with the added benefit of using an AJAX callback function (for confirmation dialogs). Simply provide a URL and optional parameters and a connector request will be sent after the user confirms the prompt. It defaults to a minimum width of 200px.
+
+h2. Methods
+
+h3. alert
+
+{quote}MODx.msg.alert(title,text,fn,scope){quote}
+
+Used to display an alert dialog box on the page. Example:
+
+{code}MODx.msg.alert(&#39;Warning!&#39;,&#39;You are out of space! We should clear the cache.&#39;,function() {
+  MODx.clearCache();
+},MODx);{code}
+
+h3. confirm
+
+{quote}MODx.msg.confirm(config){quote}
+
+Loads a confirmation dialog that prompts the user for a Yes/No response. If Yes is selected, fires an AJAX request to a specific connector. The properties for the config parameter are:
+
+|| Name || Description ||
+| title | The title of the confirmation box. |
+| text | The text in the confirmation box. |
+| url | The URL to send the AJAX request to. |
+| params | The REQUEST params to send with the AJAX request. |
+| listeners | Any listeners to look for on the request. |
+
+An example:
+
+{code}
+MODx.msg.confirm({
+   title: &#39;Are you sure?&#39;
+   ,text: &#39;Do you want to delete the world? This is irreversible.&#39;
+   ,url: &#39;http://rest.endofdays.com/armageddon/&#39;
+   ,params: {
+      deleteWorld: true
+   }
+   ,listeners: {
+        &#39;success&#39;:{fn: function(r) {
+             MODx.clearCache(); /* clear cache after world destruction, so we dont have latent data */
+        },scope:true);
+   }
+});
+{code}
+
+h4. MODx.msg.confirm Custom Events
+
+MODx.msg.confirm adds a few custom events that fire:
+
+|| Name || Description ||
+| success | Fires on a successful response from the AJAX submission. |
+| failure | Fires on a failed response from the AJAX submission. |
+| cancel | Fires when the user cancels the confirmation dialog. |
+
+h3. status
+
+{code}MODx.Msg.status(opt){code}
+
+Loads a temporary status message in the top-right of the screen, that fades away. The properties for the opt parameter are:
+
+|| Name || Description || Default ||
+| title | Optional. The title of the message. | |
+| message | The text of the status message. | |
+| dontHide | If true, will not automatically hide the status message. Will stay until it is clicked. | false |
+| delay | The number of seconds to show the message. | 1.5 |
+
+You could use this in custom manager pages to provide confirmation your object was saved. You could add something like this to your FormPanel definition:
+
+{code}
+        listeners: {
+            &#39;success&#39;: function (res) {
+                MODx.msg.status({
+                    title: _(&#39;save_successful&#39;),
+                    message: res.result[&#39;message&#39;],
+                    delay: 3
+                });
+            }
+        }
+{code}
+
+The &#39;success&#39; listener is part of modExt and comes with [revolution20:MODx.FormPanel].
+
+h2. See Also
+
+{pagetree:root=MODExt}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35586128";s:3:"ver";s:1:"3";s:4:"code";s:2466:"\\
+
+h2. MODx.Msg
+
+*Extends:* Ext.Component
+*Key Features:* AJAX connector features.
+
+!confirm.png!
+
+The MODx.Msg class provides the functionality of the Ext.MessageBox class, with the added benefit of using an AJAX callback function (for confirmation dialogs). Simply provide a URL and optional parameters and a connector request will be sent after the user confirms the prompt. It defaults to a minimum width of 200px.
+
+h2. Methods
+
+h3. alert
+
+{quote}MODx.msg.alert(title,text,fn,scope){quote}
+
+Used to display an alert dialog box on the page. Example:
+
+{code}MODx.msg.alert(&#39;Warning!&#39;,&#39;You are out of space! We should clear the cache.&#39;,function() {
+  MODx.clearCache();
+},MODx);{code}
+
+h3. confirm
+
+{quote}MODx.msg.confirm(config){quote}
+
+Loads a confirmation dialog that prompts the user for a Yes/No response. If Yes is selected, fires an AJAX request to a specific connector. The properties for the config parameter are:
+
+||Name||Description||
+|title|The title of the confirmation box.|
+|text|The text in the confirmation box.|
+|url|The URL to send the AJAX request to.|
+|params|The REQUEST params to send with the AJAX request.|
+|listeners|Any listeners to look for on the request.|
+
+An example:
+
+{code}
+MODx.msg.confirm({
+   title: &#39;Are you sure?&#39;
+   ,text: &#39;Do you want to delete the world? This is irreversible.&#39;
+   ,url: &#39;http://rest.endofdays.com/armageddon/&#39;
+   ,params: {
+      deleteWorld: true
+   }
+   ,listeners: {
+        &#39;success&#39;:{fn: function(r) {
+             MODx.clearCache(); /* clear cache after world destruction, so we dont have latent data */
+        },scope:true);
+   }
+});
+{code}
+
+h4. MODx.msg.confirm Custom Events
+
+MODx.msg.confirm adds a few custom events that fire:
+
+||Name||Description||
+|success|Fires on a successful response from the AJAX submission.|
+|failure|Fires on a failed response from the AJAX submission.|
+|cancel|Fires when the user cancels the confirmation dialog.|
+
+h3. status
+
+{quote}MODx.Msg.status(opt){quote}
+
+Loads a temporary status message in the top-right of the screen, that fades away. The properties for the opt parameter are:
+
+||Name||Description||Default||
+|title|Optional. The title of the message.| |
+|text|The text of the status message.| |
+|dontHide|If true, will not automatically hide the status message. Will stay until it is clicked.|false|
+|delay|The number of seconds to show the message.|1.5|
+
+h2. See Also
+
+{pagetree:root=MODExt}
+
+{scrollbar}
+";}i:3;a:3:{s:2:"id";s:8:"35095249";s:3:"ver";s:1:"2";s:4:"code";s:2466:"\\
+
+h2. MODx.Msg
+
+*Extends:* Ext.Component
+*Key Features:* AJAX connector features.
+
+!confirm.png!
+
+The MODx.Msg class provides the functionality of the Ext.MessageBox class, with the added benefit of using an AJAX callback function (for confirmation dialogs). Simply provide a URL and optional parameters and a connector request will be sent after the user confirms the prompt. It defaults to a minimum width of 200px.
+
+h2. Methods
+
+h3. alert
+
+{quote}MODx.Msg.alert(title,text,fn,scope){quote}
+
+Used to display an alert dialog box on the page. Example:
+
+{code}MODx.Msg.alert(&#39;Warning!&#39;,&#39;You are out of space! We should clear the cache.&#39;,function() {
+  MODx.clearCache();
+},MODx);{code}
+
+h3. confirm
+
+{quote}MODx.Msg.confirm(config){quote}
+
+Loads a confirmation dialog that prompts the user for a Yes/No response. If Yes is selected, fires an AJAX request to a specific connector. The properties for the config parameter are:
+
+||Name||Description||
+|title|The title of the confirmation box.|
+|text|The text in the confirmation box.|
+|url|The URL to send the AJAX request to.|
+|params|The REQUEST params to send with the AJAX request.|
+|listeners|Any listeners to look for on the request.|
+
+An example:
+
+{code}
+MODx.Msg.confirm({
+   title: &#39;Are you sure?&#39;
+   ,text: &#39;Do you want to delete the world? This is irreversible.&#39;
+   ,url: &#39;http://rest.endofdays.com/armageddon/&#39;
+   ,params: {
+      deleteWorld: true
+   }
+   ,listeners: {
+        &#39;success&#39;:{fn: function(r) {
+             MODx.clearCache(); /* clear cache after world destruction, so we dont have latent data */
+        },scope:true);
+   }
+});
+{code}
+
+h4. MODx.Msg.confirm Custom Events
+
+MODx.Msg.confirm adds a few custom events that fire:
+
+||Name||Description||
+|success|Fires on a successful response from the AJAX submission.|
+|failure|Fires on a failed response from the AJAX submission.|
+|cancel|Fires when the user cancels the confirmation dialog.|
+
+h3. status
+
+{quote}MODx.Msg.status(opt){quote}
+
+Loads a temporary status message in the top-right of the screen, that fades away. The properties for the opt parameter are:
+
+||Name||Description||Default||
+|title|Optional. The title of the message.| |
+|text|The text of the status message.| |
+|dontHide|If true, will not automatically hide the status message. Will stay until it is clicked.|false|
+|delay|The number of seconds to show the message.|1.5|
+
+h2. See Also
+
+{pagetree:root=MODExt}
+
+{scrollbar}
+";}i:4;a:3:{s:2:"id";s:8:"34636286";s:3:"ver";s:1:"1";s:4:"code";s:398:"\\
+
+h2. MODx.Msg
+
+*Extends:* Ext.Component
+*Key Features:* AJAX connector features.
+
+!modext_confirm.png!
+
+The MODx.Msg class provides the functionality of the Ext.MessageBox class, with the added benefit of using an AJAX callback function (for confirmation dialogs). Simply provide a URL and optional parameters and a connector request will be sent after the user confirms the prompt.
+
+{scrollbar}";}}}

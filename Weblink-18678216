@@ -1,0 +1,117 @@
+a:5:{s:2:"id";s:8:"18678216";s:4:"info";a:4:{s:6:"Title:";s:7:"Weblink";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:22:"[revolution20:Weblink]";}s:6:"parent";s:8:"18678066";s:6:"source";s:1799:"\\
+
+h2. What is a Weblink?
+
+A weblink is a document of type &quot;reference&quot;. Its template is not used to display or format the link, rather the template in this case simply serves as a container for any Template Variables that you may wish to append to your WebLink. The WebLink simply serves as a link that will be part of a generated menu.
+
+The content of the weblink is just an URL; the parser doesn&#39;t even parse it, MODx simply redirects to the URL. As soon as it sees that it is a &quot;reference&quot;, it just uses the content as the argument for sendRedirect($url).
+
+You can use an external URL for the content, or you can use a Resource ID to link to a Resource in your MODx Resource tree.
+
+h2. Example
+
+Say you want a footer menu with links to a Terms of Use, a Privacy Policy, and others. But you also want a link to &quot;Contact Us&quot; there. Contact Us is one of your main pages, and is in the top-level of your tree to be displayed in your main menu. You would put those Resources in one &quot;utility pages&quot; folder, probably unpublished so it won&#39;t show up in your main menu, and use that folder ID as the Resource ID for the menu snippet. In that folder you would also put a Weblink to your site&#39;s contact page. This way the menu will include a link to the contact page, even though that Resource is not in the folder.
+
+Or, you could do it the other way around, have the Contact Us Resource in your unpublished &quot;utility pages&quot; folder, and put the Weblink to it in your top-level so it will show in the main menu.
+
+Originally a menu snippet would make the link to the Weblink itself, just as to any other MODx resource, thus causing the page to be loaded by the parser, triggering the redirect.
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"18678216";s:3:"ver";s:1:"4";s:4:"code";s:1799:"\\
+
+h2. What is a Weblink?
+
+A weblink is a document of type &quot;reference&quot;. Its template is not used to display or format the link, rather the template in this case simply serves as a container for any Template Variables that you may wish to append to your WebLink. The WebLink simply serves as a link that will be part of a generated menu.
+
+The content of the weblink is just an URL; the parser doesn&#39;t even parse it, MODx simply redirects to the URL. As soon as it sees that it is a &quot;reference&quot;, it just uses the content as the argument for sendRedirect($url).
+
+You can use an external URL for the content, or you can use a Resource ID to link to a Resource in your MODx Resource tree.
+
+h2. Example
+
+Say you want a footer menu with links to a Terms of Use, a Privacy Policy, and others. But you also want a link to &quot;Contact Us&quot; there. Contact Us is one of your main pages, and is in the top-level of your tree to be displayed in your main menu. You would put those Resources in one &quot;utility pages&quot; folder, probably unpublished so it won&#39;t show up in your main menu, and use that folder ID as the Resource ID for the menu snippet. In that folder you would also put a Weblink to your site&#39;s contact page. This way the menu will include a link to the contact page, even though that Resource is not in the folder.
+
+Or, you could do it the other way around, have the Contact Us Resource in your unpublished &quot;utility pages&quot; folder, and put the Weblink to it in your top-level so it will show in the main menu.
+
+Originally a menu snippet would make the link to the Weblink itself, just as to any other MODx resource, thus causing the page to be loaded by the parser, triggering the redirect.
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"37683836";s:3:"ver";s:1:"3";s:4:"code";s:1919:"\\
+
+h2. What is a Weblink?
+
+A weblink is a document of type &quot;reference&quot;. Its template is not used to display or format the link, rather the template in this case simply serves as a container for any Template Variables that you may wish to append to your WebLink. The WebLink simply serves as a link that will be part of a generated menu.
+
+The content of the weblink is just an URL; the parser doesn&#39;t even parse it, MODx simply redirects to the URL. As soon as it sees that it is a &quot;reference&quot;, it just uses the content as the argument for sendRedirect($url).
+
+You can use an external URL for the content, or you can use a Resource ID to link to a Resource in your MODx Resource tree.
+
+h2. Example
+
+Say you want a footer menu with links to a Terms of Use, a Privacy Policy, and others. But you also want a link to &quot;Contact Us&quot; there. Contact Us is one of your main pages, and is in the top-level of your tree to be displayed in your main menu. You would put those Resources in one &quot;utility pages&quot; folder, probably unpublished so it won&#39;t show up in your main menu, and use that folder ID as the Resource ID for the menu snippet. In that folder you would also put a Weblink to your site&#39;s contact page. This way the menu will include a link to the contact page, even though that Resource is not in the folder.
+
+Or, you could do it the other way around, have the Contact Us Resource in your unpublished &quot;utility pages&quot; folder, and put the Weblink to it in your top-level so it will show in the main menu.
+
+Originally a menu snippet would make the link to the Weblink itself, just as to any other MODx resource, thus causing the page to be loaded by the parser, triggering the redirect.
+
+The parser will detect that the Weblink&#39;s content is a number, and run it through makeUrl($id) before redirecting.
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35095277";s:3:"ver";s:1:"2";s:4:"code";s:1706:"\\
+
+h2. What is a Weblink?
+
+A weblink is a document of type &quot;reference&quot;. It has no template. It simply serves as a link that will be part of a generated menu.
+
+The content of the weblink is just an URL. The parser doesn&#39;t even parse it; as soon as it sees that it is a &quot;reference&quot;, it just uses the content as the argument for sendRedirect($url).
+
+You can use an external URL for the content, or you can use a Resource ID to link to a Resource in your MODx Resource tree.
+
+h2. Example
+
+Say you want a footer menu with links to a Terms of Use, a Privacy Policy, and others. But you also want a link to &quot;Contact Us&quot; there. Contact Us is one of your main pages, and is in the top-level of your tree to be displayed in your main menu. You would put those Resources in one &quot;utility pages&quot; folder, probably unpublished so it won&#39;t show up in your main menu, and use that folder ID as the Resource ID for the menu snippet. In that folder you would also put a Weblink to your site&#39;s contact page. This way the menu will include a link to the contact page, even though that Resource is not in the folder.
+
+Or, you could do it the other way around, have the Contact Us Resource in your unpublished &quot;utility pages&quot; folder, and put the Weblink to it in your top-level so it will show in the main menu.
+
+Originally a menu snippet would make the link to the Weblink itself, just as to any other MODx resource, thus causing the page to be loaded by the parser, triggering the redirect.
+
+The parser will detect that the Weblink&#39;s content is a number, and run it through makeUrl($id) before redirecting.
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"18678525";s:3:"ver";s:1:"1";s:4:"code";s:1705:"\\
+
+h2. What is a Weblink?
+
+A weblink is a document of type &quot;reference&quot;. It has no template. It simply serves as a link that will be part of a generated menu.
+
+The content of the weblink is just an URL. The parser doesn&#39;t even parse it; as soon as it sees that it is a &quot;reference&quot;, it just uses the content as the argument for sendRedirect($url).
+
+You can use an external URL for the content, or you can use a Resource ID to link to a Resource in your MODx Resource tree.
+
+h2. Example
+
+Say you want a footer menu with links to a Terms of Use, a Privacy Policy, and others. But you also want a link to &quot;Contact Us&quot; there. Contact Us is one of your main pages, and is in the top-level of your tree to be displayed in your main menu. You would put those Resources in one &quot;utility pages&quot; folder, probably unpublished so it won&#39;t show up in your main menu, and use that folder ID as the Resource ID for the menu snippet. In that folder you would also put a Weblink to your site&#39;s contact page. This way the menu will include a link to the contact page, even though that Resource is not in the folder.
+
+Or, you could do it the other way around, have the Contact Us Resource in your unpublished &quot;utility pages&quot; folder, and put the Weblink to it in your top-level so it will show in the main menu.
+
+Originally a menu snippet would make the link to the Weblink itself, just as to any other MODx resource, thus causing the page to be loaded by the parser, triggering the redirect.
+
+The parser will detect that the Weblink&#39;s content is a number, and run it through makeUrl($id) before redirecting.
+
+h2. See Also
+
+{pagetree:root=Resource}
+
+{scrollbar}";}}}

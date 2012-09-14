@@ -1,0 +1,25 @@
+a:5:{s:2:"id";s:8:"35095064";s:4:"info";a:4:{s:6:"Title:";s:13:"cache_lang_js";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:28:"[revolution20:cache_lang_js]";}s:6:"parent";s:8:"18678127";s:6:"source";s:354:"h2. cache_lang_js
+
+*Name*: Cache Lexicon JS Strings
+*Type*: Yes/No
+*Default*: Yes
+*Available In*: Revolution 2.0.6+
+
+If set to true, this will use server headers to cache the lexicon strings loaded into JavaScript for the manager interface.
+
+{note}There&#39;s really no reason to turn this off, unless you like a slower mgr interface.{note}
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095064";s:3:"ver";s:1:"1";s:4:"code";s:354:"h2. cache_lang_js
+
+*Name*: Cache Lexicon JS Strings
+*Type*: Yes/No
+*Default*: Yes
+*Available In*: Revolution 2.0.6+
+
+If set to true, this will use server headers to cache the lexicon strings loaded into JavaScript for the manager interface.
+
+{note}There&#39;s really no reason to turn this off, unless you like a slower mgr interface.{note}
+
+{scrollbar}
+";}}}

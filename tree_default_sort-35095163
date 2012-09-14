@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"35095163";s:4:"info";a:4:{s:6:"Title:";s:17:"tree_default_sort";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:32:"[revolution20:tree_default_sort]";}s:6:"parent";s:8:"18678127";s:6:"source";s:211:"h2. tree_default_sort
+
+*Name*: Resource Tree Default Sort Field
+*Type*: Textfield
+*Default*: menuindex
+*Available In:* 2.0.8\+
+
+The default sort field for the Resource tree when loading the manager.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095163";s:3:"ver";s:1:"1";s:4:"code";s:211:"h2. tree_default_sort
+
+*Name*: Resource Tree Default Sort Field
+*Type*: Textfield
+*Default*: menuindex
+*Available In:* 2.0.8\+
+
+The default sort field for the Resource tree when loading the manager.
+
+{scrollbar}";}}}

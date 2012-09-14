@@ -1,0 +1,137 @@
+a:5:{s:2:"id";s:8:"18678112";s:4:"info";a:4:{s:6:"Title:";s:29:"Upgrading from MODx Evolution";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:44:"[revolution20:Upgrading from MODx Evolution]";}s:6:"parent";s:8:"18678202";s:6:"source";s:2100:"\\
+
+{warning}Automated upgrading from 0.9.6.\*/Evolution is not yet available in MODx Revolution 2.0.0. A migration tool will be provided sometime after the release of MODx Revolution 2.0.0.
+{warning}
+With that in mind, if you&#39;d \_still\_ like to upgrade, you&#39;re free to do so. However, we *strongly recommend backing up your data first*. Once you&#39;ve done so, simply run the upgrade mode in the setup/ program, and your database tables will be upgraded.
+
+From there, a few things will happen. One, you&#39;ll probably notice most of your 3rd party scripts will be broken. You&#39;ll need to convert them to the Revolution core, as well as all of your tags to the new [Tag Syntax]. Component developers will hopefully already be converting their scripts by this point, so you may be able to find Revolution-compatible scripts via [Package Management], or on [modxcms.com|http://modxcms.com/extras.html] or in the [forums|http://www.modxcms.com/forums/].
+
+Also, it&#39;s worth noting that there are no more &quot;web users&quot; or &quot;manager users&quot; - only Users. And the [new permissions scheme|Security] is vastly different than in 0.9.6/Evolution.
+
+Again, we don&#39;t recommend this, but if you&#39;re a \*brave\* soul, feel free to backup and try it.
+
+{info}An excellent resource on upgrading from Evolution can be found here: http://bobsguides.com/migrating-revolution.html{info}
+
+h2. Extras Changes from Evolution
+
+Some Extras in Evolution have been discontinued or are no longer in active development. Below is a list of Evolution Extras and their Revolution equivalents:
+
+||Evolution||Revolution||
+|Ditto|[addon:getResources], [addon:getPage], [addon:tagLister], [addon:Archivist]|
+|Jot|[addon:Quip]|
+|SiteMap|[addon:GoogleSiteMap]|
+|MaxiGallery|[addon:Gallery]|
+|eForm|[addon:FormIt]|
+|Wayfinder|[addon:Wayfinder]|
+|DocManager|[addon:Batcher]|
+|AjaxSearch|[addon:SimpleSearch]|
+|WebLogin|[addon:Login]|
+
+h2. See Also
+
+{pagetree:root=Upgrading from MODx Evolution}
+
+* [Bob&#39;s Guide to Upgrading to Revolution|http://bobsguides.com/migrating-revolution.html]
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678112";s:3:"ver";s:1:"3";s:4:"code";s:2100:"\\
+
+{warning}Automated upgrading from 0.9.6.\*/Evolution is not yet available in MODx Revolution 2.0.0. A migration tool will be provided sometime after the release of MODx Revolution 2.0.0.
+{warning}
+With that in mind, if you&#39;d \_still\_ like to upgrade, you&#39;re free to do so. However, we *strongly recommend backing up your data first*. Once you&#39;ve done so, simply run the upgrade mode in the setup/ program, and your database tables will be upgraded.
+
+From there, a few things will happen. One, you&#39;ll probably notice most of your 3rd party scripts will be broken. You&#39;ll need to convert them to the Revolution core, as well as all of your tags to the new [Tag Syntax]. Component developers will hopefully already be converting their scripts by this point, so you may be able to find Revolution-compatible scripts via [Package Management], or on [modxcms.com|http://modxcms.com/extras.html] or in the [forums|http://www.modxcms.com/forums/].
+
+Also, it&#39;s worth noting that there are no more &quot;web users&quot; or &quot;manager users&quot; - only Users. And the [new permissions scheme|Security] is vastly different than in 0.9.6/Evolution.
+
+Again, we don&#39;t recommend this, but if you&#39;re a \*brave\* soul, feel free to backup and try it.
+
+{info}An excellent resource on upgrading from Evolution can be found here: http://bobsguides.com/migrating-revolution.html{info}
+
+h2. Extras Changes from Evolution
+
+Some Extras in Evolution have been discontinued or are no longer in active development. Below is a list of Evolution Extras and their Revolution equivalents:
+
+||Evolution||Revolution||
+|Ditto|[addon:getResources], [addon:getPage], [addon:tagLister], [addon:Archivist]|
+|Jot|[addon:Quip]|
+|SiteMap|[addon:GoogleSiteMap]|
+|MaxiGallery|[addon:Gallery]|
+|eForm|[addon:FormIt]|
+|Wayfinder|[addon:Wayfinder]|
+|DocManager|[addon:Batcher]|
+|AjaxSearch|[addon:SimpleSearch]|
+|WebLogin|[addon:Login]|
+
+h2. See Also
+
+{pagetree:root=Upgrading from MODx Evolution}
+
+* [Bob&#39;s Guide to Upgrading to Revolution|http://bobsguides.com/migrating-revolution.html]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"31096835";s:3:"ver";s:1:"2";s:4:"code";s:1970:"\\
+
+{warning}Automated upgrading from 0.9.6.\*/Evolution is not yet available in MODx Revolution 2.0.0. A migration tool will be provided sometime after the release of MODx Revolution 2.0.0.
+{warning}
+With that in mind, if you&#39;d \_still\_ like to upgrade, you&#39;re free to do so. However, we *strongly recommend backing up your data first*. Once you&#39;ve done so, simply run the upgrade mode in the setup/ program, and your database tables will be upgraded.
+
+From there, a few things will happen. One, you&#39;ll probably notice most of your 3rd party scripts will be broken. You&#39;ll need to convert them to the Revolution core, as well as all of your tags to the new [Tag Syntax]. Component developers will hopefully already be converting their scripts by this point, so you may be able to find Revolution-compatible scripts via [Package Management], or on [modxcms.com|http://modxcms.com/extras.html] or in the [forums|http://www.modxcms.com/forums/].
+
+Also, it&#39;s worth noting that there are no more &quot;web users&quot; or &quot;manager users&quot; - only Users. And the [new permissions scheme|Security] is vastly different than in 0.9.6/Evolution.
+
+Again, we don&#39;t recommend this, but if you&#39;re a \*brave\* soul, feel free to backup and try it.
+
+h2. Extras Changes from Evolution
+
+Some Extras in Evolution have been discontinued or are no longer in active development. Below is a list of Evolution Extras and their Revolution equivalents:
+
+||Evolution||Revolution||
+|Ditto|[addon:getResources], [addon:getPage], [addon:tagLister], [addon:Archivist]|
+|Jot|[addon:Quip]|
+|SiteMap|[addon:GoogleSiteMap]|
+|MaxiGallery|[addon:Gallery]|
+|eForm|[addon:FormIt]|
+|Wayfinder|[addon:Wayfinder]|
+|DocManager|[addon:Batcher]|
+|AjaxSearch|[addon:SimpleSearch]|
+|WebLogin|[addon:Login]|
+
+h2. See Also
+
+{pagetree:root=Upgrading from MODx Evolution}
+
+* [Bob&#39;s Guide to Upgrading to Revolution|http://bobsguides.com/migrating-revolution.html]
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"20119598";s:3:"ver";s:1:"1";s:4:"code";s:1962:"\\
+
+{warning}Automated upgrading from 0.9.6.\*/Evolution is not yet available in MODx Revolution 2.0.0. A migration tool will be provided sometime after the release of MODx Revolution 2.0.0.
+{warning}
+With that in mind, if you&#39;d \_still\_ like to upgrade, you&#39;re free to do so. However, we *strongly recommend backing up your data first*. Once you&#39;ve done so, simply run the upgrade mode in the setup/ program, and your database tables will be upgraded.
+
+From there, a few things will happen. One, you&#39;ll probably notice most of your 3rd party scripts will be broken. You&#39;ll need to convert them to the Revolution core, as well as all of your tags to the new [Tag Syntax]. Component developers will hopefully already be converting their scripts by this point, so you may be able to find Revolution-compatible scripts via [Package Management], or on [modxcms.com|http://modxcms.com/extras.html] or in the [forums|http://www.modxcms.com/forums/].
+
+Also, it&#39;s worth noting that there are no more &quot;web users&quot; or &quot;manager users&quot; - only Users. And the [new permissions scheme|Security] is vastly different than in 0.9.6/Evolution.
+
+Again, we don&#39;t recommend this, but if you&#39;re a \*brave\* soul, feel free to backup and try it.
+
+h2. Extras Changes from Evolution
+
+Some Extras in Evolution have been discontinued or are no longer in active development. Below is a list of Evolution Extras and their Revolution equivalents:
+
+||Evolution||Revolution||
+|Ditto|[addon:getResources], [addon:getPage], [addon:tagLister], [addon:Archivist]|
+|Jot|[addon:Quip]|
+|SiteMap|GoogleSiteMap|
+|MaxiGallery|[addon:Gallery]|
+|eForm|[addon:FormIt]|
+|Wayfinder|[addon:Wayfinder]|
+|DocManager|[addon:Batcher]|
+|AjaxSearch|[addon:SimpleSearch]|
+|WebLogin|[addon:Login]|
+
+h2. See Also
+
+{pagetree:root=Upgrading from MODx Evolution}
+
+* [Bob&#39;s Guide to Upgrading to Revolution|http://bobsguides.com/migrating-revolution.html]
+
+{scrollbar}";}}}

@@ -1,0 +1,26 @@
+a:5:{s:2:"id";s:8:"18678132";s:4:"info";a:4:{s:6:"Title:";s:16:"cache_db_expires";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:31:"[revolution20:cache_db_expires]";}s:6:"parent";s:8:"18678127";s:6:"source";s:234:"h2. cache_db_expires
+
+*Name*: Expiration Time for DB Cache
+*Type*: Number
+*Default*: 0
+
+Default time for the expiration of the database cache. If set to &#39;0&#39;, the cache will never expire unless a record is updated.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678132";s:3:"ver";s:1:"2";s:4:"code";s:234:"h2. cache_db_expires
+
+*Name*: Expiration Time for DB Cache
+*Type*: Number
+*Default*: 0
+
+Default time for the expiration of the database cache. If set to &#39;0&#39;, the cache will never expire unless a record is updated.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119646";s:3:"ver";s:1:"1";s:4:"code";s:396:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Expiration Time for DB Cache{zone-data}
+{zone-data:key}cache_db_expires{zone-data}
+{zone-data:type}number{zone-data}
+{zone-data:default}0{zone-data}
+{zone-data:desc}Default time for the expiration of the database cache. If set to &#39;0&#39;, the cache will never expire unless a record is updated.{zone-data}
+{zone-template-instance}
+{scrollbar}";}}}

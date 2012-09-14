@@ -1,0 +1,335 @@
+a:5:{s:2:"id";s:8:"18678355";s:4:"info";a:4:{s:6:"Title:";s:38:"PHP Coding in MODx Revolution, Pt. III";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:53:"[revolution20:PHP Coding in MODx Revolution, Pt. III]";}s:6:"parent";s:8:"18678353";s:6:"source";s:6623:"\\
+
+{toc}
+
+In MODx, form processing is handled by &#39;Processors&#39;, which are isolated files located in the MODx core directory. They are accessed through &#39;Connectors&#39;, which handle AJAX requests from the User Interface (UI), which require a REQUEST variable named &#39;action&#39; that specifies which processor to send to. Processors are sent the sanitized REQUEST data, and then when finished respond with a JSON message back to the browser.
+
+This allows for quick, easy requests that reduce the load on the server and the browser. You can also do multiple, asynchronous requests to processors in this method.
+
+We&#39;ll look in-depth at the processor for creating a Chunk, and show you how MODx processors work.
+
+First off, let&#39;s assume that we&#39;re sending the following data into the POST array to the connector, which has the REQUEST &quot;action&quot; variable set to &#39;create&#39;, loading the proper create.php variable. In the JS, the connector is MODx.config.connectors_url+&#39;element/chunk.php, which resolves to (in our default setup):
+{quote}
+/modx/connectors/element/chunk.php
+{quote}
+From there the connector will verify the request, and then send it to the proper processor, at:
+{quote}
+/modx/core/model/modx/processors/element/chunk/create.php
+{quote}
+And now on to the processor:
+{code}
+&lt;?php
+/**
+ * @package modx
+ * @subpackage processors.element.chunk
+ */
+$modx-&gt;lexicon-&gt;load(&#39;chunk&#39;);
+{code}
+First off, we include the root index.php file for the processors, which does some slight variable checking and includes licensing. Then, we load the proper lexicon foci. In MODx Revolution, i18n language files are separated into smaller files by their &#39;foci&#39;, which is a term we&#39;ve coined for &#39;focus area&#39;. Here, we want all language strings with foci &#39;chunk&#39;. This saves processing power by only loading relevant i18n strings.
+
+{note:title=About Foci}
+The lexicon _foci_ are similar to how the popular [gettext|http://www.gnu.org/software/gettext/] translation framework employs _contexts_ to distinguish meanings and provide subsets of translation files. We mention this only for newcomers who may be familiar with systems that use gettext (e.g. WordPress): remember that contexts are something very different in MODx.
+{note}
+
+{code}
+if (!$modx-&gt;hasPermission(&#39;new_chunk&#39;)) $modx-&gt;error-&gt;failure($modx-&gt;lexicon(&#39;permission_denied&#39;));
+{code}
+This checks to make sure the user has the correct permissions to run this processor. If not, then it sends a failure response back to the browser via $modx-&gt;error-&gt;failure(). The response is a string message translated via the lexicon.
+{code}
+// default values
+if ($_POST[&#39;name&#39;] == &#39;&#39;) $_POST[&#39;name&#39;] = $modx-&gt;lexicon(&#39;chunk_untitled&#39;);
+
+// get rid of invalid chars
+$_POST[&#39;name&#39;] = str_replace(&#39;&gt;&#39;,&#39;&#39;,$_POST[&#39;name&#39;]);
+$_POST[&#39;name&#39;] = str_replace(&#39;&lt;&#39;,&#39;&#39;,$_POST[&#39;name&#39;]);
+
+
+// if the name already exists for this chunk, send back an error
+$name_exists = $modx-&gt;getObject(&#39;modChunk&#39;,array(&#39;name&#39; =&gt; $_POST[&#39;name&#39;]));
+if ($name_exists != null) return $modx-&gt;error-&gt;failure($modx-&gt;lexicon(&#39;chunk_err_exists_name&#39;));
+{code}
+Note now how we&#39;re sanitizing variables, and checking to make sure there already isn&#39;t a Chunk with this name.
+{code}
+// category
+$category = $modx-&gt;getObject(&#39;modCategory&#39;,array(&#39;id&#39; =&gt; $_POST[&#39;category&#39;]));
+if ($category == null) {
+$category = $modx-&gt;newObject(&#39;modCategory&#39;);
+if (empty($_POST[&#39;category&#39;])) {
+$category-&gt;set(&#39;id&#39;,0);
+} else {
+$category-&gt;set(&#39;category&#39;,$_POST[&#39;category&#39;]);
+$category-&gt;save();
+}
+}
+{code}
+Okay, here, we allow dynamic Category creation. If the category specified exists, it will later assign it to that category. If not, then it creates the category in the database and prepares it for later association to the Chunk.
+{code}
+// invoke OnBeforeChunkFormSave event
+$modx-&gt;invokeEvent(&#39;OnBeforeChunkFormSave&#39;,array(
+&#39;mode&#39;=&gt; modSystemEvent::MODE_NEW,
+&#39;id&#39;=&gt; $_POST[&#39;id&#39;],
+));
+{code}
+Events are pretty much the same invoke-wise in Revolution as they were in 096 - however they are more optimized in their loading.
+{code}
+$chunk = $modx-&gt;newObject(&#39;modChunk&#39;, $_POST);
+$chunk-&gt;set(&#39;locked&#39;,isset($_POST[&#39;locked&#39;]));
+$chunk-&gt;set(&#39;snippet&#39;,$_POST[&#39;chunk&#39;]);
+$chunk-&gt;set(&#39;category&#39;,$category-&gt;get(&#39;id&#39;));
+if ($chunk-&gt;save() === false) {
+    return $modx-&gt;error-&gt;failure($modx-&gt;lexicon(&#39;chunk_err_save&#39;));
+}
+{code}
+Important: note the 2nd parameter of the newObject() method. This is basically the same as $obj-&gt;fromArray() - it allows you to specify an array of key-value pairs to assign to the new object.
+{code}
+// invoke OnChunkFormSave event
+$modx-&gt;invokeEvent(&#39;OnChunkFormSave&#39;,array(
+   &#39;mode&#39; =&gt; modSystemEvent::MODE_NEW,
+   &#39;id&#39; =&gt; $chunk-&gt;get(&#39;id&#39;),
+));
+{code}
+Again, more event invoking.
+{code}
+// log manager action
+$modx-&gt;logManagerAction(&#39;chunk_create&#39;,&#39;modChunk&#39;,$chunk-&gt;get(&#39;id&#39;));
+{code}
+Now, how manager actions work in Revolution is a little different. This stores a lexicon string key (&#39;chunk_create&#39;), the class key of the object being modified, and the actual ID of the object. This allows for more detailed manager action reporting.
+{code}
+$cacheManager= $modx-&gt;getCacheManager();
+$cacheManager-&gt;clearCache();
+{code}
+Let&#39;s simply and easily clear the cache. Pretty easy, huh?
+{code}
+return $modx-&gt;error-&gt;success(&#39;&#39;,$chunk-&gt;get(array(&#39;id&#39;, &#39;name&#39;, &#39;description&#39;, &#39;locked&#39;, &#39;category&#39;)));
+{code}
+Now, send a success response back to the browser. The parameters of $modx-&gt;error-&gt;success() are as follows:
+
+1: $message - A string message to send back. Used to report details about a success (or failure).
+2: $object - An xPDOObject or array of data fields to convert into JSON and send back to the browser.
+
+So basically, here, we&#39;re sending back the Chunk information - minus the content, which could be big and unnecessary and complicated to send. This will allow the UI to handle the creation properly.
+
+Next, we&#39;ll talk about how to create your own schemas and add them dynamically into the MODx framework, without having to modify the core.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678355";s:3:"ver";s:1:"2";s:4:"code";s:6623:"\\
+
+{toc}
+
+In MODx, form processing is handled by &#39;Processors&#39;, which are isolated files located in the MODx core directory. They are accessed through &#39;Connectors&#39;, which handle AJAX requests from the User Interface (UI), which require a REQUEST variable named &#39;action&#39; that specifies which processor to send to. Processors are sent the sanitized REQUEST data, and then when finished respond with a JSON message back to the browser.
+
+This allows for quick, easy requests that reduce the load on the server and the browser. You can also do multiple, asynchronous requests to processors in this method.
+
+We&#39;ll look in-depth at the processor for creating a Chunk, and show you how MODx processors work.
+
+First off, let&#39;s assume that we&#39;re sending the following data into the POST array to the connector, which has the REQUEST &quot;action&quot; variable set to &#39;create&#39;, loading the proper create.php variable. In the JS, the connector is MODx.config.connectors_url+&#39;element/chunk.php, which resolves to (in our default setup):
+{quote}
+/modx/connectors/element/chunk.php
+{quote}
+From there the connector will verify the request, and then send it to the proper processor, at:
+{quote}
+/modx/core/model/modx/processors/element/chunk/create.php
+{quote}
+And now on to the processor:
+{code}
+&lt;?php
+/**
+ * @package modx
+ * @subpackage processors.element.chunk
+ */
+$modx-&gt;lexicon-&gt;load(&#39;chunk&#39;);
+{code}
+First off, we include the root index.php file for the processors, which does some slight variable checking and includes licensing. Then, we load the proper lexicon foci. In MODx Revolution, i18n language files are separated into smaller files by their &#39;foci&#39;, which is a term we&#39;ve coined for &#39;focus area&#39;. Here, we want all language strings with foci &#39;chunk&#39;. This saves processing power by only loading relevant i18n strings.
+
+{note:title=About Foci}
+The lexicon _foci_ are similar to how the popular [gettext|http://www.gnu.org/software/gettext/] translation framework employs _contexts_ to distinguish meanings and provide subsets of translation files. We mention this only for newcomers who may be familiar with systems that use gettext (e.g. WordPress): remember that contexts are something very different in MODx.
+{note}
+
+{code}
+if (!$modx-&gt;hasPermission(&#39;new_chunk&#39;)) $modx-&gt;error-&gt;failure($modx-&gt;lexicon(&#39;permission_denied&#39;));
+{code}
+This checks to make sure the user has the correct permissions to run this processor. If not, then it sends a failure response back to the browser via $modx-&gt;error-&gt;failure(). The response is a string message translated via the lexicon.
+{code}
+// default values
+if ($_POST[&#39;name&#39;] == &#39;&#39;) $_POST[&#39;name&#39;] = $modx-&gt;lexicon(&#39;chunk_untitled&#39;);
+
+// get rid of invalid chars
+$_POST[&#39;name&#39;] = str_replace(&#39;&gt;&#39;,&#39;&#39;,$_POST[&#39;name&#39;]);
+$_POST[&#39;name&#39;] = str_replace(&#39;&lt;&#39;,&#39;&#39;,$_POST[&#39;name&#39;]);
+
+
+// if the name already exists for this chunk, send back an error
+$name_exists = $modx-&gt;getObject(&#39;modChunk&#39;,array(&#39;name&#39; =&gt; $_POST[&#39;name&#39;]));
+if ($name_exists != null) return $modx-&gt;error-&gt;failure($modx-&gt;lexicon(&#39;chunk_err_exists_name&#39;));
+{code}
+Note now how we&#39;re sanitizing variables, and checking to make sure there already isn&#39;t a Chunk with this name.
+{code}
+// category
+$category = $modx-&gt;getObject(&#39;modCategory&#39;,array(&#39;id&#39; =&gt; $_POST[&#39;category&#39;]));
+if ($category == null) {
+$category = $modx-&gt;newObject(&#39;modCategory&#39;);
+if (empty($_POST[&#39;category&#39;])) {
+$category-&gt;set(&#39;id&#39;,0);
+} else {
+$category-&gt;set(&#39;category&#39;,$_POST[&#39;category&#39;]);
+$category-&gt;save();
+}
+}
+{code}
+Okay, here, we allow dynamic Category creation. If the category specified exists, it will later assign it to that category. If not, then it creates the category in the database and prepares it for later association to the Chunk.
+{code}
+// invoke OnBeforeChunkFormSave event
+$modx-&gt;invokeEvent(&#39;OnBeforeChunkFormSave&#39;,array(
+&#39;mode&#39;=&gt; modSystemEvent::MODE_NEW,
+&#39;id&#39;=&gt; $_POST[&#39;id&#39;],
+));
+{code}
+Events are pretty much the same invoke-wise in Revolution as they were in 096 - however they are more optimized in their loading.
+{code}
+$chunk = $modx-&gt;newObject(&#39;modChunk&#39;, $_POST);
+$chunk-&gt;set(&#39;locked&#39;,isset($_POST[&#39;locked&#39;]));
+$chunk-&gt;set(&#39;snippet&#39;,$_POST[&#39;chunk&#39;]);
+$chunk-&gt;set(&#39;category&#39;,$category-&gt;get(&#39;id&#39;));
+if ($chunk-&gt;save() === false) {
+    return $modx-&gt;error-&gt;failure($modx-&gt;lexicon(&#39;chunk_err_save&#39;));
+}
+{code}
+Important: note the 2nd parameter of the newObject() method. This is basically the same as $obj-&gt;fromArray() - it allows you to specify an array of key-value pairs to assign to the new object.
+{code}
+// invoke OnChunkFormSave event
+$modx-&gt;invokeEvent(&#39;OnChunkFormSave&#39;,array(
+   &#39;mode&#39; =&gt; modSystemEvent::MODE_NEW,
+   &#39;id&#39; =&gt; $chunk-&gt;get(&#39;id&#39;),
+));
+{code}
+Again, more event invoking.
+{code}
+// log manager action
+$modx-&gt;logManagerAction(&#39;chunk_create&#39;,&#39;modChunk&#39;,$chunk-&gt;get(&#39;id&#39;));
+{code}
+Now, how manager actions work in Revolution is a little different. This stores a lexicon string key (&#39;chunk_create&#39;), the class key of the object being modified, and the actual ID of the object. This allows for more detailed manager action reporting.
+{code}
+$cacheManager= $modx-&gt;getCacheManager();
+$cacheManager-&gt;clearCache();
+{code}
+Let&#39;s simply and easily clear the cache. Pretty easy, huh?
+{code}
+return $modx-&gt;error-&gt;success(&#39;&#39;,$chunk-&gt;get(array(&#39;id&#39;, &#39;name&#39;, &#39;description&#39;, &#39;locked&#39;, &#39;category&#39;)));
+{code}
+Now, send a success response back to the browser. The parameters of $modx-&gt;error-&gt;success() are as follows:
+
+1: $message - A string message to send back. Used to report details about a success (or failure).
+2: $object - An xPDOObject or array of data fields to convert into JSON and send back to the browser.
+
+So basically, here, we&#39;re sending back the Chunk information - minus the content, which could be big and unnecessary and complicated to send. This will allow the UI to handle the creation properly.
+
+Next, we&#39;ll talk about how to create your own schemas and add them dynamically into the MODx framework, without having to modify the core.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33226955";s:3:"ver";s:1:"1";s:4:"code";s:6222:"\\
+
+{toc}
+
+In MODx, form processing is handled by &#39;Processors&#39;, which are isolated files located in the MODx core directory. They are accessed through &#39;Connectors&#39;, which handle AJAX requests from the User Interface (UI), which require a REQUEST variable named &#39;action&#39; that specifies which processor to send to. Processors are sent the sanitized REQUEST data, and then when finished respond with a JSON message back to the browser.
+
+This allows for quick, easy requests that reduce the load on the server and the browser. You can also do multiple, asynchronous requests to processors in this method.
+
+We&#39;ll look in-depth at the processor for creating a Chunk, and show you how MODx processors work.
+
+First off, let&#39;s assume that we&#39;re sending the following data into the POST array to the connector, which has the REQUEST &quot;action&quot; variable set to &#39;create&#39;, loading the proper create.php variable. In the JS, the connector is MODx.config.connectors_url+&#39;element/chunk.php, which resolves to (in our default setup):
+{quote}
+/modx/connectors/element/chunk.php
+{quote}
+From there the connector will verify the request, and then send it to the proper processor, at:
+{quote}
+/modx/core/model/modx/processors/element/chunk/create.php
+{quote}
+And now on to the processor:
+{code}
+&lt;?php
+/**
+ * @package modx
+ * @subpackage processors.element.chunk
+ */
+$modx-&gt;lexicon-&gt;load(&#39;chunk&#39;);
+{code}
+First off, we include the root index.php file for the processors, which does some slight variable checking and includes licensing. Then, we load the proper lexicon foci. In MODx Revolution, i18n language files are separated into smaller files by their &#39;foci&#39;, which is a term we&#39;ve coined for &#39;focus area&#39;. Here, we want all language strings with foci &#39;chunk&#39;. This saves processing power by only loading relevant i18n strings.
+{code}
+if (!$modx-&gt;hasPermission(&#39;new_chunk&#39;)) $modx-&gt;error-&gt;failure($modx-&gt;lexicon(&#39;permission_denied&#39;));
+{code}
+This checks to make sure the user has the correct permissions to run this processor. If not, then it sends a failure response back to the browser via $modx-&gt;error-&gt;failure(). The response is a string message translated via the lexicon.
+{code}
+// default values
+if ($_POST[&#39;name&#39;] == &#39;&#39;) $_POST[&#39;name&#39;] = $modx-&gt;lexicon(&#39;chunk_untitled&#39;);
+
+// get rid of invalid chars
+$_POST[&#39;name&#39;] = str_replace(&#39;&gt;&#39;,&#39;&#39;,$_POST[&#39;name&#39;]);
+$_POST[&#39;name&#39;] = str_replace(&#39;&lt;&#39;,&#39;&#39;,$_POST[&#39;name&#39;]);
+
+
+// if the name already exists for this chunk, send back an error
+$name_exists = $modx-&gt;getObject(&#39;modChunk&#39;,array(&#39;name&#39; =&gt; $_POST[&#39;name&#39;]));
+if ($name_exists != null) return $modx-&gt;error-&gt;failure($modx-&gt;lexicon(&#39;chunk_err_exists_name&#39;));
+{code}
+Note now how we&#39;re sanitizing variables, and checking to make sure there already isn&#39;t a Chunk with this name.
+{code}
+// category
+$category = $modx-&gt;getObject(&#39;modCategory&#39;,array(&#39;id&#39; =&gt; $_POST[&#39;category&#39;]));
+if ($category == null) {
+$category = $modx-&gt;newObject(&#39;modCategory&#39;);
+if (empty($_POST[&#39;category&#39;])) {
+$category-&gt;set(&#39;id&#39;,0);
+} else {
+$category-&gt;set(&#39;category&#39;,$_POST[&#39;category&#39;]);
+$category-&gt;save();
+}
+}
+{code}
+Okay, here, we allow dynamic Category creation. If the category specified exists, it will later assign it to that category. If not, then it creates the category in the database and prepares it for later association to the Chunk.
+{code}
+// invoke OnBeforeChunkFormSave event
+$modx-&gt;invokeEvent(&#39;OnBeforeChunkFormSave&#39;,array(
+&#39;mode&#39;=&gt; modSystemEvent::MODE_NEW,
+&#39;id&#39;=&gt; $_POST[&#39;id&#39;],
+));
+{code}
+Events are pretty much the same invoke-wise in Revolution as they were in 096 - however they are more optimized in their loading.
+{code}
+$chunk = $modx-&gt;newObject(&#39;modChunk&#39;, $_POST);
+$chunk-&gt;set(&#39;locked&#39;,isset($_POST[&#39;locked&#39;]));
+$chunk-&gt;set(&#39;snippet&#39;,$_POST[&#39;chunk&#39;]);
+$chunk-&gt;set(&#39;category&#39;,$category-&gt;get(&#39;id&#39;));
+if ($chunk-&gt;save() === false) {
+    return $modx-&gt;error-&gt;failure($modx-&gt;lexicon(&#39;chunk_err_save&#39;));
+}
+{code}
+Important: note the 2nd parameter of the newObject() method. This is basically the same as $obj-&gt;fromArray() - it allows you to specify an array of key-value pairs to assign to the new object.
+{code}
+// invoke OnChunkFormSave event
+$modx-&gt;invokeEvent(&#39;OnChunkFormSave&#39;,array(
+   &#39;mode&#39; =&gt; modSystemEvent::MODE_NEW,
+   &#39;id&#39; =&gt; $chunk-&gt;get(&#39;id&#39;),
+));
+{code}
+Again, more event invoking.
+{code}
+// log manager action
+$modx-&gt;logManagerAction(&#39;chunk_create&#39;,&#39;modChunk&#39;,$chunk-&gt;get(&#39;id&#39;));
+{code}
+Now, how manager actions work in Revolution is a little different. This stores a lexicon string key (&#39;chunk_create&#39;), the class key of the object being modified, and the actual ID of the object. This allows for more detailed manager action reporting.
+{code}
+$cacheManager= $modx-&gt;getCacheManager();
+$cacheManager-&gt;clearCache();
+{code}
+Let&#39;s simply and easily clear the cache. Pretty easy, huh?
+{code}
+return $modx-&gt;error-&gt;success(&#39;&#39;,$chunk-&gt;get(array(&#39;id&#39;, &#39;name&#39;, &#39;description&#39;, &#39;locked&#39;, &#39;category&#39;)));
+{code}
+Now, send a success response back to the browser. The parameters of $modx-&gt;error-&gt;success() are as follows:
+
+1: $message - A string message to send back. Used to report details about a success (or failure).
+2: $object - An xPDOObject or array of data fields to convert into JSON and send back to the browser.
+
+So basically, here, we&#39;re sending back the Chunk information - minus the content, which could be big and unnecessary and complicated to send. This will allow the UI to handle the creation properly.
+
+Next, we&#39;ll talk about how to create your own schemas and add them dynamically into the MODx framework, without having to modify the core.
+
+{scrollbar}";}}}

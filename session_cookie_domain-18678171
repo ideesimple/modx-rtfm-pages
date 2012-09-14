@@ -1,0 +1,57 @@
+a:5:{s:2:"id";s:8:"18678171";s:4:"info";a:4:{s:6:"Title:";s:21:"session_cookie_domain";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:36:"[revolution20:session_cookie_domain]";}s:6:"parent";s:8:"18678127";s:6:"source";s:753:"h2. session_cookie_domain
+
+*Name*: Session Cookie Domain
+*Type*: String
+*Default*: localhost
+
+Use this setting to customize the session cookie domain. 
+
+{warning}You will need to clear your local cookies in your browser after changing this setting.{warning}
+
+This setting is useful to change if you are running multiple Contexts on one top-level domain, but want to share logins across them. For example, changing the setting to:
+
+{quote}.mydomain.com{quote}
+
+will allow all MODX sessions to persist across any *.mydomain.com site, allowing logins to work across subdomains.
+
+{note}This setting isn&#39;t in MODx by default, as it&#39;s best to let PHP calculate this on its own. Only set this if you are sure of what you are doing.{note}
+\\
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678171";s:3:"ver";s:1:"3";s:4:"code";s:753:"h2. session_cookie_domain
+
+*Name*: Session Cookie Domain
+*Type*: String
+*Default*: localhost
+
+Use this setting to customize the session cookie domain. 
+
+{warning}You will need to clear your local cookies in your browser after changing this setting.{warning}
+
+This setting is useful to change if you are running multiple Contexts on one top-level domain, but want to share logins across them. For example, changing the setting to:
+
+{quote}.mydomain.com{quote}
+
+will allow all MODX sessions to persist across any *.mydomain.com site, allowing logins to work across subdomains.
+
+{note}This setting isn&#39;t in MODx by default, as it&#39;s best to let PHP calculate this on its own. Only set this if you are sure of what you are doing.{note}
+\\
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35095014";s:3:"ver";s:1:"2";s:4:"code";s:329:"h2. session_cookie_domain
+
+*Name*: Session Cookie Domain
+*Type*: String
+*Default*: localhost
+
+Use this setting to customize the session cookie domain.
+
+{note}This setting isn&#39;t in MODx by default, as it&#39;s best to let PHP calculate this on its own. Only set this if you are sure of what you are doing.{note}
+\\
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"20119711";s:3:"ver";s:1:"1";s:4:"code";s:326:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Session Cookie Domain{zone-data}
+{zone-data:key}session_cookie_domain{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}localhost{zone-data}
+{zone-data:desc}Use this setting to customize the session cookie domain.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

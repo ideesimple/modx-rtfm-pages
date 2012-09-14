@@ -1,0 +1,31 @@
+a:5:{s:2:"id";s:8:"18678215";s:4:"info";a:4:{s:6:"Title:";s:15:"INHERIT Binding";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:30:"[revolution20:INHERIT Binding]";}s:6:"parent";s:8:"18678208";s:6:"source";s:430:"\\
+
+h2. What is the @INHERIT Binding?
+
+The @INHERIT binding will automatically find the value of the parent Resource and use that as its value. If the parent Resource also has @INHERIT, it will look at that parent&#39;s parent&#39;s value, and so forth. If it ends up at the root and no value has been specified, the value will be 0.
+
+h2. Usage
+
+{code}@INHERIT{code}
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678215";s:3:"ver";s:1:"1";s:4:"code";s:430:"\\
+
+h2. What is the @INHERIT Binding?
+
+The @INHERIT binding will automatically find the value of the parent Resource and use that as its value. If the parent Resource also has @INHERIT, it will look at that parent&#39;s parent&#39;s value, and so forth. If it ends up at the root and no value has been specified, the value will be 0.
+
+h2. Usage
+
+{code}@INHERIT{code}
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";}}}

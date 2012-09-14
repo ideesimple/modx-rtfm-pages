@@ -1,0 +1,35 @@
+a:5:{s:2:"id";s:8:"18678264";s:4:"info";a:4:{s:6:"Title:";s:17:"OnManagerPageInit";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:32:"[revolution20:OnManagerPageInit]";}s:6:"parent";s:8:"18678228";s:6:"source";s:307:"\\
+
+h2. Event: OnManagerPageInit
+
+Fired in the manager request handler, before the manager page response is loaded.
+
+Service: 2 - Manager Access Events
+Group: None
+
+h2. Event Parameters
+
+||Name||Description||
+|action|The ID of the action currently being loaded.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678264";s:3:"ver";s:1:"1";s:4:"code";s:307:"\\
+
+h2. Event: OnManagerPageInit
+
+Fired in the manager request handler, before the manager page response is loaded.
+
+Service: 2 - Manager Access Events
+Group: None
+
+h2. Event Parameters
+
+||Name||Description||
+|action|The ID of the action currently being loaded.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

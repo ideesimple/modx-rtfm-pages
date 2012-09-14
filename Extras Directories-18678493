@@ -1,0 +1,29 @@
+a:5:{s:2:"id";s:8:"18678493";s:4:"info";a:4:{s:6:"Title:";s:18:"Extras Directories";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:33:"[revolution20:Extras Directories]";}s:6:"parent";s:8:"18678489";s:6:"source";s:591:"\\
+
+Extras are most commonly stored in 2 directories when they are installed:
+
+* *core/components/* - This is the location for all the PHP and non-web-accessible files for the Extra.
+* *assets/components/* - This is the location for the web-accessible files for the Extra, such as CSS, JS and images.
+
+Why the separation? Well, since MODx users can move the core outside the webroot, separating out the non-accessible files into core/components allows MODx developers to add an extra level of security to their Extras.
+
+h2. See Also
+
+{pagetree:root=Overview of MODx Development}
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678493";s:3:"ver";s:1:"2";s:4:"code";s:591:"\\
+
+Extras are most commonly stored in 2 directories when they are installed:
+
+* *core/components/* - This is the location for all the PHP and non-web-accessible files for the Extra.
+* *assets/components/* - This is the location for the web-accessible files for the Extra, such as CSS, JS and images.
+
+Why the separation? Well, since MODx users can move the core outside the webroot, separating out the non-accessible files into core/components allows MODx developers to add an extra level of security to their Extras.
+
+h2. See Also
+
+{pagetree:root=Overview of MODx Development}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"19136577";s:3:"ver";s:1:"1";s:4:"code";s:15:"\\
+
+{scrollbar}";}}}

@@ -1,0 +1,118 @@
+a:5:{s:2:"id";s:8:"18678213";s:4:"info";a:4:{s:6:"Title:";s:12:"EVAL Binding";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:0:"";s:12:"Wiki Markup:";s:27:"[revolution20:EVAL Binding]";}s:6:"parent";s:8:"18678208";s:6:"source";s:1875:"\\
+
+h2. What is the @EVAL Binding?
+
+The @EVAL Binding executes the specified PHP code. It should be used with careful security precautions.
+
+h2. Syntax
+
+{code}@EVAL php_code_here{code}
+
+h2. Usage
+
+Simply put a PHP statement after the @EVAL tag:
+
+{code}@EVAL return &quot;The time stamp is now &quot;.time();{code}
+
+{code}@EVAL $a = &#39;dog&#39;; return $a;{code}
+
+h2. Examples
+
+h3. db-driven input-option-values by using rowboat
+
+Let&#39;s say we want to have a dropdown-box to select a user-id by username.
+Requirements: The rowboat-snippet.
+
+First, we create a new chunk for our Options and name it &#39;userOption&#39; with this code:
+
+{code}[[+username]]==[[+id]]{code}
+
+Then create a dropdown-type TV with this input-options:
+{code}@EVAL return &#39;-- choose a user --||&#39; . $modx-&gt;runSnippet(&#39;Rowboat&#39;,array(&#39;table&#39;=&gt;&#39;modx_users&#39;,&#39;tpl&#39;=&gt;&#39;userOption&#39;,&#39;outputSeparator&#39;=&gt;&#39;||&#39;));{code}
+ 
+
+h2. Security
+
+The eval() statement raises an eyebrow with anyone concerned with security: eval statements are notorious for being exploited, so it&#39;s recommended that you find another way of doing whatever you are trying to do, but this context is supported by MODx.  If I let my cynical mind wander, allow me to paint one disasterous circumstance: some web user of your MODx application logs in and has access to a field that gets executed by an EVAL binding.  This nefarious user could eval some nasty _unlink()_ or _rmdir()_ statements and destroy your web server files, or read sensitive files *anywhere* on the web-server that PHP has access to.   Be careful with these!
+
+Thankfully, I&#39;ve been unsuccessful in my attempts to unlink() a file using the @EVAL binding... but I&#39;m sure there are people out there more clever than me...
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678213";s:3:"ver";s:1:"2";s:4:"code";s:1875:"\\
+
+h2. What is the @EVAL Binding?
+
+The @EVAL Binding executes the specified PHP code. It should be used with careful security precautions.
+
+h2. Syntax
+
+{code}@EVAL php_code_here{code}
+
+h2. Usage
+
+Simply put a PHP statement after the @EVAL tag:
+
+{code}@EVAL return &quot;The time stamp is now &quot;.time();{code}
+
+{code}@EVAL $a = &#39;dog&#39;; return $a;{code}
+
+h2. Examples
+
+h3. db-driven input-option-values by using rowboat
+
+Let&#39;s say we want to have a dropdown-box to select a user-id by username.
+Requirements: The rowboat-snippet.
+
+First, we create a new chunk for our Options and name it &#39;userOption&#39; with this code:
+
+{code}[[+username]]==[[+id]]{code}
+
+Then create a dropdown-type TV with this input-options:
+{code}@EVAL return &#39;-- choose a user --||&#39; . $modx-&gt;runSnippet(&#39;Rowboat&#39;,array(&#39;table&#39;=&gt;&#39;modx_users&#39;,&#39;tpl&#39;=&gt;&#39;userOption&#39;,&#39;outputSeparator&#39;=&gt;&#39;||&#39;));{code}
+ 
+
+h2. Security
+
+The eval() statement raises an eyebrow with anyone concerned with security: eval statements are notorious for being exploited, so it&#39;s recommended that you find another way of doing whatever you are trying to do, but this context is supported by MODx.  If I let my cynical mind wander, allow me to paint one disasterous circumstance: some web user of your MODx application logs in and has access to a field that gets executed by an EVAL binding.  This nefarious user could eval some nasty _unlink()_ or _rmdir()_ statements and destroy your web server files, or read sensitive files *anywhere* on the web-server that PHP has access to.   Be careful with these!
+
+Thankfully, I&#39;ve been unsuccessful in my attempts to unlink() a file using the @EVAL binding... but I&#39;m sure there are people out there more clever than me...
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"37126253";s:3:"ver";s:1:"1";s:4:"code";s:1275:"\\
+
+h2. What is the @EVAL Binding?
+
+The @EVAL Binding executes the specified PHP code. It should be used with careful security precautions.
+
+h2. Syntax
+
+{code}@EVAL php_code_here{code}
+
+h2. Usage
+
+Simply put a PHP statement after the @EVAL tag:
+
+{code}@EVAL return &quot;The time stamp is now &quot;.time();{code}
+
+{code}@EVAL $a = &#39;dog&#39;; return $a;{code}
+
+h2. Security
+
+The eval() statement raises an eyebrow with anyone concerned with security: eval statements are notorious for being exploited, so it&#39;s recommended that you find another way of doing whatever you are trying to do, but this context is supported by MODx.  If I let my cynical mind wander, allow me to paint one disasterous circumstance: some web user of your MODx application logs in and has access to a field that gets executed by an EVAL binding.  This nefarious user could eval some nasty _unlink()_ or _rmdir()_ statements and destroy your web server files, or read sensitive files *anywhere* on the web-server that PHP has access to.   Be careful with these!
+
+Thankfully, I&#39;ve been unsuccessful in my attempts to unlink() a file using the @EVAL binding... but I&#39;m sure there are people out there more clever than me...
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";}}}

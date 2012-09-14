@@ -1,0 +1,169 @@
+a:5:{s:2:"id";s:8:"35586589";s:4:"info";a:4:{s:6:"Title:";s:28:"Dashboard Widget Type - File";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:43:"[revolution20:Dashboard Widget Type - File]";}s:6:"parent";s:8:"35586573";s:6:"source";s:2017:"The File Dashboard Widget Type runs a file on the filesystem, which can either:
+
+* Return the output of the file, rendering it in the content pane of the widget
+* Return the name of a class that extends modDashboardWidgetInterface, a MODX-provided abstract class, that has a render() method that will return the output to render to the content pane of the widget
+
+h2. Usage
+
+Simply place the name of the file in the content textarea of the widget. You can use the following placeholders to reference the widget path:
+
+* \[\[++base_path\]\]
+* \[\[++core_path\]\]
+* \[\[++manager_path\]\]
+* \[\[++assets_path\]\]
+* \[\[++manager_theme\]\]
+
+h3. Returning the Output
+
+There are two methods in your external file to return the content of the widget. The first is simply returning the output, like so:
+
+{code}&lt;?php
+return &#39;Hello, world!&#39;;{code}
+
+Will render &quot;Hello, world!&quot; in the content panel of the widget.
+
+h3. Returning a Class Name
+
+You can also return a class name of a class you have defined in your external file that extends the class modDashboardWidgetInterface, which is an abstract class provided by MODX for rendering of widgets. This is useful for widget developers who want an OOP approach that unit tests can be run against.
+
+An example class-based widget would look like this:
+
+{code}
+class modDashboardWidgetHelloWorld extends modDashboardWidgetInterface { 
+    public $version = &#39;1.0&#39;;
+
+    public function render() {
+        $o = &#39;Hello, World! Version: &#39;.$this-&gt;version;
+        return $o;
+    }
+}
+return &#39;modDashboardWidgetHelloWorld&#39;;{code}
+
+This widget would return as its content:
+
+{quote}Hello, World! Version: 1.0{quote}
+
+h2. Available Variables
+
+File-based widgets have the following PHP variables available to them:
+
+* $modx - A reference to the MODX instance.
+* $scriptProperties - An array of properties of this Dashboard Widget, as if toArray() were run on the widget object.
+
+h2. See Also
+
+{pagetree:root=Dashboard Widget Types}
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"35586589";s:3:"ver";s:1:"2";s:4:"code";s:2017:"The File Dashboard Widget Type runs a file on the filesystem, which can either:
+
+* Return the output of the file, rendering it in the content pane of the widget
+* Return the name of a class that extends modDashboardWidgetInterface, a MODX-provided abstract class, that has a render() method that will return the output to render to the content pane of the widget
+
+h2. Usage
+
+Simply place the name of the file in the content textarea of the widget. You can use the following placeholders to reference the widget path:
+
+* \[\[++base_path\]\]
+* \[\[++core_path\]\]
+* \[\[++manager_path\]\]
+* \[\[++assets_path\]\]
+* \[\[++manager_theme\]\]
+
+h3. Returning the Output
+
+There are two methods in your external file to return the content of the widget. The first is simply returning the output, like so:
+
+{code}&lt;?php
+return &#39;Hello, world!&#39;;{code}
+
+Will render &quot;Hello, world!&quot; in the content panel of the widget.
+
+h3. Returning a Class Name
+
+You can also return a class name of a class you have defined in your external file that extends the class modDashboardWidgetInterface, which is an abstract class provided by MODX for rendering of widgets. This is useful for widget developers who want an OOP approach that unit tests can be run against.
+
+An example class-based widget would look like this:
+
+{code}
+class modDashboardWidgetHelloWorld extends modDashboardWidgetInterface { 
+    public $version = &#39;1.0&#39;;
+
+    public function render() {
+        $o = &#39;Hello, World! Version: &#39;.$this-&gt;version;
+        return $o;
+    }
+}
+return &#39;modDashboardWidgetHelloWorld&#39;;{code}
+
+This widget would return as its content:
+
+{quote}Hello, World! Version: 1.0{quote}
+
+h2. Available Variables
+
+File-based widgets have the following PHP variables available to them:
+
+* $modx - A reference to the MODX instance.
+* $scriptProperties - An array of properties of this Dashboard Widget, as if toArray() were run on the widget object.
+
+h2. See Also
+
+{pagetree:root=Dashboard Widget Types}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"38994172";s:3:"ver";s:1:"1";s:4:"code";s:2012:"The File Dashboard Widget Type runs a file on the filesystem, which can either:
+
+* Return the output of the file, rendering it in the content pane of the widget
+* Return the name of a class that extends modDashboardWidgetInterface, a MODX-provided abstract class, that has a render() method that will return the output to render to the content pane of the widget
+
+h2. Usage
+
+Simply place the name of the file in the content textarea of the widget. You can use the following placeholders to reference the widget path:
+
+* \[\[+base_path\]\]
+* \[\[+core_path\]\]
+* \[\[+manager_path\]\]
+* \[\[+assets_path\]\]
+* \[\[+manager_theme\]\]
+
+h3. Returning the Output
+
+There are two methods in your external file to return the content of the widget. The first is simply returning the output, like so:
+
+{code}&lt;?php
+return &#39;Hello, world!&#39;;{code}
+
+Will render &quot;Hello, world!&quot; in the content panel of the widget.
+
+h3. Returning a Class Name
+
+You can also return a class name of a class you have defined in your external file that extends the class modDashboardWidgetInterface, which is an abstract class provided by MODX for rendering of widgets. This is useful for widget developers who want an OOP approach that unit tests can be run against.
+
+An example class-based widget would look like this:
+
+{code}
+class modDashboardWidgetHelloWorld extends modDashboardWidgetInterface { 
+    public $version = &#39;1.0&#39;;
+
+    public function render() {
+        $o = &#39;Hello, World! Version: &#39;.$this-&gt;version;
+        return $o;
+    }
+}
+return &#39;modDashboardWidgetHelloWorld&#39;;{code}
+
+This widget would return as its content:
+
+{quote}Hello, World! Version: 1.0{quote}
+
+h2. Available Variables
+
+File-based widgets have the following PHP variables available to them:
+
+* $modx - A reference to the MODX instance.
+* $scriptProperties - An array of properties of this Dashboard Widget, as if toArray() were run on the widget object.
+
+h2. See Also
+
+{pagetree:root=Dashboard Widget Types}
+
+{scrollbar}";}}}

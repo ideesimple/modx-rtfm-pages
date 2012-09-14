@@ -1,0 +1,1571 @@
+a:5:{s:2:"id";s:8:"18678205";s:4:"info";a:4:{s:6:"Title:";s:7:"Roadmap";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:22:"[revolution20:Roadmap]";}s:6:"parent";s:8:"18678475";s:6:"source";s:2687:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+*All features are non-binding*; some may be pushed sooner or later as they are finished.
+
+h2. Future Versions
+
+h3. Next Steps
+
+* Many Package Management improvements
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Extras Provider to PHP/REST with public API
+* Auto-loading of xPDO Package classes
+* Uninstall Options (similar to setup options)
+* Deprecate modAction and move to file-based controller pages
+* Make modNamespace a first-class citizen for development, tie it to Extra and version of Extra, etc
+
+h3. Near Future
+
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* xPDOObject Facades for faster class loading
+
+h3. Future
+
+* Add auto-update for MODx - IOW, update from the manager
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Basic Workflow support (moderation and approval)
+* ExtJS4 migration
+
+h3. Far Future
+
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+* Custom workflows
+
+h2. Released Versions
+
+h3. Revolution 2.2
+
+* On-the-fly manager CSS/JS compression
+* Add Static Elements - ability to store Element content in files
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Add Media Sources - Ability to configure the source of the Files tree to anything
+* Full-scale unit testing for Revolution
+* Custom Resource classes
+* Manager UI redesign and cleanup
+* CLI-based upgrades and installs
+* Class-based manager controllers
+* Class-based processors
+* Class-based TV renders
+* Property grouping for Elements via &quot;Areas&quot;
+* Configurable logging levels via System Settings
+* Create files from files tree
+* Ability to select &quot;Primary&quot; User Group for Users
+* Import/export Access Policies and Policy Templates
+* More API methods
+
+h3. Revolution 2.1
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* Caching improvements - file locking, partitioning and multiple format support
+* Change password encryption to PBKDF2, allow for plugin-based hashing
+* URI Editing/Freezing per Resource
+* Removal of all deprecated code left over for Evolution migrations
+* More API methods
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";s:8:"versions";a:32:{i:0;a:3:{s:2:"id";s:8:"18678205";s:3:"ver";s:1:"3";s:4:"code";s:2687:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+*All features are non-binding*; some may be pushed sooner or later as they are finished.
+
+h2. Future Versions
+
+h3. Next Steps
+
+* Many Package Management improvements
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Extras Provider to PHP/REST with public API
+* Auto-loading of xPDO Package classes
+* Uninstall Options (similar to setup options)
+* Deprecate modAction and move to file-based controller pages
+* Make modNamespace a first-class citizen for development, tie it to Extra and version of Extra, etc
+
+h3. Near Future
+
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* xPDOObject Facades for faster class loading
+
+h3. Future
+
+* Add auto-update for MODx - IOW, update from the manager
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Basic Workflow support (moderation and approval)
+* ExtJS4 migration
+
+h3. Far Future
+
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+* Custom workflows
+
+h2. Released Versions
+
+h3. Revolution 2.2
+
+* On-the-fly manager CSS/JS compression
+* Add Static Elements - ability to store Element content in files
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Add Media Sources - Ability to configure the source of the Files tree to anything
+* Full-scale unit testing for Revolution
+* Custom Resource classes
+* Manager UI redesign and cleanup
+* CLI-based upgrades and installs
+* Class-based manager controllers
+* Class-based processors
+* Class-based TV renders
+* Property grouping for Elements via &quot;Areas&quot;
+* Configurable logging levels via System Settings
+* Create files from files tree
+* Ability to select &quot;Primary&quot; User Group for Users
+* Import/export Access Policies and Policy Templates
+* More API methods
+
+h3. Revolution 2.1
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* Caching improvements - file locking, partitioning and multiple format support
+* Change password encryption to PBKDF2, allow for plugin-based hashing
+* URI Editing/Freezing per Resource
+* Removal of all deprecated code left over for Evolution migrations
+* More API methods
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"39355434";s:3:"ver";s:1:"3";s:4:"code";s:2668:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+*All features are non-binding*; some may be pushed sooner or later as they are finished.
+
+h2. Future Versions
+
+h3. Revolution 2.3
+
+* Many Package Management improvements
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Extras Provider to PHP/REST
+* Clean up modTransportPackage
+* Auto-loading of xPDO Package classes
+* xPDOObject Facades for faster class loading
+* Options vehicle for transport packages
+* Uninstall Options (similar to setup options)
+* Better integration of modNamespace for CMPs (deprecating modAction and moving to file-based controller pages)
+
+h3. Revolution 2.4
+
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add auto-update for MODx - IOW, update from the manager
+
+h3. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+* ExtJS4 migration
+
+h2. Released Versions
+
+h3. Revolution 2.2
+
+* On-the-fly manager CSS/JS compression
+* Add Static Elements - ability to store Element content in files
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Add Media Sources - Ability to configure the source of the Files tree to anything
+* Full-scale unit testing for Revolution
+* Custom Resource classes
+* Manager UI redesign and cleanup
+* CLI-based upgrades and installs
+* Class-based manager controllers
+* Class-based processors
+* Class-based TV renders
+* Property grouping for Elements via &quot;Areas&quot;
+* Configurable logging levels via System Settings
+* Create files from files tree
+* Ability to select &quot;Primary&quot; User Group for Users
+* Import/export Access Policies and Policy Templates
+* More API methods
+
+h3. Revolution 2.1
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* Caching improvements - file locking, partitioning and multiple format support
+* Change password encryption to PBKDF2, allow for plugin-based hashing
+* URI Editing/Freezing per Resource
+* Removal of all deprecated code left over for Evolution migrations
+* More API methods
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"38994082";s:3:"ver";s:1:"3";s:4:"code";s:2322:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+*All features are non-binding*; some may be pushed sooner or later as they are finished.
+
+h2. Future Versions
+
+h3. Revolution 2.3
+
+* Many Package Management improvements
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+
+h3. Revolution 2.4
+
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add auto-update for MODx - IOW, update from the manager
+
+h3. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+* ExtJS4 migration
+
+h2. Released Versions
+
+h3. Revolution 2.2
+
+* On-the-fly manager CSS/JS compression
+* Add Static Elements - ability to store Element content in files
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Add Media Sources - Ability to configure the source of the Files tree to anything
+* Full-scale unit testing for Revolution
+* Custom Resource classes
+* Manager UI redesign and cleanup
+* CLI-based upgrades and installs
+* Class-based manager controllers
+* Class-based processors
+* Class-based TV renders
+* Property grouping for Elements via &quot;Areas&quot;
+* Configurable logging levels via System Settings
+* Create files from files tree
+* Ability to select &quot;Primary&quot; User Group for Users
+* Import/export Access Policies and Policy Templates
+* More API methods
+
+h3. Revolution 2.1
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* Caching improvements - file locking, partitioning and multiple format support
+* Change password encryption to PBKDF2, allow for plugin-based hashing
+* URI Editing/Freezing per Resource
+* Removal of all deprecated code left over for Evolution migrations
+* More API methods
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"37683721";s:3:"ver";s:1:"2";s:4:"code";s:2322:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+*All features are non-binding*; some may be pushed sooner or later as they are finished.
+
+h2. Future Versions
+
+h3. Revolution 2.2
+
+* On-the-fly manager CSS/JS compression
+* Add Static Elements - ability to store Element content in files
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Add Media Sources - Ability to configure the source of the Files tree to anything
+* Full-scale unit testing for Revolution
+* Custom Resource classes
+* Manager UI redesign and cleanup
+* CLI-based upgrades and installs
+* Class-based manager controllers
+* Class-based processors
+* Class-based TV renders
+* Property grouping for Elements via &quot;Areas&quot;
+* Configurable logging levels via System Settings
+* Create files from files tree
+* Ability to select &quot;Primary&quot; User Group for Users
+* Import/export Access Policies and Policy Templates
+* More API methods
+
+h3. Revolution 2.3
+
+* Many Package Management improvements
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+
+h3. Revolution 2.4
+
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add auto-update for MODx - IOW, update from the manager
+
+h3. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+* ExtJS4 migration
+
+h2. Released Versions
+
+h3. Revolution 2.1
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* Caching improvements - file locking, partitioning and multiple format support
+* Change password encryption to PBKDF2, allow for plugin-based hashing
+* URI Editing/Freezing per Resource
+* Removal of all deprecated code left over for Evolution migrations
+* More API methods
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"37126245";s:3:"ver";s:1:"2";s:4:"code";s:1907:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+*All features are non-binding*; some may be pushed sooner or later as they are finished.
+
+h2. Future Versions
+
+h3. Revolution 2.2
+
+* On-the-fly manager CSS/JS compression
+* Class-based manager controllers
+* Class-based processors
+* Add Static Elements - ability to store Element content in files
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Full-scale unit testing for Revolution
+* Custom Resource classes
+* Manager UI redesign and cleanup
+* CLI-based upgrades and installs
+* More API methods
+
+h3. Revolution 2.3/2.4
+
+* Add auto-update for MODx - IOW, update from the manager
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+
+h3. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+* ExtJS4 migration
+
+h2. Released Versions
+
+h3. Revolution 2.1
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* Caching improvements - file locking, partitioning and multiple format support
+* Change password encryption to PBKDF2, allow for plugin-based hashing
+* URI Editing/Freezing per Resource
+* Removal of all deprecated code left over for Evolution migrations
+* More API methods
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"36634734";s:3:"ver";s:1:"2";s:4:"code";s:1873:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+*All features are non-binding*; some may be pushed sooner or later as they are finished.
+
+h2. Future Versions
+
+h3. Revolution 2.2
+
+* On-the-fly manager CSS/JS compression
+* Class-based manager controllers
+* Class-based processors
+* Add Static Elements - ability to store Element content in files
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Full-scale unit testing for Revolution
+* Custom Resource classes
+* Manager UI redesign and cleanup
+* More API methods
+
+h3. Revolution 2.3/2.4
+
+* Add auto-update for MODx - IOW, update from the manager
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+
+h3. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+* ExtJS4 migration
+
+h2. Released Versions
+
+h3. Revolution 2.1
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* Caching improvements - file locking, partitioning and multiple format support
+* Change password encryption to PBKDF2, allow for plugin-based hashing
+* URI Editing/Freezing per Resource
+* Removal of all deprecated code left over for Evolution migrations
+* More API methods
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"36634731";s:3:"ver";s:1:"2";s:4:"code";s:1814:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+*All features are non-binding*; some may be pushed sooner or later as they are finished.
+
+h2. Future Versions
+
+h3. Revolution 2.2
+
+* On-the-fly manager CSS/JS compression
+* Class-based manager controllers
+* Add Static Elements - ability to store Element content in files
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Full-scale unit testing for Revolution
+* Custom Resource classes
+* More API methods
+
+h3. Revolution 2.3/2.4
+
+* Add auto-update for MODx - IOW, update from the manager
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+
+h3. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+* ExtJS4 migration
+
+h2. Released Versions
+
+h3. Revolution 2.1
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* Caching improvements - file locking, partitioning and multiple format support
+* Change password encryption to PBKDF2, allow for plugin-based hashing
+* URI Editing/Freezing per Resource
+* Removal of all deprecated code left over for Evolution migrations
+* More API methods
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"35586430";s:3:"ver";s:1:"2";s:4:"code";s:1842:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+*All features are non-binding*; some may be pushed sooner or later as they are finished.
+
+h2. Future Versions
+
+h3. Revolution 2.2
+
+* On-the-fly manager CSS/JS compression
+* Class-based manager controllers
+* Add Static Elements - ability to store Element content in files
+* Full-scale unit testing for Revolution
+* More API methods
+
+h3. Revolution 2.3/2.4
+
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please. (may be in 2.2)
+* Add auto-update for MODx - IOW, update from the manager
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+* ExtJS4 migration (possibly in 3.0 depending on effort)
+
+h3. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. Released Versions
+
+h3. Revolution 2.1
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* Caching improvements - file locking, partitioning and multiple format support
+* Change password encryption to PBKDF2, allow for plugin-based hashing
+* URI Editing/Freezing per Resource
+* Removal of all deprecated code left over for Evolution migrations
+* More API methods
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:8;a:3:{s:2:"id";s:8:"35586193";s:3:"ver";s:1:"2";s:4:"code";s:1801:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+*All features are non-binding*; some may be pushed sooner or later as they are finished.
+
+h2. Future Versions
+
+h3. Revolution 2.2
+
+* On-the-fly manager CSS/JS compression
+* Class-based manager controllers
+* Add Static Elements - ability to store Element content in files
+* More API methods
+
+h3. Revolution 2.3/2.4
+
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please. (may be in 2.2)
+* Add auto-update for MODx - IOW, update from the manager
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+* ExtJS4 migration (possibly in 3.0 depending on effort)
+
+h3. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. Released Versions
+
+h3. Revolution 2.1
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* Caching improvements - file locking, partitioning and multiple format support
+* Change password encryption to PBKDF2, allow for plugin-based hashing
+* URI Editing/Freezing per Resource
+* Removal of all deprecated code left over for Evolution migrations
+* More API methods
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:9;a:3:{s:2:"id";s:8:"35586192";s:3:"ver";s:1:"2";s:4:"code";s:1737:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+*All features are non-binding*; some may be pushed sooner or later as they are finished.
+
+h2. Future Versions
+
+h3. Revolution 2.2
+
+* Add Static Elements - ability to store Element content in files
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Add auto-update for MODx - IOW, update from the manager
+* More API methods
+
+h3. Revolution 2.3/2.4
+
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+* ExtJS4 migration (possibly in 3.0 depending on effort)
+
+h3. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. Released Versions
+
+h3. Revolution 2.1
+
+Currently at RC-3 stage.
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* Caching improvements - file locking, partitioning and multiple format support
+* Change password encryption to PBKDF2, allow for plugin-based hashing
+* URI Editing/Freezing per Resource
+* Removal of all deprecated code left over for Evolution migrations
+* More API methods
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:10;a:3:{s:2:"id";s:8:"35095371";s:3:"ver";s:1:"2";s:4:"code";s:1735:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+All features are non-binding; some may be pushed sooner or later as they are finished.
+
+h2. Future Versions
+
+h3. Revolution 2.2
+
+* Add Static Elements - ability to store Element content in files
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Add auto-update for MODx - IOW, update from the manager
+* More API methods
+
+h3. Revolution 2.3/2.4
+
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+* ExtJS4 migration (possibly in 3.0 depending on effort)
+
+h3. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. Released Versions
+
+h3. Revolution 2.1
+
+Currently at RC-3 stage.
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* Caching improvements - file locking, partitioning and multiple format support
+* Change password encryption to PBKDF2, allow for plugin-based hashing
+* URI Editing/Freezing per Resource
+* Removal of all deprecated code left over for Evolution migrations
+* More API methods
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:11;a:3:{s:2:"id";s:8:"35094745";s:3:"ver";s:1:"2";s:4:"code";s:1678:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+All features are non-binding; some may be pushed sooner or later as they are finished.
+
+h2. Future Versions
+
+h3. Revolution 2.2
+
+* Add Static Elements - ability to store Element content in files
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Add auto-update for MODx - IOW, update from the manager
+* More API methods
+
+h3. Revolution 2.3/2.4
+
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+
+h3. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. Released Versions
+
+h3. Revolution 2.1
+
+Currently at RC-3 stage.
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* Caching improvements - file locking, partitioning and multiple format support
+* Change password encryption to PBKDF2, allow for plugin-based hashing
+* URI Editing/Freezing per Resource
+* Removal of all deprecated code left over for Evolution migrations
+* More API methods
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:12;a:3:{s:2:"id";s:8:"35094744";s:3:"ver";s:1:"2";s:4:"code";s:1659:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+All features are non-binding; some may be pushed sooner or later as they are finished.
+
+h2. Future Versions
+
+h3. Revolution 2.2
+
+* Add Static Elements - ability to store Element content in files
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Add auto-update for MODx - IOW, update from the manager
+
+h3. Revolution 2.3/2.4
+
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+
+h3. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. Released Versions
+
+h3. Revolution 2.1
+
+Currently at RC-3 stage.
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* Caching improvements - file locking, partitioning and multiple format support
+* Change password encryption to PBKDF2, allow for plugin-based hashing
+* URI Editing/Freezing per Resource
+* Removal of all deprecated code left over for Evolution migrations
+* More API methods
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:13;a:3:{s:2:"id";s:8:"35094743";s:3:"ver";s:1:"1";s:4:"code";s:1589:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+All features are non-binding; some may be pushed sooner or later as they are finished.
+
+h2. Revolution 2.1
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* Caching improvements - file locking, partitioning and multiple format support
+* Change password encryption to PBKDF2, allow for plugin-based hashing
+* URI Editing/Freezing per Resource
+* Removal of all deprecated code left over for Evolution migrations
+* More API methods
+
+h2. Revolution 2.2
+
+* Add Static Elements - ability to store Element content in files
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Add auto-update for MODx - IOW, update from the manager
+
+h2. Revolution 2.3/2.4
+
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+
+h2. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:14;a:3:{s:2:"id";s:8:"35094536";s:3:"ver";s:1:"1";s:4:"code";s:1390:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+All features are non-binding; some may be pushed sooner or later as they are finished.
+
+h2. Revolution 2.0
+
+* Patches and bugfix releases only
+
+h2. Revolution 2.1
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* More API methods
+
+h2. Revolution 2.2
+
+* Add Static Elements - ability to store Element content in files
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Add auto-update for MODx - IOW, update from the manager
+
+h2. Revolution 2.3/2.4
+
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+
+h2. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:15;a:3:{s:2:"id";s:8:"33948262";s:3:"ver";s:1:"1";s:4:"code";s:1407:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+All features are non-binding; some may be pushed sooner or later as they are finished.
+
+h2. Revolution 2.0
+
+* Patches and bugfix releases only
+
+h2. Revolution 2.1
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs
+* More API methods
+
+h2. Revolution 2.2
+
+* Add Static Elements - ability to store Element content in files
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+
+h2. Revolution 2.3
+
+* Add auto-update for MODx - IOW, update from the manager
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+
+h2. Revolution 2.4
+
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+
+h2. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:16;a:3:{s:2:"id";s:8:"33948261";s:3:"ver";s:1:"1";s:4:"code";s:1407:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+All features are non-binding; some may be pushed sooner or later as they are finished.
+
+h2. Revolution 2.0
+
+* Patches and bugfix releases only
+
+h2. Revolution 2.1
+
+* Input Properties for TVs that allow customization of TV inputs
+* Add Static Elements - ability to store Element content in files
+* More API methods
+
+h2. Revolution 2.2
+
+* Multi-database support (sqlsrv initially)
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+
+h2. Revolution 2.3
+
+* Add auto-update for MODx - IOW, update from the manager
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+
+h2. Revolution 2.4
+
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+
+h2. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:17;a:3:{s:2:"id";s:8:"33587443";s:3:"ver";s:1:"1";s:4:"code";s:1432:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+All features are non-binding; some may be pushed sooner or later as they are finished.
+
+h2. Revolution 2.0
+
+* Patches and bugfix releases only
+
+h2. Revolution 2.1
+
+* Multi-database support (sqlsrv initially)
+* Input Properties for TVs that allow customization of TV inputs (may be deferred to 2.2)
+
+h2. Revolution 2.2
+
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* More API methods
+
+h2. Revolution 2.3
+
+* Add auto-update for MODx - IOW, update from the manager
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Add Static Elements - ability to store Element content in files
+
+h2. Revolution 2.4
+
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+
+h2. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:18;a:3:{s:2:"id";s:8:"33587392";s:3:"ver";s:1:"1";s:4:"code";s:1409:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+All features are non-binding; some may be pushed sooner or later as they are finished.
+
+h2. Revolution 2.0
+
+* Patches and bugfix releases only
+
+h2. Revolution 2.1
+
+* Multi-database support
+
+h2. Revolution 2.2
+
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Improved TV widgets/bindings - new widgets, such as ImagePlus, ResourceListing, etc
+* More API methods
+
+h2. Revolution 2.3
+
+* Add auto-update for MODx - IOW, update from the manager
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Add Static Elements - ability to store Element content in files
+
+h2. Revolution 2.4
+
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+
+h2. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:19;a:3:{s:2:"id";s:8:"33587238";s:3:"ver";s:1:"1";s:4:"code";s:1363:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+All features are non-binding; some may be pushed sooner or later as they are finished.
+
+h2. Revolution 2.0
+
+* Patches and bugfix releases only
+
+h2. Revolution 2.1
+
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Improved TV widgets/bindings - new widgets, such as ImagePlus, ResourceListing, etc
+* More API methods
+
+h2. Revolution 2.2
+
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Add Static Elements - ability to store Element content in files
+
+h2. Revolution 2.3
+
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add auto-update for MODx - IOW, update from the manager
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+
+h2. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:20;a:3:{s:2:"id";s:8:"33226754";s:3:"ver";s:1:"1";s:4:"code";s:1517:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+All features are non-binding; some may be pushed sooner or later as they are finished.
+
+h2. Revolution 2.0
+
+After PL release, the core team will concentrate on creating distributions for different 2.0.0-pl implementations. Migration of the Revolution codebase to Git will also occur at this time.
+
+h2. Revolution 2.1
+
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Improved TV widgets/bindings - new widgets, such as ImagePlus, ResourceListing, etc
+* More API methods
+
+h2. Revolution 2.2
+
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Add Static Elements - ability to store Element content in files
+
+h2. Revolution 2.3
+
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add auto-update for MODx - IOW, update from the manager
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+
+h2. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:21;a:3:{s:2:"id";s:8:"33226753";s:3:"ver";s:1:"1";s:4:"code";s:1573:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+Tasks in {color:purple}purple{color} are already finished in Git.
+
+h2. Revolution 2.0
+
+After PL release, the core team will concentrate on creating distributions for different 2.0.0-pl implementations. Migration of the Revolution codebase to Git will also occur at this time.
+
+h3. Revolution 2.0.3
+
+* Fix any major issues in [JIRA|http://bugs.modx.com]
+
+h2. Revolution 2.1
+
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Improved TV widgets/bindings - new widgets, such as ImagePlus, ResourceListing, etc
+* More API methods
+
+h2. Revolution 2.2
+
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Add Static Elements - ability to store Element content in files
+
+h2. Revolution 2.3
+
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add auto-update for MODx - IOW, update from the manager
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+
+h2. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:22;a:3:{s:2:"id";s:8:"29687812";s:3:"ver";s:1:"1";s:4:"code";s:1573:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+Tasks in {color:purple}purple{color} are already finished in Git.
+
+h2. Revolution 2.0
+
+After PL release, the core team will concentrate on creating distributions for different 2.0.0-pl implementations. Migration of the Revolution codebase to Git will also occur at this time.
+
+h3. Revolution 2.0.1
+
+* Fix any major issues in [JIRA|http://bugs.modx.com]
+
+h2. Revolution 2.1
+
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Improved TV widgets/bindings - new widgets, such as ImagePlus, ResourceListing, etc
+* More API methods
+
+h2. Revolution 2.2
+
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Add Static Elements - ability to store Element content in files
+
+h2. Revolution 2.3
+
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add auto-update for MODx - IOW, update from the manager
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back)
+
+h2. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:23;a:3:{s:2:"id";s:8:"29687811";s:3:"ver";s:1:"9";s:4:"code";s:1572:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+Tasks in {color:purple}purple{color} are already finished in Git.
+
+h2. Revolution 2.0
+
+After PL release, the core team will concentrate on creating distributions for different 2.0.0-pl implementations. Migration of the Revolution codebase to Git will also occur at this time.
+
+h3. Revolution 2.0.1
+
+* Fix any major issues in [JIRA|http://bugs.modx.com]
+
+h2. Revolution 2.1
+
+* Add Custom Dashboards - Ability to use files, chunks, etc as dashboard widgets, and order and arrange them as you please.
+* Improved TV widgets/bindings - new widgets, such as ImagePlus, ResourceListing, etc
+* More API methods
+
+h2. Revolution 2.2
+
+* Transport Package dependencies - IOW, if a Transport Package specifies a dependency of another, then the package will attempt to &quot;retrieve&quot; the needed package from its Provider before installing.
+* Add Static Elements - ability to store Element content in files
+* Add Heirarchical Elements - ability to make heirarchical data relations for Elements (debated feature, may be pushed back
+
+h2. Revolution 2.3
+
+* Permissions/ACLs for specific Users
+* User Group Settings - Similar to User Settings but applied on a User Group level.
+* Add auto-update for MODx - IOW, update from the manager
+
+h2. Revolution 3.0
+
+* Add native Versioning for Resources/TVs and Elements
+* Add Content Element support - Eliminates Resource Fields and makes Resources with an adjustable field base
+* Add Workflow support - Including custom workflows
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:24;a:3:{s:2:"id";s:8:"29687810";s:3:"ver";s:1:"8";s:4:"code";s:953:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+Tasks in {color:purple}purple{color} are already finished in Git.
+
+h2. Revolution 2.0
+
+After PL release, the core team will concentrate on creating distributions for different 2.0.0-pl implementations. Migration of the Revolution codebase to Git will also occur at this time.
+
+h3. Revolution 2.0.1
+
+* Fix any major issues in [JIRA|http://bugs.modx.com]
+
+h2. Revolution 2.1
+
+* Add Custom Dashboards
+* Improved TV widgets/bindings
+* More API methods
+
+h2. Revolution 2.2
+
+* Transport Package dependencies
+* Add Static Elements
+* Add Heirarchical Elements
+
+h2. Revolution 2.3
+
+* Permissions/ACLs for specific Users
+* User Group Settings
+
+h2. Revolution 3.0
+
+* Add native Versioning
+* Add Content Element support
+* Add Workflow support
+* Add auto-update for MODx
+* Redo manager into an actual &#39;mgr&#39; context where pages are modx resources
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:25;a:3:{s:2:"id";s:8:"27918342";s:3:"ver";s:1:"7";s:4:"code";s:956:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+Tasks in {color:purple}purple{color} are already finished in Git.
+
+h2. Revolution 2.0
+
+After PL release, the core team will concentrate on creating distributions for different 2.0.0-pl implementations. Migration of the Revolution codebase to Git will also occur at this time.
+
+h3. Revolution 2.0.1
+
+* Fix any major issues in [JIRA|http://bugs.modxcms.com]
+
+h2. Revolution 2.1
+
+* Add Custom Dashboards
+* Improved TV widgets/bindings
+* More API methods
+
+h2. Revolution 2.2
+
+* Transport Package dependencies
+* Add Static Elements
+* Add Heirarchical Elements
+
+h2. Revolution 2.3
+
+* Permissions/ACLs for specific Users
+* User Group Settings
+
+h2. Revolution 3.0
+
+* Add native Versioning
+* Add Content Element support
+* Add Workflow support
+* Add auto-update for MODx
+* Redo manager into an actual &#39;mgr&#39; context where pages are modx resources
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:26;a:3:{s:2:"id";s:8:"27918341";s:3:"ver";s:1:"6";s:4:"code";s:924:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+Tasks in {color:purple}purple{color} are already finished in Git.
+
+h2. Revolution 2.0
+
+After PL release, the core team will concentrate on creating distributions for different 2.0.0-pl implementations. Migration of the Revolution codebase to Git will also occur at this time.
+
+h3. Revolution 2.0.1
+
+* Fix any major issues in [JIRA|http://bugs.modxcms.com]
+
+h2. Revolution 2.1
+
+* Add Custom Dashboards
+* Simplify setup/ process
+* More API methods
+
+h2. Revolution 2.2
+
+* Transport Package dependencies
+* Add Static Elements
+* Add Heirarchical Elements
+
+h2. Revolution 2.3
+
+* Permissions/ACLs for specific Users
+* User Group Settings
+
+h2. Revolution 3.0
+
+* Add native Versioning
+* Add Content Element support
+* Add Workflow support
+* Redo manager into an actual &#39;mgr&#39; context where pages are modx resources
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:27;a:3:{s:2:"id";s:8:"21659651";s:3:"ver";s:1:"5";s:4:"code";s:905:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+Tasks in {color:purple}purple{color} are already finished in Git.
+
+h2. Revolution 2.0
+
+After PL release, the core team will concentrate on creating distributions for different 2.0.0-pl implementations. Migration of the Revolution codebase to Git will also occur at this time.
+
+h3. Revolution 2.0.1
+
+* Fix any major issues in [JIRA|http://bugs.modxcms.com]
+
+h2. Revolution 2.1
+
+* Add Custom Dashboards
+* Simplify setup/ process
+
+h2. Revolution 2.2
+
+* Transport Package dependencies
+* Add Static Elements
+* Add Heirarchical Elements
+
+h2. Revolution 2.3
+
+* Permissions/ACLs for specific Users
+* User Group Settings
+
+h2. Revolution 3.0
+
+* Add native Versioning
+* Add Content Element support
+* Add Workflow support
+* Redo manager into an actual &#39;mgr&#39; context where pages are modx resources
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:28;a:3:{s:2:"id";s:8:"21659650";s:3:"ver";s:1:"4";s:4:"code";s:919:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+Tasks in {color:purple}purple{color} are already finished in Git.
+
+h2. Revolution 2.0
+
+After PL release, the core team will concentrate on creating distributions for different 2.0.0-pl implementations. Migration of the Revolution codebase to Git will also occur at this time.
+
+h3. Revolution 2.0.1
+
+* Fix any major issues in [JIRA|http://bugs.modxcms.com]
+
+h2. Revolution 2.1
+
+* Add customized Welcome page support
+* Simplify setup/ process
+* Transport Package dependencies
+
+h2. Revolution 2.2
+
+* Add Static Elements
+* Add Heirarchical Elements
+* Permissions/ACLs for specific Users
+
+h2. Revolution 2.3
+
+* Add native Versioning
+* User Group Settings
+
+h2. Revolution 3.0
+
+* Add Content Element support
+* Add Workflow support
+* Redo manager into an actual &#39;mgr&#39; context where pages are modx resources
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:29;a:3:{s:2:"id";s:8:"20119583";s:3:"ver";s:1:"3";s:4:"code";s:956:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+Tasks in {color:purple}purple{color} are already finished in Git.
+
+h2. Revolution 2.0
+
+After PL release, the core team will concentrate on creating distributions for different 2.0.0-pl implementations. Migration of the Revolution codebase to Git will also occur at this time.
+
+h3. Revolution 2.0.1
+
+* Fix any major issues in [JIRA|http://bugs.modxcms.com]
+
+h2. Revolution 2.1
+
+* Add customized Welcome page support
+* Simplify setup/ process
+* Transport Package dependencies
+
+h2. Revolution 2.2
+
+* Add Static Elements
+* Add Heirarchical Elements
+* Permissions/ACLs for specific Users
+
+h2. Revolution 2.3
+
+* Add native Versioning
+* Add dependency support to Packages
+* User Group Settings
+
+h2. Revolution 3.0
+
+* Add Content Element support
+* Add Workflow support
+* Redo manager into an actual &#39;mgr&#39; context where pages are modx resources
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:30;a:3:{s:2:"id";s:8:"18678626";s:3:"ver";s:1:"2";s:4:"code";s:1150:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+Tasks in {color:purple}purple{color} are already finished in Git.
+
+h2. Revolution 2.0
+
+h3. Revolution 2.0.0
+
+h4. Revolution 2.0.0-pl
+
+Expected Release Date: July 22nd, 2010
+
+* Have all translations done for major languages
+* Fully support browsers listed in [Server Requirements] 
+* Fix any &#39;major&#39; classified issues in [JIRA|http://bugs.modxcms.com/]
+
+After PL release, the core team will concentrate on creating distributions for different 2.0.0-pl implementations. Migration of the Revolution codebase to Git will also occur at this time.
+
+h2. Revolution 2.1
+
+* Add customized Welcome page support
+* Simplify setup/ process
+* Transport Package dependencies
+
+h2. Revolution 2.2
+
+* Add Static Elements
+* Add Heirarchical Elements
+* Permissions/ACLs for specific Users
+
+h2. Revolution 2.3
+
+* Add native Versioning
+* Add dependency support to Packages
+* User Group Settings
+
+h2. Revolution 3.0
+
+* Add Content Element support
+* Add Workflow support
+* Redo manager into an actual &#39;mgr&#39; context where pages are modx resources
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}i:31;a:3:{s:2:"id";s:8:"18678624";s:3:"ver";s:1:"1";s:4:"code";s:1150:"\\
+
+This is a work-in-progress roadmap for MODx Revolution.
+
+Tasks in {color:purple}purple{color} are already finished in SVN.
+
+h2. Revolution 2.0
+
+h3. Revolution 2.0.0
+
+h4. Revolution 2.0.0-pl
+
+Expected Release Date: July 22nd, 2010
+
+* Have all translations done for major languages
+* Fully support browsers listed in [Server Requirements] 
+* Fix any &#39;major&#39; classified issues in [JIRA|http://bugs.modxcms.com/]
+
+After PL release, the core team will concentrate on creating distributions for different 2.0.0-pl implementations. Migration of the Revolution codebase to Git will also occur at this time.
+
+h2. Revolution 2.1
+
+* Add customized Welcome page support
+* Simplify setup/ process
+* Transport Package dependencies
+
+h2. Revolution 2.2
+
+* Add Static Elements
+* Add Heirarchical Elements
+* Permissions/ACLs for specific Users
+
+h2. Revolution 2.3
+
+* Add native Versioning
+* Add dependency support to Packages
+* User Group Settings
+
+h2. Revolution 3.0
+
+* Add Content Element support
+* Add Workflow support
+* Redo manager into an actual &#39;mgr&#39; context where pages are modx resources
+
+h2. See Also
+
+{pagetree:root=Roadmap}
+
+{scrollbar}";}}}

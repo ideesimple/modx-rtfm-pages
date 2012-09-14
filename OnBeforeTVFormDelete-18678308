@@ -1,0 +1,37 @@
+a:5:{s:2:"id";s:8:"18678308";s:4:"info";a:4:{s:6:"Title:";s:20:"OnBeforeTVFormDelete";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:35:"[revolution20:OnBeforeTVFormDelete]";}s:6:"parent";s:8:"18678228";s:6:"source";s:303:"\\
+
+h2. Event: OnBeforeTVFormDelete
+
+Fires before a TV is deleted in the manager.
+
+Service: 1 - Parser Service Events
+Group: Template Variables
+
+h2. Event Parameters
+
+||Name||Description||
+|tv|A reference to the modTemplateVar object.|
+|id|The ID of the TV.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678308";s:3:"ver";s:1:"1";s:4:"code";s:303:"\\
+
+h2. Event: OnBeforeTVFormDelete
+
+Fires before a TV is deleted in the manager.
+
+Service: 1 - Parser Service Events
+Group: Template Variables
+
+h2. Event Parameters
+
+||Name||Description||
+|tv|A reference to the modTemplateVar object.|
+|id|The ID of the TV.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

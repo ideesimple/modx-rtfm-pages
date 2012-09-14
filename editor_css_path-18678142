@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678142";s:4:"info";a:4:{s:6:"Title:";s:15:"editor_css_path";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:30:"[revolution20:editor_css_path]";}s:6:"parent";s:8:"18678127";s:6:"source";s:353:"h2. editor_css_path
+
+*Name*: Path to CSS file
+*Type*: String
+*Default*: 
+
+The path to your CSS file that you wish to use within the editor. The best way to enter the path is to enter the path from the root of your server, for example: /assets/site/style.css. If you do not wish to load a style sheet into the editor, leave this field blank.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678142";s:3:"ver";s:1:"2";s:4:"code";s:353:"h2. editor_css_path
+
+*Name*: Path to CSS file
+*Type*: String
+*Default*: 
+
+The path to your CSS file that you wish to use within the editor. The best way to enter the path is to enter the path from the root of your server, for example: /assets/site/style.css. If you do not wish to load a style sheet into the editor, leave this field blank.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119669";s:3:"ver";s:1:"1";s:4:"code";s:516:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Path to CSS file{zone-data}
+{zone-data:key}editor_css_path{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}{zone-data}
+{zone-data:desc}The path to your CSS file that you wish to use within the editor. The best way to enter the path is to enter the path from the root of your server, for example: /assets/site/style.css. If you do not wish to load a style sheet into the editor, leave this field blank.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

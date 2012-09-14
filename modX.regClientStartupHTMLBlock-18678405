@@ -1,0 +1,65 @@
+a:5:{s:2:"id";s:8:"18678405";s:4:"info";a:4:{s:6:"Title:";s:30:"modX.regClientStartupHTMLBlock";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:45:"[revolution20:modX.regClientStartupHTMLBlock]";}s:6:"parent";s:8:"18678403";s:6:"source";s:623:"\\
+
+h2. modX::regClientStartupHTMLBlock
+
+Register HTML to be injected before the closing HEAD tag.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#regClientStartupHTMLBlock
+
+{code}
+void regClientStartupHTMLBlock (string $html)
+{code}
+
+h2. Example
+
+Render a faux tag element before the end of the HEAD.
+{code}
+$modx-&gt;regClientStartupHTMLBlock(&#39;&lt;tag&gt;&lt;/tag&gt;&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.regClientCSS]
+* [modX.regClientHTMLBlock]
+* [modX.regClientScript]
+* [modX.regClientStartupScript]
+* [modX.getRegisteredClientScripts]
+* [modX.getRegisteredClientStartupScripts]
+
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678405";s:3:"ver";s:1:"1";s:4:"code";s:623:"\\
+
+h2. modX::regClientStartupHTMLBlock
+
+Register HTML to be injected before the closing HEAD tag.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#regClientStartupHTMLBlock
+
+{code}
+void regClientStartupHTMLBlock (string $html)
+{code}
+
+h2. Example
+
+Render a faux tag element before the end of the HEAD.
+{code}
+$modx-&gt;regClientStartupHTMLBlock(&#39;&lt;tag&gt;&lt;/tag&gt;&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.regClientCSS]
+* [modX.regClientHTMLBlock]
+* [modX.regClientScript]
+* [modX.regClientStartupScript]
+* [modX.getRegisteredClientScripts]
+* [modX.getRegisteredClientStartupScripts]
+
+
+{scrollbar}";}}}

@@ -1,0 +1,311 @@
+a:5:{s:2:"id";s:8:"18678064";s:4:"info";a:4:{s:6:"Title:";s:30:"Adding a Custom TV Output Type";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:45:"[revolution20:Adding a Custom TV Output Type]";}s:6:"parent";s:8:"20119599";s:6:"source";s:5838:"\\
+{toc}
+
+h2. What are TV Output Types?
+
+TV Output Types allow you to output [Template Variables] in different markup and formats. Some examples include outputting a TV value as an image, URL, HTML tag, date, etc.
+
+MODx Revolution lets you create custom output types fairly easily.
+
+h2. Creating the Files
+
+Let&#39;s create a custom TV Output Type called &quot;button&quot;. This will render an input button (or more than one) with a specified value and an optional name, with some other fields for attributes. You&#39;ll need 3 files:
+
+* An input properties controller - put here: core/model/modx/processors/element/tv/renders/mgr/properties/button.php
+* An input properties template - put here: manager/templates/default/element/tv/renders/properties/button.tpl
+* An output controller - put here: core/model/modx/processors/element/tv/renders/web/output/button.php
+
+h3. Setting up the Input Properties Controller
+
+This is the PHP file that will load the mgr template for managing the TV output type&#39;s properties. We&#39;ll have it contain just this:
+
+{code}
+&lt;?php
+// any custom php you want to run here
+return $modx-&gt;smarty-&gt;fetch(&#39;element/tv/renders/properties/button.tpl&#39;);
+{code}
+
+h3. Setting up the Input Properties Template
+
+This is the template for the default manager theme to render properties with. We&#39;ll use ExtJS to render some pretty form fields:
+
+{code}
+&lt;div id=&quot;tv-wprops-form{$tv}&quot;&gt;&lt;/div&gt;
+{literal}
+&lt;script type=&quot;text/javascript&quot;&gt;
+// &lt;![CDATA[
+var params = {
+{/literal}{foreach from=$params key=k item=v name=&#39;p&#39;}
+ &#39;{$k}&#39;: &#39;{$v}&#39;{if NOT $smarty.foreach.p.last},{/if}
+{/foreach}{literal}
+};
+var oc = {&#39;change&#39;:{fn:function(){Ext.getCmp(&#39;modx-panel-tv&#39;).markDirty();},scope:this}};
+MODx.load({
+    xtype: &#39;panel&#39;
+    ,layout: &#39;form&#39;
+    ,autoHeight: true
+    ,labelWidth: 150
+    ,border: false
+    ,items: [{
+        xtype: &#39;textfield&#39;
+        ,fieldLabel: _(&#39;class&#39;)
+        ,name: &#39;prop_class&#39;
+        ,id: &#39;prop_class{/literal}{$tv}{literal}&#39;
+        ,value: params[&#39;class&#39;] || &#39;&#39;
+        ,width: 300
+        ,listeners: oc
+    },{
+        xtype: &#39;textfield&#39;
+        ,fieldLabel: _(&#39;id&#39;)
+        ,name: &#39;prop_id&#39;
+        ,id: &#39;prop_id{/literal}{$tv}{literal}&#39;
+        ,value: params[&#39;id&#39;] || &#39;&#39;
+        ,width: 300
+        ,listeners: oc
+    },{
+        xtype: &#39;textfield&#39;
+        ,fieldLabel: _(&#39;style&#39;)
+        ,name: &#39;prop_style&#39;
+        ,id: &#39;prop_style{/literal}{$tv}{literal}&#39;
+        ,value: params[&#39;style&#39;] || &#39;&#39;
+        ,width: 300
+        ,listeners: oc
+    },{
+        xtype: &#39;textfield&#39;
+        ,fieldLabel: _(&#39;attributes&#39;)
+        ,name: &#39;prop_attributes&#39;
+        ,id: &#39;prop_attributes{/literal}{$tv}{literal}&#39;
+        ,value: params[&#39;attributes&#39;] || &#39;&#39;
+        ,width: 300
+        ,listeners: oc
+    }]
+    ,renderTo: &#39;tv-wprops-form{/literal}{$tv}{literal}&#39;
+});
+// ]]&gt;
+&lt;/script&gt;
+{/literal}
+{code}
+
+The key way these save is that each field is prepended with &#39;prop_&#39; in its name. This tells MODx to save this field in the TV&#39;s output properties. Make sure you specify your fields with this prefix!
+
+{note}You don&#39;t have to use ExtJS, however - you can use just straight HTML - it&#39;s totally up to you.
+Note that if you created another manager theme, you&#39;d have to create a properties tpl for that theme as well.{note}
+
+h3. Setting up the Output Controller
+
+Now we get into the good stuff. This controller will handle exactly how the button is outputted. Our file looks like this (comments inline):
+
+{code}
+&lt;?php
+$o= &#39;&#39;;
+$buttons= $this-&gt;parseInput($value, &#39;||&#39;, &#39;array&#39;);
+/* allow multiple buttons separated by ||, or checkbox/multiple input tvs */
+foreach ($buttons as $button) {
+    if (!is_array($button)) {
+        $button= explode(&#39;==&#39;, $button);
+    }
+    /* the TV value must have a value of either: text or text==name */
+    $text = $button[0];
+    if (!empty($text)) {
+        $attributes = &#39;&#39;;
+        $attr = array(
+            &#39;class&#39; =&gt; $params[&#39;class&#39;],
+            &#39;id&#39; =&gt; ($params[&#39;id&#39;] ? $params[&#39;id&#39;] : &#39;&#39;),
+            &#39;alt&#39; =&gt; htmlspecialchars($params[&#39;alttext&#39;]),
+            &#39;style&#39; =&gt; $params[&#39;style&#39;]
+        );
+        /* if a name is specified, use it! */
+        if (!empty($button[1])) $attr[&#39;name&#39;] = $button[1];
+
+        /* separate the attributes into html tag format */
+        foreach ($attr as $k =&gt; $v) $attributes.= ($v ? &#39; &#39;.$k.&#39;=&quot;&#39;.$v.&#39;&quot;&#39; : &#39;&#39;);
+        $attributes .= &#39; &#39;.$params[&#39;attrib&#39;];
+
+        /* Output the image with attributes */
+        $o .= &#39;&lt;button&#39;.rtrim($attributes).&#39;&gt;&#39;.$text.&#39;&lt;/button&gt;&#39;.&quot;\n&quot;;
+    }
+}
+
+return $o;
+{code}
+
+h2. Using the Custom TV Output Type
+
+So, how does it look? Well, it should render an output form like this when editing the TV - I&#39;ve added some custom values to it as well:
+
+!outtvprop1.png!
+
+So we&#39;ll save this, and then let&#39;s go edit in in a Resource. We&#39;ll specify two buttons, separating with ||. We could also just do one button. And, we&#39;ll have the first button have a custom &#39;name&#39; attribute as well:
+
+!outtvinput.png!
+
+Great. Now let&#39;s preview the resource, and we&#39;ll get an output like this:
+
+!outtvresult1.png!
+
+And we can examine the HTML source: 
+
+!outtvsource1.png!
+
+And there you go! A custom TV output type!
+
+h2. See Also
+
+{pagetree:root=Template Variables}
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678064";s:3:"ver";s:1:"1";s:4:"code";s:5838:"\\
+{toc}
+
+h2. What are TV Output Types?
+
+TV Output Types allow you to output [Template Variables] in different markup and formats. Some examples include outputting a TV value as an image, URL, HTML tag, date, etc.
+
+MODx Revolution lets you create custom output types fairly easily.
+
+h2. Creating the Files
+
+Let&#39;s create a custom TV Output Type called &quot;button&quot;. This will render an input button (or more than one) with a specified value and an optional name, with some other fields for attributes. You&#39;ll need 3 files:
+
+* An input properties controller - put here: core/model/modx/processors/element/tv/renders/mgr/properties/button.php
+* An input properties template - put here: manager/templates/default/element/tv/renders/properties/button.tpl
+* An output controller - put here: core/model/modx/processors/element/tv/renders/web/output/button.php
+
+h3. Setting up the Input Properties Controller
+
+This is the PHP file that will load the mgr template for managing the TV output type&#39;s properties. We&#39;ll have it contain just this:
+
+{code}
+&lt;?php
+// any custom php you want to run here
+return $modx-&gt;smarty-&gt;fetch(&#39;element/tv/renders/properties/button.tpl&#39;);
+{code}
+
+h3. Setting up the Input Properties Template
+
+This is the template for the default manager theme to render properties with. We&#39;ll use ExtJS to render some pretty form fields:
+
+{code}
+&lt;div id=&quot;tv-wprops-form{$tv}&quot;&gt;&lt;/div&gt;
+{literal}
+&lt;script type=&quot;text/javascript&quot;&gt;
+// &lt;![CDATA[
+var params = {
+{/literal}{foreach from=$params key=k item=v name=&#39;p&#39;}
+ &#39;{$k}&#39;: &#39;{$v}&#39;{if NOT $smarty.foreach.p.last},{/if}
+{/foreach}{literal}
+};
+var oc = {&#39;change&#39;:{fn:function(){Ext.getCmp(&#39;modx-panel-tv&#39;).markDirty();},scope:this}};
+MODx.load({
+    xtype: &#39;panel&#39;
+    ,layout: &#39;form&#39;
+    ,autoHeight: true
+    ,labelWidth: 150
+    ,border: false
+    ,items: [{
+        xtype: &#39;textfield&#39;
+        ,fieldLabel: _(&#39;class&#39;)
+        ,name: &#39;prop_class&#39;
+        ,id: &#39;prop_class{/literal}{$tv}{literal}&#39;
+        ,value: params[&#39;class&#39;] || &#39;&#39;
+        ,width: 300
+        ,listeners: oc
+    },{
+        xtype: &#39;textfield&#39;
+        ,fieldLabel: _(&#39;id&#39;)
+        ,name: &#39;prop_id&#39;
+        ,id: &#39;prop_id{/literal}{$tv}{literal}&#39;
+        ,value: params[&#39;id&#39;] || &#39;&#39;
+        ,width: 300
+        ,listeners: oc
+    },{
+        xtype: &#39;textfield&#39;
+        ,fieldLabel: _(&#39;style&#39;)
+        ,name: &#39;prop_style&#39;
+        ,id: &#39;prop_style{/literal}{$tv}{literal}&#39;
+        ,value: params[&#39;style&#39;] || &#39;&#39;
+        ,width: 300
+        ,listeners: oc
+    },{
+        xtype: &#39;textfield&#39;
+        ,fieldLabel: _(&#39;attributes&#39;)
+        ,name: &#39;prop_attributes&#39;
+        ,id: &#39;prop_attributes{/literal}{$tv}{literal}&#39;
+        ,value: params[&#39;attributes&#39;] || &#39;&#39;
+        ,width: 300
+        ,listeners: oc
+    }]
+    ,renderTo: &#39;tv-wprops-form{/literal}{$tv}{literal}&#39;
+});
+// ]]&gt;
+&lt;/script&gt;
+{/literal}
+{code}
+
+The key way these save is that each field is prepended with &#39;prop_&#39; in its name. This tells MODx to save this field in the TV&#39;s output properties. Make sure you specify your fields with this prefix!
+
+{note}You don&#39;t have to use ExtJS, however - you can use just straight HTML - it&#39;s totally up to you.
+Note that if you created another manager theme, you&#39;d have to create a properties tpl for that theme as well.{note}
+
+h3. Setting up the Output Controller
+
+Now we get into the good stuff. This controller will handle exactly how the button is outputted. Our file looks like this (comments inline):
+
+{code}
+&lt;?php
+$o= &#39;&#39;;
+$buttons= $this-&gt;parseInput($value, &#39;||&#39;, &#39;array&#39;);
+/* allow multiple buttons separated by ||, or checkbox/multiple input tvs */
+foreach ($buttons as $button) {
+    if (!is_array($button)) {
+        $button= explode(&#39;==&#39;, $button);
+    }
+    /* the TV value must have a value of either: text or text==name */
+    $text = $button[0];
+    if (!empty($text)) {
+        $attributes = &#39;&#39;;
+        $attr = array(
+            &#39;class&#39; =&gt; $params[&#39;class&#39;],
+            &#39;id&#39; =&gt; ($params[&#39;id&#39;] ? $params[&#39;id&#39;] : &#39;&#39;),
+            &#39;alt&#39; =&gt; htmlspecialchars($params[&#39;alttext&#39;]),
+            &#39;style&#39; =&gt; $params[&#39;style&#39;]
+        );
+        /* if a name is specified, use it! */
+        if (!empty($button[1])) $attr[&#39;name&#39;] = $button[1];
+
+        /* separate the attributes into html tag format */
+        foreach ($attr as $k =&gt; $v) $attributes.= ($v ? &#39; &#39;.$k.&#39;=&quot;&#39;.$v.&#39;&quot;&#39; : &#39;&#39;);
+        $attributes .= &#39; &#39;.$params[&#39;attrib&#39;];
+
+        /* Output the image with attributes */
+        $o .= &#39;&lt;button&#39;.rtrim($attributes).&#39;&gt;&#39;.$text.&#39;&lt;/button&gt;&#39;.&quot;\n&quot;;
+    }
+}
+
+return $o;
+{code}
+
+h2. Using the Custom TV Output Type
+
+So, how does it look? Well, it should render an output form like this when editing the TV - I&#39;ve added some custom values to it as well:
+
+!outtvprop1.png!
+
+So we&#39;ll save this, and then let&#39;s go edit in in a Resource. We&#39;ll specify two buttons, separating with ||. We could also just do one button. And, we&#39;ll have the first button have a custom &#39;name&#39; attribute as well:
+
+!outtvinput.png!
+
+Great. Now let&#39;s preview the resource, and we&#39;ll get an output like this:
+
+!outtvresult1.png!
+
+And we can examine the HTML source: 
+
+!outtvsource1.png!
+
+And there you go! A custom TV output type!
+
+h2. See Also
+
+{pagetree:root=Template Variables}
+
+{scrollbar}";}}}

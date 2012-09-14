@@ -1,0 +1,28 @@
+a:5:{s:2:"id";s:8:"20119816";s:4:"info";a:4:{s:6:"Title:";s:15:"mail_smtp_hosts";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:30:"[revolution20:mail_smtp_hosts]";}s:6:"parent";s:8:"18678127";s:6:"source";s:334:"h2. mail_smtp_hosts
+
+*Name*: SMTP Hosts
+*Type*: String
+*Default*: localhost
+
+Sets the SMTP hosts.  All hosts must be separated by a semicolon.  You can also specify a different port for each host by using this format: hostname:port (e.g. &quot;smtp1.example.com:25;smtp2.example.com&quot;). Hosts will be tried in order.
+
+{scrollbar}
+";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"20119816";s:3:"ver";s:1:"2";s:4:"code";s:334:"h2. mail_smtp_hosts
+
+*Name*: SMTP Hosts
+*Type*: String
+*Default*: localhost
+
+Sets the SMTP hosts.  All hosts must be separated by a semicolon.  You can also specify a different port for each host by using this format: hostname:port (e.g. &quot;smtp1.example.com:25;smtp2.example.com&quot;). Hosts will be tried in order.
+
+{scrollbar}
+";}i:1;a:3:{s:2:"id";s:8:"20119817";s:3:"ver";s:1:"1";s:4:"code";s:336:"h2. mail_smtp_hosts
+
+*Name*: SMTP Hosts
+*Type*: String
+*Default*: localhost
+
+Sets the SMTP hosts.  All hosts must be separated by a semicolon.  You can also specify a different port for each host by using this format: [hostname:port] (e.g. &quot;smtp1.example.com:25;smtp2.example.com&quot;). Hosts will be tried in order.
+
+{scrollbar}
+";}}}

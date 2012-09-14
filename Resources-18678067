@@ -1,0 +1,2321 @@
+a:5:{s:2:"id";s:8:"18678067";s:4:"info";a:4:{s:6:"Title:";s:9:"Resources";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:7:"Bob Ray";s:12:"Wiki Markup:";s:24:"[revolution20:Resources]";}s:6:"parent";s:8:"18678066";s:6:"source";s:6629:"{alias:Resource}
+\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. There are different types of Resources, such as documents, weblinks, symlinks, actual files, or many other things. The default Resource type is a Document, and simply represents a webpage on your site.
+
+There are 4 total types of Resources, and they are Documents, [Weblinks|Weblink], [Symlinks|Symlink], and [Static Resources|Static Resource].
+
+Each Resource also has a unique ID, or &quot;Resource Identifier&quot;. This lets MODx know what Resource to fetch when you are loading a webpage. Also, when you&#39;re wanting to link between Resources, you should always use the ID to do so. That way MODx will generate the link and you will not have to worry about changed aliases, content types or anything - MODx will change your links also. Please see the Linking to Resources section below for more information on how to do this.
+
+
+h3. Managing Resources
+
+Resources are shown in the Resources tree in the left-hand navigation of the manager. To edit one, simply click on the page you would like to edit. You can alternatively right-click the Resource and click &#39;Edit Resource&#39;. This will load the Resource Edit page:
+
+!resource-edit1.png|thumbnail!
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+|| Name || Description ||
+| id | The ID of the Resource. |
+| template | A reference to the [Template|Templates] that this Resource is using |
+| published | If the Resource is Published, or viewable on the front-end. |
+| pagetitle | The title of the Resource. |
+| longtitle | A longer title of the Resource. |
+| description | An extended description of the Resource. |
+| introtext | Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching. |
+| alias | The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container. |
+| parent | The Parent Resource&#39;s ID. |
+| link_attributes | Used with menu building snippets to add attributes to links, etc. Can be repurposed for other needs. |
+| menutitle | The title to show for the Resource when displayed in a menu. |
+| menuindex | The order index of the Resource in a menu. Higher order means later. |
+| hidemenu | Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets. |
+| content | The actual content of the Resource. |
+
+h3. Settings Resource Fields
+
+|| Name || Description ||
+| isfolder | Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix. |
+| searchable | If the Resource is searchable. |
+| cacheable | If the Resource is cacheable. |
+| createdby | The ID of the user who created the Resource. |
+| editedby | The ID of the last user to edit the Resource. |
+| deleted | If the Resource is deleted or not. |
+| deletedby | The ID of the user who deleted the Resource. |
+| publishedby | The ID of the user who last published the Resource. |
+| createdon | The date the Resource was created. |
+| publishedon | The date the Resource was published. |
+| editedon | The date the Resource was last edited. |
+| pub_date | The scheduled date for a Resource to be published. |
+| unpub_date | The scheduled date for a Resource to be unpublished. |
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the [Template Variable|Template Variables] syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters (Output Modifiers)] applied to them:
+{code}
+// Renders a limited version of the introtext field.
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]]
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource.
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+Also see [Named Anchor].
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;sort=Taste{quote}
+
+Note that those are *backticks* instead of apostrophes.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the scheme indicated by the current settings (i.e. system or context settings).
+
+The available schemes are:
+
+|| Name || Description ||
+| \-1 | (default) URL is relative to site_url |
+| 0 | see http |
+| 1 | see https |
+| full | Renders the link as an absolute URL, prepended with site_url |
+| abs | Renders the link as an absolute URL, prepended with base_url |
+| http | Renders the link as an absolute URL, forced to http scheme |
+| https | Renders the link as an absolute URL, force to https scheme |
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";s:8:"versions";a:16:{i:0;a:3:{s:2:"id";s:8:"18678067";s:3:"ver";s:1:"1";s:4:"code";s:6629:"{alias:Resource}
+\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. There are different types of Resources, such as documents, weblinks, symlinks, actual files, or many other things. The default Resource type is a Document, and simply represents a webpage on your site.
+
+There are 4 total types of Resources, and they are Documents, [Weblinks|Weblink], [Symlinks|Symlink], and [Static Resources|Static Resource].
+
+Each Resource also has a unique ID, or &quot;Resource Identifier&quot;. This lets MODx know what Resource to fetch when you are loading a webpage. Also, when you&#39;re wanting to link between Resources, you should always use the ID to do so. That way MODx will generate the link and you will not have to worry about changed aliases, content types or anything - MODx will change your links also. Please see the Linking to Resources section below for more information on how to do this.
+
+
+h3. Managing Resources
+
+Resources are shown in the Resources tree in the left-hand navigation of the manager. To edit one, simply click on the page you would like to edit. You can alternatively right-click the Resource and click &#39;Edit Resource&#39;. This will load the Resource Edit page:
+
+!resource-edit1.png|thumbnail!
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+|| Name || Description ||
+| id | The ID of the Resource. |
+| template | A reference to the [Template|Templates] that this Resource is using |
+| published | If the Resource is Published, or viewable on the front-end. |
+| pagetitle | The title of the Resource. |
+| longtitle | A longer title of the Resource. |
+| description | An extended description of the Resource. |
+| introtext | Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching. |
+| alias | The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container. |
+| parent | The Parent Resource&#39;s ID. |
+| link_attributes | Used with menu building snippets to add attributes to links, etc. Can be repurposed for other needs. |
+| menutitle | The title to show for the Resource when displayed in a menu. |
+| menuindex | The order index of the Resource in a menu. Higher order means later. |
+| hidemenu | Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets. |
+| content | The actual content of the Resource. |
+
+h3. Settings Resource Fields
+
+|| Name || Description ||
+| isfolder | Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix. |
+| searchable | If the Resource is searchable. |
+| cacheable | If the Resource is cacheable. |
+| createdby | The ID of the user who created the Resource. |
+| editedby | The ID of the last user to edit the Resource. |
+| deleted | If the Resource is deleted or not. |
+| deletedby | The ID of the user who deleted the Resource. |
+| publishedby | The ID of the user who last published the Resource. |
+| createdon | The date the Resource was created. |
+| publishedon | The date the Resource was published. |
+| editedon | The date the Resource was last edited. |
+| pub_date | The scheduled date for a Resource to be published. |
+| unpub_date | The scheduled date for a Resource to be unpublished. |
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the [Template Variable|Template Variables] syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters (Output Modifiers)] applied to them:
+{code}
+// Renders a limited version of the introtext field.
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]]
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource.
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+Also see [Named Anchor].
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;sort=Taste{quote}
+
+Note that those are *backticks* instead of apostrophes.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the scheme indicated by the current settings (i.e. system or context settings).
+
+The available schemes are:
+
+|| Name || Description ||
+| \-1 | (default) URL is relative to site_url |
+| 0 | see http |
+| 1 | see https |
+| full | Renders the link as an absolute URL, prepended with site_url |
+| abs | Renders the link as an absolute URL, prepended with base_url |
+| http | Renders the link as an absolute URL, forced to http scheme |
+| https | Renders the link as an absolute URL, force to https scheme |
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33948017";s:3:"ver";s:1:"1";s:4:"code";s:6610:"{alias:Resource}
+\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. There are different types of Resources, such as documents, weblinks, symlinks, actual files, or many other things. The default Resource type is a Document, and simply represents a webpage on your site.
+
+There are 4 total types of Resources, and they are Documents, [Weblinks|Weblink], [Symlinks|Symlink], and [Static Resources|Static Resource].
+
+Each Resource also has a unique ID, or &quot;Resource Identifier&quot;. This lets MODx know what Resource to fetch when you are loading a webpage. Also, when you&#39;re wanting to link between Resources, you should always use the ID to do so. That way MODx will generate the link and you will not have to worry about changed aliases, content types or anything - MODx will change your links also. Please see the Linking to Resources section below for more information on how to do this.
+
+
+h3. Managing Resources
+
+Resources are shown in the Resources tree in the left-hand navigation of the manager. To edit one, simply click on the page you would like to edit. You can alternatively right-click the Resource and click &#39;Edit Resource&#39;. This will load the Resource Edit page:
+
+!resource-edit1.png|thumbnail!
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+|| Name || Description ||
+| id | The ID of the Resource. |
+| template | A reference to the [Template|Templates] that this Resource is using |
+| published | If the Resource is Published, or viewable on the front-end. |
+| pagetitle | The title of the Resource. |
+| longtitle | A longer title of the Resource. |
+| description | An extended description of the Resource. |
+| introtext | Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching. |
+| alias | The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container. |
+| parent | The Parent Resource&#39;s ID. |
+| link_attributes | Used with menu building snippets to add attributes to links, etc. Can be repurposed for other needs. |
+| menutitle | The title to show for the Resource when displayed in a menu. |
+| menuindex | The order index of the Resource in a menu. Higher order means later. |
+| hidemenu | Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets. |
+| content | The actual content of the Resource. |
+
+h3. Settings Resource Fields
+
+|| Name || Description ||
+| isfolder | Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix. |
+| searchable | If the Resource is searchable. |
+| cacheable | If the Resource is cacheable. |
+| createdby | The ID of the user who created the Resource. |
+| editedby | The ID of the last user to edit the Resource. |
+| deleted | If the Resource is deleted or not. |
+| deletedby | The ID of the user who deleted the Resource. |
+| publishedby | The ID of the user who last published the Resource. |
+| createdon | The date the Resource was created. |
+| publishedon | The date the Resource was published. |
+| editedon | The date the Resource was last edited. |
+| pub_date | The scheduled date for a Resource to be published. |
+| unpub_date | The scheduled date for a Resource to be unpublished. |
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the [Template Variable|Template Variables] syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters] applied to them:
+{code}
+// Renders a limited version of the introtext field.
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]]
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource.
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+Also see [Named Anchor].
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;sort=Taste{quote}
+
+Note that those are *backticks* instead of apostrophes.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the scheme indicated by the current settings (i.e. system or context settings).
+
+The available schemes are:
+
+|| Name || Description ||
+| \-1 | (default) URL is relative to site_url |
+| 0 | see http |
+| 1 | see https |
+| full | Renders the link as an absolute URL, prepended with site_url |
+| abs | Renders the link as an absolute URL, prepended with base_url |
+| http | Renders the link as an absolute URL, forced to http scheme |
+| https | Renders the link as an absolute URL, force to https scheme |
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"33587357";s:3:"ver";s:1:"1";s:4:"code";s:6599:"{alias:Resource}
+\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. There are different types of Resources, such as documents, weblinks, symlinks, actual files, or many other things. The default Resource type is a Document, and simply represents a webpage on your site.
+
+There are 4 total types of Resources, and they are Documents, [Weblinks|Weblink], [Symlinks|Symlink], and [Static Resources|Static Resource].
+
+Each Resource also has a unique ID, or &quot;Resource Identifier&quot;. This lets MODx know what Resource to fetch when you are loading a webpage. Also, when you&#39;re wanting to link between Rsources, you will use this ID to do so, which allows MODx to not have to worry about the resulting URL. You can move, rename, alter or even change the type of a Resource, and the ID will stay the same - meaning that any changes you make to the Resource wont affect your links to it.
+
+h3. Managing Resources
+
+Resources are shown in the Resources tree in the left-hand navigation of the manager. To edit one, simply click on the page you would like to edit. You can alternatively right-click the Resource and click &#39;Edit Resource&#39;. This will load the Resource Edit page:
+
+!resource-edit1.png|thumbnail!
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+|| Name || Description ||
+| id | The ID of the Resource. |
+| template | A reference to the [Template|Templates] that this Resource is using |
+| published | If the Resource is Published, or viewable on the front-end. |
+| pagetitle | The title of the Resource. |
+| longtitle | A longer title of the Resource. |
+| description | An extended description of the Resource. |
+| introtext | Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching. |
+| alias | The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container. |
+| parent | The Parent Resource&#39;s ID. |
+| link_attributes | Used with menu building snippets to add attributes to links, etc. Can be repurposed for other needs. |
+| menutitle | The title to show for the Resource when displayed in a menu. |
+| menuindex | The order index of the Resource in a menu. Higher order means later. |
+| hidemenu | Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets. |
+| content | The actual content of the Resource. |
+
+h3. Settings Resource Fields
+
+|| Name || Description ||
+| isfolder | Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix. |
+| searchable | If the Resource is searchable. |
+| cacheable | If the Resource is cacheable. |
+| createdby | The ID of the user who created the Resource. |
+| editedby | The ID of the last user to edit the Resource. |
+| deleted | If the Resource is deleted or not. |
+| deletedby | The ID of the user who deleted the Resource. |
+| publishedby | The ID of the user who last published the Resource. |
+| createdon | The date the Resource was created. |
+| publishedon | The date the Resource was published. |
+| editedon | The date the Resource was last edited. |
+| pub_date | The scheduled date for a Resource to be published. |
+| unpub_date | The scheduled date for a Resource to be unpublished. |
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the [Template Variable|Template Variables] syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters] applied to them:
+{code}
+// Renders a limited version of the introtext field.
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]]
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource.
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+Also see [Named Anchor].
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;sort=Taste{quote}
+
+Note that those are *backticks* instead of apostrophes.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the scheme indicated by the current settings (i.e. system or context settings).
+
+The available schemes are:
+
+|| Name || Description ||
+| -1 | (default) URL is relative to site_url |
+| 0 | see http |
+| 1 | see https |
+| full | Renders the link as an absolute URL, prepended with site_url |
+| abs | Renders the link as an absolute URL, prepended with base_url |
+| http | Renders the link as an absolute URL, forced to http scheme |
+| https | Renders the link as an absolute URL, force to https scheme |
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"33226961";s:3:"ver";s:1:"1";s:4:"code";s:6273:"{alias:Resource}
+\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. There are different types of Resources, such as documents, weblinks, symlinks, actual files, or many other things. The default Resource type is a Document, and simply represents a webpage on your site.
+
+There are 4 total types of Resources, and they are Documents, [Weblinks|Weblink], [Symlinks|Symlink], and [Static Resources|Static Resource].
+
+Each Resource also has a unique ID, or &quot;Resource Identifier&quot;. This lets MODx know what Resource to fetch when you are loading a webpage. Also, when you&#39;re wanting to link between Rsources, you will use this ID to do so, which allows MODx to not have to worry about the resulting URL. You can move, rename, alter or even change the type of a Resource, and the ID will stay the same - meaning that any changes you make to the Resource wont affect your links to it.
+
+h3. Managing Resources
+
+Resources are shown in the Resources tree in the left-hand navigation of the manager. To edit one, simply click on the page you would like to edit. You can alternatively right-click the Resource and click &#39;Edit Resource&#39;. This will load the Resource Edit page:
+
+!resource-edit1.png|thumbnail!
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+|| Name || Description ||
+| id | The ID of the Resource. |
+| template | A reference to the [Template|Templates] that this Resource is using |
+| published | If the Resource is Published, or viewable on the front-end. |
+| pagetitle | The title of the Resource. |
+| longtitle | A longer title of the Resource. |
+| description | An extended description of the Resource. |
+| introtext | Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching. |
+| alias | The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container. |
+| parent | The Parent Resource&#39;s ID. |
+| link_attributes | Used with menu building snippets to add attributes to links, etc. Can be repurposed for other needs. |
+| menutitle | The title to show for the Resource when displayed in a menu. |
+| menuindex | The order index of the Resource in a menu. Higher order means later. |
+| hidemenu | Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets. |
+| content | The actual content of the Resource. |
+
+h3. Settings Resource Fields
+
+|| Name || Description ||
+| isfolder | Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix. |
+| searchable | If the Resource is searchable. |
+| cacheable | If the Resource is cacheable. |
+| createdby | The ID of the user who created the Resource. |
+| editedby | The ID of the last user to edit the Resource. |
+| deleted | If the Resource is deleted or not. |
+| deletedby | The ID of the user who deleted the Resource. |
+| publishedby | The ID of the user who last published the Resource. |
+| createdon | The date the Resource was created. |
+| publishedon | The date the Resource was published. |
+| editedon | The date the Resource was last edited. |
+| pub_date | The scheduled date for a Resource to be published. |
+| unpub_date | The scheduled date for a Resource to be unpublished. |
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the [Template Variable|Template Variables] syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters] applied to them:
+{code}
+// Renders a limited version of the introtext field.
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]]
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource.
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+Also see [Named Anchor].
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;sort=Taste{quote}
+
+Note that those are *backticks* instead of apostrophes.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the normal http.
+
+The available schemes are:
+
+|| Name || Description ||
+| https | Renders the link with https instead of http |
+| full | Renders the link as an absolute URL |
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"33226932";s:3:"ver";s:1:"1";s:4:"code";s:6150:"{alias:Resource}
+\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. There are different types of Resources, such as documents, weblinks, symlinks, actual files, or many other things. The default Resource type is a Document, and simply represents a webpage on your site.
+
+There are 4 total types of Resources, and they are Documents, [Weblinks|Weblink], [Symlinks|Symlink], and [Static Resources|Static Resource].
+
+Each Resource also has a unique ID, or &quot;Resource Identifier&quot;. This lets MODx know what Resource to fetch when you are loading a webpage. Also, when you&#39;re wanting to link between Rsources, you will use this ID to do so, which allows MODx to not have to worry about the resulting URL. You can move, rename, alter or even change the type of a Resource, and the ID will stay the same - meaning that any changes you make to the Resource wont affect your links to it.
+
+h3. Managing Resources
+
+Resources are shown in the Resources tree in the left-hand navigation of the manager. To edit one, simply click on the page you would like to edit. You can alternatively right-click the Resource and click &#39;Edit Resource&#39;. This will load the Resource Edit page:
+
+!resource-edit1.png|thumbnail!
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+|| Name || Description ||
+| id | The ID of the Resource. |
+| template | A reference to the [Template|Templates] that this Resource is using |
+| published | If the Resource is Published, or viewable on the front-end. |
+| pagetitle | The title of the Resource. |
+| longtitle | A longer title of the Resource. |
+| description | An extended description of the Resource. |
+| introtext | Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching. |
+| alias | The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container. |
+| parent | The Parent Resource&#39;s ID. |
+| menutitle | The title to show for the Resource when displayed in a menu. |
+| menuindex | The order index of the Resource in a menu. Higher order means later. |
+| hidemenu | Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets. |
+| content | The actual content of the Resource. |
+
+h3. Settings Resource Fields
+
+|| Name || Description ||
+| isfolder | Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix. |
+| searchable | If the Resource is searchable. |
+| cacheable | If the Resource is cacheable. |
+| createdby | The ID of the user who created the Resource. |
+| editedby | The ID of the last user to edit the Resource. |
+| deleted | If the Resource is deleted or not. |
+| deletedby | The ID of the user who deleted the Resource. |
+| publishedby | The ID of the user who last published the Resource. |
+| createdon | The date the Resource was created. |
+| publishedon | The date the Resource was published. |
+| editedon | The date the Resource was last edited. |
+| pub_date | The scheduled date for a Resource to be published. |
+| unpub_date | The scheduled date for a Resource to be unpublished. |
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the [Template Variable|Template Variables] syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters] applied to them:
+{code}
+// Renders a limited version of the introtext field.
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]]
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource.
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+Also see [Named Anchor].
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;sort=Taste{quote}
+
+Note that those are *backticks* instead of apostrophes.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the normal http.
+
+The available schemes are:
+
+|| Name || Description ||
+| https | Renders the link with https instead of http |
+| full | Renders the link as an absolute URL |
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"33226880";s:3:"ver";s:1:"1";s:4:"code";s:5901:"{alias:Resource}
+\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. There are different types of Resources, such as documents, weblinks, symlinks, actual files, or many other things. The default Resource type is a Document, and simply represents a webpage on your site.
+
+There are 4 total types of Resources, and they are Documents, [Weblinks|Weblink], [Symlinks|Symlink], and [Static Resources|Static Resource].
+
+Each Resource also has a unique ID, or &quot;Resource Identifier&quot;. This lets MODx know what Resource to fetch when you are loading a webpage. Also, when you&#39;re wanting to link between Rsources, you will use this ID to do so, which allows MODx to not have to worry about the resulting URL. You can move, rename, alter or even change the type of a Resource, and the ID will stay the same - meaning that any changes you make to the Resource wont affect your links to it.
+
+h3. Managing Resources
+
+Resources are shown in the Resources tree in the left-hand navigation of the manager. To edit one, simply click on the page you would like to edit. You can alternatively right-click the Resource and click &#39;Edit Resource&#39;. This will load the Resource Edit page:
+
+!resource-edit1.png|thumbnail!
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+||Name||Description||
+|id|The ID of the Resource.|
+|template|A reference to the [Template|Templates] that this Resource is using|
+|published|If the Resource is Published, or viewable on the front-end.|
+|pagetitle|The title of the Resource.|
+|longtitle|A longer title of the Resource.|
+|description|An extended description of the Resource.|
+|introtext|Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching.|
+|alias|The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container.|
+|parent|The Parent Resource&#39;s ID.|
+|menutitle|The title to show for the Resource when displayed in a menu.|
+|menuindex|The order index of the Resource in a menu. Higher order means later.|
+|hidemenu|Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets.|
+|content|The actual content of the Resource.|
+
+h3. Settings Resource Fields
+
+||Name||Description||
+|isfolder|Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix.|
+|searchable|If the Resource is searchable.|
+|cacheable|If the Resource is cacheable.|
+|createdby|The ID of the user who created the Resource.|
+|editedby|The ID of the last user to edit the Resource.|
+|deleted|If the Resource is deleted or not.|
+|deletedby|The ID of the user who deleted the Resource.|
+|publishedby|The ID of the user who last published the Resource.|
+|createdon|The date the Resource was created.|
+|publishedon|The date the Resource was published.|
+|editedon|The date the Resource was last edited.|
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the [Template Variable|Template Variables] syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters] applied to them:
+{code}
+// Renders a limited version of the introtext field. 
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]] 
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource. 
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+Also see [Named Anchor].
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;sort=Taste{quote}
+
+Note that those are *backticks* instead of apostrophes.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the normal http.
+
+The available schemes are:
+
+||Name||Description||
+|https|Renders the link with https instead of http|
+|full|Renders the link as an absolute URL|
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"18678646";s:3:"ver";s:1:"1";s:4:"code";s:5884:"\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. There are different types of Resources, such as documents, weblinks, symlinks, actual files, or many other things. The default Resource type is a Document, and simply represents a webpage on your site.
+
+There are 4 total types of Resources, and they are Documents, [Weblinks|Weblink], [Symlinks|Symlink], and [Static Resources|Static Resource].
+
+Each Resource also has a unique ID, or &quot;Resource Identifier&quot;. This lets MODx know what Resource to fetch when you are loading a webpage. Also, when you&#39;re wanting to link between Rsources, you will use this ID to do so, which allows MODx to not have to worry about the resulting URL. You can move, rename, alter or even change the type of a Resource, and the ID will stay the same - meaning that any changes you make to the Resource wont affect your links to it.
+
+h3. Managing Resources
+
+Resources are shown in the Resources tree in the left-hand navigation of the manager. To edit one, simply click on the page you would like to edit. You can alternatively right-click the Resource and click &#39;Edit Resource&#39;. This will load the Resource Edit page:
+
+!resource-edit1.png|thumbnail!
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+||Name||Description||
+|id|The ID of the Resource.|
+|template|A reference to the [Template|Templates] that this Resource is using|
+|published|If the Resource is Published, or viewable on the front-end.|
+|pagetitle|The title of the Resource.|
+|longtitle|A longer title of the Resource.|
+|description|An extended description of the Resource.|
+|introtext|Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching.|
+|alias|The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container.|
+|parent|The Parent Resource&#39;s ID.|
+|menutitle|The title to show for the Resource when displayed in a menu.|
+|menuindex|The order index of the Resource in a menu. Higher order means later.|
+|hidemenu|Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets.|
+|content|The actual content of the Resource.|
+
+h3. Settings Resource Fields
+
+||Name||Description||
+|isfolder|Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix.|
+|searchable|If the Resource is searchable.|
+|cacheable|If the Resource is cacheable.|
+|createdby|The ID of the user who created the Resource.|
+|editedby|The ID of the last user to edit the Resource.|
+|deleted|If the Resource is deleted or not.|
+|deletedby|The ID of the user who deleted the Resource.|
+|publishedby|The ID of the user who last published the Resource.|
+|createdon|The date the Resource was created.|
+|publishedon|The date the Resource was published.|
+|editedon|The date the Resource was last edited.|
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the [Template Variable|Template Variables] syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters] applied to them:
+{code}
+// Renders a limited version of the introtext field. 
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]] 
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource. 
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+Also see [Named Anchor].
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;sort=Taste{quote}
+
+Note that those are *backticks* instead of apostrophes.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the normal http.
+
+The available schemes are:
+
+||Name||Description||
+|https|Renders the link with https instead of http|
+|full|Renders the link as an absolute URL|
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"18678602";s:3:"ver";s:1:"9";s:4:"code";s:6518:"\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. There are different types of Resources, such as documents, weblinks, symlinks, actual files, or many other things. The default Resource type is a Document, and simply represents a webpage on your site.
+
+There are 4 total types of Resources, and they are Documents, [Weblinks|Weblink], [Symlinks|Symlink], and [Static Resources|Static Resource].
+
+Each Resource also has a unique ID, or &quot;Resource Identifier&quot;. This lets MODx know what Resource to fetch when you are loading a webpage. Also, when you&#39;re wanting to link between Rsources, you will use this ID to do so, which allows MODx to not have to worry about the resulting URL. You can move, rename, alter or even change the type of a Resource, and the ID will stay the same - meaning that any changes you make to the Resource wont affect your links to it.
+
+h3. Managing Resources
+
+Resources are shown in the Resources tree in the left-hand navigation of the manager. To edit one, simply click on the page you would like to edit. You can alternatively right-click the Resource and click &#39;Edit Resource&#39;. This will load the Resource Edit page:
+
+!resource-edit1.png|thumbnail!
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+||Name||Description||
+|id|The ID of the Resource.|
+|template|A reference to the [Template|Templates] that this Resource is using|
+|published|If the Resource is Published, or viewable on the front-end.|
+|pagetitle|The title of the Resource.|
+|longtitle|A longer title of the Resource.|
+|description|An extended description of the Resource.|
+|introtext|Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching.|
+|alias|The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container.|
+|parent|The Parent Resource&#39;s ID.|
+|menutitle|The title to show for the Resource when displayed in a menu.|
+|menuindex|The order index of the Resource in a menu. Higher order means later.|
+|hidemenu|Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets.|
+|content|The actual content of the Resource.|
+
+h3. Settings Resource Fields
+
+||Name||Description||
+|isfolder|Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix.|
+|searchable|If the Resource is searchable.|
+|cacheable|If the Resource is cacheable.|
+|createdby|The ID of the user who created the Resource.|
+|editedby|The ID of the last user to edit the Resource.|
+|deleted|If the Resource is deleted or not.|
+|deletedby|The ID of the user who deleted the Resource.|
+|publishedby|The ID of the user who last published the Resource.|
+|createdon|The date the Resource was created.|
+|publishedon|The date the Resource was published.|
+|editedon|The date the Resource was last edited.|
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the [Template Variable|Template Variables] syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters] applied to them:
+{code}
+// Renders a limited version of the introtext field. 
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]] 
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource. If you need to attach GET parameters to the URL, such as &#39;?var=123&#39;, you can do so with tag properties:
+
+{code}[[~123? &amp;var=`123`]]{code}
+
+This loads the URL for 123, with &#39;?var=123&#39; appended to it. You can have multiple GET parameters by passing multiple properties into the tag. Note that those are *backticks* instead of apostrophes. 
+
+Furthermore, you have options on the scheme of the URL. You can generate an HTTPS url of the Resource by doing:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Or generate a full absolute URL (since MODx generates relative URLs) by doing:
+
+{code}[[~123? &amp;scheme=`full`]]{code}
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+Also see [Named Anchor].
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;amp;sort=Taste{quote}
+
+Note that it automatically encodes the ampersands.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the normal http.
+
+The available schemes are:
+
+||Name||Description||
+|https|Renders the link with https instead of http|
+|full|Renders the link as an absolute URL|
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:8;a:3:{s:2:"id";s:8:"18678600";s:3:"ver";s:1:"8";s:4:"code";s:6518:"\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. There are different types of Resources, such as documents, weblinks, symlinks, actual files, or many other things. The default Resource type is a Document, and simply represents a webpage on your site.
+
+There are 4 total types of Resources, and they are Documents, [Weblinks|Weblink], [Symlinks|Symlink], and [Static Resources|Static Resource].
+
+Each Resource also has a unique ID, or &quot;Resource Identifier&quot;. This lets MODx know what Resource to fetch when you are loading a webpage. Also, when you&#39;re wanting to link between Rsources, you will use this ID to do so, which allows MODx to not have to worry about the resulting URL. You can move, rename, alter or even change the type of a Resource, and the ID will stay the same - meaning that any changes you make to the Resource wont affect your links to it.
+
+h3. Managing Resources
+
+Resources are shown in the Resources tree in the left-hand navigation of the manager. To edit one, simply click on the page you would like to edit. You can alternatively right-click the Resource and click &#39;Edit Resource&#39;. This will load the Resource Edit page:
+
+!resource-edit1.png|thumbnail!
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+||Name||Description||
+|id|The ID of the Resource.|
+|template|A reference to the [Template|Templates] that this Resource is using|
+|published|If the Resource is Published, or viewable on the front-end.|
+|pagetitle|The title of the Resource.|
+|longtitle|A longer title of the Resource.|
+|description|An extended description of the Resource.|
+|introtext|Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching.|
+|alias|The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container.|
+|parent|The Parent Resource&#39;s ID.|
+|menutitle|The title to show for the Resource when displayed in a menu.|
+|menuindex|The order index of the Resource in a menu. Higher order means later.|
+|hidemenu|Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets.|
+|content|The actual content of the Resource.|
+
+h3. Settings Resource Fields
+
+||Name||Description||
+|isfolder|Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix.|
+|searchable|If the Resource is searchable.|
+|cacheable|If the Resource is cacheable.|
+|createdby|The ID of the user who created the Resource.|
+|editedby|The ID of the last user to edit the Resource.|
+|deleted|If the Resource is deleted or not.|
+|deletedby|The ID of the user who deleted the Resource.|
+|publishedby|The ID of the user who last published the Resource.|
+|createdon|The date the Resource was created.|
+|publishedon|The date the Resource was published.|
+|editedon|The date the Resource was last edited.|
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the [Template Variable|Template Variables] syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters] applied to them:
+{code}
+// Renders a limited version of the introtext field. 
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]] 
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource. If you need to attach GET parameters to the URL, such as &#39;?var=123&#39;, you can do so with tag properties:
+
+{code}[[~123? &amp;var=`123`]]{note}
+
+This loads the URL for 123, with &#39;?var=123&#39; appended to it. You can have multiple GET parameters by passing multiple properties into the tag. Note that those are *backticks* instead of apostrophes. 
+
+Furthermore, you have options on the scheme of the URL. You can generate an HTTPS url of the Resource by doing:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Or generate a full absolute URL (since MODx generates relative URLs) by doing:
+
+{code}[[~123? &amp;scheme=`full`]]{code}
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+Also see [Named Anchor].
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;amp;sort=Taste{quote}
+
+Note that it automatically encodes the ampersands.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the normal http.
+
+The available schemes are:
+
+||Name||Description||
+|https|Renders the link with https instead of http|
+|full|Renders the link as an absolute URL|
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:9;a:3:{s:2:"id";s:8:"18678599";s:3:"ver";s:1:"7";s:4:"code";s:5863:"\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. There are different types of Resources, such as documents, weblinks, symlinks, actual files, or many other things. The default Resource type is a Document, and simply represents a webpage on your site.
+
+There are 4 total types of Resources, and they are Documents, [Weblinks|Weblink], [Symlinks|Symlink], and [Static Resources|Static Resource].
+
+Each Resource also has a unique ID, or &quot;Resource Identifier&quot;. This lets MODx know what Resource to fetch when you are loading a webpage. Also, when you&#39;re wanting to link between Rsources, you will use this ID to do so, which allows MODx to not have to worry about the resulting URL. You can move, rename, alter or even change the type of a Resource, and the ID will stay the same - meaning that any changes you make to the Resource wont affect your links to it.
+
+h3. Managing Resources
+
+Resources are shown in the Resources tree in the left-hand navigation of the manager. To edit one, simply click on the page you would like to edit. You can alternatively right-click the Resource and click &#39;Edit Resource&#39;. This will load the Resource Edit page:
+
+!resource-edit1.png|thumbnail!
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+||Name||Description||
+|id|The ID of the Resource.|
+|template|A reference to the [Template|Templates] that this Resource is using|
+|published|If the Resource is Published, or viewable on the front-end.|
+|pagetitle|The title of the Resource.|
+|longtitle|A longer title of the Resource.|
+|description|An extended description of the Resource.|
+|introtext|Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching.|
+|alias|The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container.|
+|parent|The Parent Resource&#39;s ID.|
+|menutitle|The title to show for the Resource when displayed in a menu.|
+|menuindex|The order index of the Resource in a menu. Higher order means later.|
+|hidemenu|Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets.|
+|content|The actual content of the Resource.|
+
+h3. Settings Resource Fields
+
+||Name||Description||
+|isfolder|Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix.|
+|searchable|If the Resource is searchable.|
+|cacheable|If the Resource is cacheable.|
+|createdby|The ID of the user who created the Resource.|
+|editedby|The ID of the last user to edit the Resource.|
+|deleted|If the Resource is deleted or not.|
+|deletedby|The ID of the user who deleted the Resource.|
+|publishedby|The ID of the user who last published the Resource.|
+|createdon|The date the Resource was created.|
+|publishedon|The date the Resource was published.|
+|editedon|The date the Resource was last edited.|
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the [Template Variable] syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters] applied to them:
+{code}
+// Renders a limited version of the introtext field. 
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]] 
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource.
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+Also see [Named Anchor].
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;amp;sort=Taste{quote}
+
+Note that it automatically encodes the ampersands.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the normal http.
+
+The available schemes are:
+
+||Name||Description||
+|https|Renders the link with https instead of http|
+|full|Renders the link as an absolute URL|
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:10;a:3:{s:2:"id";s:8:"18678597";s:3:"ver";s:1:"6";s:4:"code";s:5832:"\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. There are different types of Resources, such as documents, weblinks, symlinks, actual files, or many other things. The default Resource type is a Document, and simply represents a webpage on your site.
+
+There are 4 total types of Resources, and they are Documents, [Weblinks|Weblink], [Symlinks|Symlink], and [Static Resources|Static Resource].
+
+Each Resource also has a unique ID, or &quot;Resource Identifier&quot;. This lets MODx know what Resource to fetch when you are loading a webpage. Also, when you&#39;re wanting to link between Rsources, you will use this ID to do so, which allows MODx to not have to worry about the resulting URL. You can move, rename, alter or even change the type of a Resource, and the ID will stay the same - meaning that any changes you make to the Resource wont affect your links to it.
+
+h3. Managing Resources
+
+In most cases, they represent single web page on a site. They are shown in the Resources tree, in the left-hand navigation of the manager. To edit one, simply click on the page you would like to edit. This will load the Resource Edit page:
+
+!resource-edit1.png|thumbnail!
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+||Name||Description||
+|id|The ID of the Resource.|
+|template|A reference to the [Template|Templates] that this Resource is using|
+|published|If the Resource is Published, or viewable on the front-end.|
+|pagetitle|The title of the Resource.|
+|longtitle|A longer title of the Resource.|
+|description|An extended description of the Resource.|
+|introtext|Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching.|
+|alias|The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container.|
+|parent|The Parent Resource&#39;s ID.|
+|menutitle|The title to show for the Resource when displayed in a menu.|
+|menuindex|The order index of the Resource in a menu. Higher order means later.|
+|hidemenu|Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets.|
+|content|The actual content of the Resource.|
+
+h3. Settings Resource Fields
+
+||Name||Description||
+|isfolder|Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix.|
+|searchable|If the Resource is searchable.|
+|cacheable|If the Resource is cacheable.|
+|createdby|The ID of the user who created the Resource.|
+|editedby|The ID of the last user to edit the Resource.|
+|deleted|If the Resource is deleted or not.|
+|deletedby|The ID of the user who deleted the Resource.|
+|publishedby|The ID of the user who last published the Resource.|
+|createdon|The date the Resource was created.|
+|publishedon|The date the Resource was published.|
+|editedon|The date the Resource was last edited.|
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the Template Variable syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters] applied to them:
+{code}
+// Renders a limited version of the introtext field. 
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]] 
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource.
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+Also see [Named Anchor].
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;amp;sort=Taste{quote}
+
+Note that it automatically encodes the ampersands.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the normal http.
+
+The available schemes are:
+
+||Name||Description||
+|https|Renders the link with https instead of http|
+|full|Renders the link as an absolute URL|
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:11;a:3:{s:2:"id";s:8:"18678595";s:3:"ver";s:1:"5";s:4:"code";s:5832:"\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. There are different types of Resources, such as documents, weblinks, symlinks, actual files, or many other things. The default Resource type is a Document, and simply represents a webpage on your site.
+
+There are 4 total types of Resources, and they are Documents, [Weblinks|Weblink], [Symlinks|Symlink], and [Static Resources|Static Resource].
+
+Each Resource also has a unique ID, or &quot;Resource Identifier&quot;. This lets MODx know what Resource to fetch when you are loading a webpage. Also, when you&#39;re wanting to link between Rsources, you will use this ID to do so, which allows MODx to not have to worry about the resulting URL. You can move, rename, alter or even change the type of a Resource, and the ID will stay the same - meaning that any changes you make to the Resource wont affect your links to it.
+
+Also see [Named Anchor].
+
+h3. Managing Resources
+
+In most cases, they represent single web page on a site. They are shown in the Resources tree, in the left-hand navigation of the manager. To edit one, simply click on the page you would like to edit. This will load the Resource Edit page:
+
+!resource-edit1.png|thumbnail!
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+||Name||Description||
+|id|The ID of the Resource.|
+|template|A reference to the [Template|Templates] that this Resource is using|
+|published|If the Resource is Published, or viewable on the front-end.|
+|pagetitle|The title of the Resource.|
+|longtitle|A longer title of the Resource.|
+|description|An extended description of the Resource.|
+|introtext|Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching.|
+|alias|The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container.|
+|parent|The Parent Resource&#39;s ID.|
+|menutitle|The title to show for the Resource when displayed in a menu.|
+|menuindex|The order index of the Resource in a menu. Higher order means later.|
+|hidemenu|Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets.|
+|content|The actual content of the Resource.|
+
+h3. Settings Resource Fields
+
+||Name||Description||
+|isfolder|Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix.|
+|searchable|If the Resource is searchable.|
+|cacheable|If the Resource is cacheable.|
+|createdby|The ID of the user who created the Resource.|
+|editedby|The ID of the last user to edit the Resource.|
+|deleted|If the Resource is deleted or not.|
+|deletedby|The ID of the user who deleted the Resource.|
+|publishedby|The ID of the user who last published the Resource.|
+|createdon|The date the Resource was created.|
+|publishedon|The date the Resource was published.|
+|editedon|The date the Resource was last edited.|
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the Template Variable syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters] applied to them:
+{code}
+// Renders a limited version of the introtext field. 
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]] 
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource.
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;amp;sort=Taste{quote}
+
+Note that it automatically encodes the ampersands.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the normal http.
+
+The available schemes are:
+
+||Name||Description||
+|https|Renders the link with https instead of http|
+|full|Renders the link as an absolute URL|
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:12;a:3:{s:2:"id";s:8:"18678594";s:3:"ver";s:1:"4";s:4:"code";s:5456:"\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. They can be content pages, weblinks, symlinks, actual files, or many other things. In most cases, they represent single web page on a site. They are shown in the Resources tree, in the left-hand navigation of the manager.
+
+{note}Resources were formerly called &quot;Documents&quot; in MODx Evolution and earlier.{note}
+
+Resources are edited via the Resource tab in the left-hand tree. To edit one, simply click on the page you would like to edit. This will load the Resource Edit page:
+
+!resource-edit1.png|thumbnail!
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h3. Default Resource Types
+
+There are 4 default resource types packaged into Revolution; however, they are dynamically built and can be added at any time.
+
+* Document _(default)_
+* [Weblink]
+* [Symlink]
+* [Static Resource]
+
+Also see [Named Anchor].
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+||Name||Description||
+|id|The ID of the Resource.|
+|template|A reference to the [Template|Templates] that this Resource is using|
+|published|If the Resource is Published, or viewable on the front-end.|
+|pagetitle|The title of the Resource.|
+|longtitle|A longer title of the Resource.|
+|description|An extended description of the Resource.|
+|introtext|Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching.|
+|alias|The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container.|
+|parent|The Parent Resource&#39;s ID.|
+|menutitle|The title to show for the Resource when displayed in a menu.|
+|menuindex|The order index of the Resource in a menu. Higher order means later.|
+|hidemenu|Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets.|
+|content|The actual content of the Resource.|
+
+h3. Settings Resource Fields
+
+||Name||Description||
+|isfolder|Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix.|
+|searchable|If the Resource is searchable.|
+|cacheable|If the Resource is cacheable.|
+|createdby|The ID of the user who created the Resource.|
+|editedby|The ID of the last user to edit the Resource.|
+|deleted|If the Resource is deleted or not.|
+|deletedby|The ID of the user who deleted the Resource.|
+|publishedby|The ID of the user who last published the Resource.|
+|createdon|The date the Resource was created.|
+|publishedon|The date the Resource was published.|
+|editedon|The date the Resource was last edited.|
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the Template Variable syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters] applied to them:
+{code}
+// Renders a limited version of the introtext field. 
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]] 
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource.
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;amp;sort=Taste{quote}
+
+Note that it automatically encodes the ampersands.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the normal http.
+
+The available schemes are:
+
+||Name||Description||
+|https|Renders the link with https instead of http|
+|full|Renders the link as an absolute URL|
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:13;a:3:{s:2:"id";s:8:"18678592";s:3:"ver";s:1:"3";s:4:"code";s:5319:"\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. They can be content pages, weblinks, symlinks, actual files, or many other things. They are shown in the Resources tree.
+
+{note}Resources were formerly called &quot;Documents&quot; in MODx 0.9.6 and earlier.{note}
+
+Resources are edited via the Resource tab in the left-hand tree. To edit one, simply click on the page you would like to edit. This will load the Resource Edit page.
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h2. Default Resource Types
+
+There are 4 default resource types packaged into Revolution; however, they are dynamically built and can be added at any time.
+
+* Document _(default)_
+* [Weblink]
+* [Symlink]
+* [Static Resource]
+
+Also see [Named Anchor].
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+||Name||Description||
+|id|The ID of the Resource.|
+|template|A reference to the [Template|Templates] that this Resource is using|
+|published|If the Resource is Published, or viewable on the front-end.|
+|pagetitle|The title of the Resource.|
+|longtitle|A longer title of the Resource.|
+|description|An extended description of the Resource.|
+|introtext|Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching.|
+|alias|The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container.|
+|parent|The Parent Resource&#39;s ID.|
+|menutitle|The title to show for the Resource when displayed in a menu.|
+|menuindex|The order index of the Resource in a menu. Higher order means later.|
+|hidemenu|Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets.|
+|content|The actual content of the Resource.|
+
+h3. Settings Resource Fields
+
+||Name||Description||
+|isfolder|Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix.|
+|searchable|If the Resource is searchable.|
+|cacheable|If the Resource is cacheable.|
+|createdby|The ID of the user who created the Resource.|
+|editedby|The ID of the last user to edit the Resource.|
+|deleted|If the Resource is deleted or not.|
+|deletedby|The ID of the user who deleted the Resource.|
+|publishedby|The ID of the user who last published the Resource.|
+|createdon|The date the Resource was created.|
+|publishedon|The date the Resource was published.|
+|editedon|The date the Resource was last edited.|
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the Template Variable syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters] applied to them:
+{code}
+// Renders a limited version of the introtext field. 
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]] 
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource.
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;amp;sort=Taste{quote}
+
+Note that it automatically encodes the ampersands.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the normal http.
+
+The available schemes are:
+
+||Name||Description||
+|https|Renders the link with https instead of http|
+|full|Renders the link as an absolute URL|
+
+h2. See Also
+
+{pagetree:root=Resources}
+
+{scrollbar}";}i:14;a:3:{s:2:"id";s:8:"18678523";s:3:"ver";s:1:"2";s:4:"code";s:5318:"\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. They can be content pages, weblinks, symlinks, actual files, or many other things. They are shown in the Resources tree.
+
+{note}Resources were formerly called &quot;Documents&quot; in MODx 0.9.6 and earlier.{note}
+
+Resources are edited via the Resource tab in the left-hand tree. To edit one, simply click on the page you would like to edit. This will load the Resource Edit page.
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h2. Default Resource Types
+
+There are 4 default resource types packaged into Revolution; however, they are dynamically built and can be added at any time.
+
+* Document _(default)_
+* [Weblink]
+* [Symlink]
+* [Static Resource]
+
+Also see [Named Anchor].
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+||Name||Description||
+|id|The ID of the Resource.|
+|template|A reference to the [Template|Templates] that this Resource is using|
+|published|If the Resource is Published, or viewable on the front-end.|
+|pagetitle|The title of the Resource.|
+|longtitle|A longer title of the Resource.|
+|description|An extended description of the Resource.|
+|introtext|Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching.|
+|alias|The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container.|
+|parent|The Parent Resource&#39;s ID.|
+|menutitle|The title to show for the Resource when displayed in a menu.|
+|menuindex|The order index of the Resource in a menu. Higher order means later.|
+|hidemenu|Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets.|
+|content|The actual content of the Resource.|
+
+h3. Settings Resource Fields
+
+||Name||Description||
+|isfolder|Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix.|
+|searchable|If the Resource is searchable.|
+|cacheable|If the Resource is cacheable.|
+|createdby|The ID of the user who created the Resource.|
+|editedby|The ID of the last user to edit the Resource.|
+|deleted|If the Resource is deleted or not.|
+|deletedby|The ID of the user who deleted the Resource.|
+|publishedby|The ID of the user who last published the Resource.|
+|createdon|The date the Resource was created.|
+|publishedon|The date the Resource was published.|
+|editedon|The date the Resource was last edited.|
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the Template Variable syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters] applied to them:
+{code}
+// Renders a limited version of the introtext field. 
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]] 
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource.
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;amp;sort=Taste{quote}
+
+Note that it automatically encodes the ampersands.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the normal http.
+
+The available schemes are:
+
+||Name||Description||
+|https|Renders the link with https instead of http|
+|full|Renders the link as an absolute URL|
+
+h2. See Also
+
+{pagetree:root=Resource}
+
+{scrollbar}";}i:15;a:3:{s:2:"id";s:8:"18678522";s:3:"ver";s:1:"1";s:4:"code";s:5318:"\\
+
+{toc}
+
+h2. What is a Resource?
+
+A resource is a representation of a page in MODx. They can be content pages, weblinks, symlinks, actual files, or many other things. They are shown in the Resources tree.
+
+{note}Resources were formerly called &quot;Documents&quot; in MODx 0.9.6 and earlier.{note}
+
+Resources are edited via the Resource tab in the left-hand tree. To edit one, simply click on the page you would like to edit. This will load the Resource Edit page.
+
+The content of the Resource can then be edited in the large content field in the bottom area. Other fields related to each Resource can also be edited via the tabs on the top of the page.
+
+h2. Default Resource Types
+
+There are 4 default resource types packaged into Revolution; however, they are dynamically built and can be added at any time.
+
+* Document _(default)_
+* [Weblink]
+* [Symlink]
+* [Static Resource]
+
+Also see [Named Anchor].
+
+h2. Resource Fields
+
+Resources come packaged with a list of predetermined fields by default. They are:
+
+h3. General Resource Fields
+
+||Name||Description||
+|id|The ID of the Resource.|
+|template|A reference to the [Template|Templates] that this Resource is using|
+|published|If the Resource is Published, or viewable on the front-end.|
+|pagetitle|The title of the Resource.|
+|longtitle|A longer title of the Resource.|
+|description|An extended description of the Resource.|
+|introtext|Also called &#39;Summary&#39;, an introductory excerpt of the Resource&#39;s content. Useful for blogs or searching.|
+|alias|The URL alias to use, if your site is using Friendly URLs. A Resource with alias &#39;home&#39; and Content Type &#39;html&#39; would render &#39;home.html&#39; if it isn&#39;t a Container.|
+|parent|The Parent Resource&#39;s ID.|
+|menutitle|The title to show for the Resource when displayed in a menu.|
+|menuindex|The order index of the Resource in a menu. Higher order means later.|
+|hidemenu|Also called &#39;Hide from Menus&#39;, if set, this Resource will not show in most Menu or Navigation snippets.|
+|content|The actual content of the Resource.|
+
+h3. Settings Resource Fields
+
+||Name||Description||
+|isfolder|Labeled as &#39;Container&#39;, this specifies whether or not the Resource renders with a / in Friendly URLs instead of its suffix.|
+|searchable|If the Resource is searchable.|
+|cacheable|If the Resource is cacheable.|
+|createdby|The ID of the user who created the Resource.|
+|editedby|The ID of the last user to edit the Resource.|
+|deleted|If the Resource is deleted or not.|
+|deletedby|The ID of the user who deleted the Resource.|
+|publishedby|The ID of the user who last published the Resource.|
+|createdon|The date the Resource was created.|
+|publishedon|The date the Resource was published.|
+|editedon|The date the Resource was last edited.|
+
+h3. Using Resource Fields
+
+Resource fields can be accessed from anywhere by using the Template Variable syntax, ie:
+
+{code}
+[[*pagetitle]] // renders the pagetitle.
+[[*id]] // renders the Resource&#39;s ID
+[[*createdby]] // renders the ID of the user who created this Resource
+{code}
+
+They can also have [Output Filters|Input and Output Filters] applied to them:
+{code}
+// Renders a limited version of the introtext field. 
+// If it is longer than 100 chars, adds an ...
+[[*introtext:ellipsis=`100`]]
+
+// Grabs the user who last edited the Resource&#39;s username
+[[*editedby:userinfo=`username`]] 
+
+// Grabs the user who published the Resource&#39;s email
+[[*publishedby:userinfo=`email`]]
+{code}
+
+h3. Accessing Resource Fields in a Snippet
+
+Grabbing the Resource Fields in a [Snippet|Snippets] is quite easy; MODx provides you with the Resource object in any Snippet, via the $modx-&gt;resource reference. For example, this example Snippet will return the current page&#39;s pagetitle reversed:
+
+{code}
+/* output the current Resource&#39;s pagetitle */
+$output = $modx-&gt;resource-&gt;get(&#39;pagetitle&#39;);
+return strrev($output);
+{code}
+
+
+
+h2. Linking to a Resource
+
+In MODx, links to Resources are dynamically managed via &quot;Resource Tags&quot;. They look like this:
+
+{code}[[~123]]{code}
+
+where &#39;123&#39; is the ID of the Resource to link to. You can put these tags anywhere, and MODx will dynamically render the URL for the Resource.
+
+{note}You can also get the Resource Tag by dragging a Resource from the left tree into the content panel.{note}
+
+h3. URL Parameters for Resource Tags
+
+Adding URL parameters in your Resource Tag is quite simple in Revolution. Let&#39;s say we have Resource ID 42 that resolves to a URL of &#39;store/items.html&#39;. We want to add a &#39;tag&#39; parameter to the URL, with a value of &#39;Snacks&#39; and a &#39;sort&#39; parameter of &#39;Taste&#39;. Here&#39;s how you&#39;d do it:
+
+{code}[[~42? &amp;tag=`Snacks` &amp;sort=`Taste`]]{code}
+
+This would render as:
+
+{quote}store/items.html?tag=Snacks&amp;amp;sort=Taste{quote}
+
+Note that it automatically encodes the ampersands.
+
+h3. URL Schemes in Resource Tags
+
+You can specify the scheme for a Resource in your tag:
+
+{code}[[~123? &amp;scheme=`https`]]{code}
+
+Would render the URL using &#39;https&#39; instead of the normal http.
+
+The available schemes are:
+
+||Name||Description||
+|https|Renders the link with https instead of http|
+|full|Renders the link as an absolute URL|
+
+h2. See Also
+
+{pagetree:root=Resource}
+
+{scrollbar}";}}}

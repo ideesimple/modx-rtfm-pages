@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678138";s:4:"info";a:4:{s:6:"Title:";s:22:"cache_resource_expires";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:37:"[revolution20:cache_resource_expires]";}s:6:"parent";s:8:"18678127";s:6:"source";s:224:"h2. cache_resource_expires
+
+*Name*: Expiration Time for Partial Resource Cache
+*Type*: Number
+*Default*: 0
+
+Expiration time for the Partial Resource Cache setting. A value of 0 means the cache will never expire.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678138";s:3:"ver";s:1:"2";s:4:"code";s:224:"h2. cache_resource_expires
+
+*Name*: Expiration Time for Partial Resource Cache
+*Type*: Number
+*Default*: 0
+
+Expiration time for the Partial Resource Cache setting. A value of 0 means the cache will never expire.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119657";s:3:"ver";s:1:"1";s:4:"code";s:397:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Expiration Time for Partial Resource Cache{zone-data}
+{zone-data:key}cache_resource_expires{zone-data}
+{zone-data:type}number{zone-data}
+{zone-data:default}0{zone-data}
+{zone-data:desc}&amp;nbsp;Expiration time for the Partial Resource Cache setting. A value of 0 means the cache will never expire.
+{zone-data}
+{zone-template-instance}
+{scrollbar}";}}}

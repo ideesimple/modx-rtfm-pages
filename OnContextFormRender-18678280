@@ -1,0 +1,39 @@
+a:5:{s:2:"id";s:8:"18678280";s:4:"info";a:4:{s:6:"Title:";s:19:"OnContextFormRender";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:34:"[revolution20:OnContextFormRender]";}s:6:"parent";s:8:"18678228";s:6:"source";s:380:"\\
+
+h2. Event: OnContextFormRender
+
+Fires after the context editing form has loaded.
+
+Service: 2 - Manager Access Events
+Group: modContext
+
+h2. Event Parameters
+
+||Name||Description||
+|key|The key of the context.|
+|context|A reference to the modContext object.|
+|mode|Either &#39;upd&#39; or &#39;new&#39;, depending on the situation.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678280";s:3:"ver";s:1:"1";s:4:"code";s:380:"\\
+
+h2. Event: OnContextFormRender
+
+Fires after the context editing form has loaded.
+
+Service: 2 - Manager Access Events
+Group: modContext
+
+h2. Event Parameters
+
+||Name||Description||
+|key|The key of the context.|
+|context|A reference to the modContext object.|
+|mode|Either &#39;upd&#39; or &#39;new&#39;, depending on the situation.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

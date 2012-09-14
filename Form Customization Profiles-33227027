@@ -1,0 +1,42 @@
+a:5:{s:2:"id";s:8:"33227027";s:4:"info";a:4:{s:6:"Title:";s:27:"Form Customization Profiles";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:42:"[revolution20:Form Customization Profiles]";}s:6:"parent";s:8:"18678089";s:6:"source";s:401:"{toc}
+
+h2. What is a Form Customization Profile?
+
+A Profile is a collection of [Form Customization Sets]. A Profile can be restricted to only load for specific User Groups. If no User Groups are assigned, the Profile will be run for all Users.
+
+It can also be marked &#39;inactive&#39;, which will disable its execution.
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"33227027";s:3:"ver";s:1:"3";s:4:"code";s:401:"{toc}
+
+h2. What is a Form Customization Profile?
+
+A Profile is a collection of [Form Customization Sets]. A Profile can be restricted to only load for specific User Groups. If no User Groups are assigned, the Profile will be run for all Users.
+
+It can also be marked &#39;inactive&#39;, which will disable its execution.
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33587470";s:3:"ver";s:1:"2";s:4:"code";s:432:"{alias:Form Customization}
+\\
+
+{toc}
+
+h2. What is a Form Customization Profile?
+
+A Profile is a collection of [Form Customization Sets]. A Profile can be restricted to only load for specific User Groups. If no User Groups are assigned, the Profile will be run for all Users.
+
+It can also be marked &#39;inactive&#39;, which will disable its execution.
+
+h2. See Also
+
+{pagetree:root=Customizing the Manager|startDepth=1}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"33587469";s:3:"ver";s:1:"1";s:4:"code";s:43:"{note}Under construction{note}
+
+{scrollbar}";}}}

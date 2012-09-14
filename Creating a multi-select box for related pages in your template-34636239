@@ -1,0 +1,1742 @@
+a:5:{s:2:"id";s:8:"34636239";s:4:"info";a:4:{s:6:"Title:";s:62:"Creating a multi-select box for related pages in your template";s:7:"Author:";s:12:"Mark Hamstra";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:77:"[revolution20:Creating a multi-select box for related pages in your template]";}s:6:"parent";s:8:"18678062";s:6:"source";s:12690:"This brief tutorial will explain how you can make a client-proof&amp;nbsp; &quot;Related pages&quot; template variable. This specific example will introduce you to several MODX subjects including writing custom [snippets |revolution20:Snippets]and using [custom output modifiers|revolution20:Input and Output Filters (Output Modifiers)], however there are many different ways to achieve the same result. This tutorial will hopefully allow you to get a deeper understanding of several of the used concepts and help you further develop highly customizable content editing.
+
+
+
+
+h2. Setting up the Template Variable
+
+Of course we will need a Template Variable. In the Manager, navigate to the Elements tab in the navigation structure and click the icon with a TV on it, or right click on the Template Variables section to create a new template variable. Give it a suitable name and caption (this tutorial assumes relatedPages).
+
+
+In this case we will want to be able of selecting multiple resources, so we&#39;re going to choose the input type &quot;Listbox (multi-select)&quot;, however you could also use the Checkbox type without adjusting the rest of this tutorial if you would rather have a list of checkboxes.&amp;nbsp;
+
+Next link the Template Variable to the template that needs it on the &quot;Template Access&quot; tab, for example your blog item template.
+
+To fill the template variable with some values, we will need to write simple snippet\* and run it in the Input Options field. To do this we will be using what is known as an [@BINDING|revolution20:Bindings]. Add the following code to the Input Options field:
+
+{code}
+ @EVAL return $modx-&gt;runSnippet(&#39;listMyResources&#39;,array(&#39;parent&#39; =&gt; 9));
+{code}
+This makes use of the [@EVAL binding|revolution20:EVAL Binding] to wrap the rest of the input in an eval() PHP statement. This can be used to execute PHP, and therefore access the very powerful $modx object. We are then using that to use the runSnippet method which, well, runs a snippet, while passing the array in the second parameter as properties. In this case we are telling it that &quot;parent&quot; is equal to 9. The result of this snippet will then be returned - not echoed. This is needed to make sure it can be parsed and will not be placed on the page randomly.
+
+You probably don&#39;t have a snippet called listMyResources yet, so let&#39;s create it.
+
+\* You don&#39;t \*have\* to write a snippet, you could use getResources for it as well, but to introduce you to a number of interesting methods while we&#39;re at it you may want to write your own. .
+
+
+h2. Creating the snippet
+
+We will need to create a snippet that lists the appropriate resources, and in such a way that it makes sense to the TV input type. The Listbox will be expecting a string like the following:
+
+{quote}
+value1==name\|\|value2==name2\|\|lasteone==Last name?
+{quote}
+The above consists of three key-value pairs, seperated by two pipes. The key and value are separated by two equal characters. So this is what we want the snippet to output as well.
+
+Create a new snippet and name it listMyResources or whatever you put in the input options of the template variable. Let&#39;s start of by assigning the property expected (parent) to a variable.
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+{code}
+This sets the variable $parent to the value of any &quot;parent&quot; property found. This can be from an assigned property set or inline properties like in our situation. The 9 in the end is the default value to be used if there is no value found.
+
+{code}
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+if (!($parentObj instanceof modResource)) { return &#39;&#39;; }
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+{code}
+Then we will get the Object (abstraction) of the parent resource using the getObject method and assign it to a variable named parentObj. We check if we are dealing with a proper resource (ie, the resource with the id $parent existed and loaded into $parentObj just fine). After that we will set up the $resArray variable which is filled with an array of the parents&#39; children if any.
+
+
+Now that we have all the children we need, let&#39;s get the information we need from each aswell.
+
+{code}
+$resources = array();
+foreach($resArray as $res) {
+  if ($res instanceof modResource) {
+    $resources[] = $res-&gt;get(&#39;pagetitle&#39;) . &#39;==&#39; . $res-&gt;get(&#39;id&#39;);
+  }
+}
+{code}
+First we instantiate a new variable as an empty array. While not really required, it is good practice and can prevent injection of not-so-funny things elsewhere. Next we loop through the array with resources and when a valid resource, we store the id and pagetitle in a new entry in the $resources array. Note that we are putting it in with the two equal characters to put it in the right format for the TV.
+
+Almost done\!
+
+{code}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+We just glue together the array into a string, seperated by the two pipes (remember the tv input type syntax?) , and return it. Be sure not to echo it as that will make it show up whenever it is being called instead of when it is requested and can lead to unexpected results.
+
+Now if you go to a resource and change it to the template linked to this template variable, you should see the a list of pages you can select.
+
+For clarity, here&#39;s the complete snippet:
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+if (!($parentObj instanceof modResource)) { return &#39;&#39;; }
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+$resources = array();
+foreach($resArray as $res) {
+  if ($res instanceof modResource) {
+    $resources[] = $res-&gt;get(&#39;pagetitle&#39;) . &#39;==&#39; . $res-&gt;get(&#39;id&#39;);
+  }
+}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+
+h2. Presenting the related pages in your template
+
+You can just put the TV tag in your template, but most likely that will just give you a bunch of numbers, representing the IDs of the selected resources. You&#39;ll want to do a few things. First of, go back to your template variable and set the Output type to &quot;delimiter&quot;. You will be giving the option to specify what your delimiter will be, for example a comma or two pipes. Let&#39;s set it as a comma for this tutorial.
+
+
+Now to show it in your template, we will want a snippet that fetches the resources based on the ID we got from the template variable, parse it in a chunk so we can display it in anyway we want to and then return it to the template.
+
+We will assume this would be our snippet call:
+
+{code}
+ [[relatedPages? &amp;input=`[[*relatedPages]]` &amp;tpl=`relatedPagesTpl`]]
+{code}
+So we are setting an input property with the delimited list of resource IDs that we said were related, and a chunkname (relatedPagesTpl) to use as the chunk template.
+
+Let&#39;s work on the snippet then. Why don&#39;t we start with fetching and checking the two properties we added?
+
+{code}
+if (empty($input)) { return &#39;This article is so unique, that we couldn\&#39;t find anything related to it!&#39;; }
+$tpl = $modx-&gt;getOption(&#39;tpl&#39;,$scriptProperties,&#39;relatedPagesTpl&#39;);
+if ($modx-&gt;getChunk($tpl) == &#39;&#39;) { return &#39;We found some related pages, but don\&#39;t know how to present it.&#39;; }
+{code}
+What you see here is first checking if the $input variable (derived from the &amp;input property) is empty and return an error message if so. The reason we&#39;re using this directly and not in the way as shown with the $tpl variable (using modX::getOption) is because we could also use the snippet as an output filter, and when we do that we can assume the $input variable is set. [More about output filters here|revolution20:Input and Output Filters (Output Modifiers)]. On the second line we are first assigning a value to $tpl, which is either the &quot;tpl&quot; property passed in the snippet call, or the default of &#39;relatedPagesTpl&#39;. On the third line we fetch the chunk by its name using modX::getChunk, and if that is empty (so it does not exist, or is empty) we return a nice error message.
+
+
+
+So now that we have the settings, we can start processing. Let&#39;s first split up the delimited list of IDs into an array using the explode function. We will also set up an empty array for our output.
+
+{code}
+$ids = explode(&#39;,&#39;, $input);
+$output = array();
+{code}
+
+Now loop through the $ids array...
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  // We will do something here in a minute
+}
+{code}
+
+Within the loop we will want to get the resource object first, and to prevent we will create links that others can not access, we are making sure it has been published as well. You could add more conditions (for example, only when the &#39;hidemenu&#39; field is set to 0, or only searchable resources will show up), but we are happy with this.
+
+After we fetched the object, we are also going to make sure we found an object. If we don&#39;t, and a selected resource that was not published can potentially result in a nasty fatal PHP error being visible instead of your carefully handcrafted template with related pages... To be 100% sure, we are checking if the returned object is part of the &quot;modResource&quot; class.
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    // We are sure we have a resource here, so let&#39;s do something!
+  }
+}
+{code}
+
+Okay, so what do we want to do now? Let&#39;s just assume we want to call the chunk we assigned earlier, and put all resource fields into placeholders so we can call pretty much anything in there. For this we use the modElement::toArray() method to create an array of field =&gt; value pairs, and the modX::getChunk method (we also used that before, remember?) with the value array as second parameter to tell it to parse those as placeholders. We assign the result of that (which is the chunk with the placeholders parsed with the values we passed) to our $output array.
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    $output[] = $modx-&gt;getChunk($tpl,$resource-&gt;toArray());
+  }
+}
+{code}
+
+All we need to do now is return the $output array as a string and we have our related pages. The implode function glues together the different array items, using the first parameter (in this case an empty string) as delimiter. We could specify a comma-space in there to glue together with a comma in between, however in this case we wont.
+
+
+{code}
+return implode(&#39;&#39;,$output);
+{code}
+
+And that&#39;s it\!
+
+For clarity, this is the resulting snippet we named &quot;relatedPages&quot;:
+
+{code}
+if (empty($input)) { return &#39;This article is so unique, that we couldn\&#39;t find anything related to it!&#39;; }
+$tpl = $modx-&gt;getOption(&#39;tpl&#39;,$scriptProperties,&#39;relatedPagesTpl&#39;);
+if ($modx-&gt;getChunk($tpl) == &#39;&#39;) { return &#39;We found some related pages, but don\&#39;t know how to present it.&#39;; }
+$ids = explode(&#39;,&#39;, $input);
+$output = array();
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    $output[] = $modx-&gt;getChunk($tpl,$resource-&gt;toArray());
+  }
+}
+return implode(&#39;&#39;,$output);
+{code}
+
+An example of the relatedPagesTpl could be:
+
+{code}
+&lt;li&gt;
+  &lt;a href=&quot;[[~[[+id]]]]&quot; title=&quot;[[+pagetitle]]&quot;&gt;
+    [[+longtitle:default=`[[+pagetitle]]`]]
+  &lt;/a&gt;, by [[+createdby:userinfo=`fullname`]]
+&lt;/li&gt;
+{code}
+This creates a list item with a link to the resource and its pagetitle as the title attribute. It will try to use the longtitle for the link text, but defaults to the pagetitle if the longtitle doesn&#39;t exist. It also uses the userinfo output modifier to add the fullname of the author of the resource to the list item. You can use any default resource field there.
+
+
+h2. Further reading..
+
+* ?[revolution20:Template Variable Input Types]
+* ?[revolution20:Input and Output Filters]
+* [modX::getCollection|xPDO20:xPDO.getCollection]
+* [modX::getObject|xPDO20:xPDO.getObject]
+* [modX::getChunk|revolution20:modX.getChunk]";s:8:"versions";a:9:{i:0;a:3:{s:2:"id";s:8:"34636239";s:3:"ver";s:1:"9";s:4:"code";s:12690:"This brief tutorial will explain how you can make a client-proof&amp;nbsp; &quot;Related pages&quot; template variable. This specific example will introduce you to several MODX subjects including writing custom [snippets |revolution20:Snippets]and using [custom output modifiers|revolution20:Input and Output Filters (Output Modifiers)], however there are many different ways to achieve the same result. This tutorial will hopefully allow you to get a deeper understanding of several of the used concepts and help you further develop highly customizable content editing.
+
+
+
+
+h2. Setting up the Template Variable
+
+Of course we will need a Template Variable. In the Manager, navigate to the Elements tab in the navigation structure and click the icon with a TV on it, or right click on the Template Variables section to create a new template variable. Give it a suitable name and caption (this tutorial assumes relatedPages).
+
+
+In this case we will want to be able of selecting multiple resources, so we&#39;re going to choose the input type &quot;Listbox (multi-select)&quot;, however you could also use the Checkbox type without adjusting the rest of this tutorial if you would rather have a list of checkboxes.&amp;nbsp;
+
+Next link the Template Variable to the template that needs it on the &quot;Template Access&quot; tab, for example your blog item template.
+
+To fill the template variable with some values, we will need to write simple snippet\* and run it in the Input Options field. To do this we will be using what is known as an [@BINDING|revolution20:Bindings]. Add the following code to the Input Options field:
+
+{code}
+ @EVAL return $modx-&gt;runSnippet(&#39;listMyResources&#39;,array(&#39;parent&#39; =&gt; 9));
+{code}
+This makes use of the [@EVAL binding|revolution20:EVAL Binding] to wrap the rest of the input in an eval() PHP statement. This can be used to execute PHP, and therefore access the very powerful $modx object. We are then using that to use the runSnippet method which, well, runs a snippet, while passing the array in the second parameter as properties. In this case we are telling it that &quot;parent&quot; is equal to 9. The result of this snippet will then be returned - not echoed. This is needed to make sure it can be parsed and will not be placed on the page randomly.
+
+You probably don&#39;t have a snippet called listMyResources yet, so let&#39;s create it.
+
+\* You don&#39;t \*have\* to write a snippet, you could use getResources for it as well, but to introduce you to a number of interesting methods while we&#39;re at it you may want to write your own. .
+
+
+h2. Creating the snippet
+
+We will need to create a snippet that lists the appropriate resources, and in such a way that it makes sense to the TV input type. The Listbox will be expecting a string like the following:
+
+{quote}
+value1==name\|\|value2==name2\|\|lasteone==Last name?
+{quote}
+The above consists of three key-value pairs, seperated by two pipes. The key and value are separated by two equal characters. So this is what we want the snippet to output as well.
+
+Create a new snippet and name it listMyResources or whatever you put in the input options of the template variable. Let&#39;s start of by assigning the property expected (parent) to a variable.
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+{code}
+This sets the variable $parent to the value of any &quot;parent&quot; property found. This can be from an assigned property set or inline properties like in our situation. The 9 in the end is the default value to be used if there is no value found.
+
+{code}
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+if (!($parentObj instanceof modResource)) { return &#39;&#39;; }
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+{code}
+Then we will get the Object (abstraction) of the parent resource using the getObject method and assign it to a variable named parentObj. We check if we are dealing with a proper resource (ie, the resource with the id $parent existed and loaded into $parentObj just fine). After that we will set up the $resArray variable which is filled with an array of the parents&#39; children if any.
+
+
+Now that we have all the children we need, let&#39;s get the information we need from each aswell.
+
+{code}
+$resources = array();
+foreach($resArray as $res) {
+  if ($res instanceof modResource) {
+    $resources[] = $res-&gt;get(&#39;pagetitle&#39;) . &#39;==&#39; . $res-&gt;get(&#39;id&#39;);
+  }
+}
+{code}
+First we instantiate a new variable as an empty array. While not really required, it is good practice and can prevent injection of not-so-funny things elsewhere. Next we loop through the array with resources and when a valid resource, we store the id and pagetitle in a new entry in the $resources array. Note that we are putting it in with the two equal characters to put it in the right format for the TV.
+
+Almost done\!
+
+{code}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+We just glue together the array into a string, seperated by the two pipes (remember the tv input type syntax?) , and return it. Be sure not to echo it as that will make it show up whenever it is being called instead of when it is requested and can lead to unexpected results.
+
+Now if you go to a resource and change it to the template linked to this template variable, you should see the a list of pages you can select.
+
+For clarity, here&#39;s the complete snippet:
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+if (!($parentObj instanceof modResource)) { return &#39;&#39;; }
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+$resources = array();
+foreach($resArray as $res) {
+  if ($res instanceof modResource) {
+    $resources[] = $res-&gt;get(&#39;pagetitle&#39;) . &#39;==&#39; . $res-&gt;get(&#39;id&#39;);
+  }
+}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+
+h2. Presenting the related pages in your template
+
+You can just put the TV tag in your template, but most likely that will just give you a bunch of numbers, representing the IDs of the selected resources. You&#39;ll want to do a few things. First of, go back to your template variable and set the Output type to &quot;delimiter&quot;. You will be giving the option to specify what your delimiter will be, for example a comma or two pipes. Let&#39;s set it as a comma for this tutorial.
+
+
+Now to show it in your template, we will want a snippet that fetches the resources based on the ID we got from the template variable, parse it in a chunk so we can display it in anyway we want to and then return it to the template.
+
+We will assume this would be our snippet call:
+
+{code}
+ [[relatedPages? &amp;input=`[[*relatedPages]]` &amp;tpl=`relatedPagesTpl`]]
+{code}
+So we are setting an input property with the delimited list of resource IDs that we said were related, and a chunkname (relatedPagesTpl) to use as the chunk template.
+
+Let&#39;s work on the snippet then. Why don&#39;t we start with fetching and checking the two properties we added?
+
+{code}
+if (empty($input)) { return &#39;This article is so unique, that we couldn\&#39;t find anything related to it!&#39;; }
+$tpl = $modx-&gt;getOption(&#39;tpl&#39;,$scriptProperties,&#39;relatedPagesTpl&#39;);
+if ($modx-&gt;getChunk($tpl) == &#39;&#39;) { return &#39;We found some related pages, but don\&#39;t know how to present it.&#39;; }
+{code}
+What you see here is first checking if the $input variable (derived from the &amp;input property) is empty and return an error message if so. The reason we&#39;re using this directly and not in the way as shown with the $tpl variable (using modX::getOption) is because we could also use the snippet as an output filter, and when we do that we can assume the $input variable is set. [More about output filters here|revolution20:Input and Output Filters (Output Modifiers)]. On the second line we are first assigning a value to $tpl, which is either the &quot;tpl&quot; property passed in the snippet call, or the default of &#39;relatedPagesTpl&#39;. On the third line we fetch the chunk by its name using modX::getChunk, and if that is empty (so it does not exist, or is empty) we return a nice error message.
+
+
+
+So now that we have the settings, we can start processing. Let&#39;s first split up the delimited list of IDs into an array using the explode function. We will also set up an empty array for our output.
+
+{code}
+$ids = explode(&#39;,&#39;, $input);
+$output = array();
+{code}
+
+Now loop through the $ids array...
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  // We will do something here in a minute
+}
+{code}
+
+Within the loop we will want to get the resource object first, and to prevent we will create links that others can not access, we are making sure it has been published as well. You could add more conditions (for example, only when the &#39;hidemenu&#39; field is set to 0, or only searchable resources will show up), but we are happy with this.
+
+After we fetched the object, we are also going to make sure we found an object. If we don&#39;t, and a selected resource that was not published can potentially result in a nasty fatal PHP error being visible instead of your carefully handcrafted template with related pages... To be 100% sure, we are checking if the returned object is part of the &quot;modResource&quot; class.
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    // We are sure we have a resource here, so let&#39;s do something!
+  }
+}
+{code}
+
+Okay, so what do we want to do now? Let&#39;s just assume we want to call the chunk we assigned earlier, and put all resource fields into placeholders so we can call pretty much anything in there. For this we use the modElement::toArray() method to create an array of field =&gt; value pairs, and the modX::getChunk method (we also used that before, remember?) with the value array as second parameter to tell it to parse those as placeholders. We assign the result of that (which is the chunk with the placeholders parsed with the values we passed) to our $output array.
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    $output[] = $modx-&gt;getChunk($tpl,$resource-&gt;toArray());
+  }
+}
+{code}
+
+All we need to do now is return the $output array as a string and we have our related pages. The implode function glues together the different array items, using the first parameter (in this case an empty string) as delimiter. We could specify a comma-space in there to glue together with a comma in between, however in this case we wont.
+
+
+{code}
+return implode(&#39;&#39;,$output);
+{code}
+
+And that&#39;s it\!
+
+For clarity, this is the resulting snippet we named &quot;relatedPages&quot;:
+
+{code}
+if (empty($input)) { return &#39;This article is so unique, that we couldn\&#39;t find anything related to it!&#39;; }
+$tpl = $modx-&gt;getOption(&#39;tpl&#39;,$scriptProperties,&#39;relatedPagesTpl&#39;);
+if ($modx-&gt;getChunk($tpl) == &#39;&#39;) { return &#39;We found some related pages, but don\&#39;t know how to present it.&#39;; }
+$ids = explode(&#39;,&#39;, $input);
+$output = array();
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    $output[] = $modx-&gt;getChunk($tpl,$resource-&gt;toArray());
+  }
+}
+return implode(&#39;&#39;,$output);
+{code}
+
+An example of the relatedPagesTpl could be:
+
+{code}
+&lt;li&gt;
+  &lt;a href=&quot;[[~[[+id]]]]&quot; title=&quot;[[+pagetitle]]&quot;&gt;
+    [[+longtitle:default=`[[+pagetitle]]`]]
+  &lt;/a&gt;, by [[+createdby:userinfo=`fullname`]]
+&lt;/li&gt;
+{code}
+This creates a list item with a link to the resource and its pagetitle as the title attribute. It will try to use the longtitle for the link text, but defaults to the pagetitle if the longtitle doesn&#39;t exist. It also uses the userinfo output modifier to add the fullname of the author of the resource to the list item. You can use any default resource field there.
+
+
+h2. Further reading..
+
+* ?[revolution20:Template Variable Input Types]
+* ?[revolution20:Input and Output Filters]
+* [modX::getCollection|xPDO20:xPDO.getCollection]
+* [modX::getObject|xPDO20:xPDO.getObject]
+* [modX::getChunk|revolution20:modX.getChunk]";}i:1;a:3:{s:2:"id";s:8:"35586502";s:3:"ver";s:1:"8";s:4:"code";s:12436:"This brief tutorial will explain how you can make a client-proof&amp;nbsp; &quot;Related pages&quot; template variable. This specific example will introduce you to several MODX subjects including writing custom [snippets |revolution20:Snippets]and using [custom output modifiers|revolution20:Input and Output Filters (Output Modifiers)], however there are many different ways to achieve the same result. This tutorial will hopefully allow you to get a deeper understanding of several of the used concepts and help you further develop highly customizable content editing.
+
+
+
+
+h2. Setting up the Template Variable
+
+Of course we will need a Template Variable. In the Manager, navigate to the Elements tab in the navigation structure and click the icon with a TV on it, or right click on the Template Variables section to create a new template variable. Give it a suitable name and caption (this tutorial assumes relatedPages).
+
+
+In this case we will want to be able of selecting multiple resources, so we&#39;re going to choose the input type &quot;Listbox (multi-select)&quot;, however you could also use the Checkbox type without adjusting the rest of this tutorial if you would rather have a list of checkboxes.&amp;nbsp;
+
+Next link the Template Variable to the template that needs it on the &quot;Template Access&quot; tab, for example your blog item template.
+
+To fill the template variable with some values, we will need to write simple snippet\* and run it in the Input Options field. To do this we will be using what is known as an [@BINDING|revolution20:Bindings]. Add the following code to the Input Options field:
+
+{code}
+ @EVAL return $modx-&gt;runSnippet(&#39;listMyResources&#39;,array(&#39;parent&#39; =&gt; 9));
+{code}
+This makes use of the [@EVAL binding|revolution20:EVAL Binding] to wrap the rest of the input in an eval() PHP statement. This can be used to execute PHP, and therefore access the very powerful $modx object. We are then using that to use the runSnippet method which, well, runs a snippet, while passing the array in the second parameter as properties. In this case we are telling it that &quot;parent&quot; is equal to 9. The result of this snippet will then be returned - not echoed. This is needed to make sure it can be parsed and will not be placed on the page randomly.
+
+You probably don&#39;t have a snippet called listMyResources yet, so let&#39;s create it.
+
+\* You don&#39;t \*have\* to write a snippet, you could use getResources for it as well, but to introduce you to a number of interesting methods while we&#39;re at it you may want to write your own. .
+
+
+h2. Creating the snippet
+
+We will need to create a snippet that lists the appropriate resources, and in such a way that it makes sense to the TV input type. The Listbox will be expecting a string like the following:
+
+{quote}
+value1==name\|\|value2==name2\|\|lasteone==Last name?
+{quote}
+The above consists of three key-value pairs, seperated by two pipes. The key and value are separated by two equal characters. So this is what we want the snippet to output as well.
+
+Create a new snippet and name it listMyResources or whatever you put in the input options of the template variable. Let&#39;s start of by assigning the property expected (parent) to a variable.
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+{code}
+This sets the variable $parent to the value of any &quot;parent&quot; property found. This can be from an assigned property set or inline properties like in our situation. The 9 in the end is the default value to be used if there is no value found.
+
+{code}
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+{code}
+Then we will get the Object (abstraction) of the parent resource using the getObject method and assign it to a variable named parentObj. After that we will set up the $resArray variable which is filled with an array of the parents&#39; children if any. This assumes that there is indeed a valid object in the parentObj parameter. This may not always be the case, so you may want to add in a check before setting $resArray to see if $parantObj is not empty.
+
+Now that we have all the children we need, let&#39;s get the information we need from each aswell.
+
+{code}
+$resources = array();
+foreach($resArray as $res) {
+  $resources[] = $res-&gt;get(&#39;pagetitle&#39;) . &#39;==&#39; . $res-&gt;get(&#39;id&#39;);
+}
+{code}
+First we instantiate a new variable as an empty array. While not really required, it is good practice and can prevent injection of not-so-funny things elsewhere. Next we loop through the array with resources and store the id and pagetitle in a new entry in the $resources array. Note that we are putting it in with the two equal characters to put it in the right format for the TV.
+
+Almost done\!
+
+{code}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+We just glue together the array into a string, seperated by the two pipes (remember the tv input type syntax?) , and return it. Be sure not to echo it as that will make it show up whenever it is being called instead of when it is requested and can lead to unexpected results.
+
+Now if you go to a resource and change it to the template linked to this template variable, you should see the a list of pages you can select.
+
+For clarity, here&#39;s the complete snippet:
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+$resources = array();
+foreach($resArray as $res) {
+  $resources[] = $res-&gt;get(&#39;pagetitle&#39;) . &#39;==&#39; . $res-&gt;get(&#39;id&#39;);
+}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+
+h2. Presenting the related pages in your template
+
+You can just put the TV tag in your template, but most likely that will just give you a bunch of numbers, representing the IDs of the selected resources. You&#39;ll want to do a few things. First of, go back to your template variable and set the Output type to &quot;delimiter&quot;. You will be giving the option to specify what your delimiter will be, for example a comma or two pipes. Let&#39;s set it as a comma for this tutorial.
+
+
+Now to show it in your template, we will want a snippet that fetches the resources based on the ID we got from the template variable, parse it in a chunk so we can display it in anyway we want to and then return it to the template.
+
+We will assume this would be our snippet call:
+
+{code}
+ [[relatedPages? &amp;input=`[[*relatedPages]]` &amp;tpl=`relatedPagesTpl`]]
+{code}
+So we are setting an input property with the delimited list of resource IDs that we said were related, and a chunkname (relatedPagesTpl) to use as the chunk template.
+
+Let&#39;s work on the snippet then. Why don&#39;t we start with fetching and checking the two properties we added?
+
+{code}
+if (empty($input)) { return &#39;This article is so unique, that we couldn\&#39;t find anything related to it!&#39;; }
+$tpl = $modx-&gt;getOption(&#39;tpl&#39;,$scriptProperties,&#39;relatedPagesTpl&#39;);
+if ($modx-&gt;getChunk($tpl) == &#39;&#39;) { return &#39;We found some related pages, but don\&#39;t know how to present it.&#39;; }
+{code}
+What you see here is first checking if the $input variable (derived from the &amp;input property) is empty and return an error message if so. The reason we&#39;re using this directly and not in the way as shown with the $tpl variable (using modX::getOption) is because we could also use the snippet as an output filter, and when we do that we can assume the $input variable is set. [More about output filters here|revolution20:Input and Output Filters (Output Modifiers)]. On the second line we are first assigning a value to $tpl, which is either the &quot;tpl&quot; property passed in the snippet call, or the default of &#39;relatedPagesTpl&#39;. On the third line we fetch the chunk by its name using modX::getChunk, and if that is empty (so it does not exist, or is empty) we return a nice error message.
+
+
+
+So now that we have the settings, we can start processing. Let&#39;s first split up the delimited list of IDs into an array using the explode function. We will also set up an empty array for our output.
+
+{code}
+$ids = explode(&#39;,&#39;, $input);
+$output = array();
+{code}
+
+Now loop through the $ids array...
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  // We will do something here in a minute
+}
+{code}
+
+Within the loop we will want to get the resource object first, and to prevent we will create links that others can not access, we are making sure it has been published as well. You could add more conditions (for example, only when the &#39;hidemenu&#39; field is set to 0, or only searchable resources will show up), but we are happy with this.
+
+After we fetched the object, we are also going to make sure we found an object. If we don&#39;t, and a selected resource that was not published can potentially result in a nasty fatal PHP error being visible instead of your carefully handcrafted template with related pages... To be 100% sure, we are checking if the returned object is part of the &quot;modResource&quot; class.
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    // We are sure we have a resource here, so let&#39;s do something!
+  }
+}
+{code}
+
+Okay, so what do we want to do now? Let&#39;s just assume we want to call the chunk we assigned earlier, and put all resource fields into placeholders so we can call pretty much anything in there. For this we use the modElement::toArray() method to create an array of field =&gt; value pairs, and the modX::getChunk method (we also used that before, remember?) with the value array as second parameter to tell it to parse those as placeholders. We assign the result of that (which is the chunk with the placeholders parsed with the values we passed) to our $output array.
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    $output[] = $modx-&gt;getChunk($tpl,$resource-&gt;toArray());
+  }
+}
+{code}
+
+All we need to do now is return the $output array as a string and we have our related pages. The implode function glues together the different array items, using the first parameter (in this case an empty string) as delimiter. We could specify a comma-space in there to glue together with a comma in between.
+
+{code}
+return implode(&#39;&#39;,$output);
+{code}
+
+And that&#39;s it\!
+
+For clarity, this is the resulting snippet we named &quot;relatedPages&quot;:
+
+{code}
+if (empty($input)) { return &#39;This article is so unique, that we couldn\&#39;t find anything related to it!&#39;; }
+$tpl = $modx-&gt;getOption(&#39;tpl&#39;,$scriptProperties,&#39;relatedPagesTpl&#39;);
+if ($modx-&gt;getChunk($tpl) == &#39;&#39;) { return &#39;We found some related pages, but don\&#39;t know how to present it.&#39;; }
+$ids = explode(&#39;,&#39;, $input);
+$output = array();
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    $output[] = $modx-&gt;getChunk($tpl,$resource-&gt;toArray());
+  }
+}
+return implode(&#39;&#39;,$output);
+{code}
+
+An example of the relatedPagesTpl could be:
+
+{code}
+&lt;li&gt;
+  &lt;a href=&quot;[[~[[+id]]]]&quot; title=&quot;[[+pagetitle]]&quot;&gt;
+    [[+longtitle:default=`[[+pagetitle]]`]]
+  &lt;/a&gt;, by [[+createdby:userinfo=`fullname`]]
+&lt;/li&gt;
+{code}
+This creates a list item with a link to the resource and its pagetitle as the title attribute. It will try to use the longtitle for the link text, but defaults to the pagetitle if the longtitle doesn&#39;t exist. It also uses the userinfo output modifier to add the fullname of the author of the resource to the list item.
+
+h2. Further reading..
+
+* ?[revolution20:Template Variable Input Types]
+* ?[revolution20:Input and Output Filters]
+* [modX::getCollection|xPDO20:xPDO.getCollection]
+* [modX::getObject|xPDO20:xPDO.getObject]
+* [modX::getChunk|revolution20:modX.getChunk]";}i:2;a:3:{s:2:"id";s:8:"35095316";s:3:"ver";s:1:"7";s:4:"code";s:12436:"This brief tutorial will explain how you can make a client-proof&amp;nbsp; &quot;Related pages&quot; template variable. This specific example will introduce you to several MODX subjects including writing custom [snippets |revolution20:Snippets]and using [custom output modifiers|revolution20:Input and Output Filters (Output Modifiers)], however there are many different ways to achieve the same result. This tutorial will hopefully allow you to get a deeper understanding of several of the used concepts and help you further develop highly customizable content editing.
+
+
+
+
+h2. Setting up the Template Variable
+
+Of course we will need a Template Variable. In the Manager, navigate to the Elements tab in the navigation structure and click the icon with a TV on it, or right click on the Template Variables section to create a new template variable. Give it a suitable name and caption (this tutorial assumes relatedPages).
+
+
+In this case we will want to be able of selecting multiple resources, so we&#39;re going to choose the input type &quot;Listbox (multi-select)&quot;, however you could also use the Checkbox type without adjusting the rest of this tutorial if you would rather have a list of checkboxes.&amp;nbsp;
+
+Next link the Template Variable to the template that needs it on the &quot;Template Access&quot; tab, for example your blog item template.
+
+To fill the template variable with some values, we will need to write simple snippet\* and run it in the Input Options field. To do this we will be using what is known as an [@BINDING|revolution20:Bindings]. Add the following code to the Input Options field:
+
+{code}
+ @EVAL return $modx-&gt;runSnippet(&#39;listMyResources&#39;,array(&#39;parent&#39; =&gt; 9));
+{code}
+This makes use of the [@EVAL binding|revolution20:EVAL Binding] to wrap the rest of the input in an eval() PHP statement. This can be used to execute PHP, and therefore access the very powerful $modx object. We are then using that to use the runSnippet method which, well, runs a snippet, while passing the array in the second parameter as properties. In this case we are telling it that &quot;parent&quot; is equal to 9. The result of this snippet will then be returned - not echoed. This is needed to make sure it can be parsed and will not be placed on the page randomly.
+
+You probably don&#39;t have a snippet called listMyResources yet, so let&#39;s create it.
+
+\* You don&#39;t \*have\* to write a snippet, you could use getResources for it as well, but to introduce you to a number of interesting methods while we&#39;re at it you may want to write your own. .
+
+
+h2. Creating the snippet
+
+We will need to create a snippet that lists the appropriate resources, and in such a way that it makes sense to the TV input type. The Listbox will be expecting a string like the following:
+
+{quote}
+value1==name\|\|value2==name2\|\|lasteone==Last name?
+{quote}
+The above consists of three key-value pairs, seperated by two pipes. The key and value are separated by two equal characters. So this is what we want the snippet to output as well.
+
+Create a new snippet and name it listMyResources or whatever you put in the input options of the template variable. Let&#39;s start of by assigning the property expected (parent) to a variable.
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+{code}
+This sets the variable $parent to the value of any &quot;parent&quot; property found. This can be from an assigned property set or inline properties like in our situation. The 9 in the end is the default value to be used if there is no value found.
+
+{code}
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+{code}
+Then we will get the Object (abstraction) of the parent resource using the getObject method and assign it to a variable named parentObj. After that we will set up the $resArray variable which is filled with an array of the parents&#39; children if any. This assumes that there is indeed a valid object in the parentObj parameter. This may not always be the case, so you may want to add in a check before setting $resArray to see if $parantObj is not empty.
+
+Now that we have all the children we need, let&#39;s get the information we need from each aswell.
+
+{code}
+$resources = array();
+foreach($resArray as $res) {
+  $resources[] = $res-&gt;get(&#39;id&#39;) . &#39;==&#39; . $res-&gt;get(&#39;pagetitle&#39;);
+}
+{code}
+First we instantiate a new variable as an empty array. While not really required, it is good practice and can prevent injection of not-so-funny things elsewhere. Next we loop through the array with resources and store the id and pagetitle in a new entry in the $resources array. Note that we are putting it in with the two equal characters to put it in the right format for the TV.
+
+Almost done\!
+
+{code}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+We just glue together the array into a string, seperated by the two pipes (remember the tv input type syntax?) , and return it. Be sure not to echo it as that will make it show up whenever it is being called instead of when it is requested and can lead to unexpected results.
+
+Now if you go to a resource and change it to the template linked to this template variable, you should see the a list of pages you can select.
+
+For clarity, here&#39;s the complete snippet:
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+$resources = array();
+foreach($resArray as $res) {
+  $resources[] = $res-&gt;get(&#39;pagetitle&#39;) . &#39;==&#39; . $res-&gt;get(&#39;id&#39;);
+}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+
+h2. Presenting the related pages in your template
+
+You can just put the TV tag in your template, but most likely that will just give you a bunch of numbers, representing the IDs of the selected resources. You&#39;ll want to do a few things. First of, go back to your template variable and set the Output type to &quot;delimiter&quot;. You will be giving the option to specify what your delimiter will be, for example a comma or two pipes. Let&#39;s set it as a comma for this tutorial.
+
+
+Now to show it in your template, we will want a snippet that fetches the resources based on the ID we got from the template variable, parse it in a chunk so we can display it in anyway we want to and then return it to the template.
+
+We will assume this would be our snippet call:
+
+{code}
+ [[relatedPages? &amp;input=`[[*relatedPages]]` &amp;tpl=`relatedPagesTpl`]]
+{code}
+So we are setting an input property with the delimited list of resource IDs that we said were related, and a chunkname (relatedPagesTpl) to use as the chunk template.
+
+Let&#39;s work on the snippet then. Why don&#39;t we start with fetching and checking the two properties we added?
+
+{code}
+if (empty($input)) { return &#39;This article is so unique, that we couldn\&#39;t find anything related to it!&#39;; }
+$tpl = $modx-&gt;getOption(&#39;tpl&#39;,$scriptProperties,&#39;relatedPagesTpl&#39;);
+if ($modx-&gt;getChunk($tpl) == &#39;&#39;) { return &#39;We found some related pages, but don\&#39;t know how to present it.&#39;; }
+{code}
+What you see here is first checking if the $input variable (derived from the &amp;input property) is empty and return an error message if so. The reason we&#39;re using this directly and not in the way as shown with the $tpl variable (using modX::getOption) is because we could also use the snippet as an output filter, and when we do that we can assume the $input variable is set. [More about output filters here|revolution20:Input and Output Filters (Output Modifiers)]. On the second line we are first assigning a value to $tpl, which is either the &quot;tpl&quot; property passed in the snippet call, or the default of &#39;relatedPagesTpl&#39;. On the third line we fetch the chunk by its name using modX::getChunk, and if that is empty (so it does not exist, or is empty) we return a nice error message.
+
+
+
+So now that we have the settings, we can start processing. Let&#39;s first split up the delimited list of IDs into an array using the explode function. We will also set up an empty array for our output.
+
+{code}
+$ids = explode(&#39;,&#39;, $input);
+$output = array();
+{code}
+
+Now loop through the $ids array...
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  // We will do something here in a minute
+}
+{code}
+
+Within the loop we will want to get the resource object first, and to prevent we will create links that others can not access, we are making sure it has been published as well. You could add more conditions (for example, only when the &#39;hidemenu&#39; field is set to 0, or only searchable resources will show up), but we are happy with this.
+
+After we fetched the object, we are also going to make sure we found an object. If we don&#39;t, and a selected resource that was not published can potentially result in a nasty fatal PHP error being visible instead of your carefully handcrafted template with related pages... To be 100% sure, we are checking if the returned object is part of the &quot;modResource&quot; class.
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    // We are sure we have a resource here, so let&#39;s do something!
+  }
+}
+{code}
+
+Okay, so what do we want to do now? Let&#39;s just assume we want to call the chunk we assigned earlier, and put all resource fields into placeholders so we can call pretty much anything in there. For this we use the modElement::toArray() method to create an array of field =&gt; value pairs, and the modX::getChunk method (we also used that before, remember?) with the value array as second parameter to tell it to parse those as placeholders. We assign the result of that (which is the chunk with the placeholders parsed with the values we passed) to our $output array.
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    $output[] = $modx-&gt;getChunk($tpl,$resource-&gt;toArray());
+  }
+}
+{code}
+
+All we need to do now is return the $output array as a string and we have our related pages. The implode function glues together the different array items, using the first parameter (in this case an empty string) as delimiter. We could specify a comma-space in there to glue together with a comma in between.
+
+{code}
+return implode(&#39;&#39;,$output);
+{code}
+
+And that&#39;s it\!
+
+For clarity, this is the resulting snippet we named &quot;relatedPages&quot;:
+
+{code}
+if (empty($input)) { return &#39;This article is so unique, that we couldn\&#39;t find anything related to it!&#39;; }
+$tpl = $modx-&gt;getOption(&#39;tpl&#39;,$scriptProperties,&#39;relatedPagesTpl&#39;);
+if ($modx-&gt;getChunk($tpl) == &#39;&#39;) { return &#39;We found some related pages, but don\&#39;t know how to present it.&#39;; }
+$ids = explode(&#39;,&#39;, $input);
+$output = array();
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    $output[] = $modx-&gt;getChunk($tpl,$resource-&gt;toArray());
+  }
+}
+return implode(&#39;&#39;,$output);
+{code}
+
+An example of the relatedPagesTpl could be:
+
+{code}
+&lt;li&gt;
+  &lt;a href=&quot;[[~[[+id]]]]&quot; title=&quot;[[+pagetitle]]&quot;&gt;
+    [[+longtitle:default=`[[+pagetitle]]`]]
+  &lt;/a&gt;, by [[+createdby:userinfo=`fullname`]]
+&lt;/li&gt;
+{code}
+This creates a list item with a link to the resource and its pagetitle as the title attribute. It will try to use the longtitle for the link text, but defaults to the pagetitle if the longtitle doesn&#39;t exist. It also uses the userinfo output modifier to add the fullname of the author of the resource to the list item.
+
+h2. Further reading..
+
+* ?[revolution20:Template Variable Input Types]
+* ?[revolution20:Input and Output Filters]
+* [modX::getCollection|xPDO20:xPDO.getCollection]
+* [modX::getObject|xPDO20:xPDO.getObject]
+* [modX::getChunk|revolution20:modX.getChunk]";}i:3;a:3:{s:2:"id";s:8:"35095315";s:3:"ver";s:1:"6";s:4:"code";s:12215:"This brief tutorial will explain how you can make a client-proof&amp;nbsp; &quot;Related pages&quot; template variable. This specific example will introduce you to several MODX subjects including writing custom snippets and using custom output modifiers, however there are many different ways to achieve the same result. This tutorial will hopefully allow you to get a deeper understanding of several of the used concepts and help you further develop highly customizable content editing.
+
+
+
+
+h2. Setting up the Template Variable
+
+Of course we will need a Template Variable. In the Manager, navigate to the Elements tab in the navigation structure and click the icon with a TV on it, or right click on the Template Variables section to create a new template variable. Give it a suitable name and caption (this tutorial assumes relatedPages).
+
+
+In this case we will want to be able of selecting multiple resources, so we&#39;re going to choose the input type &quot;Listbox (multi-select)&quot;, however you could also use the Checkbox type without adjusting the rest of this tutorial if you would rather have a list of checkboxes.&amp;nbsp;
+
+Next link the Template Variable to the template that needs it on the &quot;Template Access&quot; tab, for example your blog item template.
+
+To fill the template variable with some values, we will need to write simple snippet\* and run it in the Input Options field. To do this we will be using what is known as an @BINDING. Add the following code to the Input Options field:
+
+{code}
+ @EVAL return $modx-&gt;runSnippet(&#39;listMyResources&#39;,array(&#39;parent&#39; =&gt; 9));
+{code}
+This makes use of the [@EVAL binding|revolution20:EVAL Binding] to wrap the rest of the input in an eval() PHP statement. This can be used to execute PHP, and therefore access the very powerful $modx object. We are then using that to use the runSnippet method which, well, runs a snippet, while passing the array in the second parameter as properties. In this case we are telling it that &quot;parent&quot; is equal to 9. The result of this snippet will then be returned - not echoed. This is needed to make sure it can be parsed and will not be placed on the page randomly.
+
+You probably don&#39;t have a snippet called listMyResources yet, so let&#39;s create it.
+
+\* You don&#39;t \*have\* to write a snippet, you could use getResources for it as well, but to introduce you to a number of interesting methods while we&#39;re at it you may want to write your own. .
+
+
+h2. Creating the snippet
+
+We will need to create a snippet that lists the appropriate resources, and in such a way that it makes sense to the TV input type. The Listbox will be expecting a string like the following:
+
+{quote}
+value1==name\|\|value2==name2\|\|lasteone==Last name?
+{quote}
+The above consists of three key-value pairs, seperated by two pipes. The key and value are separated by two equal characters. So this is what we want the snippet to output as well.
+
+Create a new snippet and name it listMyResources or whatever you put in the input options of the template variable. Let&#39;s start of by assigning the property expected (parent) to a variable.
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+{code}
+This sets the variable $parent to the value of any &quot;parent&quot; property found. This can be from an assigned property set or inline properties like in our situation. The 9 in the end is the default value to be used if there is no value found.
+
+{code}
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+{code}
+Then we will get the Object (abstraction) of the parent resource using the getObject method and assign it to a variable named parentObj. After that we will set up the $resArray variable which is filled with an array of the parents&#39; children if any. This assumes that there is indeed a valid object in the parentObj parameter. This may not always be the case, so you may want to add in a check before setting $resArray to see if $parantObj is not empty.
+
+Now that we have all the children we need, let&#39;s get the information we need from each aswell.
+
+{code}
+$resources = array();
+foreach($resArray as $res) {
+  $resources[] = $res-&gt;get(&#39;id&#39;) . &#39;==&#39; . $res-&gt;get(&#39;pagetitle&#39;);
+}
+{code}
+First we instantiate a new variable as an empty array. While not really required, it is good practice and can prevent injection of not-so-funny things elsewhere. Next we loop through the array with resources and store the id and pagetitle in a new entry in the $resources array. Note that we are putting it in with the two equal characters to put it in the right format for the TV.
+
+Almost done\!
+
+{code}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+We just glue together the array into a string, seperated by the two pipes (remember the tv input type syntax?) , and return it. Be sure not to echo it as that will make it show up whenever it is being called instead of when it is requested and can lead to unexpected results.
+
+Now if you go to a resource and change it to the template linked to this template variable, you should see the a list of pages you can select.
+
+For clarity, here&#39;s the complete snippet:
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+$resources = array();
+foreach($resArray as $res) {
+  $resources[] = $res-&gt;get(&#39;id&#39;) . &#39;==&#39; . $res-&gt;get(&#39;pagetitle&#39;);
+}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+
+h2. Presenting the related pages in your template
+
+You can just put the TV tag in your template, but most likely that will just give you a bunch of numbers, representing the IDs of the selected resources. You&#39;ll want to do a few things. First of, go back to your template variable and set the Output type to &quot;delimiter&quot;. You will be giving the option to specify what your delimiter will be, for example a comma or two pipes. Let&#39;s set it as a comma for this tutorial.
+
+
+Now to show it in your template, we will want a snippet that fetches the resources based on the ID we got from the template variable, parse it in a chunk so we can display it in anyway we want to and then return it to the template.
+
+We will assume this would be our snippet call:
+
+{code}
+ [[relatedPages? &amp;input=`[[*relatedPages]]` &amp;tpl=`relatedPagesTpl`]]
+{code}
+So we are setting an input property with the delimited list of resource IDs that we said were related, and a chunkname (relatedPagesTpl) to use as the chunk template.
+
+Let&#39;s work on the snippet then. Why don&#39;t we start with fetching and checking the two properties we added?
+
+{code}
+if (empty($input)) { return &#39;This article is so unique, that we couldn\&#39;t find anything related to it!&#39;; }
+$tpl = $modx-&gt;getOption(&#39;tpl&#39;,$scriptProperties,&#39;relatedPagesTpl&#39;);
+if ($modx-&gt;getChunk($tpl) == &#39;&#39;) { return &#39;We found some related pages, but don\&#39;t know how to present it.&#39;; }
+{code}
+What you see here is first checking if the $input variable (derived from the &amp;input property) is empty and return an error message if so. The reason we&#39;re using this directly and not in the way as shown with the $tpl variable (using modX::getOption) is because we could also use the snippet as an output filter, and when we do that we can assume the $input variable is set. [More about output filters here|revolution20:Input and Output Filters (Output Modifiers)]. On the second line we are first assigning a value to $tpl, which is either the &quot;tpl&quot; property passed in the snippet call, or the default of &#39;relatedPagesTpl&#39;. On the third line we fetch the chunk by its name using modX::getChunk, and if that is empty (so it does not exist, or is empty) we return a nice error message.
+
+
+
+So now that we have the settings, we can start processing. Let&#39;s first split up the delimited list of IDs into an array using the explode function. We will also set up an empty array for our output.
+
+{code}
+$ids = explode(&#39;,&#39;, $input);
+$output = array();
+{code}
+
+Now loop through the $ids array...
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  // We will do something here in a minute
+}
+{code}
+
+Within the loop we will want to get the resource object first, and to prevent we will create links that others can not access, we are making sure it has been published as well. You could add more conditions (for example, only when the &#39;hidemenu&#39; field is set to 0, or only searchable resources will show up), but we are happy with this.
+
+After we fetched the object, we are also going to make sure we found an object. If we don&#39;t, and a selected resource that was not published can potentially result in a nasty fatal PHP error being visible instead of your carefully handcrafted template with related pages... To be 100% sure, we are checking if the returned object is part of the &quot;modResource&quot; class.
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    // We are sure we have a resource here, so let&#39;s do something!
+  }
+}
+{code}
+
+Okay, so what do we want to do now? Let&#39;s just assume we want to call the chunk we assigned earlier, and put all resource fields into placeholders so we can call pretty much anything in there. For this we use the modElement::toArray() method to create an array of field =&gt; value pairs, and the modX::getChunk method (we also used that before, remember?) with the value array as second parameter to tell it to parse those as placeholders. We assign the result of that (which is the chunk with the placeholders parsed with the values we passed) to our $output array.
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    $output[] = $modx-&gt;getChunk($tpl,$resource-&gt;toArray());
+  }
+}
+{code}
+
+All we need to do now is return the $output array as a string and we have our related pages. The implode function glues together the different array items, using the first parameter (in this case an empty string) as delimiter. We could specify a comma-space in there to glue together with a comma in between.
+
+{code}
+return implode(&#39;&#39;,$output);
+{code}
+
+And that&#39;s it\!
+
+For clarity, this is the resulting snippet we named &quot;relatedPages&quot;:
+
+{code}
+if (empty($input)) { return &#39;This article is so unique, that we couldn\&#39;t find anything related to it!&#39;; }
+$tpl = $modx-&gt;getOption(&#39;tpl&#39;,$scriptProperties,&#39;relatedPagesTpl&#39;);
+if ($modx-&gt;getChunk($tpl) == &#39;&#39;) { return &#39;We found some related pages, but don\&#39;t know how to present it.&#39;; }
+$ids = explode(&#39;,&#39;, $input);
+$output = array();
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    $output[] = $modx-&gt;getChunk($tpl,$resource-&gt;toArray());
+  }
+}
+return implode(&#39;&#39;,$output);
+{code}
+
+An example of the relatedPagesTpl could be:
+
+{code}
+&lt;li&gt;
+  &lt;a href=&quot;[[~[[+id]]]]&quot; title=&quot;[[+pagetitle]]&quot;&gt;
+    [[+longtitle:default=`[[+pagetitle]]`]]
+  &lt;/a&gt;, by [[+createdby:userinfo=`fullname`]]
+&lt;/li&gt;
+{code}
+This creates a list item with a link to the resource and its pagetitle as the title attribute. It will try to use the longtitle for the link text, but defaults to the pagetitle if the longtitle doesn&#39;t exist. It also uses the userinfo output modifier to add the fullname of the author of the resource to the list item.
+
+h2. Further reading..
+
+* Template Variable Input Types
+* Custom Output Modifiers
+* modX::getCollection
+* modX::getObject
+* modX::getChunk";}i:4;a:3:{s:2:"id";s:8:"35095313";s:3:"ver";s:1:"5";s:4:"code";s:11824:"This brief tutorial will explain how you can make a client-proof&amp;nbsp; &quot;Related pages&quot; template variable. This specific example will introduce you to several MODX subjects including writing custom snippets and using custom output modifiers, however there are many different ways to achieve the same result. This tutorial will hopefully allow you to get a deeper understanding of several of the used concepts and help you further develop highly customizable content editing.
+
+
+
+
+h2. Setting up the Template Variable
+
+Of course we will need a Template Variable. In the Manager, navigate to the Elements tab in the navigation structure and click the icon with a TV on it, or right click on the Template Variables section to create a new template variable. Give it a suitable name and caption (this tutorial assumes relatedPages).
+
+
+In this case we will want to be able of selecting multiple resources, so we&#39;re going to choose the input type &quot;Listbox (multi-select)&quot;, however you could also use the Checkbox type without adjusting the rest of this tutorial if you would rather have a list of checkboxes.&amp;nbsp;
+
+Next link the Template Variable to the template that needs it on the &quot;Template Access&quot; tab, for example your blog item template.
+
+To fill the template variable with some values, we will need to write simple snippet\* and run it in the Input Options field. To do this we will be using what is known as an @BINDING. Add the following code to the Input Options field:
+
+{code}
+ @EVAL return $modx-&gt;runSnippet(&#39;listMyResources&#39;,array(&#39;parent&#39; =&gt; 9));
+{code}
+This makes use of the [@EVAL binding|revolution20:EVAL Binding] to wrap the rest of the input in an eval() PHP statement. This can be used to execute PHP, and therefore access the very powerful $modx object. We are then using that to use the runSnippet method which, well, runs a snippet, while passing the array in the second parameter as properties. In this case we are telling it that &quot;parent&quot; is equal to 9. The result of this snippet will then be returned - not echoed. This is needed to make sure it can be parsed and will not be placed on the page randomly.
+
+You probably don&#39;t have a snippet called listMyResources yet, so let&#39;s create it.
+
+\* You don&#39;t \*have\* to write a snippet, you could use getResources for it as well, but to introduce you to a number of interesting methods while we&#39;re at it you may want to write your own. .
+
+
+h2. Creating the snippet
+
+We will need to create a snippet that lists the appropriate resources, and in such a way that it makes sense to the TV input type. The Listbox will be expecting a string like the following:
+
+{quote}
+value1==name\|\|value2==name2\|\|lasteone==Last name?
+{quote}
+The above consists of three key-value pairs, seperated by two pipes. The key and value are separated by two equal characters. So this is what we want the snippet to output as well.
+
+Create a new snippet and name it listMyResources or whatever you put in the input options of the template variable. Let&#39;s start of by assigning the property expected (parent) to a variable.
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+{code}
+This sets the variable $parent to the value of any &quot;parent&quot; property found. This can be from an assigned property set or inline properties like in our situation. The 9 in the end is the default value to be used if there is no value found.
+
+{code}
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+{code}
+Then we will get the Object (abstraction) of the parent resource using the getObject method and assign it to a variable named parentObj. After that we will set up the $resArray variable which is filled with an array of the parents&#39; children if any. This assumes that there is indeed a valid object in the parentObj parameter. This may not always be the case, so you may want to add in a check before setting $resArray to see if $parantObj is not empty.
+
+Now that we have all the children we need, let&#39;s get the information we need from each aswell.
+
+{code}
+$resources = array();
+foreach($resArray as $res) {
+  $resources[] = $res-&gt;get(&#39;id&#39;) . &#39;==&#39; . $res-&gt;get(&#39;pagetitle&#39;);
+}
+{code}
+First we instantiate a new variable as an empty array. While not really required, it is good practice and can prevent injection of not-so-funny things elsewhere. Next we loop through the array with resources and store the id and pagetitle in a new entry in the $resources array. Note that we are putting it in with the two equal characters to put it in the right format for the TV.
+
+Almost done\!
+
+{code}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+We just glue together the array into a string, seperated by the two pipes (remember the tv input type syntax?) , and return it. Be sure not to echo it as that will make it show up whenever it is being called instead of when it is requested and can lead to unexpected results.
+
+Now if you go to a resource and change it to the template linked to this template variable, you should see the a list of pages you can select.
+
+For clarity, here&#39;s the complete snippet:
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+$resources = array();
+foreach($resArray as $res) {
+  $resources[] = $res-&gt;get(&#39;id&#39;) . &#39;==&#39; . $res-&gt;get(&#39;pagetitle&#39;);
+}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+
+h2. Presenting the related pages in your template
+
+You can just put the TV tag in your template, but most likely that will just give you a bunch of numbers, representing the IDs of the selected resources. You&#39;ll want to do a few things. First of, go back to your template variable and set the Output type to &quot;delimiter&quot;. You will be giving the option to specify what your delimiter will be, for example a comma or two pipes. Let&#39;s set it as a comma for this tutorial.
+
+
+Now to show it in your template, we will want a snippet that fetches the resources based on the ID we got from the template variable, parse it in a chunk so we can display it in anyway we want to and then return it to the template.
+
+We will assume this would be our snippet call:
+
+{code}
+ [[relatedPages? &amp;input=`[[*relatedPages]]` &amp;tpl=`relatedPagesTpl`]]
+{code}
+So we are setting an input property with the delimited list of resource IDs that we said were related, and a chunkname (relatedPagesTpl) to use as the chunk template.
+
+Let&#39;s work on the snippet then. Why don&#39;t we start with fetching and checking the two properties we added?
+
+{code}
+if (empty($input)) { return &#39;This article is so unique, that we couldn\&#39;t find anything related to it!&#39;; }
+$tpl = $modx-&gt;getOption(&#39;tpl&#39;,$scriptProperties,&#39;relatedPagesTpl&#39;);
+if ($modx-&gt;getChunk($tpl) == &#39;&#39;) { return &#39;We found some related pages, but don\&#39;t know how to present it.&#39;; }
+{code}
+What you see here is first checking if the $input variable (derived from the &amp;input property) is empty and return an error message if so. The reason we&#39;re using this directly and not in the way as shown with the $tpl variable (using modX::getOption) is because we could also use the snippet as an output filter, and when we do that we can assume the $input variable is set. [More about output filters here|revolution20:Input and Output Filters (Output Modifiers)]. On the second line we are first assigning a value to $tpl, which is either the &quot;tpl&quot; property passed in the snippet call, or the default of &#39;relatedPagesTpl&#39;. On the third line we fetch the chunk by its name using modX::getChunk, and if that is empty (so it does not exist, or is empty) we return a nice error message.
+
+
+
+So now that we have the settings, we can start processing. Let&#39;s first split up the delimited list of IDs into an array using the explode function. We will also set up an empty array for our output.
+
+{code}
+$ids = explode(&#39;,&#39;, $input);
+$output = array();
+{code}
+
+Now loop through the $ids array...
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  // We will do something here in a minute
+}
+{code}
+
+Within the loop we will want to get the resource object first, and to prevent we will create links that others can not access, we are making sure it has been published as well. You could add more conditions (for example, only when the &#39;hidemenu&#39; field is set to 0, or only searchable resources will show up), but we are happy with this.
+
+After we fetched the object, we are also going to make sure we found an object. If we don&#39;t, and a selected resource that was not published can potentially result in a nasty fatal PHP error being visible instead of your carefully handcrafted template with related pages... To be 100% sure, we are checking if the returned object is part of the &quot;modResource&quot; class.
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    // We are sure we have a resource here, so let&#39;s do something!
+  }
+}
+{code}
+
+Okay, so what do we want to do now? Let&#39;s just assume we want to call the chunk we assigned earlier, and put all resource fields into placeholders so we can call pretty much anything in there. For this we use the modElement::toArray() method to create an array of field =&gt; value pairs, and the modX::getChunk method (we also used that before, remember?) with the value array as second parameter to tell it to parse those as placeholders. We assign the result of that (which is the chunk with the placeholders parsed with the values we passed) to our $output array.
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    $output[] = $modx-&gt;getChunk($tpl,$resource-&gt;toArray());
+  }
+}
+{code}
+
+All we need to do now is return the $output array as a string and we have our related pages. The implode function glues together the different array items, using the first parameter (in this case an empty string) as delimiter. We could specify a comma-space in there to glue together with a comma in between.
+
+{code}
+return implode(&#39;&#39;,$output);
+{code}
+
+And that&#39;s it\!
+
+For clarity, this is the resulting snippet we named &quot;relatedPages&quot;:
+
+{code}
+if (empty($input)) { return &#39;This article is so unique, that we couldn\&#39;t find anything related to it!&#39;; }
+$tpl = $modx-&gt;getOption(&#39;tpl&#39;,$scriptProperties,&#39;relatedPagesTpl&#39;);
+if ($modx-&gt;getChunk($tpl) == &#39;&#39;) { return &#39;We found some related pages, but don\&#39;t know how to present it.&#39;; }
+$ids = explode(&#39;,&#39;, $input);
+$output = array();
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $value));
+  if ($resource instanceof modResource) {
+    $output[] = $modx-&gt;getChunk($tpl,$resource-&gt;toArray());
+  }
+}
+return implode(&#39;&#39;,$output);
+{code}
+
+An example of the relatedPagesTpl could be:
+
+{code}
+&lt;li class=&quot;related&quot;&gt;[[+longtitle:default=`[[+pagetitle]]`]], by [[+createdby:userinfo=`fullname`]]&lt;/li&gt;
+{code}
+
+h2. Further reading..
+
+* Template Variable Input Types
+* Custom Output Modifiers
+* modX::getCollection
+* modX::getObject
+* modX::getChunk";}i:5;a:3:{s:2:"id";s:8:"35095311";s:3:"ver";s:1:"4";s:4:"code";s:11947:"This brief tutorial will explain how you can make a client-proof&amp;nbsp; &quot;Related pages&quot; template variable. This specific example will introduce you to several MODX subjects including writing custom snippets and using custom output modifiers, however there are many different ways to achieve the same result. This tutorial will hopefully allow you to get a deeper understanding of several of the used concepts and help you further develop highly customizable content editing.
+
+
+{note}This tutorial has been written for MODX Revolution 2.0.x and still needs to be tested for the upcoming 2.1 release. {note}
+
+
+h2. Setting up the Template Variable
+
+Of course we will need a Template Variable. In the Manager, navigate to the Elements tab in the navigation structure and click the icon with a TV on it, or right click on the Template Variables section to create a new template variable. Give it a suitable name and caption (this tutorial assumes relatedPages).
+
+
+In this case we will want to be able of selecting multiple resources, so we&#39;re going to choose the input type &quot;Listbox (multi-select)&quot;, however you could also use the Checkbox type without adjusting the rest of this tutorial if you would rather have a list of checkboxes.&amp;nbsp;
+
+Next link the Template Variable to the template that needs it on the &quot;Template Access&quot; tab, for example your blog item template.
+
+To fill the template variable with some values, we will need to write simple snippet\* and run it in the Input Options field. To do this we will be using what is known as an @BINDING. Add the following code to the Input Options field:
+
+{code}
+ @EVAL return $modx-&gt;runSnippet(&#39;listMyResources&#39;,array(&#39;parent&#39; =&gt; 9));
+{code}
+This makes use of the [@EVAL binding|revolution20:EVAL Binding] to wrap the rest of the input in an eval() PHP statement. This can be used to execute PHP, and therefore access the very powerful $modx object. We are then using that to use the runSnippet method which, well, runs a snippet, while passing the array in the second parameter as properties. In this case we are telling it that &quot;parent&quot; is equal to 9. The result of this snippet will then be returned - not echoed. This is needed to make sure it can be parsed and will not be placed on the page randomly.
+
+You probably don&#39;t have a snippet called listMyResources yet, so let&#39;s create it.
+
+\* You don&#39;t \*have\* to write a snippet, you could use getResources for it as well, but to introduce you to a number of interesting methods while we&#39;re at it you may want to write your own. .
+
+
+h2. Creating the snippet
+
+We will need to create a snippet that lists the appropriate resources, and in such a way that it makes sense to the TV input type. The Listbox will be expecting a string like the following:
+
+{quote}
+value1==name\|\|value2==name2\|\|lasteone==Last name?
+{quote}
+The above consists of three key-value pairs, seperated by two pipes. The key and value are separated by two equal characters. So this is what we want the snippet to output as well.
+
+Create a new snippet and name it listMyResources or whatever you put in the input options of the template variable. Let&#39;s start of by assigning the property expected (parent) to a variable.
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+{code}
+This sets the variable $parent to the value of any &quot;parent&quot; property found. This can be from an assigned property set or inline properties like in our situation. The 9 in the end is the default value to be used if there is no value found.
+
+{code}
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+{code}
+Then we will get the Object (abstraction) of the parent resource using the getObject method and assign it to a variable named parentObj. After that we will set up the $resArray variable which is filled with an array of the parents&#39; children if any. This assumes that there is indeed a valid object in the parentObj parameter. This may not always be the case, so you may want to add in a check before setting $resArray to see if $parantObj is not empty.
+
+Now that we have all the children we need, let&#39;s get the information we need from each aswell.
+
+{code}
+$resources = array();
+foreach($resArray as $res) {
+  $resources[] = $res-&gt;get(&#39;id&#39;) . &#39;==&#39; . $res-&gt;get(&#39;pagetitle&#39;);
+}
+{code}
+First we instantiate a new variable as an empty array. While not really required, it is good practice and can prevent injection of not-so-funny things elsewhere. Next we loop through the array with resources and store the id and pagetitle in a new entry in the $resources array. Note that we are putting it in with the two equal characters to put it in the right format for the TV.
+
+Almost done\!
+
+{code}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+We just glue together the array into a string, seperated by the two pipes (remember the tv input type syntax?) , and return it. Be sure not to echo it as that will make it show up whenever it is being called instead of when it is requested and can lead to unexpected results.
+
+Now if you go to a resource and change it to the template linked to this template variable, you should see the a list of pages you can select.
+
+For clarity, here&#39;s the complete snippet:
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+$resources = array();
+foreach($resArray as $res) {
+  $resources[] = $res-&gt;get(&#39;id&#39;) . &#39;==&#39; . $res-&gt;get(&#39;pagetitle&#39;);
+}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+
+h2. Presenting the related pages in your template
+
+You can just put the TV tag in your template, but most likely that will just give you a bunch of numbers, representing the IDs of the selected resources. You&#39;ll want to do a few things. First of, go back to your template variable and set the Output type to &quot;delimiter&quot;. You will be giving the option to specify what your delimiter will be, for example a comma or two pipes. Let&#39;s set it as a comma for this tutorial.
+
+
+Now to show it in your template, we will want a snippet that fetches the resources based on the ID we got from the template variable, parse it in a chunk so we can display it in anyway we want to and then return it to the template.
+
+We will assume this would be our snippet call:
+
+{code}
+ [[relatedPages? &amp;input=`[[*relatedPages]]` &amp;tpl=`relatedPagesTpl`]]
+{code}
+So we are setting an input property with the delimited list of resource IDs that we said were related, and a chunkname (relatedPagesTpl) to use as the chunk template.
+
+Let&#39;s work on the snippet then. Why don&#39;t we start with fetching and checking the two properties we added?
+
+{code}
+if (empty($input)) { return &#39;This article is so unique, that we couldn\&#39;t find anything related to it!&#39;; }
+$tpl = $modx-&gt;getOption(&#39;tpl&#39;,$scriptProperties,&#39;relatedPagesTpl&#39;);
+if ($modx-&gt;getChunk($tpl) == &#39;&#39;) { return &#39;We found some related pages, but don\&#39;t know how to present it.&#39;; }
+{code}
+What you see here is first checking if the $input variable (derived from the &amp;input property) is empty and return an error message if so. The reason we&#39;re using this directly and not in the way as shown with the $tpl variable (using modX::getOption) is because we could also use the snippet as an output filter, and when we do that we can assume the $input variable is set. [More about output filters here|revolution20:Input and Output Filters (Output Modifiers)]. On the second line we are first assigning a value to $tpl, which is either the &quot;tpl&quot; property passed in the snippet call, or the default of &#39;relatedPagesTpl&#39;. On the third line we fetch the chunk by its name using modX::getChunk, and if that is empty (so it does not exist, or is empty) we return a nice error message.
+
+
+
+So now that we have the settings, we can start processing. Let&#39;s first split up the delimited list of IDs into an array using the explode function. We will also set up an empty array for our output.
+
+{code}
+$ids = explode(&#39;,&#39;, $input);
+$output = array();
+{code}
+
+Now loop through the $ids array...
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  // We will do something here in a minute
+}
+{code}
+
+Within the loop we will want to get the resource object first, and to prevent we will create links that others can not access, we are making sure it has been published as well. You could add more conditions (for example, only when the &#39;hidemenu&#39; field is set to 0, or only searchable resources will show up), but we are happy with this.
+
+After we fetched the object, we are also going to make sure we found an object. If we don&#39;t, and a selected resource that was not published can potentially result in a nasty fatal PHP error being visible instead of your carefully handcrafted template with related pages... To be 100% sure, we are checking if the returned object is part of the &quot;modResource&quot; class.
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $key));
+  if ($resource instanceof modResource) {
+    // We are sure we have a resource here, so let&#39;s do something!
+  }
+}
+{code}
+
+Okay, so what do we want to do now? Let&#39;s just assume we want to call the chunk we assigned earlier, and put all resource fields into placeholders so we can call pretty much anything in there. For this we use the modElement::toArray() method to create an array of field =&gt; value pairs, and the modX::getChunk method (we also used that before, remember?) with the value array as second parameter to tell it to parse those as placeholders. We assign the result of that (which is the chunk with the placeholders parsed with the values we passed) to our $output array.
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $key));
+  if ($resource instanceof modResource) {
+    $output[] = $modx-&gt;getChunk($tpl,$resource-&gt;toArray());
+  }
+}
+{code}
+
+All we need to do now is return the $output array as a string and we have our related pages. The implode function glues together the different array items, using the first parameter (in this case an empty string) as delimiter. We could specify a comma-space in there to glue together with a comma in between.
+
+{code}
+return implode(&#39;&#39;,$output);
+{code}
+
+And that&#39;s it\!
+
+For clarity, this is the resulting snippet we named &quot;relatedPages&quot;:
+
+{code}
+if (empty($input)) { return &#39;This article is so unique, that we couldn\&#39;t find anything related to it!&#39;; }
+$tpl = $modx-&gt;getOption(&#39;tpl&#39;,$scriptProperties,&#39;relatedPagesTpl&#39;);
+if ($modx-&gt;getChunk($tpl) == &#39;&#39;) { return &#39;We found some related pages, but don\&#39;t know how to present it.&#39;; }
+$ids = explode(&#39;,&#39;, $input);
+$output = array();
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $key));
+  if ($resource instanceof modResource) {
+    $output[] = $modx-&gt;getChunk($tpl,$resource-&gt;toArray());
+  }
+}
+return implode(&#39;&#39;,$output);
+{code}
+
+An example of the relatedPagesTpl could be:
+
+{code}
+&lt;li class=&quot;related&quot;&gt;[[+longtitle:default=`[[+pagetitle]]`]], by [[+createdby:userinfo=`fullname`]]&lt;/li&gt;
+{code}
+
+h2. Further reading..
+
+* Template Variable Input Types
+* Custom Output Modifiers
+* modX::getCollection
+* modX::getObject
+* modX::getChunk";}i:6;a:3:{s:2:"id";s:8:"35095309";s:3:"ver";s:1:"3";s:4:"code";s:11742:"This brief tutorial will explain how you can make a client-proof&amp;nbsp; &quot;Related pages&quot; template variable. This specific example will introduce you to several MODX subjects including writing custom snippets and using custom output modifiers, however there are many different ways to achieve the same result. This tutorial will hopefully allow you to get a deeper understanding of several of the used concepts and help you further develop highly customizable content editing.
+
+
+{note}This tutorial has been written for MODX Revolution 2.0.x and still needs to be tested for the upcoming 2.1 release. {note}
+
+
+h2. Setting up the Template Variable
+
+Of course we will need a Template Variable. In the Manager, navigate to the Elements tab in the navigation structure and click the icon with a TV on it, or right click on the Template Variables section to create a new template variable. Give it a suitable name and caption (this tutorial assumes relatedPages).
+
+
+In this case we will want to be able of selecting multiple resources, so we&#39;re going to choose the input type &quot;Listbox (multi-select)&quot;, however you could also use the Checkbox type without adjusting the rest of this tutorial if you would rather have a list of checkboxes.&amp;nbsp;
+
+Next link the Template Variable to the template that needs it on the &quot;Template Access&quot; tab, for example your blog item template.
+
+To fill the template variable with some values, we will need to write simple snippet\* and run it in the Input Options field. To do this we will be using what is known as an @BINDING. Add the following code to the Input Options field:
+
+{code}
+ @EVAL return $modx-&gt;runSnippet(&#39;listMyResources&#39;,array(&#39;parent&#39; =&gt; 9));
+{code}
+This makes use of the [@EVAL binding|revolution20:EVAL Binding] to wrap the rest of the input in an eval() PHP statement. This can be used to execute PHP, and therefore access the very powerful $modx object. We are then using that to use the runSnippet method which, well, runs a snippet, while passing the array in the second parameter as properties. In this case we are telling it that &quot;parent&quot; is equal to 9. The result of this snippet will then be returned - not echoed. This is needed to make sure it can be parsed and will not be placed on the page randomly.
+
+You probably don&#39;t have a snippet called listMyResources yet, so let&#39;s create it.
+
+\* You don&#39;t \*have\* to write a snippet, you could use getResources for it as well, but to introduce you to a number of interesting methods while we&#39;re at it you may want to write your own. .
+
+
+h2. Creating the snippet
+
+We will need to create a snippet that lists the appropriate resources, and in such a way that it makes sense to the TV input type. The Listbox will be expecting a string like the following:
+
+{quote}
+value1==name\|\|value2==name2\|\|lasteone==Last name?
+{quote}
+The above consists of three key-value pairs, seperated by two pipes. The key and value are separated by two equal characters. So this is what we want the snippet to output as well.
+
+Create a new snippet and name it listMyResources or whatever you put in the input options of the template variable. Let&#39;s start of by assigning the property expected (parent) to a variable.
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+{code}
+This sets the variable $parent to the value of any &quot;parent&quot; property found. This can be from an assigned property set or inline properties like in our situation. The 9 in the end is the default value to be used if there is no value found.
+
+{code}
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+{code}
+Then we will get the Object (abstraction) of the parent resource using the getObject method and assign it to a variable named parentObj. After that we will set up the $resArray variable which is filled with an array of the parents&#39; children if any. This assumes that there is indeed a valid object in the parentObj parameter. This may not always be the case, so you may want to add in a check before setting $resArray to see if $parantObj is not empty.
+
+Now that we have all the children we need, let&#39;s get the information we need from each aswell.
+
+{code}
+$resources = array();
+foreach($resArray as $res) {
+  $resources[] = $res-&gt;get(&#39;id&#39;) . &#39;==&#39; . $res-&gt;get(&#39;pagetitle&#39;);
+}
+{code}
+First we instantiate a new variable as an empty array. While not really required, it is good practice and can prevent injection of not-so-funny things elsewhere. Next we loop through the array with resources and store the id and pagetitle in a new entry in the $resources array. Note that we are putting it in with the two equal characters to put it in the right format for the TV.
+
+Almost done\!
+
+{code}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+We just glue together the array into a string, seperated by the two pipes (remember the tv input type syntax?) , and return it. Be sure not to echo it as that will make it show up whenever it is being called instead of when it is requested and can lead to unexpected results.
+
+Now if you go to a resource and change it to the template linked to this template variable, you should see the a list of pages you can select.
+
+For clarity, here&#39;s the complete snippet:
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+$resources = array();
+foreach($resArray as $res) {
+  $resources[] = $res-&gt;get(&#39;id&#39;) . &#39;==&#39; . $res-&gt;get(&#39;pagetitle&#39;);
+}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+
+h2. Presenting the related pages in your template
+
+You can just put the TV tag in your template, but most likely that will just give you a bunch of numbers, representing the IDs of the selected resources. You&#39;ll want to do a few things. First of, go back to your template variable and set the Output type to &quot;delimiter&quot;. You will be giving the option to specify what your delimiter will be, for example a comma or two pipes. Let&#39;s set it as a comma for this tutorial.
+
+
+Now to show it in your template, we will want a snippet that fetches the resources based on the ID we got from the template variable, parse it in a chunk so we can display it in anyway we want to and then return it to the template.
+
+We will assume this would be our snippet call:
+
+{code}
+ [[relatedPages? &amp;input=`[[*relatedPages]]` &amp;tpl=`relatedPagesTpl`]]
+{code}
+So we are setting an input property with the delimited list of resource IDs that we said were related, and a chunkname (relatedPagesTpl) to use as the chunk template.
+
+Let&#39;s work on the snippet then. Why don&#39;t we start with fetching and checking the two properties we added?
+
+{code}
+if (empty($input)) { return &#39;This article is so unique, that we couldn&#39;t find anything related to it!&#39;; }
+$tpl = $modx-&gt;getOption(&#39;tpl&#39;,$scriptProperties,&#39;relatedPagesTpl&#39;);
+if (empty($modx-&gt;getChunk($tpl)) { return &#39;We found some related pages, but don&#39;t know how to present it.&#39;; }
+{code}
+What you see here is first checking if the $input variable (derived from the &amp;input property) is empty and return an error message if so. The reason we&#39;re using this directly and not in the way as shown with the $tpl variable (using modX::getOption) is because we could also use the snippet as an output filter, and when we do that we can assume the $input variable is set. [More about output filters here|revolution20:Input and Output Filters (Output Modifiers)]. On the second line we are first assigning a value to $tpl, which is either the &quot;tpl&quot; property passed in the snippet call, or the default of &#39;relatedPagesTpl&#39;. On the third line we fetch the chunk by its name using modX::getChunk, and if that is empty (so it does not exist, or is empty) we return a nice error message.
+
+
+
+So now that we have the settings, we can start processing. Let&#39;s first split up the delimited list of IDs into an array using the explode function. We will also set up an empty array for our output.
+
+{code}
+$ids = explode(&#39;,&#39;, $input);
+$output = array();
+{code}
+
+Now loop through the $ids array...
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  // We will do something here in a minute
+}
+{code}
+
+Within the loop we will want to get the resource object first, and to prevent we will create links that others can not access, we are making sure it has been published as well. You could add more conditions (for example, only when the &#39;hidemenu&#39; field is set to 0, or only searchable resources will show up), but we are happy with this.
+
+After we fetched the object, we are also going to make sure we found an object. If we don&#39;t, and a selected resource that was not published can potentially result in a nasty fatal PHP error being visible instead of your carefully handcrafted template with related pages... To be 100% sure, we are checking if the returned object is part of the &quot;modResource&quot; class.
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $key));
+  if ($resource instanceof modResource) {
+    // We are sure we have a resource here, so let&#39;s do something!
+  }
+}
+{code}
+
+Okay, so what do we want to do now? Let&#39;s just assume we want to call the chunk we assigned earlier, and put all resource fields into placeholders so we can call pretty much anything in there. For this we use the modElement::toArray() method to create an array of field =&gt; value pairs, and the modX::getChunk method (we also used that before, remember?) with the value array as second parameter to tell it to parse those as placeholders. We assign the result of that (which is the chunk with the placeholders parsed with the values we passed) to our $output array.
+
+{code}
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $key));
+  if ($resource instanceof modResource) {
+    $output[] = $modx-&gt;getChunk($tpl,$resource-&gt;toArray());
+  }
+}
+{code}
+
+All we need to do now is return the $output array as a string and we have our related pages. The implode function glues together the different array items, using the first parameter (in this case an empty string) as delimiter. We could specify a comma-space in there to glue together with a comma in between.
+
+{code}
+return implode(&#39;&#39;,$output);
+{code}
+
+And that&#39;s it! 
+
+For clarity, this is the resulting snippet we named &quot;relatedPages&quot;:
+
+{code}
+if (empty($input)) { return &#39;This article is so unique, that we couldn&#39;t find anything related to it!&#39;; }
+$tpl = $modx-&gt;getOption(&#39;tpl&#39;,$scriptProperties,&#39;relatedPagesTpl&#39;);
+if (empty($modx-&gt;getChunk($tpl)) { return &#39;We found some related pages, but don&#39;t know how to present it.&#39;; }
+$ids = explode(&#39;,&#39;, $input);
+$output = array();
+foreach ($ids as $key =&gt; $value) {
+  $resource = $modx-&gt;getObject(&#39;modResource&#39;,array(
+    &#39;published&#39; =&gt; 1,
+    &#39;id&#39; =&gt; $key));
+  if ($resource instanceof modResource) {
+    $output[] = $modx-&gt;getChunk($tpl,$resource-&gt;toArray());
+  }
+}
+return implode(&#39;&#39;,$output);
+{code}
+
+
+h2. Further reading..
+
+* Template Variable Input Types
+* Custom Output Modifiers
+* modX::getCollection
+* modX::getObject
+* modX::getChunk";}i:7;a:3:{s:2:"id";s:8:"35095307";s:3:"ver";s:1:"2";s:4:"code";s:6864:"This brief tutorial will explain how you can make a client-proof&amp;nbsp; &quot;Related pages&quot; template variable. This specific example will introduce you to several MODX subjects including writing custom snippets and using custom output modifiers, however there are many different ways to achieve the same result. This tutorial will hopefully allow you to get a deeper understanding of several of the used concepts and help you further develop highly customizable content editing.
+
+
+{note}This tutorial has been written for MODX Revolution 2.0.x and still needs to be tested for the upcoming 2.1 release. {note}
+
+
+h2. Setting up the Template Variable
+
+Of course we will need a Template Variable. In the Manager, navigate to the Elements tab in the navigation structure and click the icon with a TV on it, or right click on the Template Variables section to create a new template variable. Give it a suitable name and caption (this tutorial assumes relatedPages).
+
+
+In this case we will want to be able of selecting multiple resources, so we&#39;re going to choose the input type &quot;Listbox (multi-select)&quot;, however you could also use the Checkbox type without adjusting the rest of this tutorial if you would rather have a list of checkboxes.&amp;nbsp;
+
+Next link the Template Variable to the template that needs it on the &quot;Template Access&quot; tab, for example your blog item template.
+
+To fill the template variable with some values, we will need to write simple snippet\* and run it in the Input Options field. To do this we will be using what is known as an @BINDING. Add the following code to the Input Options field:
+
+{code}
+ @EVAL return $modx-&gt;runSnippet(&#39;listMyResources&#39;,array(&#39;parent&#39; =&gt; 9));
+{code}
+This makes use of the [@EVAL binding|revolution20:EVAL Binding] to wrap the rest of the input in an eval() PHP statement. This can be used to execute PHP, and therefore access the very powerful $modx object. We are then using that to use the runSnippet method which, well, runs a snippet, while passing the array in the second parameter as properties. In this case we are telling it that &quot;parent&quot; is equal to 9. The result of this snippet will then be returned - not echoed. This is needed to make sure it can be parsed and will not be placed on the page randomly.
+
+You probably don&#39;t have a snippet called listMyResources yet, so let&#39;s create it.
+
+\* You don&#39;t \*have\* to write a snippet, you could use getResources for it as well, but to introduce you to a number of interesting methods while we&#39;re at it you may want to write your own. .
+
+
+h2. Creating the snippet
+
+We will need to create a snippet that lists the appropriate resources, and in such a way that it makes sense to the TV input type. The Listbox will be expecting a string like the following:
+
+{quote}
+value1==name\|\|value2==name2\|\|lasteone==Last name?
+{quote}
+The above consists of three key-value pairs, seperated by two pipes. The key and value are separated by two equal characters. So this is what we want the snippet to output as well.
+
+Create a new snippet and name it listMyResources or whatever you put in the input options of the template variable. Let&#39;s start of by assigning the property expected (parent) to a variable.
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+{code}
+This sets the variable $parent to the value of any &quot;parent&quot; property found. This can be from an assigned property set or inline properties like in our situation. The 9 in the end is the default value to be used if there is no value found.
+
+{code}
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+{code}
+Then we will get the Object (abstraction) of the parent resource using the getObject method and assign it to a variable named parentObj. After that we will set up the $resArray variable which is filled with an array of the parents&#39; children if any. This assumes that there is indeed a valid object in the parentObj parameter. This may not always be the case, so you may want to add in a check before setting $resArray to see if $parantObj is not empty.
+
+Now that we have all the children we need, let&#39;s get the information we need from each aswell.
+
+{code}
+$resources = array();
+foreach($resArray as $res) {
+  $resources[] = $res-&gt;get(&#39;id&#39;) . &#39;==&#39; . $res-&gt;get(&#39;pagetitle&#39;);
+}
+{code}
+First we instantiate a new variable as an empty array. While not really required, it is good practice and can prevent injection of not-so-funny things elsewhere. Next we loop through the array with resources and store the id and pagetitle in a new entry in the $resources array. Note that we are putting it in with the two equal characters to put it in the right format for the TV.
+
+Almost done\!
+
+{code}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+We just glue together the array into a string, seperated by the two pipes (remember the tv input type syntax?) , and return it. Be sure not to echo it as that will make it show up whenever it is being called instead of when it is requested and can lead to unexpected results.
+
+Now if you go to a resource and change it to the template linked to this template variable, you should see the a list of pages you can select.
+
+For clarity, here&#39;s the complete snippet:
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+$resources = array();
+foreach($resArray as $res) {
+  $resources[] = $res-&gt;get(&#39;id&#39;) . &#39;==&#39; . $res-&gt;get(&#39;pagetitle&#39;);
+}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+
+h2. Presenting the related pages in your template
+
+You can just put the TV tag in your template, but most likely that will just give you a bunch of numbers, representing the IDs of the selected resources. You&#39;ll want to do a few things. First of, go back to your template variable and set the Output type to &quot;delimiter&quot;. You will be giving the option to specify what your delimiter will be, for example a comma or two pipes.
+
+Next you&#39;ll be using a custom snippet as output modifier to your TV tag to display additional information for each related page based on its ID. This can be just the pagetitle, but you could also extend it to grab an image type template variable to use as an icon and add the full name of the person who modified the page the last time - all of that is possible as long as you can imagine it. \:)
+
+
+{note}Need to add the snippet, still\! It&#39;s 3am\! Give me some time to sleep\! \;){note}
+
+h2. Further reading..
+
+* Template Variable Input Types
+* Custom Output Modifiers
+* modX::getCollection";}i:8;a:3:{s:2:"id";s:8:"34636241";s:3:"ver";s:1:"1";s:4:"code";s:6861:"This brief tutorial will explain how you can make a client-proof&amp;nbsp; &quot;Related pages&quot; template variable. This specific example will introduce you to several MODX subjects including writing custom snippets and using custom output modifiers, however there are many different ways to achieve the same result. This tutorial will hopefully allow you to get a deeper understanding of several of the used concepts and help you further develop highly customizable content editing.
+
+
+{note}This tutorial has been written for MODX Revolution 2.0.x and still needs to be tested for the upcoming 2.1 release. {note}
+
+
+h2. Setting up the Template Variable
+
+Of course we will need a Template Variable. In the Manager, navigate to the Elements tab in the navigation structure and click the icon with a TV on it, or right click on the Template Variables section to create a new template variable. Give it a suitable name and caption (this tutorial assumes relatedPages).
+
+
+In this case we will want to be able of selecting multiple resources, so we&#39;re going to choose the input type &quot;Listbox (multi-select)&quot;, however you could also use the Checkbox type without adjusting the rest of this tutorial if you would rather have a list of checkboxes.&amp;nbsp;
+
+Next link the Template Variable to the template that needs it on the &quot;Template Access&quot; tab, for example your blog item template.
+
+To fill the template variable with some values, we will need to write simple snippet\* and run it in the Input Options field. To do this we will be using what is known as an @BINDING. Add the following code to the Input Options field:
+
+{code}
+ @EVAL return $modx-&gt;runSnippet(&#39;listMyResources&#39;,array(&#39;parent&#39; =&gt; 9));
+{code}
+This makes use of the [@EVAL binding|revolution20:EVAL Binding] to wrap the rest of the input in an eval() PHP statement. This can be used to execute PHP, and therefore access the very powerful $modx object. We are then using that to use the runSnippet method which, well, runs a snippet, while passing the array in the second parameter as properties. In this case we are telling it that &quot;parent&quot; is equal to 9. The result of this snippet will then be returned - not echoed. This is needed to make sure it can be parsed and will not be placed on the page randomly.
+
+You probably don&#39;t have a snippet called listMyResources yet, so let&#39;s create it.
+
+\* You don&#39;t \*have\* to write a snippet, you could use getResources for it as well, but to introduce you to a number of interesting methods while we&#39;re at it you may want to write your own. .
+
+
+h2. Creating the snippet
+
+We will need to create a snippet that lists the appropriate resources, and in such a way that it makes sense to the TV input type. The Listbox will be expecting a string like the following:
+
+{quote}
+value1==name\|\|value2==name2\|\|lasteone==Last name?
+{quote}
+The above consists of three key-value pairs, seperated by two pipes. The key and value are separated by two equal characters. So this is what we want the snippet to output as well.
+
+Create a new snippet and name it listMyResources or whatever you put in the input options of the template variable. Let&#39;s start of by assigning the property expected (parent) to a variable.
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);
+{code}
+This sets the variable $parent to the value of any &quot;parent&quot; property found. This can be from an assigned property set or inline properties like in our situation. The 9 in the end is the default value to be used if there is no value found.
+
+{code}
+$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);
+{code}
+Then we will get the Object (abstraction) of the parent resource using the getObject method and assign it to a variable named parentObj. After that we will set up the $resArray variable which is filled with an array of the parents&#39; children if any. This assumes that there is indeed a valid object in the parentObj parameter. This may not always be the case, so you may want to add in a check before setting $resArray to see if $parantObj is not empty.
+
+Now that we have all the children we need, let&#39;s get the information we need from each aswell.
+
+{code}
+$resources = array();
+foreach($resArray as $res) {
+  $resources[] = $res-&gt;get(&#39;id&#39;) . &#39;==&#39; . $res-&gt;get(&#39;pagetitle&#39;);
+}
+{code}
+First we instantiate a new variable as an empty array. While not really required, it is good practice and can prevent injection of not-so-funny things elsewhere. Next we loop through the array with resources and store the id and pagetitle in a new entry in the $resources array. Note that we are putting it in with the two equal characters to put it in the right format for the TV.
+
+Almost done\!
+
+{code}
+$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+We just glue together the array into a string, seperated by the two pipes (remember the tv input type syntax?) , and return it. Be sure not to echo it as that will make it show up whenever it is being called instead of when it is requested and can lead to unexpected results.
+
+Now if you go to a resource and change it to the template linked to this template variable, you should see the a list of pages you can select.
+
+For clarity, here&#39;s the complete snippet:
+
+{code}
+$parent = $modx-&gt;getOption(&#39;parent&#39;,$scriptProperties,9);$parentObj = $modx-&gt;getObject(&#39;modResource&#39;,$parent);
+$resArray = $parentObj-&gt;getMany(&#39;Children&#39;);$resources = array();
+foreach($resArray as $res) {
+  $resources[] = $res-&gt;get(&#39;id&#39;) . &#39;==&#39; . $res-&gt;get(&#39;pagetitle&#39;);
+}$out = implode(&quot;||&quot;,$resources);
+return $out;
+{code}
+
+h2. Presenting the related pages in your template
+
+You can just put the TV tag in your template, but most likely that will just give you a bunch of numbers, representing the IDs of the selected resources. You&#39;ll want to do a few things. First of, go back to your template variable and set the Output type to &quot;delimiter&quot;. You will be giving the option to specify what your delimiter will be, for example a comma or two pipes.
+
+Next you&#39;ll be using a custom snippet as output modifier to your TV tag to display additional information for each related page based on its ID. This can be just the pagetitle, but you could also extend it to grab an image type template variable to use as an icon and add the full name of the person who modified the page the last time - all of that is possible as long as you can imagine it. \:)
+
+
+{note}Need to add the snippet, still\! It&#39;s 3am\! Give me some time to sleep\! \;){note}
+
+h2. Further reading..
+
+* Template Variable Input Types
+* Custom Output Modifiers
+* modX::getCollection";}}}

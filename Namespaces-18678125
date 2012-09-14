@@ -1,0 +1,90 @@
+a:5:{s:2:"id";s:8:"18678125";s:4:"info";a:4:{s:6:"Title:";s:10:"Namespaces";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:25:"[revolution20:Namespaces]";}s:6:"parent";s:8:"18678126";s:6:"source";s:1783:"\\
+
+h2. What are Namespaces?
+
+Namespaces are organizational elements for Components. They relate lexicon strings and packages to one another, as well as provide a basic way for Revolution to know what objects belong to what package.
+
+h2. Usage
+
+Revolution uses namespace paths to determine where to load 3rd Party Component files for custom manager pages, as well as managing custom language strings for those 3rd Party Components.
+
+For example, if a Namespace called &quot;quip&quot; has a path of &quot;/www/modx/core/components/quip/&quot;, then when the CMP is loaded from the [Action|Actions and Menus] with a value on the controller of &quot;index&quot;, it will look for the index controller file in the namespace path, ie: &quot;/www/modx/core/components/quip/index.php&quot;. This will then load in place of the Custom Manager Page. A useful value for the controller on the Action is &quot;controllers/index&quot;, so that you can point it to &quot;/www/modx/core/components/quip/controllers/index.php&quot; (which is the standard practice for paths for Extras in MODX).
+
+h3. Lexicons in Namespaces
+
+Namespaces can be used to isolate Lexicons and Lexicon Topics. For example, when loading a Lexicon, you can specify the Namespace of the topic prior to the name of the topic with a colon. For example, to load the &quot;comment&quot; topic for the &quot;quip&quot; Namespace:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;quip:comment&#39;);{code}
+
+Assuming we&#39;re in English, this will look for the lexicon/en/comment.inc.php file in the Namespace path for Quip. This allows Lexicon topics to be loaded dynamically based on the Namespace path, rather than requiring the topic files to be put inside the MODX core directories.
+
+
+* [Internationalization]
+* [Settings]
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678125";s:3:"ver";s:1:"3";s:4:"code";s:1783:"\\
+
+h2. What are Namespaces?
+
+Namespaces are organizational elements for Components. They relate lexicon strings and packages to one another, as well as provide a basic way for Revolution to know what objects belong to what package.
+
+h2. Usage
+
+Revolution uses namespace paths to determine where to load 3rd Party Component files for custom manager pages, as well as managing custom language strings for those 3rd Party Components.
+
+For example, if a Namespace called &quot;quip&quot; has a path of &quot;/www/modx/core/components/quip/&quot;, then when the CMP is loaded from the [Action|Actions and Menus] with a value on the controller of &quot;index&quot;, it will look for the index controller file in the namespace path, ie: &quot;/www/modx/core/components/quip/index.php&quot;. This will then load in place of the Custom Manager Page. A useful value for the controller on the Action is &quot;controllers/index&quot;, so that you can point it to &quot;/www/modx/core/components/quip/controllers/index.php&quot; (which is the standard practice for paths for Extras in MODX).
+
+h3. Lexicons in Namespaces
+
+Namespaces can be used to isolate Lexicons and Lexicon Topics. For example, when loading a Lexicon, you can specify the Namespace of the topic prior to the name of the topic with a colon. For example, to load the &quot;comment&quot; topic for the &quot;quip&quot; Namespace:
+
+{code}$modx-&gt;lexicon-&gt;load(&#39;quip:comment&#39;);{code}
+
+Assuming we&#39;re in English, this will look for the lexicon/en/comment.inc.php file in the Namespace path for Quip. This allows Lexicon topics to be loaded dynamically based on the Namespace path, rather than requiring the topic files to be put inside the MODX core directories.
+
+
+* [Internationalization]
+* [Settings]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35586099";s:3:"ver";s:1:"2";s:4:"code";s:1132:"\\
+
+h2. What are Namespaces?
+
+Namespaces are organizational elements for Components. They relate lexicon strings and packages to one another, as well as provide a basic way for Revolution to know what objects belong to what package.
+
+h2. Usage
+
+Revolution uses namespace paths to determine where to load 3rd Party Component files for custom manager pages, as well as managing custom language strings for those 3rd Party Components.
+
+For example, if a Namespace called &quot;quip&quot; has a path of &quot;/www/modx/core/components/quip/&quot;, then when the CMP is loaded from the [Action|Actions and Menus] with a value on the controller of &quot;index&quot;, it will look for the index controller file in the namespace path, ie: &quot;/www/modx/core/components/quip/index.php&quot;. This will then load in place of the Custom Manager Page. A useful value for the controller on the Action is &quot;controllers/index&quot;, so that you can point it to &quot;/www/modx/core/components/quip/controllers/index.php&quot; (which is the standard practice for paths for Extras in MODX).
+
+
+* [Internationalization]
+* [Settings]
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35586097";s:3:"ver";s:1:"1";s:4:"code";s:804:"\\
+
+h2. What are Namespaces?
+
+Namespaces are organizational elements for Components. They relate lexicon strings and packages to one another, as well as provide a basic way for Revolution to know what objects belong to what package.
+
+h2. Usage
+
+Revolution uses namespace paths to determine where to load 3rd Party Component files for custom manager pages, as well as managing custom language strings for those 3rd Party Components.
+
+h3. How to get a Namespace
+
+You can access a Namespace, and its specified path, via:
+
+{code}
+$namespace = $modx-&gt;getObject(&#39;modNamespace&#39;,&#39;mynamespace&#39;);
+echo $namespace-&gt;get(&#39;name&#39;).&#39; has a path of: &#39;.$namespace-&gt;get(&#39;path&#39;);
+{code}
+
+h2. See Also
+
+* [Package Management]
+* [Internationalization]
+* [Settings]
+
+{scrollbar}";}}}

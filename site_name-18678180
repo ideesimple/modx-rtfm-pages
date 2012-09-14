@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678180";s:4:"info";a:4:{s:6:"Title:";s:9:"site_name";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:24:"[revolution20:site_name]";}s:6:"parent";s:8:"18678127";s:6:"source";s:116:"h2. site_name
+
+*Name*: Site Name
+*Type*: String
+*Default*: MODx Revolution
+
+The name of your MODx site.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678180";s:3:"ver";s:1:"2";s:4:"code";s:116:"h2. site_name
+
+*Name*: Site Name
+*Type*: String
+*Default*: MODx Revolution
+
+The name of your MODx site.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119726";s:3:"ver";s:1:"1";s:4:"code";s:271:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Site Name{zone-data}
+{zone-data:key}site_name{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}My MODx Site{zone-data}
+{zone-data:desc}The name of your site.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

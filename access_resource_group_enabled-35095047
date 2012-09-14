@@ -1,0 +1,25 @@
+a:5:{s:2:"id";s:8:"35095047";s:4:"info";a:4:{s:6:"Title:";s:29:"access_resource_group_enabled";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:44:"[revolution20:access_resource_group_enabled]";}s:6:"parent";s:8:"18678127";s:6:"source";s:332:"h2. access_resource_group_enabled
+
+*Name*: Check Resource Group Access
+*Type*: Yes/No
+*Default*: Yes
+*Available In*: Revolution 2.1+
+
+Use this to enable or disable Resource Group ACL checks (per Context). 
+
+{warning}NOTE: If this option is set to no then ALL Resource Group Access Permissions will be ignored!{warning}
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095047";s:3:"ver";s:1:"1";s:4:"code";s:332:"h2. access_resource_group_enabled
+
+*Name*: Check Resource Group Access
+*Type*: Yes/No
+*Default*: Yes
+*Available In*: Revolution 2.1+
+
+Use this to enable or disable Resource Group ACL checks (per Context). 
+
+{warning}NOTE: If this option is set to no then ALL Resource Group Access Permissions will be ignored!{warning}
+
+{scrollbar}
+";}}}

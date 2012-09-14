@@ -1,0 +1,59 @@
+a:5:{s:2:"id";s:8:"18678410";s:4:"info";a:4:{s:6:"Title:";s:15:"modX.runSnippet";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:30:"[revolution20:modX.runSnippet]";}s:6:"parent";s:8:"18678225";s:6:"source";s:525:"\\
+
+h2. modX::runSnippet
+
+Process and return the output from a PHP snippet by name.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#runSnippet
+
+{code}
+string runSnippet (string $snippetName, [array $params = array ()])
+{code}
+
+h2. Example
+
+Run the &#39;Welcome&#39; snippet with some custom parameters:
+{code}
+$output = $modx-&gt;runSnippet(&#39;Welcome&#39;,array(
+   &#39;name&#39; =&gt; &#39;John&#39;
+));
+echo $output; // prints &#39;Welcome John!&#39;
+{code}
+
+h2. See Also
+
+* [modX]
+* [Snippets]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678410";s:3:"ver";s:1:"1";s:4:"code";s:525:"\\
+
+h2. modX::runSnippet
+
+Process and return the output from a PHP snippet by name.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#runSnippet
+
+{code}
+string runSnippet (string $snippetName, [array $params = array ()])
+{code}
+
+h2. Example
+
+Run the &#39;Welcome&#39; snippet with some custom parameters:
+{code}
+$output = $modx-&gt;runSnippet(&#39;Welcome&#39;,array(
+   &#39;name&#39; =&gt; &#39;John&#39;
+));
+echo $output; // prints &#39;Welcome John!&#39;
+{code}
+
+h2. See Also
+
+* [modX]
+* [Snippets]
+
+{scrollbar}";}}}

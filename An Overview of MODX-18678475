@@ -1,0 +1,673 @@
+a:5:{s:2:"id";s:8:"18678475";s:4:"info";a:4:{s:6:"Title:";s:19:"An Overview of MODX";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:34:"[revolution20:An Overview of MODX]";}s:6:"parent";s:8:"18678198";s:6:"source";s:4481:"\\
+
+h2. What is MODX?
+
+MODX is a Content Application Platform. What does this mean? Well, that depends on who you are:
+
+!avgjoe.png|align=right!
+
+h3. End-Users (Average Joe)
+
+MODX offers you a system that lets you publish your offline content onto the web in any form, shape or presence you want. It also offers a completely customizable backend interface that you can make as simple (or as complex) as you like.
+
+You can setup everything from a simple site, to a blog, to a full-scale web presence with MODX, and keep your admin interface simple and usable. Drag and drop your webpages around to reorder and move them. Get a full WYSIWYG view of your Resources. Leave Resources unpublished before you finish them. Schedule Resources to publish at certain times.
+
+MODX helps you organize your content the way you want it, and get stellar built-in SEO results. MODX is fully, 100% Friendly URL compatible, so getting mysite.com/my/own/custom/url.html is incredibly simple, and as easy as structuring your site that way.
+
+!coolcarl.png|align=right!
+
+h3. Designers (Cool Carl)
+
+Ever wanted complete freedom with your HTML and CSS? Tired of hacking existing systems to get your design to work the way you comp&#39;ed it? MODX does not generate one single line of HTML - it leaves the front-end design up to you.
+
+You can use MODX as your Content Management System (CMS) of choice, as MODX offers completely flexible templating and no-holds-barred content delivery. Put your CSS and images where you want them. And once you&#39;re done designing, either hand off the development duties to your developer, or point-and-click install Extras straight from within the manager. Simple.
+
+!badassbilly.png|align=right!
+
+h3. Developers (Badass Billy)
+
+You&#39;ve looked at different CMSes, but have found developing in them to be either a mishmash of too many unconnected code pieces, or simply not powerful or elegant enough. You&#39;ve looked at PHP frameworks, and have found they have the power, but don&#39;t do Content Management nor have a good enough UI for your clients. You want the power and flexibility of a framework, with the UI and content management of a CMS.
+
+Enter MODX Revolution. A completely flexible, powerful and robust API, built on OOP principles and using a PDO-powered Object Relational Model (ORM) called [xPDO|xPDO20:Home]. Add in a rich, [Sencha|http://sencha.com]\-powered UI for your clients, that&#39;s fully customizable. Custom properties and sets. Internationalization support. Package distribution built-in so you can pack up your code, and distribute it across any Revolution install. Add custom manager pages to run entire applications within MODX.
+
+h2. Basic Concepts
+
+MODX, in essence, has a ton of moving parts. But the basics parts are:
+
+h3. Resources
+
+[Resources] are basically a webpage location. It can be actual HTML content, or a file, forwarding link, or a symlink, or anything else.
+
+h3. Templates
+
+[Templates] are the house a Resource lives in. They usually contain the footer and header for a page.
+
+h3. Template Variables
+
+[Template Variables] (TVs) are custom fields for a Template that allow the user to assign dynamic values to a Resource. A great example would be a &#39;tags&#39; TV that allows you to specify tags for a Resource. You can have an unlimited number of TVs per page.
+
+h3. Chunks
+
+[Chunks] are simply small blocks of content, be it whatever you want inside it. They can contain [Snippets], or any other Element type (Snippet, Chunk, TV, etc).
+
+h3. Snippets
+
+[Snippets] are dynamic bits of PHP code that run when the page is loaded. They can do anything you can code, including building custom menus, grabbing custom data, tagging elements, processing forms, grabbing tweets, etc.
+
+h3. Plugins
+
+Plugins are event hooks that run whenever an event is fired. They are usually used for extending the Revolution core to do something during a part of the loading process - such as stripping out bad words in content, adding dictionary links to words, managing redirects for old pages, etc.
+
+h2. So What Happens on a Request?
+
+MODX loads the requested [Resource|Resources], fetches that Resource&#39;s [Template|Templates], and then places the Resource&#39;s content in that Template. MODX then parses the resulting combined content, including any tags that might be in it, in the order they are reached. From there, it outputs the response to the user&#39;s browser.
+
+h2. See Also
+
+{pagetree:root=An Overview of MODX}
+
+{scrollbar}";s:8:"versions";a:16:{i:0;a:3:{s:2:"id";s:8:"18678475";s:3:"ver";s:1:"1";s:4:"code";s:4481:"\\
+
+h2. What is MODX?
+
+MODX is a Content Application Platform. What does this mean? Well, that depends on who you are:
+
+!avgjoe.png|align=right!
+
+h3. End-Users (Average Joe)
+
+MODX offers you a system that lets you publish your offline content onto the web in any form, shape or presence you want. It also offers a completely customizable backend interface that you can make as simple (or as complex) as you like.
+
+You can setup everything from a simple site, to a blog, to a full-scale web presence with MODX, and keep your admin interface simple and usable. Drag and drop your webpages around to reorder and move them. Get a full WYSIWYG view of your Resources. Leave Resources unpublished before you finish them. Schedule Resources to publish at certain times.
+
+MODX helps you organize your content the way you want it, and get stellar built-in SEO results. MODX is fully, 100% Friendly URL compatible, so getting mysite.com/my/own/custom/url.html is incredibly simple, and as easy as structuring your site that way.
+
+!coolcarl.png|align=right!
+
+h3. Designers (Cool Carl)
+
+Ever wanted complete freedom with your HTML and CSS? Tired of hacking existing systems to get your design to work the way you comp&#39;ed it? MODX does not generate one single line of HTML - it leaves the front-end design up to you.
+
+You can use MODX as your Content Management System (CMS) of choice, as MODX offers completely flexible templating and no-holds-barred content delivery. Put your CSS and images where you want them. And once you&#39;re done designing, either hand off the development duties to your developer, or point-and-click install Extras straight from within the manager. Simple.
+
+!badassbilly.png|align=right!
+
+h3. Developers (Badass Billy)
+
+You&#39;ve looked at different CMSes, but have found developing in them to be either a mishmash of too many unconnected code pieces, or simply not powerful or elegant enough. You&#39;ve looked at PHP frameworks, and have found they have the power, but don&#39;t do Content Management nor have a good enough UI for your clients. You want the power and flexibility of a framework, with the UI and content management of a CMS.
+
+Enter MODX Revolution. A completely flexible, powerful and robust API, built on OOP principles and using a PDO-powered Object Relational Model (ORM) called [xPDO|xPDO20:Home]. Add in a rich, [Sencha|http://sencha.com]\-powered UI for your clients, that&#39;s fully customizable. Custom properties and sets. Internationalization support. Package distribution built-in so you can pack up your code, and distribute it across any Revolution install. Add custom manager pages to run entire applications within MODX.
+
+h2. Basic Concepts
+
+MODX, in essence, has a ton of moving parts. But the basics parts are:
+
+h3. Resources
+
+[Resources] are basically a webpage location. It can be actual HTML content, or a file, forwarding link, or a symlink, or anything else.
+
+h3. Templates
+
+[Templates] are the house a Resource lives in. They usually contain the footer and header for a page.
+
+h3. Template Variables
+
+[Template Variables] (TVs) are custom fields for a Template that allow the user to assign dynamic values to a Resource. A great example would be a &#39;tags&#39; TV that allows you to specify tags for a Resource. You can have an unlimited number of TVs per page.
+
+h3. Chunks
+
+[Chunks] are simply small blocks of content, be it whatever you want inside it. They can contain [Snippets], or any other Element type (Snippet, Chunk, TV, etc).
+
+h3. Snippets
+
+[Snippets] are dynamic bits of PHP code that run when the page is loaded. They can do anything you can code, including building custom menus, grabbing custom data, tagging elements, processing forms, grabbing tweets, etc.
+
+h3. Plugins
+
+Plugins are event hooks that run whenever an event is fired. They are usually used for extending the Revolution core to do something during a part of the loading process - such as stripping out bad words in content, adding dictionary links to words, managing redirects for old pages, etc.
+
+h2. So What Happens on a Request?
+
+MODX loads the requested [Resource|Resources], fetches that Resource&#39;s [Template|Templates], and then places the Resource&#39;s content in that Template. MODX then parses the resulting combined content, including any tags that might be in it, in the order they are reached. From there, it outputs the response to the user&#39;s browser.
+
+h2. See Also
+
+{pagetree:root=An Overview of MODX}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"39354459";s:3:"ver";s:1:"1";s:4:"code";s:4477:"\\
+
+h2. What is MODx?
+
+MODx is a Content Application Platform. What does this mean? Well, that depends on who you are:
+
+!avgjoe.png|align=right!
+h3. End-Users (Average Joe)
+
+MODx offers you a system that lets you publish your offline content onto the web in any form, shape or presence you want. It also offers a completely customizable backend interface that you can make as simple (or as complex) as you like.
+
+You can setup everything from a simple site, to a blog, to a full-scale web presence with MODx, and keep your admin interface simple and usable. Drag and drop your webpages around to reorder and move them. Get a full WYSIWYG view of your Resources. Leave Resources unpublished before you finish them. Schedule Resources to publish at certain times.
+
+MODx helps you organize your content the way you want it, and get stellar built-in SEO results. MODx is fully, 100% Friendly URL compatible, so getting mysite.com/my/own/custom/url.html is incredibly simple, and as easy as structuring your site that way.
+
+!coolcarl.png|align=right!
+h3. Designers (Cool Carl)
+
+Ever wanted complete freedom with your HTML and CSS? Tired of hacking existing systems to get your design to work the way you comp&#39;ed it? MODx does not generate one single line of HTML - it leaves the front-end design up to you.
+
+You can use MODx as your Content Management System (CMS) of choice, as MODx offers completely flexible templating and no-holds-barred content delivery. Put your CSS and images where you want them. And once you&#39;re done designing, either hand off the development duties to your developer, or point-and-click install Extras straight from within the manager. Simple.
+
+!badassbilly.png|align=right!
+h3. Developers (Badass Billy)
+
+You&#39;ve looked at different CMSes, but have found developing in them to be either a mishmash of too many unconnected code pieces, or simply not powerful or elegant enough. You&#39;ve looked at PHP frameworks, and have found they have the power, but don&#39;t do Content Management nor have a good enough UI for your clients. You want the power and flexibility of a framework, with the UI and content management of a CMS.
+
+Enter MODx Revolution. A completely flexible, powerful and robust API, built on OOP principles and using a PDO-powered Object Relational Model (ORM) called [xPDO|xPDO20:Home]. Add in a rich, [Sencha|http://sencha.com]-powered UI for your clients, that&#39;s fully customizable. Custom properties and sets. Internationalization support. Package distribution built-in so you can pack up your code, and distribute it across any Revolution install. Add custom manager pages to run entire applications within MODx.
+
+h2. Basic Concepts
+
+MODx, in essence, has a ton of moving parts. But the basics parts are:
+
+h3. Resources
+
+[Resources] are basically a webpage location. It can be actual HTML content, or a file, forwarding link, or a symlink, or anything else.
+
+h3. Templates
+
+[Templates] are the house a Resource lives in. They usually contain the footer and header for a page.
+
+h3. Template Variables
+
+[Template Variables] (TVs) are custom fields for a Template that allow the user to assign dynamic values to a Resource. A great example would be a &#39;tags&#39; TV that allows you to specify tags for a Resource. You can have an unlimited number of TVs per page.
+
+h3. Chunks
+
+[Chunks] are simply small blocks of content, be it whatever you want inside it. They can contain [Snippets], or any other Element type (Snippet, Chunk, TV, etc).
+
+h3. Snippets
+
+[Snippets] are dynamic bits of PHP code that run when the page is loaded. They can do anything you can code, including building custom menus, grabbing custom data, tagging elements, processing forms, grabbing tweets, etc.
+
+h3. Plugins
+
+Plugins are event hooks that run whenever an event is fired. They are usually used for extending the Revolution core to do something during a part of the loading process - such as stripping out bad words in content, adding dictionary links to words, managing redirects for old pages, etc.
+
+h2. So What Happens on a Request?
+
+MODx loads the requested [Resource|Resources], fetches that Resource&#39;s [Template|Templates], and then places the Resource&#39;s content in that Template. MODx then parses the resulting combined content, including any tags that might be in it, in the order they are reached. From there, it outputs the response to the user&#39;s browser.
+
+h2. See Also
+
+{pagetree:root=An Overview of MODx}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"18678623";s:3:"ver";s:1:"1";s:4:"code";s:4426:"\\
+
+h2. What is MODx?
+
+MODx is a Content Application Platform. What does this mean? Well, that depends on who you are:
+
+!avgjoe.png|align=right!
+h3. End-Users (Average Joe)
+
+MODx offers you a system that lets you publish your offline content onto the web in any form, shape or presence you want. It also offers a completely customizable backend interface that you can make as simple (or as complex) as you like.
+
+You can setup everything from a simple site, to a blog, to a full-scale web presence with MODx, and keep your admin interface simple and usable. Drag and drop your webpages around to reorder and move them. Get a full WYSIWYG view of your Resources. Leave Resources unpublished before you finish them. Schedule Resources to publish at certain times.
+
+MODx helps you organize your content the way you want it, and get stellar built-in SEO results. MODx is fully, 100% Friendly URL compatible, so getting mysite.com/my/own/custom/url.html is incredibly simple, and as easy as structuring your site that way.
+
+!coolcarl.png|align=right!
+h3. Designers (Cool Carl)
+
+Ever wanted complete freedom with your HTML and CSS? Tired of hacking existing systems to get your design to work the way you comp&#39;ed it? MODx does not generate one single line of HTML - it leaves the front-end design up to you.
+
+You can use MODx as your Content Management System (CMS) of choice, as MODx offers completely flexible templating and no-holds-barred content delivery. Put your CSS and images where you want them. And once you&#39;re done designing, either hand off the development duties to your developer, or point-and-click install Extras straight from within the manager. Simple.
+
+!badassbilly.png|align=right!
+h3. Developers (Badass Billy)
+
+You&#39;ve looked at different CMSes, but have found developing in them to be either a mishmash of too many unconnected code pieces, or simply not powerful or elegant enough. You&#39;ve looked at PHP frameworks, and have found they have the power, but don&#39;t do Content Management nor have a good enough UI for your clients. You want the power and flexibility of a framework, with the UI and content management of a CMS.
+
+Enter MODx Revolution. A completely flexible, powerful and robust API, built on OOP principles and using a PDO-powered Object Relational Model (ORM) called [xPDO|xPDO20:Home]. Add in a rich, [Sencha|http://sencha.com]-powered UI for your clients, that&#39;s fully customizable. Custom properties and sets. Internationalization support. Package distribution built-in so you can pack up your code, and distribute it across any Revolution install. Add custom manager pages to run entire applications within MODx.
+
+h2. Basic Concepts
+
+MODx, in essence, has a ton of moving parts. But the basics parts are:
+
+h3. Resources
+
+[Resources] are basically a webpage location. It can be actual HTML content, or a file, forwarding link, or a symlink, or anything else.
+
+h3. Templates
+
+[Templates] are the house a Resource lives in. They usually contain the footer and header for a page.
+
+h3. Template Variables
+
+[Template Variables] (TVs) are custom fields for a Template that allow the user to assign dynamic values to a Resource. A great example would be a &#39;tags&#39; TV that allows you to specify tags for a Resource. You can have an unlimited number of TVs per page.
+
+h3. Chunks
+
+[Chunks] are simply small blocks of content, be it whatever you want inside it. They can contain [Snippets], or any other Element type (Snippet, Chunk, TV, etc).
+
+h3. Snippets
+
+[Snippets] are dynamic bits of PHP code that run when the page is loaded. They can do anything you can code, including building custom menus, grabbing custom data, tagging elements, processing forms, grabbing tweets, etc.
+
+h3. Plugins
+
+Plugins are event hooks that run whenever an event is fired. They are usually used for extending the Revolution core to do something during a part of the loading process - such as stripping out bad words in content, adding dictionary links to words, managing redirects for old pages, etc.
+
+h2. So What Happens on a Request?
+
+MODx loads the requested [Resource|Resources], fetches that Resource&#39;s [Template|Templates], and then places the Resource&#39;s content in that Template. MODx then parses the resulting combined content, including any tags that might be in it, in the order they are reached. From there, it outputs the response to the user&#39;s browser.
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"18678622";s:3:"ver";s:1:"1";s:4:"code";s:4426:"\\
+
+h2. What is MODx?
+
+MODx is a Content Application Platform. What does this mean? Well, that depends on who you are:
+
+!avgjoe.png|align=right!
+h3. End-Users (Average Joe)
+
+MODx offers you a system that lets you publish your offline content onto the web in any form, shape or presence you want. It also offers a completely customizable backend interface that you can make as simple (or as complex) as you like.
+
+You can setup everything from a simple site, to a blog, to a full-scale web presence with MODx, and keep your admin interface simple and usable. Drag and drop your webpages around to reorder and move them. Get a full WYSIWYG view of your Resources. Leave Resources unpublished before you finish them. Schedule Resources to publish at certain times.
+
+MODx helps you organize your content the way you want it, and get stellar built-in SEO results. MODx is fully, 100% Friendly URL compatible, so getting mysite.com/my/own/custom/url.html is incredibly simple, and as easy as structuring your site that way.
+
+!coolcarl.png|align=right!
+h3. Designers (Cool Carl)
+
+Ever wanted complete freedom with your HTML and CSS? Tired of hacking existing systems to get your design to work the way you comp&#39;ed it? MODx does not generate one single line of HTML - it leaves the front-end design up to you.
+
+You can use MODx as your Content Management System (CMS) of choice, as MODx offers completely flexible templating and no-holds-barred content delivery. Put your CSS and images where you want them. And once you&#39;re done designing, either hand off the development duties to your developer, or point-and-click install Extras straight from within the manager. Simple.
+
+!badassbilly.png|align=right!
+h3. Developers (Badass Billy)
+
+You&#39;ve looked at different CMSes, but have found developing in them to be either a mishmash of too many unconnected code pieces, or simply not powerful or elegant enough. You&#39;ve looked at PHP frameworks, and have found they have the power, but don&#39;t do Content Management nor have a good enough UI for your clients. You want the power and flexibility of a framework, with the UI and content management of a CMS.
+
+Enter MODx Revolution. A completely flexible, powerful and robust API, built on OOP principles and using a PDO-powered Object Relational Model (ORM) called [xPDO|xPDO20:Home]. Add in a rich, [Sencha|http://sencha.com]-powered UI for your clients, that&#39;s fully customizable. Custom properties and sets. Internationalization support. Package distribution built-in so you can pack up your code, and distribute it across any Revolution install. Add custom manager pages to run entire applications within MODx.
+
+h2. Basic Overview
+
+MODx, in essence, has a ton of moving parts. But the basics parts are:
+
+h3. Resources
+
+[Resources] are basically a webpage location. It can be actual HTML content, or a file, forwarding link, or a symlink, or anything else.
+
+h3. Templates
+
+[Templates] are the house a Resource lives in. They usually contain the footer and header for a page.
+
+h3. Template Variables
+
+[Template Variables] (TVs) are custom fields for a Template that allow the user to assign dynamic values to a Resource. A great example would be a &#39;tags&#39; TV that allows you to specify tags for a Resource. You can have an unlimited number of TVs per page.
+
+h3. Chunks
+
+[Chunks] are simply small blocks of content, be it whatever you want inside it. They can contain [Snippets], or any other Element type (Snippet, Chunk, TV, etc).
+
+h3. Snippets
+
+[Snippets] are dynamic bits of PHP code that run when the page is loaded. They can do anything you can code, including building custom menus, grabbing custom data, tagging elements, processing forms, grabbing tweets, etc.
+
+h3. Plugins
+
+Plugins are event hooks that run whenever an event is fired. They are usually used for extending the Revolution core to do something during a part of the loading process - such as stripping out bad words in content, adding dictionary links to words, managing redirects for old pages, etc.
+
+h2. So What Happens on a Request?
+
+MODx loads the requested [Resource|Resources], fetches that Resource&#39;s [Template|Templates], and then places the Resource&#39;s content in that Template. MODx then parses the resulting combined content, including any tags that might be in it, in the order they are reached. From there, it outputs the response to the user&#39;s browser.
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"18678620";s:3:"ver";s:1:"1";s:4:"code";s:2776:"\\
+
+h2. What is MODx?
+
+MODx is a Content Application Platform. What does this mean? Well, that depends on who you are:
+
+!avgjoe.png|align=right!
+h3. End-Users (Average Joe)
+
+MODx offers you a system that lets you publish your offline content onto the web in any form, shape or presence you want. It also offers a completely customizable backend interface that you can make as simple (or as complex) as you like.
+
+You can setup everything from a simple site, to a blog, to a full-scale web presence with MODx, and keep your admin interface simple and usable. Drag and drop your webpages around to reorder and move them. Get a full WYSIWYG view of your Resources. Leave Resources unpublished before you finish them. Schedule Resources to publish at certain times.
+
+MODx helps you organize your content the way you want it, and get stellar built-in SEO results. MODx is fully, 100% Friendly URL compatible, so getting mysite.com/my/own/custom/url.html is incredibly simple, and as easy as structuring your site that way.
+
+!coolcarl.png|align=right!
+h3. Designers (Cool Carl)
+
+Ever wanted complete freedom with your HTML and CSS? Tired of hacking existing systems to get your design to work the way you comp&#39;ed it? MODx does not generate one single line of HTML - it leaves the front-end design up to you.
+
+You can use MODx as your Content Management System (CMS) of choice, as MODx offers completely flexible templating and no-holds-barred content delivery. Put your CSS and images where you want them. And once you&#39;re done designing, either hand off the development duties to your developer, or point-and-click install Extras straight from within the manager. Simple.
+
+!badassbilly.png|align=right!
+h3. Developers (Badass Billy)
+
+You&#39;ve looked at different CMSes, but have found developing in them to be either a mishmash of too many unconnected code pieces, or simply not powerful or elegant enough. You&#39;ve looked at PHP frameworks, and have found they have the power, but don&#39;t do Content Management nor have a good enough UI for your clients. You want the power and flexibility of a framework, with the UI and content management of a CMS.
+
+Enter MODx Revolution. A completely flexible, powerful and robust API, built on OOP principles and using a PDO-powered Object Relational Model (ORM) called [xPDO|xPDO20:Home]. Add in a rich, [Sencha|http://sencha.com]-powered UI for your clients, that&#39;s fully customizable. Custom properties and sets. Internationalization support. Package distribution built-in so you can pack up your code, and distribute it across any Revolution install. Add custom manager pages to run entire applications within MODx.
+
+h2. Basic Overview
+
+MODx, in essence, has a ton of moving parts. But the basics are this:
+
+
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"18678618";s:3:"ver";s:1:"1";s:4:"code";s:2784:"\\
+
+h2. What is MODx?
+
+MODx is a Content Application Platform. What does this mean? Well, that depends on who you are:
+
+!avgjoe.png|align=left,border=0!
+h3. End-Users (Average Joe)
+
+MODx offers you a system that lets you publish your offline content onto the web in any form, shape or presence you want. It also offers a completely customizable backend interface that you can make as simple (or as complex) as you like.
+
+You can setup everything from a simple site, to a blog, to a full-scale web presence with MODx, and keep your admin interface simple and usable. Drag and drop your webpages around to reorder and move them. Get a full WYSIWYG view of your Resources. Leave Resources unpublished before you finish them. Schedule Resources to publish at certain times.
+
+MODx helps you organize your content the way you want it, and get stellar built-in SEO results. MODx is fully, 100% Friendly URL compatible, so getting mysite.com/my/own/custom/url.html is incredibly simple, and as easy as structuring your site that way.
+
+!coolcarl.png|align=right!
+h3. Designers (Cool Carl)
+
+Ever wanted complete freedom with your HTML and CSS? Tired of hacking existing systems to get your design to work the way you comp&#39;ed it? MODx does not generate one single line of HTML - it leaves the front-end design up to you.
+
+You can use MODx as your Content Management System (CMS) of choice, as MODx offers completely flexible templating and no-holds-barred content delivery. Put your CSS and images where you want them. And once you&#39;re done designing, either hand off the development duties to your developer, or point-and-click install Extras straight from within the manager. Simple.
+
+!badassbilly.png|align=right!
+h3. Developers (Badass Billy)
+
+You&#39;ve looked at different CMSes, but have found developing in them to be either a mishmash of too many unconnected code pieces, or simply not powerful or elegant enough. You&#39;ve looked at PHP frameworks, and have found they have the power, but don&#39;t do Content Management nor have a good enough UI for your clients. You want the power and flexibility of a framework, with the UI and content management of a CMS.
+
+Enter MODx Revolution. A completely flexible, powerful and robust API, built on OOP principles and using a PDO-powered Object Relational Model (ORM) called [xPDO|xPDO20:Home]. Add in a rich, [Sencha|http://sencha.com]-powered UI for your clients, that&#39;s fully customizable. Custom properties and sets. Internationalization support. Package distribution built-in so you can pack up your code, and distribute it across any Revolution install. Add custom manager pages to run entire applications within MODx.
+
+h2. Basic Overview
+
+MODx, in essence, has a ton of moving parts. But the basics are this:
+
+
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"18678617";s:3:"ver";s:1:"1";s:4:"code";s:2807:"\\
+
+h2. What is MODx?
+
+MODx is a Content Application Platform. What does this mean? Well, that depends on who you are:
+
+!avgjoe.png|align=left,style=&quot;padding: 10px&quot;!
+h3. End-Users (Average Joe)
+
+MODx offers you a system that lets you publish your offline content onto the web in any form, shape or presence you want. It also offers a completely customizable backend interface that you can make as simple (or as complex) as you like.
+
+You can setup everything from a simple site, to a blog, to a full-scale web presence with MODx, and keep your admin interface simple and usable. Drag and drop your webpages around to reorder and move them. Get a full WYSIWYG view of your Resources. Leave Resources unpublished before you finish them. Schedule Resources to publish at certain times.
+
+MODx helps you organize your content the way you want it, and get stellar built-in SEO results. MODx is fully, 100% Friendly URL compatible, so getting mysite.com/my/own/custom/url.html is incredibly simple, and as easy as structuring your site that way.
+
+!coolcarl.png|align=right!
+h3. Designers (Cool Carl)
+
+Ever wanted complete freedom with your HTML and CSS? Tired of hacking existing systems to get your design to work the way you comp&#39;ed it? MODx does not generate one single line of HTML - it leaves the front-end design up to you.
+
+You can use MODx as your Content Management System (CMS) of choice, as MODx offers completely flexible templating and no-holds-barred content delivery. Put your CSS and images where you want them. And once you&#39;re done designing, either hand off the development duties to your developer, or point-and-click install Extras straight from within the manager. Simple.
+
+!badassbilly.png|align=right!
+h3. Developers (Badass Billy)
+
+You&#39;ve looked at different CMSes, but have found developing in them to be either a mishmash of too many unconnected code pieces, or simply not powerful or elegant enough. You&#39;ve looked at PHP frameworks, and have found they have the power, but don&#39;t do Content Management nor have a good enough UI for your clients. You want the power and flexibility of a framework, with the UI and content management of a CMS.
+
+Enter MODx Revolution. A completely flexible, powerful and robust API, built on OOP principles and using a PDO-powered Object Relational Model (ORM) called [xPDO|xPDO20:Home]. Add in a rich, [Sencha|http://sencha.com]-powered UI for your clients, that&#39;s fully customizable. Custom properties and sets. Internationalization support. Package distribution built-in so you can pack up your code, and distribute it across any Revolution install. Add custom manager pages to run entire applications within MODx.
+
+h2. Basic Overview
+
+MODx, in essence, has a ton of moving parts. But the basics are this:
+
+
+
+{scrollbar}";}i:7;a:3:{s:2:"id";s:8:"18678616";s:3:"ver";s:1:"9";s:4:"code";s:2784:"\\
+
+h2. What is MODx?
+
+MODx is a Content Application Platform. What does this mean? Well, that depends on who you are:
+
+!avgjoe.png|align=left,vspace=4!
+h3. End-Users (Average Joe)
+
+MODx offers you a system that lets you publish your offline content onto the web in any form, shape or presence you want. It also offers a completely customizable backend interface that you can make as simple (or as complex) as you like.
+
+You can setup everything from a simple site, to a blog, to a full-scale web presence with MODx, and keep your admin interface simple and usable. Drag and drop your webpages around to reorder and move them. Get a full WYSIWYG view of your Resources. Leave Resources unpublished before you finish them. Schedule Resources to publish at certain times.
+
+MODx helps you organize your content the way you want it, and get stellar built-in SEO results. MODx is fully, 100% Friendly URL compatible, so getting mysite.com/my/own/custom/url.html is incredibly simple, and as easy as structuring your site that way.
+
+!coolcarl.png|align=right!
+h3. Designers (Cool Carl)
+
+Ever wanted complete freedom with your HTML and CSS? Tired of hacking existing systems to get your design to work the way you comp&#39;ed it? MODx does not generate one single line of HTML - it leaves the front-end design up to you.
+
+You can use MODx as your Content Management System (CMS) of choice, as MODx offers completely flexible templating and no-holds-barred content delivery. Put your CSS and images where you want them. And once you&#39;re done designing, either hand off the development duties to your developer, or point-and-click install Extras straight from within the manager. Simple.
+
+!badassbilly.png|align=right!
+h3. Developers (Badass Billy)
+
+You&#39;ve looked at different CMSes, but have found developing in them to be either a mishmash of too many unconnected code pieces, or simply not powerful or elegant enough. You&#39;ve looked at PHP frameworks, and have found they have the power, but don&#39;t do Content Management nor have a good enough UI for your clients. You want the power and flexibility of a framework, with the UI and content management of a CMS.
+
+Enter MODx Revolution. A completely flexible, powerful and robust API, built on OOP principles and using a PDO-powered Object Relational Model (ORM) called [xPDO|xPDO20:Home]. Add in a rich, [Sencha|http://sencha.com]-powered UI for your clients, that&#39;s fully customizable. Custom properties and sets. Internationalization support. Package distribution built-in so you can pack up your code, and distribute it across any Revolution install. Add custom manager pages to run entire applications within MODx.
+
+h2. Basic Overview
+
+MODx, in essence, has a ton of moving parts. But the basics are this:
+
+
+
+{scrollbar}";}i:8;a:3:{s:2:"id";s:8:"18678615";s:3:"ver";s:1:"8";s:4:"code";s:2787:"\\
+
+h2. What is MODx?
+
+MODx is a Content Application Platform. What does this mean? Well, that depends on who you are:
+
+!avgjoe.png|align=left,margin=10px!
+h3. End-Users (Average Joe)
+
+MODx offers you a system that lets you publish your offline content onto the web in any form, shape or presence you want. It also offers a completely customizable backend interface that you can make as simple (or as complex) as you like.
+
+You can setup everything from a simple site, to a blog, to a full-scale web presence with MODx, and keep your admin interface simple and usable. Drag and drop your webpages around to reorder and move them. Get a full WYSIWYG view of your Resources. Leave Resources unpublished before you finish them. Schedule Resources to publish at certain times.
+
+MODx helps you organize your content the way you want it, and get stellar built-in SEO results. MODx is fully, 100% Friendly URL compatible, so getting mysite.com/my/own/custom/url.html is incredibly simple, and as easy as structuring your site that way.
+
+!coolcarl.png|align=right!
+h3. Designers (Cool Carl)
+
+Ever wanted complete freedom with your HTML and CSS? Tired of hacking existing systems to get your design to work the way you comp&#39;ed it? MODx does not generate one single line of HTML - it leaves the front-end design up to you.
+
+You can use MODx as your Content Management System (CMS) of choice, as MODx offers completely flexible templating and no-holds-barred content delivery. Put your CSS and images where you want them. And once you&#39;re done designing, either hand off the development duties to your developer, or point-and-click install Extras straight from within the manager. Simple.
+
+!badassbilly.png|align=right!
+h3. Developers (Badass Billy)
+
+You&#39;ve looked at different CMSes, but have found developing in them to be either a mishmash of too many unconnected code pieces, or simply not powerful or elegant enough. You&#39;ve looked at PHP frameworks, and have found they have the power, but don&#39;t do Content Management nor have a good enough UI for your clients. You want the power and flexibility of a framework, with the UI and content management of a CMS.
+
+Enter MODx Revolution. A completely flexible, powerful and robust API, built on OOP principles and using a PDO-powered Object Relational Model (ORM) called [xPDO|xPDO20:Home]. Add in a rich, [Sencha|http://sencha.com]-powered UI for your clients, that&#39;s fully customizable. Custom properties and sets. Internationalization support. Package distribution built-in so you can pack up your code, and distribute it across any Revolution install. Add custom manager pages to run entire applications within MODx.
+
+h2. Basic Overview
+
+MODx, in essence, has a ton of moving parts. But the basics are this:
+
+
+
+{scrollbar}";}i:9;a:3:{s:2:"id";s:8:"18678614";s:3:"ver";s:1:"7";s:4:"code";s:2775:"\\
+
+h2. What is MODx?
+
+MODx is a Content Application Platform. What does this mean? Well, that depends on who you are:
+
+!avgjoe.png|align=left!
+h3. End-Users (Average Joe)
+
+MODx offers you a system that lets you publish your offline content onto the web in any form, shape or presence you want. It also offers a completely customizable backend interface that you can make as simple (or as complex) as you like.
+
+You can setup everything from a simple site, to a blog, to a full-scale web presence with MODx, and keep your admin interface simple and usable. Drag and drop your webpages around to reorder and move them. Get a full WYSIWYG view of your Resources. Leave Resources unpublished before you finish them. Schedule Resources to publish at certain times.
+
+MODx helps you organize your content the way you want it, and get stellar built-in SEO results. MODx is fully, 100% Friendly URL compatible, so getting mysite.com/my/own/custom/url.html is incredibly simple, and as easy as structuring your site that way.
+
+!coolcarl.png|align=right!
+h3. Designers (Cool Carl)
+
+Ever wanted complete freedom with your HTML and CSS? Tired of hacking existing systems to get your design to work the way you comp&#39;ed it? MODx does not generate one single line of HTML - it leaves the front-end design up to you.
+
+You can use MODx as your Content Management System (CMS) of choice, as MODx offers completely flexible templating and no-holds-barred content delivery. Put your CSS and images where you want them. And once you&#39;re done designing, either hand off the development duties to your developer, or point-and-click install Extras straight from within the manager. Simple.
+
+!badassbilly.png|align=right!
+h3. Developers (Badass Billy)
+
+You&#39;ve looked at different CMSes, but have found developing in them to be either a mishmash of too many unconnected code pieces, or simply not powerful or elegant enough. You&#39;ve looked at PHP frameworks, and have found they have the power, but don&#39;t do Content Management nor have a good enough UI for your clients. You want the power and flexibility of a framework, with the UI and content management of a CMS.
+
+Enter MODx Revolution. A completely flexible, powerful and robust API, built on OOP principles and using a PDO-powered Object Relational Model (ORM) called [xPDO|xPDO20:Home]. Add in a rich, [Sencha|http://sencha.com]-powered UI for your clients, that&#39;s fully customizable. Custom properties and sets. Internationalization support. Package distribution built-in so you can pack up your code, and distribute it across any Revolution install. Add custom manager pages to run entire applications within MODx.
+
+h2. Basic Overview
+
+MODx, in essence, has a ton of moving parts. But the basics are this:
+
+
+
+{scrollbar}";}i:10;a:3:{s:2:"id";s:8:"18678613";s:3:"ver";s:1:"6";s:4:"code";s:2776:"\\
+
+h2. What is MODx?
+
+MODx is a Content Application Platform. What does this mean? Well, that depends on who you are:
+
+!avgjoe.png|align=right!
+h3. End-Users (Average Joe)
+
+MODx offers you a system that lets you publish your offline content onto the web in any form, shape or presence you want. It also offers a completely customizable backend interface that you can make as simple (or as complex) as you like.
+
+You can setup everything from a simple site, to a blog, to a full-scale web presence with MODx, and keep your admin interface simple and usable. Drag and drop your webpages around to reorder and move them. Get a full WYSIWYG view of your Resources. Leave Resources unpublished before you finish them. Schedule Resources to publish at certain times.
+
+MODx helps you organize your content the way you want it, and get stellar built-in SEO results. MODx is fully, 100% Friendly URL compatible, so getting mysite.com/my/own/custom/url.html is incredibly simple, and as easy as structuring your site that way.
+
+!coolcarl.png|align=right!
+h3. Designers (Cool Carl)
+
+Ever wanted complete freedom with your HTML and CSS? Tired of hacking existing systems to get your design to work the way you comp&#39;ed it? MODx does not generate one single line of HTML - it leaves the front-end design up to you.
+
+You can use MODx as your Content Management System (CMS) of choice, as MODx offers completely flexible templating and no-holds-barred content delivery. Put your CSS and images where you want them. And once you&#39;re done designing, either hand off the development duties to your developer, or point-and-click install Extras straight from within the manager. Simple.
+
+!badassbilly.png|align=right!
+h3. Developers (Badass Billy)
+
+You&#39;ve looked at different CMSes, but have found developing in them to be either a mishmash of too many unconnected code pieces, or simply not powerful or elegant enough. You&#39;ve looked at PHP frameworks, and have found they have the power, but don&#39;t do Content Management nor have a good enough UI for your clients. You want the power and flexibility of a framework, with the UI and content management of a CMS.
+
+Enter MODx Revolution. A completely flexible, powerful and robust API, built on OOP principles and using a PDO-powered Object Relational Model (ORM) called [xPDO|xPDO20:Home]. Add in a rich, [Sencha|http://sencha.com]-powered UI for your clients, that&#39;s fully customizable. Custom properties and sets. Internationalization support. Package distribution built-in so you can pack up your code, and distribute it across any Revolution install. Add custom manager pages to run entire applications within MODx.
+
+h2. Basic Overview
+
+MODx, in essence, has a ton of moving parts. But the basics are this:
+
+
+
+{scrollbar}";}i:11;a:3:{s:2:"id";s:8:"18678612";s:3:"ver";s:1:"5";s:4:"code";s:1542:"\\
+
+h2. What is MODx?
+
+MODx is a Content Application Platform. What does this mean? Well, that depends on who you are:
+
+!avgjoe.png|align=right!
+h3. End-Users (Average Joe)
+
+MODx offers you a system that lets you publish your offline content onto the web in any form, shape or presence you want. It also offers a completely customizable backend interface that you can make as simple (or as complex) as you like.
+
+You can setup everything from a simple site, to a blog, to a full-scale web presence with MODx, and keep your admin interface simple and usable. Drag and drop your webpages around to reorder and move them. Get a full WYSIWYG view of your Resources. Leave Resources unpublished before you finish them. Schedule Resources to publish at certain times.
+
+!coolcarl.png|align=right!
+h3. Designers (Cool Carl)
+
+Ever wanted complete freedom with your HTML and CSS? Tired of hacking existing systems to get your design to work the way you comp&#39;ed it? MODx does not generate one single line of HTML - it leaves the front-end design up to you.
+
+You can use MODx as your Content Management System (CMS) of choice, as MODx offers completely flexible templating and no-holds-barred content delivery. Put your CSS and images where you want them. And once you&#39;re done designing, either hand off the development duties to your developer, or point-and-click install Extras straight from within the manager. Simple.
+
+!badassbilly.png|align=right!
+h3. Developers (Badass Billy)
+
+A completely flexible, powerful and robust API.
+
+
+
+{scrollbar}";}i:12;a:3:{s:2:"id";s:8:"18678610";s:3:"ver";s:1:"4";s:4:"code";s:930:"\\
+
+h2. What is MODx?
+
+MODx is a Content Application Platform. What does this mean? Well, that depends on who you are:
+
+!avgjoe.png|align=right!
+h3. End-Users (Average Joe)
+
+MODx offers you a system that lets you publish your offline content onto the web in any form, shape or presence you want. It also offers a completely customizable backend interface that you can make as simple (or as complex) as you like.
+
+You can setup everything from a simple site, to a blog, to a full-scale web presence with MODx.
+
+!coolcarl.png|align=right|border=0!
+h3. Designers (Cool Carl)
+
+Ever wanted complete freedom with your HTML and CSS? Tired of hacking existing systems to get your design to work the way you comp&#39;ed it? MODx does not generate one single line of HTML - it leaves the front-end design up to you.
+
+!badassbilly.png|align=right!
+h3. Developers (Badass Billy)
+
+A completely flexible, powerful and robust API.
+
+
+
+{scrollbar}";}i:13;a:3:{s:2:"id";s:8:"18678608";s:3:"ver";s:1:"3";s:4:"code";s:934:"\\
+
+h2. What is MODx?
+
+MODx is a Content Application Platform. What does this mean? Well, that depends on who you are:
+
+!avgjoe.png|align=right!
+h3. End-Users (Average Joe)
+
+MODx offers you a system that lets you publish your offline content onto the web in any form, shape or presence you want. It also offers a completely customizable backend interface that you can make as simple (or as complex) as you like.
+
+You can setup everything from a simple site, to a blog, to a full-scale web presence with MODx.
+
+!coolcarl.png|align=right|border=false!
+h3. Designers (Cool Carl)
+
+Ever wanted complete freedom with your HTML and CSS? Tired of hacking existing systems to get your design to work the way you comp&#39;ed it? MODx does not generate one single line of HTML - it leaves the front-end design up to you.
+
+!badassbilly.png|align=right!
+h3. Developers (Badass Billy)
+
+A completely flexible, powerful and robust API.
+
+
+
+{scrollbar}";}i:14;a:3:{s:2:"id";s:8:"18678607";s:3:"ver";s:1:"2";s:4:"code";s:921:"\\
+
+h2. What is MODx?
+
+MODx is a Content Application Platform. What does this mean? Well, that depends on who you are:
+
+!avgjoe.png|align=right!
+h3. End-Users (Average Joe)
+
+MODx offers you a system that lets you publish your offline content onto the web in any form, shape or presence you want. It also offers a completely customizable backend interface that you can make as simple (or as complex) as you like.
+
+You can setup everything from a simple site, to a blog, to a full-scale web presence with MODx.
+
+!coolcarl.png|align=right!
+h3. Designers (Cool Carl)
+
+Ever wanted complete freedom with your HTML and CSS? Tired of hacking existing systems to get your design to work the way you comp&#39;ed it? MODx does not generate one single line of HTML - it leaves the front-end design up to you.
+
+!badassbilly.png|align=right!
+h3. Developers (Badass Billy)
+
+A completely flexible, powerful and robust API.
+
+
+
+{scrollbar}";}i:15;a:3:{s:2:"id";s:8:"18678606";s:3:"ver";s:1:"1";s:4:"code";s:15:"\\
+
+{scrollbar}";}}}

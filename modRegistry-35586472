@@ -1,0 +1,2400 @@
+a:5:{s:2:"id";s:8:"35586472";s:4:"info";a:4:{s:6:"Title:";s:11:"modRegistry";s:7:"Author:";s:12:"Jason Coward";s:16:"Last Changed by:";s:12:"Jason Coward";s:12:"Wiki Markup:";s:26:"[revolution20:modRegistry]";}s:6:"parent";s:8:"18678337";s:6:"source";s:17790:"//
+
+{toc}
+
+h2. What is modRegistry?
+
+The modRegistry service provided with the MODX Revolution Core is a simple message queue service that developers can make use of for a wide variety of purposes. It comes with a file and database modRegister implementation, and can be extended to work with custom or external message queue implementations.
+
+The modRegistry service can connect to any number of unique registers. Within each register, specific topics are subscribed to and messages can then be sent or read from the topic.
+
+
+h2. Choosing a modRegister implementation
+
+MODX ships with two simple modRegister implementations. One is file-based and one uses database tables for storage. Each has benefits and limitations that you should consider before determining which one to use for a specific purpose.
+
+h3. modFileRegister
+
+This file-based register reads and writes messages, by default, to files under the {{registry/}} folder in the MODX {{cache_path}} location. This is great for single-server deployments that do not have high-traffic requirements where writing and reading to the the same topics might occur simultaneously from multiple client requests.
+
+Here is how you would add a specific file-based register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+{warning:title=Be Careful!}Clearing the cache manually by deleting all files and folders under {{core/cache/}} will delete any existing modFileRegister messages as well.{warning}
+
+h3. modDbRegister
+
+When reading and writing is expected to reach higher volumes, or you need messages shared across a load-balanced environment with multiple web server nodes, you would want to choose the database-powered modRegister implementation.
+
+Here is how you would add a specific database register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+
+h2. Using the Registry API
+
+The modRegistry service provides a very simple API for working with Registers, subscribing to topics, and sending/reading messages within them.
+
+h3. Connecting
+
+Once you have obtained the modRegistry and initialized a modRegister implementation of your choice, you can now attempt to make a connection to your queue. Here is how you would connect to the _food_ register we added in the examples above.
+
+{code}&lt;?php
+$connected = $modx-&gt;registry-&gt;food-&gt;connect();
+{code}
+
+If there is any problem connecting to the register instance, the return value will be {{false}}.
+
+h3. Subscribing
+
+Once you make a successful connection, it is time to subscribe to a topic for relevant messages to be sent or read. Let&#39;s subscribe to a nice topic about _beer_ in our _food_ register:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;subscribe(&quot;/beer/&quot;);
+{code}
+
+This adds the topic &quot;/beer/&quot; to your subscriptions and sets it as the current topic. Topics are similar to relative URI&#39;s. If you specify a slash at the beginning, you are subscribing to a topic from the root of the register. No initial slash would indicate you want to subscribe to a sub-topic of the current topic. Once subscribed to at least one topic, you are free to send and read messages from them at will.
+
+
+h3. Sending Messages
+
+You can send messages to a topic in multiple ways. They can be sent as an array of sequenced messages (ordered by time sent and the array keys provided), named messages ordered by key (by providing associative array keys), or as a single message that automatically gets a time stamp.
+
+h4. Sending an Array of Sequenced Messages
+
+Let&#39;s say we wanted to send three messages that should be read in the same order as they were sent. We simply provide an array of those messages in the order to read them in:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;beer1&quot;, &quot;beer2&quot;, &quot;beer3&quot;));
+{code}
+
+h4. Sending an Array of Named Messages
+
+You can also provide an associative array to send messages with specific keys that will be read according to the order of the keys:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;Heineken&quot; =&gt; &quot;not so good&quot;, &quot;Pabst Blue Ribbon&quot; =&gt; &quot;rocks&quot;, &quot;Molson Golden&quot; =&gt; &quot;ok for Canadian beer&quot;));
+{code}
+
+These messages will be read in ascending alphabetic order, or specifically by key.
+
+h4. Sending a Single Message
+
+Sometimes it is necessary to send a single message without a specific key. The MODX register will automatically provide a time-based key for the message so that it is read in a proper time-based order.
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, &quot;It&#39;s Miller Time!&quot;, array(&#39;kill&#39; =&gt; true));
+{code}
+
+{note}The _kill_ option tells message consumers to stop reading any further messages once a message with this option is read.{note}
+
+h4. Options for Sending Messages
+
+h5. delay
+
+Only supported for time-based messages (no keys provided), this option specifies the number of seconds to delay the message before it can be read. The message is still sent immediately to the queue, but is not available for reading until the specified delay has expired.
+
+h5. ttl
+
+The _time to live_ option specifies how many seconds the message(s) remain valid in the queue. Once a message has outlived it&#39;s ttl, it will not be included in the messages returned by a {{read()}} operation.
+
+h5. kill
+
+If specified, when a message consumer reads a message with this option set, no further messages will be read from the queue, regardless of any other read options.
+
+
+h3. Reading Messages
+
+You can also read messages from a topic in a variety of ways using options passed to the {{read()}} method.
+
+h4. Polling for New Messages in a Topic
+
+The most common use of the registry is to look for up to x number of new messages in any subscribed topics. Here we are polling once for up to 5 new messages in the current topic, which is &quot;/beer/&quot;:
+
+{code}&lt;?php
+$msgs = $modx-&gt;registry-&gt;food-&gt;read(array(
+    &#39;poll_limit&#39; =&gt; 1,
+    &#39;msg_limit&#39; =&gt; 5
+));
+{code}
+
+This returns an array of the messages sent to the queue in the order they are read, without the corresponding message keys, regardless if they were specified when sent.
+
+h4. Options for Reading Messages
+
+h5. poll_limit
+
+By default, a modRegister will attempt to poll for messages until the msg_limit, time_limit, or a message with the kill option is encountered. In most situations when using the modRegister in web requests, this is not desirable. Most cases will want to set this option to 1, so the read operation only checks the queue once for messages and moves on regardless if the msg_limit or time_limit is hit. This option is useful if you want to set up a simple PHP polling server that checks for messages and takes action based on them (e.g. in a cronjob).
+
+h5. poll_interval
+
+A configurable delay to wait between polling for new messages, in seconds. Default is unlimited.
+
+h5. time_limit
+
+The maximum number of seconds to poll for new messages when multiple poll attempts are configured (i.e. poll_limit != 1).
+
+h5. msg_limit
+
+The maximum number of messages to read from the queue. The default is 5 messages.
+
+h5. remove_read
+
+Indicates if the message should be removed when it is read.
+
+h5. include_keys _(MODX 2.2+ only)_
+
+Indicates if the read operation should include the message keys. If not true, only the messages are returned in a simple, ordered array.
+
+
+h2. Using the Registry Processors
+
+In addition to the raw API, MODX also provides connectors and processors for sending messages to and reading messages from a register topic. These can be easily utilized by components using the runProcessor method or by AJAX requests via the connectors.
+
+h3. Sending Messages
+
+There are several parameters that control the behavior of the {{system/registry/register/send}} processor, which is used to send a message or multiple messages to a specific register topic. These parameters can be passed to the runProcessor method as properties or passed to the processor via REQUEST variables from the connector.
+
+* *register* _(required)_ — The name of the register to send a message to.
+* *topic* _(required)_ — The topic to send a message to within the specified register.
+* *register_class* _(optional)_ — Specifies the modRegister implementation to use; default is {{registry.modFileRegister}}.
+* *message* _(optional)_ — The message(s) to send to the register topic. In MODX 2.2+, multiple messages can be sent using {{json}} as the *message_format*.
+* *message_key* _(optional, MODX 2.2+)_ — An optional message key that can be provided to send a named message to the topic. If empty, the message is given a sequenced timestamp as the key.
+* *message_format* _(optional, MODX 2.2+)_ — Default is string, which just sends the message as a string. If this is set to {{json}}, the message is converted to PHP before being sent, allowing multiple or more complex messages to be sent.
+
+h3. Reading Messages
+
+Reading messages with the {{system/registry/register/read}} processor can also be accomplished via runProcessor or the connector. Following are the parameters for reading.
+
+* *register* _(required)_ — The name of the register to send a message to.
+* *topic* _(required)_ — The topic to send a message to within the specified register.
+* *register_class* _(optional)_ — Specifies the modRegister implementation to use; default is {{registry.modFileRegister}}.
+* *format* _(optional, MODX 2.2+)_ — If specified as {{json}}, the messages are converted to JSON before being returned; esp. useful for AJAX requests. If specified as {{html_log}}, the messages are assumed to be xPDO/modX log messages and are formatted for HTML output; useful for modExt consoles. By default, the messages are returned as an array.
+* *poll_limit* _(optional)_ — The number of times to poll for new messages before exiting; default is 1.
+* *poll_interval* _(optional)_ — The number of seconds to delay each poll attempt for new messages before exiting; default is 1.
+* *time_limit* _(optional)_ — The number of seconds to continue polling for new messages before exiting; default is 10.
+* *message_limit* _(optional)_ — The maximum number of messages to return; default is 200.
+* *remove_read* _(optional)_ — Indicates if returned messages should be removed from the queue; default is true.
+* *include_keys* _(optional, MODX 2.2+)_ — Indicates if returned messages should include the message keys; default is false.
+* *show_filename* _(optional)_ — Indicates if html_log formatted messages should include the filename; default is false.
+
+
+h2. Examples
+
+h3. Alternative to Session Storage
+
+There might be times that session storage is not appropriate for persisting personalized information. In these cases, you could use a register topic to store the data and retrieve it, regardless of the user&#39;s session state. This might be useful for custom registration systems where unauthorized users are turned into authorized users and you need access to data stored before the new authorized user&#39;s session was started (i.e. they logged in).
+
+You might write a named message into a topic for retrieval by key at a later time, as done in the Login Add-On for useractivation:
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;login&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;login&#39;));
+$modx-&gt;registry-&gt;login-&gt;connect();
+$modx-&gt;registry-&gt;login-&gt;subscribe(&#39;/useractivation/&#39;);
+$modx-&gt;registry-&gt;login-&gt;send(&#39;/useractivation/&#39;,array($user-&gt;get(&#39;username&#39;) =&gt; $pword),array(
+    &#39;ttl&#39; =&gt; ($modx-&gt;getOption(&#39;activationttl&#39;,$scriptProperties,180)*60),
+));
+{code}
+
+And to retrieve the specific message later:
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;login&#39;,&#39;registry.modFileRegister&#39;);
+$modx-&gt;registry-&gt;login-&gt;connect();
+$modx-&gt;registry-&gt;login-&gt;subscribe(&#39;/useractivation/&#39;.$user-&gt;get(&#39;username&#39;));
+$msgs = $modx-&gt;registry-&gt;login-&gt;read(array(&#39;poll_limit&#39; =&gt; 1));
+$password = reset($msgs);
+{code}
+
+
+h3. Capturing Log Messages
+
+MODX supports specifying the logTarget as a modRegister instance. This allows you to capture all log messages a message queue where you can read them later to provide user feedback, audit views, etc.
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;logging&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;logging&#39;));
+$modx-&gt;registry-&gt;logging-&gt;connect();
+$modx-&gt;registry-&gt;logging-&gt;subscribe($topic);
+
+/* set the logTarget to the register instance */
+$oldTarget = $modx-&gt;setLogTarget($modx-&gt;registry-&gt;logging);
+
+/* code here that sends log messages */
+
+/* set the old target back */
+$modx-&gt;setLogTarget($oldTarget);
+{code}
+
+h3. Registering Load Balanced Web Nodes for Remote Commands
+
+This example solution using modRegistry uses two plugins to help manage cache refresh operations across multiple web nodes, each using it&#39;s own local file cache.
+
+The first, which is attached to OnWebPageComplete, registers each server instance for 20 minutes (this was designed for a cloud deployment that would launch and kill new server instances on demand, but you can remove the expiration time to avoid the overhead of writing those messages every 20 minutes) and then looks for any messages with the command &#39;clearCache&#39; specified. The second, attached to the OnSiteRefresh event allows clearing the cache in the manager to register a &#39;clearCache&#39; message with all of the remote server &#39;instances&#39; that have been registered by the first plugin. You can take the idea and tailor it for your environment, but in our experience the best practice is to isolate one server instance for the manager (via subdomain configuration or similar) that is separate from your remote web nodes. This allows activity to take place on the manager instance in high volume, then changes only get pushed out when the Refresh site action is taken from the Admin menu.
+
+Here is an example remotecommands plugin (NOTE this is for MODX 2.1, and 2.0 would be slightly different, using clearCache() instead of refresh()):
+
+{code}&lt;?php
+/* RemoteCommands plugin -- register with OnWebPageComplete event */
+ 
+/* find any remote commands to execute from the master instance */
+$instance = $_SERVER[&#39;SERVER_ADDR&#39;];
+if (!empty($instance) &amp;&amp; $modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;)) {
+    $modx-&gt;registry-&gt;addRegister(&#39;remotes&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;remotes&#39;));
+    $modx-&gt;registry-&gt;remotes-&gt;connect();
+ 
+    /* register this instance */
+    $modx-&gt;registry-&gt;remotes-&gt;subscribe(&quot;/distrib/instances/&quot;);
+    $modx-&gt;registry-&gt;remotes-&gt;send(&quot;/distrib/instances/&quot;, array($instance =&gt; true), array(&#39;expires&#39; =&gt; time() + 1440));
+ 
+    /* find any valid command messages for this instance and act on them */
+    $modx-&gt;registry-&gt;remotes-&gt;subscribe(&quot;/distrib/commands/{$instance}/&quot;);
+    $commands = $modx-&gt;registry-&gt;remotes-&gt;read(array(&#39;poll_limit&#39; =&gt; 1, &#39;msg_limit&#39; =&gt; 1));
+    if (!empty($commands)) {
+        $command = reset($commands);
+        if (!empty($command)) {
+             switch ($command) {
+                 case &#39;clearCache&#39;:
+                    $results= $modx-&gt;cacheManager-&gt;refresh();
+                    break;
+                 default:
+                    break;
+             }
+        }
+    }
+}
+{code}
+
+
+And here is an example sendclearcache plugin for registering a remote command message to each remote server instance:
+
+{code}&lt;?php
+/* SendClearCache plugin -- register with OnSiteRefresh event */
+ 
+/* read instances and write clear cache msg to each command directory */
+if ($modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;)) {
+    $modx-&gt;registry-&gt;addRegister(&#39;remotes&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;remotes&#39;));
+    $modx-&gt;registry-&gt;remotes-&gt;connect();
+    $modx-&gt;registry-&gt;remotes-&gt;subscribe(&#39;/distrib/instances/&#39;);
+    $instances = $modx-&gt;registry-&gt;remotes-&gt;read(array(&#39;poll_limit&#39; =&gt; 1, &#39;msg_limit&#39; =&gt; 25, &#39;remove_read&#39; =&gt; false));
+    if (!empty($instances)) {
+        foreach ($instances as $instance) {
+            if ($instance == $_SERVER[&#39;SERVER_ADDR&#39;]) continue;
+            $modx-&gt;registry-&gt;remotes-&gt;subscribe(&quot;/distrib/commands/{$instance}/&quot;);
+            $modx-&gt;registry-&gt;remotes-&gt;send(&quot;/distrib/commands/{$instance}/&quot;, &#39;clearCache&#39;, array(&#39;expires&#39; =&gt; time() + 1440));
+        }
+    }
+}
+{code}
+
+Other remote commands could also be sent and processed in this way. You would simply implement handling for additional commands in the switch statement in the RemoteCommands plugin.
+";s:8:"versions";a:12:{i:0;a:3:{s:2:"id";s:8:"35586472";s:3:"ver";s:1:"1";s:4:"code";s:17790:"//
+
+{toc}
+
+h2. What is modRegistry?
+
+The modRegistry service provided with the MODX Revolution Core is a simple message queue service that developers can make use of for a wide variety of purposes. It comes with a file and database modRegister implementation, and can be extended to work with custom or external message queue implementations.
+
+The modRegistry service can connect to any number of unique registers. Within each register, specific topics are subscribed to and messages can then be sent or read from the topic.
+
+
+h2. Choosing a modRegister implementation
+
+MODX ships with two simple modRegister implementations. One is file-based and one uses database tables for storage. Each has benefits and limitations that you should consider before determining which one to use for a specific purpose.
+
+h3. modFileRegister
+
+This file-based register reads and writes messages, by default, to files under the {{registry/}} folder in the MODX {{cache_path}} location. This is great for single-server deployments that do not have high-traffic requirements where writing and reading to the the same topics might occur simultaneously from multiple client requests.
+
+Here is how you would add a specific file-based register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+{warning:title=Be Careful!}Clearing the cache manually by deleting all files and folders under {{core/cache/}} will delete any existing modFileRegister messages as well.{warning}
+
+h3. modDbRegister
+
+When reading and writing is expected to reach higher volumes, or you need messages shared across a load-balanced environment with multiple web server nodes, you would want to choose the database-powered modRegister implementation.
+
+Here is how you would add a specific database register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+
+h2. Using the Registry API
+
+The modRegistry service provides a very simple API for working with Registers, subscribing to topics, and sending/reading messages within them.
+
+h3. Connecting
+
+Once you have obtained the modRegistry and initialized a modRegister implementation of your choice, you can now attempt to make a connection to your queue. Here is how you would connect to the _food_ register we added in the examples above.
+
+{code}&lt;?php
+$connected = $modx-&gt;registry-&gt;food-&gt;connect();
+{code}
+
+If there is any problem connecting to the register instance, the return value will be {{false}}.
+
+h3. Subscribing
+
+Once you make a successful connection, it is time to subscribe to a topic for relevant messages to be sent or read. Let&#39;s subscribe to a nice topic about _beer_ in our _food_ register:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;subscribe(&quot;/beer/&quot;);
+{code}
+
+This adds the topic &quot;/beer/&quot; to your subscriptions and sets it as the current topic. Topics are similar to relative URI&#39;s. If you specify a slash at the beginning, you are subscribing to a topic from the root of the register. No initial slash would indicate you want to subscribe to a sub-topic of the current topic. Once subscribed to at least one topic, you are free to send and read messages from them at will.
+
+
+h3. Sending Messages
+
+You can send messages to a topic in multiple ways. They can be sent as an array of sequenced messages (ordered by time sent and the array keys provided), named messages ordered by key (by providing associative array keys), or as a single message that automatically gets a time stamp.
+
+h4. Sending an Array of Sequenced Messages
+
+Let&#39;s say we wanted to send three messages that should be read in the same order as they were sent. We simply provide an array of those messages in the order to read them in:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;beer1&quot;, &quot;beer2&quot;, &quot;beer3&quot;));
+{code}
+
+h4. Sending an Array of Named Messages
+
+You can also provide an associative array to send messages with specific keys that will be read according to the order of the keys:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;Heineken&quot; =&gt; &quot;not so good&quot;, &quot;Pabst Blue Ribbon&quot; =&gt; &quot;rocks&quot;, &quot;Molson Golden&quot; =&gt; &quot;ok for Canadian beer&quot;));
+{code}
+
+These messages will be read in ascending alphabetic order, or specifically by key.
+
+h4. Sending a Single Message
+
+Sometimes it is necessary to send a single message without a specific key. The MODX register will automatically provide a time-based key for the message so that it is read in a proper time-based order.
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, &quot;It&#39;s Miller Time!&quot;, array(&#39;kill&#39; =&gt; true));
+{code}
+
+{note}The _kill_ option tells message consumers to stop reading any further messages once a message with this option is read.{note}
+
+h4. Options for Sending Messages
+
+h5. delay
+
+Only supported for time-based messages (no keys provided), this option specifies the number of seconds to delay the message before it can be read. The message is still sent immediately to the queue, but is not available for reading until the specified delay has expired.
+
+h5. ttl
+
+The _time to live_ option specifies how many seconds the message(s) remain valid in the queue. Once a message has outlived it&#39;s ttl, it will not be included in the messages returned by a {{read()}} operation.
+
+h5. kill
+
+If specified, when a message consumer reads a message with this option set, no further messages will be read from the queue, regardless of any other read options.
+
+
+h3. Reading Messages
+
+You can also read messages from a topic in a variety of ways using options passed to the {{read()}} method.
+
+h4. Polling for New Messages in a Topic
+
+The most common use of the registry is to look for up to x number of new messages in any subscribed topics. Here we are polling once for up to 5 new messages in the current topic, which is &quot;/beer/&quot;:
+
+{code}&lt;?php
+$msgs = $modx-&gt;registry-&gt;food-&gt;read(array(
+    &#39;poll_limit&#39; =&gt; 1,
+    &#39;msg_limit&#39; =&gt; 5
+));
+{code}
+
+This returns an array of the messages sent to the queue in the order they are read, without the corresponding message keys, regardless if they were specified when sent.
+
+h4. Options for Reading Messages
+
+h5. poll_limit
+
+By default, a modRegister will attempt to poll for messages until the msg_limit, time_limit, or a message with the kill option is encountered. In most situations when using the modRegister in web requests, this is not desirable. Most cases will want to set this option to 1, so the read operation only checks the queue once for messages and moves on regardless if the msg_limit or time_limit is hit. This option is useful if you want to set up a simple PHP polling server that checks for messages and takes action based on them (e.g. in a cronjob).
+
+h5. poll_interval
+
+A configurable delay to wait between polling for new messages, in seconds. Default is unlimited.
+
+h5. time_limit
+
+The maximum number of seconds to poll for new messages when multiple poll attempts are configured (i.e. poll_limit != 1).
+
+h5. msg_limit
+
+The maximum number of messages to read from the queue. The default is 5 messages.
+
+h5. remove_read
+
+Indicates if the message should be removed when it is read.
+
+h5. include_keys _(MODX 2.2+ only)_
+
+Indicates if the read operation should include the message keys. If not true, only the messages are returned in a simple, ordered array.
+
+
+h2. Using the Registry Processors
+
+In addition to the raw API, MODX also provides connectors and processors for sending messages to and reading messages from a register topic. These can be easily utilized by components using the runProcessor method or by AJAX requests via the connectors.
+
+h3. Sending Messages
+
+There are several parameters that control the behavior of the {{system/registry/register/send}} processor, which is used to send a message or multiple messages to a specific register topic. These parameters can be passed to the runProcessor method as properties or passed to the processor via REQUEST variables from the connector.
+
+* *register* _(required)_ — The name of the register to send a message to.
+* *topic* _(required)_ — The topic to send a message to within the specified register.
+* *register_class* _(optional)_ — Specifies the modRegister implementation to use; default is {{registry.modFileRegister}}.
+* *message* _(optional)_ — The message(s) to send to the register topic. In MODX 2.2+, multiple messages can be sent using {{json}} as the *message_format*.
+* *message_key* _(optional, MODX 2.2+)_ — An optional message key that can be provided to send a named message to the topic. If empty, the message is given a sequenced timestamp as the key.
+* *message_format* _(optional, MODX 2.2+)_ — Default is string, which just sends the message as a string. If this is set to {{json}}, the message is converted to PHP before being sent, allowing multiple or more complex messages to be sent.
+
+h3. Reading Messages
+
+Reading messages with the {{system/registry/register/read}} processor can also be accomplished via runProcessor or the connector. Following are the parameters for reading.
+
+* *register* _(required)_ — The name of the register to send a message to.
+* *topic* _(required)_ — The topic to send a message to within the specified register.
+* *register_class* _(optional)_ — Specifies the modRegister implementation to use; default is {{registry.modFileRegister}}.
+* *format* _(optional, MODX 2.2+)_ — If specified as {{json}}, the messages are converted to JSON before being returned; esp. useful for AJAX requests. If specified as {{html_log}}, the messages are assumed to be xPDO/modX log messages and are formatted for HTML output; useful for modExt consoles. By default, the messages are returned as an array.
+* *poll_limit* _(optional)_ — The number of times to poll for new messages before exiting; default is 1.
+* *poll_interval* _(optional)_ — The number of seconds to delay each poll attempt for new messages before exiting; default is 1.
+* *time_limit* _(optional)_ — The number of seconds to continue polling for new messages before exiting; default is 10.
+* *message_limit* _(optional)_ — The maximum number of messages to return; default is 200.
+* *remove_read* _(optional)_ — Indicates if returned messages should be removed from the queue; default is true.
+* *include_keys* _(optional, MODX 2.2+)_ — Indicates if returned messages should include the message keys; default is false.
+* *show_filename* _(optional)_ — Indicates if html_log formatted messages should include the filename; default is false.
+
+
+h2. Examples
+
+h3. Alternative to Session Storage
+
+There might be times that session storage is not appropriate for persisting personalized information. In these cases, you could use a register topic to store the data and retrieve it, regardless of the user&#39;s session state. This might be useful for custom registration systems where unauthorized users are turned into authorized users and you need access to data stored before the new authorized user&#39;s session was started (i.e. they logged in).
+
+You might write a named message into a topic for retrieval by key at a later time, as done in the Login Add-On for useractivation:
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;login&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;login&#39;));
+$modx-&gt;registry-&gt;login-&gt;connect();
+$modx-&gt;registry-&gt;login-&gt;subscribe(&#39;/useractivation/&#39;);
+$modx-&gt;registry-&gt;login-&gt;send(&#39;/useractivation/&#39;,array($user-&gt;get(&#39;username&#39;) =&gt; $pword),array(
+    &#39;ttl&#39; =&gt; ($modx-&gt;getOption(&#39;activationttl&#39;,$scriptProperties,180)*60),
+));
+{code}
+
+And to retrieve the specific message later:
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;login&#39;,&#39;registry.modFileRegister&#39;);
+$modx-&gt;registry-&gt;login-&gt;connect();
+$modx-&gt;registry-&gt;login-&gt;subscribe(&#39;/useractivation/&#39;.$user-&gt;get(&#39;username&#39;));
+$msgs = $modx-&gt;registry-&gt;login-&gt;read(array(&#39;poll_limit&#39; =&gt; 1));
+$password = reset($msgs);
+{code}
+
+
+h3. Capturing Log Messages
+
+MODX supports specifying the logTarget as a modRegister instance. This allows you to capture all log messages a message queue where you can read them later to provide user feedback, audit views, etc.
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;logging&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;logging&#39;));
+$modx-&gt;registry-&gt;logging-&gt;connect();
+$modx-&gt;registry-&gt;logging-&gt;subscribe($topic);
+
+/* set the logTarget to the register instance */
+$oldTarget = $modx-&gt;setLogTarget($modx-&gt;registry-&gt;logging);
+
+/* code here that sends log messages */
+
+/* set the old target back */
+$modx-&gt;setLogTarget($oldTarget);
+{code}
+
+h3. Registering Load Balanced Web Nodes for Remote Commands
+
+This example solution using modRegistry uses two plugins to help manage cache refresh operations across multiple web nodes, each using it&#39;s own local file cache.
+
+The first, which is attached to OnWebPageComplete, registers each server instance for 20 minutes (this was designed for a cloud deployment that would launch and kill new server instances on demand, but you can remove the expiration time to avoid the overhead of writing those messages every 20 minutes) and then looks for any messages with the command &#39;clearCache&#39; specified. The second, attached to the OnSiteRefresh event allows clearing the cache in the manager to register a &#39;clearCache&#39; message with all of the remote server &#39;instances&#39; that have been registered by the first plugin. You can take the idea and tailor it for your environment, but in our experience the best practice is to isolate one server instance for the manager (via subdomain configuration or similar) that is separate from your remote web nodes. This allows activity to take place on the manager instance in high volume, then changes only get pushed out when the Refresh site action is taken from the Admin menu.
+
+Here is an example remotecommands plugin (NOTE this is for MODX 2.1, and 2.0 would be slightly different, using clearCache() instead of refresh()):
+
+{code}&lt;?php
+/* RemoteCommands plugin -- register with OnWebPageComplete event */
+ 
+/* find any remote commands to execute from the master instance */
+$instance = $_SERVER[&#39;SERVER_ADDR&#39;];
+if (!empty($instance) &amp;&amp; $modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;)) {
+    $modx-&gt;registry-&gt;addRegister(&#39;remotes&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;remotes&#39;));
+    $modx-&gt;registry-&gt;remotes-&gt;connect();
+ 
+    /* register this instance */
+    $modx-&gt;registry-&gt;remotes-&gt;subscribe(&quot;/distrib/instances/&quot;);
+    $modx-&gt;registry-&gt;remotes-&gt;send(&quot;/distrib/instances/&quot;, array($instance =&gt; true), array(&#39;expires&#39; =&gt; time() + 1440));
+ 
+    /* find any valid command messages for this instance and act on them */
+    $modx-&gt;registry-&gt;remotes-&gt;subscribe(&quot;/distrib/commands/{$instance}/&quot;);
+    $commands = $modx-&gt;registry-&gt;remotes-&gt;read(array(&#39;poll_limit&#39; =&gt; 1, &#39;msg_limit&#39; =&gt; 1));
+    if (!empty($commands)) {
+        $command = reset($commands);
+        if (!empty($command)) {
+             switch ($command) {
+                 case &#39;clearCache&#39;:
+                    $results= $modx-&gt;cacheManager-&gt;refresh();
+                    break;
+                 default:
+                    break;
+             }
+        }
+    }
+}
+{code}
+
+
+And here is an example sendclearcache plugin for registering a remote command message to each remote server instance:
+
+{code}&lt;?php
+/* SendClearCache plugin -- register with OnSiteRefresh event */
+ 
+/* read instances and write clear cache msg to each command directory */
+if ($modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;)) {
+    $modx-&gt;registry-&gt;addRegister(&#39;remotes&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;remotes&#39;));
+    $modx-&gt;registry-&gt;remotes-&gt;connect();
+    $modx-&gt;registry-&gt;remotes-&gt;subscribe(&#39;/distrib/instances/&#39;);
+    $instances = $modx-&gt;registry-&gt;remotes-&gt;read(array(&#39;poll_limit&#39; =&gt; 1, &#39;msg_limit&#39; =&gt; 25, &#39;remove_read&#39; =&gt; false));
+    if (!empty($instances)) {
+        foreach ($instances as $instance) {
+            if ($instance == $_SERVER[&#39;SERVER_ADDR&#39;]) continue;
+            $modx-&gt;registry-&gt;remotes-&gt;subscribe(&quot;/distrib/commands/{$instance}/&quot;);
+            $modx-&gt;registry-&gt;remotes-&gt;send(&quot;/distrib/commands/{$instance}/&quot;, &#39;clearCache&#39;, array(&#39;expires&#39; =&gt; time() + 1440));
+        }
+    }
+}
+{code}
+
+Other remote commands could also be sent and processed in this way. You would simply implement handling for additional commands in the switch statement in the RemoteCommands plugin.
+";}i:1;a:3:{s:2:"id";s:8:"35586484";s:3:"ver";s:1:"1";s:4:"code";s:17790:"//
+
+{toc}
+
+h2. What is modRegistry?
+
+The modRegistry service provided with the MODX Revolution Core is a simple message queue service that developers can make use of for a wide variety of purposes. It comes with a file and database modRegister implementation, and can be extended to work with custom or external message queue implementations.
+
+The modRegistry service can connect to any number of unique registers. Within each register, specific topics are subscribed to and messages can then be sent or read from the topic.
+
+
+h2. Choosing a modRegister implementation
+
+MODX ships with two simple modRegister implementations. One is file-based and one uses database tables for storage. Each has benefits and limitations that you should consider before determining which one to use for a specific purpose.
+
+h3. modFileRegister
+
+This file-based register reads and writes messages, by default, to files under the {{registry/}} folder in the MODX {{cache_path}} location. This is great for single-server deployments that do not have high-traffic requirements where writing and reading to the the same topics might occur simultaneously from multiple client requests.
+
+Here is how you would add a specific file-based register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+{warning:title=Be Careful!}Clearing the cache manually by deleting all files and folders under {{core/cache/}} will delete any existing modFileRegister messages as well.{warning}
+
+h3. modDbRegister
+
+When reading and writing is expected to reach higher volumes, or you need messages shared across a load-balanced environment with multiple web server nodes, you would want to choose the database-powered modRegister implementation.
+
+Here is how you would add a specific database register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+
+h2. Using the Registry API
+
+The modRegistry service provides a very simple API for working with Registers, subscribing to topics, and sending/reading messages within them.
+
+h3. Connecting
+
+Once you have obtained the modRegistry and initialized a modRegister implementation of your choice, you can now attempt to make a connection to your queue. Here is how you would connect to the _food_ register we added in the examples above.
+
+{code}&lt;?php
+$connected = $modx-&gt;registry-&gt;food-&gt;connect();
+{code}
+
+If there is any problem connecting to the register instance, the return value will be {{false}}.
+
+h3. Subscribing
+
+Once you make a successful connection, it is time to subscribe to a topic for relevant messages to be sent or read. Let&#39;s subscribe to a nice topic about _beer_ in our _food_ register:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;subscribe(&quot;/beer/&quot;);
+{code}
+
+This adds the topic &quot;/beer/&quot; to your subscriptions and sets it as the current topic. Topics are similar to relative URI&#39;s. If you specify a slash at the beginning, you are subscribing to a topic from the root of the register. No initial slash would indicate you want to subscribe to a sub-topic of the current topic. Once subscribed to at least one topic, you are free to send and read messages from them at will.
+
+
+h3. Sending Messages
+
+You can send messages to a topic in multiple ways. They can be sent as an array of sequenced messages (ordered by time sent and the array keys provided), named messages ordered by key (by providing associative array keys), or as a single message that automatically gets a time stamp.
+
+h4. Sending an Array of Sequenced Messages
+
+Let&#39;s say we wanted to send three messages that should be read in the same order as they were sent. We simply provide an array of those messages in the order to read them in:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;beer1&quot;, &quot;beer2&quot;, &quot;beer3&quot;));
+{code}
+
+h4. Sending an Array of Named Messages
+
+You can also provide an associative array to send messages with specific keys that will be read according to the order of the keys:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;Heineken&quot; =&gt; &quot;not so good&quot;, &quot;Pabst Blue Ribbon&quot; =&gt; &quot;rocks&quot;, &quot;Molson Golden&quot; =&gt; &quot;ok for Canadian beer&quot;));
+{code}
+
+These messages will be read in ascending alphabetic order, or specifically by key.
+
+h4. Sending a Single Message
+
+Sometimes it is necessary to send a single message without a specific key. The MODX register will automatically provide a time-based key for the message so that it is read in a proper time-based order.
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, &quot;It&#39;s Miller Time!&quot;, array(&#39;kill&#39; =&gt; true));
+{code}
+
+{note}The _kill_ option tells message consumers to stop reading any further messages once a message with this option is read.{note}
+
+h4. Options for Sending Messages
+
+h5. delay
+
+Only supported for time-based messages (no keys provided), this option specifies the number of seconds to delay the message before it can be read. The message is still sent immediately to the queue, but is not available for reading until the specified delay has expired.
+
+h5. ttl
+
+The _time to live_ option specifies how many seconds the message(s) remain valid in the queue. Once a message has outlived it&#39;s ttl, it will not be included in the messages returned by a {{read()}} operation.
+
+h5. kill
+
+If specified, when a message consumer reads a message with this option set, no further messages will be read from the queue, regardless of any other read options.
+
+
+h3. Reading Messages
+
+You can also read messages from a topic in a variety of ways using options passed to the {{read()}} method.
+
+h4. Polling for New Messages in a Topic
+
+The most common use of the registry is to look for up to x number of new messages in any subscribed topics. Here we are polling once for up to 5 new messages in the current topic, which is &quot;/beer/&quot;:
+
+{code}&lt;?php
+$msgs = $modx-&gt;registry-&gt;food-&gt;read(array(
+    &#39;poll_limit&#39; =&gt; 1,
+    &#39;msg_limit&#39; =&gt; 5
+));
+{code}
+
+This returns an array of the messages sent to the queue in the order they are read, without the corresponding message keys, regardless if they were specified when sent.
+
+h4. Options for Reading Messages
+
+h5. poll_limit
+
+By default, a modRegister will attempt to poll for messages until the msg_limit, time_limit, or a message with the kill option is encountered. In most situations when using the modRegister in web requests, this is not desirable. Most cases will want to set this option to 1, so the read operation only checks the queue once for messages and moves on regardless if the msg_limit or time_limit is hit. This option is useful if you want to set up a simple PHP polling server that checks for messages and takes action based on them (e.g. in a cronjob).
+
+h5. poll_interval
+
+A configurable delay to wait between polling for new messages, in seconds. Default is unlimited.
+
+h5. time_limit
+
+The maximum number of seconds to poll for new messages when multiple poll attempts are configured (i.e. poll_limit != 1).
+
+h5. msg_limit
+
+The maximum number of messages to read from the queue. The default is 5 messages.
+
+h5. remove_read
+
+Indicates if the message should be removed when it is read.
+
+h5. include_keys _(MODX 2.2+ only)_
+
+Indicates if the read operation should include the message keys. If not true, only the messages are returned in a simple, ordered array.
+
+
+h2. Using the Registry Processors
+
+In addition to the raw API, MODX also provides connectors and processors for sending messages to and reading messages from a register topic. These can be easily utilized by components using the runProcessor method or by AJAX requests via the connectors.
+
+h3. Sending Messages
+
+There are several parameters that control the behavior of the {{system/registry/register/send}} processor, which is used to send a message or multiple messages to a specific register topic. These parameters can be passed to the runProcessor method as properties or passed to the processor via REQUEST variables from the connector.
+
+* *register* _[required]_ — The name of the register to send a message to.
+* *topic* _[required]_ — The topic to send a message to within the specified register.
+* *register_class* _[optional]_ — Specifies the modRegister implementation to use; default is {{registry.modFileRegister}}.
+* *message* _[optional]_ — The message(s) to send to the register topic. In MODX 2.2+, multiple messages can be sent using {{json}} as the *message_format*.
+* *message_key* _[optional, MODX 2.2+]_ — An optional message key that can be provided to send a named message to the topic. If empty, the message is given a sequenced timestamp as the key.
+* *message_format* _[optional, MODX 2.2+]_ — Default is string, which just sends the message as a string. If this is set to {{json}}, the message is converted to PHP before being sent, allowing multiple or more complex messages to be sent.
+
+h3. Reading Messages
+
+Reading messages with the {{system/registry/register/read}} processor can also be accomplished via runProcessor or the connector. Following are the parameters for reading.
+
+* *register* _[required]_ — The name of the register to send a message to.
+* *topic* _[required]_ — The topic to send a message to within the specified register.
+* *register_class* _[optional]_ — Specifies the modRegister implementation to use; default is {{registry.modFileRegister}}.
+* *format* _[optional, MODX 2.2+]_ — If specified as {{json}}, the messages are converted to JSON before being returned; esp. useful for AJAX requests. If specified as {{html_log}}, the messages are assumed to be xPDO/modX log messages and are formatted for HTML output; useful for modExt consoles. By default, the messages are returned as an array.
+* *poll_limit* _[optional]_ — The number of times to poll for new messages before exiting; default is 1.
+* *poll_interval* _[optional]_ — The number of seconds to delay each poll attempt for new messages before exiting; default is 1.
+* *time_limit* _[optional]_ — The number of seconds to continue polling for new messages before exiting; default is 10.
+* *message_limit* _[optional]_ — The maximum number of messages to return; default is 200.
+* *remove_read* _[optional]_ — Indicates if returned messages should be removed from the queue; default is true.
+* *include_keys* _[optional, MODX 2.2+]_ — Indicates if returned messages should include the message keys; default is false.
+* *show_filename* _[optional]_ — Indicates if html_log formatted messages should include the filename; default is false.
+
+
+h2. Examples
+
+h3. Alternative to Session Storage
+
+There might be times that session storage is not appropriate for persisting personalized information. In these cases, you could use a register topic to store the data and retrieve it, regardless of the user&#39;s session state. This might be useful for custom registration systems where unauthorized users are turned into authorized users and you need access to data stored before the new authorized user&#39;s session was started (i.e. they logged in).
+
+You might write a named message into a topic for retrieval by key at a later time, as done in the Login Add-On for useractivation:
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;login&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;login&#39;));
+$modx-&gt;registry-&gt;login-&gt;connect();
+$modx-&gt;registry-&gt;login-&gt;subscribe(&#39;/useractivation/&#39;);
+$modx-&gt;registry-&gt;login-&gt;send(&#39;/useractivation/&#39;,array($user-&gt;get(&#39;username&#39;) =&gt; $pword),array(
+    &#39;ttl&#39; =&gt; ($modx-&gt;getOption(&#39;activationttl&#39;,$scriptProperties,180)*60),
+));
+{code}
+
+And to retrieve the specific message later:
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;login&#39;,&#39;registry.modFileRegister&#39;);
+$modx-&gt;registry-&gt;login-&gt;connect();
+$modx-&gt;registry-&gt;login-&gt;subscribe(&#39;/useractivation/&#39;.$user-&gt;get(&#39;username&#39;));
+$msgs = $modx-&gt;registry-&gt;login-&gt;read(array(&#39;poll_limit&#39; =&gt; 1));
+$password = reset($msgs);
+{code}
+
+
+h3. Capturing Log Messages
+
+MODX supports specifying the logTarget as a modRegister instance. This allows you to capture all log messages a message queue where you can read them later to provide user feedback, audit views, etc.
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;logging&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;logging&#39;));
+$modx-&gt;registry-&gt;logging-&gt;connect();
+$modx-&gt;registry-&gt;logging-&gt;subscribe($topic);
+
+/* set the logTarget to the register instance */
+$oldTarget = $modx-&gt;setLogTarget($modx-&gt;registry-&gt;logging);
+
+/* code here that sends log messages */
+
+/* set the old target back */
+$modx-&gt;setLogTarget($oldTarget);
+{code}
+
+h3. Registering Load Balanced Web Nodes for Remote Commands
+
+This example solution using modRegistry uses two plugins to help manage cache refresh operations across multiple web nodes, each using it&#39;s own local file cache.
+
+The first, which is attached to OnWebPageComplete, registers each server instance for 20 minutes (this was designed for a cloud deployment that would launch and kill new server instances on demand, but you can remove the expiration time to avoid the overhead of writing those messages every 20 minutes) and then looks for any messages with the command &#39;clearCache&#39; specified. The second, attached to the OnSiteRefresh event allows clearing the cache in the manager to register a &#39;clearCache&#39; message with all of the remote server &#39;instances&#39; that have been registered by the first plugin. You can take the idea and tailor it for your environment, but in our experience the best practice is to isolate one server instance for the manager (via subdomain configuration or similar) that is separate from your remote web nodes. This allows activity to take place on the manager instance in high volume, then changes only get pushed out when the Refresh site action is taken from the Admin menu.
+
+Here is an example remotecommands plugin (NOTE this is for MODX 2.1, and 2.0 would be slightly different, using clearCache() instead of refresh()):
+
+{code}&lt;?php
+/* RemoteCommands plugin -- register with OnWebPageComplete event */
+ 
+/* find any remote commands to execute from the master instance */
+$instance = $_SERVER[&#39;SERVER_ADDR&#39;];
+if (!empty($instance) &amp;&amp; $modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;)) {
+    $modx-&gt;registry-&gt;addRegister(&#39;remotes&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;remotes&#39;));
+    $modx-&gt;registry-&gt;remotes-&gt;connect();
+ 
+    /* register this instance */
+    $modx-&gt;registry-&gt;remotes-&gt;subscribe(&quot;/distrib/instances/&quot;);
+    $modx-&gt;registry-&gt;remotes-&gt;send(&quot;/distrib/instances/&quot;, array($instance =&gt; true), array(&#39;expires&#39; =&gt; time() + 1440));
+ 
+    /* find any valid command messages for this instance and act on them */
+    $modx-&gt;registry-&gt;remotes-&gt;subscribe(&quot;/distrib/commands/{$instance}/&quot;);
+    $commands = $modx-&gt;registry-&gt;remotes-&gt;read(array(&#39;poll_limit&#39; =&gt; 1, &#39;msg_limit&#39; =&gt; 1));
+    if (!empty($commands)) {
+        $command = reset($commands);
+        if (!empty($command)) {
+             switch ($command) {
+                 case &#39;clearCache&#39;:
+                    $results= $modx-&gt;cacheManager-&gt;refresh();
+                    break;
+                 default:
+                    break;
+             }
+        }
+    }
+}
+{code}
+
+
+And here is an example sendclearcache plugin for registering a remote command message to each remote server instance:
+
+{code}&lt;?php
+/* SendClearCache plugin -- register with OnSiteRefresh event */
+ 
+/* read instances and write clear cache msg to each command directory */
+if ($modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;)) {
+    $modx-&gt;registry-&gt;addRegister(&#39;remotes&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;remotes&#39;));
+    $modx-&gt;registry-&gt;remotes-&gt;connect();
+    $modx-&gt;registry-&gt;remotes-&gt;subscribe(&#39;/distrib/instances/&#39;);
+    $instances = $modx-&gt;registry-&gt;remotes-&gt;read(array(&#39;poll_limit&#39; =&gt; 1, &#39;msg_limit&#39; =&gt; 25, &#39;remove_read&#39; =&gt; false));
+    if (!empty($instances)) {
+        foreach ($instances as $instance) {
+            if ($instance == $_SERVER[&#39;SERVER_ADDR&#39;]) continue;
+            $modx-&gt;registry-&gt;remotes-&gt;subscribe(&quot;/distrib/commands/{$instance}/&quot;);
+            $modx-&gt;registry-&gt;remotes-&gt;send(&quot;/distrib/commands/{$instance}/&quot;, &#39;clearCache&#39;, array(&#39;expires&#39; =&gt; time() + 1440));
+        }
+    }
+}
+{code}
+
+Other remote commands could also be sent and processed in this way. You would simply implement handling for additional commands in the switch statement in the RemoteCommands plugin.
+";}i:2;a:3:{s:2:"id";s:8:"35586483";s:3:"ver";s:1:"1";s:4:"code";s:14654:"//
+
+{toc}
+
+h2. What is modRegistry?
+
+The modRegistry service provided with the MODX Revolution Core is a simple message queue service that developers can make use of for a wide variety of purposes. It comes with a file and database modRegister implementation, and can be extended to work with custom or external message queue implementations.
+
+The modRegistry service can connect to any number of unique registers. Within each register, specific topics are subscribed to and messages can then be sent or read from the topic.
+
+
+h2. Choosing a modRegister implementation
+
+MODX ships with two simple modRegister implementations. One is file-based and one uses database tables for storage. Each has benefits and limitations that you should consider before determining which one to use for a specific purpose.
+
+h3. modFileRegister
+
+This file-based register reads and writes messages, by default, to files under the {{registry/}} folder in the MODX {{cache_path}} location. This is great for single-server deployments that do not have high-traffic requirements where writing and reading to the the same topics might occur simultaneously from multiple client requests.
+
+Here is how you would add a specific file-based register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+{warning:title=Be Careful!}Clearing the cache manually by deleting all files and folders under {{core/cache/}} will delete any existing modFileRegister messages as well.{warning}
+
+h3. modDbRegister
+
+When reading and writing is expected to reach higher volumes, or you need messages shared across a load-balanced environment with multiple web server nodes, you would want to choose the database-powered modRegister implementation.
+
+Here is how you would add a specific database register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+
+h2. Using the Registry API
+
+The modRegistry service provides a very simple API for working with Registers, subscribing to topics, and sending/reading messages within them.
+
+h3. Connecting
+
+Once you have obtained the modRegistry and initialized a modRegister implementation of your choice, you can now attempt to make a connection to your queue. Here is how you would connect to the _food_ register we added in the examples above.
+
+{code}&lt;?php
+$connected = $modx-&gt;registry-&gt;food-&gt;connect();
+{code}
+
+If there is any problem connecting to the register instance, the return value will be {{false}}.
+
+h3. Subscribing
+
+Once you make a successful connection, it is time to subscribe to a topic for relevant messages to be sent or read. Let&#39;s subscribe to a nice topic about _beer_ in our _food_ register:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;subscribe(&quot;/beer/&quot;);
+{code}
+
+This adds the topic &quot;/beer/&quot; to your subscriptions and sets it as the current topic. Topics are similar to relative URI&#39;s. If you specify a slash at the beginning, you are subscribing to a topic from the root of the register. No initial slash would indicate you want to subscribe to a sub-topic of the current topic. Once subscribed to at least one topic, you are free to send and read messages from them at will.
+
+
+h3. Sending Messages
+
+You can send messages to a topic in multiple ways. They can be sent as an array of sequenced messages (ordered by time sent and the array keys provided), named messages ordered by key (by providing associative array keys), or as a single message that automatically gets a time stamp.
+
+h4. Sending an Array of Sequenced Messages
+
+Let&#39;s say we wanted to send three messages that should be read in the same order as they were sent. We simply provide an array of those messages in the order to read them in:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;beer1&quot;, &quot;beer2&quot;, &quot;beer3&quot;));
+{code}
+
+h4. Sending an Array of Named Messages
+
+You can also provide an associative array to send messages with specific keys that will be read according to the order of the keys:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;Heineken&quot; =&gt; &quot;not so good&quot;, &quot;Pabst Blue Ribbon&quot; =&gt; &quot;rocks&quot;, &quot;Molson Golden&quot; =&gt; &quot;ok for Canadian beer&quot;));
+{code}
+
+These messages will be read in ascending alphabetic order, or specifically by key.
+
+h4. Sending a Single Message
+
+Sometimes it is necessary to send a single message without a specific key. The MODX register will automatically provide a time-based key for the message so that it is read in a proper time-based order.
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, &quot;It&#39;s Miller Time!&quot;, array(&#39;kill&#39; =&gt; true));
+{code}
+
+{note}The _kill_ option tells message consumers to stop reading any further messages once a message with this option is read.{note}
+
+h4. Options for Sending Messages
+
+h5. delay
+
+Only supported for time-based messages (no keys provided), this option specifies the number of seconds to delay the message before it can be read. The message is still sent immediately to the queue, but is not available for reading until the specified delay has expired.
+
+h5. ttl
+
+The _time to live_ option specifies how many seconds the message(s) remain valid in the queue. Once a message has outlived it&#39;s ttl, it will not be included in the messages returned by a {{read()}} operation.
+
+h5. kill
+
+If specified, when a message consumer reads a message with this option set, no further messages will be read from the queue, regardless of any other read options.
+
+
+h3. Reading Messages
+
+You can also read messages from a topic in a variety of ways using options passed to the {{read()}} method.
+
+h4. Polling for New Messages in a Topic
+
+The most common use of the registry is to look for up to x number of new messages in any subscribed topics. Here we are polling once for up to 5 new messages in the current topic, which is &quot;/beer/&quot;:
+
+{code}&lt;?php
+$msgs = $modx-&gt;registry-&gt;food-&gt;read(array(
+    &#39;poll_limit&#39; =&gt; 1,
+    &#39;msg_limit&#39; =&gt; 5
+));
+{code}
+
+This returns an array of the messages sent to the queue in the order they are read, without the corresponding message keys, regardless if they were specified when sent.
+
+h4. Options for Reading Messages
+
+h5. poll_limit
+
+By default, a modRegister will attempt to poll for messages until the msg_limit, time_limit, or a message with the kill option is encountered. In most situations when using the modRegister in web requests, this is not desirable. Most cases will want to set this option to 1, so the read operation only checks the queue once for messages and moves on regardless if the msg_limit or time_limit is hit. This option is useful if you want to set up a simple PHP polling server that checks for messages and takes action based on them (e.g. in a cronjob).
+
+h5. poll_interval
+
+A configurable delay to wait between polling for new messages, in seconds. Default is unlimited.
+
+h5. time_limit
+
+The maximum number of seconds to poll for new messages when multiple poll attempts are configured (i.e. poll_limit != 1).
+
+h5. msg_limit
+
+The maximum number of messages to read from the queue. The default is 5 messages.
+
+h5. remove_read
+
+Indicates if the message should be removed when it is read.
+
+h5. include_keys _(MODX 2.2+ only)_
+
+Indicates if the read operation should include the message keys. If not true, only the messages are returned in a simple, ordered array.
+
+
+h2. Using the Registry Processors
+
+h3. Sending Messages
+
+h3. Reading Messages
+
+h2. Examples
+
+h3. Alternative to Session Storage
+
+There might be times that session storage is not appropriate for persisting personalized information. In these cases, you could use a register topic to store the data and retrieve it, regardless of the user&#39;s session state. This might be useful for custom registration systems where unauthorized users are turned into authorized users and you need access to data stored before the new authorized user&#39;s session was started (i.e. they logged in).
+
+You might write a named message into a topic for retrieval by key at a later time, as done in the Login Add-On for useractivation:
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;login&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;login&#39;));
+$modx-&gt;registry-&gt;login-&gt;connect();
+$modx-&gt;registry-&gt;login-&gt;subscribe(&#39;/useractivation/&#39;);
+$modx-&gt;registry-&gt;login-&gt;send(&#39;/useractivation/&#39;,array($user-&gt;get(&#39;username&#39;) =&gt; $pword),array(
+    &#39;ttl&#39; =&gt; ($modx-&gt;getOption(&#39;activationttl&#39;,$scriptProperties,180)*60),
+));
+{code}
+
+And to retrieve the specific message later:
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;login&#39;,&#39;registry.modFileRegister&#39;);
+$modx-&gt;registry-&gt;login-&gt;connect();
+$modx-&gt;registry-&gt;login-&gt;subscribe(&#39;/useractivation/&#39;.$user-&gt;get(&#39;username&#39;));
+$msgs = $modx-&gt;registry-&gt;login-&gt;read(array(&#39;poll_limit&#39; =&gt; 1));
+{code}
+
+
+h3. Capturing Log Messages
+
+MODX supports specifying the logTarget as a modRegister instance. This allows you to capture all log messages a message queue where you can read them later to provide user feedback, audit views, etc.
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;logging&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;logging&#39;));
+$modx-&gt;registry-&gt;logging-&gt;connect();
+$modx-&gt;registry-&gt;logging-&gt;subscribe($topic);
+
+/* set the logTarget to the register instance */
+$oldTarget = $modx-&gt;setLogTarget($modx-&gt;registry-&gt;logging);
+
+/* code here that sends log messages */
+
+/* set the old target back */
+$modx-&gt;setLogTarget($oldTarget);
+{code}
+
+h3. Registering Load Balanced Web Nodes for Remote Commands
+
+This example solution using modRegistry uses two plugins to help manage cache refresh operations across multiple web nodes, each using it&#39;s own local file cache.
+
+The first, which is attached to OnWebPageComplete, registers each server instance for 20 minutes (this was designed for a cloud deployment that would launch and kill new server instances on demand, but you can remove the expiration time to avoid the overhead of writing those messages every 20 minutes) and then looks for any messages with the command &#39;clearCache&#39; specified. The second, attached to the OnSiteRefresh event allows clearing the cache in the manager to register a &#39;clearCache&#39; message with all of the remote server &#39;instances&#39; that have been registered by the first plugin. You can take the idea and tailor it for your environment, but in our experience the best practice is to isolate one server instance for the manager (via subdomain configuration or similar) that is separate from your remote web nodes. This allows activity to take place on the manager instance in high volume, then changes only get pushed out when the Refresh site action is taken from the Admin menu.
+
+Here is an example remotecommands plugin (NOTE this is for MODX 2.1, and 2.0 would be slightly different, using clearCache() instead of refresh()):
+
+{code}&lt;?php
+/* RemoteCommands plugin -- register with OnWebPageComplete event */
+ 
+/* find any remote commands to execute from the master instance */
+$instance = $_SERVER[&#39;SERVER_ADDR&#39;];
+if (!empty($instance) &amp;&amp; $modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;)) {
+    $modx-&gt;registry-&gt;addRegister(&#39;remotes&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;remotes&#39;));
+    $modx-&gt;registry-&gt;remotes-&gt;connect();
+ 
+    /* register this instance */
+    $modx-&gt;registry-&gt;remotes-&gt;subscribe(&quot;/distrib/instances/&quot;);
+    $modx-&gt;registry-&gt;remotes-&gt;send(&quot;/distrib/instances/&quot;, array($instance =&gt; true), array(&#39;expires&#39; =&gt; time() + 1440));
+ 
+    /* find any valid command messages for this instance and act on them */
+    $modx-&gt;registry-&gt;remotes-&gt;subscribe(&quot;/distrib/commands/{$instance}/&quot;);
+    $commands = $modx-&gt;registry-&gt;remotes-&gt;read(array(&#39;poll_limit&#39; =&gt; 1, &#39;msg_limit&#39; =&gt; 1));
+    if (!empty($commands)) {
+        $command = reset($commands);
+        if (!empty($command)) {
+             switch ($command) {
+                 case &#39;clearCache&#39;:
+                    $results= $modx-&gt;cacheManager-&gt;refresh();
+                    break;
+                 default:
+                    break;
+             }
+        }
+    }
+}
+{code}
+
+
+And here is an example sendclearcache plugin for registering a remote command message to each remote server instance:
+
+{code}&lt;?php
+/* SendClearCache plugin -- register with OnSiteRefresh event */
+ 
+/* read instances and write clear cache msg to each command directory */
+if ($modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;)) {
+    $modx-&gt;registry-&gt;addRegister(&#39;remotes&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;remotes&#39;));
+    $modx-&gt;registry-&gt;remotes-&gt;connect();
+    $modx-&gt;registry-&gt;remotes-&gt;subscribe(&#39;/distrib/instances/&#39;);
+    $instances = $modx-&gt;registry-&gt;remotes-&gt;read(array(&#39;poll_limit&#39; =&gt; 1, &#39;msg_limit&#39; =&gt; 25, &#39;remove_read&#39; =&gt; false));
+    if (!empty($instances)) {
+        foreach ($instances as $instance) {
+            if ($instance == $_SERVER[&#39;SERVER_ADDR&#39;]) continue;
+            $modx-&gt;registry-&gt;remotes-&gt;subscribe(&quot;/distrib/commands/{$instance}/&quot;);
+            $modx-&gt;registry-&gt;remotes-&gt;send(&quot;/distrib/commands/{$instance}/&quot;, &#39;clearCache&#39;, array(&#39;expires&#39; =&gt; time() + 1440));
+        }
+    }
+}
+{code}
+
+Other remote commands could also be sent and processed in this way. You would simply implement handling for additional commands in the switch statement in the RemoteCommands plugin.
+";}i:3;a:3:{s:2:"id";s:8:"35586482";s:3:"ver";s:1:"9";s:4:"code";s:14653:"//
+
+{toc}
+
+h2. What is modRegistry?
+
+The modRegistry service provided with the MODX Revolution Core is a simple message queue service that developers can make use of for a wide variety of purposes. It comes with a file and database modRegister implementation, and can be extended to work with custom or external message queue implementations.
+
+The modRegistry service can connect to any number of unique registers. Within each register, specific topics are subscribed to and messages can then be sent or read from the topic.
+
+
+h2. Choosing a modRegister implementation
+
+MODX ships with two simple modRegister implementations. One is file-based and one uses database tables for storage. Each has benefits and limitations that you should consider before determining which one to use for a specific purpose.
+
+h3. modFileRegister
+
+This file-based register reads and writes messages, by default, to files under the {{registry/}} folder in the MODX {{cache_path}} location. This is great for single-server deployments that do not have high-traffic requirements where writing and reading to the the same topics might occur simultaneously from multiple client requests.
+
+Here is how you would add a specific file-based register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+{warning:title=Be Careful!}Clearing the cache manually by deleting all files and folders under {{core/cache/}} will delete any existing modFileRegister messages as well.{warning}
+
+h3. modDbRegister
+
+When reading and writing is expected to reach higher volumes, or you need messages shared across a load-balanced environment with multiple web server nodes, you would want to choose the database-powered modRegister implementation.
+
+Here is how you would add a specific database register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+
+h2. Using the Registry API
+
+The modRegistry service provides a very simple API for working with Registers, subscribing to topics, and sending/reading messages within them.
+
+h3. Connecting
+
+Once you have obtained the modRegistry and initialized a modRegister implementation of your choice, you can now attempt to make a connection to your queue. Here is how you would connect to the _food_ register we added in the examples above.
+
+{code}&lt;?php
+$connected = $modx-&gt;registry-&gt;food-&gt;connect();
+{code}
+
+If there is any problem connecting to the register instance, the return value will be {{false}}.
+
+h3. Subscribing
+
+Once you make a successful connection, it is time to subscribe to a topic for relevant messages to be sent or read. Let&#39;s subscribe to a nice topic about _beer_ in our _food_ register:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;subscribe(&quot;/beer/&quot;);
+{code}
+
+This adds the topic &quot;/beer/&quot; to your subscriptions and sets it as the current topic. Topics are similar to relative URI&#39;s. If you specify a slash at the beginning, you are subscribing to a topic from the root of the register. No initial slash would indicate you want to subscribe to a sub-topic of the current topic. Once subscribed to at least one topic, you are free to send and read messages from them at will.
+
+
+h3. Sending Messages
+
+You can send messages to a topic in multiple ways. They can be sent as an array of sequenced messages (ordered by time sent and the array keys provided), named messages ordered by key (by providing associative array keys), or as a single message that automatically gets a time stamp.
+
+h4. Sending an Array of Sequenced Messages
+
+Let&#39;s say we wanted to send three messages that should be read in the same order as they were sent. We simply provide an array of those messages in the order to read them in:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;beer1&quot;, &quot;beer2&quot;, &quot;beer3&quot;));
+{code}
+
+h4. Sending an Array of Named Messages
+
+You can also provide an associative array to send messages with specific keys that will be read according to the order of the keys:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;Heineken&quot; =&gt; &quot;not so good&quot;, &quot;Pabst Blue Ribbon&quot; =&gt; &quot;rocks&quot;, &quot;Molson Golden&quot; =&gt; &quot;ok for Canadian beer&quot;));
+{code}
+
+These messages will be read in ascending alphabetic order, or specifically by key.
+
+h4. Sending a Single Message
+
+Sometimes it is necessary to send a single message without a specific key. The MODX register will automatically provide a time-based key for the message so that it is read in a proper time-based order.
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, &quot;It&#39;s Miller Time!&quot;, array(&#39;kill&#39; =&gt; true));
+{code}
+
+{note}The _kill_ option tells message consumers to stop reading any further messages once a message with this option is read.{note}
+
+h4. Options for Sending Messages
+
+h5. delay
+
+Only supported for time-based messages (no keys provided), this option specifies the number of seconds to delay the message before it can be read. The message is still sent immediately to the queue, but is not available for reading until the specified delay has expired.
+
+h5. ttl
+
+The _time to live_ option specifies how many seconds the message(s) remain valid in the queue. Once a message has outlived it&#39;s ttl, it will not be included in the messages returned by a {{read()}} operation.
+
+h5. kill
+
+If specified, when a message consumer reads a message with this option set, no further messages will be read from the queue, regardless of any other read options.
+
+
+h3. Reading Messages
+
+You can also read messages from a topic in a variety of ways using options passed to the {{read()}} method.
+
+h4. Polling for New Messages in a Topic
+
+The most common use of the registry is to look for up to x number of new messages in any subscribed topics. Here we are polling once for up to 5 new messages in the current topic, which is &quot;/beer/&quot;:
+
+{code}&lt;?php
+$msgs = $modx-&gt;registry-&gt;food-&gt;read(array(
+    &#39;poll_limit&#39; =&gt; 1,
+    &#39;msg_limit&#39; =&gt; 5
+));
+{code}
+
+This returns an array of the messages sent to the queue in the order they are read, without the corresponding message keys, regardless if they were specified when sent.
+
+h4. Options for Reading Messages
+
+h5. poll_limit
+
+By default, a modRegister will attempt to poll for messages until the msg_limit, time_limit, or a message with the kill option is encountered. In most situations when using the modRegister in web requests, this is not desirable. Most cases will want to set this option to 1, so the read operation only checks the queue once for messages and moves on regardless if the msg_limit or time_limit is hit. This option is useful if you want to set up a simple PHP polling server that checks for messages and takes action based on them (e.g. in a cronjob).
+
+h5. poll_interval
+
+A configurable delay to wait between polling for new messages, in seconds. Default is unlimited.
+
+h5. time_limit
+
+The maximum number of seconds to poll for new messages when multiple poll attempts are configured (i.e. poll_limit != 1).
+
+h5. msg_limit
+
+The maximum number of messages to read from the queue. The default is 5 messages.
+
+h5. remove_read
+
+Indicates if the message should be removed when it is read.
+
+h5. include_keys _(MODX 2.2+ only)_
+
+Indicates if the read operation should include the message keys. If not true, only the messages are returned in a simple, ordered array.
+
+
+h2. Using the Registry Processors
+
+h3. Sending Messages
+
+h3. Reading Messages
+
+h2. Examples
+
+h3. Alternative to Session Storage
+
+There might be times that session storage is not appropriate for persisting personalized information. In these cases, you could use a register topic to store the data and retrieve it, regardless of the user&#39;s session state. This might be useful for custom registration systems where unauthorized users are turned into authorized users and you need access to data stored before the new authorized user&#39;s session was started (i.e. they logged in).
+
+You might write a named message into a topic for retrieval by key at a later time, as done in the Login Add-On for useractivation:
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;login&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;login&#39;));
+$modx-&gt;registry-&gt;login-&gt;connect();
+$modx-&gt;registry-&gt;login-&gt;subscribe(&#39;/useractivation/&#39;);
+$modx-&gt;registry-&gt;login-&gt;send(&#39;/useractivation/&#39;,array($user-&gt;get(&#39;username&#39;) =&gt; $pword),array(
+    &#39;ttl&#39; =&gt; ($modx-&gt;getOption(&#39;activationttl&#39;,$scriptProperties,180)*60),
+));
+{code}
+
+And to retrieve the specific message later:
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;login&#39;,&#39;registry.modFileRegister&#39;);
+$modx-&gt;registry-&gt;login-&gt;connect();
+$modx-&gt;registry-&gt;login-&gt;subscribe(&#39;/useractivation/&#39;.$user-&gt;get(&#39;username&#39;));
+$msgs = $modx-&gt;registry-&gt;login-&gt;read(array(&#39;poll_limit&#39; =&gt; 1));
+{code}
+
+
+h3. Capturing Log Messages
+
+MODX supports specifying the logTarget as a modRegister instance. This allows you to capture all log messages a message queue where you can read them later to provide user feedback, audit views, etc.
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;logging&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;logging&#39;));
+$modx-&gt;registry-&gt;logging-&gt;connect();
+$modx-&gt;registry-&gt;logging-&gt;subscribe($topic);
+
+/* set the logTarget to the register instance */
+$oldTarget = $modx-&gt;setLogTarget($modx-&gt;registry-&gt;logging);
+
+/* code here that sends log messages */
+
+/* set the old target back */
+$modx-&gt;setLogTarget($oldTarget);
+{code}
+
+h3. Registering Load Balanced Web Nodes for Remote Commands
+
+This example solution using modRegistry uses two plugins to help manage cache refresh operations across multiple web nodes, each using it&#39;s own local file cache.
+
+The first, which is attached to OnWebPageComplete, registers each server instance for 20 minutes (this was designed for a cloud deployment that would launch and kill new server instances on demand, but you can remove the expiration time to avoid the overhead of writing those messages every 20 minutes) and then looks for any messages with the command &#39;clearCache&#39; specified. The second, attached to the OnSiteRefresh event allows clearing the cache in the manager to register a &#39;clearCache&#39; message with all of the remote server &#39;instances&#39; that have been registered by the first plugin. You can take the idea and tailor it for your environment, but in our experience the best practice is to isolate one server instance for the manager (via subdomain configuration or similar) that is separate from your remote web nodes. This allows activity to take place on the manager instance in high volume, then changes only get pushed out when the Refresh site action is taken from the Admin menu.
+
+Here is an example remotecommands plugin (NOTE this is for MODX 2.1, and 2.0 would be slightly different, using clearCache() instead of refresh()):
+
+{code}&lt;?php
+/* RemoteCommands plugin -- register with OnWebPageComplete event */
+ 
+/* find any remote commands to execute from the master instance */
+$instance = $_SERVER[&#39;SERVER_ADDR&#39;];
+if (!empty($instance) &amp;&amp; $modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;)) {
+    $modx-&gt;registry-&gt;addRegister(&#39;remotes&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;remotes&#39;));
+    $modx-&gt;registry-&gt;remotes-&gt;connect();
+ 
+    /* register this instance */
+    $modx-&gt;registry-&gt;remotes-&gt;subscribe(&quot;/distrib/instances/&quot;);
+    $modx-&gt;registry-&gt;remotes-&gt;send(&quot;/distrib/instances/&quot;, array($instance =&gt; true), array(&#39;expires&#39; =&gt; time() + 1440));
+ 
+    /* find any valid command messages for this instance and act on them */
+    $modx-&gt;registry-&gt;remotes-&gt;subscribe(&quot;/distrib/commands/{$instance}/&quot;);
+    $commands = $modx-&gt;registry-&gt;remotes-&gt;read(array(&#39;poll_limit&#39; =&gt; 1, &#39;msg_limit&#39; =&gt; 1));
+    if (!empty($commands)) {
+        $command = reset($commands);
+        if (!empty($command)) {
+             switch ($command) {
+                 case &#39;clearCache&#39;:
+                    $results= $modx-&gt;cacheManager-&gt;refresh();
+                    break;
+                 default:
+                    break;
+             }
+        }
+    }
+}
+{code}
+
+
+And here is an example sendclearcache plugin for registering a remote command message to each remote server instance:
+
+{code}&lt;?php
+/* SendClearCache plugin -- register with OnSiteRefresh event */
+ 
+/* read instances and write clear cache msg to each command directory */
+if ($modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;)) {
+    $modx-&gt;registry-&gt;addRegister(&#39;remotes&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;remotes&#39;));
+    $modx-&gt;registry-&gt;remotes-&gt;connect();
+    $modx-&gt;registry-&gt;remotes-&gt;subscribe(&#39;/distrib/instances/&#39;);
+    $instances = $modx-&gt;registry-&gt;remotes-&gt;read(array(&#39;poll_limit&#39; =&gt; 1, &#39;msg_limit&#39; =&gt; 25, &#39;remove_read&#39; =&gt; false));
+    if (!empty($instances)) {
+        foreach ($instances as $instance) {
+            if ($instance == $_SERVER[&#39;SERVER_ADDR&#39;]) continue;
+            $modx-&gt;registry-&gt;remotes-&gt;subscribe(&quot;/distrib/commands/{$instance}/&quot;);
+            $modx-&gt;registry-&gt;remotes-&gt;send(&quot;/distrib/commands/{$instance}/&quot;, &#39;clearCache&#39;, array(&#39;expires&#39; =&gt; time() + 1440));
+        }
+    }
+}
+{code}
+
+Other remote commands could also be sent and processed in this way. You would simply implement handing for additional commands in the switch statement in the RemoteCommands plugin.
+";}i:4;a:3:{s:2:"id";s:8:"35586481";s:3:"ver";s:1:"8";s:4:"code";s:10478:"//
+
+{toc}
+
+h2. What is modRegistry?
+
+The modRegistry service provided with the MODX Revolution Core is a simple message queue service that developers can make use of for a wide variety of purposes. It comes with a file and database modRegister implementation, and can be extended to work with custom or external message queue implementations.
+
+The modRegistry service can connect to any number of unique registers. Within each register, specific topics are subscribed to and messages can then be sent or read from the topic.
+
+
+h2. Choosing a modRegister implementation
+
+MODX ships with two simple modRegister implementations. One is file-based and one uses database tables for storage. Each has benefits and limitations that you should consider before determining which one to use for a specific purpose.
+
+h3. modFileRegister
+
+This file-based register reads and writes messages, by default, to files under the {{registry/}} folder in the MODX {{cache_path}} location. This is great for single-server deployments that do not have high-traffic requirements where writing and reading to the the same topics might occur simultaneously from multiple client requests.
+
+Here is how you would add a specific file-based register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+{warning:title=Be Careful!}Clearing the cache manually by deleting all files and folders under {{core/cache/}} will delete any existing modFileRegister messages as well.{warning}
+
+h3. modDbRegister
+
+When reading and writing is expected to reach higher volumes, or you need messages shared across a load-balanced environment with multiple web server nodes, you would want to choose the database-powered modRegister implementation.
+
+Here is how you would add a specific database register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+
+h2. Using the Registry API
+
+The modRegistry service provides a very simple API for working with Registers, subscribing to topics, and sending/reading messages within them.
+
+h3. Connecting
+
+Once you have obtained the modRegistry and initialized a modRegister implementation of your choice, you can now attempt to make a connection to your queue. Here is how you would connect to the _food_ register we added in the examples above.
+
+{code}&lt;?php
+$connected = $modx-&gt;registry-&gt;food-&gt;connect();
+{code}
+
+If there is any problem connecting to the register instance, the return value will be {{false}}.
+
+h3. Subscribing
+
+Once you make a successful connection, it is time to subscribe to a topic for relevant messages to be sent or read. Let&#39;s subscribe to a nice topic about _beer_ in our _food_ register:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;subscribe(&quot;/beer/&quot;);
+{code}
+
+This adds the topic &quot;/beer/&quot; to your subscriptions and sets it as the current topic. Topics are similar to relative URI&#39;s. If you specify a slash at the beginning, you are subscribing to a topic from the root of the register. No initial slash would indicate you want to subscribe to a sub-topic of the current topic. Once subscribed to at least one topic, you are free to send and read messages from them at will.
+
+
+h3. Sending Messages
+
+You can send messages to a topic in multiple ways. They can be sent as an array of sequenced messages (ordered by time sent and the array keys provided), named messages ordered by key (by providing associative array keys), or as a single message that automatically gets a time stamp.
+
+h4. Sending an Array of Sequenced Messages
+
+Let&#39;s say we wanted to send three messages that should be read in the same order as they were sent. We simply provide an array of those messages in the order to read them in:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;beer1&quot;, &quot;beer2&quot;, &quot;beer3&quot;));
+{code}
+
+h4. Sending an Array of Named Messages
+
+You can also provide an associative array to send messages with specific keys that will be read according to the order of the keys:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;Heineken&quot; =&gt; &quot;not so good&quot;, &quot;Pabst Blue Ribbon&quot; =&gt; &quot;rocks&quot;, &quot;Molson Golden&quot; =&gt; &quot;ok for Canadian beer&quot;));
+{code}
+
+These messages will be read in ascending alphabetic order, or specifically by key.
+
+h4. Sending a Single Message
+
+Sometimes it is necessary to send a single message without a specific key. The MODX register will automatically provide a time-based key for the message so that it is read in a proper time-based order.
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, &quot;It&#39;s Miller Time!&quot;, array(&#39;kill&#39; =&gt; true));
+{code}
+
+{note}The _kill_ option tells message consumers to stop reading any further messages once a message with this option is read.{note}
+
+h4. Options for Sending Messages
+
+h5. delay
+
+Only supported for time-based messages (no keys provided), this option specifies the number of seconds to delay the message before it can be read. The message is still sent immediately to the queue, but is not available for reading until the specified delay has expired.
+
+h5. ttl
+
+The _time to live_ option specifies how many seconds the message(s) remain valid in the queue. Once a message has outlived it&#39;s ttl, it will not be included in the messages returned by a {{read()}} operation.
+
+h5. kill
+
+If specified, when a message consumer reads a message with this option set, no further messages will be read from the queue, regardless of any other read options.
+
+
+h3. Reading Messages
+
+You can also read messages from a topic in a variety of ways using options passed to the {{read()}} method.
+
+h4. Polling for New Messages in a Topic
+
+The most common use of the registry is to look for up to x number of new messages in any subscribed topics. Here we are polling once for up to 5 new messages in the current topic, which is &quot;/beer/&quot;:
+
+{code}&lt;?php
+$msgs = $modx-&gt;registry-&gt;food-&gt;read(array(
+    &#39;poll_limit&#39; =&gt; 1,
+    &#39;msg_limit&#39; =&gt; 5
+));
+{code}
+
+This returns an array of the messages sent to the queue in the order they are read, without the corresponding message keys, regardless if they were specified when sent.
+
+h4. Options for Reading Messages
+
+h5. poll_limit
+
+By default, a modRegister will attempt to poll for messages until the msg_limit, time_limit, or a message with the kill option is encountered. In most situations when using the modRegister in web requests, this is not desirable. Most cases will want to set this option to 1, so the read operation only checks the queue once for messages and moves on regardless if the msg_limit or time_limit is hit. This option is useful if you want to set up a simple PHP polling server that checks for messages and takes action based on them (e.g. in a cronjob).
+
+h5. poll_interval
+
+A configurable delay to wait between polling for new messages, in seconds. Default is unlimited.
+
+h5. time_limit
+
+The maximum number of seconds to poll for new messages when multiple poll attempts are configured (i.e. poll_limit != 1).
+
+h5. msg_limit
+
+The maximum number of messages to read from the queue. The default is 5 messages.
+
+h5. remove_read
+
+Indicates if the message should be removed when it is read.
+
+h5. include_keys _(MODX 2.2+ only)_
+
+Indicates if the read operation should include the message keys. If not true, only the messages are returned in a simple, ordered array.
+
+
+h2. Using the Registry Processors
+
+h3. Sending Messages
+
+h3. Reading Messages
+
+h2. Examples
+
+h3. Alternative to Session Storage
+
+There might be times that session storage is not appropriate for persisting personalized information. In these cases, you could use a register topic to store the data and retrieve it, regardless of the user&#39;s session state. This might be useful for custom registration systems where unauthorized users are turned into authorized users and you need access to data stored before the new authorized user&#39;s session was started (i.e. they logged in).
+
+You might write a named message into a topic for retrieval by key at a later time, as done in the Login Add-On for useractivation:
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;login&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;login&#39;));
+$modx-&gt;registry-&gt;login-&gt;connect();
+$modx-&gt;registry-&gt;login-&gt;subscribe(&#39;/useractivation/&#39;);
+$modx-&gt;registry-&gt;login-&gt;send(&#39;/useractivation/&#39;,array($user-&gt;get(&#39;username&#39;) =&gt; $pword),array(
+    &#39;ttl&#39; =&gt; ($modx-&gt;getOption(&#39;activationttl&#39;,$scriptProperties,180)*60),
+));
+{code}
+
+And to retrieve the specific message later:
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;login&#39;,&#39;registry.modFileRegister&#39;);
+$modx-&gt;registry-&gt;login-&gt;connect();
+$modx-&gt;registry-&gt;login-&gt;subscribe(&#39;/useractivation/&#39;.$user-&gt;get(&#39;username&#39;));
+$msgs = $modx-&gt;registry-&gt;login-&gt;read(array(&#39;poll_limit&#39; =&gt; 1));
+{code}
+
+
+h3. Capturing Log Messages
+
+MODX supports specifying the logTarget as a modRegister instance. This allows you to capture all log messages a message queue where you can read them later to provide user feedback, audit views, etc.
+
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;logging&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;logging&#39;));
+$modx-&gt;registry-&gt;logging-&gt;connect();
+$modx-&gt;registry-&gt;logging-&gt;subscribe($topic);
+
+/* set the logTarget to the register instance */
+$oldTarget = $modx-&gt;setLogTarget($modx-&gt;registry-&gt;logging);
+
+/* code here that sends log messages */
+
+/* set the old target back */
+$modx-&gt;setLogTarget($oldTarget);
+{code}
+
+h3. Registering Load Balanced Web Nodes for Remote Commands
+";}i:5;a:3:{s:2:"id";s:8:"35586480";s:3:"ver";s:1:"7";s:4:"code";s:8079:"//
+
+{toc}
+
+h2. What is modRegistry?
+
+The modRegistry service provided with the MODX Revolution Core is a simple message queue service that developers can make use of for a wide variety of purposes. It comes with a file and database modRegister implementation, and can be extended to work with custom or external message queue implementations.
+
+The modRegistry service can connect to any number of unique registers. Within each register, specific topics are subscribed to and messages can then be sent or read from the topic.
+
+
+h2. Choosing a modRegister implementation
+
+MODX ships with two simple modRegister implementations. One is file-based and one uses database tables for storage. Each has benefits and limitations that you should consider before determining which one to use for a specific purpose.
+
+h3. modFileRegister
+
+This file-based register reads and writes messages, by default, to files under the {{registry/}} folder in the MODX {{cache_path}} location. This is great for single-server deployments that do not have high-traffic requirements where writing and reading to the the same topics might occur simultaneously from multiple client requests.
+
+Here is how you would add a specific file-based register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+{warning:title=Be Careful!}Clearing the cache manually by deleting all files and folders under {{core/cache/}} will delete any existing modFileRegister messages as well.{warning}
+
+h3. modDbRegister
+
+When reading and writing is expected to reach higher volumes, or you need messages shared across a load-balanced environment with multiple web server nodes, you would want to choose the database-powered modRegister implementation.
+
+Here is how you would add a specific database register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+
+h2. Using the Registry API
+
+The modRegistry service provides a very simple API for working with Registers, subscribing to topics, and sending/reading messages within them.
+
+h3. Connecting
+
+Once you have obtained the modRegistry and initialized a modRegister implementation of your choice, you can now attempt to make a connection to your queue. Here is how you would connect to the _food_ register we added in the examples above.
+
+{code}&lt;?php
+$connected = $modx-&gt;registry-&gt;food-&gt;connect();
+{code}
+
+If there is any problem connecting to the register instance, the return value will be {{false}}.
+
+h3. Subscribing
+
+Once you make a successful connection, it is time to subscribe to a topic for relevant messages to be sent or read. Let&#39;s subscribe to a nice topic about _beer_ in our _food_ register:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;subscribe(&quot;/beer/&quot;);
+{code}
+
+This adds the topic &quot;/beer/&quot; to your subscriptions and sets it as the current topic. Topics are similar to relative URI&#39;s. If you specify a slash at the beginning, you are subscribing to a topic from the root of the register. No initial slash would indicate you want to subscribe to a sub-topic of the current topic. Once subscribed to at least one topic, you are free to send and read messages from them at will.
+
+
+h3. Sending Messages
+
+You can send messages to a topic in multiple ways. They can be sent as an array of sequenced messages (ordered by time sent and the array keys provided), named messages ordered by key (by providing associative array keys), or as a single message that automatically gets a time stamp.
+
+h4. Sending an Array of Sequenced Messages
+
+Let&#39;s say we wanted to send three messages that should be read in the same order as they were sent. We simply provide an array of those messages in the order to read them in:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;beer1&quot;, &quot;beer2&quot;, &quot;beer3&quot;));
+{code}
+
+h4. Sending an Array of Named Messages
+
+You can also provide an associative array to send messages with specific keys that will be read according to the order of the keys:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;Heineken&quot; =&gt; &quot;not so good&quot;, &quot;Pabst Blue Ribbon&quot; =&gt; &quot;rocks&quot;, &quot;Molson Golden&quot; =&gt; &quot;ok for Canadian beer&quot;));
+{code}
+
+These messages will be read in ascending alphabetic order, or specifically by key.
+
+h4. Sending a Single Message
+
+Sometimes it is necessary to send a single message without a specific key. The MODX register will automatically provide a time-based key for the message so that it is read in a proper time-based order.
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, &quot;It&#39;s Miller Time!&quot;, array(&#39;kill&#39; =&gt; true));
+{code}
+
+{note}The _kill_ option tells message consumers to stop reading any further messages once a message with this option is read.{note}
+
+h4. Options for Sending Messages
+
+h5. delay
+
+Only supported for time-based messages (no keys provided), this option specifies the number of seconds to delay the message before it can be read. The message is still sent immediately to the queue, but is not available for reading until the specified delay has expired.
+
+h5. ttl
+
+The _time to live_ option specifies how many seconds the message(s) remain valid in the queue. Once a message has outlived it&#39;s ttl, it will not be included in the messages returned by a {{read()}} operation.
+
+h5. kill
+
+If specified, when a message consumer reads a message with this option set, no further messages will be read from the queue, regardless of any other read options.
+
+
+h3. Reading Messages
+
+You can also read messages from a topic in a variety of ways using options passed to the {{read()}} method.
+
+h4. Polling for New Messages in a Topic
+
+The most common use of the registry is to look for up to x number of new messages in any subscribed topics. Here we are polling once for up to 5 new messages in the current topic, which is &quot;/beer/&quot;:
+
+{code}&lt;?php
+$msgs = $modx-&gt;registry-&gt;food-&gt;read(array(
+    &#39;poll_limit&#39; =&gt; 1,
+    &#39;msg_limit&#39; =&gt; 5
+));
+{code}
+
+This returns an array of the messages sent to the queue in the order they are read, without the corresponding message keys, regardless if they were specified when sent.
+
+h4. Options for Reading Messages
+
+h5. poll_limit
+
+By default, a modRegister will attempt to poll for messages until the msg_limit, time_limit, or a message with the kill option is encountered. In most situations when using the modRegister in web requests, this is not desirable. Most cases will want to set this option to 1, so the read operation only checks the queue once for messages and moves on regardless if the msg_limit or time_limit is hit. This option is useful if you want to set up a simple PHP polling server that checks for messages and takes action based on them (e.g. in a cronjob).
+
+h5. poll_interval
+
+A configurable delay to wait between polling for new messages, in seconds. Default is unlimited.
+
+h5. time_limit
+
+The maximum number of seconds to poll for new messages when multiple poll attempts are configured (i.e. poll_limit != 1).
+
+h5. msg_limit
+
+The maximum number of messages to read from the queue. The default is 5 messages.
+
+h5. remove_read
+
+Indicates if the message should be removed when it is read.
+
+h5. include_keys _(MODX 2.2+ only)_
+
+Indicates if the read operation should include the message keys. If not true, only the messages are returned in a simple, ordered array.
+
+
+h2. Using the Registry Processors
+
+h3. Sending Messages
+
+h3. Reading Messages
+
+h2. Examples
+
+h3. Alternative to Session Storage
+
+h3. Capturing Log Messages
+
+h3. Registering Load Balanced Web Nodes for Remote Commands
+";}i:6;a:3:{s:2:"id";s:8:"35586479";s:3:"ver";s:1:"6";s:4:"code";s:7024:"//
+
+{toc}
+
+h2. What is modRegistry?
+
+The modRegistry service provided with the MODX Revolution Core is a simple message queue service that developers can make use of for a wide variety of purposes. It comes with a file and database modRegister implementation, and can be extended to work with custom or external message queue implementations.
+
+The modRegistry service can connect to any number of unique registers. Within each register, specific topics are subscribed to and messages can then be sent or read from the topic.
+
+
+h2. Choosing a modRegister implementation
+
+MODX ships with two simple modRegister implementations. One is file-based and one uses database tables for storage. Each has benefits and limitations that you should consider before determining which one to use for a specific purpose.
+
+h3. modFileRegister
+
+This file-based register reads and writes messages, by default, to files under the {{registry/}} folder in the MODX {{cache_path}} location. This is great for single-server deployments that do not have high-traffic requirements where writing and reading to the the same topics might occur simultaneously from multiple client requests.
+
+Here is how you would add a specific file-based register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+{warning:title=Be Careful!}Clearing the cache manually by deleting all files and folders under {{core/cache/}} will delete any existing modFileRegister messages as well.{warning}
+
+h3. modDbRegister
+
+When reading and writing is expected to reach higher volumes, or you need messages shared across a load-balanced environment with multiple web server nodes, you would want to choose the database-powered modRegister implementation.
+
+Here is how you would add a specific database register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+
+h2. Using the Registry API
+
+The modRegistry service provides a very simple API for working with Registers, subscribing to topics, and sending/reading messages within them.
+
+h3. Connecting
+
+Once you have obtained the modRegistry and initialized a modRegister implementation of your choice, you can now attempt to make a connection to your queue. Here is how you would connect to the _food_ register we added in the examples above.
+
+{code}&lt;?php
+$connected = $modx-&gt;registry-&gt;food-&gt;connect();
+{code}
+
+If there is any problem connecting to the register instance, the return value will be {{false}}.
+
+h3. Subscribing
+
+Once you make a successful connection, it is time to subscribe to a topic for relevant messages to be sent or read. Let&#39;s subscribe to a nice topic about _beer_ in our _food_ register:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;subscribe(&quot;/beer/&quot;);
+{code}
+
+This adds the topic &quot;/beer/&quot; to your subscriptions and sets it as the current topic. Topics are similar to relative URI&#39;s. If you specify a slash at the beginning, you are subscribing to a topic from the root of the register. No initial slash would indicate you want to subscribe to a sub-topic of the current topic. Once subscribed to at least one topic, you are free to send and read messages from them at will.
+
+
+h3. Sending Messages
+
+You can send messages to a topic in multiple ways. They can be sent as an array of sequenced messages (ordered by time sent and the array keys provided), named messages ordered by key (by providing associative array keys), or as a single message that automatically gets a time stamp.
+
+h4. Sending an Array of Sequenced Messages
+
+Let&#39;s say we wanted to send three messages that should be read in the same order as they were sent. We simply provide an array of those messages in the order to read them in:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;beer1&quot;, &quot;beer2&quot;, &quot;beer3&quot;));
+{code}
+
+h4. Sending an Array of Named Messages
+
+You can also provide an associative array to send messages with specific keys that will be read according to the order of the keys:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;Heineken&quot; =&gt; &quot;not so good&quot;, &quot;Pabst Blue Ribbon&quot; =&gt; &quot;rocks&quot;, &quot;Molson Golden&quot; =&gt; &quot;ok for Canadian beer&quot;));
+{code}
+
+These messages will be read in ascending alphabetic order, or specifically by key.
+
+h4. Sending a Single Message
+
+Sometimes it is necessary to send a single message without a specific key. The MODX register will automatically provide a time-based key for the message so that it is read in a proper time-based order.
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, &quot;It&#39;s Miller Time!&quot;, array(&#39;kill&#39; =&gt; true));
+{code}
+
+{note}The _kill_ option tells message consumers to stop reading any further messages once a message with this option is read.{note}
+
+h4. Options for Sending Messages
+
+h5. delay
+
+Only supported for time-based messages (no keys provided), this option specifies the number of seconds to delay the message before it can be read. The message is still sent immediately to the queue, but is not available for reading until the specified delay has expired.
+
+h5. ttl
+
+The _time to live_ option specifies how many seconds the message(s) remain valid in the queue. Once a message has outlived it&#39;s ttl, it will not be included in the messages returned by a {{read()}} operation.
+
+h5. kill
+
+If specified, when a message consumer reads a message with this option set, no further messages will be read from the queue, regardless of any other read options.
+
+
+h3. Reading Messages
+
+You can also read messages from a topic in a variety of ways using options passed to the {{read()}} method.
+
+h4. Polling for New Messages in a Topic
+
+The most common use of the registry is to look for up to x number of new messages in any subscribed topics. Here we are polling once for up to 5 new messages in the current topic, which is &quot;/beer/&quot;:
+
+{code}&lt;?php
+$msgs = $modx-&gt;registry-&gt;food-&gt;read(array(
+    &#39;poll_limit&#39; =&gt; 1,
+    &#39;msg_limit&#39; =&gt; 5
+));
+{code}
+
+This returns an array of the messages sent to the queue in the order they are read, without the corresponding message keys, regardless if they were specified when sent.
+
+h4. Options for Reading Messages
+
+h5. poll_limit
+
+h5. poll_interval
+
+h5. time_limit
+
+h5. msg_limit
+
+h5. remove_read
+
+h5. include_keys (MODX 2.2+ only)
+
+
+h2. Using the Registry Processors
+
+h3. Sending Messages
+
+h3. Reading Messages
+
+h2. Examples
+
+h3. Alternative to Session Storage
+
+h3. Capturing Log Messages
+
+h3. Registering Load Balanced Web Nodes for Remote Commands
+";}i:7;a:3:{s:2:"id";s:8:"35586478";s:3:"ver";s:1:"5";s:4:"code";s:6110:"//
+
+{toc}
+
+h2. What is modRegistry?
+
+The modRegistry service provided with the MODX Revolution Core is a simple message queue service that developers can make use of for a wide variety of purposes. It comes with a file and database modRegister implementation, and can be extended to work with custom or external message queue implementations.
+
+The modRegistry service can connect to any number of unique registers. Within each register, specific topics are subscribed to and messages can then be sent or read from the topic.
+
+
+h2. Choosing a modRegister implementation
+
+MODX ships with two simple modRegister implementations. One is file-based and one uses database tables for storage. Each has benefits and limitations that you should consider before determining which one to use for a specific purpose.
+
+h3. modFileRegister
+
+This file-based register reads and writes messages, by default, to files under the {{registry/}} folder in the MODX {{cache_path}} location. This is great for single-server deployments that do not have high-traffic requirements where writing and reading to the the same topics might occur simultaneously from multiple client requests.
+
+Here is how you would add a specific file-based register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+{warning:title=Be Careful!}Clearing the cache manually by deleting all files and folders under {{core/cache/}} will delete any existing modFileRegister messages as well.{warning}
+
+h3. modDbRegister
+
+When reading and writing is expected to reach higher volumes, or you need messages shared across a load-balanced environment with multiple web server nodes, you would want to choose the database-powered modRegister implementation.
+
+Here is how you would add a specific database register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+
+h2. Using the Registry API
+
+The modRegistry service provides a very simple API for working with Registers, subscribing to topics, and sending/reading messages within them.
+
+h3. Connecting
+
+Once you have obtained the modRegistry and initialized a modRegister implementation of your choice, you can now attempt to make a connection to your queue. Here is how you would connect to the _food_ register we added in the examples above.
+
+{code}&lt;?php
+$connected = $modx-&gt;registry-&gt;food-&gt;connect();
+{code}
+
+If there is any problem connecting to the register instance, the return value will be {{false}}.
+
+h3. Subscribing
+
+Once you make a successful connection, it is time to subscribe to a topic for relevant messages to be sent or read. Let&#39;s subscribe to a nice topic about _beer_ in our _food_ register:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;subscribe(&quot;/beer/&quot;);
+{code}
+
+This adds the topic &quot;/beer/&quot; to your subscriptions and sets it as the current topic. Topics are similar to relative URI&#39;s. If you specify a slash at the beginning, you are subscribing to a topic from the root of the register. No initial slash would indicate you want to subscribe to a sub-topic of the current topic. Once subscribed to at least one topic, you are free to send and read messages from them at will.
+
+
+h3. Sending Messages
+
+You can send messages to a topic in multiple ways. They can be sent as an array of sequenced messages (ordered by time sent and the array keys provided), named messages ordered by key (by providing associative array keys), or as a single message that automatically gets a time stamp.
+
+h4. Sending an Array of Sequenced Messages
+
+Let&#39;s say we wanted to send three messages that should be read in the same order as they were sent. We simply provide an array of those messages in the order to read them in:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;beer1&quot;, &quot;beer2&quot;, &quot;beer3&quot;));
+{code}
+
+h4. Sending an Array of Named Messages
+
+You can also provide an associative array to send messages with specific keys that will be read according to the order of the keys:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;Heineken&quot; =&gt; &quot;not so good&quot;, &quot;Pabst Blue Ribbon&quot; =&gt; &quot;rocks&quot;, &quot;Molson Golden&quot; =&gt; &quot;ok for Canadian beer&quot;));
+{code}
+
+These messages will be read in ascending alphabetic order, or specifically by key.
+
+h4. Sending a Single Message
+
+Sometimes it is necessary to send a single message without a specific key. The MODX register will automatically provide a time-based key for the message so that it is read in a proper time-based order.
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, &quot;It&#39;s Miller Time!&quot;, array(&#39;kill&#39; =&gt; true));
+{code}
+
+{note}The _kill_ option tells message consumers to stop reading any further messages once a message with this option is read.{note}
+
+h3. Reading Messages
+
+You can also read messages from a topic in a variety of ways.
+
+h4. Polling for New Messages in a Topic
+
+The most common use of the registry is to look for up to x number of new messages in any subscribed topics. Here we are polling once for up to 5 new messages in the current topic, which is &quot;/beer/&quot;:
+
+{code}&lt;?php
+$msgs = $modx-&gt;registry-&gt;food-&gt;read(array(
+    &#39;poll_limit&#39; =&gt; 1,
+    &#39;msg_limit&#39; =&gt; 5
+));
+{code}
+
+This returns an array of the messages sent to the queue in the order they are read, without the corresponding message keys, regardless if they were specified when sent.
+
+h2. Using the Registry Processors
+
+h3. Sending Messages
+
+h3. Reading Messages
+
+h2. Examples
+
+h3. Alternative to Session Storage
+
+h3. Capturing Log Messages
+
+h3. Registering Load Balanced Web Nodes for Remote Commands
+";}i:8;a:3:{s:2:"id";s:8:"35586477";s:3:"ver";s:1:"4";s:4:"code";s:5555:"//
+
+{toc}
+
+h2. What is modRegistry?
+
+The modRegistry service provided with the MODX Revolution Core is a simple message queue service that developers can make use of for a wide variety of purposes. It comes with a file and database modRegister implementation, and can be extended to work with custom or external message queue implementations.
+
+The modRegistry service can connect to any number of unique registers. Within each register, specific topics are subscribed to and messages can then be sent or read from the topic.
+
+
+h2. Choosing a modRegister implementation
+
+MODX ships with two simple modRegister implementations. One is file-based and one uses database tables for storage. Each has benefits and limitations that you should consider before determining which one to use for a specific purpose.
+
+h3. modFileRegister
+
+This file-based register reads and writes messages, by default, to files under the {{registry/}} folder in the MODX {{cache_path}} location. This is great for single-server deployments that do not have high-traffic requirements where writing and reading to the the same topics might occur simultaneously from multiple client requests.
+
+Here is how you would add a specific file-based register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+{warning:title=Be Careful!}Clearing the cache manually by deleting all files and folders under {{core/cache/}} will delete any existing modFileRegister messages as well.{warning}
+
+h3. modDbRegister
+
+When reading and writing is expected to reach higher volumes, or you need messages shared across a load-balanced environment with multiple web server nodes, you would want to choose the database-powered modRegister implementation.
+
+Here is how you would add a specific database register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+
+h2. Using the Registry API
+
+The modRegistry service provides a very simple API for working with Registers, subscribing to topics, and sending/reading messages within them.
+
+h3. Connecting
+
+Once you have obtained the modRegistry and initialized a modRegister implementation of your choice, you can now attempt to make a connection to your queue. Here is how you would connect to the _food_ register we added in the examples above.
+
+{code}&lt;?php
+$connected = $modx-&gt;registry-&gt;food-&gt;connect();
+{code}
+
+If there is any problem connecting to the register instance, the return value will be {{false}}.
+
+h3. Subscribing
+
+Once you make a successful connection, it is time to subscribe to a topic for relevant messages to be sent or read. Let&#39;s subscribe to a nice topic about _beer_ in our _food_ register:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;subscribe(&quot;/beer/&quot;);
+{code}
+
+This adds the topic &quot;/beer/&quot; to your subscriptions and sets it as the current topic. Topics are similar to relative URI&#39;s. If you specify a slash at the beginning, you are subscribing to a topic from the root of the register. No initial slash would indicate you want to subscribe to a sub-topic of the current topic. Once subscribed to at least one topic, you are free to send and read messages from them at will.
+
+
+h3. Sending Messages
+
+You can send messages to a topic in multiple ways. They can be sent as an array of sequenced messages (ordered by time sent and the array keys provided), named messages ordered by key (by providing associative array keys), or as a single message that automatically gets a time stamp.
+
+h4. Sending an Array of Sequenced Messages
+
+Let&#39;s say we wanted to send three messages that should be read in the same order as they were sent. We simply provide an array of those messages in the order to read them in:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;beer1&quot;, &quot;beer2&quot;, &quot;beer3&quot;));
+{code}
+
+h4. Sending an Array of Named Messages
+
+You can also provide an associative array to send messages with specific keys that will be read according to the order of the keys:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, array(&quot;Heineken&quot; =&gt; &quot;f*&amp;^ that s&amp;#t&quot;, &quot;Pabst Blue Ribbon&quot; =&gt; &quot;rocks&quot;, &quot;Molson Golden&quot; =&gt; &quot;ok for Canadian beer&quot;));
+{code}
+
+These messages will be read in ascending alphabetic order, or specifically by key.
+
+h4. Sending a Single Message
+
+Sometimes it is necessary to send a single message without a specific key. The MODX register will automatically provide a time-based key for the message so that it is read in a proper time-based order.
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;send(&quot;/beer/&quot;, &quot;It&#39;s Miller Time!&quot;, array(&#39;kill&#39; =&gt; true));
+{code}
+
+{note}The _kill_ option tells message consumers to stop reading any further messages once a message with this option is read.{note}
+
+h3. Reading Messages
+
+You can also read messages from a topic in a variety of ways.
+
+h2. Using the Registry Processors
+
+h3. Sending Messages
+
+h3. Reading Messages
+
+h2. Examples
+
+h3. Alternative to Session Storage
+
+h3. Capturing Log Messages
+
+h3. Registering Load Balanced Web Nodes for Remote Commands
+";}i:9;a:3:{s:2:"id";s:8:"35586476";s:3:"ver";s:1:"3";s:4:"code";s:3795:"//
+
+{toc}
+
+h2. What is modRegistry?
+
+The modRegistry service provided with the MODX Revolution Core is a simple message queue service that developers can make use of for a wide variety of purposes. It comes with a file and database modRegister implementation, and can be extended to work with custom or external message queue implementations.
+
+The modRegistry service can connect to any number of unique registers. Within each register, specific topics are subscribed to and messages can then be sent or read from the topic.
+
+
+h2. Choosing a modRegister implementation
+
+MODX ships with two simple modRegister implementations. One is file-based and one uses database tables for storage. Each has benefits and limitations that you should consider before determining which one to use for a specific purpose.
+
+h3. modFileRegister
+
+This file-based register reads and writes messages, by default, to files under the {{registry/}} folder in the MODX {{cache_path}} location. This is great for single-server deployments that do not have high-traffic requirements where writing and reading to the the same topics might occur simultaneously from multiple client requests.
+
+Here is how you would add a specific file-based register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+{warning:title=Be Careful!}Clearing the cache manually by deleting all files and folders under {{core/cache/}} will delete any existing modFileRegister messages as well.{warning}
+
+h3. modDbRegister
+
+When reading and writing is expected to reach higher volumes, or you need messages shared across a load-balanced environment with multiple web server nodes, you would want to choose the database-powered modRegister implementation.
+
+Here is how you would add a specific database register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+
+h2. Using the Registry API
+
+The modRegistry service provides a very simple API for working with Registers, subscribing to topics, and sending/reading messages within them.
+
+h3. Connecting
+
+Once you have obtained the modRegistry and initialized a modRegister implementation of your choice, you can now attempt to make a connection to your queue. Here is how you would connect to the _food_ register we added in the examples above.
+
+{code}&lt;?php
+$connected = $modx-&gt;registry-&gt;food-&gt;connect();
+{code}
+
+If there is any problem connecting to the register instance, the return value will be {{false}}.
+
+h3. Subscribing
+
+Once you make a successful connection, it is time to subscribe to a topic for relevant messages to be sent or read. Let&#39;s subscribe to a nice topic about _beer_ in our _food_ register:
+
+{code}&lt;?php
+$modx-&gt;registry-&gt;food-&gt;subscribe(&quot;/beer/&quot;);
+{code}
+
+This adds the topic &quot;/beer/&quot; to your subscriptions and sets it as the current topic. Topics are similar to relative URI&#39;s. If you specify a slash at the beginning, you are subscribing to a topic from the root of the register. No initial slash would indicate you want to subscribe to a sub-topic of the current topic. Once subscribed to at least one topic, you are free to send and read messages from them at will.
+
+
+h3. Sending Messages
+
+
+
+h3. Reading Messages
+
+h2. Using the Registry Processors
+
+h3. Sending Messages
+
+h3. Reading Messages
+
+h2. Examples
+
+h3. Alternative to Session Storage
+
+h3. Capturing Log Messages
+
+h3. Registering Load Balanced Web Nodes for Remote Commands
+";}i:10;a:3:{s:2:"id";s:8:"35586475";s:3:"ver";s:1:"2";s:4:"code";s:2841:"//
+
+{toc}
+
+h2. What is modRegistry?
+
+The modRegistry service provided with the MODX Revolution Core is a simple message queue service that developers can make use of for a wide variety of purposes. It comes with a file and database modRegister implementation, and can be extended to work with custom or external message queue implementations.
+
+The modRegistry service can connect to any number of unique registers. Within each register, specific topics are subscribed to and messages can then be sent or read from the topic.
+
+
+h2. Choosing a modRegister implementation
+
+MODX ships with two simple modRegister implementations. One is file-based and one uses database tables for storage. Each has benefits and limitations that you should consider before determining which one to use for a specific purpose.
+
+h3. modFileRegister
+
+This file-based register reads and writes messages, by default, to files under the {{registry/}} folder in the MODX {{cache_path}} location. This is great for single-server deployments that do not have high-traffic requirements where writing and reading to the the same topics might occur simultaneously from multiple client requests.
+
+Here is how you would add a specific file-based register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modFileRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+{warning:title=Be Careful!}Clearing the cache manually by deleting all files and folders under {{core/cache/}} will delete any existing modFileRegister messages as well.{warning}
+
+h3. modDbRegister
+
+When reading and writing is expected to reach higher volumes, or you need messages shared across a load-balanced environment with multiple web server nodes, you would want to choose the database-powered modRegister implementation.
+
+Here is how you would add a specific database register named _food_:
+{code}&lt;?php
+$modx-&gt;getService(&#39;registry&#39;, &#39;registry.modRegistry&#39;);
+$modx-&gt;registry-&gt;addRegister(&#39;food&#39;, &#39;registry.modDbRegister&#39;, array(&#39;directory&#39; =&gt; &#39;food&#39;));
+{code}
+
+
+h2. Using the Registry API
+
+The modRegistry service provides a very simple API for working with Registers, subscribing to topics, and sending/reading messages within them.
+
+h3. Connecting
+
+Once you have obtained the modRegistry and initialized a modRegister implementation of your choice, you can now attempt to make a connection to your queue.
+
+{code}
+
+{code}
+
+h3. Subscribing
+
+h3. Sending Messages
+
+h3. Reading Messages
+
+h2. Using the Registry Processors
+
+h3. Sending Messages
+
+h3. Reading Messages
+
+h2. Examples
+
+h3. Alternative to Session Storage
+
+h3. Capturing Log Messages
+
+h3. Registering Load Balanced Web Nodes for Remote Commands
+";}i:11;a:3:{s:2:"id";s:8:"35586474";s:3:"ver";s:1:"1";s:4:"code";s:1917:"//
+
+{toc}
+
+h2. What is modRegistry?
+
+The modRegistry service provided with the MODX Revolution Core is a simple message queue service that developers can make use of for a wide variety of purposes. It comes with a file and database modRegister implementation, and can be extended to work with custom or external message queue implementations.
+
+The modRegistry service can connect to any number of unique registers. Within each register, specific topics are subscribed to and messages can then be sent or read from the topic.
+
+
+h2. Choosing a modRegister implementation
+
+MODX ships with two simple modRegister implementations. One is file-based and one uses database tables for storage. Each has benefits and limitations that you should consider before determining which one to use for a specific purpose.
+
+h3. modFileRegister
+
+This file-based register reads and writes messages, by default, to files under the {{registry/}} folder in the MODX {{cache_path}} location. This is great for single-server deployments that do not have high-traffic requirements where writing and reading to the the same topics might occur simultaneously from multiple client requests.
+
+{warning:title=Be Careful!}Clearing the cache manually by deleting all files and folders under {{core/cache/}} will delete any existing modFileRegister messages as well.{warning}
+
+h3. modDbRegister
+
+When reading and writing is expected to reach higher volumes, or you need messages shared across a load-balanced environment with multiple web server nodes, you would want to choose the database-powered modRegister implementation.
+
+
+h2. Using the Registry API
+
+h3. Connecting
+
+h3. Subscribing
+
+h3. Sending Messages
+
+h3. Reading Messages
+
+h2. Using the Registry Processors
+
+h3. Sending Messages
+
+h3. Reading Messages
+
+h2. Examples
+
+h3. Alternative to Session Storage
+
+h3. Capturing Log Messages
+
+h3. Registering Load Balanced Web Nodes for Remote Commands
+";}}}

@@ -1,0 +1,17 @@
+a:5:{s:2:"id";s:8:"20119785";s:4:"info";a:4:{s:6:"Title:";s:14:"proxy_username";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:29:"[revolution20:proxy_username]";}s:6:"parent";s:8:"18678127";s:6:"source";s:144:"h2. proxy_username
+
+*Name*: Proxy Username
+*Type*: String
+*Default*: 
+
+The username to authenticate against with your proxy server.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"20119785";s:3:"ver";s:1:"1";s:4:"code";s:144:"h2. proxy_username
+
+*Name*: Proxy Username
+*Type*: String
+*Default*: 
+
+The username to authenticate against with your proxy server.
+
+{scrollbar}";}}}

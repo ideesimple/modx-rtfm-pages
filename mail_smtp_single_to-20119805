@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"20119805";s:4:"info";a:4:{s:6:"Title:";s:19:"mail_smtp_single_to";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:34:"[revolution20:mail_smtp_single_to]";}s:6:"parent";s:8:"18678127";s:6:"source";s:203:"h2. mail_smtp_single_to
+
+*Name*: SMTP Single-To
+*Type*: Yes/No
+*Default*: No
+
+Provides the ability to have the TO field process individual emails, instead of sending to entire TO addresses.
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"20119805";s:3:"ver";s:1:"1";s:4:"code";s:203:"h2. mail_smtp_single_to
+
+*Name*: SMTP Single-To
+*Type*: Yes/No
+*Default*: No
+
+Provides the ability to have the TO field process individual emails, instead of sending to entire TO addresses.
+
+{scrollbar}
+";}}}

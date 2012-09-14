@@ -1,0 +1,1182 @@
+a:5:{s:2:"id";s:8:"35094612";s:4:"info";a:4:{s:6:"Title:";s:18:"MODExt MODx Object";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:33:"[revolution20:MODExt MODx Object]";}s:6:"parent";s:8:"36634908";s:6:"source";s:5830:"{toc}
+
+h2. The MODx JS Object
+
+MODExt comes with a global MODx JS object on each manager page. This object has a few custom methods that can be executed from any custom manager page using MODExt, and also sets up some default settings and customizations.
+
+h2. Custom Class Variables
+
+The following variables are accessible from the MODx JS object:
+
+h3. MODx.request
+
+This is a JS object that contains all the current GET parameters for the page. Example:
+
+{code}var id = MODx.request.id;{code}
+
+h3. MODx.config
+
+This object contains all the active System Settings in MODX by key:
+
+{code}var tpl = MODx.config.default_template;{code}
+
+h4. Other Variables
+
+There are a few other variables available on the MODx.config object that are not [System Settings]:
+
+|| Key || Description ||
+| base_url | The base URL for the MODX site and/or active context. |
+| connectors_url | The URL to the connectors directory. |
+| manager_url | The URL to the manager. |
+| http_host | The HTTP host variable for the active context. |
+| site_url | The full Site URL for the active context. |
+| custom_resource_classes | An array of custom Resource classes pulled from the System Setting custom_resource_classes |
+
+h3. MODx.action
+
+This object contains a map of all the modAction objects (or MODX manager controllers), mapped by their controller to their ID:
+{code}var actionId = MODx.action[&#39;resource/create&#39;];{code}
+
+As of MODX 2.2, the non-core Actions are prefixed with their namespace. Prior to 2.2 it would just be the action controller. For example a &quot;controllers/index&quot; action in a &quot;mycomponent&quot; namespace would be retrievable using the following in 2.2 and up:
+
+{code}
+var actionId = MODx.action[&#39;mycomponent:controllers/index&#39;];
+{code}
+
+h3. MODx.version
+
+Contains MODX version information, with the following attributes:
+
+|| Key || Example ||
+| version | 2 |
+| major_version | 1 |
+| minor_version | 0 |
+| patch_level | pl |
+| code_name | Revolution |
+| distro | @traditional@ |
+| full_version | 2.1.0-pl |
+| full_appname | MODX Revolution 2.1.0-pl (traditional) |
+
+Example:
+{code}var fv = MODx.version.full_version;{code}
+
+h3. MODx.user
+
+This object will contain the two following properties for the currently logged-in manager user:
+
+| MODx.user.id | The ID of the user. |
+| MODx.user.username | The username of the user. |
+
+{code}var userId = MODx.user.id;{code}
+
+h3. MODx.perm
+
+This will contain the following permissions should they be granted to the user (they will not exist if the user does not have the permission):
+
+|| Name || Description ||
+| MODx.perm.resource_tree | To view the Resources tree. |
+| MODx.perm.element_tree | To view the Elements tree. |
+| MODx.perm.file_tree | To view the Files tree. |
+| MODx.perm.file_upload | To be able to upload files. |
+| MODx.perm.file_manager | To use the MODX file browser. |
+| MODx.perm.new_chunk | To create a new Chunk. |
+| MODx.perm.new_plugin | To create a new Plugin. |
+| MODx.perm.new_snippet | To create a new Snippet. |
+| MODx.perm.new_template | To create a new Template. |
+| MODx.perm.new_tv | To create a new Template Variable. |
+| MODx.perm.directory_create | To be able to create a directory on the filesystem. |
+
+{code}if (MODx.perm.file_upload) { /* ...code... */ }{code}
+
+h2. Custom Methods
+
+The MODx object also has quite a few custom methods available to it:
+
+h3. MODx.load
+
+This method will create a new object of any specified xtype and passed in configuration parameters. Example:
+
+{code}var w = MODx.load({
+  xtype: &#39;modx-window-namespace-create&#39;
+  ,blankValues: true
+});
+w.setValues({ name: &#39;My Namespace&#39; });
+w.show();{code}
+
+Any defined class that has a registered xtype can be loaded from this method.
+
+h3. MODx.clearCache
+
+This fires up the console that clears the MODX cache. It will also fire the &#39;beforeClearCache&#39; and &#39;afterClearCache&#39; events on the MODx object. If the System Setting [clear_cache_refresh_trees|clear_cache_refresh_trees] is set to 1, it will also refresh all the active left-hand trees.
+
+h3. MODx.releaseLock
+
+This will release the lock on the current active Resource. This method should not be fired on non-Resource editing pages. It will fire the &#39;beforeReleaseLocks&#39; and &#39;afterReleaseLocks&#39; events on the MODx object.
+
+h3. MODx.sleep
+
+This method will cause JavaScript to sleep (or halt) for a specified number of seconds:
+
+{code}MODx.sleep(3); /* sleep for 3 seconds */{code}
+
+h3. MODx.logout
+
+This method will automatically logout the active manager user. It fires the &#39;beforeLogout&#39; and &#39;afterLogout&#39; events on the MODx object. If both events are successful, it will then redirect the user to the login screen.
+
+h3. MODx.loadHelpPane
+
+This will load the current Help screen for the active page. Normally this is set by default on the modAction record for the page, and its URL can be found by the MODx.config.help_url property. You can, however, override this to fire up any URL into the panel:
+
+{code}
+/* show the modx.com site in the Help modal */
+MODx.config.help_url = &#39;http://modx.com/&#39;;
+MODx.loadHelpPane();
+{code}
+
+h3. MODx.preview
+
+Loads the current MODX site for the active Context.
+
+h3. MODx.isEmpty
+
+Checks to see if the specified variable is &quot;empty&quot; (in the PHP sense). This means it is either:
+
+* false, &#39;false&#39;, or &#39;FALSE&#39;
+* 0 or &#39;0&#39;
+* &#39;&#39; (blank string)
+* null
+* undefined
+
+h3. MODx.debug
+
+(2.1\+ only)
+
+This will send off a debug message if and only if the MODX [System Setting|Settings] [ui_debug_mode|ui_debug_mode] is set to Yes/1. The debug message will use console.log to output to the console. This can be useful to add debugging and assertions to your code without breaking it in production sites (which would presumably have [ui_debug_mode|ui_debug_mode] off).";s:8:"versions";a:8:{i:0;a:3:{s:2:"id";s:8:"35094612";s:3:"ver";s:1:"8";s:4:"code";s:5830:"{toc}
+
+h2. The MODx JS Object
+
+MODExt comes with a global MODx JS object on each manager page. This object has a few custom methods that can be executed from any custom manager page using MODExt, and also sets up some default settings and customizations.
+
+h2. Custom Class Variables
+
+The following variables are accessible from the MODx JS object:
+
+h3. MODx.request
+
+This is a JS object that contains all the current GET parameters for the page. Example:
+
+{code}var id = MODx.request.id;{code}
+
+h3. MODx.config
+
+This object contains all the active System Settings in MODX by key:
+
+{code}var tpl = MODx.config.default_template;{code}
+
+h4. Other Variables
+
+There are a few other variables available on the MODx.config object that are not [System Settings]:
+
+|| Key || Description ||
+| base_url | The base URL for the MODX site and/or active context. |
+| connectors_url | The URL to the connectors directory. |
+| manager_url | The URL to the manager. |
+| http_host | The HTTP host variable for the active context. |
+| site_url | The full Site URL for the active context. |
+| custom_resource_classes | An array of custom Resource classes pulled from the System Setting custom_resource_classes |
+
+h3. MODx.action
+
+This object contains a map of all the modAction objects (or MODX manager controllers), mapped by their controller to their ID:
+{code}var actionId = MODx.action[&#39;resource/create&#39;];{code}
+
+As of MODX 2.2, the non-core Actions are prefixed with their namespace. Prior to 2.2 it would just be the action controller. For example a &quot;controllers/index&quot; action in a &quot;mycomponent&quot; namespace would be retrievable using the following in 2.2 and up:
+
+{code}
+var actionId = MODx.action[&#39;mycomponent:controllers/index&#39;];
+{code}
+
+h3. MODx.version
+
+Contains MODX version information, with the following attributes:
+
+|| Key || Example ||
+| version | 2 |
+| major_version | 1 |
+| minor_version | 0 |
+| patch_level | pl |
+| code_name | Revolution |
+| distro | @traditional@ |
+| full_version | 2.1.0-pl |
+| full_appname | MODX Revolution 2.1.0-pl (traditional) |
+
+Example:
+{code}var fv = MODx.version.full_version;{code}
+
+h3. MODx.user
+
+This object will contain the two following properties for the currently logged-in manager user:
+
+| MODx.user.id | The ID of the user. |
+| MODx.user.username | The username of the user. |
+
+{code}var userId = MODx.user.id;{code}
+
+h3. MODx.perm
+
+This will contain the following permissions should they be granted to the user (they will not exist if the user does not have the permission):
+
+|| Name || Description ||
+| MODx.perm.resource_tree | To view the Resources tree. |
+| MODx.perm.element_tree | To view the Elements tree. |
+| MODx.perm.file_tree | To view the Files tree. |
+| MODx.perm.file_upload | To be able to upload files. |
+| MODx.perm.file_manager | To use the MODX file browser. |
+| MODx.perm.new_chunk | To create a new Chunk. |
+| MODx.perm.new_plugin | To create a new Plugin. |
+| MODx.perm.new_snippet | To create a new Snippet. |
+| MODx.perm.new_template | To create a new Template. |
+| MODx.perm.new_tv | To create a new Template Variable. |
+| MODx.perm.directory_create | To be able to create a directory on the filesystem. |
+
+{code}if (MODx.perm.file_upload) { /* ...code... */ }{code}
+
+h2. Custom Methods
+
+The MODx object also has quite a few custom methods available to it:
+
+h3. MODx.load
+
+This method will create a new object of any specified xtype and passed in configuration parameters. Example:
+
+{code}var w = MODx.load({
+  xtype: &#39;modx-window-namespace-create&#39;
+  ,blankValues: true
+});
+w.setValues({ name: &#39;My Namespace&#39; });
+w.show();{code}
+
+Any defined class that has a registered xtype can be loaded from this method.
+
+h3. MODx.clearCache
+
+This fires up the console that clears the MODX cache. It will also fire the &#39;beforeClearCache&#39; and &#39;afterClearCache&#39; events on the MODx object. If the System Setting [clear_cache_refresh_trees|clear_cache_refresh_trees] is set to 1, it will also refresh all the active left-hand trees.
+
+h3. MODx.releaseLock
+
+This will release the lock on the current active Resource. This method should not be fired on non-Resource editing pages. It will fire the &#39;beforeReleaseLocks&#39; and &#39;afterReleaseLocks&#39; events on the MODx object.
+
+h3. MODx.sleep
+
+This method will cause JavaScript to sleep (or halt) for a specified number of seconds:
+
+{code}MODx.sleep(3); /* sleep for 3 seconds */{code}
+
+h3. MODx.logout
+
+This method will automatically logout the active manager user. It fires the &#39;beforeLogout&#39; and &#39;afterLogout&#39; events on the MODx object. If both events are successful, it will then redirect the user to the login screen.
+
+h3. MODx.loadHelpPane
+
+This will load the current Help screen for the active page. Normally this is set by default on the modAction record for the page, and its URL can be found by the MODx.config.help_url property. You can, however, override this to fire up any URL into the panel:
+
+{code}
+/* show the modx.com site in the Help modal */
+MODx.config.help_url = &#39;http://modx.com/&#39;;
+MODx.loadHelpPane();
+{code}
+
+h3. MODx.preview
+
+Loads the current MODX site for the active Context.
+
+h3. MODx.isEmpty
+
+Checks to see if the specified variable is &quot;empty&quot; (in the PHP sense). This means it is either:
+
+* false, &#39;false&#39;, or &#39;FALSE&#39;
+* 0 or &#39;0&#39;
+* &#39;&#39; (blank string)
+* null
+* undefined
+
+h3. MODx.debug
+
+(2.1\+ only)
+
+This will send off a debug message if and only if the MODX [System Setting|Settings] [ui_debug_mode|ui_debug_mode] is set to Yes/1. The debug message will use console.log to output to the console. This can be useful to add debugging and assertions to your code without breaking it in production sites (which would presumably have [ui_debug_mode|ui_debug_mode] off).";}i:1;a:3:{s:2:"id";s:8:"36634912";s:3:"ver";s:1:"7";s:4:"code";s:5305:"{toc}
+
+h2. The MODx JS Object
+
+MODExt comes with a global MODx JS object on each manager page. This object has a few custom methods that can be executed from any custom manager page using MODExt, and also sets up some default settings and customizations.
+
+h2. Custom Class Variables
+
+The following variables are accessible from the MODx JS object:
+
+h3. MODx.request
+
+This is a JS object that contains all the current GET parameters for the page. Example:
+
+{code}var id = MODx.request.id;{code}
+
+h3. MODx.config
+
+This object contains all the active System Settings in MODX by key:
+
+{code}var tpl = MODx.config.default_template;{code}
+
+h4. Other Variables
+
+There are a few other variables available on the MODx.config object that are not [System Settings]:
+
+||Key||Description||
+|base_url|The base URL for the MODX site and/or active context.|
+|connectors_url|The URL to the connectors directory.|
+|manager_url|The URL to the manager.|
+|http_host|The HTTP host variable for the active context.|
+|site_url|The full Site URL for the active context.| 
+|custom_resource_classes|An array of custom Resource classes pulled from the System Setting custom_resource_classes|
+
+h3. MODx.action
+
+This object contains a map of all the modAction objects (or MODX manager controllers), mapped by their controller to their ID:
+{code}var actionId = MODx.action[&#39;resource/create&#39;];{code}
+
+h3. MODx.version
+
+Contains MODX version information, with the following attributes:
+
+||Key||Example||
+|version|2|
+|major_version|1|
+|minor_version|0|
+|patch_level|pl|
+|code_name|Revolution|
+|distro|\@traditional\@|
+|full_version|2.1.0-pl|
+|full_appname|MODX Revolution 2.1.0-pl (traditional)|
+
+Example: 
+{code}var fv = MODx.version.full_version;{code}
+
+h3. MODx.user
+
+This object will contain the two following properties for the currently logged-in manager user:
+
+|MODx.user.id|The ID of the user.|
+|MODx.user.username|The username of the user.|
+
+{code}var userId = MODx.user.id;{code}
+
+h3. MODx.perm
+
+This will contain the following permissions should they be granted to the user (they will not exist if the user does not have the permission):
+
+||Name||Description||
+|MODx.perm.resource_tree|To view the Resources tree.|
+|MODx.perm.element_tree|To view the Elements tree.|
+|MODx.perm.file_tree|To view the Files tree.|
+|MODx.perm.file_upload|To be able to upload files.|
+|MODx.perm.file_manager|To use the MODX file browser.|
+|MODx.perm.new_chunk|To create a new Chunk.|
+|MODx.perm.new_plugin|To create a new Plugin.|
+|MODx.perm.new_snippet|To create a new Snippet.|
+|MODx.perm.new_template|To create a new Template.|
+|MODx.perm.new_tv|To create a new Template Variable.|
+|MODx.perm.directory_create|To be able to create a directory on the filesystem.|
+
+{code}if (MODx.perm.file_upload) { /* ...code... */ }{code}
+
+h2. Custom Methods
+
+The MODx object also has quite a few custom methods available to it:
+
+h3. MODx.load
+
+This method will create a new object of any specified xtype and passed in configuration parameters. Example:
+
+{code}var w = MODx.load({
+  xtype: &#39;modx-window-namespace-create&#39;
+  ,blankValues: true
+});
+w.setValues({ name: &#39;My Namespace&#39; });
+w.show();{code}
+
+Any defined class that has a registered xtype can be loaded from this method.
+
+h3. MODx.clearCache
+
+This fires up the console that clears the MODX cache. It will also fire the &#39;beforeClearCache&#39; and &#39;afterClearCache&#39; events on the MODx object. If the System Setting [clear_cache_refresh_trees] is set to 1, it will also refresh all the active left-hand trees.
+
+h3. MODx.releaseLock
+
+This will release the lock on the current active Resource. This method should not be fired on non-Resource editing pages. It will fire the &#39;beforeReleaseLocks&#39; and &#39;afterReleaseLocks&#39; events on the MODx object.
+
+h3. MODx.sleep
+
+This method will cause JavaScript to sleep (or halt) for a specified number of seconds:
+
+{code}MODx.sleep(3); /* sleep for 3 seconds */{code}
+
+h3. MODx.logout
+
+This method will automatically logout the active manager user. It fires the &#39;beforeLogout&#39; and &#39;afterLogout&#39; events on the MODx object. If both events are successful, it will then redirect the user to the login screen.
+
+h3. MODx.loadHelpPane
+
+This will load the current Help screen for the active page. Normally this is set by default on the modAction record for the page, and its URL can be found by the MODx.config.help_url property. You can, however, override this to fire up any URL into the panel:
+
+{code}
+/* show the modx.com site in the Help modal */
+MODx.config.help_url = &#39;http://modx.com/&#39;;
+MODx.loadHelpPane();
+{code}
+
+h3. MODx.preview
+
+Loads the current MODX site for the active Context.
+
+h3. MODx.isEmpty
+
+Checks to see if the specified variable is &quot;empty&quot; (in the PHP sense). This means it is either:
+
+* false, &#39;false&#39;, or &#39;FALSE&#39;
+* 0 or &#39;0&#39;
+* &#39;&#39; (blank string)
+* null
+* undefined
+
+h3. MODx.debug
+
+(2.1+ only)
+
+This will send off a debug message if and only if the MODX [System Setting|Settings] [ui_debug_mode] is set to Yes/1. The debug message will use console.log to output to the console. This can be useful to add debugging and assertions to your code without breaking it in production sites (which would presumably have [ui_debug_mode] off).
+
+";}i:2;a:3:{s:2:"id";s:8:"35094625";s:3:"ver";s:1:"6";s:4:"code";s:4774:"{toc}
+
+h2. The MODx JS Object
+
+MODExt comes with a global MODx JS object on each manager page. This object has a few custom methods that can be executed from any custom manager page using MODExt, and also sets up some default settings and customizations.
+
+h2. Custom Class Variables
+
+The following variables are accessible from the MODx JS object:
+
+h3. MODx.request
+
+This is a JS object that contains all the current GET parameters for the page. Example:
+
+{code}var id = MODx.request.id;{code}
+
+h3. MODx.config
+
+This object contains all the active System Settings in MODX by key:
+
+{code}var tpl = MODx.config.default_template;{code}
+
+h3. MODx.action
+
+This object contains a map of all the modAction objects (or MODX manager controllers), mapped by their controller to their ID:
+{code}var actionId = MODx.action[&#39;resource/create&#39;];{code}
+
+h3. MODx.version
+
+Contains MODX version information, with the following attributes:
+
+||Key||Example||
+|version|2|
+|major_version|1|
+|minor_version|0|
+|patch_level|pl|
+|code_name|Revolution|
+|distro|\@traditional\@|
+|full_version|2.1.0-pl|
+|full_appname|MODX Revolution 2.1.0-pl (traditional)|
+
+Example: 
+{code}var fv = MODx.version.full_version;{code}
+
+h3. MODx.user
+
+This object will contain the two following properties for the currently logged-in manager user:
+
+|MODx.user.id|The ID of the user.|
+|MODx.user.username|The username of the user.|
+
+{code}var userId = MODx.user.id;{code}
+
+h3. MODx.perm
+
+This will contain the following permissions should they be granted to the user (they will not exist if the user does not have the permission):
+
+||Name||Description||
+|MODx.perm.resource_tree|To view the Resources tree.|
+|MODx.perm.element_tree|To view the Elements tree.|
+|MODx.perm.file_tree|To view the Files tree.|
+|MODx.perm.file_upload|To be able to upload files.|
+|MODx.perm.file_manager|To use the MODX file browser.|
+|MODx.perm.new_chunk|To create a new Chunk.|
+|MODx.perm.new_plugin|To create a new Plugin.|
+|MODx.perm.new_snippet|To create a new Snippet.|
+|MODx.perm.new_template|To create a new Template.|
+|MODx.perm.new_tv|To create a new Template Variable.|
+|MODx.perm.directory_create|To be able to create a directory on the filesystem.|
+
+{code}if (MODx.perm.file_upload) { /* ...code... */ }{code}
+
+h2. Custom Methods
+
+The MODx object also has quite a few custom methods available to it:
+
+h3. MODx.load
+
+This method will create a new object of any specified xtype and passed in configuration parameters. Example:
+
+{code}var w = MODx.load({
+  xtype: &#39;modx-window-namespace-create&#39;
+  ,blankValues: true
+});
+w.setValues({ name: &#39;My Namespace&#39; });
+w.show();{code}
+
+Any defined class that has a registered xtype can be loaded from this method.
+
+h3. MODx.clearCache
+
+This fires up the console that clears the MODX cache. It will also fire the &#39;beforeClearCache&#39; and &#39;afterClearCache&#39; events on the MODx object. If the System Setting [clear_cache_refresh_trees] is set to 1, it will also refresh all the active left-hand trees.
+
+h3. MODx.releaseLock
+
+This will release the lock on the current active Resource. This method should not be fired on non-Resource editing pages. It will fire the &#39;beforeReleaseLocks&#39; and &#39;afterReleaseLocks&#39; events on the MODx object.
+
+h3. MODx.sleep
+
+This method will cause JavaScript to sleep (or halt) for a specified number of seconds:
+
+{code}MODx.sleep(3); /* sleep for 3 seconds */{code}
+
+h3. MODx.logout
+
+This method will automatically logout the active manager user. It fires the &#39;beforeLogout&#39; and &#39;afterLogout&#39; events on the MODx object. If both events are successful, it will then redirect the user to the login screen.
+
+h3. MODx.loadHelpPane
+
+This will load the current Help screen for the active page. Normally this is set by default on the modAction record for the page, and its URL can be found by the MODx.config.help_url property. You can, however, override this to fire up any URL into the panel:
+
+{code}
+/* show the modx.com site in the Help modal */
+MODx.config.help_url = &#39;http://modx.com/&#39;;
+MODx.loadHelpPane();
+{code}
+
+h3. MODx.preview
+
+Loads the current MODX site for the active Context.
+
+h3. MODx.isEmpty
+
+Checks to see if the specified variable is &quot;empty&quot; (in the PHP sense). This means it is either:
+
+* false, &#39;false&#39;, or &#39;FALSE&#39;
+* 0 or &#39;0&#39;
+* &#39;&#39; (blank string)
+* null
+* undefined
+
+h3. MODx.debug
+
+(2.1+ only)
+
+This will send off a debug message if and only if the MODX [System Setting|Settings] [ui_debug_mode] is set to Yes/1. The debug message will use console.log to output to the console. This can be useful to add debugging and assertions to your code without breaking it in production sites (which would presumably have [ui_debug_mode] off).
+
+";}i:3;a:3:{s:2:"id";s:8:"35094621";s:3:"ver";s:1:"5";s:4:"code";s:4780:"{toc}
+
+h2. The MODx JS Object
+
+MODExt comes with a global MODx JS object on each manager page. This object has a few custom methods that can be executed from any custom manager page using MODExt, and also sets up some default settings and customizations.
+
+h2. Custom Class Variables
+
+The following variables are accessible from the MODx JS object:
+
+h3. MODx.request
+
+This is a JS object that contains all the current GET parameters for the page. Example:
+
+{code}var id = MODx.request.id;{code}
+
+h3. MODx.config
+
+This object contains all the active System Settings in MODX by key:
+
+{code}var tpl = MODx.config.default_template;{code}
+
+h3. MODx.action
+
+This object contains a map of all the modAction objects (or MODX manager controllers), mapped by their controller to their ID:
+{code}var actionId = MODx.action[&#39;resource/create&#39;];{code}
+
+h3. MODx.version
+
+Contains MODX version information, with the following attributes:
+
+||Key||Example||
+|version|2|
+|major_version|1|
+|minor_version|0|
+|patch_level|pl|
+|code_name|Revolution|
+|distro|\@traditional\@|
+|full_version|2.1.0-pl|
+|full_appname|MODX Revolution 2.1.0-pl (traditional)|
+
+Example: 
+{code}var fv = MODx.version.full_version;{code}
+
+h3. MODx.user
+
+This object will contain the two following properties for the currently logged-in manager user:
+
+|MODx.user.id|The ID of the user.|
+|MODx.user.username|The username of the user.|
+
+{code}var userId = MODx.user.id;{code}
+
+h3. MODx.perm
+
+This will contain the following permissions should they be granted to the user (they will not exist if the user does not have the permission):
+
+||Name||Description||
+|MODx.perm.resource_tree|To view the Resources tree.|
+|MODx.perm.element_tree|To view the Elements tree.|
+|MODx.perm.file_tree|To view the Files tree.|
+|MODx.perm.file_upload|To be able to upload files.|
+|MODx.perm.file_manager|To use the MODX file browser.|
+|MODx.perm.new_chunk|To create a new Chunk.|
+|MODx.perm.new_plugin|To create a new Plugin.|
+|MODx.perm.new_snippet|To create a new Snippet.|
+|MODx.perm.new_template|To create a new Template.|
+|MODx.perm.new_tv|To create a new Template Variable.|
+|MODx.perm.directory_create|To be able to create a directory on the filesystem.|
+
+{code}if (MODx.perm.file_upload) { /* ...code... */ }{code}
+
+h2. Custom Methods
+
+The MODx object also has quite a few custom methods available to it:
+
+h3. MODx.load
+
+This method will create a new object of any specified xtype and passed in configuration parameters. Example:
+
+{code}var w = MODx.load({
+  xtype: &#39;modx-window-namespace-create&#39;
+  ,blankValues: true
+});
+w.setValues({ name: &#39;My Namespace&#39; });
+w.show();{code}
+
+Any defined class that has a registered xtype can be loaded from this method.
+
+h3. MODx.clearCache
+
+This fires up the console that clears the MODX cache. It will also fire the &#39;beforeClearCache&#39; and &#39;afterClearCache&#39; events on the MODx object. If the System Setting [clear_cache_refresh_trees] is set to 1, it will also refresh all the active left-hand trees.
+
+h3. MODx.releaseLock
+
+This will release the lock on the current active Resource. This method should not be fired on non-Resource editing pages. It will fire the &#39;beforeReleaseLocks&#39; and &#39;afterReleaseLocks&#39; events on the MODx object.
+
+h3. MODx.sleep
+
+This method will cause JavaScript to sleep (or halt) for a specified number of seconds:
+
+{code}MODx.sleep(3); /* sleep for 3 seconds */{code}
+
+h3. MODx.logout
+
+This method will automatically logout the active manager user. It fires the &#39;beforeLogout&#39; and &#39;afterLogout&#39; events on the MODx object. If both events are successful, it will then redirect the user to the login screen.
+
+h3. MODx.loadHelpPane
+
+This will load the current Help screen for the active page. Normally this is set by default on the modAction record for the page, and its URL can be found by the MODx.config.help_url property. You can, however, override this to fire up any URL into the panel:
+
+{code}
+/* show the modx.com site in the Help modal */
+MODx.config.help_url = &#39;http://modx.com/&#39;;
+MODx.loadHelpPane();
+{code}
+
+h3. MODx.preview
+
+Loads the current MODX site for the active Context.
+
+h3. MODx.isEmpty
+
+Checks to see if the specified variable is &quot;empty&quot; (in the PHP sense). This means it is either:
+
+* false, &#39;false&#39;, or &#39;FALSE&#39;
+* 0 or &#39;0&#39;
+* &#39;&#39; (blank string)
+* null
+* undefined
+
+h3. MODx.debug
+
+(2.1+ only)
+
+This will send off a debug message if and only if the MODX [System Setting|Settings] &#39;ui_debug_mode&#39; is set to Yes/1. The debug message will use console.log to output to the console. This can be useful to add debugging and assertions to your code without breaking it in production sites (which would presumably have ui_debug_mode off).
+
+";}i:4;a:3:{s:2:"id";s:8:"35094620";s:3:"ver";s:1:"4";s:4:"code";s:4778:"{toc}
+
+h2. The MODx JS Object
+
+MODExt comes with a global MODx JS object on each manager page. This object has a few custom methods that can be executed from any custom manager page using MODExt, and also sets up some default settings and customizations.
+
+h2. Custom Class Variables
+
+The following variables are accessible from the MODx JS object:
+
+h3. MODx.request
+
+This is a JS object that contains all the current GET parameters for the page. Example:
+
+{code}var id = MODx.request.id;{code}
+
+h3. MODx.config
+
+This object contains all the active System Settings in MODX by key:
+
+{code}var tpl = MODx.config.default_template;{code}
+
+h3. MODx.action
+
+This object contains a map of all the modAction objects (or MODX manager controllers), mapped by their controller to their ID:
+{code}var actionId = MODx.action[&#39;resource/create&#39;];{code}
+
+h3. MODx.version
+
+Contains MODX version information, with the following attributes:
+
+||Key||Example||
+|version|2|
+|major_version|1|
+|minor_version|0|
+|patch_level|pl|
+|code_name|Revolution|
+|distro|@traditional@|
+|full_version|2.1.0-pl|
+|full_appname|MODX Revolution 2.1.0-pl (traditional)|
+
+Example: 
+{code}var fv = MODx.version.full_version;{code}
+
+h3. MODx.user
+
+This object will contain the two following properties for the currently logged-in manager user:
+
+|MODx.user.id|The ID of the user.|
+|MODx.user.username|The username of the user.|
+
+{code}var userId = MODx.user.id;{code}
+
+h3. MODx.perm
+
+This will contain the following permissions should they be granted to the user (they will not exist if the user does not have the permission):
+
+||Name||Description||
+|MODx.perm.resource_tree|To view the Resources tree.|
+|MODx.perm.element_tree|To view the Elements tree.|
+|MODx.perm.file_tree|To view the Files tree.|
+|MODx.perm.file_upload|To be able to upload files.|
+|MODx.perm.file_manager|To use the MODX file browser.|
+|MODx.perm.new_chunk|To create a new Chunk.|
+|MODx.perm.new_plugin|To create a new Plugin.|
+|MODx.perm.new_snippet|To create a new Snippet.|
+|MODx.perm.new_template|To create a new Template.|
+|MODx.perm.new_tv|To create a new Template Variable.|
+|MODx.perm.directory_create|To be able to create a directory on the filesystem.|
+
+{code}if (MODx.perm.file_upload) { /* ...code... */ }{code}
+
+h2. Custom Methods
+
+The MODx object also has quite a few custom methods available to it:
+
+h3. MODx.load
+
+This method will create a new object of any specified xtype and passed in configuration parameters. Example:
+
+{code}var w = MODx.load({
+  xtype: &#39;modx-window-namespace-create&#39;
+  ,blankValues: true
+});
+w.setValues({ name: &#39;My Namespace&#39; });
+w.show();{code}
+
+Any defined class that has a registered xtype can be loaded from this method.
+
+h3. MODx.clearCache
+
+This fires up the console that clears the MODX cache. It will also fire the &#39;beforeClearCache&#39; and &#39;afterClearCache&#39; events on the MODx object. If the System Setting [clear_cache_refresh_trees] is set to 1, it will also refresh all the active left-hand trees.
+
+h3. MODx.releaseLock
+
+This will release the lock on the current active Resource. This method should not be fired on non-Resource editing pages. It will fire the &#39;beforeReleaseLocks&#39; and &#39;afterReleaseLocks&#39; events on the MODx object.
+
+h3. MODx.sleep
+
+This method will cause JavaScript to sleep (or halt) for a specified number of seconds:
+
+{code}MODx.sleep(3); /* sleep for 3 seconds */{code}
+
+h3. MODx.logout
+
+This method will automatically logout the active manager user. It fires the &#39;beforeLogout&#39; and &#39;afterLogout&#39; events on the MODx object. If both events are successful, it will then redirect the user to the login screen.
+
+h3. MODx.loadHelpPane
+
+This will load the current Help screen for the active page. Normally this is set by default on the modAction record for the page, and its URL can be found by the MODx.config.help_url property. You can, however, override this to fire up any URL into the panel:
+
+{code}
+/* show the modx.com site in the Help modal */
+MODx.config.help_url = &#39;http://modx.com/&#39;;
+MODx.loadHelpPane();
+{code}
+
+h3. MODx.preview
+
+Loads the current MODX site for the active Context.
+
+h3. MODx.isEmpty
+
+Checks to see if the specified variable is &quot;empty&quot; (in the PHP sense). This means it is either:
+
+* false, &#39;false&#39;, or &#39;FALSE&#39;
+* 0 or &#39;0&#39;
+* &#39;&#39; (blank string)
+* null
+* undefined
+
+h3. MODx.debug
+
+(2.1+ only)
+
+This will send off a debug message if and only if the MODX [System Setting|Settings] &#39;ui_debug_mode&#39; is set to Yes/1. The debug message will use console.log to output to the console. This can be useful to add debugging and assertions to your code without breaking it in production sites (which would presumably have ui_debug_mode off).
+
+";}i:5;a:3:{s:2:"id";s:8:"35094617";s:3:"ver";s:1:"3";s:4:"code";s:4778:"{toc}
+
+h2. The MODx JS Object
+
+MODExt comes with a global MODx JS object on each manager page. This object has a few custom methods that can be executed from any custom manager page using MODExt, and also sets up some default settings and customizations.
+
+h2. Custom Class Variables
+
+The following variables are accessible from the MODx JS object:
+
+h3. MODx.request
+
+This is a JS object that contains all the current GET parameters for the page. Example:
+
+{code}var id = MODx.request.id;{code}
+
+h3. MODx.config
+
+This object contains all the active System Settings in MODX by key:
+
+{code}var tpl = MODx.config.default_template;{code}
+
+h3. MODx.action
+
+This object contains a map of all the modAction objects (or MODX manager controllers), mapped by their controller to their ID:
+{code}var actionId = MODx.action[&#39;resource/create&#39;];{code}
+
+h3. MODx.version
+
+Contains MODX version information, with the following attributes:
+
+||Key||Example||
+|version|2|
+|major_version|1|
+|minor_version|0|
+|patch_level|pl|
+|code_name|Revolution|
+|distro|@traditional@|
+|full_version|2.1.0-pl|
+|full_appname|MODX Revolution 2.1.0-pl (traditional)|
+
+Example: 
+{code}var fv = MODx.version.full_version;{code}
+
+h3. MODx.user
+
+This object will contain the two following properties for the currently logged-in manager user:
+
+|MODx.user.id|The ID of the user.|
+|MODx.user.username|The username of the user.|
+
+{code}var userId = MODx.user.id;{code}
+
+h3. MODx.perm
+
+This will contain the following permissions should they be granted to the user (they will not exist if the user does not have the permission):
+
+||Name||Description||
+|MODx.perm.resource_tree|To view the Resources tree.|
+|MODx.perm.element_tree|To view the Elements tree.|
+|MODx.perm.file_tree|To view the Files tree.|
+|MODx.perm.file_upload|To be able to upload files.|
+|MODx.perm.file_manager|To use the MODX file browser.|
+|MODx.perm.new_chunk|To create a new Chunk.|
+|MODx.perm.new_plugin|To create a new Plugin.|
+|MODx.perm.new_snippet|To create a new Snippet.|
+|MODx.perm.new_template|To create a new Template.|
+|MODx.perm.new_tv|To create a new Template Variable.|
+|MODx.perm.directory_create|To be able to create a directory on the filesystem.|
+
+{code}if (MODx.perm.file_upload) { /* ...code... */ }{code}
+
+h2. Custom Methods
+
+The MODx object also has quite a few custom methods available to it:
+
+h3. MODx.load
+
+This method will create a new object of any specified xtype and passed in configuration parameters. Example:
+
+{code}var w = MODx.load({
+  xtype: &#39;modx-window-namespace-create&#39;
+  ,blankValues: true
+});
+w.setValues({ name: &#39;My Namespace&#39; });
+w.show();{code}
+
+Any defined class that has a registered xtype can be loaded from this method.
+
+h3. MODx.clearCache
+
+This fires up the console that clears the MODX cache. It will also fire the &#39;beforeClearCache&#39; and &#39;afterClearCache&#39; events on the MODx object. If the System Setting [clear_cache_refresh_trees] is set to 1, it will also refresh all the active left-hand trees.
+
+h3. MODx.releaseLock
+
+This will release the lock on the current active Resource. This method should not be fired on non-Resource editing pages. It will fire the &#39;beforeReleaseLocks&#39; and &#39;afterReleaseLocks&#39; events on the MODx object.
+
+h3. MODx.sleep
+
+This method will cause JavaScript to sleep (or halt) for a specified number of seconds:
+
+{code}MODx.sleep(3); /* sleep for 3 seconds */{code}
+
+h3. MODx.logout
+
+This method will automatically logout the active manager user. It fires the &#39;beforeLogout&#39; and &#39;afterLogout&#39; events on the MODx object. If both events are successful, it will then redirect the user to the login screen.
+
+h3. MODx.loadHelpPane
+
+This will load the current Help screen for the active page. Normally this is set by default on the modAction record for the page, and its URL can be found by the MODx.config.help_url property. You can, however, override this to fire up any URL into the panel:
+
+{code}
+/* show the modx.com site in the Help modal */
+MODx.config.help_url = &#39;http://modx.com/&#39;;
+MODx.loadHelpPane();
+{code}
+
+h3. MODx.preview
+
+Loads the current MODX site for the active Context.
+
+h3. MODx.isEmpty
+
+Checks to see if the specified variable is &quot;empty&quot; (in the PHP sense). This means it is either:
+
+* false, &#39;false&#39;, or &#39;FALSE&#39;
+* 0 or &#39;0&#39;
+* &#39;&#39; (blank string)
+* null
+* undefined
+
+h3. MODx.debug
+
+(2.1+ only)
+
+This will send off a debug message if and only if the MODX [System Setting|Settings] &#39;ui_debug_mode&#39; is set to Yes/1. The debug message will use console.log to output to the console. This can be useful to add debugging and assertions to your code without breaking it in production sites (which would presumably have ui_debug_mode off).
+
+";}i:6;a:3:{s:2:"id";s:8:"35094616";s:3:"ver";s:1:"2";s:4:"code";s:4406:"{toc}
+
+h2. The MODx JS Object
+
+MODExt comes with a global MODx JS object on each manager page. This object has a few custom methods that can be executed from any custom manager page using MODExt, and also sets up some default settings and customizations.
+
+h2. Custom Class Variables
+
+The following variables are accessible from the MODx JS object:
+
+h3. MODx.request
+
+This is a JS object that contains all the current GET parameters for the page. Example:
+
+{code}var id = MODx.request.id;{code}
+
+h3. MODx.config
+
+This object contains all the active System Settings in MODX by key:
+
+{code}var tpl = MODx.config.default_template;{code}
+
+h3. MODx.action
+
+This object contains a map of all the modAction objects (or MODX manager controllers), mapped by their controller to their ID:
+{code}var actionId = MODx.action[&#39;resource/create&#39;];{code}
+
+h3. MODx.version
+
+Contains MODX version information, with the following attributes:
+
+||Key||Example||
+|version|2|
+|major_version|1|
+|minor_version|0|
+|patch_level|pl|
+|code_name|Revolution|
+|distro|@traditional@|
+|full_version|2.1.0-pl|
+|full_appname|MODX Revolution 2.1.0-pl (traditional)|
+
+Example: 
+{code}var fv = MODx.version.full_version;{code}
+
+h3. MODx.user
+
+This object will contain the two following properties for the currently logged-in manager user:
+
+|MODx.user.id|The ID of the user.|
+|MODx.user.username|The username of the user.|
+
+{code}var userId = MODx.user.id;{code}
+
+h3. MODx.perm
+
+This will contain the following permissions should they be granted to the user (they will not exist if the user does not have the permission):
+
+||Name||Description||
+|MODx.perm.resource_tree|To view the Resources tree.|
+|MODx.perm.element_tree|To view the Elements tree.|
+|MODx.perm.file_tree|To view the Files tree.|
+|MODx.perm.file_upload|To be able to upload files.|
+|MODx.perm.file_manager|To use the MODX file browser.|
+|MODx.perm.new_chunk|To create a new Chunk.|
+|MODx.perm.new_plugin|To create a new Plugin.|
+|MODx.perm.new_snippet|To create a new Snippet.|
+|MODx.perm.new_template|To create a new Template.|
+|MODx.perm.new_tv|To create a new Template Variable.|
+|MODx.perm.directory_create|To be able to create a directory on the filesystem.|
+
+{code}if (MODx.perm.file_upload) { /* ...code... */ }{code}
+
+h2. Custom Methods
+
+The MODx object also has quite a few custom methods available to it:
+
+h3. MODx.load
+
+This method will create a new object of any specified xtype and passed in configuration parameters. Example:
+
+{code}var w = MODx.load({
+  xtype: &#39;modx-window-namespace-create&#39;
+  ,blankValues: true
+});
+w.setValues({ name: &#39;My Namespace&#39; });
+w.show();{code}
+
+Any defined class that has a registered xtype can be loaded from this method.
+
+h3. MODx.clearCache
+
+This fires up the console that clears the MODX cache. It will also fire the &#39;beforeClearCache&#39; and &#39;afterClearCache&#39; events on the MODx object. If the System Setting [clear_cache_refresh_trees] is set to 1, it will also refresh all the active left-hand trees.
+
+h3. MODx.releaseLock
+
+This will release the lock on the current active Resource. This method should not be fired on non-Resource editing pages. It will fire the &#39;beforeReleaseLocks&#39; and &#39;afterReleaseLocks&#39; events on the MODx object.
+
+h3. MODx.sleep
+
+This method will cause JavaScript to sleep (or halt) for a specified number of seconds:
+
+{code}MODx.sleep(3); /* sleep for 3 seconds */{code}
+
+h3. MODx.logout
+
+This method will automatically logout the active manager user. It fires the &#39;beforeLogout&#39; and &#39;afterLogout&#39; events on the MODx object. If both events are successful, it will then redirect the user to the login screen.
+
+h3. MODx.loadHelpPane
+
+This will load the current Help screen for the active page. Normally this is set by default on the modAction record for the page, and its URL can be found by the MODx.config.help_url property. You can, however, override this to fire up any URL into the panel:
+
+{code}
+/* show the modx.com site in the Help modal */
+MODx.config.help_url = &#39;http://modx.com/&#39;;
+MODx.loadHelpPane();
+{code}
+
+h3. MODx.preview
+
+Loads the current MODX site for the active Context.
+
+h3. MODx.isEmpty
+
+Checks to see if the specified variable is &quot;empty&quot; (in the PHP sense). This means it is either:
+
+* false, &#39;false&#39;, or &#39;FALSE&#39;
+* 0 or &#39;0&#39;
+* &#39;&#39; (blank string)
+* null
+* undefined
+
+
+
+";}i:7;a:3:{s:2:"id";s:8:"35094614";s:3:"ver";s:1:"1";s:4:"code";s:1198:"{toc}
+
+h2. The MODx JS Object
+
+MODExt comes with a global MODx JS object on each manager page. This object has a few custom methods that can be executed from any custom manager page using MODExt, and also sets up some default settings and customizations.
+
+h2. Custom Class Variables
+
+The following variables are accessible from the MODx JS object:
+
+h3. MODx.request
+
+This is a JS object that contains all the current GET parameters for the page. Example:
+
+{code}var id = MODx.request.id;{code}
+
+h3. MODx.config
+
+This object contains all the active System Settings in MODX by key:
+
+{code}var tpl = MODx.config.default_template;{code}
+
+h3. MODx.action
+
+This object contains a map of all the modAction objects (or MODX manager controllers), mapped by their controller to their ID:
+{code}var actionId = MODx.action[&#39;resource/create&#39;];{code}
+
+h3. MODx.version
+
+Contains MODX version information, with the following attributes:
+
+||Key||Example||
+|version|2|
+|major_version|1|
+|minor_version|0|
+|patch_level|pl|
+|code_name|Revolution|
+|distro|@traditional@|
+|full_version|2.1.0-pl|
+|full_appname|MODX Revolution 2.1.0-pl (traditional)|
+
+Example: 
+{code}var fv = MODx.version.full_version;{code}
+
+
+";}}}

@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"35095151";s:4:"info";a:4:{s:6:"Title:";s:36:"phpthumb_nooffsitelink_valid_domains";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:51:"[revolution20:phpthumb_nooffsitelink_valid_domains]";}s:6:"parent";s:8:"18678127";s:6:"source";s:251:"h2. phpthumb_nooffsitelink_valid_domains
+
+*Name*: phpThumb Offsite Linking Valid Domains
+*Type*: Textfield
+*Default*: \{http_host\}
+*Available In:* 2.0.8\+
+
+A comma-delimited list of hostnames that are valid referrers for offsite linking.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095151";s:3:"ver";s:1:"1";s:4:"code";s:251:"h2. phpthumb_nooffsitelink_valid_domains
+
+*Name*: phpThumb Offsite Linking Valid Domains
+*Type*: Textfield
+*Default*: \{http_host\}
+*Available In:* 2.0.8\+
+
+A comma-delimited list of hostnames that are valid referrers for offsite linking.
+
+{scrollbar}";}}}

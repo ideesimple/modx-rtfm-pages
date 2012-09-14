@@ -1,0 +1,196 @@
+a:5:{s:2:"id";s:8:"18678072";s:4:"info";a:4:{s:6:"Title:";s:9:"Providers";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:24:"[revolution20:Providers]";}s:6:"parent";s:8:"18678070";s:6:"source";s:1792:"\\
+
+{toc}
+
+h2. What is a Transport Provider?
+
+Transport Providers in MODx are remote sources that one can download Transport Packages from. Simply by specifying a service URL, you can easily hook into the Transport Provider and grab the latest Transport Packages easily from it.
+
+MODx supports an unlimited number of Transport Providers, and each one can be from any source.
+{warning}MODx recommends not downloading Transport Packages from providers you cannot verify or do not trust. We recommend the modxcms.com Official Provider at:&amp;nbsp;[http://rest.modx.com/extras/|http://rest.modx.com/extras/]
+{warning}
+
+h2. Usage
+
+To setup a Transport Provider, simply go to the Package Management page, and from there click on the &#39;Providers&#39; panel heading at the bottom. This will open up a grid of Providers, which you can manage easily. 
+
+!providers.png!
+
+From there, you can click &quot;Add New Provider&quot; to add another, or right-click on any provider to get more options. Providers must be valid JSON files, web-accessible, and in the correct Provider format. Note that the Extras section of modxcms.com is a Provider.
+
+The Service URL is the actual, absolute location of the provider file.
+
+Once you have a provider, you can connect to it by going up to the Packages grid, clicking &quot;Add New Provider&quot;, and then select the &quot;Select a Provider&quot; option. This will bring up a dropdown of Provider options: !selprovider.png!
+&amp;nbsp;
+Once you&#39;ve selected your provider, click Next, and the download tree will be populated with the contents of that Provider&#39;s payload (ie, data). This will show you a tree of Package Versions you can download:
+
+!pkgdownload.png|width=792,height=383!
+
+
+
+h2. Related Pages
+
+{pagetree:root=Package Management}
+
+{scrollbar}";s:8:"versions";a:5:{i:0;a:3:{s:2:"id";s:8:"18678072";s:3:"ver";s:1:"5";s:4:"code";s:1792:"\\
+
+{toc}
+
+h2. What is a Transport Provider?
+
+Transport Providers in MODx are remote sources that one can download Transport Packages from. Simply by specifying a service URL, you can easily hook into the Transport Provider and grab the latest Transport Packages easily from it.
+
+MODx supports an unlimited number of Transport Providers, and each one can be from any source.
+{warning}MODx recommends not downloading Transport Packages from providers you cannot verify or do not trust. We recommend the modxcms.com Official Provider at:&amp;nbsp;[http://rest.modx.com/extras/|http://rest.modx.com/extras/]
+{warning}
+
+h2. Usage
+
+To setup a Transport Provider, simply go to the Package Management page, and from there click on the &#39;Providers&#39; panel heading at the bottom. This will open up a grid of Providers, which you can manage easily. 
+
+!providers.png!
+
+From there, you can click &quot;Add New Provider&quot; to add another, or right-click on any provider to get more options. Providers must be valid JSON files, web-accessible, and in the correct Provider format. Note that the Extras section of modxcms.com is a Provider.
+
+The Service URL is the actual, absolute location of the provider file.
+
+Once you have a provider, you can connect to it by going up to the Packages grid, clicking &quot;Add New Provider&quot;, and then select the &quot;Select a Provider&quot; option. This will bring up a dropdown of Provider options: !selprovider.png!
+&amp;nbsp;
+Once you&#39;ve selected your provider, click Next, and the download tree will be populated with the contents of that Provider&#39;s payload (ie, data). This will show you a tree of Package Versions you can download:
+
+!pkgdownload.png|width=792,height=383!
+
+
+
+h2. Related Pages
+
+{pagetree:root=Package Management}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35586197";s:3:"ver";s:1:"4";s:4:"code";s:1813:"\\
+
+{toc}
+
+h2. What is a Transport Provider?
+
+Transport Providers in MODx are remote sources that one can download Transport Packages from. Simply by specifying a service URL, you can easily hook into the Transport Provider and grab the latest Transport Packages easily from it.
+
+MODx supports an unlimited number of Transport Providers, and each one can be from any source.
+{warning}MODx recommends not downloading Transport Packages from providers you cannot verify or do not trust. We recommend the modxcms.com Official Provider at:&amp;nbsp;[http://rest.modx.com/extras/|http://rest.modx.com/extras/]
+{warning}
+
+h2. Usage
+
+To setup a Transport Provider, simply go to the Package Management page, and from there click on the &#39;Providers&#39; panel heading at the bottom. This will open up a grid of Providers, which you can manage easily. 
+
+!providers.png|width=800,height=186!
+
+From there, you can click &quot;Add New Provider&quot; to add another, or right-click on any provider to get more options. Providers must be valid JSON files, web-accessible, and in the correct Provider format. Note that the Extras section of modxcms.com is a Provider.
+
+The Service URL is the actual, absolute location of the provider file.
+
+Once you have a provider, you can connect to it by going up to the Packages grid, clicking &quot;Add New Provider&quot;, and then select the &quot;Select a Provider&quot; option. This will bring up a dropdown of Provider options: !selprovider.png!
+&amp;nbsp;
+Once you&#39;ve selected your provider, click Next, and the download tree will be populated with the contents of that Provider&#39;s payload (ie, data). This will show you a tree of Package Versions you can download:
+
+!pkgdownload.png|width=792,height=383!
+
+
+
+h2. Related Pages
+
+{pagetree:root=Package Management}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35586196";s:3:"ver";s:1:"3";s:4:"code";s:1810:"\\
+
+{toc}
+
+h2. What is a Transport Provider?
+
+Transport Providers in MODx are remote sources that one can download Transport Packages from. Simply by specifying a service URL, you can easily hook into the Transport Provider and grab the latest Transport Packages easily from it.
+
+MODx supports an unlimited number of Transport Providers, and each one can be from any source.
+{warning}MODx recommends not downloading Transport Packages from providers you cannot verify or do not trust. We recommend the modxcms.com Official Provider at:&amp;nbsp;[http://rest.modx.com/extras/|http://rest.modx.com/extras/]
+{warning}
+
+h2. Usage
+
+To setup a Transport Provider, simply go to the Package Management page, and from there click on the &#39;Providers&#39; panel heading at the bottom. This will open up a grid of Providers, which you can manage easily. !providers.png|width=789,height=186!
+From there, you can click &quot;Add New Provider&quot; to add another, or right-click on any provider to get more options. Providers must be valid JSON files, web-accessible, and in the correct Provider format. Note that the Extras section of modxcms.com is a Provider.
+
+The Service URL is the actual, absolute location of the provider file.
+
+Once you have a provider, you can connect to it by going up to the Packages grid, clicking &quot;Add New Provider&quot;, and then select the &quot;Select a Provider&quot; option. This will bring up a dropdown of Provider options: !selprovider.png!
+&amp;nbsp;
+Once you&#39;ve selected your provider, click Next, and the download tree will be populated with the contents of that Provider&#39;s payload (ie, data). This will show you a tree of Package Versions you can download:
+
+!pkgdownload.png|width=792,height=383!
+
+
+
+h2. Related Pages
+
+{pagetree:root=Package Management}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"35586195";s:3:"ver";s:1:"2";s:4:"code";s:1813:"\\
+
+{toc}
+
+h2. What is a Transport Provider?
+
+Transport Providers in MODx are remote sources that one can download Transport Packages from. Simply by specifying a service URL, you can easily hook into the Transport Provider and grab the latest Transport Packages easily from it.
+
+MODx supports an unlimited number of Transport Providers, and each one can be from any source.
+{warning}MODx recommends not downloading Transport Packages from providers you cannot verify or do not trust. We recommend the modxcms.com Official Provider at:&amp;nbsp;[http://rest.modxcms.com/extras/|http://rest.modx.com/extras/]
+{warning}
+
+h2. Usage
+
+To setup a Transport Provider, simply go to the Package Management page, and from there click on the &#39;Providers&#39; panel heading at the bottom. This will open up a grid of Providers, which you can manage easily. !providers.png|width=789,height=186!
+From there, you can click &quot;Add New Provider&quot; to add another, or right-click on any provider to get more options. Providers must be valid JSON files, web-accessible, and in the correct Provider format. Note that the Extras section of modxcms.com is a Provider.
+
+The Service URL is the actual, absolute location of the provider file.
+
+Once you have a provider, you can connect to it by going up to the Packages grid, clicking &quot;Add New Provider&quot;, and then select the &quot;Select a Provider&quot; option. This will bring up a dropdown of Provider options: !selprovider.png!
+&amp;nbsp;
+Once you&#39;ve selected your provider, click Next, and the download tree will be populated with the contents of that Provider&#39;s payload (ie, data). This will show you a tree of Package Versions you can download:
+
+!pkgdownload.png|width=792,height=383!
+
+
+
+h2. Related Pages
+
+{pagetree:root=Package Management}
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"35586194";s:3:"ver";s:1:"1";s:4:"code";s:1816:"\\
+
+{toc}
+
+h2. What is a Transport Provider?
+
+Transport Providers in MODx are remote sources that one can download Transport Packages from. Simply by specifying a service URL, you can easily hook into the Transport Provider and grab the latest Transport Packages easily from it.
+
+MODx supports an unlimited number of Transport Providers, and each one can be from any source.
+{warning}MODx recommends not downloading Transport Packages from providers you cannot verify or do not trust. We recommend the modxcms.com Official Provider at:&amp;nbsp;[http://rest.modxcms.com/extras/|http://rest.modxcms.com/extras/]
+{warning}
+
+h2. Usage
+
+To setup a Transport Provider, simply go to the Package Management page, and from there click on the &#39;Providers&#39; panel heading at the bottom. This will open up a grid of Providers, which you can manage easily. !providers.png|width=789,height=186!
+From there, you can click &quot;Add New Provider&quot; to add another, or right-click on any provider to get more options. Providers must be valid JSON files, web-accessible, and in the correct Provider format. Note that the Extras section of modxcms.com is a Provider.
+
+The Service URL is the actual, absolute location of the provider file.
+
+Once you have a provider, you can connect to it by going up to the Packages grid, clicking &quot;Add New Provider&quot;, and then select the &quot;Select a Provider&quot; option. This will bring up a dropdown of Provider options: !selprovider.png!
+&amp;nbsp;
+Once you&#39;ve selected your provider, click Next, and the download tree will be populated with the contents of that Provider&#39;s payload (ie, data). This will show you a tree of Package Versions you can download:
+
+!pkgdownload.png|width=792,height=383!
+
+
+
+h2. Related Pages
+
+{pagetree:root=Package Management}
+
+{scrollbar}";}}}

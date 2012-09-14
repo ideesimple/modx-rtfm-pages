@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"35095118";s:4:"info";a:4:{s:6:"Title:";s:19:"manager_favicon_url";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:34:"[revolution20:manager_favicon_url]";}s:6:"parent";s:8:"18678127";s:6:"source";s:250:"h2. manager_favicon_url
+
+*Name*: Manager Favicon URL
+*Type*: Textfield
+*Default*: 
+*Available In:* 2.1\+
+
+If set, will load this URL as a favicon for the MODX manager. Must be a relative URL to the manager/ directory, or an absolute URL.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095118";s:3:"ver";s:1:"1";s:4:"code";s:250:"h2. manager_favicon_url
+
+*Name*: Manager Favicon URL
+*Type*: Textfield
+*Default*: 
+*Available In:* 2.1\+
+
+If set, will load this URL as a favicon for the MODX manager. Must be a relative URL to the manager/ directory, or an absolute URL.
+
+{scrollbar}";}}}

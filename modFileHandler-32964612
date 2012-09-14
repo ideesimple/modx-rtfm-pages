@@ -1,0 +1,106 @@
+a:5:{s:2:"id";s:8:"32964612";s:4:"info";a:4:{s:6:"Title:";s:14:"modFileHandler";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:29:"[revolution20:modFileHandler]";}s:6:"parent";s:8:"18678337";s:6:"source";s:1709:"\\
+
+h2. What is modFileHandler?
+
+modFileHandler is a service class used in MODx Revolution for handling files. It abstracts basic file management actions to provide helper methods for file management.
+
+{note}modFileHandler, modFile and modDirectory are still in their infancy stages. Many more methods will be added to them in Revolution 2.2.{note}
+
+h2. Using modFileHandler
+
+The basic idea behind modFileHandler is its &quot;make&quot; method. When passed a path into modFileHandler-&gt;make(), it will return either a modDirectory or modFile object, depending on what was passed inside of it.
+
+For example, a simple snippet that makes a modDirectory object out of the passed &quot;path&quot; property (defaulting to &quot;/www/test/&quot;) and then removes the directory:
+
+{code}
+if (!isset($path)) $path = &#39;/www/test/&#39;;
+
+$modx-&gt;getService(&#39;fileHandler&#39;,&#39;modFileHandler&#39;);
+$directory = $modx-&gt;fileHandler-&gt;make($path);
+if (!is_object($directory) || !($directory instanceof modDirectory)) return &#39;Not a directory!&#39;;
+
+if (!$directory-&gt;remove()) {
+   return &#39;Could not remove directory.&#39;;
+}
+{code}
+
+You can also create modDirectory or modFile objects from non-existent paths. This will allow you to run -&gt;create() on them, allowing you to make new directories or files. For example, to create a new file with the content of &#39;Hello!&#39; at the path &quot;/www/test/test.txt&quot;:
+
+{code}
+$modx-&gt;getService(&#39;fileHandler&#39;,&#39;modFileHandler&#39;);
+$file = $modx-&gt;fileHandler-&gt;make(&#39;/www/test/test.txt&#39;);
+if (!$file-&gt;create(&#39;Hello!&#39;)) {
+   return &#39;File not written.&#39;;
+}
+return &#39;File written.&#39;;
+{code}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"32964612";s:3:"ver";s:1:"2";s:4:"code";s:1709:"\\
+
+h2. What is modFileHandler?
+
+modFileHandler is a service class used in MODx Revolution for handling files. It abstracts basic file management actions to provide helper methods for file management.
+
+{note}modFileHandler, modFile and modDirectory are still in their infancy stages. Many more methods will be added to them in Revolution 2.2.{note}
+
+h2. Using modFileHandler
+
+The basic idea behind modFileHandler is its &quot;make&quot; method. When passed a path into modFileHandler-&gt;make(), it will return either a modDirectory or modFile object, depending on what was passed inside of it.
+
+For example, a simple snippet that makes a modDirectory object out of the passed &quot;path&quot; property (defaulting to &quot;/www/test/&quot;) and then removes the directory:
+
+{code}
+if (!isset($path)) $path = &#39;/www/test/&#39;;
+
+$modx-&gt;getService(&#39;fileHandler&#39;,&#39;modFileHandler&#39;);
+$directory = $modx-&gt;fileHandler-&gt;make($path);
+if (!is_object($directory) || !($directory instanceof modDirectory)) return &#39;Not a directory!&#39;;
+
+if (!$directory-&gt;remove()) {
+   return &#39;Could not remove directory.&#39;;
+}
+{code}
+
+You can also create modDirectory or modFile objects from non-existent paths. This will allow you to run -&gt;create() on them, allowing you to make new directories or files. For example, to create a new file with the content of &#39;Hello!&#39; at the path &quot;/www/test/test.txt&quot;:
+
+{code}
+$modx-&gt;getService(&#39;fileHandler&#39;,&#39;modFileHandler&#39;);
+$file = $modx-&gt;fileHandler-&gt;make(&#39;/www/test/test.txt&#39;);
+if (!$file-&gt;create(&#39;Hello!&#39;)) {
+   return &#39;File not written.&#39;;
+}
+return &#39;File written.&#39;;
+{code}";}i:1;a:3:{s:2:"id";s:8:"35095194";s:3:"ver";s:1:"1";s:4:"code";s:1708:"\\
+
+h2. What is modFileHandler?
+
+modFileHandler is a service class used in MODx Revolution for handling files. It abstracts basic file management actions to provide helper methods for file management.
+
+{note}modFileHandler, modFile and modDirectory are still in their infancy stages. Many more methods will be added to them in Revolution 2.1{note}
+
+h2. Using modFileHandler
+
+The basic idea behind modFileHandler is its &quot;make&quot; method. When passed a path into modFileHandler-&gt;make(), it will return either a modDirectory or modFile object, depending on what was passed inside of it.
+
+For example, a simple snippet that makes a modDirectory object out of the passed &quot;path&quot; property (defaulting to &quot;/www/test/&quot;) and then removes the directory:
+
+{code}
+if (!isset($path)) $path = &#39;/www/test/&#39;;
+
+$modx-&gt;getService(&#39;fileHandler&#39;,&#39;modFileHandler&#39;);
+$directory = $modx-&gt;fileHandler-&gt;make($path);
+if (!is_object($directory) || !($directory instanceof modDirectory)) return &#39;Not a directory!&#39;;
+
+if (!$directory-&gt;remove()) {
+   return &#39;Could not remove directory.&#39;;
+}
+{code}
+
+You can also create modDirectory or modFile objects from non-existent paths. This will allow you to run -&gt;create() on them, allowing you to make new directories or files. For example, to create a new file with the content of &#39;Hello!&#39; at the path &quot;/www/test/test.txt&quot;:
+
+{code}
+$modx-&gt;getService(&#39;fileHandler&#39;,&#39;modFileHandler&#39;);
+$file = $modx-&gt;fileHandler-&gt;make(&#39;/www/test/test.txt&#39;);
+if (!$file-&gt;create(&#39;Hello!&#39;)) {
+   return &#39;File not written.&#39;;
+}
+return &#39;File written.&#39;;
+{code}";}}}

@@ -1,0 +1,41 @@
+a:5:{s:2:"id";s:8:"35586587";s:4:"info";a:4:{s:6:"Title:";s:34:"Dashboard Widget Type - Inline PHP";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:49:"[revolution20:Dashboard Widget Type - Inline PHP]";}s:6:"parent";s:8:"35586573";s:6:"source";s:627:"The Inline PHP widget acts very similar to the [Snippet Widget|Dashboard Widget Type - Snippet], except it runs the content of the widget as if it were a Snippet.
+
+h2. Usage
+
+Simply place your PHP code in the content panel, and return the output of your widget.
+
+For example, this will display &quot;Hello, World!&quot;:
+
+{code}&lt;?php
+return &#39;Hello, World!&#39;;{code}
+
+A few notes about using this:
+
+* Do not &quot;echo&quot; content, as it will be ignored
+* Do not use $modx-&gt;resource in your widget, as there is no active resource for the dashboard
+
+h2. See Also
+
+{pagetree:root=Dashboard Widget Types}
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35586587";s:3:"ver";s:1:"1";s:4:"code";s:627:"The Inline PHP widget acts very similar to the [Snippet Widget|Dashboard Widget Type - Snippet], except it runs the content of the widget as if it were a Snippet.
+
+h2. Usage
+
+Simply place your PHP code in the content panel, and return the output of your widget.
+
+For example, this will display &quot;Hello, World!&quot;:
+
+{code}&lt;?php
+return &#39;Hello, World!&#39;;{code}
+
+A few notes about using this:
+
+* Do not &quot;echo&quot; content, as it will be ignored
+* Do not use $modx-&gt;resource in your widget, as there is no active resource for the dashboard
+
+h2. See Also
+
+{pagetree:root=Dashboard Widget Types}
+
+{scrollbar}";}}}

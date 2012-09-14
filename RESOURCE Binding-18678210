@@ -1,0 +1,47 @@
+a:5:{s:2:"id";s:8:"18678210";s:4:"info";a:4:{s:6:"Title:";s:16:"RESOURCE Binding";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:31:"[revolution20:RESOURCE Binding]";}s:6:"parent";s:8:"18678211";s:6:"source";s:475:"\\
+
+h2. What is the @RESOURCE Binding?
+
+The @RESOURCE Binding returns the parsed contents of any specified Resource.
+
+h2. Syntax
+
+{code}@RESOURCE resource_id{code}
+
+Binds the variable to a Resource, where resource_id is the ID of the Resource. The returned value is a string containing the parsed content of the Resource.
+
+h2. Usage
+
+To output the contents of a Resource with ID of 12:
+
+{code}@RESOURCE 12{code}
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678210";s:3:"ver";s:1:"1";s:4:"code";s:475:"\\
+
+h2. What is the @RESOURCE Binding?
+
+The @RESOURCE Binding returns the parsed contents of any specified Resource.
+
+h2. Syntax
+
+{code}@RESOURCE resource_id{code}
+
+Binds the variable to a Resource, where resource_id is the ID of the Resource. The returned value is a string containing the parsed content of the Resource.
+
+h2. Usage
+
+To output the contents of a Resource with ID of 12:
+
+{code}@RESOURCE 12{code}
+
+h2. See Also
+
+* [Template Variables]
+* [Bindings]
+
+{scrollbar}";}}}

@@ -1,0 +1,1089 @@
+a:5:{s:2:"id";s:8:"18678339";s:4:"info";a:4:{s:6:"Title:";s:5:"Users";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:20:"[revolution20:Users]";}s:6:"parent";s:8:"18678092";s:6:"source";s:4790:"\\
+
+{toc}
+
+h2. What is a User?
+
+A User is simply a representation of a login in MODx Revolution.
+
+
+Users can also be assigned to User Groups, which can have [ACLs] attached to them to provide Access Controls.
+
+h2. User Settings
+
+User Settings in MODx Revolution will automatically override for that user any System or Context settings with the same key. They can also be completely unique settings as well. The order of inheritance for Settings is:
+
+{quote}System Settings \-&gt; Context Settings \-&gt; User Settings{quote}
+
+To edit the user settings, navigate to *Security \-&gt; Manage Users \-&gt; Update User (_right-click_) \-&gt; Settings (_tab_)*
+
+{note}
+You can change user-specific settings only _after_ you&#39;ve created the user.  The &quot;Settings&quot; tab is not visible when you first create the user.
+{note}
+
+h2. Users in the Front-End
+
+When a user is logged into the frontend of your site, their username and ID can be accessed by the following [Properties|Properties and Property Sets]:
+
+{code}
+[[+modx.user.id]] - Prints the ID
+[[+modx.user.username]] - Prints the username
+{code}
+
+If a user is not logged in, ID will be blank, and Username will be &quot;(anonymous)&quot;.  
+
+{note:title=Remember}
+Keep in mind that confusing caveat: just because you have logged into the _manager_ does not mean that you are logged into the _web_ front-end.  The user-specific settings and the [xPDO20:getOption] API method obeys this same rule, so if you&#39;re not logged in, then the *System Settings \-&gt; Context Settings \-&gt; User Settings* cannot fully apply.
+{note}
+
+h2. User Fields
+
+Users contain the following fields:
+
+|| Name || Description ||
+| id | The ID of the user. |
+| username | The username of the user. |
+| password | The user&#39;s encrypted password. |
+| active | Either 1 or 0. If not active, the user will not be able to log in. |
+| remote_key | A remote user Key used by remote authentication apps. |
+| remote_data | A JSON array of data used by remote authentication apps. |
+
+Users also have a Profile attached to them. It contains the following fields:
+
+{table-plus}
+
+
+
+
+|| Name || Description ||
+| internalKey | The ID of the user. |
+| fullname | The full name of the user. |
+| email | The email of the user. |
+| phone | The phone number. |
+| mobilephone | The cellphone number. |
+| fax | The fax number. |
+| blocked | Either 1 or 0. If blocked is set to true, the user will not be able to log in. |
+| blockeduntil | A timestamp that, when set, will prevent the user from logging in until this date. |
+| blockedafter | A timestamp that, when set, will prevent the user from logging in after this date. |
+| logincount | The number of logins for this user. |
+| lastlogin | The last time the user logged in. |
+| thislogin | The time the user logged in in their current session. |
+| failedlogincount | The number of times the user has failed to log in since last logging in. |
+| sessionid | The User&#39;s session ID that maps to the session table. |
+| dob | The date of birth. |
+| gender | 0 for neither, 1 for male and 2 for female. |
+| address | The physical address. |
+| country | The country of the user. |
+| city | The city of the user. |
+| zip | The zip or postal code for the user. |
+| state | The physical state or province of the user. |
+| photo | An optional field for a photo. Not used in the UI. |
+| comment | An optional comment field for comments on the User. |
+| website | The website of the user. |
+| extended | A JSON array that can be used to store extra fields for the User. |
+{table-plus}
+
+
+h2. Grabbing the User via the API
+
+The current user can be retrieved in the API via the $modx-&gt;user reference. For example, this snippet outputs the username of the user:
+
+{code}return $modx-&gt;user-&gt;get(&#39;username&#39;);{code}
+
+Note that to grab Profile fields, you&#39;ll need to first get the modUserProfile object via the Profile alias. For example, this snippet grabs the email of the user and returns it:
+
+{code}
+$profile = $modx-&gt;user-&gt;getOne(&#39;Profile&#39;);
+return $profile ? $profile-&gt;get(&#39;email&#39;) : &#39;&#39;;
+{code}
+
+If the User is not logged in, $modx-&gt;user will still be available as an object, but will return 0 as the ID and (Anonymous) as the username.
+
+h3. Using Extended Fields
+
+Values in the extended field return as an array. They can be manipulated like so:
+
+{code}
+/* get the extended field named &quot;color&quot;: */
+$fields = $profile-&gt;get(&#39;extended&#39;);
+$color = $fields[&#39;color&#39;];
+
+/* set the color field to red */
+$fields = $profile-&gt;get(&#39;extended&#39;);
+$fields[&#39;color&#39;] = &#39;red&#39;;
+$profile-&gt;set(&#39;extended&#39;,$fields);
+$profile-&gt;save();
+{code}
+
+h2. See Also
+
+{pagetree:root=Security}
+
+
+[revolution20:Extending modUser]
+
+{scrollbar}";s:8:"versions";a:9:{i:0;a:3:{s:2:"id";s:8:"18678339";s:3:"ver";s:1:"9";s:4:"code";s:4790:"\\
+
+{toc}
+
+h2. What is a User?
+
+A User is simply a representation of a login in MODx Revolution.
+
+
+Users can also be assigned to User Groups, which can have [ACLs] attached to them to provide Access Controls.
+
+h2. User Settings
+
+User Settings in MODx Revolution will automatically override for that user any System or Context settings with the same key. They can also be completely unique settings as well. The order of inheritance for Settings is:
+
+{quote}System Settings \-&gt; Context Settings \-&gt; User Settings{quote}
+
+To edit the user settings, navigate to *Security \-&gt; Manage Users \-&gt; Update User (_right-click_) \-&gt; Settings (_tab_)*
+
+{note}
+You can change user-specific settings only _after_ you&#39;ve created the user.  The &quot;Settings&quot; tab is not visible when you first create the user.
+{note}
+
+h2. Users in the Front-End
+
+When a user is logged into the frontend of your site, their username and ID can be accessed by the following [Properties|Properties and Property Sets]:
+
+{code}
+[[+modx.user.id]] - Prints the ID
+[[+modx.user.username]] - Prints the username
+{code}
+
+If a user is not logged in, ID will be blank, and Username will be &quot;(anonymous)&quot;.  
+
+{note:title=Remember}
+Keep in mind that confusing caveat: just because you have logged into the _manager_ does not mean that you are logged into the _web_ front-end.  The user-specific settings and the [xPDO20:getOption] API method obeys this same rule, so if you&#39;re not logged in, then the *System Settings \-&gt; Context Settings \-&gt; User Settings* cannot fully apply.
+{note}
+
+h2. User Fields
+
+Users contain the following fields:
+
+|| Name || Description ||
+| id | The ID of the user. |
+| username | The username of the user. |
+| password | The user&#39;s encrypted password. |
+| active | Either 1 or 0. If not active, the user will not be able to log in. |
+| remote_key | A remote user Key used by remote authentication apps. |
+| remote_data | A JSON array of data used by remote authentication apps. |
+
+Users also have a Profile attached to them. It contains the following fields:
+
+{table-plus}
+
+
+
+
+|| Name || Description ||
+| internalKey | The ID of the user. |
+| fullname | The full name of the user. |
+| email | The email of the user. |
+| phone | The phone number. |
+| mobilephone | The cellphone number. |
+| fax | The fax number. |
+| blocked | Either 1 or 0. If blocked is set to true, the user will not be able to log in. |
+| blockeduntil | A timestamp that, when set, will prevent the user from logging in until this date. |
+| blockedafter | A timestamp that, when set, will prevent the user from logging in after this date. |
+| logincount | The number of logins for this user. |
+| lastlogin | The last time the user logged in. |
+| thislogin | The time the user logged in in their current session. |
+| failedlogincount | The number of times the user has failed to log in since last logging in. |
+| sessionid | The User&#39;s session ID that maps to the session table. |
+| dob | The date of birth. |
+| gender | 0 for neither, 1 for male and 2 for female. |
+| address | The physical address. |
+| country | The country of the user. |
+| city | The city of the user. |
+| zip | The zip or postal code for the user. |
+| state | The physical state or province of the user. |
+| photo | An optional field for a photo. Not used in the UI. |
+| comment | An optional comment field for comments on the User. |
+| website | The website of the user. |
+| extended | A JSON array that can be used to store extra fields for the User. |
+{table-plus}
+
+
+h2. Grabbing the User via the API
+
+The current user can be retrieved in the API via the $modx-&gt;user reference. For example, this snippet outputs the username of the user:
+
+{code}return $modx-&gt;user-&gt;get(&#39;username&#39;);{code}
+
+Note that to grab Profile fields, you&#39;ll need to first get the modUserProfile object via the Profile alias. For example, this snippet grabs the email of the user and returns it:
+
+{code}
+$profile = $modx-&gt;user-&gt;getOne(&#39;Profile&#39;);
+return $profile ? $profile-&gt;get(&#39;email&#39;) : &#39;&#39;;
+{code}
+
+If the User is not logged in, $modx-&gt;user will still be available as an object, but will return 0 as the ID and (Anonymous) as the username.
+
+h3. Using Extended Fields
+
+Values in the extended field return as an array. They can be manipulated like so:
+
+{code}
+/* get the extended field named &quot;color&quot;: */
+$fields = $profile-&gt;get(&#39;extended&#39;);
+$color = $fields[&#39;color&#39;];
+
+/* set the color field to red */
+$fields = $profile-&gt;get(&#39;extended&#39;);
+$fields[&#39;color&#39;] = &#39;red&#39;;
+$profile-&gt;set(&#39;extended&#39;,$fields);
+$profile-&gt;save();
+{code}
+
+h2. See Also
+
+{pagetree:root=Security}
+
+
+[revolution20:Extending modUser]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"37683208";s:3:"ver";s:1:"8";s:4:"code";s:4488:"\\
+
+{toc}
+
+h2. What is a User?
+
+A User is simply a representation of a login in MODx Revolution.
+
+
+Users can also be assigned to User Groups, which can have [ACLs] attached to them to provide Access Controls.
+
+h2. User Settings
+
+User Settings in MODx Revolution will automatically override for that user any System or Context settings with the same key. They can also be completely unique settings as well. The order of inheritance for Settings is:
+
+{quote}System Settings \-&gt; Context Settings \-&gt; User Settings{quote}
+
+h2. Users in the Front-End
+
+When a user is logged into the frontend of your site, their username and ID can be accessed by the following [Properties|Properties and Property Sets]:
+
+{code}
+[[+modx.user.id]] - Prints the ID
+[[+modx.user.username]] - Prints the username
+{code}
+
+If a user is not logged in, ID will be blank, and Username will be &quot;(anonymous)&quot;.  
+
+{note:title=Remember}
+Keep in mind that confusing caveat: just because you have logged into the _manager_ does not mean that you are logged into the _web_ front-end.  The user-specific settings and the [xPDO20:getOption] API method obeys this same rule, so if you&#39;re not logged in, then the *System Settings \-&gt; Context Settings \-&gt; User Settings* cannot fully apply.
+{note}
+
+h2. User Fields
+
+Users contain the following fields:
+
+|| Name || Description ||
+| id | The ID of the user. |
+| username | The username of the user. |
+| password | The user&#39;s encrypted password. |
+| active | Either 1 or 0. If not active, the user will not be able to log in. |
+| remote_key | A remote user Key used by remote authentication apps. |
+| remote_data | A JSON array of data used by remote authentication apps. |
+
+Users also have a Profile attached to them. It contains the following fields:
+
+{table-plus}
+
+
+
+
+|| Name || Description ||
+| internalKey | The ID of the user. |
+| fullname | The full name of the user. |
+| email | The email of the user. |
+| phone | The phone number. |
+| mobilephone | The cellphone number. |
+| fax | The fax number. |
+| blocked | Either 1 or 0. If blocked is set to true, the user will not be able to log in. |
+| blockeduntil | A timestamp that, when set, will prevent the user from logging in until this date. |
+| blockedafter | A timestamp that, when set, will prevent the user from logging in after this date. |
+| logincount | The number of logins for this user. |
+| lastlogin | The last time the user logged in. |
+| thislogin | The time the user logged in in their current session. |
+| failedlogincount | The number of times the user has failed to log in since last logging in. |
+| sessionid | The User&#39;s session ID that maps to the session table. |
+| dob | The date of birth. |
+| gender | 0 for neither, 1 for male and 2 for female. |
+| address | The physical address. |
+| country | The country of the user. |
+| city | The city of the user. |
+| zip | The zip or postal code for the user. |
+| state | The physical state or province of the user. |
+| photo | An optional field for a photo. Not used in the UI. |
+| comment | An optional comment field for comments on the User. |
+| website | The website of the user. |
+| extended | A JSON array that can be used to store extra fields for the User. |
+{table-plus}
+
+
+h2. Grabbing the User via the API
+
+The current user can be retrieved in the API via the $modx-&gt;user reference. For example, this snippet outputs the username of the user:
+
+{code}return $modx-&gt;user-&gt;get(&#39;username&#39;);{code}
+
+Note that to grab Profile fields, you&#39;ll need to first get the modUserProfile object via the Profile alias. For example, this snippet grabs the email of the user and returns it:
+
+{code}
+$profile = $modx-&gt;user-&gt;getOne(&#39;Profile&#39;);
+return $profile ? $profile-&gt;get(&#39;email&#39;) : &#39;&#39;;
+{code}
+
+If the User is not logged in, $modx-&gt;user will still be available as an object, but will return 0 as the ID and (Anonymous) as the username.
+
+h3. Using Extended Fields
+
+Values in the extended field return as an array. They can be manipulated like so:
+
+{code}
+/* get the extended field named &quot;color&quot;: */
+$fields = $profile-&gt;get(&#39;extended&#39;);
+$color = $fields[&#39;color&#39;];
+
+/* set the color field to red */
+$fields = $profile-&gt;get(&#39;extended&#39;);
+$fields[&#39;color&#39;] = &#39;red&#39;;
+$profile-&gt;set(&#39;extended&#39;,$fields);
+$profile-&gt;save();
+{code}
+
+h2. See Also
+
+{pagetree:root=Security}
+
+
+[revolution20:Extending modUser]
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"37126180";s:3:"ver";s:1:"7";s:4:"code";s:4481:"\\
+
+{toc}
+
+h2. What is a User?
+
+A User is simply a representation of a login in MODx Revolution.
+
+
+Users can also be assigned to User Groups, which can have [ACLs] attached to them to provide Access Controls.
+
+h2. User Settings
+
+User Settings in MODx Revolution will automatically override for that user any System or Context settings with the same key. They can also be completely unique settings as well. The order of inheritance for Settings is:
+
+{quote}System Settings \-&gt; Context Settings \-&gt; User Settings{quote}
+
+h2. Users in the Front-End
+
+When a user is logged into the frontend of your site, their username and ID can be accessed by the following [Properties|Properties and Property Sets]:
+
+{code}
+[[+modx.user.id]] - Prints the ID
+[[+modx.user.username]] - Prints the username
+{code}
+
+If a user is not logged in, ID will be blank, and Username will be &quot;(anonymous)&quot;.  
+
+{note:title=Remember}
+Keep in mind that confusing caveat: just because you have logged into the _manager_ does not mean that you are logged into the _web_ front-end.  The user-specific settings and the [getOption] API method obeys this same rule, so if you&#39;re not logged in, then the *System Settings \-&gt; Context Settings \-&gt; User Settings* cannot fully apply.
+{note}
+
+h2. User Fields
+
+Users contain the following fields:
+
+|| Name || Description ||
+| id | The ID of the user. |
+| username | The username of the user. |
+| password | The user&#39;s encrypted password. |
+| active | Either 1 or 0. If not active, the user will not be able to log in. |
+| remote_key | A remote user Key used by remote authentication apps. |
+| remote_data | A JSON array of data used by remote authentication apps. |
+
+Users also have a Profile attached to them. It contains the following fields:
+
+{table-plus}
+
+
+
+
+|| Name || Description ||
+| internalKey | The ID of the user. |
+| fullname | The full name of the user. |
+| email | The email of the user. |
+| phone | The phone number. |
+| mobilephone | The cellphone number. |
+| fax | The fax number. |
+| blocked | Either 1 or 0. If blocked is set to true, the user will not be able to log in. |
+| blockeduntil | A timestamp that, when set, will prevent the user from logging in until this date. |
+| blockedafter | A timestamp that, when set, will prevent the user from logging in after this date. |
+| logincount | The number of logins for this user. |
+| lastlogin | The last time the user logged in. |
+| thislogin | The time the user logged in in their current session. |
+| failedlogincount | The number of times the user has failed to log in since last logging in. |
+| sessionid | The User&#39;s session ID that maps to the session table. |
+| dob | The date of birth. |
+| gender | 0 for neither, 1 for male and 2 for female. |
+| address | The physical address. |
+| country | The country of the user. |
+| city | The city of the user. |
+| zip | The zip or postal code for the user. |
+| state | The physical state or province of the user. |
+| photo | An optional field for a photo. Not used in the UI. |
+| comment | An optional comment field for comments on the User. |
+| website | The website of the user. |
+| extended | A JSON array that can be used to store extra fields for the User. |
+{table-plus}
+
+
+h2. Grabbing the User via the API
+
+The current user can be retrieved in the API via the $modx-&gt;user reference. For example, this snippet outputs the username of the user:
+
+{code}return $modx-&gt;user-&gt;get(&#39;username&#39;);{code}
+
+Note that to grab Profile fields, you&#39;ll need to first get the modUserProfile object via the Profile alias. For example, this snippet grabs the email of the user and returns it:
+
+{code}
+$profile = $modx-&gt;user-&gt;getOne(&#39;Profile&#39;);
+return $profile ? $profile-&gt;get(&#39;email&#39;) : &#39;&#39;;
+{code}
+
+If the User is not logged in, $modx-&gt;user will still be available as an object, but will return 0 as the ID and (Anonymous) as the username.
+
+h3. Using Extended Fields
+
+Values in the extended field return as an array. They can be manipulated like so:
+
+{code}
+/* get the extended field named &quot;color&quot;: */
+$fields = $profile-&gt;get(&#39;extended&#39;);
+$color = $fields[&#39;color&#39;];
+
+/* set the color field to red */
+$fields = $profile-&gt;get(&#39;extended&#39;);
+$fields[&#39;color&#39;] = &#39;red&#39;;
+$profile-&gt;set(&#39;extended&#39;,$fields);
+$profile-&gt;save();
+{code}
+
+h2. See Also
+
+{pagetree:root=Security}
+
+
+[revolution20:Extending modUser]
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"37126178";s:3:"ver";s:1:"6";s:4:"code";s:4100:"\\
+
+{toc}
+
+h2. What is a User?
+
+A User is simply a representation of a login in MODx Revolution.
+
+
+Users can also be assigned to User Groups, which can have [ACLs] attached to them to provide Access Controls.
+
+h2. User Settings
+
+User Settings in MODx Revolution will automatically override for that user any System or Context settings with the same key. They can also be completely unique settings as well. The order of inheritance for Settings is:
+
+{quote}System Settings \-&gt; Context Settings \-&gt; User Settings{quote}
+
+h2. Users in the Front-End
+
+When a user is logged into the frontend of your site, their username and ID can be accessed by the following [Properties|Properties and Property Sets]:
+
+{code}
+[[+modx.user.id]] - Prints the ID
+[[+modx.user.username]] - Prints the username
+{code}
+
+If a user is not logged in, ID will be blank, and Username will be &quot;(anonymous)&quot;.
+
+h2. User Fields
+
+Users contain the following fields:
+
+|| Name || Description ||
+| id | The ID of the user. |
+| username | The username of the user. |
+| password | The user&#39;s encrypted password. |
+| active | Either 1 or 0. If not active, the user will not be able to log in. |
+| remote_key | A remote user Key used by remote authentication apps. |
+| remote_data | A JSON array of data used by remote authentication apps. |
+
+Users also have a Profile attached to them. It contains the following fields:
+
+{table-plus}
+
+
+
+
+|| Name || Description ||
+| internalKey | The ID of the user. |
+| fullname | The full name of the user. |
+| email | The email of the user. |
+| phone | The phone number. |
+| mobilephone | The cellphone number. |
+| fax | The fax number. |
+| blocked | Either 1 or 0. If blocked is set to true, the user will not be able to log in. |
+| blockeduntil | A timestamp that, when set, will prevent the user from logging in until this date. |
+| blockedafter | A timestamp that, when set, will prevent the user from logging in after this date. |
+| logincount | The number of logins for this user. |
+| lastlogin | The last time the user logged in. |
+| thislogin | The time the user logged in in their current session. |
+| failedlogincount | The number of times the user has failed to log in since last logging in. |
+| sessionid | The User&#39;s session ID that maps to the session table. |
+| dob | The date of birth. |
+| gender | 0 for neither, 1 for male and 2 for female. |
+| address | The physical address. |
+| country | The country of the user. |
+| city | The city of the user. |
+| zip | The zip or postal code for the user. |
+| state | The physical state or province of the user. |
+| photo | An optional field for a photo. Not used in the UI. |
+| comment | An optional comment field for comments on the User. |
+| website | The website of the user. |
+| extended | A JSON array that can be used to store extra fields for the User. |
+{table-plus}
+
+
+h2. Grabbing the User via the API
+
+The current user can be retrieved in the API via the $modx-&gt;user reference. For example, this snippet outputs the username of the user:
+
+{code}return $modx-&gt;user-&gt;get(&#39;username&#39;);{code}
+
+Note that to grab Profile fields, you&#39;ll need to first get the modUserProfile object via the Profile alias. For example, this snippet grabs the email of the user and returns it:
+
+{code}
+$profile = $modx-&gt;user-&gt;getOne(&#39;Profile&#39;);
+return $profile ? $profile-&gt;get(&#39;email&#39;) : &#39;&#39;;
+{code}
+
+If the User is not logged in, $modx-&gt;user will still be available as an object, but will return 0 as the ID and (Anonymous) as the username.
+
+h3. Using Extended Fields
+
+Values in the extended field return as an array. They can be manipulated like so:
+
+{code}
+/* get the extended field named &quot;color&quot;: */
+$fields = $profile-&gt;get(&#39;extended&#39;);
+$color = $fields[&#39;color&#39;];
+
+/* set the color field to red */
+$fields = $profile-&gt;get(&#39;extended&#39;);
+$fields[&#39;color&#39;] = &#39;red&#39;;
+$profile-&gt;set(&#39;extended&#39;,$fields);
+$profile-&gt;save();
+{code}
+
+h2. See Also
+
+{pagetree:root=Security}
+
+
+[revolution20:Extending modUser]
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"35586337";s:3:"ver";s:1:"5";s:4:"code";s:4096:"\\
+
+{toc}
+
+h2. What is a User?
+
+A User is simply a representation of a login in MODx Revolution.
+
+
+Users can also be assigned to User Groups, which can have [ACLs] attached to them to provide Access Controls.
+
+h2. User Settings
+
+User Settings in MODx Revolution will automatically override for that user any System or Context settings with the same key. They can also be completely unique settings as well. The order of inheritance for Settings is:
+
+{quote}System Settings \-&gt; Context Settings \-&gt; User Settings{quote}
+
+h2. Users in the Front-End
+
+When a user is logged into the frontend of your site, their username and ID can be accessed by the following [Properties|Properties and Property Sets]:
+
+{code}
+[[+modx.user.id]] - Prints the ID
+[[+modx.user.username]] - Prints the username
+{code}
+
+If a user is not logged in, ID will be blank, and Username will be &quot;(anonymous)&quot;.
+
+h2. User Fields
+
+Users contain the following fields:
+
+|| Name || Description ||
+| id | The ID of the user. |
+| username | The username of the user. |
+| password | The user&#39;s encrypted password. |
+| active | Either 1 or 0. If not active, the user will not be able to log in. |
+| remote_key | A remote user Key used by remote authentication apps. |
+| remote_data | A JSON array of data used by remote authentication apps. |
+
+Users also have a Profile attached to them. It contains the following fields:
+
+{table-plus}
+
+
+
+|| Name || Description ||
+| internalKey | The ID of the user. |
+| fullname | The full name of the user. |
+| email | The email of the user. |
+| phone | The phone number. |
+| mobilephone | The cellphone number. |
+| fax | The fax number. |
+| blocked | Either 1 or 0. If blocked is set to true, the user will not be able to log in. |
+| blockeduntil | A timestamp that, when set, will prevent the user from logging in until this date. |
+| blockedafter | A timestamp that, when set, will prevent the user from logging in after this date. |
+| logincount | The number of logins for this user. |
+| lastlogin | The last time the user logged in. |
+| thislogin | The time the user logged in in their current session. |
+| failedlogincount | The number of times the user has failed to log in since last logging in. |
+| sessionid | The User&#39;s session ID that maps to the session table. |
+| dob | The date of birth. |
+| gender | 0 for neither, 1 for male and 2 for female. |
+| address | The physical address. |
+| country | The country of the user. |
+| city | The city of the user. |
+| zip | The zip or postal code for the user. |
+| state | The physical state or province of the user. |
+| photo | An optional field for a photo. Not used in the UI. |
+| comment | An optional comment field for comments on the User. |
+| website | The website of the user. |
+| extended | A JSON array that can be used to store extra fields for the User. |
+{table-plus}
+
+
+h2. Grabbing the User via the API
+
+The current user can be gotten in the API via the $modx-&gt;user reference. For example, this snippet outputs the username of the user:
+
+{code}return $modx-&gt;user-&gt;get(&#39;username&#39;);{code}
+
+Note that to grab Profile fields, you&#39;ll need to first get the modUserProfile object via the Profile alias. For example, this snippet grabs the email of the user and returns it:
+
+{code}
+$profile = $modx-&gt;user-&gt;getOne(&#39;Profile&#39;);
+return $profile ? $profile-&gt;get(&#39;email&#39;) : &#39;&#39;;
+{code}
+
+If the User is not logged in, $modx-&gt;user will still be available as an object, but will return 0 as the ID and (Anonymous) as the username.
+
+h3. Using Extended Fields
+
+Values in the extended field return as an array. They can be manipulated like so:
+
+{code}
+/* get the extended field named &quot;color&quot;: */
+$fields = $profile-&gt;get(&#39;extended&#39;);
+$color = $fields[&#39;color&#39;];
+
+/* set the color field to red */
+$fields = $profile-&gt;get(&#39;extended&#39;);
+$fields[&#39;color&#39;] = &#39;red&#39;;
+$profile-&gt;set(&#39;extended&#39;,$fields);
+$profile-&gt;save();
+{code}
+
+h2. See Also
+
+{pagetree:root=Security}
+
+
+[revolution20:Extending modUser]
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"35095037";s:3:"ver";s:1:"4";s:4:"code";s:3643:"\\
+
+{toc}
+
+h2. What is a User?
+
+A User is simply a representation of a login in MODx Revolution.
+
+
+Users can also be assigned to User Groups, which can have [ACLs] attached to them to provide Access Controls.
+
+h2. User Settings
+
+User Settings in MODx Revolution will automatically override for that user any System or Context settings with the same key. They can also be completely unique settings as well. The order of inheritance for Settings is:
+
+{quote}System Settings \-&gt; Context Settings \-&gt; User Settings{quote}
+
+h2. Users in the Front-End
+
+When a user is logged into the frontend of your site, their username and ID can be accessed by the following [Properties|Properties and Property Sets]:
+
+{code}
+[[+modx.user.id]] - Prints the ID
+[[+modx.user.username]] - Prints the username
+{code}
+
+If a user is not logged in, ID will be blank, and Username will be &quot;(anonymous)&quot;.
+
+h2. User Fields
+
+Users contain the following fields:
+
+|| Name || Description ||
+| id | The ID of the user. |
+| username | The username of the user. |
+| password | The user&#39;s encrypted password. |
+| active | Either 1 or 0. If not active, the user will not be able to log in. |
+| remote_key | A remote user Key used by remote authentication apps. |
+| remote_data | A JSON array of data used by remote authentication apps. |
+
+Users also have a Profile attached to them. It contains the following fields:
+
+{table-plus}
+
+
+
+|| Name || Description ||
+| internalKey | The ID of the user. |
+| fullname | The full name of the user. |
+| email | The email of the user. |
+| phone | The phone number. |
+| mobilephone | The cellphone number. |
+| fax | The fax number. |
+| blocked | Either 1 or 0. If blocked is set to true, the user will not be able to log in. |
+| blockeduntil | A timestamp that, when set, will prevent the user from logging in until this date. |
+| blockedafter | A timestamp that, when set, will prevent the user from logging in after this date. |
+| logincount | The number of logins for this user. |
+| lastlogin | The last time the user logged in. |
+| thislogin | The time the user logged in in their current session. |
+| failedlogincount | The number of times the user has failed to log in since last logging in. |
+| sessionid | The User&#39;s session ID that maps to the session table. |
+| dob | The date of birth. |
+| gender | 0 for neither, 1 for male and 2 for female. |
+| address | The physical address. |
+| country | The country of the user. |
+| city | The city of the user. |
+| zip | The zip or postal code for the user. |
+| state | The physical state or province of the user. |
+| photo | An optional field for a photo. Not used in the UI. |
+| comment | An optional comment field for comments on the User. |
+| website | The website of the user. |
+| extended | A JSON array that can be used to store extra fields for the User. |
+{table-plus}
+
+
+h2. Grabbing the User via the API
+
+The current user can be gotten in the API via the $modx-&gt;user reference. For example, this snippet outputs the username of the user:
+
+{code}return $modx-&gt;user-&gt;get(&#39;username&#39;);{code}
+
+Note that to grab Profile fields, you&#39;ll need to first get the modUserProfile object via the Profile alias. For example, this snippet grabs the email of the user and returns it:
+
+{code}
+$profile = $modx-&gt;user-&gt;getOne(&#39;Profile&#39;);
+return $profile ? $profile-&gt;get(&#39;email&#39;) : &#39;&#39;;
+{code}
+
+If the User is not logged in, $modx-&gt;user will still be available as an object, but will return 0 as the ID and (Anonymous) as the username.
+
+h2. See Also
+
+{pagetree:root=Security}
+
+
+[revolution20:Extending modUser]
+
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"33226783";s:3:"ver";s:1:"3";s:4:"code";s:3659:"\\
+
+{toc}
+
+h2. What is a User?
+
+A User is simply a representation of a login in MODx Revolution.
+
+
+Users can also be assigned to User Groups, which can have [ACLs] attached to them to provide Access Controls.
+
+h2. User Settings
+
+User Settings in MODx Revolution will automatically override for that user any System or Context settings with the same key. They can also be completely unique settings as well. The order of inheritance for Settings is:
+
+{quote}System Settings \-&gt; Context Settings \-&gt; User Settings{quote}
+
+h2. Users in the Front-End
+
+When a user is logged into the frontend of your site, their username and ID can be accessed by the following [Properties|Properties and Property Sets]:
+
+{code}
+[[+modx.user.id]] - Prints the ID
+[[+modx.user.username]] - Prints the username
+{code}
+
+If a user is not logged in, ID will be blank, and Username will be &quot;(anonymous)&quot;.
+
+h2. User Fields
+
+Users contain the following fields:
+
+|| Name || Description ||
+| id | The ID of the user. |
+| username | The username of the user. |
+| password | The user&#39;s encrypted password. |
+| active | Either 1 or 0. If not active, the user will not be able to log in. |
+| remote_key | A remote user Key used by remote authentication apps. |
+| remote_data | A JSON array of data used by remote authentication apps. |
+
+Users also have a Profile attached to them. It contains the following fields:
+
+{table-plus}
+
+
+|| Name || Description ||
+| internalKey | The ID of the user. |
+| fullname | The full name of the user. |
+| email | The email of the user. |
+| phone | The phone number. |
+| mobilephone | The cellphone number. |
+| fax | The fax number. |
+| blocked | Either 1 or 0. If blocked is set to true, the user will not be able to log in. |
+| blockeduntil | A timestamp that, when set, will prevent the user from logging in until this date. |
+| blockedafter | A timestamp that, when set, will prevent the user from logging in after this date. |
+| logincount | The number of logins for this user. |
+| lastlogin | The last time the user logged in. |
+| thislogin | The time the user logged in in their current session. |
+| failedlogincount | The number of times the user has failed to log in since last logging in. |
+| sessionid | The User&#39;s session ID that maps to the session table. |
+| dob | The date of birth. |
+| gender | 0 for neither, 1 for male and 2 for female. |
+| address | The physical address. |
+| country | The country of the user. |
+| city | The city of the user. |
+| zip | The zip or postal code for the user. |
+| state | The physical state or province of the user. |
+| photo | An optional field for a photo. Not used in the UI. |
+| comment | An optional comment field for comments on the User. |
+| website | The website of the user. |
+| extended | A JSON array that can be used to store extra fields for the User. |
+{table-plus}
+
+
+h2. Grabbing the User via the API
+
+The current user can be gotten in the API via the $modx-&gt;user reference. For example, this snippet outputs the username of the user:
+
+{code}return $modx-&gt;user-&gt;get(&#39;username&#39;);{code}
+
+Note that to grab Profile fields, you&#39;ll need to first get the modUserProfile object via the Profile alias. For example, this snippet grabs the email of the user and returns it:
+
+{code}
+$profile = $modx-&gt;user-&gt;getOne(&#39;Profile&#39;);
+return $profile ? $profile-&gt;get(&#39;email&#39;) : &#39;&#39;;
+{code}
+
+If the User is not logged in, $modx-&gt;user will still be available as an object, but will return 0 as the ID and (Anonymous) as the username.
+
+h2. See Also
+
+{pagetree:root=Security}
+
+
+Extending modUser
+{scrollbar}[|revolution20:Extending modUser]";}i:7;a:3:{s:2:"id";s:8:"33226781";s:3:"ver";s:1:"2";s:4:"code";s:3649:"\\
+
+{toc}
+
+h2. What is a User?
+
+A User is simply a representation of a login in MODx Revolution.
+
+
+Users can also be assigned to User Groups, which can have [ACLs] attached to them to provide Access Controls.
+
+h2. User Settings
+
+User Settings in MODx Revolution will automatically override for that user any System or Context settings with the same key. They can also be completely unique settings as well. The order of inheritance for Settings is:
+
+{quote}System Settings \-&gt; Context Settings \-&gt; User Settings{quote}
+
+h2. Users in the Front-End
+
+When a user is logged into the frontend of your site, their username and ID can be accessed by the following [Properties|Properties and Property Sets]:
+
+{code}
+[[+modx.user.id]] - Prints the ID
+[[+modx.user.username]] - Prints the username
+{code}
+
+If a user is not logged in, ID will be blank, and Username will be &quot;(anonymous)&quot;.
+
+h2. User Fields
+
+Users contain the following fields:
+
+|| Name || Description ||
+| id | The ID of the user. |
+| username | The username of the user. |
+| password | The user&#39;s encrypted password. |
+| active | Either 1 or 0. If not active, the user will not be able to log in. |
+| remote_key | A remote user Key used by remote authentication apps. |
+| remote_data | A JSON array of data used by remote authentication apps. |
+
+Users also have a Profile attached to them. It contains the following fields:
+
+{table-plus}
+
+|| Name || Description ||
+| internalKey | The ID of the user. |
+| fullname | The full name of the user. |
+| email | The email of the user. |
+| phone | The phone number. |
+| mobilephone | The cellphone number. |
+| fax | The fax number. |
+| blocked | Either 1 or 0. If blocked is set to true, the user will not be able to log in. |
+| blockeduntil | A timestamp that, when set, will prevent the user from logging in until this date. |
+| blockedafter | A timestamp that, when set, will prevent the user from logging in after this date. |
+| logincount | The number of logins for this user. |
+| lastlogin | The last time the user logged in. |
+| thislogin | The time the user logged in in their current session. |
+| failedlogincount | The number of times the user has failed to log in since last logging in. |
+| sessionid | The User&#39;s session ID that maps to the session table. |
+| dob | The date of birth. |
+| gender | 0 for neither, 1 for male and 2 for female. |
+| address | The physical address. |
+| country | The country of the user. |
+| city | The city of the user. |
+| zip | The zip or postal code for the user. |
+| state | The physical state or province of the user. |
+| photo | An optional field for a photo. Not used in the UI. |
+| comment | An optional comment field for comments on the User. |
+| website | The website of the user. |
+| extended | A JSON array that can be used to store extra fields for the User. |
+{table-plus}
+
+
+h2. Grabbing the User via the API
+
+The current user can be gotten in the API via the $modx-&gt;user reference. For example, this snippet outputs the username of the user:
+
+{code}return $modx-&gt;user-&gt;get(&#39;username&#39;);{code}
+
+Note that to grab Profile fields, you&#39;ll need to first get the modUserProfile object via the Profile alias. For example, this snippet grabs the email of the user and returns it:
+
+{code}
+$profile = $modx-&gt;user-&gt;getOne(&#39;Profile&#39;);
+return $profile ? $profile-&gt;get(&#39;email&#39;) : &#39;&#39;;
+{code}
+
+If the User is not logged in, $modx-&gt;user will still be available as an object, but will return 0 as the ID and (Anonymous) as the username.
+
+h2. See Also
+
+{pagetree:root=Security}
+
+
+{scrollbar}[revolution20:Extending modUser]&amp;nbsp;";}i:8;a:3:{s:2:"id";s:8:"33226780";s:3:"ver";s:1:"1";s:4:"code";s:3473:"\\
+
+{toc}
+
+h2. What is a User?
+
+A User is simply a representation of a login in MODx Revolution. 
+
+
+Users can also be assigned to User Groups, which can have [ACLs] attached to them to provide Access Controls.
+
+h2. User Settings
+
+User Settings in MODx Revolution will automatically override for that user any System or Context settings with the same key. They can also be completely unique settings as well. The order of inheritance for Settings is:
+
+{quote}System Settings -&gt; Context Settings -&gt; User Settings{quote}
+
+h2. Users in the Front-End
+
+When a user is logged into the frontend of your site, their username and ID can be accessed by the following [Properties|Properties and Property Sets]:
+
+{code}
+[[+modx.user.id]] - Prints the ID
+[[+modx.user.username]] - Prints the username
+{code}
+
+If a user is not logged in, ID will be blank, and Username will be &quot;(anonymous)&quot;.
+
+h2. User Fields
+
+Users contain the following fields:
+
+||Name||Description||
+|id|The ID of the user.|
+|username|The username of the user.|
+|password|The user&#39;s encrypted password.|
+|active|Either 1 or 0. If not active, the user will not be able to log in.|
+|remote_key|A remote user Key used by remote authentication apps.|
+|remote_data|A JSON array of data used by remote authentication apps.|
+
+Users also have a Profile attached to them. It contains the following fields:
+
+{table-plus}
+||Name||Description||
+|internalKey|The ID of the user.|
+|fullname|The full name of the user.|
+|email|The email of the user.|
+|phone|The phone number.|
+|mobilephone|The cellphone number.|
+|fax|The fax number.|
+|blocked|Either 1 or 0. If blocked is set to true, the user will not be able to log in.|
+|blockeduntil|A timestamp that, when set, will prevent the user from logging in until this date.|
+|blockedafter|A timestamp that, when set, will prevent the user from logging in after this date.|
+|logincount|The number of logins for this user.|
+|lastlogin|The last time the user logged in.|
+|thislogin|The time the user logged in in their current session.|
+|failedlogincount|The number of times the user has failed to log in since last logging in.|
+|sessionid|The User&#39;s session ID that maps to the session table.|
+|dob|The date of birth.|
+|gender|0 for neither, 1 for male and 2 for female.|
+|address|The physical address.|
+|country|The country of the user.|
+|city|The city of the user.|
+|zip|The zip or postal code for the user.|
+|state|The physical state or province of the user.|
+|photo|An optional field for a photo. Not used in the UI.|
+|comment|An optional comment field for comments on the User.|
+|website|The website of the user.|
+|extended|A JSON array that can be used to store extra fields for the User.|
+{table-plus}
+
+
+h2. Grabbing the User via the API
+
+The current user can be gotten in the API via the $modx-&gt;user reference. For example, this snippet outputs the username of the user:
+
+{code}return $modx-&gt;user-&gt;get(&#39;username&#39;);{code}
+
+Note that to grab Profile fields, you&#39;ll need to first get the modUserProfile object via the Profile alias. For example, this snippet grabs the email of the user and returns it:
+
+{code}
+$profile = $modx-&gt;user-&gt;getOne(&#39;Profile&#39;);
+return $profile ? $profile-&gt;get(&#39;email&#39;) : &#39;&#39;;
+{code}
+
+If the User is not logged in, $modx-&gt;user will still be available as an object, but will return 0 as the ID and (Anonymous) as the username.
+
+h2. See Also
+
+{pagetree:root=Security}
+
+
+{scrollbar}";}}}

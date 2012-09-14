@@ -1,0 +1,31 @@
+a:5:{s:2:"id";s:8:"18678148";s:4:"info";a:4:{s:6:"Title:";s:14:"fe_editor_lang";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:29:"[revolution20:fe_editor_lang]";}s:6:"parent";s:8:"18678127";s:6:"source";s:241:"h2. fe_editor_lang
+
+*Name*: Front-end Editor Language
+*Type*: String
+*Default*: english
+
+The language for the editor to use when used as a front-end editor.
+
+{warning}This setting is *deprecated* and no longer in use.{warning}
+\\
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678148";s:3:"ver";s:1:"2";s:4:"code";s:241:"h2. fe_editor_lang
+
+*Name*: Front-end Editor Language
+*Type*: String
+*Default*: english
+
+The language for the editor to use when used as a front-end editor.
+
+{warning}This setting is *deprecated* and no longer in use.{warning}
+\\
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119679";s:3:"ver";s:1:"1";s:4:"code";s:332:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Front-end Editor Language{zone-data}
+{zone-data:key}fe_editor_lang{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}english{zone-data}
+{zone-data:desc}The language for the editor to use when used as a front-end editor.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

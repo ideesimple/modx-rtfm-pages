@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678144";s:4:"info";a:4:{s:6:"Title:";s:11:"emailsender";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:26:"[revolution20:emailsender]";}s:6:"parent";s:8:"18678127";s:6:"source";s:178:"h2. emailsender
+
+*Name*: Site Admin Email Address
+*Type*: String
+*Default*: Set at Install
+
+The e-mail address used when sending users their usernames and passwords.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678144";s:3:"ver";s:1:"2";s:4:"code";s:178:"h2. emailsender
+
+*Name*: Site Admin Email Address
+*Type*: String
+*Default*: Set at Install
+
+The e-mail address used when sending users their usernames and passwords.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119672";s:3:"ver";s:1:"1";s:4:"code";s:317:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}E-mail address{zone-data}
+{zone-data:key}emailsender{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}{zone-data}
+{zone-data:desc}The e-mail address used when sending users their usernames and passwords.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

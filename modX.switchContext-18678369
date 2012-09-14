@@ -1,0 +1,55 @@
+a:5:{s:2:"id";s:8:"18678369";s:4:"info";a:4:{s:6:"Title:";s:18:"modX.switchContext";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:33:"[revolution20:modX.switchContext]";}s:6:"parent";s:8:"18678361";s:6:"source";s:668:"\\
+
+h2. modX::switchContext
+
+Switches the primary Context for the modX instance.
+
+Be aware that switching contexts does not allow custom session handling classes to be loaded. The gateway defines the session handling that is applied to a single request. To create a context with a custom session handler you must create a unique context gateway that initializes that context directly.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#switchContext
+
+{code}
+boolean switchContext (string $contextKey)
+{code}
+
+h2. Example
+
+Switch to the &#39;sports&#39; Context.
+{code}
+$modx-&gt;switchContext(&#39;sports&#39;);
+{code}
+
+h2. See Also
+
+* [Contexts]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678369";s:3:"ver";s:1:"1";s:4:"code";s:668:"\\
+
+h2. modX::switchContext
+
+Switches the primary Context for the modX instance.
+
+Be aware that switching contexts does not allow custom session handling classes to be loaded. The gateway defines the session handling that is applied to a single request. To create a context with a custom session handler you must create a unique context gateway that initializes that context directly.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#switchContext
+
+{code}
+boolean switchContext (string $contextKey)
+{code}
+
+h2. Example
+
+Switch to the &#39;sports&#39; Context.
+{code}
+$modx-&gt;switchContext(&#39;sports&#39;);
+{code}
+
+h2. See Also
+
+* [Contexts]
+
+{scrollbar}";}}}

@@ -1,0 +1,26 @@
+a:5:{s:2:"id";s:8:"18678170";s:4:"info";a:4:{s:6:"Title:";s:15:"server_protocol";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:30:"[revolution20:server_protocol]";}s:6:"parent";s:8:"18678127";s:6:"source";s:150:"h2. server_protocol
+
+*Name*: Server Protocol
+*Type*: String
+*Default*: http
+
+If your site is on a normal http or secure https connection.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678170";s:3:"ver";s:1:"2";s:4:"code";s:150:"h2. server_protocol
+
+*Name*: Server Protocol
+*Type*: String
+*Default*: http
+
+If your site is on a normal http or secure https connection.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119709";s:3:"ver";s:1:"1";s:4:"code";s:308:"\\
+{zone-template-instance:sszt}
+{zone-data:name}Server Type{zone-data}
+{zone-data:key}server_protocol{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}http{zone-data}
+{zone-data:desc}If your site is on a normal http or secure https connection.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

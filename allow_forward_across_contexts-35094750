@@ -1,0 +1,62 @@
+a:5:{s:2:"id";s:8:"35094750";s:4:"info";a:4:{s:6:"Title:";s:29:"allow_forward_across_contexts";s:7:"Author:";s:11:"Mike Schell";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:44:"[revolution20:allow_forward_across_contexts]";}s:6:"parent";s:8:"18678127";s:6:"source";s:250:"h2. allow_forward_across_contexts
+
+*Name*: Allow Forwarding Across Contexts
+*Type*: Yes/No
+*Default*: No
+*Available In:* 2.1\+
+
+When enabled, Symlinks and modX::sendForward() API calls can forward requests to Resources in other Contexts.
+
+{scrollbar}";s:8:"versions";a:6:{i:0;a:3:{s:2:"id";s:8:"35094750";s:3:"ver";s:1:"6";s:4:"code";s:250:"h2. allow_forward_across_contexts
+
+*Name*: Allow Forwarding Across Contexts
+*Type*: Yes/No
+*Default*: No
+*Available In:* 2.1\+
+
+When enabled, Symlinks and modX::sendForward() API calls can forward requests to Resources in other Contexts.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35095054";s:3:"ver";s:1:"5";s:4:"code";s:462:"h2. allow_forward_across_contexts
+
+{color:#333333}{*}Name{*}{color}{color:#333333}: Allow Forwarding Across Contexts{color}
+{color:#333333}{*}Type{*}{color}{color:#333333}: Yes/No{color}
+{color:#333333}{*}Default{*}{color}{color:#333333}: No{color}
+{color:#333333}{*}Available In:*{color} {color:#333333}2.1\+{color}
+
+{color:#333333}When enabled, Symlinks and modX::sendForward() API calls can forward requests to Resources in other Contexts.{color}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35095052";s:3:"ver";s:1:"4";s:4:"code";s:457:"h2. allow_forward_across_contexts
+
+{color:#333333}{*}Name{*}{color}{color:#333333}: Allow Forwarding Across Contexts{color}
+{color:#333333}{*}Type{*}{color}{color:#333333}: Yes/No{color}
+{color:#333333}{*}Default{*}{color}{color:#333333}: No{color}
+{color:#333333}{*}Version:*{color} {color:#333333}2.1\+{color}
+
+{color:#333333}When enabled, Symlinks and modX::sendForward() API calls can forward requests to Resources in other Contexts.{color}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"35094754";s:3:"ver";s:1:"3";s:4:"code";s:454:"h2. allow_forward_across_contexts
+
+{color:#333333}{*}Name{*}{color}{color:#333333}: Allow Forward Across Contexts{color}
+{color:#333333}{*}Type{*}{color}{color:#333333}: Yes/No{color}
+{color:#333333}{*}Default{*}{color}{color:#333333}: No{color}
+{color:#333333}{*}Version:*{color} {color:#333333}2.1\+{color}
+
+{color:#333333}When enabled, Symlinks and modX::sendForward() API calls can forward requests to Resources in other Contexts.{color}
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"35094753";s:3:"ver";s:1:"2";s:4:"code";s:391:"h2. allow_forward_across_contexts
+
+{color:#333333}{*}Name{*}{color}{color:#333333}: Allow Forward Across Contexts{color}
+{color:#333333}{*}Type{*}{color}{color:#333333}: Yes/No{color}
+{color:#333333}{*}Default{*}{color}{color:#333333}: No{color}
+
+{color:#333333}When enabled, Symlinks and modX::sendForward() API calls can forward requests to Resources in other Contexts.{color}
+
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"35094751";s:3:"ver";s:1:"1";s:4:"code";s:387:"allow_forward_across_contexts
+
+{color:#333333}{*}Name{*}{color}{color:#333333}: Allow Forward Across Contexts{color}
+{color:#333333}{*}Type{*}{color}{color:#333333}: Yes/No{color}
+{color:#333333}{*}Default{*}{color}{color:#333333}: No{color}
+
+{color:#333333}When enabled, Symlinks and modX::sendForward() API calls can forward requests to Resources in other Contexts.{color}
+
+{scrollbar}";}}}

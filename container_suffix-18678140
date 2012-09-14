@@ -1,0 +1,48 @@
+a:5:{s:2:"id";s:8:"18678140";s:4:"info";a:4:{s:6:"Title:";s:16:"container_suffix";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:31:"[revolution20:container_suffix]";}s:6:"parent";s:8:"18678127";s:6:"source";s:449:"h2. container_suffix
+
+*Name*: Container Suffix
+*Type*: String
+*Default*: /
+
+Sets the container suffix for the site. This is the suffix added to the Friendly URL when a Resource is checked as a container.
+
+h2. Example
+
+A container suffix of / will render a Resource with an alias of &#39;test&#39; as:
+
+{quote}www.mysite.com/test/{quote}
+
+whereas a container suffix of &#39;.html&#39; will render:
+
+{quote}www.mysite.com/test.html{quote}
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678140";s:3:"ver";s:1:"2";s:4:"code";s:449:"h2. container_suffix
+
+*Name*: Container Suffix
+*Type*: String
+*Default*: /
+
+Sets the container suffix for the site. This is the suffix added to the Friendly URL when a Resource is checked as a container.
+
+h2. Example
+
+A container suffix of / will render a Resource with an alias of &#39;test&#39; as:
+
+{quote}www.mysite.com/test/{quote}
+
+whereas a container suffix of &#39;.html&#39; will render:
+
+{quote}www.mysite.com/test.html{quote}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119665";s:3:"ver";s:1:"1";s:4:"code";s:101:"\\
+
+h2. Container Suffix
+
+*key*: container_suffix
+*type*: string
+
+h2. Usage
+
+h2. Example
+
+{scrollbar}";}}}

@@ -1,0 +1,55 @@
+a:5:{s:2:"id";s:8:"35586548";s:4:"info";a:4:{s:6:"Title:";s:31:"Media Source Type - File System";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:46:"[revolution20:Media Source Type - File System]";}s:6:"parent";s:8:"35586544";s:6:"source";s:1246:"{toc}
+
+h2. The File System Media Source Type
+
+This Source Type allows you to browse the file system your MODX installation resides on.
+
+h2. Available Properties
+
+{table-plus}
+||Name||Description||Default Value||
+|basePath|The file path to point the Source to. If relative, the path relative to the MODX base path.|
+|basePathRelative|If the Base Path setting above is not relative to the MODX install path, set this to Yes.|
+|baseUrl|The URL that this source can be accessed from. If relative, the URL relative to the MODX base URL.|
+|baseUrlRelative|If the Base URL setting above is not relative to the MODX install URL, set this to Yes.|
+|allowedFileTypes|If set, will restrict the files shown to only the specified extensions. Please specify in a comma-separated list, without the .| |
+|imageExtensions|A list of file extensions that can be made into thumbnails.|jpg,jpeg,png,gif|
+|thumbnailType|When a thumbnail is displayed, the type of image it will be rendered as.|png|
+|thumbnailQuality|The quality of the rendered thumbnail, on a scale from 0-100|90|
+|skipFiles|A comma-separated list of filenames to skip when browsing the source.|.svn,.git,_notes,nbproject,.idea,.DS_Store|
+{table-plus}
+
+h2. See Also
+
+{pagetree:root=Media Source Types}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"35586548";s:3:"ver";s:1:"2";s:4:"code";s:1246:"{toc}
+
+h2. The File System Media Source Type
+
+This Source Type allows you to browse the file system your MODX installation resides on.
+
+h2. Available Properties
+
+{table-plus}
+||Name||Description||Default Value||
+|basePath|The file path to point the Source to. If relative, the path relative to the MODX base path.|
+|basePathRelative|If the Base Path setting above is not relative to the MODX install path, set this to Yes.|
+|baseUrl|The URL that this source can be accessed from. If relative, the URL relative to the MODX base URL.|
+|baseUrlRelative|If the Base URL setting above is not relative to the MODX install URL, set this to Yes.|
+|allowedFileTypes|If set, will restrict the files shown to only the specified extensions. Please specify in a comma-separated list, without the .| |
+|imageExtensions|A list of file extensions that can be made into thumbnails.|jpg,jpeg,png,gif|
+|thumbnailType|When a thumbnail is displayed, the type of image it will be rendered as.|png|
+|thumbnailQuality|The quality of the rendered thumbnail, on a scale from 0-100|90|
+|skipFiles|A comma-separated list of filenames to skip when browsing the source.|.svn,.git,_notes,nbproject,.idea,.DS_Store|
+{table-plus}
+
+h2. See Also
+
+{pagetree:root=Media Source Types}";}i:1;a:3:{s:2:"id";s:8:"35586552";s:3:"ver";s:1:"1";s:4:"code";s:126:"{toc}
+
+h2. The File System Media Source Type
+
+{note}Under construction{note}
+
+h2. See Also
+
+{pagetree:root=Media Source Types}";}}}

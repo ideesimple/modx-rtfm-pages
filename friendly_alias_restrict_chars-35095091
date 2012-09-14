@@ -1,0 +1,21 @@
+a:5:{s:2:"id";s:8:"35095091";s:4:"info";a:4:{s:6:"Title:";s:29:"friendly_alias_restrict_chars";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:44:"[revolution20:friendly_alias_restrict_chars]";}s:6:"parent";s:8:"18678127";s:6:"source";s:460:"h2. friendly_alias_restrict_chars
+
+*Name*: FURL Alias Character Restriction Method
+*Type*: Textfield
+*Default*: pattern
+*Available In*: Revolution 2.0.8+
+
+The method used to restrict characters used in a Resource alias. &quot;pattern&quot; allows a RegEx pattern to be provided, &quot;legal&quot; allows any legal URL characters, &quot;alpha&quot; allows only letters of the alphabet, and &quot;alphanumeric&quot; allows only letters and numbers.
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095091";s:3:"ver";s:1:"1";s:4:"code";s:460:"h2. friendly_alias_restrict_chars
+
+*Name*: FURL Alias Character Restriction Method
+*Type*: Textfield
+*Default*: pattern
+*Available In*: Revolution 2.0.8+
+
+The method used to restrict characters used in a Resource alias. &quot;pattern&quot; allows a RegEx pattern to be provided, &quot;legal&quot; allows any legal URL characters, &quot;alpha&quot; allows only letters of the alphabet, and &quot;alphanumeric&quot; allows only letters and numbers.
+
+{scrollbar}
+";}}}

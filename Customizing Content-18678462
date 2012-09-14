@@ -1,0 +1,15 @@
+a:5:{s:2:"id";s:8:"18678462";s:4:"info";a:4:{s:6:"Title:";s:19:"Customizing Content";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:34:"[revolution20:Customizing Content]";}s:6:"parent";s:8:"18678456";s:6:"source";s:175:"\\
+
+MODx offers many ways of customizing content. This section covers the ways to do so that are built into the core of MODx.
+
+{pagetree:root=Customizing Content}
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678462";s:3:"ver";s:1:"2";s:4:"code";s:175:"\\
+
+MODx offers many ways of customizing content. This section covers the ways to do so that are built into the core of MODx.
+
+{pagetree:root=Customizing Content}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"18678634";s:3:"ver";s:1:"1";s:4:"code";s:15:"\\
+
+{scrollbar}";}}}

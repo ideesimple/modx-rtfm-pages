@@ -1,0 +1,116 @@
+a:5:{s:2:"id";s:8:"18678218";s:4:"info";a:4:{s:6:"Title:";s:12:"Named Anchor";s:7:"Author:";s:18:"W. Shawn Wilkerson";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:27:"[revolution20:Named Anchor]";}s:6:"parent";s:8:"18678067";s:6:"source";s:2125:"h2. What is a Named Anchor?
+
+A named anchor is a link to content within the current resource.
+
+A typical named anchor will be similar to:
+{quote}&lt;a name=&quot;prohibited&quot;&gt;&lt;/a&gt;{quote}
+
+
+The problem with using named anchors with MODX and friendly URLs enabled, is that the &lt;base href=&quot;&quot;&gt; tag, which is required to maintain relative urls, will confuse browsers, thinking that any anchors point to the base href page which would usually be your homepage. Luckily - nothing is impossible with MODX, and there are (at least) two ways to overcome this issue.
+
+
+h2. Accessing the Named Anchor by adding the URL manually
+
+To generate a link to the current Resource, while using a named anchor of &quot;prohibited&quot;:
+{code}&lt;a href=&quot;[[~[[*id]]]]#prohibited&quot;&gt;Prohibited Activities&lt;/a&gt;{code}
+
+To generate a link to a Resource with ID 12, while using a named anchor of &quot;prohibited&quot;:
+{code}&lt;a href=&quot;[[~12]]#prohibited&quot;&gt;Prohibited Activities&lt;/a&gt;{code}
+
+h2. Using a Plugin to automatically add the URL when using anchors
+
+Alternatively, you could use a plugin to automatically prepend a link to the current resource before the actual anchor.
+
+Put the following code into a new plugin, and on the System Events tab assign it to the &quot;OnWebPagePrerender&quot; event (based on [this post|http://forums.modx.com/thread/35800/plugin-anchorsaway?page=3#dis-post-199475]).
+
+
+{code}
+if($modx-&gt;resource-&gt;get(&#39;id&#39;) !=$modx-&gt;config[&#39;site_start&#39;]) {  $modx-&gt;resource-&gt;_output =str_replace(&#39;href=&quot;#&#39;,&#39;href=&quot;&#39; .$modx-&gt;makeUrl($modx-&gt;resource-&gt;get(&#39;id&#39;)) .&#39;#&#39;,$modx-&gt;resource-&gt;_output);}
+{code}
+The code first makes sure we are not on the homepage (if we are, there is no need to add the url to the page). When we&#39;re not it will replace any occurrences of +href=&quot;#+ with +href=&quot;link-to-page.html#+, making sure your anchors will work as intended.
+
+With this solution, you can still refer to anchors on other pages using the second example above.
+
+{scrollbar}";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"18678218";s:3:"ver";s:1:"3";s:4:"code";s:2125:"h2. What is a Named Anchor?
+
+A named anchor is a link to content within the current resource.
+
+A typical named anchor will be similar to:
+{quote}&lt;a name=&quot;prohibited&quot;&gt;&lt;/a&gt;{quote}
+
+
+The problem with using named anchors with MODX and friendly URLs enabled, is that the &lt;base href=&quot;&quot;&gt; tag, which is required to maintain relative urls, will confuse browsers, thinking that any anchors point to the base href page which would usually be your homepage. Luckily - nothing is impossible with MODX, and there are (at least) two ways to overcome this issue.
+
+
+h2. Accessing the Named Anchor by adding the URL manually
+
+To generate a link to the current Resource, while using a named anchor of &quot;prohibited&quot;:
+{code}&lt;a href=&quot;[[~[[*id]]]]#prohibited&quot;&gt;Prohibited Activities&lt;/a&gt;{code}
+
+To generate a link to a Resource with ID 12, while using a named anchor of &quot;prohibited&quot;:
+{code}&lt;a href=&quot;[[~12]]#prohibited&quot;&gt;Prohibited Activities&lt;/a&gt;{code}
+
+h2. Using a Plugin to automatically add the URL when using anchors
+
+Alternatively, you could use a plugin to automatically prepend a link to the current resource before the actual anchor.
+
+Put the following code into a new plugin, and on the System Events tab assign it to the &quot;OnWebPagePrerender&quot; event (based on [this post|http://forums.modx.com/thread/35800/plugin-anchorsaway?page=3#dis-post-199475]).
+
+
+{code}
+if($modx-&gt;resource-&gt;get(&#39;id&#39;) !=$modx-&gt;config[&#39;site_start&#39;]) {  $modx-&gt;resource-&gt;_output =str_replace(&#39;href=&quot;#&#39;,&#39;href=&quot;&#39; .$modx-&gt;makeUrl($modx-&gt;resource-&gt;get(&#39;id&#39;)) .&#39;#&#39;,$modx-&gt;resource-&gt;_output);}
+{code}
+The code first makes sure we are not on the homepage (if we are, there is no need to add the url to the page). When we&#39;re not it will replace any occurrences of +href=&quot;#+ with +href=&quot;link-to-page.html#+, making sure your anchors will work as intended.
+
+With this solution, you can still refer to anchors on other pages using the second example above.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"35586655";s:3:"ver";s:1:"2";s:4:"code";s:2127:"h2. What is a Named Anchor?
+
+A named anchor is a link to content within the current resource.
+
+A typical named anchor will be similar to:
+{quote}&lt;a name=&quot;prohibited&quot;&gt;&lt;/a&gt;{quote}
+T
+
+
+The problem with using named anchors with MODX and friendly URLs enabled, is that the &lt;base href=&quot;&quot;&gt; tag, which is required to maintain relative urls, will confuse browsers, thinking that any anchors point to the base href page which would usually be your homepage. Luckily - nothing is impossible with MODX, and there are (at least) two ways to overcome this issue.
+
+
+h2. Accessing the Named Anchor by adding the URL manually
+
+To generate a link to the current Resource, while using a named anchor of &quot;prohibited&quot;:
+{code}&lt;a href=&quot;[[~[[*id]]]]#prohibited&quot;&gt;Prohibited Activities&lt;/a&gt;{code}
+
+To generate a link to a Resource with ID 12, while using a named anchor of &quot;prohibited&quot;:
+{code}&lt;a href=&quot;[[~12]]#prohibited&quot;&gt;Prohibited Activities&lt;/a&gt;{code}
+
+h2. Using a Plugin to automatically add the URL when using anchors
+
+Alternatively, you could use a plugin to automatically prepend a link to the current resource before the actual anchor.
+
+Put the following code into a new plugin, and on the System Events tab assign it to the &quot;OnWebPagePrerender&quot; event (based on [this post|http://forums.modx.com/thread/35800/plugin-anchorsaway?page=3#dis-post-199475]).
+
+
+{code}
+if($modx-&gt;resource-&gt;get(&#39;id&#39;) !=$modx-&gt;config[&#39;site_start&#39;]) {  $modx-&gt;resource-&gt;_output =str_replace(&#39;href=&quot;#&#39;,&#39;href=&quot;&#39; .$modx-&gt;makeUrl($modx-&gt;resource-&gt;get(&#39;id&#39;)) .&#39;#&#39;,$modx-&gt;resource-&gt;_output);}
+{code}
+The code first makes sure we are not on the homepage (if we are, there is no need to add the url to the page). When we&#39;re not it will replace any occurrences of +href=&quot;#+ with +href=&quot;link-to-page.html#+, making sure your anchors will work as intended.
+
+With this solution, you can still refer to anchors on other pages using the second example above.
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"35586654";s:3:"ver";s:1:"1";s:4:"code";s:627:"h2. What is a Named Anchor?
+
+A named anchor is a link to content within the current resource.
+
+A typical named anchor will be similar to: 
+{quote}&lt;a name=&quot;prohibited&quot;&gt;&lt;/a&gt;{quote}
+
+h2. Accessing the Named Anchor
+
+To generate a link to the current Resource, while using a named anchor of &quot;prohibited&quot;:
+{code}&lt;a href=&quot;[[~[[*id]]]]#prohibited&quot;&gt;Prohibited Activities&lt;/a&gt;{code}
+
+To generate a link to a Resource with ID 12, while using a named anchor of &quot;prohibited&quot;:
+{code}&lt;a href=&quot;[[~12]]#prohibited&quot;&gt;Prohibited Activities&lt;/a&gt;{code}
+
+{scrollbar}";}}}

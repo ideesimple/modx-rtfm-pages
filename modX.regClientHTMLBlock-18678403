@@ -1,0 +1,65 @@
+a:5:{s:2:"id";s:8:"18678403";s:4:"info";a:4:{s:6:"Title:";s:23:"modX.regClientHTMLBlock";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:38:"[revolution20:modX.regClientHTMLBlock]";}s:6:"parent";s:8:"18678406";s:6:"source";s:614:"\\
+
+h2. modX::regClientHTMLBlock
+
+Register HTML to be injected before the closing BODY tag.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#regClientHTMLBlock
+
+{code}
+void regClientHTMLBlock (string $html)
+{code}
+
+h2. Example
+
+Inject a footer into the page.
+{code}
+$modx-&gt;regClientHTMLBlock(&#39;&lt;div id=&quot;footer&quot;&gt;(c) 2009 MODx&lt;/div&gt;&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.regClientCSS]
+* [modX.regClientScript]
+* [modX.regClientStartupHTMLBlock]
+* [modX.regClientStartupScript]
+* [modX.getRegisteredClientScripts]
+* [modX.getRegisteredClientStartupScripts]
+
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678403";s:3:"ver";s:1:"1";s:4:"code";s:614:"\\
+
+h2. modX::regClientHTMLBlock
+
+Register HTML to be injected before the closing BODY tag.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#regClientHTMLBlock
+
+{code}
+void regClientHTMLBlock (string $html)
+{code}
+
+h2. Example
+
+Inject a footer into the page.
+{code}
+$modx-&gt;regClientHTMLBlock(&#39;&lt;div id=&quot;footer&quot;&gt;(c) 2009 MODx&lt;/div&gt;&#39;);
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.regClientCSS]
+* [modX.regClientScript]
+* [modX.regClientStartupHTMLBlock]
+* [modX.regClientStartupScript]
+* [modX.getRegisteredClientScripts]
+* [modX.getRegisteredClientStartupScripts]
+
+
+{scrollbar}";}}}

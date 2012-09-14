@@ -1,0 +1,31 @@
+a:5:{s:2:"id";s:8:"18678191";s:4:"info";a:4:{s:6:"Title:";s:11:"use_browser";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:26:"[revolution20:use_browser]";}s:6:"parent";s:8:"18678127";s:6:"source";s:367:"h2. use_browser
+
+*Name*: Use File Browser
+*Type*: Yes/No
+*Default*: Yes
+
+If set to Yes, enables the resource browser. This will allow your users to browse and upload resources such as images, flash and media files on the server.
+
+{warning}This setting is *deprecated* in MODx Revolution. Use the file_tree and file_manager [Permissions] instead.{warning}
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678191";s:3:"ver";s:1:"2";s:4:"code";s:367:"h2. use_browser
+
+*Name*: Use File Browser
+*Type*: Yes/No
+*Default*: Yes
+
+If set to Yes, enables the resource browser. This will allow your users to browse and upload resources such as images, flash and media files on the server.
+
+{warning}This setting is *deprecated* in MODx Revolution. Use the file_tree and file_manager [Permissions] instead.{warning}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119747";s:3:"ver";s:1:"1";s:4:"code";s:413:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Enable Resource Browser{zone-data}
+{zone-data:key}use_browser{zone-data}
+{zone-data:type}boolean{zone-data}
+{zone-data:default}true{zone-data}
+{zone-data:desc}If set to Yes, enables the resource browser. This will allow your users to browse and upload resources such as images, flash and media files on the server.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

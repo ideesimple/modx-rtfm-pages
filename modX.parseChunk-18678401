@@ -1,0 +1,51 @@
+a:5:{s:2:"id";s:8:"18678401";s:4:"info";a:4:{s:6:"Title:";s:15:"modX.parseChunk";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:30:"[revolution20:modX.parseChunk]";}s:6:"parent";s:8:"18678361";s:6:"source";s:477:"\\
+
+h2. modX::parseChunk
+
+Parse a chunk using an associative array of replacement variables.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#parseChunk
+
+{code}
+string parseChunk (string $chunkName, array $chunkArr, [string $prefix = &#39;[[+&#39;], [string $suffix = &#39;]]&#39;])
+{code}
+
+h2. Example
+
+{code}
+$output = $modx-&gt;parseChunk(&#39;myChunk&#39;,array(&#39;name&#39; =&gt; &#39;John&#39;));
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.getChunk]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678401";s:3:"ver";s:1:"1";s:4:"code";s:477:"\\
+
+h2. modX::parseChunk
+
+Parse a chunk using an associative array of replacement variables.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#parseChunk
+
+{code}
+string parseChunk (string $chunkName, array $chunkArr, [string $prefix = &#39;[[+&#39;], [string $suffix = &#39;]]&#39;])
+{code}
+
+h2. Example
+
+{code}
+$output = $modx-&gt;parseChunk(&#39;myChunk&#39;,array(&#39;name&#39; =&gt; &#39;John&#39;));
+{code}
+
+h2. See Also
+
+* [modX]
+* [modX.getChunk]
+
+{scrollbar}";}}}

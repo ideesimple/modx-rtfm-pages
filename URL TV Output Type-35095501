@@ -1,0 +1,45 @@
+a:5:{s:2:"id";s:8:"35095501";s:4:"info";a:4:{s:6:"Title:";s:18:"URL TV Output Type";s:7:"Author:";s:16:"Anselm Hannemann";s:16:"Last Changed by:";s:16:"Anselm Hannemann";s:12:"Wiki Markup:";s:33:"[revolution20:URL TV Output Type]";}s:6:"parent";s:8:"20119599";s:6:"source";s:805:"h2. URL TV Output Type
+
+This output-type allows you to wrap an link (a-tag) around the input (normally should be input-type: &quot;text&quot;).
+
+h2. Output Options
+
+It&#39;s output options look like:
+
+ !tv-url-output.png|border=1!
+|| Name || Description || Value ||
+| Output type | The option to be outputted to the frontend. | URL |
+| Display text | text that is displayed as link text instead of the URL | |
+| Title | title tag for the link-title | |
+| Class | CSS class to attach the img tag \\ | |
+| Style | Any CSS style-attributes to add to the tag \\ | |
+| Target | target of the link, should be left blank but could be &quot;_blank&quot; | |
+| Attributes | any other HTML-attributes you want to add to the tag | |
+| | | |
+
+h2. See Also
+{pagetree:root=Template Variable Output Types}
+\\
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095501";s:3:"ver";s:1:"1";s:4:"code";s:805:"h2. URL TV Output Type
+
+This output-type allows you to wrap an link (a-tag) around the input (normally should be input-type: &quot;text&quot;).
+
+h2. Output Options
+
+It&#39;s output options look like:
+
+ !tv-url-output.png|border=1!
+|| Name || Description || Value ||
+| Output type | The option to be outputted to the frontend. | URL |
+| Display text | text that is displayed as link text instead of the URL | |
+| Title | title tag for the link-title | |
+| Class | CSS class to attach the img tag \\ | |
+| Style | Any CSS style-attributes to add to the tag \\ | |
+| Target | target of the link, should be left blank but could be &quot;_blank&quot; | |
+| Attributes | any other HTML-attributes you want to add to the tag | |
+| | | |
+
+h2. See Also
+{pagetree:root=Template Variable Output Types}
+\\
+{scrollbar}";}}}

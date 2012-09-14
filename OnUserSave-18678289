@@ -1,0 +1,37 @@
+a:5:{s:2:"id";s:8:"18678289";s:4:"info";a:4:{s:6:"Title:";s:10:"OnUserSave";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:25:"[revolution20:OnUserSave]";}s:6:"parent";s:8:"18678228";s:6:"source";s:393:"\\
+
+h2. Event: OnUserSave
+
+Fires when a User is saved.
+
+Service: 1 - Parser Service Events
+Group: modUser
+
+h2. Event Parameters
+
+||Name||Description||
+|user|A reference to the modUser object.|
+|mode|Either &#39;new&#39; (modSystemEvent::MODE_NEW) or &#39;upd&#39; (modSystemEvent::MODE_UPD) depending on whether is a new object or an existing one.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678289";s:3:"ver";s:1:"1";s:4:"code";s:393:"\\
+
+h2. Event: OnUserSave
+
+Fires when a User is saved.
+
+Service: 1 - Parser Service Events
+Group: modUser
+
+h2. Event Parameters
+
+||Name||Description||
+|user|A reference to the modUser object.|
+|mode|Either &#39;new&#39; (modSystemEvent::MODE_NEW) or &#39;upd&#39; (modSystemEvent::MODE_UPD) depending on whether is a new object or an existing one.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

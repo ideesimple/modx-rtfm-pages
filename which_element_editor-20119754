@@ -1,0 +1,17 @@
+a:5:{s:2:"id";s:8:"20119754";s:4:"info";a:4:{s:6:"Title:";s:20:"which_element_editor";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:35:"[revolution20:which_element_editor]";}s:6:"parent";s:8:"18678127";s:6:"source";s:176:"h2. which_element_editor
+
+*Name*: Which Element Richtext Editor
+*Type*: Richtext Combo
+*Default*: 
+
+Select which RTE you would like to use when editing an Element.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"20119754";s:3:"ver";s:1:"1";s:4:"code";s:176:"h2. which_element_editor
+
+*Name*: Which Element Richtext Editor
+*Type*: Richtext Combo
+*Default*: 
+
+Select which RTE you would like to use when editing an Element.
+
+{scrollbar}";}}}

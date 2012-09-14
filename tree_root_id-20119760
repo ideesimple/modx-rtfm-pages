@@ -1,0 +1,17 @@
+a:5:{s:2:"id";s:8:"20119760";s:4:"info";a:4:{s:6:"Title:";s:12:"tree_root_id";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:27:"[revolution20:tree_root_id]";}s:6:"parent";s:8:"18678127";s:6:"source";s:298:"h2. tree_root_id
+
+*Name*: Tree Root ID
+*Type*: String
+*Default*: 
+
+Set this to a comma-separated list of valid IDs of Resources to start the left Resource tree at below those nodes as the root. The user will only be able to see Resources that are children of those specified Resources.
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"20119760";s:3:"ver";s:1:"1";s:4:"code";s:298:"h2. tree_root_id
+
+*Name*: Tree Root ID
+*Type*: String
+*Default*: 
+
+Set this to a comma-separated list of valid IDs of Resources to start the left Resource tree at below those nodes as the root. The user will only be able to see Resources that are children of those specified Resources.
+
+{scrollbar}";}}}

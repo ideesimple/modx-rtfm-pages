@@ -1,0 +1,21 @@
+a:5:{s:2:"id";s:8:"35095101";s:4:"info";a:4:{s:6:"Title:";s:34:"friendly_alias_translit_class_path";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:49:"[revolution20:friendly_alias_translit_class_path]";}s:6:"parent";s:8:"35095099";s:6:"source";s:295:"h2. friendly_alias_translit_class_path
+
+*Name*: FURL Alias Transliteration Service Class Path
+*Type*: textfield
+*Default*: \{core_path\}components/
+*Available In*: Revolution 2.0.8+
+
+The model package location where the FURL Alias Transliteration Service Class will be loaded from.
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095101";s:3:"ver";s:1:"1";s:4:"code";s:295:"h2. friendly_alias_translit_class_path
+
+*Name*: FURL Alias Transliteration Service Class Path
+*Type*: textfield
+*Default*: \{core_path\}components/
+*Available In*: Revolution 2.0.8+
+
+The model package location where the FURL Alias Transliteration Service Class will be loaded from.
+
+{scrollbar}
+";}}}

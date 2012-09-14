@@ -1,0 +1,43 @@
+a:5:{s:2:"id";s:8:"18678275";s:4:"info";a:4:{s:6:"Title:";s:14:"OnPageNotFound";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:29:"[revolution20:OnPageNotFound]";}s:6:"parent";s:8:"18678228";s:6:"source";s:604:"\\
+
+h2. Event: OnPageNotFound
+
+Fires immediately before the user is forwarded to the error page if attempting to view a non-existent Resource.
+
+Service: 1 - Parser Service Events
+Group: None
+
+h2. Event Parameters
+
+||Name||Description||
+|response_code|The response code to send. Defaults to &quot;HTTP/1.1 404 Not Found&quot;|
+|error_type|The type. Defaults to 404.|
+|error_header|The header being sent: Defaults to &quot;HTTP/1.1 404 Not Found&quot;|
+|error_pagetitle|The pagetitle of the error page.|
+|error_message|The message being sent in the error page.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678275";s:3:"ver";s:1:"1";s:4:"code";s:604:"\\
+
+h2. Event: OnPageNotFound
+
+Fires immediately before the user is forwarded to the error page if attempting to view a non-existent Resource.
+
+Service: 1 - Parser Service Events
+Group: None
+
+h2. Event Parameters
+
+||Name||Description||
+|response_code|The response code to send. Defaults to &quot;HTTP/1.1 404 Not Found&quot;|
+|error_type|The type. Defaults to 404.|
+|error_header|The header being sent: Defaults to &quot;HTTP/1.1 404 Not Found&quot;|
+|error_pagetitle|The pagetitle of the error page.|
+|error_message|The message being sent in the error page.|
+
+h2. See Also
+
+* [System Events]
+* [Plugins]";}}}

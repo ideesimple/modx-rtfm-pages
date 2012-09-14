@@ -1,0 +1,33 @@
+a:5:{s:2:"id";s:8:"18678120";s:4:"info";a:4:{s:6:"Title:";s:19:"MySQL 5.0.51 Issues";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:34:"[revolution20:MySQL 5.0.51 Issues]";}s:6:"parent";s:8:"18678115";s:6:"source";s:617:"\\
+
+h2. Why does MODx not support MySQL server version 5.0.51?
+
+MySQL 5.0.51, including 5.0.51a, has serious bugs with PDO, specifically grouping, ordering and prepare statements. 
+
+It will cause uncorrectable errors in normal queries in MODx, as well as other open source applications, and therefore MODx does not support installations with MySQL 5.0.51 installed. Please upgrade your MySQL installation.
+
+h2. MySQL 5.0.51 Server Buglist
+
+Here are just some of the bugs that occur:
+
+* http://bugs.mysql.com/bug.php?id=32202
+* http://bugs.php.net/bug.php?id=47655
+* http://bugs.mysql.com/bug.php?id=36406
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678120";s:3:"ver";s:1:"1";s:4:"code";s:617:"\\
+
+h2. Why does MODx not support MySQL server version 5.0.51?
+
+MySQL 5.0.51, including 5.0.51a, has serious bugs with PDO, specifically grouping, ordering and prepare statements. 
+
+It will cause uncorrectable errors in normal queries in MODx, as well as other open source applications, and therefore MODx does not support installations with MySQL 5.0.51 installed. Please upgrade your MySQL installation.
+
+h2. MySQL 5.0.51 Server Buglist
+
+Here are just some of the bugs that occur:
+
+* http://bugs.mysql.com/bug.php?id=32202
+* http://bugs.php.net/bug.php?id=47655
+* http://bugs.mysql.com/bug.php?id=36406
+
+{scrollbar}";}}}

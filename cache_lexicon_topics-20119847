@@ -1,0 +1,19 @@
+a:5:{s:2:"id";s:8:"20119847";s:4:"info";a:4:{s:6:"Title:";s:20:"cache_lexicon_topics";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:35:"[revolution20:cache_lexicon_topics]";}s:6:"parent";s:8:"18678127";s:6:"source";s:340:"h2. cache_lexicon_topics
+
+*Name*: Cache Lexicon Topics
+*Type*: Yes/No
+*Default*: Yes
+
+When enabled, all Lexicon Topics will be cached so as to greatly reduce load times for Internationalization functionality. MODx strongly recommends leaving this set to Yes, as setting it to No will greatly slow down your manager load times.
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"20119847";s:3:"ver";s:1:"1";s:4:"code";s:340:"h2. cache_lexicon_topics
+
+*Name*: Cache Lexicon Topics
+*Type*: Yes/No
+*Default*: Yes
+
+When enabled, all Lexicon Topics will be cached so as to greatly reduce load times for Internationalization functionality. MODx strongly recommends leaving this set to Yes, as setting it to No will greatly slow down your manager load times.
+
+{scrollbar}
+";}}}

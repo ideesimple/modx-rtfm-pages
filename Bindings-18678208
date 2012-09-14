@@ -1,0 +1,142 @@
+a:5:{s:2:"id";s:8:"18678208";s:4:"info";a:4:{s:6:"Title:";s:8:"Bindings";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:23:"[revolution20:Bindings]";}s:6:"parent";s:8:"18678213";s:6:"source";s:2443:"\\
+
+h2. What are *@* Bindings?
+
+In the context to Template Variables, a Data Source is the location of the information to be displayed. A Data source can come from any of the following sources:
+* an externally generated file that is sent via FTP to the server
+* a Database table accessible to MODx
+* a [Resources] in the resource tree
+* a [Chunk|Chunks] in the Elements tree
+* the result of an evaluated PHP script
+
+These Data Sources can be tied (or &quot;bound&quot;) to a Template Variable for formatting and displaying in document. In addition, the bound data in the TVs can be almost effortlessly formatted via the Display Controls within the TV system for some truly stunning results. The format for using the types of data source bindings available to all template variables follows:
+* @FILE file_path
+* @RESOURCE resource_id
+* @CHUNK chunk_name
+* @SELECT sql_query
+* @EVAL php_code
+* @DIRECTORY path_relative_to_base_path
+
+These &quot;@&quot; commands or bindings will allow you to quickly and easily attach your template variables to virtually any database system available.
+
+The value returned from the data source can either be a string value (including numbers, dates, etc), an array or a recordset. The value returned is dependent on the type of binding used. Some display controls will attempt to either convert the returned value into a string or an array.
+
+For example, controls that accept string values such as a radio button group or select list will attempt to convert a record set (rows and columns) into the following format:
+{code}
+col1row1Value==col2row1Value||col1row2Value==col2row2Value,...
+{code}
+Please note that @ bindings will work only when used inside &quot;Input Option Values&quot; or &quot;Default Value&quot; fields.
+
+When placing @ bindings inside the &quot;Input Option Values&quot; field, they are used to format input options only when editing document within the Manager, for example to create a drop-down list of Cities or Countries.
+
+When placing @ bindings inside the &quot;Default Value&quot; field the returned value is used to render to the final web page. This makes it simple to build complex forms for data input on the web very quickly. 
+
+h2. Types
+
+* [@FILE|FILE Binding]
+* [@RESOURCE|RESOURCE Binding]
+* [@CHUNK|CHUNK Binding]
+* [@SELECT|SELECT Binding]
+* [@EVAL|EVAL Binding]
+* [@DIRECTORY|DIRECTORY Binding]
+* [@INHERIT|INHERIT Binding]
+
+h2. See Also
+
+* [Template Variables]
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678208";s:3:"ver";s:1:"2";s:4:"code";s:2443:"\\
+
+h2. What are *@* Bindings?
+
+In the context to Template Variables, a Data Source is the location of the information to be displayed. A Data source can come from any of the following sources:
+* an externally generated file that is sent via FTP to the server
+* a Database table accessible to MODx
+* a [Resources] in the resource tree
+* a [Chunk|Chunks] in the Elements tree
+* the result of an evaluated PHP script
+
+These Data Sources can be tied (or &quot;bound&quot;) to a Template Variable for formatting and displaying in document. In addition, the bound data in the TVs can be almost effortlessly formatted via the Display Controls within the TV system for some truly stunning results. The format for using the types of data source bindings available to all template variables follows:
+* @FILE file_path
+* @RESOURCE resource_id
+* @CHUNK chunk_name
+* @SELECT sql_query
+* @EVAL php_code
+* @DIRECTORY path_relative_to_base_path
+
+These &quot;@&quot; commands or bindings will allow you to quickly and easily attach your template variables to virtually any database system available.
+
+The value returned from the data source can either be a string value (including numbers, dates, etc), an array or a recordset. The value returned is dependent on the type of binding used. Some display controls will attempt to either convert the returned value into a string or an array.
+
+For example, controls that accept string values such as a radio button group or select list will attempt to convert a record set (rows and columns) into the following format:
+{code}
+col1row1Value==col2row1Value||col1row2Value==col2row2Value,...
+{code}
+Please note that @ bindings will work only when used inside &quot;Input Option Values&quot; or &quot;Default Value&quot; fields.
+
+When placing @ bindings inside the &quot;Input Option Values&quot; field, they are used to format input options only when editing document within the Manager, for example to create a drop-down list of Cities or Countries.
+
+When placing @ bindings inside the &quot;Default Value&quot; field the returned value is used to render to the final web page. This makes it simple to build complex forms for data input on the web very quickly. 
+
+h2. Types
+
+* [@FILE|FILE Binding]
+* [@RESOURCE|RESOURCE Binding]
+* [@CHUNK|CHUNK Binding]
+* [@SELECT|SELECT Binding]
+* [@EVAL|EVAL Binding]
+* [@DIRECTORY|DIRECTORY Binding]
+* [@INHERIT|INHERIT Binding]
+
+h2. See Also
+
+* [Template Variables]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"18678517";s:3:"ver";s:1:"1";s:4:"code";s:2442:"\\
+
+h2. What are *@* Bindings?
+
+In the context to Template Variables, a Data Source is the location of the information to be displayed. A Data source can come from any of the following sources:
+* an externally generated file that is sent via FTP to the server
+* a Database table accessible to MODx
+* a [Resource] in the resource tree
+* a [Chunk|Chunks] in the Elements tree
+* the result of an evaluated PHP script
+
+These Data Sources can be tied (or &quot;bound&quot;) to a Template Variable for formatting and displaying in document. In addition, the bound data in the TVs can be almost effortlessly formatted via the Display Controls within the TV system for some truly stunning results. The format for using the types of data source bindings available to all template variables follows:
+* @FILE file_path
+* @RESOURCE resource_id
+* @CHUNK chunk_name
+* @SELECT sql_query
+* @EVAL php_code
+* @DIRECTORY path_relative_to_base_path
+
+These &quot;@&quot; commands or bindings will allow you to quickly and easily attach your template variables to virtually any database system available.
+
+The value returned from the data source can either be a string value (including numbers, dates, etc), an array or a recordset. The value returned is dependent on the type of binding used. Some display controls will attempt to either convert the returned value into a string or an array.
+
+For example, controls that accept string values such as a radio button group or select list will attempt to convert a record set (rows and columns) into the following format:
+{code}
+col1row1Value==col2row1Value||col1row2Value==col2row2Value,...
+{code}
+Please note that @ bindings will work only when used inside &quot;Input Option Values&quot; or &quot;Default Value&quot; fields.
+
+When placing @ bindings inside the &quot;Input Option Values&quot; field, they are used to format input options only when editing document within the Manager, for example to create a drop-down list of Cities or Countries.
+
+When placing @ bindings inside the &quot;Default Value&quot; field the returned value is used to render to the final web page. This makes it simple to build complex forms for data input on the web very quickly. 
+
+h2. Types
+
+* [@FILE|FILE Binding]
+* [@RESOURCE|RESOURCE Binding]
+* [@CHUNK|CHUNK Binding]
+* [@SELECT|SELECT Binding]
+* [@EVAL|EVAL Binding]
+* [@DIRECTORY|DIRECTORY Binding]
+* [@INHERIT|INHERIT Binding]
+
+h2. See Also
+
+* [Template Variables]
+
+{scrollbar}";}}}

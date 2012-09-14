@@ -1,0 +1,51 @@
+a:5:{s:2:"id";s:8:"18678377";s:4:"info";a:4:{s:6:"Title:";s:12:"modX.getTree";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:27:"[revolution20:modX.getTree]";}s:6:"parent";s:8:"18678361";s:6:"source";s:394:"\\
+
+h2. modX::getTree
+
+Get a site tree from a single or multiple modResource instances.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getTree
+
+{code}
+array getTree ([int|array $id = null], [int $depth = 10])
+{code}
+
+h2. Example
+
+Get a tree for the Resource with ID 12. Only go 5 levels deep.
+{code}
+$treeArray = $modx-&gt;getTree(12,5);
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678377";s:3:"ver";s:1:"1";s:4:"code";s:394:"\\
+
+h2. modX::getTree
+
+Get a site tree from a single or multiple modResource instances.
+
+h2. Syntax
+
+API Doc: http://api.modxcms.com/modx/modX.html#getTree
+
+{code}
+array getTree ([int|array $id = null], [int $depth = 10])
+{code}
+
+h2. Example
+
+Get a tree for the Resource with ID 12. Only go 5 levels deep.
+{code}
+$treeArray = $modx-&gt;getTree(12,5);
+{code}
+
+h2. See Also
+
+* [modX]
+
+{scrollbar}";}}}

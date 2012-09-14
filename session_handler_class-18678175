@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678175";s:4:"info";a:4:{s:6:"Title:";s:21:"session_handler_class";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:36:"[revolution20:session_handler_class]";}s:6:"parent";s:8:"18678127";s:6:"source";s:286:"h2. session_handler_class
+
+*Name*: Session Handler Class
+*Type*: String
+*Default*: modSessionHandler
+
+For database managed sessions, use &#39;modSessionHandler&#39;.  Leave this blank to use standard PHP session management, or set to your own custom session handling class.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678175";s:3:"ver";s:1:"2";s:4:"code";s:286:"h2. session_handler_class
+
+*Name*: Session Handler Class
+*Type*: String
+*Default*: modSessionHandler
+
+For database managed sessions, use &#39;modSessionHandler&#39;.  Leave this blank to use standard PHP session management, or set to your own custom session handling class.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119717";s:3:"ver";s:1:"1";s:4:"code";s:403:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Session Handler Classname{zone-data}
+{zone-data:key}session_handler_class{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}modSessionHandler{zone-data}
+{zone-data:desc}For database managed sessions, use &#39;modSessionHandler&#39;.  Leave this blank to use standard PHP session management.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

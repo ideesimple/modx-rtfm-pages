@@ -1,0 +1,107 @@
+a:5:{s:2:"id";s:8:"18678074";s:4:"info";a:4:{s:6:"Title:";s:20:"Installing a Package";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:35:"[revolution20:Installing a Package]";}s:6:"parent";s:8:"18678070";s:6:"source";s:1760:"\\
+
+h2. Installing a Package
+
+This page will guide you through the process of installing a Package via [Package Management].
+
+{note}Downloading packages through [Package Management] requires cURL or PHP Sockets. MODx will let you know if you don&#39;t have either of these. If you are still having problems with Package Management after confirming these are installed, see [Troubleshooting Package Management].{note}
+
+Go to System \-&gt; [Package Management].
+
+!dl-snip1.png!
+
+Then click the Download Extras link.
+
+!dl-snip2.png!
+
+Browse the available packages, opening the folders to expose the individual packages. Click Download to download whichever packages you&#39;d like to download. You may download multiple packages at one time.
+
+!dl-snip3.png!
+
+The package will be downloaded to the proper directories in your MODx installation. Now you can view your new package, and click Install to choose to install it.
+
+!dl-snip4.png!
+
+h3. [Providers]
+
+You can select the location from which to download packages, add a new location, or select packages on your local machine. Use the Add New Package link, to the left of the Download Extras link. By default, the modxcms.com/extras repository is available as a remote provider.
+
+h3. Manual Installation
+
+If you prefer, you can manually copy the package into the core/packages directory. The package must be a transport.zip archive, such as wayfinder-2.1.1-beta1.transport.zip. Then, click on &#39;Add New Package&#39; in the packages grid. From there, select the &#39;Scan Local&#39; option. The package will now be visible in the Packages list, and you can install it as usual, by right-clicking and selecting Install Package from the pop-up menu.
+
+h2. See Also
+
+{pagetree:root=Package Management}
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678074";s:3:"ver";s:1:"2";s:4:"code";s:1760:"\\
+
+h2. Installing a Package
+
+This page will guide you through the process of installing a Package via [Package Management].
+
+{note}Downloading packages through [Package Management] requires cURL or PHP Sockets. MODx will let you know if you don&#39;t have either of these. If you are still having problems with Package Management after confirming these are installed, see [Troubleshooting Package Management].{note}
+
+Go to System \-&gt; [Package Management].
+
+!dl-snip1.png!
+
+Then click the Download Extras link.
+
+!dl-snip2.png!
+
+Browse the available packages, opening the folders to expose the individual packages. Click Download to download whichever packages you&#39;d like to download. You may download multiple packages at one time.
+
+!dl-snip3.png!
+
+The package will be downloaded to the proper directories in your MODx installation. Now you can view your new package, and click Install to choose to install it.
+
+!dl-snip4.png!
+
+h3. [Providers]
+
+You can select the location from which to download packages, add a new location, or select packages on your local machine. Use the Add New Package link, to the left of the Download Extras link. By default, the modxcms.com/extras repository is available as a remote provider.
+
+h3. Manual Installation
+
+If you prefer, you can manually copy the package into the core/packages directory. The package must be a transport.zip archive, such as wayfinder-2.1.1-beta1.transport.zip. Then, click on &#39;Add New Package&#39; in the packages grid. From there, select the &#39;Scan Local&#39; option. The package will now be visible in the Packages list, and you can install it as usual, by right-clicking and selecting Install Package from the pop-up menu.
+
+h2. See Also
+
+{pagetree:root=Package Management}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"19136537";s:3:"ver";s:1:"1";s:4:"code";s:1468:"\\
+
+h2. Installing a Package
+
+This page will guide you through the process of installing a Package via [Package Management].
+
+Go to System \-&gt; [Package Management].
+
+!dl-snip1.png!
+
+Then click the Download Extras link.
+
+!dl-snip2.png!
+
+Browse the available packages, opening the folders to expose the individual packages. Click Download to download whichever packages you&#39;d like to download. You may download multiple packages at one time.
+
+!dl-snip3.png!
+
+The package will be downloaded to the proper directories in your MODx installation. Now you can view your new package, and click Install to choose to install it.
+
+!dl-snip4.png!
+
+h3. [Providers]
+
+You can select the location from which to download packages, add a new location, or select packages on your local machine. Use the Add New Package link, to the left of the Download Extras link. By default, the modxcms.com/extras repository is available as a remote provider.
+
+h3. Manual Installation
+
+If you prefer, you can manually copy the package into the core/packages directory. The package must be a transport.zip archive, such as wayfinder-2.1.1-beta1.transport.zip. Then, click on &#39;Add New Package&#39; in the packages grid. From there, select the &#39;Scan Local&#39; option. The package will now be visible in the Packages list, and you can install it as usual, by right-clicking and selecting Install Package from the pop-up menu.
+
+h2. See Also
+
+{pagetree:root=Package Management}
+
+{scrollbar}";}}}

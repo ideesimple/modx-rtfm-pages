@@ -1,0 +1,23 @@
+a:5:{s:2:"id";s:8:"18678143";s:4:"info";a:4:{s:6:"Title:";s:20:"editor_css_selectors";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:35:"[revolution20:editor_css_selectors]";}s:6:"parent";s:8:"18678127";s:6:"source";s:98:"h2. editor_css_selectors
+
+*Name*: CSS Selectors for Editor
+*Type*: String
+*Default*: 
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678143";s:3:"ver";s:1:"2";s:4:"code";s:98:"h2. editor_css_selectors
+
+*Name*: CSS Selectors for Editor
+*Type*: String
+*Default*: 
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119670";s:3:"ver";s:1:"1";s:4:"code";s:263:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}CSS Selectors for Editor{zone-data}
+{zone-data:key}editor_css_selectors{zone-data}
+{zone-data:type}string{zone-data}
+{zone-data:default}{zone-data}
+{zone-data:desc}{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

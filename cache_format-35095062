@@ -1,0 +1,21 @@
+a:5:{s:2:"id";s:8:"35095062";s:4:"info";a:4:{s:6:"Title:";s:12:"cache_format";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:27:"[revolution20:cache_format]";}s:6:"parent";s:8:"18678127";s:6:"source";s:176:"h2. cache_format
+
+*Name*: Caching Format to Use
+*Type*: Textfield
+*Default*: 0
+*Available In*: Revolution 2.1+
+
+0 = PHP arrays, 1 = JSON, 2 = PHP serialized data.
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095062";s:3:"ver";s:1:"1";s:4:"code";s:176:"h2. cache_format
+
+*Name*: Caching Format to Use
+*Type*: Textfield
+*Default*: 0
+*Available In*: Revolution 2.1+
+
+0 = PHP arrays, 1 = JSON, 2 = PHP serialized data.
+
+{scrollbar}
+";}}}

@@ -1,0 +1,50 @@
+a:5:{s:2:"id";s:8:"35095122";s:4:"info";a:4:{s:6:"Title:";s:32:"phpthumb_allow_src_above_docroot";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:10:"AMDbuilder";s:12:"Wiki Markup:";s:47:"[revolution20:phpthumb_allow_src_above_docroot]";}s:6:"parent";s:8:"18678127";s:6:"source";s:396:"h2. phpthumb_allow_src_above_docroot
+
+*Name*: phpThumb Allow src Above Document Root
+*Type*: Yes/No
+*Default*: No
+*Available In:* 2.1\+
+
+Indicates if the src path is allowed outside the document root. This is useful for multi-context deployments with multiple virtual hosts.
+{note}Thumbnails will not work if this is set to No, and your media source is outside the root folder.{note}
+
+{scrollbar}";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"35095122";s:3:"ver";s:1:"4";s:4:"code";s:396:"h2. phpthumb_allow_src_above_docroot
+
+*Name*: phpThumb Allow src Above Document Root
+*Type*: Yes/No
+*Default*: No
+*Available In:* 2.1\+
+
+Indicates if the src path is allowed outside the document root. This is useful for multi-context deployments with multiple virtual hosts.
+{note}Thumbnails will not work if this is set to No, and your media source is outside the root folder.{note}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"37683583";s:3:"ver";s:1:"3";s:4:"code";s:408:"h2. phpthumb_allow_src_above_docroot
+
+*Name*: phpThumb Allow src Above Document Root
+*Type*: Yes/No
+*Default*: No
+*Available In:* 2.1\+
+
+Indicates if the src path is allowed outside the document root. This is useful for multi-context deployments with multiple virtual hosts.
+{note}If using media sources outside the root folder, this must be set to Yes. Thumbnails will not work otherwise.{note}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"37683582";s:3:"ver";s:1:"2";s:4:"code";s:415:"h2. phpthumb_allow_src_above_docroot
+
+*Name*: phpThumb Allow src Above Document Root
+*Type*: Yes/No
+*Default*: No
+*Available In:* 2.1\+
+
+Indicates if the src path is allowed outside the document root. This is useful for multi-context deployments with multiple virtual hosts.
+{excerpt}If using media sources outside the root folder, this must be set to Yes.  Thumbnails will not work otherwise.{excerpt}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"37683580";s:3:"ver";s:1:"1";s:4:"code";s:287:"h2. phpthumb_allow_src_above_docroot
+
+*Name*: phpThumb Allow src Above Document Root
+*Type*: Yes/No
+*Default*: No
+*Available In:* 2.1\+
+
+Indicates if the src path is allowed outside the document root. This is useful for multi-context deployments with multiple virtual hosts.
+
+{scrollbar}";}}}

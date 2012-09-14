@@ -1,0 +1,49 @@
+a:5:{s:2:"id";s:8:"36634914";s:4:"info";a:4:{s:6:"Title:";s:28:"Manager Templates and Themes";s:7:"Author:";s:17:"Everett Griffiths";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:43:"[revolution20:Manager Templates and Themes]";}s:6:"parent";s:8:"37683775";s:6:"source";s:1171:"This about customizing the manager and its templates.  For example if you want a customized manager login form.
+
+The MODX manager uses a template much like regular MODX pages.  The manager&#39;s template files live inside of *manager/templates/default* directory.  You can update the system setting for the *manager_theme* to point to the new directory.
+
+The way this is set up is just like extending a PHP class: you can override any single file by mimicking the directory structure and updating the *manager_theme* directory.
+
+{note}For 2.1 and earlier, you must copy the entire controllers and templates directory for your theme. 2.2 and later let you copy single files.{note}
+
+For example, to customize just the Manager Login template, you could copy the following file into a new directory:
+
+*manager/templates/default/security/login.tpl*
+
+Copy that file into a new directory, for example here:
+
+*manager/templates/custom/security/login.tpl*
+
+Then update your System Setting for *manager_theme* to point to the newly created *custom* directory, and the version of the file from the *custom* directory will override the version of the file from the default directory.";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"36634914";s:3:"ver";s:1:"3";s:4:"code";s:1171:"This about customizing the manager and its templates.  For example if you want a customized manager login form.
+
+The MODX manager uses a template much like regular MODX pages.  The manager&#39;s template files live inside of *manager/templates/default* directory.  You can update the system setting for the *manager_theme* to point to the new directory.
+
+The way this is set up is just like extending a PHP class: you can override any single file by mimicking the directory structure and updating the *manager_theme* directory.
+
+{note}For 2.1 and earlier, you must copy the entire controllers and templates directory for your theme. 2.2 and later let you copy single files.{note}
+
+For example, to customize just the Manager Login template, you could copy the following file into a new directory:
+
+*manager/templates/default/security/login.tpl*
+
+Copy that file into a new directory, for example here:
+
+*manager/templates/custom/security/login.tpl*
+
+Then update your System Setting for *manager_theme* to point to the newly created *custom* directory, and the version of the file from the *custom* directory will override the version of the file from the default directory.";}i:1;a:3:{s:2:"id";s:8:"36634947";s:3:"ver";s:1:"2";s:4:"code";s:1019:"This about customizing the manager and its templates.  For example if you want a customized manager login form.
+
+The MODX manager uses a template much like regular MODX pages.  The manager&#39;s template files live inside of *manager/templates/default* directory.  You can update the system setting for the *manager_theme* to point to the new directory.
+
+The way this is set up is just like extending a PHP class: you can override any single file by mimicking the directory structure and updating the *manager_theme* directory.
+
+For example, to customize just the Manager Login template, you could copy the following file into a new directory:
+
+*manager/templates/default/security/login.tpl*
+
+Copy that file into a new directory, for example here:
+
+*manager/templates/custom/security/login.tpl*
+
+Then update your System Setting for *manager_theme* to point to the newly created *custom* directory, and the version of the file from the *custom* directory will override the version of the file from the default directory.";}i:2;a:3:{s:2:"id";s:8:"36634923";s:3:"ver";s:1:"1";s:4:"code";s:353:"This about customizing the manager and its templates.  For example if you want a customized manager login form.
+
+The MODX manager uses a template much like regular MODX pages.  The manager&#39;s template files live inside of *manager/templates/default* directory.  You can update the system setting for the *manager_theme* to point to the new directory.";}}}

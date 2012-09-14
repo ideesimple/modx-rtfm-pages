@@ -1,0 +1,85 @@
+a:5:{s:2:"id";s:8:"19136539";s:4:"info";a:4:{s:6:"Title:";s:34:"Troubleshooting Package Management";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:49:"[revolution20:Troubleshooting Package Management]";}s:6:"parent";s:8:"36634926";s:6:"source";s:1025:"\\
+
+h2. Troubleshooting Package Management
+
+This page is dedicated to problems with Package Management, specifically with downloading and installing packages.
+
+Most issues can be resolved by making sure you have cURL installed, and that the core/packages/ directory is writable by PHP.
+
+h3. archiveTo/extractTo errors
+
+If you&#39;ve downloaded a package, but are getting &#39;archiveTo&#39;-related errors or a &quot;Package Not Found&quot; error after downloading, make sure you&#39;re running at least Revolution 2.0.1, and then go to System Settings and set the *archive_with* setting to &quot;Yes&quot;, or 1. 
+
+This will force MODx to use PCLZip instead of ZipArchive, as your environment most likely has a broken ZipArchive configuration or version that is causing the error:
+
+See these tickets for more information:
+* http://bugs.php.net/bug.php?id=44974 (Closed)
+* http://bugs.php.net/bug.php?id=47023 (Closed)
+* http://bugs.php.net/bug.php?id=43641 (Closed)
+* http://bugs.php.net/bug.php?id=48218 (Open)
+
+{scrollbar}";s:8:"versions";a:5:{i:0;a:3:{s:2:"id";s:8:"19136539";s:3:"ver";s:1:"5";s:4:"code";s:1025:"\\
+
+h2. Troubleshooting Package Management
+
+This page is dedicated to problems with Package Management, specifically with downloading and installing packages.
+
+Most issues can be resolved by making sure you have cURL installed, and that the core/packages/ directory is writable by PHP.
+
+h3. archiveTo/extractTo errors
+
+If you&#39;ve downloaded a package, but are getting &#39;archiveTo&#39;-related errors or a &quot;Package Not Found&quot; error after downloading, make sure you&#39;re running at least Revolution 2.0.1, and then go to System Settings and set the *archive_with* setting to &quot;Yes&quot;, or 1. 
+
+This will force MODx to use PCLZip instead of ZipArchive, as your environment most likely has a broken ZipArchive configuration or version that is causing the error:
+
+See these tickets for more information:
+* http://bugs.php.net/bug.php?id=44974 (Closed)
+* http://bugs.php.net/bug.php?id=47023 (Closed)
+* http://bugs.php.net/bug.php?id=43641 (Closed)
+* http://bugs.php.net/bug.php?id=48218 (Open)
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33226989";s:3:"ver";s:1:"4";s:4:"code";s:794:"\\
+
+h2. Troubleshooting Package Management
+
+This page is dedicated to problems with Package Management, specifically with downloading and installing packages.
+
+Most issues can be resolved by making sure you have cURL installed, and that the core/packages/ directory is writable by PHP.
+
+h3. archiveTo/extractTo errors
+
+If you&#39;ve downloaded a package, but are getting &#39;archiveTo&#39;-related errors or a &quot;Package Not Found&quot; error after downloading, make sure you&#39;re running at least Revolution 2.0.1, and then go to System Settings and set the *archive_with* setting to &quot;Yes&quot;, or 1. 
+
+This will force MODx to use PCLZip instead of ZipArchive, as your environment most likely has a broken ZipArchive configuration or version that is causing the error.
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"30507009";s:3:"ver";s:1:"3";s:4:"code";s:784:"\\
+
+h2. Troubleshooting Package Management
+
+This page is dedicated to problems with Package Management, specifically with downloading and installing packages.
+
+Most issues can be resolved by making sure you have cURL installed, and that the core/packages/ directory is writable by PHP.
+
+h3. archiveTo errors
+
+If you&#39;ve downloaded a package, but are getting &#39;archiveTo&#39;-related errors or a &quot;Package Not Found&quot; error after downloading, make sure you&#39;re running at least Revolution 2.0.1, and then go to System Settings and set the *archive_with* setting to &quot;Yes&quot;, or 1. 
+
+This will force MODx to use PCLZip instead of ZipArchive, as your environment most likely has a broken ZipArchive configuration or version that is causing the error.
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"28082183";s:3:"ver";s:1:"2";s:4:"code";s:298:"\\
+
+h2. Troubleshooting Package Management
+
+This page is dedicated to problems with Package Management, specifically with downloading and installing packages.
+
+Most issues can be resolved by making sure you have cURL installed, and that the core/packages/ directory is writable by PHP.
+
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"19136541";s:3:"ver";s:1:"1";s:4:"code";s:173:"\\
+
+h2. Troubleshooting Package Management
+
+This page is dedicated to problems with Package Management, specifically with downloading and installing packages.
+
+
+
+{scrollbar}";}}}

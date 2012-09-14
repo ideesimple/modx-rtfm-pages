@@ -1,0 +1,157 @@
+a:5:{s:2:"id";s:8:"39355582";s:4:"info";a:4:{s:6:"Title:";s:46:"Accessing Template Variable Values via the API";s:7:"Author:";s:17:"Everett Griffiths";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:61:"[revolution20:Accessing Template Variable Values via the API]";}s:6:"parent";s:8:"18678062";s:6:"source";s:1422:"\\
+
+{toc}
+
+h2. Accessing Template Variable Values via the API
+
+Like just about everything in the MODX GUI, you can access Template Variables and their values via the MODX API.  This relies on the xPDO method [getObject|xPDO20:xPDO.getObject] and related functions, but we demonstrate some examples here because it relates directly to Template Variables.
+
+h2. getTVValue
+
+{code}
+string|null getTVValue (str|integer $tv_name OR ID of TV)
+{code}
+
+See *core/model/modx/modresource.class.php*
+
+
+h3. getTVValue Usage
+
+Let&#39;s say we have a TV named &#39;bio&#39;, and we&#39;re going to retrieve page id 123 that uses this TV.  Here&#39;s what our Snippet might look like:
+
+{code}
+$page = $modx-&gt;getObject(&#39;modResource&#39;, 123);
+return $page-&gt;getTVValue(&#39;bio&#39;);
+{code}
+
+
+
+h2. setTVValue
+
+Use *setTVValue* to save a new value to a TV.  Unlike some other xPDO API methods, this method stores values to the database immediately, so you do not need to invoke a separate call to a *save()* method.
+
+{code}
+boolean setTVValue (str|integer $tv_name OR ID of TV, string $value)
+{code}
+
+h3. setTVValue Usage
+
+{code}
+$page = $modx-&gt;getObject(&#39;modResource&#39;, 123);
+
+if (!$page-&gt;setTVValue(&#39;bio&#39;, &#39;This is my new bio...&#39;)) {
+    $modx-&gt;log(xPDO::LOG_LEVEL_ERROR, &#39;There was a problem saving your TV...&#39;);
+}
+{code}
+
+
+
+h2. See Also
+
+{pagetree:root=Template Variables}
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"39355582";s:3:"ver";s:1:"2";s:4:"code";s:1422:"\\
+
+{toc}
+
+h2. Accessing Template Variable Values via the API
+
+Like just about everything in the MODX GUI, you can access Template Variables and their values via the MODX API.  This relies on the xPDO method [getObject|xPDO20:xPDO.getObject] and related functions, but we demonstrate some examples here because it relates directly to Template Variables.
+
+h2. getTVValue
+
+{code}
+string|null getTVValue (str|integer $tv_name OR ID of TV)
+{code}
+
+See *core/model/modx/modresource.class.php*
+
+
+h3. getTVValue Usage
+
+Let&#39;s say we have a TV named &#39;bio&#39;, and we&#39;re going to retrieve page id 123 that uses this TV.  Here&#39;s what our Snippet might look like:
+
+{code}
+$page = $modx-&gt;getObject(&#39;modResource&#39;, 123);
+return $page-&gt;getTVValue(&#39;bio&#39;);
+{code}
+
+
+
+h2. setTVValue
+
+Use *setTVValue* to save a new value to a TV.  Unlike some other xPDO API methods, this method stores values to the database immediately, so you do not need to invoke a separate call to a *save()* method.
+
+{code}
+boolean setTVValue (str|integer $tv_name OR ID of TV, string $value)
+{code}
+
+h3. setTVValue Usage
+
+{code}
+$page = $modx-&gt;getObject(&#39;modResource&#39;, 123);
+
+if (!$page-&gt;setTVValue(&#39;bio&#39;, &#39;This is my new bio...&#39;)) {
+    $modx-&gt;log(xPDO::LOG_LEVEL_ERROR, &#39;There was a problem saving your TV...&#39;);
+}
+{code}
+
+
+
+h2. See Also
+
+{pagetree:root=Template Variables}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"39355633";s:3:"ver";s:1:"1";s:4:"code";s:1422:"\\
+
+{toc}
+
+h2. Accessing Template Variable Values via the API
+
+Like just about everything in the MODX GUI, you can access Template Variables and their values via the MODX API.  This relies on the xPDO method [getObject|xPDO20:xPDO.getObject] and related functions, but we demonstrate some examples here because it relates directly to Template Variables.
+
+h2. getTVValue
+
+{code}
+string|null getTVValue (str|integer $tv_name OR ID of TV)
+{code}
+
+See *core/model/modx/modresource.class.php*
+
+
+h3. getTVValue Usage
+
+Let&#39;s say we have a TV named &#39;bio&#39;, and we&#39;re going to retrieve page id 123 that uses this TV.  Here&#39;s what our Snippet might look like:
+
+{code}
+$page = $modx-&gt;getObject(&#39;modResource&#39;, 123);
+return $modx-&gt;getTVValue(&#39;bio&#39;);
+{code}
+
+
+
+h2. setTVValue
+
+Use *setTVValue* to save a new value to a TV.  Unlike some other xPDO API methods, this method stores values to the database immediately, so you do not need to invoke a separate call to a *save()* method.
+
+{code}
+boolean setTVValue (str|integer $tv_name OR ID of TV, string $value)
+{code}
+
+h3. setTVValue Usage
+
+{code}
+$page = $modx-&gt;getObject(&#39;modResource&#39;, 123);
+
+if (!$modx-&gt;setTVValue(&#39;bio&#39;, &#39;This is my new bio...&#39;)) {
+    $modx-&gt;log(xPDO::LOG_LEVEL_ERROR, &#39;There was a problem saving your TV...&#39;);
+}
+{code}
+
+
+
+h2. See Also
+
+{pagetree:root=Template Variables}
+
+{scrollbar}";}}}

@@ -1,0 +1,483 @@
+a:5:{s:2:"id";s:8:"18678329";s:4:"info";a:4:{s:6:"Title:";s:22:"Developer Introduction";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:18:"W. Shawn Wilkerson";s:12:"Wiki Markup:";s:37:"[revolution20:Developer Introduction]";}s:6:"parent";s:8:"18678336";s:6:"source";s:6336:"\\
+
+{toc}
+
+h2. What is MODx?
+
+MODx Revolution is an Content Application Platform, built for developers, designers and users who want a powerful, scalable system with flexible content management built in.
+
+h2. What is MVC?
+
+MVC is &quot;Model-View-Controller&quot;, a common programming paradigm where the data&#39;s Model is only accessed through a Controller, which connects to a View that can easily be changed without having to change the Model.
+
+h3. What is MVC²?
+
+MVC² is a MODx terminology that is &quot;Model-View-Controller/Connector&quot;. It basically adds a new way of accessing the model from the view - Connectors, which are AJAX-based files that &quot;connect&quot; to processors to provide remote CRUD interactions.
+
+h3. Connector/Processor Relationships
+
+Connectors are simply gateway files that hook into specific Processors. They are used mainly to prevent direct accessing of processors, and limit user access to those processors.
+
+h2. What is xPDO?
+
+[xPDO|xPDO20:Home] is our name for open eXtensions to PDO. It&#39;s a light-weight ORB (object-relational bridge) library that works on PHP 4 and 5, and takes advantage of the newly adopted standard for database persistence in PHP 5.1+, PDO. It implements the very simple, but effective Active Record pattern for data access, as well as a flexible domain model that allows you to isolate domain logic from database-specific logic, or not, depending on your needs.
+
+h2. What is an ORM?
+
+As defined by [Wikipedia|http://www.wikipedia.org/wiki/Object-relational_model]:
+
+{quote}An object-relational database (ORD), or object-relational database management system (ORDBMS), is a database management system (DBMS) similar to a relational database, but with an object-oriented database model: objects, classes and inheritance are directly supported in database schemas and in the query language. In addition, it supports extension of the data model with custom data-types and methods.{quote}
+
+Basically, tables in SQL databases become classes that can contain table-specific methods, inherit from base classes, and much more.
+
+h2. A Brief Overview of Revolution
+
+Revolution at its core is a Content Management Framework. It&#39;s not a PHP Application Framework like CodeIgnitor or Symfony, nor does it purport to be one. With that said, it&#39;s much more than a typical CMS like Wordpress or others; it enables you to build Content Management Applications with ease and extensibility.
+
+Revolution bases its internal structure on what we call a MVC² design system. It&#39;s loosely based on the MVC, or [model-view-controller|http://en.wikipedia.org/wiki/Model-view-controller] architectural pattern, in programming.
+
+h3. The Model
+
+The _M_ stands for _Model_, which is the core classes that manipulate data records. These core classes, prefixed with &#39;mod&#39; in Revolution, handle all the Domain logic for MODx Revolution.
+
+This also includes what Revolution calls &quot;processors&quot;, which are scripts that handle Domain Logic for MODx Revolution. They are never accessed directly, and are used to handle form processing, REST requests, AJAX requests, and more. They resemble basic CRUD (Create-Read-Update-Delete) processing tasks.
+
+h3. The View
+
+Views in MODx Revolution are called &#39;Templates&#39;, but are used differently based on what context we&#39;re talking about.
+
+h4. In the front-end, they are Templates, Chunks and Resources.
+
+h5. [Templates]
+
+Templates are what they sound like. They allow you to create templates that will encapsulate more page-specific data. Think of them like headers/footers all rolled into one (and so much more\!)
+
+h5. [Chunks]
+
+Chunks are small pieces of HTML code that can be inserted anywhere. They represent View widgets, in a sense, because of their modularity and ease of insertion.
+
+h5. Resources
+
+Resources is the basic representation of a single &quot;webpage&quot; in MODx Revolution. They represent a single page or resource by which the client accesses content from the server. They can be files, weblinks, symlinks or just plain-old HTML pages wrapped by [Templates].
+
+h4. In the Manager
+
+In the manager-side of MODx Revolution, the View is handled by templates as well, although these are file-based and located in manager/templates, and currently loaded via Smarty.
+
+h3. The Controller
+
+Controllers in MODx Revolution come in two forms. In the front-end, they are Request Handlers (via the modRequest class) and Snippets and Plugins.
+
+h4. [Snippets]
+
+Snippets are simply PHP code that can be placed anywhere in a page. They can be placed in [Chunks], [Templates], or Resources. They simply execute PHP code whenever they are called, and return whatever output they would like to push to the page.
+
+h4. [Plugins]
+
+Plugins are also PHP code, but are targeted at specific System Events that occur throughout the request processing. They can occur before the webpage is rendered, after it is, before the request is handled, or many more places.
+
+They allow users to write generic code that affects basic page functionality, such as word censoring, automatic link creation, separate cache handling, context redirection, and more.
+
+h3. The 2nd C: The Connectors
+
+Connectors are a new idea to MODx Revolution; they are access points for processors. The manager system in MODx Revolution uses them extensively; they provide secure locations for AJAX requests to process data on certain objects.
+
+For example, a connector request that loads /modx/connectors/resource/index.php with a GET &#39;action&#39; parameter of &quot;get&quot;, and a GET parameter of &#39;id&#39;, will (assuming the request&#39;s client has access) grab the Resource with the ID specified and return it in JSON (or whatever is configured; this is JSON by default in Revolution) format.
+
+Every Connector request is also secured down by Context permissions loaded on every request. If the user does not have access (via the Access Policy assigned to the request&#39;s context), the connector will refuse to provide data.
+
+Connectors allow for dynamic, secure JSON requests (and eventually REST-based requests) straight from your MODx manager.
+
+h2. See Also
+
+{pagetree:root=Developer Introduction}
+
+* [xPDO|xPDO20:Home], the database layer for Revolution
+* [Explanation of Directory Structure]
+* [Glossary of Revolution Terms]
+
+{scrollbar}";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"18678329";s:3:"ver";s:1:"4";s:4:"code";s:6336:"\\
+
+{toc}
+
+h2. What is MODx?
+
+MODx Revolution is an Content Application Platform, built for developers, designers and users who want a powerful, scalable system with flexible content management built in.
+
+h2. What is MVC?
+
+MVC is &quot;Model-View-Controller&quot;, a common programming paradigm where the data&#39;s Model is only accessed through a Controller, which connects to a View that can easily be changed without having to change the Model.
+
+h3. What is MVC²?
+
+MVC² is a MODx terminology that is &quot;Model-View-Controller/Connector&quot;. It basically adds a new way of accessing the model from the view - Connectors, which are AJAX-based files that &quot;connect&quot; to processors to provide remote CRUD interactions.
+
+h3. Connector/Processor Relationships
+
+Connectors are simply gateway files that hook into specific Processors. They are used mainly to prevent direct accessing of processors, and limit user access to those processors.
+
+h2. What is xPDO?
+
+[xPDO|xPDO20:Home] is our name for open eXtensions to PDO. It&#39;s a light-weight ORB (object-relational bridge) library that works on PHP 4 and 5, and takes advantage of the newly adopted standard for database persistence in PHP 5.1+, PDO. It implements the very simple, but effective Active Record pattern for data access, as well as a flexible domain model that allows you to isolate domain logic from database-specific logic, or not, depending on your needs.
+
+h2. What is an ORM?
+
+As defined by [Wikipedia|http://www.wikipedia.org/wiki/Object-relational_model]:
+
+{quote}An object-relational database (ORD), or object-relational database management system (ORDBMS), is a database management system (DBMS) similar to a relational database, but with an object-oriented database model: objects, classes and inheritance are directly supported in database schemas and in the query language. In addition, it supports extension of the data model with custom data-types and methods.{quote}
+
+Basically, tables in SQL databases become classes that can contain table-specific methods, inherit from base classes, and much more.
+
+h2. A Brief Overview of Revolution
+
+Revolution at its core is a Content Management Framework. It&#39;s not a PHP Application Framework like CodeIgnitor or Symfony, nor does it purport to be one. With that said, it&#39;s much more than a typical CMS like Wordpress or others; it enables you to build Content Management Applications with ease and extensibility.
+
+Revolution bases its internal structure on what we call a MVC² design system. It&#39;s loosely based on the MVC, or [model-view-controller|http://en.wikipedia.org/wiki/Model-view-controller] architectural pattern, in programming.
+
+h3. The Model
+
+The _M_ stands for _Model_, which is the core classes that manipulate data records. These core classes, prefixed with &#39;mod&#39; in Revolution, handle all the Domain logic for MODx Revolution.
+
+This also includes what Revolution calls &quot;processors&quot;, which are scripts that handle Domain Logic for MODx Revolution. They are never accessed directly, and are used to handle form processing, REST requests, AJAX requests, and more. They resemble basic CRUD (Create-Read-Update-Delete) processing tasks.
+
+h3. The View
+
+Views in MODx Revolution are called &#39;Templates&#39;, but are used differently based on what context we&#39;re talking about.
+
+h4. In the front-end, they are Templates, Chunks and Resources.
+
+h5. [Templates]
+
+Templates are what they sound like. They allow you to create templates that will encapsulate more page-specific data. Think of them like headers/footers all rolled into one (and so much more\!)
+
+h5. [Chunks]
+
+Chunks are small pieces of HTML code that can be inserted anywhere. They represent View widgets, in a sense, because of their modularity and ease of insertion.
+
+h5. Resources
+
+Resources is the basic representation of a single &quot;webpage&quot; in MODx Revolution. They represent a single page or resource by which the client accesses content from the server. They can be files, weblinks, symlinks or just plain-old HTML pages wrapped by [Templates].
+
+h4. In the Manager
+
+In the manager-side of MODx Revolution, the View is handled by templates as well, although these are file-based and located in manager/templates, and currently loaded via Smarty.
+
+h3. The Controller
+
+Controllers in MODx Revolution come in two forms. In the front-end, they are Request Handlers (via the modRequest class) and Snippets and Plugins.
+
+h4. [Snippets]
+
+Snippets are simply PHP code that can be placed anywhere in a page. They can be placed in [Chunks], [Templates], or Resources. They simply execute PHP code whenever they are called, and return whatever output they would like to push to the page.
+
+h4. [Plugins]
+
+Plugins are also PHP code, but are targeted at specific System Events that occur throughout the request processing. They can occur before the webpage is rendered, after it is, before the request is handled, or many more places.
+
+They allow users to write generic code that affects basic page functionality, such as word censoring, automatic link creation, separate cache handling, context redirection, and more.
+
+h3. The 2nd C: The Connectors
+
+Connectors are a new idea to MODx Revolution; they are access points for processors. The manager system in MODx Revolution uses them extensively; they provide secure locations for AJAX requests to process data on certain objects.
+
+For example, a connector request that loads /modx/connectors/resource/index.php with a GET &#39;action&#39; parameter of &quot;get&quot;, and a GET parameter of &#39;id&#39;, will (assuming the request&#39;s client has access) grab the Resource with the ID specified and return it in JSON (or whatever is configured; this is JSON by default in Revolution) format.
+
+Every Connector request is also secured down by Context permissions loaded on every request. If the user does not have access (via the Access Policy assigned to the request&#39;s context), the connector will refuse to provide data.
+
+Connectors allow for dynamic, secure JSON requests (and eventually REST-based requests) straight from your MODx manager.
+
+h2. See Also
+
+{pagetree:root=Developer Introduction}
+
+* [xPDO|xPDO20:Home], the database layer for Revolution
+* [Explanation of Directory Structure]
+* [Glossary of Revolution Terms]
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20578320";s:3:"ver";s:1:"3";s:4:"code";s:6332:"\\
+
+{toc}
+
+h2. What is MODx?
+
+MODx Revolution is an Content Application Platform, built for developers, designers and users who want a powerful, scalable system with flexible content management built in.
+
+h2. What is MVC?
+
+MVC is &quot;Model-View-Controller&quot;, a common programming paradigm where the data&#39;s Model is only accessed through a Controller, which connects to a View that can easily be changed without having to change the Model.
+
+h3. What is MVC²?
+
+MVC² is a MODx terminology that is &quot;Model-View-Controller/Connector&quot;. It basically adds a new way of accessing the model from the view - Connectors, which are AJAX-based files that &quot;connect&quot; to processors to provide remote CRUD interactions.
+
+h3. Connector/Processor Relationships
+
+Connectors are simply gateway files that hook into specific Processors. They are used mainly to prevent direct accessing of processors, and limit user access to those processors.
+
+h2. What is xPDO?
+
+[xPDO|xPDO20:Home] is our name for open eXtensions to PDO. It&#39;s a light-weight ORB (object-relational bridge) library that works on PHP 4 and 5, and takes advantage of the newly adopted standard for database persistence in PHP 5.1+, PDO. It implements the very simple, but effective Active Record pattern for data access, as well as a flexible domain model that allows you to isolate domain logic from database-specific logic, or not, depending on your needs.
+
+h2. What is an ORM?
+
+As defined by [Wikipedia|http://www.wikipedia.org/wiki/Object-relational_model]: 
+
+{quote}An object-relational database (ORD), or object-relational database management system (ORDBMS), is a database management system (DBMS) similar to a relational database, but with an object-oriented database model: objects, classes and inheritance are directly supported in database schemas and in the query language. In addition, it supports extension of the data model with custom data-types and methods.{quote}
+
+Basically, tables in SQL databases become classes that can contain table-specific methods, inherit from base classes, and much more.
+
+h2. A Brief Overview of Revolution
+
+Revolution at its core is a Content Management Framework. It&#39;s not a PHP Application Framework like CodeIgnitor or Symfony, nor does it purport to be one. With that said, it&#39;s much more than a typical CMS like Wordpress or others; it enables you to build Content Management Applications with ease and extensibility.
+
+Revolution bases its internal structure on what we call a MVC² design system. It&#39;s loosely based on the MVC, or [model-view-controller|http://en.wikipedia.org/wiki/Model-view-controller] architectural pattern, in programming. 
+
+h3. The Model
+
+The _M_ stands for _Model_, which is the core classes that manipulate data records. These core classes, prefixed with &#39;mod&#39; in Revolution, handle all the Domain logic for MODx Revolution.
+
+This also includes what Revolution calls &quot;processors&quot;, which are scripts that handle Domain Logic for MODx Revolution. They are never accessed directly, and are used to handle form processing, REST requests, AJAX requests, and more. They resemble basic CRUD (Create-Read-Update-Delete) processing tasks.
+
+h3. The View
+
+Views in MODx Revolution are called &#39;Templates&#39;, but are used differently based on what context we&#39;re talking about. In the front-end, they are Templates, Chunks and Resources.
+
+h4. [Templates]
+
+Templates are what they sound like. They allow you to create templates that will encapsulate more page-specific data. Think of them like headers/footers all rolled into one (and so much more!)
+
+h4. [Chunks]
+
+Chunks are small pieces of HTML code that can be inserted anywhere. They represent View widgets, in a sense, because of their modularity and ease of insertion.
+
+h4. Resources
+
+Resources is the basic representation of a single &quot;webpage&quot; in MODx Revolution. They represent a single page or resource by which the client accesses content from the server. They can be files, weblinks, symlinks or just plain-old HTML pages wrapped by [Templates].
+
+h4. In the Manager
+
+In the manager-side of MODx Revolution, the View is handled by templates as well, although these are file-based and located in manager/templates, and currently loaded via Smarty.
+
+h3. The Controller
+
+Controllers in MODx Revolution come in two forms. In the front-end, they are Request Handlers (via the modRequest class) and Snippets and Plugins.
+
+h4. [Snippets]
+
+Snippets are simply PHP code that can be placed anywhere in a page. They can be placed in [Chunks], [Templates], or Resources. They simply execute PHP code whenever they are called, and return whatever output they would like to push to the page.
+
+h4. [Plugins]
+
+Plugins are also PHP code, but are targeted at specific System Events that occur throughout the request processing. They can occur before the webpage is rendered, after it is, before the request is handled, or many more places.
+
+They allow users to write generic code that affects basic page functionality, such as word censoring, automatic link creation, separate cache handling, context redirection, and more.
+
+h3. The 2nd C: The Connectors
+
+Connectors are a new idea to MODx Revolution; they are access points for processors. The manager system in MODx Revolution uses them extensively; they provide secure locations for AJAX requests to process data on certain objects.
+
+For example, a connector request that loads /modx/connectors/resource/index.php with a GET &#39;action&#39; parameter of &quot;get&quot;, and a GET parameter of &#39;id&#39;, will (assuming the request&#39;s client has access) grab the Resource with the ID specified and return it in JSON (or whatever is configured; this is JSON by default in Revolution) format.
+
+Every Connector request is also secured down by Context permissions loaded on every request. If the user does not have access (via the Access Policy assigned to the request&#39;s context), the connector will refuse to provide data.
+
+Connectors allow for dynamic, secure JSON requests (and eventually REST-based requests) straight from your MODx manager.
+
+h2. See Also
+
+{pagetree:root=Developer Introduction}
+
+* [xPDO|xPDO20:Home], the database layer for Revolution
+* [Explanation of Directory Structure]
+* [Glossary of Revolution Terms]
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"19136575";s:3:"ver";s:1:"2";s:4:"code";s:6292:"\\
+
+{toc}
+
+h2. What is MODx?
+
+MODx Revolution is an Content Application Platform, built for developers, designers and users who want a powerful, scalable system with flexible content management built in.
+
+h2. What is MVC?
+
+MVC is &quot;Model-View-Controller&quot;, a common programming paradigm where the data&#39;s Model is only accessed through a Controller, which connects to a View that can easily be changed without having to change the Model.
+
+h3. What is MVC²?
+
+MVC² is a MODx terminology that is &quot;Model-View-Controller/Connector&quot;. It basically adds a new way of accessing the model from the view - Connectors, which are AJAX-based files that &quot;connect&quot; to processors to provide remote CRUD interactions.
+
+h3. Connector/Processor Relationships
+
+Connectors are simply gateway files that hook into specific Processors. They are used mainly to prevent direct accessing of processors, and limit user access to those processors.
+
+h2. What is xPDO?
+
+[xPDO|xPDO20:Home] is our name for open eXtensions to PDO. It&#39;s a light-weight ORB (object-relational bridge) library that works on PHP 4 and 5, and takes advantage of the newly adopted standard for database persistence in PHP 5.1+, PDO. It implements the very simple, but effective Active Record pattern for data access, as well as a flexible domain model that allows you to isolate domain logic from database-specific logic, or not, depending on your needs.
+
+h2. What is an ORM?
+
+As defined by [Wikipedia|http://www.wikipedia.org/wiki/Object-relational_model]: 
+
+{quote}An object-relational database (ORD), or object-relational database management system (ORDBMS), is a database management system (DBMS) similar to a relational database, but with an object-oriented database model: objects, classes and inheritance are directly supported in database schemas and in the query language. In addition, it supports extension of the data model with custom data-types and methods.{quote}
+
+Basically, tables in SQL databases become classes that can contain table-specific methods, inherit from base classes, and much more.
+
+h2. A Brief Overview of Revolution
+
+Revolution at its core is a Content Management Framework. It&#39;s not a PHP Application Framework like CodeIgnitor or Symfony, nor does it purport to be one. With that said, it&#39;s much more than a typical CMS like Wordpress or others; it enables you to build Content Management Applications with ease and extensibility.
+
+Revolution bases its internal structure on what we call a MVC² design system. It&#39;s loosely based on the MVC, or [model-view-controller|http://en.wikipedia.org/wiki/Model-view-controller] architectural pattern, in programming. 
+
+h3. The Model
+
+The _M_ stands for _Model_, which is the core classes that manipulate data records. These core classes, prefixed with &#39;mod&#39; in Revolution, handle all the Domain logic for MODx Revolution.
+
+This also includes what Revolution calls &quot;processors&quot;, which are scripts that handle Domain Logic for MODx Revolution. They are never accessed directly, and are used to handle form processing, REST requests, AJAX requests, and more. They resemble basic CRUD (Create-Read-Update-Delete) processing tasks.
+
+h3. The View
+
+Views in MODx Revolution are called &#39;Templates&#39;, but are used differently based on what context we&#39;re talking about. In the front-end, they are Templates, Chunks and Resources.
+
+h4. [Templates]
+
+Templates are what they sound like. They allow you to create templates that will encapsulate more page-specific data. Think of them like headers/footers all rolled into one (and so much more!)
+
+h4. [Chunks]
+
+Chunks are small pieces of HTML code that can be inserted anywhere. They represent View widgets, in a sense, because of their modularity and ease of insertion.
+
+h4. Resources
+
+Resources is the basic representation of a single &quot;webpage&quot; in MODx Revolution. They represent a single page or resource by which the client accesses content from the server. They can be files, weblinks, symlinks or just plain-old HTML pages wrapped by [Templates].
+
+h4. In the Manager
+
+In the manager-side of MODx Revolution, the View is handled by templates as well, although these are file-based and located in manager/templates, and currently loaded via Smarty.
+
+h3. The Controller
+
+Controllers in MODx Revolution come in two forms. In the front-end, they are Request Handlers (via the modRequest class) and Snippets and Plugins.
+
+h4. [Snippets]
+
+Snippets are simply PHP code that can be placed anywhere in a page. They can be placed in [Chunks], [Templates], or Resources. They simply execute PHP code whenever they are called, and return whatever output they would like to push to the page.
+
+h4. [Plugins]
+
+Plugins are also PHP code, but are targeted at specific System Events that occur throughout the request processing. They can occur before the webpage is rendered, after it is, before the request is handled, or many more places.
+
+They allow users to write generic code that affects basic page functionality, such as word censoring, automatic link creation, separate cache handling, context redirection, and more.
+
+h3. The 2nd C: The Connectors
+
+Connectors are a new idea to MODx Revolution; they are access points for processors. The manager system in MODx Revolution uses them extensively; they provide secure locations for AJAX requests to process data on certain objects.
+
+For example, a connector request that loads /modx/connectors/resource/index.php with a GET &#39;action&#39; parameter of &quot;get&quot;, and a GET parameter of &#39;id&#39;, will (assuming the request&#39;s client has access) grab the Resource with the ID specified and return it in JSON (or whatever is configured; this is JSON by default in Revolution) format.
+
+Every Connector request is also secured down by Context permissions loaded on every request. If the user does not have access (via the Access Policy assigned to the request&#39;s context), the connector will refuse to provide data.
+
+Connectors allow for dynamic, secure JSON requests (and eventually REST-based requests) straight from your MODx manager.
+
+h2. See Also
+
+* [xPDO|xPDO20:Home], the database layer for Revolution
+* [Explanation of Directory Structure]
+* [Glossary of Revolution Terms]
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"19136574";s:3:"ver";s:1:"1";s:4:"code";s:6368:"\\
+
+{toc}
+
+h2. What is MODx?
+
+MODx Revolution is an Content Application Platform, built for developers, designers and users who want a powerful, scalable system with flexible content management built in.
+
+h2. What is MVC?
+
+MVC is &quot;Model-View-Controller&quot;, a common programming paradigm where the data&#39;s Model is only accessed through a Controller, which connects to a View that can easily be changed without having to change the Model.
+
+h3. What is MVC²?
+
+MVC² is a MODx terminology that is &quot;Model-View-Controller/Connector&quot;. It basically adds a new way of accessing the model from the view - Connectors, which are AJAX-based files that &quot;connect&quot; to processors to provide remote CRUD interactions.
+
+h3. Connector/Processor Relationships
+
+Connectors are simply gateway files that hook into specific Processors. They are used mainly to prevent direct accessing of processors, and limit user access to those processors.
+
+h2. What is xPDO?
+
+[xPDO|xPDO20:Home] is our name for open eXtensions to PDO. It&#39;s a light-weight ORB (object-relational bridge) library that works on PHP 4 and 5, and takes advantage of the newly adopted standard for database persistence in PHP 5.1+, PDO. It implements the very simple, but effective Active Record pattern for data access, as well as a flexible domain model that allows you to isolate domain logic from database-specific logic, or not, depending on your needs.
+
+h2. What is an ORM?
+
+As defined by [Wikipedia|http://www.wikipedia.org/wiki/Object-relational_model]: 
+
+{quote}An object-relational database (ORD), or object-relational database management system (ORDBMS), is a database management system (DBMS) similar to a relational database, but with an object-oriented database model: objects, classes and inheritance are directly supported in database schemas and in the query language. In addition, it supports extension of the data model with custom data-types and methods.{quote}
+
+Basically, tables in SQL databases become classes that can contain table-specific methods, inherit from base classes, and much more.
+
+h2. A Brief Overview of Revolution
+
+Revolution at its core is a Content Management Framework. It&#39;s not a PHP Application Framework like CodeIgnitor or Symfony, nor does it purport to be one. With that said, it&#39;s much more than a typical CMS like Wordpress or others; it enables you to build Content Management Applications with ease and extensibility.
+
+Revolution bases its internal structure on what we call a MVC² design system. It&#39;s loosely based on the MVC, or [model-view-controller|http://en.wikipedia.org/wiki/Model-view-controller] architectural pattern, in programming. 
+
+h3. The Model
+
+The _M_ stands for _Model_, which is the core classes that manipulate data records. These core classes, prefixed with &#39;mod&#39; in Revolution, handle all the Domain logic for MODx Revolution.
+
+This also includes what Revolution calls &quot;processors&quot;, which are scripts that handle Domain Logic for MODx Revolution. They are never accessed directly, and are used to handle form processing, REST requests, AJAX requests, and more. They resemble basic CRUD (Create-Read-Update-Delete) processing tasks.
+
+h3. The View
+
+Views in MODx Revolution are called &#39;Templates&#39;, but are used differently based on what context we&#39;re talking about. In the front-end, they are Templates, Chunks and Resources.
+
+h4. [Templates]
+
+Templates are what they sound like. They allow you to create templates that will encapsulate more page-specific data. Think of them like headers/footers all rolled into one (and so much more!)
+
+h4. [Chunks]
+
+Chunks are small pieces of HTML code that can be inserted anywhere. They represent View widgets, in a sense, because of their modularity and ease of insertion.
+
+h4. Resources
+
+Resources is the basic representation of a single &quot;webpage&quot; in MODx Revolution. They represent a single page or resource by which the client accesses content from the server. They can be files, weblinks, symlinks or just plain-old HTML pages wrapped by [Templates].
+
+h4. In the Manager
+
+In the manager-side of MODx Revolution, the View is handled by templates as well, although these are file-based and located in manager/templates, and currently loaded via Smarty.
+
+h3. The Controller
+
+Controllers in MODx Revolution come in two forms. In the front-end, they are Request Handlers (via the modRequest class) and Snippets and Plugins.
+
+h4. [Snippets]
+
+Snippets are simply PHP code that can be placed anywhere in a page. They can be placed in [Chunks], [Templates], or Resources. They simply execute PHP code whenever they are called, and return whatever output they would like to push to the page.
+
+h4. [Plugins]
+
+Plugins are also PHP code, but are targeted at specific System Events that occur throughout the request processing. They can occur before the webpage is rendered, after it is, before the request is handled, or many more places.
+
+They allow users to write generic code that affects basic page functionality, such as word censoring, automatic link creation, separate cache handling, context redirection, and more.
+
+h3. The 2nd C: The Connectors
+
+Connectors are a new idea to MODx Revolution; they are access points for processors. The manager system in MODx Revolution uses them extensively; they provide secure locations for AJAX requests to process data on certain objects.
+
+For example, a connector request that loads /modx/connectors/resource/index.php with a GET &#39;action&#39; parameter of &quot;get&quot;, and a GET parameter of &#39;id&#39;, will (assuming the request&#39;s client has access) grab the Resource with the ID specified and return it in JSON (or whatever is configured; this is JSON by default in Revolution) format.
+
+Every Connector request is also secured down by Context permissions loaded on every request. If the user does not have access (via the Access Policy assigned to the request&#39;s context), the connector will refuse to provide data.
+
+Connectors allow for dynamic, secure JSON requests (and eventually REST-based requests) straight from your MODx manager.
+
+h2. See Also
+
+* [xPDO|xPDO20:Home], the database layer for Revolution
+* [Core Design Philosophy]
+* [Explanation of Directory Structure]
+* [MODx Revolution Framework Structure Ideology]
+* [Glossary of Revolution Terms]
+
+{scrollbar}";}}}

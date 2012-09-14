@@ -1,0 +1,84 @@
+a:5:{s:2:"id";s:8:"28672014";s:4:"info";a:4:{s:6:"Title:";s:24:"Troubleshooting Upgrades";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:39:"[revolution20:Troubleshooting Upgrades]";}s:6:"parent";s:8:"36634926";s:6:"source";s:1720:"{toc}
+
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions on the [Upgrading MODx] page.
+* You&#39;ve uploaded all the necessary files for upgrade, making sure to *merge* directories and not _replace_ them.
+* Clear your browser cache after upgrading. This will clear up a lot of common JS and CSS related errors.
+* Clear the Site Cache after upgrading. Sometimes this doesn&#39;t occur for whatever reason during setup/ because of your environment.
+
+h3. Help! The only option I can choose is &quot;New Installation&quot;, but this is an upgrade!
+
+This occurs when you erase the core/config/config.inc.php file. You&#39;ll need to restore it. If you made a backup before upgrading (as is strongly recommended), just copy the file from there to your new core/config/ directory and make it writable.
+
+If you didn&#39;t backup, you can try creating a new core/config/config.inc.php from the template in core/docs/config.inc.tpl, by replacing all the placeholders surrounded by {}, and then making the file writable.
+
+h3. Setup went well, but my manager isn&#39;t fully working.
+
+Make sure to clear your browser cache. Browsers cache the JS and CSS in the manager to have it load faster, and this often causes issues when upgrading, as the browser persists in using the old files. (Note: this is less of an issue post-2.0.2, as JS files are now prefixed with the version to make them non-cacheable after upgrades.)
+
+h2. Still Problems?
+
+File a bug here: http://bugs.modx.com/ and we&#39;ll get right to the issue.
+
+h2. See Also
+
+* [Troubleshooting Installation]";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"28672014";s:3:"ver";s:1:"2";s:4:"code";s:1720:"{toc}
+
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions on the [Upgrading MODx] page.
+* You&#39;ve uploaded all the necessary files for upgrade, making sure to *merge* directories and not _replace_ them.
+* Clear your browser cache after upgrading. This will clear up a lot of common JS and CSS related errors.
+* Clear the Site Cache after upgrading. Sometimes this doesn&#39;t occur for whatever reason during setup/ because of your environment.
+
+h3. Help! The only option I can choose is &quot;New Installation&quot;, but this is an upgrade!
+
+This occurs when you erase the core/config/config.inc.php file. You&#39;ll need to restore it. If you made a backup before upgrading (as is strongly recommended), just copy the file from there to your new core/config/ directory and make it writable.
+
+If you didn&#39;t backup, you can try creating a new core/config/config.inc.php from the template in core/docs/config.inc.tpl, by replacing all the placeholders surrounded by {}, and then making the file writable.
+
+h3. Setup went well, but my manager isn&#39;t fully working.
+
+Make sure to clear your browser cache. Browsers cache the JS and CSS in the manager to have it load faster, and this often causes issues when upgrading, as the browser persists in using the old files. (Note: this is less of an issue post-2.0.2, as JS files are now prefixed with the version to make them non-cacheable after upgrades.)
+
+h2. Still Problems?
+
+File a bug here: http://bugs.modx.com/ and we&#39;ll get right to the issue.
+
+h2. See Also
+
+* [Troubleshooting Installation]";}i:1;a:3:{s:2:"id";s:8:"28672015";s:3:"ver";s:1:"1";s:4:"code";s:1584:"{toc}
+
+h2. Common Problems
+
+First off, make sure:
+
+* You have eAccelerator disabled during install. eAccelerator can cause problems when doing the heavy lifting during the install process.
+* You followed all the directions on the [Upgrading MODx] page.
+* You&#39;ve uploaded all the necessary files for upgrade, making sure to *merge* directories and not _replace_ them.
+* Clear your browser cache after upgrading. This will clear up a lot of common JS and CSS related errors.
+
+h3. Help! The only option I can choose is &quot;New Installation&quot;, but this is an upgrade!
+
+This occurs when you erase the core/config/config.inc.php file. You&#39;ll need to restore it. If you made a backup before upgrading (as is strongly recommended), just copy the file from there to your new core/config/ directory and make it writable.
+
+If you didn&#39;t backup, you can try creating a new core/config/config.inc.php from the template in core/docs/config.inc.tpl, by replacing all the placeholders surrounded by {}, and then making the file writable.
+
+h3. Setup went well, but my manager isn&#39;t fully working.
+
+Make sure to clear your browser cache. Browsers cache the JS and CSS in the manager to have it load faster, and this often causes issues when upgrading, as the browser persists in using the old files. (Note: this is less of an issue post-2.0.2, as JS files are now prefixed with the version to make them non-cacheable after upgrades.)
+
+h2. Still Problems?
+
+File a bug here: http://bugs.modx.com/ and we&#39;ll get right to the issue.
+
+h2. See Also
+
+* [Troubleshooting Installation]";}}}

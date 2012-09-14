@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678136";s:4:"info";a:4:{s:6:"Title:";s:18:"cache_json_expires";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:33:"[revolution20:cache_json_expires]";}s:6:"parent";s:8:"18678127";s:6:"source";s:196:"h2. cache_json_expires
+
+*Name*: Expiration Time for JSON Cache
+*Type*: Number
+*Default*: 0
+
+Expiration time for JSON format cached data. A value of zero means the cache never expires.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678136";s:3:"ver";s:1:"2";s:4:"code";s:196:"h2. cache_json_expires
+
+*Name*: Expiration Time for JSON Cache
+*Type*: Number
+*Default*: 0
+
+Expiration time for JSON format cached data. A value of zero means the cache never expires.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119654";s:3:"ver";s:1:"1";s:4:"code";s:359:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Expiration Time for JSON Cache{zone-data}
+{zone-data:key}cache_json_expires{zone-data}
+{zone-data:type}number{zone-data}
+{zone-data:default}0{zone-data}
+{zone-data:desc}Expiration time for JSON format cached data. A value of zero means the cache never expires.
+{zone-data}
+{zone-template-instance}
+{scrollbar}";}}}

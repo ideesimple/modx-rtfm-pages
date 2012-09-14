@@ -1,0 +1,55 @@
+a:5:{s:2:"id";s:8:"18678098";s:4:"info";a:4:{s:6:"Title:";s:10:"TV Default";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:25:"[revolution20:TV Default]";}s:6:"parent";s:8:"18678090";s:6:"source";s:694:"\\
+
+h2. The TV Default Value Rule
+
+The TV Default Value Rule, if set, will set the default value for a TV.
+
+{note}This only works on &quot;create&quot; Actions, *not* &quot;update&quot; Actions.{note}
+
+h2. Usage
+
+The values for the Rule should be as follows:
+
+* *Name*: The ID of the TV prefixed with &#39;tv&#39;; for example, for the TV with ID 23, &#39;tv23&#39;
+* *Containing Panel*: &#39;modx-panel-resource&#39;
+* *Rule*: &#39;TV Default Value&#39;
+* *Value*: The value you want to set as the default.
+
+h2. Examples
+
+An example Rule of setting the default value for a TV with ID 23 to &quot;test&quot; is:
+
+!fc-tvDefault.png!
+
+h2. See Also
+
+{pagetree:root=Form Customization}
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678098";s:3:"ver";s:1:"1";s:4:"code";s:694:"\\
+
+h2. The TV Default Value Rule
+
+The TV Default Value Rule, if set, will set the default value for a TV.
+
+{note}This only works on &quot;create&quot; Actions, *not* &quot;update&quot; Actions.{note}
+
+h2. Usage
+
+The values for the Rule should be as follows:
+
+* *Name*: The ID of the TV prefixed with &#39;tv&#39;; for example, for the TV with ID 23, &#39;tv23&#39;
+* *Containing Panel*: &#39;modx-panel-resource&#39;
+* *Rule*: &#39;TV Default Value&#39;
+* *Value*: The value you want to set as the default.
+
+h2. Examples
+
+An example Rule of setting the default value for a TV with ID 23 to &quot;test&quot; is:
+
+!fc-tvDefault.png!
+
+h2. See Also
+
+{pagetree:root=Form Customization}
+
+{scrollbar}";}}}

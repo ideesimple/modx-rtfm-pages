@@ -1,0 +1,116 @@
+a:5:{s:2:"id";s:8:"20119603";s:4:"info";a:4:{s:6:"Title:";s:19:"Date TV Output Type";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:34:"[revolution20:Date TV Output Type]";}s:6:"parent";s:8:"33227172";s:6:"source";s:670:"\\
+
+h2. Date TV Output Type
+
+This type allows you to output any TV input as a Date, formatted in the way you want.
+
+h2. Output Properties
+
+It&#39;s output properties look like:
+
+!tvot.date.png!
+
+|| Name || Description ||
+| Date Format | A format string similar to the [PHP strftime method|http://php.net/strftime]. |
+| Default | If no value is set for the TV, use the current time? This defaults to &#39;no&#39;, which will output a blank value. |
+
+h2. Examples
+
+|| Format String || Example Output ||
+| %A %d, %B %Y | Friday 01, April 2011 |
+| %Y-%m-%d | 2011-04-01 |
+| %b %e, %Y | Apr 1, 2011|
+
+
+h2. See Also
+
+{pagetree:root=Template Variable Output Types}
+
+{scrollbar}";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"20119603";s:3:"ver";s:1:"4";s:4:"code";s:670:"\\
+
+h2. Date TV Output Type
+
+This type allows you to output any TV input as a Date, formatted in the way you want.
+
+h2. Output Properties
+
+It&#39;s output properties look like:
+
+!tvot.date.png!
+
+|| Name || Description ||
+| Date Format | A format string similar to the [PHP strftime method|http://php.net/strftime]. |
+| Default | If no value is set for the TV, use the current time? This defaults to &#39;no&#39;, which will output a blank value. |
+
+h2. Examples
+
+|| Format String || Example Output ||
+| %A %d, %B %Y | Friday 01, April 2011 |
+| %Y-%m-%d | 2011-04-01 |
+| %b %e, %Y | Apr 1, 2011|
+
+
+h2. See Also
+
+{pagetree:root=Template Variable Output Types}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"33947906";s:3:"ver";s:1:"3";s:4:"code";s:510:"\\
+
+h2. Date TV Output Type
+
+This type allows you to output any TV input as a Date, formatted in the way you want. 
+
+h2. Output Properties
+
+It&#39;s output properties look like:
+
+!tvot.date.png!
+
+||Name||Description||
+|Date Format|A format string similar to the [PHP strftime method|http://php.net/strftime].
+|Default|If no value is set for the TV, use the current time? This defaults to &#39;no&#39;, which will output a blank value.|
+
+h2. See Also
+
+{pagetree:root=Template Variable Output Types}
+
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"20119605";s:3:"ver";s:1:"2";s:4:"code";s:519:"\\
+
+h2. Date TV Output Type
+
+This type allows you to output any TV input as a Date, formatted in the way you want. 
+
+h2. Output Properties
+
+It&#39;s output properties look like:
+
+!tvot.date.png|border=1!
+
+||Name||Description||
+|Date Format|A format string similar to the [PHP strftime method|http://php.net/strftime].
+|Default|If no value is set for the TV, use the current time? This defaults to &#39;no&#39;, which will output a blank value.|
+
+h2. See Also
+
+{pagetree:root=Template Variable Output Types}
+
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"20119604";s:3:"ver";s:1:"1";s:4:"code";s:494:"\\
+
+h2. Date TV Output Type
+
+This type allows you to output any TV input as a Date, formatted in the way you want. 
+
+h2. Output Properties
+
+It&#39;s output properties look like:
+
+
+||Name||Description||
+|Date Format|A format string similar to the [PHP strftime method|http://php.net/strftime].
+|Default|If no value is set for the TV, use the current time? This defaults to &#39;no&#39;, which will output a blank value.|
+
+h2. See Also
+
+{pagetree:root=Template Variable Output Types}
+
+{scrollbar}";}}}

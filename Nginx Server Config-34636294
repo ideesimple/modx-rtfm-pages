@@ -1,0 +1,154 @@
+a:5:{s:2:"id";s:8:"34636294";s:4:"info";a:4:{s:6:"Title:";s:19:"Nginx Server Config";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:34:"[revolution20:Nginx Server Config]";}s:6:"parent";s:8:"18678053";s:6:"source";s:941:"Here is an example config for a MODX installation on an nginx server (php-fpm is required for nginx servers). This example enables MODX FURLs as well.
+
+{code}
+server {
+listen 80;
+server_name example.com www.example.com;
+root /home/sites/example.com;
+index index.php;
+client_max_body_size 30M;
+location / {
+root /home/sites/example.com;
+if (!-e $request_filename) {
+rewrite ^/(.*)$ /index.php?q=$1 last;
+}
+}
+location ~ \.php$ {
+                try_files $uri =404;
+fastcgi_split_path_info ^(.+\.php)(.*)$;
+fastcgi_pass   127.0.0.1:9000;
+fastcgi_index  index.php;
+fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+include fastcgi_params;
+fastcgi_ignore_client_abort on;
+fastcgi_param  SERVER_NAME $http_host;
+}
+
+location ~ /\.ht {
+deny  all;
+}
+}
+{code}
+An alternative server configuration was suggested [in this forum topic|http://forums.modx.com/thread/70163/furls-not-working-after-upgrade-2-1-3-pl?page=2#dis-post-394442].";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"34636294";s:3:"ver";s:1:"4";s:4:"code";s:941:"Here is an example config for a MODX installation on an nginx server (php-fpm is required for nginx servers). This example enables MODX FURLs as well.
+
+{code}
+server {
+listen 80;
+server_name example.com www.example.com;
+root /home/sites/example.com;
+index index.php;
+client_max_body_size 30M;
+location / {
+root /home/sites/example.com;
+if (!-e $request_filename) {
+rewrite ^/(.*)$ /index.php?q=$1 last;
+}
+}
+location ~ \.php$ {
+                try_files $uri =404;
+fastcgi_split_path_info ^(.+\.php)(.*)$;
+fastcgi_pass   127.0.0.1:9000;
+fastcgi_index  index.php;
+fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+include fastcgi_params;
+fastcgi_ignore_client_abort on;
+fastcgi_param  SERVER_NAME $http_host;
+}
+
+location ~ /\.ht {
+deny  all;
+}
+}
+{code}
+An alternative server configuration was suggested [in this forum topic|http://forums.modx.com/thread/70163/furls-not-working-after-upgrade-2-1-3-pl?page=2#dis-post-394442].";}i:1;a:3:{s:2:"id";s:8:"36110352";s:3:"ver";s:1:"3";s:4:"code";s:769:"Here is an example config for a MODX installation on an nginx server (php-fpm is required for nginx servers). This example enables MODX FURLs as well.
+
+{code}
+server {
+listen 80;
+server_name example.com www.example.com;
+root /home/sites/example.com;
+index index.php;
+client_max_body_size 30M;
+location / {
+root /home/sites/example.com;
+if (!-e $request_filename) {
+rewrite ^/(.*)$ /index.php?q=$1 last;
+}
+}
+location ~ \.php$ {
+                try_files $uri =404;
+fastcgi_split_path_info ^(.+\.php)(.*)$;
+fastcgi_pass   127.0.0.1:9000;
+fastcgi_index  index.php;
+fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+include fastcgi_params;
+fastcgi_ignore_client_abort on;
+fastcgi_param  SERVER_NAME $http_host;
+}
+
+location ~ /\.ht {
+deny  all;
+}
+}
+{code}
+";}i:2;a:3:{s:2:"id";s:8:"35094537";s:3:"ver";s:1:"2";s:4:"code";s:732:"Here is an example config for a MODX installation on an nginx server (php-fpm is required for nginx servers). This example enables MODX FURLs as well.
+
+{code}
+server {
+listen 80;
+server_name example.com www.example.com;
+root /home/sites/example.com;
+index index.php;
+client_max_body_size 30M;
+location / {
+root /home/sites/example.com;
+if (!-e $request_filename) {
+rewrite ^/(.*)$ /index.php?q=$1 last;
+}
+}
+location ~ \.php$ {
+fastcgi_split_path_info ^(.+\.php)(.*)$;
+fastcgi_pass   127.0.0.1:9000;
+fastcgi_index  index.php;
+fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+include fastcgi_params;
+fastcgi_ignore_client_abort on;
+fastcgi_param  SERVER_NAME $http_host;
+}
+
+location ~ /\.ht {
+deny  all;
+}
+}
+{code}
+";}i:3;a:3:{s:2:"id";s:8:"34636295";s:3:"ver";s:1:"1";s:4:"code";s:691:"Here is an example config for a MODX installation on an nginx server (php-fpm is required for nginx servers):
+
+{code}
+server {
+listen 80;
+server_name example.com www.example.com;
+root /home/sites/example.com;
+index index.php;
+client_max_body_size 30M;
+location / {
+root /home/sites/example.com;
+if (!-e $request_filename) {
+rewrite ^/(.*)$ /index.php?q=$1 last;
+}
+}
+location ~ \.php$ {
+fastcgi_split_path_info ^(.+\.php)(.*)$;
+fastcgi_pass   127.0.0.1:9000;
+fastcgi_index  index.php;
+fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+include fastcgi_params;
+fastcgi_ignore_client_abort on;
+fastcgi_param  SERVER_NAME $http_host;
+}
+
+location ~ /\.ht {
+deny  all;
+}
+}
+{code}
+";}}}

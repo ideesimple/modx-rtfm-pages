@@ -1,0 +1,27 @@
+a:5:{s:2:"id";s:8:"18678146";s:4:"info";a:4:{s:6:"Title:";s:10:"error_page";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:25:"[revolution20:error_page]";}s:6:"parent";s:8:"18678127";s:6:"source";s:186:"h2. error_page
+
+*Name*: Error Page
+*Type*: Number
+*Default*: 1
+
+The ID of the resource you want to send users to if they request a Resource which doesn&#39;t actually exist.
+
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678146";s:3:"ver";s:1:"2";s:4:"code";s:186:"h2. error_page
+
+*Name*: Error Page
+*Type*: Number
+*Default*: 1
+
+The ID of the resource you want to send users to if they request a Resource which doesn&#39;t actually exist.
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119675";s:3:"ver";s:1:"1";s:4:"code";s:349:"\\
+
+{zone-template-instance:sszt}
+{zone-data:name}Error page{zone-data}
+{zone-data:key}error_page{zone-data}
+{zone-data:type}number{zone-data}
+{zone-data:default}1{zone-data}
+{zone-data:desc}The ID of the resource you want to send users to if they request a document which doesn&#39;t actually exist.{zone-data}
+{zone-template-instance}
+
+{scrollbar}";}}}

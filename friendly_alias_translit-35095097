@@ -1,0 +1,21 @@
+a:5:{s:2:"id";s:8:"35095097";s:4:"info";a:4:{s:6:"Title:";s:23:"friendly_alias_translit";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:38:"[revolution20:friendly_alias_translit]";}s:6:"parent";s:8:"18678127";s:6:"source";s:481:"h2. friendly_alias_translit
+
+*Name*: FURL Alias Transliteration
+*Type*: textfield
+*Default*: none
+*Available In*: Revolution 2.0.8+
+
+The method of transliteration to use on an alias specified for a Resource. Empty or &quot;none&quot; is the default which skips transliteration. Other possible values are &quot;iconv&quot; (if available) or a named transliteration table provided by a custom transliteration service class, specified in [friendly_alias_translit_class].
+
+{scrollbar}
+";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"35095097";s:3:"ver";s:1:"1";s:4:"code";s:481:"h2. friendly_alias_translit
+
+*Name*: FURL Alias Transliteration
+*Type*: textfield
+*Default*: none
+*Available In*: Revolution 2.0.8+
+
+The method of transliteration to use on an alias specified for a Resource. Empty or &quot;none&quot; is the default which skips transliteration. Other possible values are &quot;iconv&quot; (if available) or a named transliteration table provided by a custom transliteration service class, specified in [friendly_alias_translit_class].
+
+{scrollbar}
+";}}}

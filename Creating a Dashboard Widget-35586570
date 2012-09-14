@@ -1,0 +1,158 @@
+a:5:{s:2:"id";s:8:"35586570";s:4:"info";a:4:{s:6:"Title:";s:27:"Creating a Dashboard Widget";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:42:"[revolution20:Creating a Dashboard Widget]";}s:6:"parent";s:8:"35586555";s:6:"source";s:2831:"{toc}
+
+This article describes how to create a custom Dashboard Widget, including a short description of the different Dashboard Widget types and how they work.
+
+h2. Creating a Basic Widget
+
+Go to the Dashboards page (Dashboard -&gt; Dashboards in the top menu), and click on the &quot;Widgets&quot; tab. Then, click on &quot;Create New Widget&quot;, and this will load the Widget creation screen. You&#39;ll see a few new fields:
+
+* *Name* - The name of your new widget. Let&#39;s call ours &quot;Hello World&quot;.
+* *Description* - A short description of your widget, used internally.
+* *Widget Type* - The type of Widget. We&#39;ll get into this more later, but for now, just select &quot;HTML&quot;.
+* *Size* - Widgets come in 3 sizes - half, full, and double. A half-sized widget takes up half of one row. A full takes up one whole row. A double takes up 2 rows.
+* *Namespace* - The Namespace to associate the widget with. Useful for Extras developers; but for us, let&#39;s keep it at &quot;core&quot;.
+* *Lexicon* - Adds an ability to load a lexicon with this widget. Let&#39;s go ahead and leave ours at &quot;core:dashboards&quot;, the default setting.
+
+You&#39;ll note that as you type the name of the widget, text appears below it following what you type. This is the automatic translation tool for Widget names; if you were to type a Lexicon Entry key, it would translate it (try typing &quot;widget_create&quot; for kicks to see what it does).
+
+Now, in your dashboard widget content, go ahead and put this:
+
+{code}&lt;p&gt;Hello, world!&lt;/p&gt;{code}
+
+Our widget should look like this:
+
+!dashboard-create1.png!
+
+Go ahead and save the Widget.
+
+h3. Assigning the Widget to the Default Dashboard
+
+Now that we&#39;ve got our widget, let&#39;s assign it to the Default Dashboard, by going back to the main Dashboards page, clicking on the &quot;Dashboards&quot; tab, and finding the default Dashboard. Right-click on it, and click &quot;Update Dashboard&quot;. This will load the Default Dashboard editing page.
+
+From here, click the &quot;Place Widget&quot; button above the Widgets grid on this page. Select our &quot;Hello World&quot; widget from the dropdown, and click save. Now our Widget is on the Dashboard! Let&#39;s go ahead and place it in position #2 by dragging it between the &quot;Configuration Check&quot; widget and the &quot;MODX News Feed&quot; widget:
+
+!dashboard-create2.png!
+
+Save your Dashboard.
+
+h3. Viewing the Widget
+
+Now, if you click the &quot;Dashboard&quot; top menu item on the page, you can see your new dashboard widget in place!
+
+!dashboard-create3.png!
+
+h2. Other Widget Types
+
+Obviously, there are more widget types to create. See the [Dashboard Widget Types] section for more information on creating different types of widgets.
+
+h2. See Also
+
+{pagetree:root=Dashboards}
+
+{scrollbar}
+
+";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"35586570";s:3:"ver";s:1:"2";s:4:"code";s:2831:"{toc}
+
+This article describes how to create a custom Dashboard Widget, including a short description of the different Dashboard Widget types and how they work.
+
+h2. Creating a Basic Widget
+
+Go to the Dashboards page (Dashboard -&gt; Dashboards in the top menu), and click on the &quot;Widgets&quot; tab. Then, click on &quot;Create New Widget&quot;, and this will load the Widget creation screen. You&#39;ll see a few new fields:
+
+* *Name* - The name of your new widget. Let&#39;s call ours &quot;Hello World&quot;.
+* *Description* - A short description of your widget, used internally.
+* *Widget Type* - The type of Widget. We&#39;ll get into this more later, but for now, just select &quot;HTML&quot;.
+* *Size* - Widgets come in 3 sizes - half, full, and double. A half-sized widget takes up half of one row. A full takes up one whole row. A double takes up 2 rows.
+* *Namespace* - The Namespace to associate the widget with. Useful for Extras developers; but for us, let&#39;s keep it at &quot;core&quot;.
+* *Lexicon* - Adds an ability to load a lexicon with this widget. Let&#39;s go ahead and leave ours at &quot;core:dashboards&quot;, the default setting.
+
+You&#39;ll note that as you type the name of the widget, text appears below it following what you type. This is the automatic translation tool for Widget names; if you were to type a Lexicon Entry key, it would translate it (try typing &quot;widget_create&quot; for kicks to see what it does).
+
+Now, in your dashboard widget content, go ahead and put this:
+
+{code}&lt;p&gt;Hello, world!&lt;/p&gt;{code}
+
+Our widget should look like this:
+
+!dashboard-create1.png!
+
+Go ahead and save the Widget.
+
+h3. Assigning the Widget to the Default Dashboard
+
+Now that we&#39;ve got our widget, let&#39;s assign it to the Default Dashboard, by going back to the main Dashboards page, clicking on the &quot;Dashboards&quot; tab, and finding the default Dashboard. Right-click on it, and click &quot;Update Dashboard&quot;. This will load the Default Dashboard editing page.
+
+From here, click the &quot;Place Widget&quot; button above the Widgets grid on this page. Select our &quot;Hello World&quot; widget from the dropdown, and click save. Now our Widget is on the Dashboard! Let&#39;s go ahead and place it in position #2 by dragging it between the &quot;Configuration Check&quot; widget and the &quot;MODX News Feed&quot; widget:
+
+!dashboard-create2.png!
+
+Save your Dashboard.
+
+h3. Viewing the Widget
+
+Now, if you click the &quot;Dashboard&quot; top menu item on the page, you can see your new dashboard widget in place!
+
+!dashboard-create3.png!
+
+h2. Other Widget Types
+
+Obviously, there are more widget types to create. See the [Dashboard Widget Types] section for more information on creating different types of widgets.
+
+h2. See Also
+
+{pagetree:root=Dashboards}
+
+{scrollbar}
+
+";}i:1;a:3:{s:2:"id";s:8:"35586577";s:3:"ver";s:1:"1";s:4:"code";s:2818:"{toc}
+
+This article describes how to create a custom Dashboard Widget, including a short description of the different Dashboard Widget types and how they work.
+
+h2. Creating a Basic Widget
+
+Go to the Dashboards page (Dashboard -&gt; Dashboards in the top menu), and click on the &quot;Widgets&quot; tab. Then, click on &quot;Create New Widget&quot;, and this will load the Widget creation screen. You&#39;ll see a few new fields:
+
+* *Name* - The name of your new widget. Let&#39;s call ours &quot;Hello World&quot;.
+* *Description* - A short description of your widget, used internally.
+* *Widget Type* - The type of Widget. We&#39;ll get into this more later, but for now, just select &quot;HTML&quot;.
+* *Size* - Widgets come in 3 sizes - half, full, and double. A half-sized widget takes up half of one row. A full takes up one whole row. A double takes up 2 rows.
+* *Namespace* - The Namespace to associate the widget with. Useful for Extras developers; but for us, let&#39;s keep it at &quot;core&quot;.
+* *Lexicon* - Adds an ability to load a lexicon with this widget. Let&#39;s go ahead and leave ours at &quot;core:dashboards&quot;, the default setting.
+
+You&#39;ll note that as you type the name of the widget, text appears below it following what you type. This is the automatic translation tool for Widget names; if you were to type a Lexicon Entry key, it would translate it (try typing &quot;widget_create&quot; for kicks to see what it does).
+
+Now, in your dashboard widget content, go ahead and put this:
+
+{code}&lt;p&gt;Hello, world!&lt;/p&gt;{code}
+
+Our widget should look like this:
+
+!dashboard-create1.png!
+
+Go ahead and save the Widget.
+
+h3. Assigning the Widget to the Default Dashboard
+
+Now that we&#39;ve got our widget, let&#39;s assign it to the Default Dashboard, by going back to the main Dashboards page, clicking on the &quot;Dashboards&quot; tab, and finding the default Dashboard. Right-click on it, and click &quot;Update Dashboard&quot;. This will load the Default Dashboard editing page.
+
+From here, click the &quot;Place Widget&quot; button above the Widgets grid on this page. Select our &quot;Hello World&quot; widget from the dropdown, and click save. Now our Widget is on the Dashboard! Let&#39;s go ahead and place it in position #2 by dragging it between the &quot;Configuration Check&quot; widget and the &quot;MODX News Feed&quot; widget:
+
+!dashboard-create2.png!
+
+Save your Dashboard.
+
+h3. Viewing the Widget
+
+Now, if you click the &quot;Dashboard&quot; top menu item on the page, you can see your new dashboard widget in place!
+
+!dashboard-create3.png!
+
+h2. Other Widget Types
+
+Obviously, there are more widget types to create. See the [Dashboard Widget Types] section for more information on creating different types of widgets.
+
+h2. See Also
+
+{pagetree:root=Dashboards}
+
+";}}}

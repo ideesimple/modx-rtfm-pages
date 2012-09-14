@@ -1,0 +1,114 @@
+a:5:{s:2:"id";s:8:"39354370";s:4:"info";a:4:{s:6:"Title:";s:20:"Adding a Translation";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:35:"[revolution20:Adding a Translation]";}s:6:"parent";s:8:"18678335";s:6:"source";s:1573:"{toc}
+
+Adding translations is fairly simple in MODX.
+
+h2. The Core Manager Lexicon
+
+If your language is not in the provided translations, you can fairly simply add a translation of the manager interface by copying the following directory, and renaming to your IANA code for your language (example: &quot;de&quot; for German, &quot;it&quot; for Italian):
+
+{quote}core/lexicon/en/ -\&gt; core/lexicon/\[mylanguage\]/{quote}
+
+So, for example, if we wanted to create a Haitian translation (&quot;ht&quot;), we would just copy core/lexicon/en/ to core/lexicon/ht/. Then we would edit the .inc.php files in the core/lexicon/ht/ directory, translating the string values there into Haitian.
+
+h2. The Setup Lexicon
+
+A similar process can be done for the installer, if you so choose. Just copy the following directory and rename - similarly to how you do the core manager lexicon:
+
+{quote}setup/lang/en/ -\&gt; setup/lang/\[mylanguage\]/ {quote}
+
+h2. Extras Lexicons
+
+Often, Extras lexicons can be found in their respective directories in the core/components/ directory. For example, [Quip&#39;s|ADDON:Quip] is found here:
+
+{quote}core/components/quip/lexicon/en/{quote}
+
+You can copy the &quot;en&quot; directory and repeat the normal process to translate it as well.
+
+h2. Contributing Translations
+
+Consider contributing your core translations to the MODX core by submitting a Pull Request on [GitHub|https://github.com/modxcms/revolution]. Contributions require a [CLA signature|http://modx.com/cla/]. More information can be found [in this wiki|community:Becoming a Contributor].";s:8:"versions";a:3:{i:0;a:3:{s:2:"id";s:8:"39354370";s:3:"ver";s:1:"3";s:4:"code";s:1573:"{toc}
+
+Adding translations is fairly simple in MODX.
+
+h2. The Core Manager Lexicon
+
+If your language is not in the provided translations, you can fairly simply add a translation of the manager interface by copying the following directory, and renaming to your IANA code for your language (example: &quot;de&quot; for German, &quot;it&quot; for Italian):
+
+{quote}core/lexicon/en/ -\&gt; core/lexicon/\[mylanguage\]/{quote}
+
+So, for example, if we wanted to create a Haitian translation (&quot;ht&quot;), we would just copy core/lexicon/en/ to core/lexicon/ht/. Then we would edit the .inc.php files in the core/lexicon/ht/ directory, translating the string values there into Haitian.
+
+h2. The Setup Lexicon
+
+A similar process can be done for the installer, if you so choose. Just copy the following directory and rename - similarly to how you do the core manager lexicon:
+
+{quote}setup/lang/en/ -\&gt; setup/lang/\[mylanguage\]/ {quote}
+
+h2. Extras Lexicons
+
+Often, Extras lexicons can be found in their respective directories in the core/components/ directory. For example, [Quip&#39;s|ADDON:Quip] is found here:
+
+{quote}core/components/quip/lexicon/en/{quote}
+
+You can copy the &quot;en&quot; directory and repeat the normal process to translate it as well.
+
+h2. Contributing Translations
+
+Consider contributing your core translations to the MODX core by submitting a Pull Request on [GitHub|https://github.com/modxcms/revolution]. Contributions require a [CLA signature|http://modx.com/cla/]. More information can be found [in this wiki|community:Becoming a Contributor].";}i:1;a:3:{s:2:"id";s:8:"39354372";s:3:"ver";s:1:"2";s:4:"code";s:1564:"{toc}
+
+Adding translations is fairly simple in MODX.
+
+h2. The Core Manager Lexicon
+
+If your language is not in the provided translations, you can fairly simply add a translation of the manager interface by copying the following directory, and renaming to your IANA code for your language (example: &quot;de&quot; for German, &quot;it&quot; for Italian):
+
+{quote}core/lexicon/en/ -\&gt; core/lexicon/\[mylanguage\]/{quote}
+
+So, for example, if we wanted to create a Haitian translation (&quot;ht&quot;), we would just copy core/lexicon/en/ to core/lexicon/ht/. Then we would edit the .inc.php files in the core/lexicon/ht/ directory, translating the string values there into Haitian.
+
+h2. The Setup Lexicon
+
+A similar process can be done for the installer, if you so choose. Just copy the following directory and rename - similarly to how you do the core manager lexicon:
+
+{quote}setup/lang/en/ -\&gt; setup/lang/\[mylanguage\]/ {quote}
+
+h2. Extras Lexicons
+
+Often, Extras lexicons can be found in their respective directories in the core/components/ directory. For example, [Quip&#39;s|ADDON:Quip] is found here:
+
+{quote}core/components/quip/lexicon/en/{quote}
+
+You can copy the &quot;en&quot; directory and repeat the normal process to translate it as well.
+
+h2. Contributing Translations
+
+Consider contributing your core translations to the MODX core by submitting a Pull Request on [GitHub|https://github.com/modxcms/revolution]. Contributions require a [CLA signature|http://modx.com/cla/]. More information can be found [here|community:Becoming a Contributor]";}i:2;a:3:{s:2:"id";s:8:"39354371";s:3:"ver";s:1:"1";s:4:"code";s:1565:"{toc}
+
+Adding translations is fairly simple in MODX.
+
+h2. The Core Manager Lexicon
+
+If your language is not in the provided translations, you can fairly simply add a translation of the manager interface by copying the following directory, and renaming to your IANA code for your language (example: &quot;de&quot; for German, &quot;it&quot; for Italian):
+
+{quote}core/lexicon/en/ -\&gt; core/lexicon/\[mylanguage\]/{quote}
+
+So, for example, if we wanted to create a Haitian translation (&quot;ht&quot;), we would just copy core/lexicon/en/ to core/lexicon/ht/. Then we would edit the .inc.php files in the core/lexicon/ht/ directory, translating the string values there into Haitian.
+
+h2. The Setup Lexicon
+
+A similar process can be done for the installer, if you so choose. Just copy the following directory and rename - similarly to how you do the core manager lexicon:
+
+{quote}setup/lang/en/ -\&gt; setup/lang/\[mylanguage\]/ {quote}
+
+h2. Extras Lexicons
+
+Often, Extras lexicons can be found in their respective directories in the core/components/ directory. For example, [ADDON:Quip|Quip&#39;s] is found here:
+
+{quote}core/components/quip/lexicon/en/{quote}
+
+You can copy the &quot;en&quot; directory and repeat the normal process to translate it as well.
+
+h2. Contributing Translations
+
+Consider contributing your core translations to the MODX core by submitting a Pull Request on [GitHub|https://github.com/modxcms/revolution]. Contributions require a [CLA signature|http://modx.com/cla/]. More information can be found [here|community:Becoming+a+Contributor}
+";}}}

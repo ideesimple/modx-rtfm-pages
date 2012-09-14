@@ -1,0 +1,37 @@
+a:5:{s:2:"id";s:8:"18678093";s:4:"info";a:4:{s:6:"Title:";s:13:"Field Default";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:28:"[revolution20:Field Default]";}s:6:"parent";s:8:"18678090";s:6:"source";s:458:"\\
+
+h2. The Field Default Rule
+
+The Field Default Rule, when set, will automatically set the default value of a field. 
+
+{note}This will only work on &quot;create&quot; pages, *not* &quot;update&quot; pages.{note}
+
+h2. Examples
+
+An example Rule of setting the default Category for a [Snippet|Snippets] for all [Users] in the User Group HR Department would look like this:
+
+!fc-fieldDefault1.png!
+
+h2. See Also
+
+{pagetree:root=Form Customization}
+
+{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678093";s:3:"ver";s:1:"1";s:4:"code";s:458:"\\
+
+h2. The Field Default Rule
+
+The Field Default Rule, when set, will automatically set the default value of a field. 
+
+{note}This will only work on &quot;create&quot; pages, *not* &quot;update&quot; pages.{note}
+
+h2. Examples
+
+An example Rule of setting the default Category for a [Snippet|Snippets] for all [Users] in the User Group HR Department would look like this:
+
+!fc-fieldDefault1.png!
+
+h2. See Also
+
+{pagetree:root=Form Customization}
+
+{scrollbar}";}}}
