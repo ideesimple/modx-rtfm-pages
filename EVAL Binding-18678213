@@ -1,4 +1,4 @@
-a:5:{s:2:"id";s:8:"18678213";s:4:"info";a:4:{s:6:"Title:";s:12:"EVAL Binding";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:0:"";s:12:"Wiki Markup:";s:27:"[revolution20:EVAL Binding]";}s:6:"parent";s:8:"18678208";s:6:"source";s:1875:"\\
+a:5:{s:2:"id";s:8:"18678213";s:4:"info";a:4:{s:6:"Title:";s:12:"EVAL Binding";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Bruno Perner";s:12:"Wiki Markup:";s:27:"[revolution20:EVAL Binding]";}s:6:"parent";s:8:"18678208";s:6:"source";s:1875:"\\
 
 h2. What is the @EVAL Binding?
 

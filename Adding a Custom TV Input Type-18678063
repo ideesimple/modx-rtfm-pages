@@ -1,5 +1,4 @@
-a:5:{s:2:"id";s:8:"18678063";s:4:"info";a:4:{s:6:"Title:";s:29:"Adding a Custom TV Input Type";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:44:"[revolution20:Adding a Custom TV Input Type]";}s:6:"parent";s:8:"18678062";s:6:"source";s:1814:"\\
-
+a:5:{s:2:"id";s:8:"18678063";s:4:"info";a:4:{s:6:"Title:";s:29:"Adding a Custom TV Input Type";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:44:"[revolution20:Adding a Custom TV Input Type]";}s:6:"parent";s:8:"35094876";s:6:"source";s:2068:"{warning:title=Only use this documentation for pre-2.2 or core submissions. }Refer to the [Adding a Custom TV Type|revolution20:Adding a Custom TV Type - MODX 2.2] doc for the proper way to build custom TVs in 2.2 which allows easy packaging. {warning}\\
 h2. What are Custom TV Input Types?
 
 MODx Revolution allows you to create your own custom TV input types (similar to the textbox, radio, textarea, richtext, etc types already available) for your [Template Variables].
@@ -10,8 +9,8 @@ To create a custom TV input type (let&#39;s say, one called &quot;test&quot;), y
 
 I&#39;d first need 2 files:
 
-* *An input controller* - put here: core/model/modx/processors/element/tv/renders/mgr/input/test.php
-* *An input template* - put here: manager/templates/default/element/tv/renders/input/test.tpl
+* *An input controller* \- put here: core/model/modx/processors/element/tv/renders/mgr/input/test.php
+* *An input template* \- put here: manager/templates/default/element/tv/renders/input/test.tpl
 
 The input controller, test.php, would have:
 
@@ -42,7 +41,7 @@ MODx.load({
 &lt;/script&gt;
 {code}
 
-And there you go! A custom TV input type.
+And there you go\! A custom TV input type.
 
 !customtv1.png!
 
@@ -52,7 +51,60 @@ h2. See Also
 
 {pagetree:root=Template Variables}
 
-{scrollbar}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"18678063";s:3:"ver";s:1:"1";s:4:"code";s:1814:"\\
+{scrollbar}";s:8:"versions";a:2:{i:0;a:3:{s:2:"id";s:8:"18678063";s:3:"ver";s:1:"2";s:4:"code";s:2068:"{warning:title=Only use this documentation for pre-2.2 or core submissions. }Refer to the [Adding a Custom TV Type|revolution20:Adding a Custom TV Type - MODX 2.2] doc for the proper way to build custom TVs in 2.2 which allows easy packaging. {warning}\\
+h2. What are Custom TV Input Types?
+
+MODx Revolution allows you to create your own custom TV input types (similar to the textbox, radio, textarea, richtext, etc types already available) for your [Template Variables].
+
+h2. Creating the Files
+
+To create a custom TV input type (let&#39;s say, one called &quot;test&quot;), you need a few things. Let&#39;s say my &quot;test&quot; TV input type loads a Template selecting combobox.
+
+I&#39;d first need 2 files:
+
+* *An input controller* \- put here: core/model/modx/processors/element/tv/renders/mgr/input/test.php
+* *An input template* \- put here: manager/templates/default/element/tv/renders/input/test.tpl
+
+The input controller, test.php, would have:
+
+{code}
+$this-&gt;xpdo-&gt;lexicon-&gt;load(&#39;tv_widget&#39;);
+// any other PHP i want here
+return $this-&gt;xpdo-&gt;smarty-&gt;fetch(&#39;element/tv/renders/input/test.tpl&#39;);
+{code}
+
+And the input template, test.tpl, for the default mgr theme would have (note that it is using [Smarty|http://smarty.net/] syntax):
+
+{code}
+&lt;select id=&quot;tv{$tv-&gt;id}&quot; name=&quot;tv{$tv-&gt;id}&quot; class=&quot;combobox&quot;&gt;&lt;/select&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+// &lt;![CDATA[
+{literal}
+MODx.load({
+{/literal}
+    xtype: &#39;modx-combo-template&#39;
+    ,transform: &#39;tv{$tv-&gt;id}&#39;
+    ,id: &#39;tv{$tv-&gt;id}&#39;
+    ,width: 300
+{literal}
+    ,listeners: { &#39;select&#39;: { fn:MODx.fireResourceFormChange, scope:this}}
+});
+{/literal}
+// ]]&gt;
+&lt;/script&gt;
+{code}
+
+And there you go\! A custom TV input type.
+
+!customtv1.png!
+
+{note}You don&#39;t have to use the ExtJS code as shown here to have a custom input type. It could even just be a straight HTML input. It&#39;s really up to you.{note}
+
+h2. See Also
+
+{pagetree:root=Template Variables}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"40206375";s:3:"ver";s:1:"1";s:4:"code";s:1814:"\\
 
 h2. What are Custom TV Input Types?
 

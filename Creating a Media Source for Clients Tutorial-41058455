@@ -1,0 +1,614 @@
+a:5:{s:2:"id";s:8:"41058455";s:4:"info";a:4:{s:6:"Title:";s:44:"Creating a Media Source for Clients Tutorial";s:7:"Author:";s:11:"Scott Borys";s:16:"Last Changed by:";s:11:"Scott Borys";s:12:"Wiki Markup:";s:59:"[revolution20:Creating a Media Source for Clients Tutorial]";}s:6:"parent";s:8:"35586541";s:6:"source";s:4852:"{toc}
+
+
+h2. Introduction
+
+This tutorial will show you how to create a second media source that you can use for clients that will hide your MODX site files. &amp;nbsp;This tutorial should be performed on sites before your clients have uploaded any files. If you are doing this on an existing site, please read Troubleshooting: Existing Installs at the end of this article.&amp;nbsp;
+
+Let&#39;s get to it\! By default, your file manager should look something like this:
+
+
+!modx1.png|border=1!
+
+
+That&#39;s cool and all, but we can probably make it more meaningful by preventing users from viewing files they will never use. Let&#39;s make it look something like this:&amp;nbsp;
+
+!modx2.png|border=1!
+
+
+h2. Tutorial
+
+h3. Step 1: Create a Directory Structure
+
+Great. Let&#39;s make a folder in /assets/ called &quot;files&quot;. Inside that, two more, one called &quot;pdf&quot; and the other &quot;images&quot;. All of the files that our clients upload will go into these folders. Let&#39;s CHMOD the three folders we&#39;ve created to 777. Your filesystem media source should look like this:
+
+ !modx3.png|border=1!
+
+h3. Step 2: Hide the Filesystem Media Source
+
+Now it&#39;s time to hide everything above the &quot;/assets/files/&quot; folder.&amp;nbsp;
+\\
+# Go to Tools &gt; Media Sources.&amp;nbsp;
+# Right click on the Filesystem Media Source and select &quot;Update Media Source&quot;.&amp;nbsp;
+# Go to the Access Permissions tab.
+# Click &quot;Add User Group&quot;
+# Select &quot;Administrator&quot; as the user group, &quot;Member&quot; as the minimum role, and &quot;Media Source Admin&quot; as the policy. This will mean that all users in the Administrator user group will be able to add / remove media sources. &amp;nbsp;You want to ensure that your clients are in a different user group. If they are in the admin user group, you can set the minimum role for this media source to &quot;Super User&quot; so that only users with a role of &quot;Super User&quot; can access the media source.
+# Click &quot;Done&quot;, and then &quot;Save&quot;.
+\\
+
+At this point, if a client logs in, they will not be able to use the file system at all. Let&#39;s fix that.
+
+h3. Step 3: Add the Client Files Media Source
+
+Now we&#39;re going to create a new media source that our clients will use.
+\\
+# Go to Tools &gt; Media Sources
+# Click &quot;Create New Media Source&quot;
+# Scroll down and put &quot;assets/files/&quot; as both the basePath and baseURL values. The first tells MODX where on the server to look, and the second tells MODX where on the web to look (i.e., relative to your domain name). Let&#39;s keep both of the next two keys (basePathRelative and baseUrlRelative) set to &quot;true&quot; for now. For more advanced setups (such as a site that uses different domains for different contexts) you may need to set absolute paths. Don&#39;t worry about it for now.
+# Click &quot;Save&quot;
+\\
+
+At this point, clients can log in, but it&#39;s kind of confusing how they use the file system. When they go to the files tab, the default media source is one that they don&#39;t have access to. They can still change the media source to theirs, but it&#39;s a pretty confusing experience for the user. Yikes. Let&#39;s fix that.
+
+h3. Step 4: Set the Default Media Source
+
+It&#39;s easy to set the default media source.&amp;nbsp;
+\\
+# System &gt; System Settings
+# Click &quot;Filter by area&quot; and select &quot;Back-end Manager&quot;
+# Find the &quot;Default Media Source&quot; setting. Change this from &quot;Filesystem&quot; to &quot;Client Files&quot;
+# Wait for MODX to save this setting
+\\
+
+At this point, when clients log in, they will see &quot;Client Files&quot; as the default media source and be able to use it as normal. Any new Template Variables of the Image or File variety will also reference this location.
+
+We&#39;re done\!
+
+h2. Troubleshooting: Existing Installs
+
+If you are using this tutorial on a site that already has TVs in place and images uploaded, you will need to update their paths after you have performed Steps 1-4:
+\\
+# Move all the files from the server location to the new location. Their location should be the same path relative to the media source location
+# Update all of the template variables to reference the new media source
+\\
+
+That should be it\!
+
+h2. Advanced Usage
+
+
+h3. Different Contexts
+
+It&#39;s easy to set up a different media source for each context. For each context, create a new setting called &quot;default_media_source&quot; and fill in the ID of the media source.
+
+ !modx4.png|border=1!
+
+Any new TVs in that context will now use that media source.
+
+&amp;nbsp; !modx5.png|border=1,width=300!
+
+Combined with [this tutorial|revolution20:Creating a Subdomain from a Folder using Virtual Hosts], we now have different sites on the same MODX install, each with their own unique file system. Neat\!";s:8:"versions";a:6:{i:0;a:3:{s:2:"id";s:8:"41058455";s:3:"ver";s:1:"6";s:4:"code";s:4852:"{toc}
+
+
+h2. Introduction
+
+This tutorial will show you how to create a second media source that you can use for clients that will hide your MODX site files. &amp;nbsp;This tutorial should be performed on sites before your clients have uploaded any files. If you are doing this on an existing site, please read Troubleshooting: Existing Installs at the end of this article.&amp;nbsp;
+
+Let&#39;s get to it\! By default, your file manager should look something like this:
+
+
+!modx1.png|border=1!
+
+
+That&#39;s cool and all, but we can probably make it more meaningful by preventing users from viewing files they will never use. Let&#39;s make it look something like this:&amp;nbsp;
+
+!modx2.png|border=1!
+
+
+h2. Tutorial
+
+h3. Step 1: Create a Directory Structure
+
+Great. Let&#39;s make a folder in /assets/ called &quot;files&quot;. Inside that, two more, one called &quot;pdf&quot; and the other &quot;images&quot;. All of the files that our clients upload will go into these folders. Let&#39;s CHMOD the three folders we&#39;ve created to 777. Your filesystem media source should look like this:
+
+ !modx3.png|border=1!
+
+h3. Step 2: Hide the Filesystem Media Source
+
+Now it&#39;s time to hide everything above the &quot;/assets/files/&quot; folder.&amp;nbsp;
+\\
+# Go to Tools &gt; Media Sources.&amp;nbsp;
+# Right click on the Filesystem Media Source and select &quot;Update Media Source&quot;.&amp;nbsp;
+# Go to the Access Permissions tab.
+# Click &quot;Add User Group&quot;
+# Select &quot;Administrator&quot; as the user group, &quot;Member&quot; as the minimum role, and &quot;Media Source Admin&quot; as the policy. This will mean that all users in the Administrator user group will be able to add / remove media sources. &amp;nbsp;You want to ensure that your clients are in a different user group. If they are in the admin user group, you can set the minimum role for this media source to &quot;Super User&quot; so that only users with a role of &quot;Super User&quot; can access the media source.
+# Click &quot;Done&quot;, and then &quot;Save&quot;.
+\\
+
+At this point, if a client logs in, they will not be able to use the file system at all. Let&#39;s fix that.
+
+h3. Step 3: Add the Client Files Media Source
+
+Now we&#39;re going to create a new media source that our clients will use.
+\\
+# Go to Tools &gt; Media Sources
+# Click &quot;Create New Media Source&quot;
+# Scroll down and put &quot;assets/files/&quot; as both the basePath and baseURL values. The first tells MODX where on the server to look, and the second tells MODX where on the web to look (i.e., relative to your domain name). Let&#39;s keep both of the next two keys (basePathRelative and baseUrlRelative) set to &quot;true&quot; for now. For more advanced setups (such as a site that uses different domains for different contexts) you may need to set absolute paths. Don&#39;t worry about it for now.
+# Click &quot;Save&quot;
+\\
+
+At this point, clients can log in, but it&#39;s kind of confusing how they use the file system. When they go to the files tab, the default media source is one that they don&#39;t have access to. They can still change the media source to theirs, but it&#39;s a pretty confusing experience for the user. Yikes. Let&#39;s fix that.
+
+h3. Step 4: Set the Default Media Source
+
+It&#39;s easy to set the default media source.&amp;nbsp;
+\\
+# System &gt; System Settings
+# Click &quot;Filter by area&quot; and select &quot;Back-end Manager&quot;
+# Find the &quot;Default Media Source&quot; setting. Change this from &quot;Filesystem&quot; to &quot;Client Files&quot;
+# Wait for MODX to save this setting
+\\
+
+At this point, when clients log in, they will see &quot;Client Files&quot; as the default media source and be able to use it as normal. Any new Template Variables of the Image or File variety will also reference this location.
+
+We&#39;re done\!
+
+h2. Troubleshooting: Existing Installs
+
+If you are using this tutorial on a site that already has TVs in place and images uploaded, you will need to update their paths after you have performed Steps 1-4:
+\\
+# Move all the files from the server location to the new location. Their location should be the same path relative to the media source location
+# Update all of the template variables to reference the new media source
+\\
+
+That should be it\!
+
+h2. Advanced Usage
+
+
+h3. Different Contexts
+
+It&#39;s easy to set up a different media source for each context. For each context, create a new setting called &quot;default_media_source&quot; and fill in the ID of the media source.
+
+ !modx4.png|border=1!
+
+Any new TVs in that context will now use that media source.
+
+&amp;nbsp; !modx5.png|border=1,width=300!
+
+Combined with [this tutorial|revolution20:Creating a Subdomain from a Folder using Virtual Hosts], we now have different sites on the same MODX install, each with their own unique file system. Neat\!";}i:1;a:3:{s:2:"id";s:8:"41058462";s:3:"ver";s:1:"5";s:4:"code";s:4862:"{toc}
+
+
+h2. Introduction
+
+This tutorial will show you how to create a second media source that you can use for clients that will hide your MODX site files. &amp;nbsp;This tutorial should be performed on sites before your clients have uploaded any files. If you are doing this on an existing site, please read Troubleshooting: Existing Installs at the end of this article.&amp;nbsp;
+
+Let&#39;s get to it\! By default, your file manager should look something like this:
+
+
+!modx1.png|border=1!
+
+
+That&#39;s cool and all, but we can probably make it more meaningful by preventing users from viewing files they will never use. Let&#39;s make it look something like this:&amp;nbsp;
+
+!modx2.png|border=1!
+
+
+h2. Tutorial
+
+h3. Step 1: Create a Directory Structure
+
+Great. Let&#39;s make a folder in /assets/ called &quot;files&quot;. Inside that, two more, one called &quot;pdf&quot; and the other &quot;images&quot;. All of the files that our clients upload will go into these folders. Let&#39;s CHMOD the three folders we&#39;ve created to 777. Your filesystem media source should look like this:
+
+ !modx3.png|border=1!
+
+h3. Step 2: Hide the Filesystem Media Source
+
+Now it&#39;s time to hide everything above the &quot;/assets/files/&quot; folder.&amp;nbsp;
+\\
+# Go to Tools &gt; Media Sources.&amp;nbsp;
+# Right click on the Filesystem Media Source and select &quot;Update Media Source&quot;.&amp;nbsp;
+# Go to the Access Permissions tab.
+# Click &quot;Add User Group&quot;
+# Select &quot;Administrator&quot; as the user group, &quot;Member&quot; as the minimum role, and &quot;Media Source Admin&quot; as the policy. This will mean that all users in the Administrator user group will be able to add / remove media sources. &amp;nbsp;You want to ensure that your clients are in a different user group. If they are in the admin user group, you can set the minimum role for this media source to &quot;Super User&quot; so that only users with a role of &quot;Super User&quot; can access the media source.
+# Click &quot;Done&quot;, and then &quot;Save&quot;.
+\\
+
+At this point, if a client logs in, they will not be able to use the file system at all. Let&#39;s fix that.
+
+h3. Step 3: Add the Client Files Media Source
+
+Now we&#39;re going to create a new media source that our clients will use.
+\\
+# Go to Tools &gt; Media Sources
+# Click &quot;Create New Media Source&quot;
+# Scroll down and put &quot;assets/files/&quot; as both the basePath and baseURL values. The first tells MODX where on the server to look, and the second tells MODX where on the web to look (i.e., relative to your domain name). Let&#39;s keep both of the next two keys (basePathRelative and baseUrlRelative) set to &quot;true&quot; for now. For more advanced setups (such as a site that uses different domains for different contexts) you may need to set absolute paths. Don&#39;t worry about it for now.
+# Click &quot;Save&quot;
+\\
+
+At this point, clients can log in, but it&#39;s kind of confusing how they use the file system. When they go to the files tab, the default media source is one that they don&#39;t have access to. They can still change the media source to theirs, but it&#39;s a pretty confusing experience for the user. Yikes. Let&#39;s fix that.
+
+h3. Step 4: Set the Default Media Source
+
+It&#39;s easy to set the default media source.&amp;nbsp;
+\\
+# System &gt; System Settings
+# Click &quot;Filter by area&quot; and select &quot;Back-end Manager&quot;
+# Find the &quot;Default Media Source&quot; setting. Change this from &quot;Filesystem&quot; to &quot;Client Files&quot;
+# Wait for MODX to save this setting
+\\
+
+At this point, when clients log in, they will see &quot;Client Files&quot; as the default media source and be able to use it as normal. Any new Template Variables of the Image or File variety will also reference this location.
+
+We&#39;re done\!
+
+h2. Troubleshooting: Existing Installs
+
+If you are using this tutorial on a site that already has TVs in place and images uploaded, you will need to update their paths after you have performed Steps 1-4:
+\\
+# Move all the files from the server location to the new location. Their location should be the same path relative to the media source location
+# Update all of the template variables to reference the new media source
+\\
+
+That should be it\!
+
+h2. Advanced Usage
+
+
+h3. Different Contexts
+
+It&#39;s easy to set up a different media source for each context. For each context, create a new setting called &quot;default_media_source&quot; and fill in the ID of the media source.
+
+ !modx4.png|border=1,width=300!
+
+Any new TVs in that context will now use that media source.
+
+&amp;nbsp; !modx5.png|border=1,width=300!
+
+Combined with [this tutorial|revolution20:Creating a Subdomain from a Folder using Virtual Hosts], we now have different sites on the same MODX install, each with their own unique file system. Neat\!";}i:2;a:3:{s:2:"id";s:8:"41058461";s:3:"ver";s:1:"4";s:4:"code";s:4838:"{toc}
+
+
+h2. Introduction
+
+This tutorial will show you how to create a second media source that you can use for clients that will hide your MODX site files. &amp;nbsp;This tutorial should be performed on sites before your clients have uploaded any files. If you are doing this on an existing site, please read Troubleshooting: Existing Installs at the end of this article.&amp;nbsp;
+
+Let&#39;s get to it\! By default, your file manager should look something like this:
+
+
+!modx1.png|border=1!
+
+
+That&#39;s cool and all, but we can probably make it more meaningful by preventing users from viewing files they will never use. Let&#39;s make it look something like this:&amp;nbsp;
+
+!modx2.png|border=1!
+
+
+h2. Tutorial
+
+h3. Step 1: Create a Directory Structure
+
+Great. Let&#39;s make a folder in /assets/ called &quot;files&quot;. Inside that, two more, one called &quot;pdf&quot; and the other &quot;images&quot;. All of the files that our clients upload will go into these folders. Let&#39;s CHMOD the three folders we&#39;ve created to 777. Your filesystem media source should look like this:
+
+ !modx3.png|border=1!
+
+h3. Step 2: Hide the Filesystem Media Source
+
+Now it&#39;s time to hide everything above the &quot;/assets/files/&quot; folder.&amp;nbsp;
+\\
+# Go to Tools &gt; Media Sources.&amp;nbsp;
+# Right click on the Filesystem Media Source and select &quot;Update Media Source&quot;.&amp;nbsp;
+# Go to the Access Permissions tab.
+# Click &quot;Add User Group&quot;
+# Select &quot;Administrator&quot; as the user group, &quot;Member&quot; as the minimum role, and &quot;Media Source Admin&quot; as the policy. This will mean that all users in the Administrator user group will be able to add / remove media sources. &amp;nbsp;You want to ensure that your clients are in a different user group. If they are in the admin user group, you can set the minimum role for this media source to &quot;Super User&quot; so that only users with a role of &quot;Super User&quot; can access the media source.
+# Click &quot;Done&quot;, and then &quot;Save&quot;.
+\\
+
+At this point, if a client logs in, they will not be able to use the file system at all. Let&#39;s fix that.
+
+h3. Step 3: Add the Client Files Media Source
+
+Now we&#39;re going to create a new media source that our clients will use.
+\\
+# Go to Tools &gt; Media Sources
+# Click &quot;Create New Media Source&quot;
+# Scroll down and put &quot;assets/files/&quot; as both the basePath and baseURL values. The first tells MODX where on the server to look, and the second tells MODX where on the web to look (i.e., relative to your domain name). Let&#39;s keep both of the next two keys (basePathRelative and baseUrlRelative) set to &quot;true&quot; for now. For more advanced setups (such as a site that uses different domains for different contexts) you may need to set absolute paths. Don&#39;t worry about it for now.
+# Click &quot;Save&quot;
+\\
+
+At this point, clients can log in, but it&#39;s kind of confusing how they use the file system. When they go to the files tab, the default media source is one that they don&#39;t have access to. They can still change the media source to theirs, but it&#39;s a pretty confusing experience for the user. Yikes. Let&#39;s fix that.
+
+h3. Step 4: Set the Default Media Source
+
+It&#39;s easy to set the default media source.&amp;nbsp;
+\\
+# System &gt; System Settings
+# Click &quot;Filter by area&quot; and select &quot;Back-end Manager&quot;
+# Find the &quot;Default Media Source&quot; setting. Change this from &quot;Filesystem&quot; to &quot;Client Files&quot;
+# Wait for MODX to save this setting
+\\
+
+At this point, when clients log in, they will see &quot;Client Files&quot; as the default media source and be able to use it as normal. Any new Template Variables of the Image or File variety will also reference this location.
+
+We&#39;re done\!
+
+h2. Troubleshooting: Existing Installs
+
+If you are using this tutorial on a site that already has TVs in place and images uploaded, you will need to update their paths after you have performed Steps 1-4:
+\\
+# Move all the files from the server location to the new location. Their location should be the same path relative to the media source location
+# Update all of the template variables to reference the new media source
+\\
+
+That should be it\!
+
+h2. Advanced Usage
+
+
+h3. Different Contexts
+
+It&#39;s easy to set up a different media source for each context. For each context, create a new setting called &quot;default_media_source&quot; and fill in the ID of the media source. !modx4.png|border=1!
+
+Any new TVs in that context will now use that media source.&amp;nbsp; !modx5.png|border=1!
+
+Combined with [this tutorial|revolution20:Creating a Subdomain from a Folder using Virtual Hosts], we now have different sites on the same MODX install, each with their own unique file system. Neat\!";}i:3;a:3:{s:2:"id";s:8:"41058460";s:3:"ver";s:1:"3";s:4:"code";s:4811:"{toc}
+
+
+h2. Introduction
+
+This tutorial will show you how to create a second media source that you can use for clients that will hide your MODX site files. &amp;nbsp;This tutorial should be performed on sites before your clients have uploaded any files. If you are doing this on an existing site, please read Troubleshooting: Existing Installs at the end of this article.
+
+Let&#39;s get to it\! By default, your file manager should look something like this: !modx1.png|border=1!
+
+That&#39;s cool and all, but we can probably make it more meaningful by preventing users from viewing files they will never use. Let&#39;s make it look something like this: !modx2.png|border=1!
+
+h2. Tutorial
+
+h3. Step 1: Create a Directory Structure
+
+Great. Let&#39;s make a folder in /assets/ called &quot;files&quot;. Inside that, two more, one called &quot;pdf&quot; and the other &quot;images&quot;. All of the files that our clients upload will go into these folders. Let&#39;s CHMOD the three folders we&#39;ve created to 777. Your filesystem media source should look like this: !modx3.png|border=1!
+
+h3. Step 2: Hide the Filesystem Media Source
+
+Now it&#39;s time to hide everything above the &quot;/assets/files/&quot; folder.&amp;nbsp;
+\\
+# Go to Tools &gt; Media Sources.&amp;nbsp;
+# Right click on the Filesystem Media Source and select &quot;Update Media Source&quot;.&amp;nbsp;
+# Go to the Access Permissions tab.
+# Click &quot;Add User Group&quot;
+# Select &quot;Administrator&quot; as the user group, &quot;Member&quot; as the minimum role, and &quot;Media Source Admin&quot; as the policy. This will mean that all users in the Administrator user group will be able to add / remove media sources. &amp;nbsp;You want to ensure that your clients are in a different user group. If they are in the admin user group, you can set the minimum role for this media source to &quot;Super User&quot; so that only users with a role of &quot;Super User&quot; can access the media source.
+# Click &quot;Done&quot;, and then &quot;Save&quot;.
+\\
+
+At this point, if a client logs in, they will not be able to use the file system at all. Let&#39;s fix that.
+
+h3. Step 3: Add the Client Files Media Source
+
+Now we&#39;re going to create a new media source that our clients will use.
+\\
+# Go to Tools &gt; Media Sources
+# Click &quot;Create New Media Source&quot;
+# Scroll down and put &quot;assets/files/&quot; as both the basePath and baseURL values. The first tells MODX where on the server to look, and the second tells MODX where on the web to look (i.e., relative to your domain name). Let&#39;s keep both of the next two keys (basePathRelative and baseUrlRelative) set to &quot;true&quot; for now. For more advanced setups (such as a site that uses different domains for different contexts) you may need to set absolute paths. Don&#39;t worry about it for now.
+# Click &quot;Save&quot;
+\\
+
+At this point, clients can log in, but it&#39;s kind of confusing how they use the file system. When they go to the files tab, the default media source is one that they don&#39;t have access to. They can still change the media source to theirs, but it&#39;s a pretty confusing experience for the user. Yikes. Let&#39;s fix that.
+
+h3. Step 4: Set the Default Media Source
+
+It&#39;s easy to set the default media source.&amp;nbsp;
+\\
+# System &gt; System Settings
+# Click &quot;Filter by area&quot; and select &quot;Back-end Manager&quot;
+# Find the &quot;Default Media Source&quot; setting. Change this from &quot;Filesystem&quot; to &quot;Client Files&quot;
+# Wait for MODX to save this setting
+\\
+
+At this point, when clients log in, they will see &quot;Client Files&quot; as the default media source and be able to use it as normal. Any new Template Variables of the Image or File variety will also reference this location.
+
+We&#39;re done\!
+
+h2. Troubleshooting: Existing Installs
+
+If you are using this tutorial on a site that already has TVs in place and images uploaded, you will need to update their paths after you have performed Steps 1-4:
+\\
+# Move all the files from the server location to the new location. Their location should be the same path relative to the media source location
+# Update all of the template variables to reference the new media source
+\\
+
+That should be it\!
+
+h2. Advanced Usage
+
+
+h3. Different Contexts
+
+It&#39;s easy to set up a different media source for each context. For each context, create a new setting called &quot;default_media_source&quot; and fill in the ID of the media source. !modx4.png|border=1!
+
+Any new TVs in that context will now use that media source.&amp;nbsp; !modx5.png|border=1!
+
+Combined with [this tutorial|revolution20:Creating a Subdomain from a Folder using Virtual Hosts], we now have different sites on the same MODX install, each with their own unique file system. Neat\!";}i:4;a:3:{s:2:"id";s:8:"41058458";s:3:"ver";s:1:"2";s:4:"code";s:4613:"{toc}
+
+
+h2. Introduction
+
+This tutorial will show you how to create second media source that you can use for clients that will hide your MODX site files. &amp;nbsp;This tutorial should be performed on sites before your clients have uploaded any files. If you are doing this on an existing site, please read Troubleshooting: Existing Installs at the end of this article.
+
+Let&#39;s get to it\! By default, your file manager should look something like this:
+\\
+
+That&#39;s cool and all, but we can probably make it more meaningful by preventing users from viewing files they will never use. Let&#39;s make it look something like this:
+\\
+
+h2. Step 1: Create a Directory Structure
+
+Great. Let&#39;s make a folder in /assets/ called &quot;files&quot;. Inside that, two more, one called &quot;pdf&quot; and the other &quot;images&quot;. All of the files that our clients upload will go into these folders. Let&#39;s CHMOD the three folders we&#39;ve created to 777. Your filesystem media source should look like this:
+\\
+
+h2. Step 2: Hide the Filesystem Media Source
+
+Now it&#39;s time to hide everything above the &quot;/assets/files/&quot; folder.&amp;nbsp;
+\\
+# Go to Tools &gt; Media Sources.&amp;nbsp;
+# Right click on the Filesystem Media Source and select &quot;Update Media Source&quot;.&amp;nbsp;
+# Go to the Access Permissions tab.
+# Click &quot;Add User Group&quot;
+# Select &quot;Administrator&quot; as the user group, &quot;Member&quot; as the minimum role, and &quot;Media Source Admin&quot; as the policy. This will mean that all users in the Administrator user group will be able to add / remove media sources. &amp;nbsp;You want to ensure that your clients are in a different user group. If they are in the admin user group, you can set the minimum role to &quot;Super User&quot; so that only users with a role of &quot;Super User&quot; can access the media source.
+# Click &quot;Done&quot;, and then &quot;Save&quot;.
+\\
+
+At this point, if a client logs in, they will not be able to use the file system at all. Let&#39;s fix that.
+
+h2. Step 3: Add the Client Files Media Source
+
+Now we&#39;re going to create a new media source that our clients will use.
+\\
+# Go to Tools &gt; Media Sources
+# Click &quot;Create New Media Source&quot;
+# Scroll down and put &quot;assets/files/&quot; as both the basePath and baseURL values. The first tells MODX where on the server to look, and the second tells MODX where on the web to look (i.e., relative to your domain name). Let&#39;s keep both of the next two keys (basePathRelative and baseUrlRelative) set to &quot;true&quot; for now. For more advanced setups (such as a site that uses different domains for different contexts) you may need to set absolute paths. Don&#39;t worry about it for now.
+# Click &quot;Save&quot;
+\\
+
+At this point, clients can log in, but it&#39;s kind of confusing how they use the file system. When they go to the files tab, the default media source is one that they don&#39;t have access to. They can still change the media source to theirs, but it&#39;s a pretty confusing experience for the user. Yikes. Let&#39;s fix that.
+
+h2. Step 4: Set the Default Media Source
+
+It&#39;s easy to set the default media source.&amp;nbsp;
+\\
+# System &gt; System Settings
+# Click &quot;Filter by area&quot; and select &quot;Back-end Manager&quot;
+# Find the &quot;Default Media Source&quot; setting. Change this from &quot;Filesystem&quot; to &quot;Client Files&quot;
+# Wait for MODX to save this setting
+\\
+
+At this point, when clients log in, they will see &quot;Client Files&quot; as the default media source and be able to use it as normal. Any new Template Variables of the Image or File variety will also reference this location.
+
+We&#39;re done\!
+
+h2. Troubleshooting: Existing Installs
+
+If you are using this tutorial on a site that already has TVs in place and images uploaded, you will need to update their paths after you have performed Steps 1-4:
+\\
+# Move all the files from the server location to the new location. Their location should be the same path relative to the media source location
+# Update all of the template variables to reference the new media source
+\\
+
+That should be it\!
+
+h2. Advanced Usage
+
+
+h3. Different Contexts
+
+It&#39;s easy to set up a different media source for each context. For each context, create a new setting called &quot;default_media_source&quot; and fill in the ID of the media source.
+\\
+
+Any new TVs in that context will now use that media source.&amp;nbsp;
+\\
+
+Combined with this tutorial, we now have different sites on the same MODX install, each with their own unique file system. Neat\!";}i:5;a:3:{s:2:"id";s:8:"41058456";s:3:"ver";s:1:"1";s:4:"code";s:8731:"This tutorial will show you how to create second media source that you can use for clients that will hide your MODX site files. &amp;nbsp;This tutorial should be performed on sites before your clients have uploaded any files. If you are doing this on an existing site, please read \[THIS SECTION\]
+By default, your file manager should look something like this:
+That&#39;s cool and all, but we can probably make it more meaningful by preventing users from viewing files they will never use. Let&#39;s make it look something like this:
+Step 1: Create a Directory Structure
+Great. Let&#39;s make a folder in /assets/ called &quot;files&quot;. Inside that, two more, one called &quot;pdf&quot; and the other &quot;images&quot;. All of the files that our clients upload will go into these folders. Let&#39;s CHMOD the three folders we&#39;ve created to 777. Your filesystem media source should look like this:
+Step 2: Hide the Filesystem Media Source
+Now it&#39;s time to hide everything above the &quot;/assets/files/&quot; folder.&amp;nbsp;
+Go to Tools &gt; Media Sources.&amp;nbsp;
+Right click on the Filesystem Media Source and select &quot;Update Media Source&quot;.&amp;nbsp;
+Go to the Access Permissions tab.
+Click &quot;Add User Group&quot;
+Select &quot;Administrator&quot; as the user group, &quot;Member&quot; as the minimum role, and &quot;Media Source Admin&quot; as the policy. This will mean that all users in the Administrator user group will be able to add / remove media sources. &amp;nbsp;You want to ensure that your clients are in a different user group. If they are in the admin user group, you can set the minimum role to &quot;Super User&quot; so that only users with a role of &quot;Super User&quot; can access the media source.
+Click &quot;Done&quot;, and then &quot;Save&quot;.
+At this point, if a client logs in, they will not be able to use the file system at all. Let&#39;s fix that.
+Step 3: Add the Client Files Media Source
+Now we&#39;re going to create a new media source that our clients will use.
+Go to Tools &gt; Media Sources
+Click &quot;Create New Media Source&quot;
+Scroll down and put &quot;assets/files/&quot; as the \[BLANK\] and \[BLANK\] fields. The first tells MODX where on the server to look, and the second tells MODX where on the web to look (i.e., relative to your domain name). Let&#39;s keep these as &quot;relative&quot; for now.
+Click &quot;Save&quot;
+At this point, clients can log in, but it&#39;s kind of confusing how they use the file system. When they go to the files tab, the default media source is one that they don&#39;t have access to. They can still change the media source to theirs, but it&#39;s a pretty confusing experience for the user. Yikes. Let&#39;s fix that.
+Step 4: Set the default Media Source
+It&#39;s easy to set the default media source. Go to:
+System &gt; System Settings
+Click &quot;Filter by area&quot; and select &quot;Back-end Manager&quot;
+Find the &quot;Default Media Source&quot; setting. Change this from &quot;Filesystem&quot; to &quot;Client Files&quot;
+Wait for MODX to save this setting
+At this point, when clients log in, they will see &quot;Client Files&quot; as the default media source and be able to use it as normal. Any new Template Variables of the Image or File variety will also reference this location.
+We&#39;re done\!
+Existing Installs
+If you are using this tutorial on a site that already has TVs in place and images uploaded, you will need to update their paths:
+Step 1: Move all the files from the server location to the new location. Their location should be the same path relative to the media source location
+Step 2: Update all of the template variables to reference the new media source
+That should be it\!
+Advanced Usage
+Different Contexts
+It&#39;s easy to set up a different media source for each context. For each context, create a new setting called &quot;default_media_source&quot; and fill in the ID of the media source. Any new TVs in that context will now use that media source.
+Combined with this tutorial, we now have different sites on the same MODX install, each with their own unique file system. Neat{toc
+
+\!
+{toc}
+
+
+h2. Introduction
+
+This tutorial will show you how to create second media source that you can use for clients that will hide your MODX site files. &amp;nbsp;This tutorial should be performed on sites before your clients have uploaded any files. If you are doing this on an existing site, please read Troubleshooting: Existing Installs at the end of this article.
+
+Let&#39;s get to it\! By default, your file manager should look something like this:\\
+
+That&#39;s cool and all, but we can probably make it more meaningful by preventing users from viewing files they will never use. Let&#39;s make it look something like this:\\
+
+h2. Step 1: Create a Directory Structure
+
+Great. Let&#39;s make a folder in /assets/ called &quot;files&quot;. Inside that, two more, one called &quot;pdf&quot; and the other &quot;images&quot;. All of the files that our clients upload will go into these folders. Let&#39;s CHMOD the three folders we&#39;ve created to 777. Your filesystem media source should look like this:\\
+
+h2. Step 2: Hide the Filesystem Media Source
+
+Now it&#39;s time to hide everything above the &quot;/assets/files/&quot; folder.&amp;nbsp;\\
+# Go to Tools &gt; Media Sources.&amp;nbsp;
+# Right click on the Filesystem Media Source and select &quot;Update Media Source&quot;.&amp;nbsp;
+# Go to the Access Permissions tab.
+# Click &quot;Add User Group&quot;
+# Select &quot;Administrator&quot; as the user group, &quot;Member&quot; as the minimum role, and &quot;Media Source Admin&quot; as the policy. This will mean that all users in the Administrator user group will be able to add / remove media sources. &amp;nbsp;You want to ensure that your clients are in a different user group. If they are in the admin user group, you can set the minimum role to &quot;Super User&quot; so that only users with a role of &quot;Super User&quot; can access the media source.
+# Click &quot;Done&quot;, and then &quot;Save&quot;.\\
+
+At this point, if a client logs in, they will not be able to use the file system at all. Let&#39;s fix that.
+
+h2. Step 3: Add the Client Files Media Source
+
+Now we&#39;re going to create a new media source that our clients will use.\\
+# Go to Tools &gt; Media Sources
+# Click &quot;Create New Media Source&quot;
+# Scroll down and put &quot;assets/files/&quot; as both the basePath and baseURL values. The first tells MODX where on the server to look, and the second tells MODX where on the web to look (i.e., relative to your domain name). Let&#39;s keep both of the next two keys (basePathRelative and baseUrlRelative) set to &quot;true&quot; for now. For more advanced setups (such as a site that uses different domains for different contexts) you may need to set absolute paths. Don&#39;t worry about it for now.
+# Click &quot;Save&quot;\\
+
+At this point, clients can log in, but it&#39;s kind of confusing how they use the file system. When they go to the files tab, the default media source is one that they don&#39;t have access to. They can still change the media source to theirs, but it&#39;s a pretty confusing experience for the user. Yikes. Let&#39;s fix that.
+
+h2. Step 4: Set the Default Media Source
+
+It&#39;s easy to set the default media source.&amp;nbsp;\\
+# System &gt; System Settings
+# Click &quot;Filter by area&quot; and select &quot;Back-end Manager&quot;
+# Find the &quot;Default Media Source&quot; setting. Change this from &quot;Filesystem&quot; to &quot;Client Files&quot;
+# Wait for MODX to save this setting\\
+
+At this point, when clients log in, they will see &quot;Client Files&quot; as the default media source and be able to use it as normal. Any new Template Variables of the Image or File variety will also reference this location.
+
+We&#39;re done\!
+
+h2. Troubleshooting: Existing Installs
+
+If you are using this tutorial on a site that already has TVs in place and images uploaded, you will need to update their paths after you have performed Steps 1-4:\\
+# Move all the files from the server location to the new location. Their location should be the same path relative to the media source location
+# Update all of the template variables to reference the new media source\\
+
+That should be it\!
+
+h2. Advanced Usage
+
+
+h3. Different Contexts
+
+It&#39;s easy to set up a different media source for each context. For each context, create a new setting called &quot;default_media_source&quot; and fill in the ID of the media source.\\
+
+Any new TVs in that context will now use that media source.&amp;nbsp;\\
+
+Combined with this tutorial, we now have different sites on the same MODX install, each with their own unique file system. Neat\!";}}}

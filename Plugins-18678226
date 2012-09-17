@@ -1,4 +1,246 @@
-a:5:{s:2:"id";s:8:"18678226";s:4:"info";a:4:{s:6:"Title:";s:7:"Plugins";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:22:"[revolution20:Plugins]";}s:6:"parent";s:8:"18678300";s:6:"source";s:5243:"\\
+a:5:{s:2:"id";s:8:"18678226";s:4:"info";a:4:{s:6:"Title:";s:7:"Plugins";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:10:"AMDbuilder";s:12:"Wiki Markup:";s:22:"[revolution20:Plugins]";}s:6:"parent";s:8:"18678300";s:6:"source";s:5239:"\\
+{toc}
+
+h2. What is a Plugin?
+
+Plugins are similar to snippets in that they are snippets of code that have access to the MODx API - however the big difference is that Plugins are associated&amp;nbsp;with specific System Events. For example, in an average MODx page request, several events happen at certain points within the page parsing process and plugins can be attached to any of these events to fulfill a desired function. That means that when those events &quot;fire,&quot; control is transferred to any Plugin &quot;listening&quot; for that event. Once the Plugin&#39;s code has executed, control returns&amp;nbsp;to the point after the&amp;nbsp;spot where the System Event was triggered.
+
+Plugins aren&#39;t limited to front-end processing, there are many events that are available in the MODx Manager. There is a list of MODx System Events [here|http://wiki.modxcms.com/index.php/System_Events|MODx System Events].
+
+{info}Any closing PHP tag ?&gt; will be stripped from your plugin code when it is saved. It&#39;s unnecessary (and unwanted) because the plugin code will end up inside other PHP code when executed.{info}
+
+h2. The Event Model
+
+MODx invokes System Events across its code processes to allow you to modify core functionality without hacking the core. These System Events can have any number of Plugins attached to them, and will execute each Plugin in rank according to its priority (lowest numbers first).
+
+h2. Handling an Event
+
+In your Plugin, how you handle the output depends on the System Event you are in. For some system events, you return a value from the Plugin. For others, you access the output directly and modify it.
+
+If you need to know which event triggered your plugin (say, for a plugin that listens to more than one event), you can access the Event&#39;s name like so:
+
+{code}$eventName = $modx-&gt;event-&gt;name;{code}
+The code for a Plugin listening to more than one event looks like this:
+
+{code}$eventName = $modx-&gt;event-&gt;name;
+switch($eventName) {
+    case &#39;OnWebPageInit&#39;:
+        /* do something */
+        break;
+    case &#39;OnWebPagePrerender&#39;:
+        /* do something else */
+        break;
+}{code}
+
+h2. Plugin Examples
+
+Plugins can be used for a variety of different applications, below are a couple of examples:
+
+h3. Message the User:
+
+*Description:* Send a custom message to the user as they create/edit a page... a custom header.
+*System Events:* OnDocFormPrerender
+
+{code}
+$modx-&gt;event-&gt;output(&#39;Hi there user!&#39;);
+{code}
+
+----
+h3. Custom Validation
+
+
+*Description:* Do some custom validation on saving a page resource
+*System Events:* OnBeforeDocFormSave
+
+{code}
+// Do some logical stuff.... if validation failed:
+$modx-&gt;event-&gt;output(&#39;Something did not validate!&#39;);
+return &quot;This goes to the logs&quot;;
+{code}
+
+The trick here is that what you want to message the user has to be passed to the *$modx-&gt;event-&gt;output()* function; any text you want to write to the logs can simply be returned by the plugin.  If you pass validation, simply return null.
+
+{warning:title=No HTML Allowed}
+The output you set in *$modx-&gt;event-&gt;output()* must not contain any HTML\!  Use plain text only\!
+{warning}
+
+----
+h3. Word Filter
+
+*Description:* Filter words from a document before it&#39;s displayed on the web
+*System Events:* OnWebPagePrerender
+
+{code}$words = array(&quot;snippet&quot;, &quot;template&quot;); // words to filter
+$output = &amp;$modx-&gt;resource-&gt;_output; // get a reference to the output
+$output = str_replace($words,&quot;&lt;b&gt;[filtered]&lt;/b&gt;&quot;,$output);
+
+{code}\\
+
+----
+h3. Page-Not-Found Redirector:
+
+*Description:* Redirects a user to selected document and sends a message
+*System Events:* OnPageNotFound
+*System Settings:*
+* _pnf.page_: Error Resource ID
+* _pnf.mailto_: Mail To Address
+* _pnf.mailfrom_: Mail From Address
+
+{code}if ($modx-&gt;event-&gt;name == &#39;OnPageNotFound&#39;) {
+     $errorPage = $modx-&gt;getOption(&#39;pnf.page&#39;);
+     if (empty($errorPage)) {
+         $modx-&gt;sendErrorPage();
+     } else {
+         $mailto = $modx-&gt;getOption(&#39;pnf.mailto&#39;);
+         if (!empty($mailto)) {
+            // send a message to a local account
+            $resourceId = $modx-&gt;resource-&gt;get(&#39;id&#39;);
+            $subject = &#39;Page not found&#39;;
+            $body = &#39;Someone tried to access document id &#39;.$resourceId;
+            $modx-&gt;getService(&#39;mail&#39;, &#39;mail.modPHPMailer&#39;);
+            $modx-&gt;mail-&gt;set(modMail::MAIL_BODY, $body);
+            $modx-&gt;mail-&gt;set(modMail::MAIL_FROM, &#39;$modx-&gt;getOption(&#39;pnf.mailfrom&#39;));
+            $modx-&gt;mail-&gt;set(modMail::MAIL_FROM_NAME, &#39;MODx&#39;);
+            $modx-&gt;mail-&gt;set(modMail::MAIL_SENDER, &#39;MODx&#39;);
+            $modx-&gt;mail-&gt;set(modMail::MAIL_SUBJECT, $subject);
+            $modx-&gt;mail-&gt;address(&#39;to&#39;,$mailto);
+            $modx-&gt;mail-&gt;setHTML(true);
+            $modx-&gt;mail-&gt;send();
+         }
+         $url = $this-&gt;makeUrl($scriptProperties[&#39;page&#39;]);
+         $modx-&gt;sendRedirect($url, 1);
+         exit;
+    }
+}
+{code}\\
+
+
+h2. See Also
+
+{pagetree:root=Plugins}
+
+{scrollbar}";s:8:"versions";a:7:{i:0;a:3:{s:2:"id";s:8:"18678226";s:3:"ver";s:1:"7";s:4:"code";s:5239:"\\
+{toc}
+
+h2. What is a Plugin?
+
+Plugins are similar to snippets in that they are snippets of code that have access to the MODx API - however the big difference is that Plugins are associated&amp;nbsp;with specific System Events. For example, in an average MODx page request, several events happen at certain points within the page parsing process and plugins can be attached to any of these events to fulfill a desired function. That means that when those events &quot;fire,&quot; control is transferred to any Plugin &quot;listening&quot; for that event. Once the Plugin&#39;s code has executed, control returns&amp;nbsp;to the point after the&amp;nbsp;spot where the System Event was triggered.
+
+Plugins aren&#39;t limited to front-end processing, there are many events that are available in the MODx Manager. There is a list of MODx System Events [here|http://wiki.modxcms.com/index.php/System_Events|MODx System Events].
+
+{info}Any closing PHP tag ?&gt; will be stripped from your plugin code when it is saved. It&#39;s unnecessary (and unwanted) because the plugin code will end up inside other PHP code when executed.{info}
+
+h2. The Event Model
+
+MODx invokes System Events across its code processes to allow you to modify core functionality without hacking the core. These System Events can have any number of Plugins attached to them, and will execute each Plugin in rank according to its priority (lowest numbers first).
+
+h2. Handling an Event
+
+In your Plugin, how you handle the output depends on the System Event you are in. For some system events, you return a value from the Plugin. For others, you access the output directly and modify it.
+
+If you need to know which event triggered your plugin (say, for a plugin that listens to more than one event), you can access the Event&#39;s name like so:
+
+{code}$eventName = $modx-&gt;event-&gt;name;{code}
+The code for a Plugin listening to more than one event looks like this:
+
+{code}$eventName = $modx-&gt;event-&gt;name;
+switch($eventName) {
+    case &#39;OnWebPageInit&#39;:
+        /* do something */
+        break;
+    case &#39;OnWebPagePrerender&#39;:
+        /* do something else */
+        break;
+}{code}
+
+h2. Plugin Examples
+
+Plugins can be used for a variety of different applications, below are a couple of examples:
+
+h3. Message the User:
+
+*Description:* Send a custom message to the user as they create/edit a page... a custom header.
+*System Events:* OnDocFormPrerender
+
+{code}
+$modx-&gt;event-&gt;output(&#39;Hi there user!&#39;);
+{code}
+
+----
+h3. Custom Validation
+
+
+*Description:* Do some custom validation on saving a page resource
+*System Events:* OnBeforeDocFormSave
+
+{code}
+// Do some logical stuff.... if validation failed:
+$modx-&gt;event-&gt;output(&#39;Something did not validate!&#39;);
+return &quot;This goes to the logs&quot;;
+{code}
+
+The trick here is that what you want to message the user has to be passed to the *$modx-&gt;event-&gt;output()* function; any text you want to write to the logs can simply be returned by the plugin.  If you pass validation, simply return null.
+
+{warning:title=No HTML Allowed}
+The output you set in *$modx-&gt;event-&gt;output()* must not contain any HTML\!  Use plain text only\!
+{warning}
+
+----
+h3. Word Filter
+
+*Description:* Filter words from a document before it&#39;s displayed on the web
+*System Events:* OnWebPagePrerender
+
+{code}$words = array(&quot;snippet&quot;, &quot;template&quot;); // words to filter
+$output = &amp;$modx-&gt;resource-&gt;_output; // get a reference to the output
+$output = str_replace($words,&quot;&lt;b&gt;[filtered]&lt;/b&gt;&quot;,$output);
+
+{code}\\
+
+----
+h3. Page-Not-Found Redirector:
+
+*Description:* Redirects a user to selected document and sends a message
+*System Events:* OnPageNotFound
+*System Settings:*
+* _pnf.page_: Error Resource ID
+* _pnf.mailto_: Mail To Address
+* _pnf.mailfrom_: Mail From Address
+
+{code}if ($modx-&gt;event-&gt;name == &#39;OnPageNotFound&#39;) {
+     $errorPage = $modx-&gt;getOption(&#39;pnf.page&#39;);
+     if (empty($errorPage)) {
+         $modx-&gt;sendErrorPage();
+     } else {
+         $mailto = $modx-&gt;getOption(&#39;pnf.mailto&#39;);
+         if (!empty($mailto)) {
+            // send a message to a local account
+            $resourceId = $modx-&gt;resource-&gt;get(&#39;id&#39;);
+            $subject = &#39;Page not found&#39;;
+            $body = &#39;Someone tried to access document id &#39;.$resourceId;
+            $modx-&gt;getService(&#39;mail&#39;, &#39;mail.modPHPMailer&#39;);
+            $modx-&gt;mail-&gt;set(modMail::MAIL_BODY, $body);
+            $modx-&gt;mail-&gt;set(modMail::MAIL_FROM, &#39;$modx-&gt;getOption(&#39;pnf.mailfrom&#39;));
+            $modx-&gt;mail-&gt;set(modMail::MAIL_FROM_NAME, &#39;MODx&#39;);
+            $modx-&gt;mail-&gt;set(modMail::MAIL_SENDER, &#39;MODx&#39;);
+            $modx-&gt;mail-&gt;set(modMail::MAIL_SUBJECT, $subject);
+            $modx-&gt;mail-&gt;address(&#39;to&#39;,$mailto);
+            $modx-&gt;mail-&gt;setHTML(true);
+            $modx-&gt;mail-&gt;send();
+         }
+         $url = $this-&gt;makeUrl($scriptProperties[&#39;page&#39;]);
+         $modx-&gt;sendRedirect($url, 1);
+         exit;
+    }
+}
+{code}\\
+
+
+h2. See Also
+
+{pagetree:root=Plugins}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"41484325";s:3:"ver";s:1:"6";s:4:"code";s:5243:"\\
 {toc}
 
 h2. What is a Plugin?
@@ -121,130 +363,7 @@ h2. See Also
 
 {pagetree:root=Plugins}
 
-{scrollbar}";s:8:"versions";a:6:{i:0;a:3:{s:2:"id";s:8:"18678226";s:3:"ver";s:1:"6";s:4:"code";s:5243:"\\
-{toc}
-
-h2. What is a Plugin?
-
-Plugins are similar to snippets in that they are snippets of code that have access to the MODx API - however the big difference is that Plugins are associated&amp;nbsp;with specific System Events. For example, in an average MODx page request, several events happen at certain points within the page parsing process and plugins can be attached to any of these events to fulfill a desired function. That means that when those events &quot;fire,&quot; control is transferred to any Plugin &quot;listening&quot; for that event. Once the Plugin&#39;s code has executed, control returns&amp;nbsp;to the point after the&amp;nbsp;spot where the System Event was triggered.
-
-Plugins aren&#39;t limited to front-end processing, there are many events that are available in the MODx Manager. There is a list of MODx System Events [here|http://wiki.modxcms.com/index.php/System_Events|MODx System Events].
-
-{info}Any closing PHP tag ?&gt; will be stripped from your plugin code when it is saved. It&#39;s unnecessary (and unwanted) because the plugin code will end up inside other PHP code when executed.{info}
-
-h2. The Event Model
-
-MODx invokes System Events across its code processes to allow you to modify core functionality without hacking the core. These System Events can have any number of Plugins attached to them, and will execute each Plugin in rank according to its priority (lowest numbers first).
-
-h2. Handling an Event
-
-In your Plugin, how you handle the output depends on the System Event you are in. For some system events, you return a value from the Plugin. For others, you access the output directly and modify it.
-
-If you need to know which event triggered your plugin (say, for a plugin that listens to more than one event), you can access the Event&#39;s name like so:
-
-{code}$eventName = $modx-&gt;event-&gt;name;{code}
-The code for a Plugin listening to more than one event looks like this:
-
-{code}$eventName = $modx-&gt;event-&gt;name;
-switch($eventName) {
-    case &#39;OnWebPageInit&#39;:
-        /* do something */
-        break;
-    case &#39;OnWebPagePrerender&#39;:
-        /* do something else */
-        break;
-}{code}
-
-h2. Plugin Examples
-
-Plugins can be used for a variety of different applications, below are a couple of examples:
-
-h3. Message the User:
-
-*Description:* Send a custom message to the user as they create/edit a page... a custom header.
-*System Events:* onDocFormPrerender
-
-{code}
-$modx-&gt;event-&gt;output(&#39;Hi there user!&#39;);
-{code}
-
-----
-
-h3. Custom Validation
-
-
-*Description:* Do some custom validation on saving a page resource
-*System Events:* OnBeforeDocFormSave
-
-{code}
-// Do some logical stuff.... if validation failed:
-$modx-&gt;event-&gt;output(&#39;Something did not validate!&#39;);
-return &quot;This goes to the logs&quot;;
-{code}
-
-The trick here is that what you want to message the user has to be passed to the *$modx\-&gt;event\-&gt;output()* function; any text you want to write to the logs can simply be returned by the plugin.  If you pass validation, simply return null.
-
-{warning:title=No HTML Allowed}
-The output you set in *$modx\-&gt;event\-&gt;output()* must not contain any HTML!  Use plain text only!
-{warning}
-
-----
-
-h3. Word Filter
-
-*Description:* Filter words from a document before it&#39;s displayed on the web
-*System Events:* OnWebPagePrerender
-
-{code}$words = array(&quot;snippet&quot;, &quot;template&quot;); // words to filter
-$output = &amp;$modx-&gt;resource-&gt;_output; // get a reference to the output
-$output = str_replace($words,&quot;&lt;b&gt;[filtered]&lt;/b&gt;&quot;,$output);
-
-{code}\\
-
-----
-h3. Page-Not-Found Redirector:
-
-*Description:* Redirects a user to selected document and sends a message
-*System Events:* OnPageNotFound
-*System Settings:*
-* _pnf.page_: Error Resource ID
-* _pnf.mailto_: Mail To Address
-* _pnf.mailfrom_: Mail From Address
-
-{code}if ($modx-&gt;event-&gt;name == &#39;OnPageNotFound&#39;) {
-     $errorPage = $modx-&gt;getOption(&#39;pnf.page&#39;);
-     if (empty($errorPage)) {
-         $modx-&gt;sendErrorPage();
-     } else {
-         $mailto = $modx-&gt;getOption(&#39;pnf.mailto&#39;);
-         if (!empty($mailto)) {
-            // send a message to a local account
-            $resourceId = $modx-&gt;resource-&gt;get(&#39;id&#39;);
-            $subject = &#39;Page not found&#39;;
-            $body = &#39;Someone tried to access document id &#39;.$resourceId;
-            $modx-&gt;getService(&#39;mail&#39;, &#39;mail.modPHPMailer&#39;);
-            $modx-&gt;mail-&gt;set(modMail::MAIL_BODY, $body);
-            $modx-&gt;mail-&gt;set(modMail::MAIL_FROM, &#39;$modx-&gt;getOption(&#39;pnf.mailfrom&#39;));
-            $modx-&gt;mail-&gt;set(modMail::MAIL_FROM_NAME, &#39;MODx&#39;);
-            $modx-&gt;mail-&gt;set(modMail::MAIL_SENDER, &#39;MODx&#39;);
-            $modx-&gt;mail-&gt;set(modMail::MAIL_SUBJECT, $subject);
-            $modx-&gt;mail-&gt;address(&#39;to&#39;,$mailto);
-            $modx-&gt;mail-&gt;setHTML(true);
-            $modx-&gt;mail-&gt;send();
-         }
-         $url = $this-&gt;makeUrl($scriptProperties[&#39;page&#39;]);
-         $modx-&gt;sendRedirect($url, 1);
-         exit;
-    }
-}
-{code}\\
-
-
-h2. See Also
-
-{pagetree:root=Plugins}
-
-{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"38994103";s:3:"ver";s:1:"5";s:4:"code";s:5225:"\\
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"38994103";s:3:"ver";s:1:"5";s:4:"code";s:5225:"\\
 {toc}
 
 h2. What is a Plugin?
@@ -367,7 +486,7 @@ h2. See Also
 
 {pagetree:root=Plugins}
 
-{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"37126196";s:3:"ver";s:1:"4";s:4:"code";s:5078:"\\
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"37126196";s:3:"ver";s:1:"4";s:4:"code";s:5078:"\\
 {toc}
 
 h2. What is a Plugin?
@@ -486,7 +605,7 @@ h2. See Also
 
 {pagetree:root=Plugins}
 
-{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"37126194";s:3:"ver";s:1:"3";s:4:"code";s:4538:"\\
+{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"37126194";s:3:"ver";s:1:"3";s:4:"code";s:4538:"\\
 {toc}
 
 h2. What is a Plugin?
@@ -589,7 +708,7 @@ h2. See Also
 
 {pagetree:root=Plugins}
 
-{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"37126188";s:3:"ver";s:1:"2";s:4:"code";s:4290:"\\
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"37126188";s:3:"ver";s:1:"2";s:4:"code";s:4290:"\\
 {toc}
 
 h2. What is a Plugin?
@@ -681,7 +800,7 @@ h2. See Also
 
 {pagetree:root=Plugins}
 
-{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"33948055";s:3:"ver";s:1:"1";s:4:"code";s:4085:"\\
+{scrollbar}";}i:6;a:3:{s:2:"id";s:8:"33948055";s:3:"ver";s:1:"1";s:4:"code";s:4085:"\\
 {toc}
 
 h2. What is a Plugin?

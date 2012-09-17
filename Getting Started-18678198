@@ -1,39 +1,46 @@
-a:5:{s:2:"id";s:8:"18678198";s:4:"info";a:4:{s:6:"Title:";s:15:"Getting Started";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:30:"[revolution20:Getting Started]";}s:6:"parent";s:8:"18678050";s:6:"source";s:225:"\\
+a:5:{s:2:"id";s:8:"18678198";s:4:"info";a:4:{s:6:"Title:";s:15:"Getting Started";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:11:"Jay Gilmore";s:12:"Wiki Markup:";s:30:"[revolution20:Getting Started]";}s:6:"parent";s:8:"18678050";s:6:"source";s:225:"\\
+
+Welcome to MODX Revolution. This section provides installation tutorials, beginning concepts around MODX, and general information about MODX to get you started. 
+
+
+{pagetree:root=Getting Started|startDepth=1}
+
+{scrollbar}";s:8:"versions";a:6:{i:0;a:3:{s:2:"id";s:8:"18678198";s:3:"ver";s:1:"6";s:4:"code";s:225:"\\
+
+Welcome to MODX Revolution. This section provides installation tutorials, beginning concepts around MODX, and general information about MODX to get you started. 
+
+
+{pagetree:root=Getting Started|startDepth=1}
+
+{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"40206343";s:3:"ver";s:1:"5";s:4:"code";s:225:"\\
 
 Welcome to MODx Revolution. This section provides installation tutorials, beginning concepts around MODx, and general information about MODx to get you started. 
 
 
 {pagetree:root=Getting Started|startDepth=1}
 
-{scrollbar}";s:8:"versions";a:5:{i:0;a:3:{s:2:"id";s:8:"18678198";s:3:"ver";s:1:"5";s:4:"code";s:225:"\\
-
-Welcome to MODx Revolution. This section provides installation tutorials, beginning concepts around MODx, and general information about MODx to get you started. 
-
-
-{pagetree:root=Getting Started|startDepth=1}
-
-{scrollbar}";}i:1;a:3:{s:2:"id";s:8:"20119566";s:3:"ver";s:1:"4";s:4:"code";s:224:"\\
+{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"20119566";s:3:"ver";s:1:"4";s:4:"code";s:224:"\\
 
 Welcome to MODx Revolution. This section provides installation tutorials, beginning concepts around MODx, and general information about MODx to get you started.
 
 
 {pagetree:root=Getting Started|startDepth=1}
 
-{scrollbar}";}i:2;a:3:{s:2:"id";s:8:"20119565";s:3:"ver";s:1:"3";s:4:"code";s:244:"\\
+{scrollbar}";}i:3;a:3:{s:2:"id";s:8:"20119565";s:3:"ver";s:1:"3";s:4:"code";s:244:"\\
 
 Welcome to MODx Revolution. This section provides installation tutorials, beginning concepts around MODx, and general information about MODx to get you started.
 
 
 {pagetree:root=Getting Started|startDepth=1}
 
-{scrollbar}here is another test";}i:3;a:3:{s:2:"id";s:8:"20119564";s:3:"ver";s:1:"2";s:4:"code";s:224:"\\
+{scrollbar}here is another test";}i:4;a:3:{s:2:"id";s:8:"20119564";s:3:"ver";s:1:"2";s:4:"code";s:224:"\\
 
 Welcome to MODx Revolution. This section provides installation tutorials, beginning concepts around MODx, and general information about MODx to get you started.
 
 
 {pagetree:root=Getting Started|startDepth=1}
 
-{scrollbar}";}i:4;a:3:{s:2:"id";s:8:"18678590";s:3:"ver";s:1:"1";s:4:"code";s:75:"\\
+{scrollbar}";}i:5;a:3:{s:2:"id";s:8:"18678590";s:3:"ver";s:1:"1";s:4:"code";s:75:"\\
 
 {pagetree:root=Getting Started|startDepth=4|sort=position}
 

@@ -1,4 +1,539 @@
-a:5:{s:2:"id";s:8:"18678054";s:4:"info";a:4:{s:6:"Title:";s:54:"Creating a Subdomain from a Folder using Virtual Hosts";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:10:"AMDbuilder";s:12:"Wiki Markup:";s:69:"[revolution20:Creating a Subdomain from a Folder using Virtual Hosts]";}s:6:"parent";s:8:"18678055";s:6:"source";s:4975:"This case study will show an example usage of Contexts to create a separate subdomain manageable in a single Revolution install. We&#39;re going to create a subdomain at dev.modxcms.com (of course, not really, but you get the idea).
+a:5:{s:2:"id";s:8:"18678054";s:4:"info";a:4:{s:6:"Title:";s:54:"Creating a Subdomain from a Folder using Virtual Hosts";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:0:"";s:12:"Wiki Markup:";s:69:"[revolution20:Creating a Subdomain from a Folder using Virtual Hosts]";}s:6:"parent";s:8:"41058455";s:6:"source";s:5085:"This tutorial will demonstrate how to use a Context to create and manage a separate subdomain in a single Revolution install. We&#39;re going to create a subdomain at dev.modxcms.com (of course, not really, but you get the idea).
+
+h2. Creating the Context
+
+Navigate to System \-&gt; Contexts. Click _Create New_ to create a new context. Give it a name of &quot;dev&quot; and click _Save_.
+
+Next, in the Resource Tree (to the left) create a &quot;Dev Home&quot; Resource. Place it in the root of the &quot;dev&quot; context. Also, while you&#39;re at it, create a &quot;Dev Docs&quot; Resource as well with an alias of &quot;documentation&quot;. We&#39;ll use this to test our context links.
+
+Your tree should look something like this:
+
+!subctx1.png!
+
+From there, go ahead and right-click on the &quot;dev&quot; Context in the tree, and click &quot;Edit Context&quot;. From here we&#39;ll see a Context Settings tab. Click on it, and you&#39;ll need to add a few settings:
+
+* *base_url* \- Set this to &quot;*/*&quot; (no quotes) since we&#39;re making the root of the URL our base.
+* *http_host* \- Set this to *dev.modxcms.com* (or your subdomain name)
+* *site_start*&amp;nbsp;\- Set this to the *ID of your &quot;Dev Home&quot; resource*.
+* *site_url* \- Set this to *&amp;nbsp;**[http://dev.modxcms.com/]* *&amp;nbsp;*(or your subdomain url). Don&#39;t forget the *_trailing slash_*. Remember this setting is: *scheme + _http_host_ + base_url*
+
+You can add other context-specific settings, such as error_page, unauthorized_page, cultureKey, and others if you so choose. All system settings can be overridden by setting them on a context.
+
+
+{note}{*}Note: LINKING BETWEEN CONTEXTS*
+If you&#39;re going to be *linking back to the &#39;web&#39; context from this context (&#39;dev&#39;)*, you&#39;ll want to *add those same Context Settings (with &#39;web&#39;-specific values, of course) to the &#39;web&#39; context*. This allows MODx to know where to redirect &#39;web&#39; context URLs back to.{note}
+
+After creating the settings, clear your site cache.
+
+h2. Creating the Virtual Host
+
+{note:title=cPanel Users}cPanel will make the necessary changes automatically when you create a new sub domain.  Manually editing the Virtual Hosts is not recommended.{note}
+Now we need to do some Apache work. (If you&#39;re not using Apache, you can at least follow the same idea and customize it to your server.) Go to Apache&#39;s httpd.conf file, and add these lines, changing where necessary for your domain name:
+
+{code}
+NameVirtualHost dev.modxcms.com
+&lt;VirtualHost dev.modxcms.com&gt;
+  ServerAdmin dev@modxcms.com
+  DocumentRoot /home/modxcms.com/public_html/dev
+  ServerName dev.modxcms.com
+  ErrorLog logs/devmodxcms-error_log
+  TransferLog logs/devmodxcms-access_log
+&lt;/VirtualHost&gt;
+{code}
+
+{note}Some Apache installs prefer you to put the IP address of the server in the VirtualHost and NameVirtualHost parameters - this is fine; the important field is the ServerName.{note}
+
+Obviously, if you&#39;re creating a different subdomain than dev.modxcms.com, you&#39;d want to change these values.
+
+Great\! Restart your server (apachectl graceful).
+
+h2. The Subdomain Files
+
+Now we&#39;re going to need to create the actual files to load the subdomain. Go create a &quot;dev/&quot; subdirectory in /home/modxcms.com/public_html/ (or whatever base path your webroot is in).
+
+You&#39;ll need to copy 3 files from your MODx Revolution&#39;s root directory:
+
+* index.php
+* .htaccess
+* config.core.php
+
+Copy those to the dev/ directory.
+
+Now, you&#39;ll need to edit them.
+
+h4. index.php
+
+Edit index.php, and find this line (near the end):
+
+{code}$modx-&gt;initialize(&#39;web&#39;);{code}
+
+Change &#39;web&#39; to &#39;dev&#39;. Save the file and close.
+
+h4. .htaccess
+
+You&#39;ll only need to edit one line here (and maybe not at all). Find this line (near the top):
+
+{code}RewriteBase /{code}
+
+Make sure that&#39;s set to /, not anything else. It should match the *base_url* context setting you set up earlier.
+
+h4. config.core.php
+
+What is really important here is to make sure this line points to your MODX core folder:
+
+{code}
+ define(&#39;MODX_CORE_PATH&#39;, dirname(__FILE__) . &#39;/core/&#39;);
+{code}
+If the main domain is &quot;up one level&quot; on the filesystem, you should be able to use the following:
+
+{code}
+ define(&#39;MODX_CORE_PATH&#39;, dirname(dirname(__FILE__)) . &#39;/core/&#39;);
+{code}
+
+h2. Final Steps
+
+Clear your site cache again, refresh the Resource tree, and click &#39;Preview&#39; on your &quot;Dev Home&quot; document. You should now be showing the page at the following URL:
+
+{quote}[http://dev.modxcms.com/]{quote}
+
+Create a \[\[~135\]\] link to the &quot;Dev Docs&quot; Resource in the &quot;Dev Home&quot; Resource. Reload your page. Note the link properly builds to:
+
+{quote}[http://dev.modxcms.com/documentation.html]{quote}
+
+And you&#39;re done\!
+
+h2. See Also
+
+* [Contexts]
+* Contexts as subfolders (from the forums:&amp;nbsp;[http://modxcms.com/forums/index.php/topic,51346.0.html|http://modxcms.com/forums/index.php/topic,51346.0.html])";s:8:"versions";a:8:{i:0;a:3:{s:2:"id";s:8:"18678054";s:3:"ver";s:1:"8";s:4:"code";s:5085:"This tutorial will demonstrate how to use a Context to create and manage a separate subdomain in a single Revolution install. We&#39;re going to create a subdomain at dev.modxcms.com (of course, not really, but you get the idea).
+
+h2. Creating the Context
+
+Navigate to System \-&gt; Contexts. Click _Create New_ to create a new context. Give it a name of &quot;dev&quot; and click _Save_.
+
+Next, in the Resource Tree (to the left) create a &quot;Dev Home&quot; Resource. Place it in the root of the &quot;dev&quot; context. Also, while you&#39;re at it, create a &quot;Dev Docs&quot; Resource as well with an alias of &quot;documentation&quot;. We&#39;ll use this to test our context links.
+
+Your tree should look something like this:
+
+!subctx1.png!
+
+From there, go ahead and right-click on the &quot;dev&quot; Context in the tree, and click &quot;Edit Context&quot;. From here we&#39;ll see a Context Settings tab. Click on it, and you&#39;ll need to add a few settings:
+
+* *base_url* \- Set this to &quot;*/*&quot; (no quotes) since we&#39;re making the root of the URL our base.
+* *http_host* \- Set this to *dev.modxcms.com* (or your subdomain name)
+* *site_start*&amp;nbsp;\- Set this to the *ID of your &quot;Dev Home&quot; resource*.
+* *site_url* \- Set this to *&amp;nbsp;**[http://dev.modxcms.com/]* *&amp;nbsp;*(or your subdomain url). Don&#39;t forget the *_trailing slash_*. Remember this setting is: *scheme + _http_host_ + base_url*
+
+You can add other context-specific settings, such as error_page, unauthorized_page, cultureKey, and others if you so choose. All system settings can be overridden by setting them on a context.
+
+
+{note}{*}Note: LINKING BETWEEN CONTEXTS*
+If you&#39;re going to be *linking back to the &#39;web&#39; context from this context (&#39;dev&#39;)*, you&#39;ll want to *add those same Context Settings (with &#39;web&#39;-specific values, of course) to the &#39;web&#39; context*. This allows MODx to know where to redirect &#39;web&#39; context URLs back to.{note}
+
+After creating the settings, clear your site cache.
+
+h2. Creating the Virtual Host
+
+{note:title=cPanel Users}cPanel will make the necessary changes automatically when you create a new sub domain.  Manually editing the Virtual Hosts is not recommended.{note}
+Now we need to do some Apache work. (If you&#39;re not using Apache, you can at least follow the same idea and customize it to your server.) Go to Apache&#39;s httpd.conf file, and add these lines, changing where necessary for your domain name:
+
+{code}
+NameVirtualHost dev.modxcms.com
+&lt;VirtualHost dev.modxcms.com&gt;
+  ServerAdmin dev@modxcms.com
+  DocumentRoot /home/modxcms.com/public_html/dev
+  ServerName dev.modxcms.com
+  ErrorLog logs/devmodxcms-error_log
+  TransferLog logs/devmodxcms-access_log
+&lt;/VirtualHost&gt;
+{code}
+
+{note}Some Apache installs prefer you to put the IP address of the server in the VirtualHost and NameVirtualHost parameters - this is fine; the important field is the ServerName.{note}
+
+Obviously, if you&#39;re creating a different subdomain than dev.modxcms.com, you&#39;d want to change these values.
+
+Great\! Restart your server (apachectl graceful).
+
+h2. The Subdomain Files
+
+Now we&#39;re going to need to create the actual files to load the subdomain. Go create a &quot;dev/&quot; subdirectory in /home/modxcms.com/public_html/ (or whatever base path your webroot is in).
+
+You&#39;ll need to copy 3 files from your MODx Revolution&#39;s root directory:
+
+* index.php
+* .htaccess
+* config.core.php
+
+Copy those to the dev/ directory.
+
+Now, you&#39;ll need to edit them.
+
+h4. index.php
+
+Edit index.php, and find this line (near the end):
+
+{code}$modx-&gt;initialize(&#39;web&#39;);{code}
+
+Change &#39;web&#39; to &#39;dev&#39;. Save the file and close.
+
+h4. .htaccess
+
+You&#39;ll only need to edit one line here (and maybe not at all). Find this line (near the top):
+
+{code}RewriteBase /{code}
+
+Make sure that&#39;s set to /, not anything else. It should match the *base_url* context setting you set up earlier.
+
+h4. config.core.php
+
+What is really important here is to make sure this line points to your MODX core folder:
+
+{code}
+ define(&#39;MODX_CORE_PATH&#39;, dirname(__FILE__) . &#39;/core/&#39;);
+{code}
+If the main domain is &quot;up one level&quot; on the filesystem, you should be able to use the following:
+
+{code}
+ define(&#39;MODX_CORE_PATH&#39;, dirname(dirname(__FILE__)) . &#39;/core/&#39;);
+{code}
+
+h2. Final Steps
+
+Clear your site cache again, refresh the Resource tree, and click &#39;Preview&#39; on your &quot;Dev Home&quot; document. You should now be showing the page at the following URL:
+
+{quote}[http://dev.modxcms.com/]{quote}
+
+Create a \[\[~135\]\] link to the &quot;Dev Docs&quot; Resource in the &quot;Dev Home&quot; Resource. Reload your page. Note the link properly builds to:
+
+{quote}[http://dev.modxcms.com/documentation.html]{quote}
+
+And you&#39;re done\!
+
+h2. See Also
+
+* [Contexts]
+* Contexts as subfolders (from the forums:&amp;nbsp;[http://modxcms.com/forums/index.php/topic,51346.0.html|http://modxcms.com/forums/index.php/topic,51346.0.html])";}i:1;a:3:{s:2:"id";s:8:"40206364";s:3:"ver";s:1:"7";s:4:"code";s:5069:"This tutorial will demonstrate how to use a Context to create and manage a separate subdomain in a single Revolution install. We&#39;re going to create a subdomain at dev.modxcms.com (of course, not really, but you get the idea).
+
+h2. Creating the Context
+
+Navigate to System \-&gt; Contexts. Click _Create New_ to create a new context. Give it a name of &quot;dev&quot; and click _Save_.
+
+Next, in the Resource Tree (to the left) create a &quot;Dev Home&quot; Resource. Place it in the root of the &quot;dev&quot; context. Also, while you&#39;re at it, create a &quot;Dev Docs&quot; Resource as well with an alias of &quot;documentation&quot;. We&#39;ll use this to test our context links.
+
+Your tree should look something like this:
+
+!subctx1.png!
+
+From there, go ahead and right-click on the &quot;dev&quot; Context in the tree, and click &quot;Edit Context&quot;. From here we&#39;ll see a Context Settings tab. Click on it, and you&#39;ll need to add a few settings:
+
+* *base_url* \- Set this to &quot;*/*&quot; (no quotes) since we&#39;re making the root of the URL our base.
+* *http_host* \- Set this to *dev.modxcms.com* (or your subdomain name)
+* *site_start*&amp;nbsp;\- Set this to the *ID of your &quot;Dev Home&quot; resource*.
+* *site_url* \- Set this to *&amp;nbsp;http://dev.modxcms.com/ &amp;nbsp;*(or your subdomain url). Don&#39;t forget the trailing slash. Remember this setting is (scheme+http_host+base_url).
+
+You can add other context-specific settings, such as error_page, unauthorized_page, cultureKey, and others if you so choose. All system settings can be overridden by setting them on a context.
+
+
+{note}{*}Note: LINKING BETWEEN CONTEXTS*
+If you&#39;re going to be *linking back to the &#39;web&#39; context from this context (&#39;dev&#39;)*, you&#39;ll want to *add those same Context Settings (with &#39;web&#39;-specific values, of course) to the &#39;web&#39; context*. This allows MODx to know where to redirect &#39;web&#39; context URLs back to.{note}
+
+After creating the settings, clear your site cache.
+
+h2. Creating the Virtual Host
+
+{note:title=cPanel Users}cPanel will make the necessary changes automatically when you create a new sub domain.  Manually editing the Virtual Hosts is not recommended.{note}
+Now we need to do some Apache work. (If you&#39;re not using Apache, you can at least follow the same idea and customize it to your server.) Go to Apache&#39;s httpd.conf file, and add these lines, changing where necessary for your domain name:
+
+{code}
+NameVirtualHost dev.modxcms.com
+&lt;VirtualHost dev.modxcms.com&gt;
+  ServerAdmin dev@modxcms.com
+  DocumentRoot /home/modxcms.com/public_html/dev
+  ServerName dev.modxcms.com
+  ErrorLog logs/devmodxcms-error_log
+  TransferLog logs/devmodxcms-access_log
+&lt;/VirtualHost&gt;
+{code}
+
+{note}Some Apache installs prefer you to put the IP address of the server in the VirtualHost and NameVirtualHost parameters - this is fine; the important field is the ServerName.{note}
+
+Obviously, if you&#39;re creating a different subdomain than dev.modxcms.com, you&#39;d want to change these values.
+
+Great\! Restart your server (apachectl graceful).
+
+h2. The Subdomain Files
+
+Now we&#39;re going to need to create the actual files to load the subdomain. Go create a &quot;dev/&quot; subdirectory in /home/modxcms.com/public_html/ (or whatever base path your webroot is in).
+
+You&#39;ll need to copy 3 files from your MODx Revolution&#39;s root directory:
+
+* index.php
+* .htaccess
+* config.core.php
+
+Copy those to the dev/ directory.
+
+Now, you&#39;ll need to edit them.
+
+h4. index.php
+
+Edit index.php, and find this line (near the end):
+
+{code}$modx-&gt;initialize(&#39;web&#39;);{code}
+
+Change &#39;web&#39; to &#39;dev&#39;. Save the file and close.
+
+h4. .htaccess
+
+You&#39;ll only need to edit one line here (and maybe not at all). Find this line (near the top):
+
+{code}RewriteBase /{code}
+
+Make sure that&#39;s set to /, not anything else. It should match the *base_url* context setting you set up earlier.
+
+h4. config.core.php
+
+What is really important here is to make sure this line points to your MODX core folder:
+
+{code}
+ define(&#39;MODX_CORE_PATH&#39;, dirname(__FILE__) . &#39;/core/&#39;);
+{code}
+If the main domain is &quot;up one level&quot; on the filesystem, you should be able to use the following:
+
+{code}
+ define(&#39;MODX_CORE_PATH&#39;, dirname(dirname(__FILE__)) . &#39;/core/&#39;);
+{code}
+
+h2. Final Steps
+
+Clear your site cache again, refresh the Resource tree, and click &#39;Preview&#39; on your &quot;Dev Home&quot; document. You should now be showing the page at the following URL:
+
+{quote}[http://dev.modxcms.com/]{quote}
+
+Create a \[\[~135\]\] link to the &quot;Dev Docs&quot; Resource in the &quot;Dev Home&quot; Resource. Reload your page. Note the link properly builds to:
+
+{quote}[http://dev.modxcms.com/documentation.html]{quote}
+
+And you&#39;re done\!
+
+h2. See Also
+
+* [Contexts]
+* Contexts as subfolders (from the forums:&amp;nbsp;[http://modxcms.com/forums/index.php/topic,51346.0.html|http://modxcms.com/forums/index.php/topic,51346.0.html])";}i:2;a:3:{s:2:"id";s:8:"40206361";s:3:"ver";s:1:"6";s:4:"code";s:5049:"This case study will show an example usage of Contexts to create a separate subdomain manageable in a single Revolution install. We&#39;re going to create a subdomain at dev.modxcms.com (of course, not really, but you get the idea).
+
+h2. Creating the Context
+
+First off, go to System \-&gt; Contexts. Then, create a new context. We&#39;ll call it &quot;dev&quot;.
+
+Go ahead and create a &quot;Dev Home&quot; Resource in the Resource tree to the left. Place it in the root of the &quot;dev&quot; context. Also, while you&#39;re at it, create a &quot;Dev Docs&quot; Resource as well with an alias of &quot;documentation&quot;. We&#39;ll use this to test our context links.
+
+Your tree should look something like this:
+
+!subctx1.png!
+
+From there, go ahead and right-click on the &quot;dev&quot; Context in the tree, and click &quot;Edit Context&quot;. From here we&#39;ll see a Context Settings tab. Click on it, and you&#39;ll need to add a few settings:
+
+* *base_url* \- Set this to &quot;*/*&quot; (no quotes) since we&#39;re making the root of the URL our base.
+* *http_host* \- Set this to *dev.modxcms.com* (or your subdomain name)
+* *site_start*&amp;nbsp;\- Set this to the *ID of your &quot;Dev Home&quot; resource*.
+* *site_url* \- Set this to *&amp;nbsp;http://dev.modxcms.com/ &amp;nbsp;*(or your subdomain url). Don&#39;t forget the trailing slash. Remember this setting is (scheme+http_host+base_url).
+
+You can add other context-specific settings, such as error_page, unauthorized_page, cultureKey, and others if you so choose. All system settings can be overridden by setting them on a context.
+
+
+{note}{*}Note: LINKING BETWEEN CONTEXTS*
+If you&#39;re going to be *linking back to the &#39;web&#39; context from this context (&#39;dev&#39;)*, you&#39;ll want to *add those same Context Settings (with &#39;web&#39;-specific values, of course) to the &#39;web&#39; context*. This allows MODx to know where to redirect &#39;web&#39; context URLs back to.{note}
+
+After creating the settings, clear your site cache.
+
+h2. Creating the Virtual Host
+
+{note:title=cPanel Users}cPanel will make the necessary changes automatically when you create a new sub domain.  Manually editing the Virtual Hosts is not recommended.{note}
+Now we need to do some Apache work. (If you&#39;re not using Apache, you can at least follow the same idea and customize it to your server.) Go to Apache&#39;s httpd.conf file, and add these lines, changing where necessary for your domain name:
+
+{code}
+NameVirtualHost dev.modxcms.com
+&lt;VirtualHost dev.modxcms.com&gt;
+  ServerAdmin dev@modxcms.com
+  DocumentRoot /home/modxcms.com/public_html/dev
+  ServerName dev.modxcms.com
+  ErrorLog logs/devmodxcms-error_log
+  TransferLog logs/devmodxcms-access_log
+&lt;/VirtualHost&gt;
+{code}
+
+{note}Some Apache installs prefer you to put the IP address of the server in the VirtualHost and NameVirtualHost parameters - this is fine; the important field is the ServerName.{note}
+
+Obviously, if you&#39;re creating a different subdomain than dev.modxcms.com, you&#39;d want to change these values.
+
+Great\! Restart your server (apachectl graceful).
+
+h2. The Subdomain Files
+
+Now we&#39;re going to need to create the actual files to load the subdomain. Go create a &quot;dev/&quot; subdirectory in /home/modxcms.com/public_html/ (or whatever base path your webroot is in).
+
+You&#39;ll need to copy 3 files from your MODx Revolution&#39;s root directory:
+
+* index.php
+* .htaccess
+* config.core.php
+
+Copy those to the dev/ directory.
+
+Now, you&#39;ll need to edit them.
+
+h4. index.php
+
+Edit index.php, and find this line (near the end):
+
+{code}$modx-&gt;initialize(&#39;web&#39;);{code}
+
+Change &#39;web&#39; to &#39;dev&#39;. Save the file and close.
+
+h4. .htaccess
+
+You&#39;ll only need to edit one line here (and maybe not at all). Find this line (near the top):
+
+{code}RewriteBase /{code}
+
+Make sure that&#39;s set to /, not anything else. It should match the *base_url* context setting you set up earlier.
+
+h4. config.core.php
+
+What is really important here is to make sure this line points to your MODX core folder:
+
+{code}
+ define(&#39;MODX_CORE_PATH&#39;, dirname(__FILE__) . &#39;/core/&#39;);
+{code}
+If the main domain is &quot;up one level&quot; on the filesystem, you should be able to use the following:
+
+{code}
+ define(&#39;MODX_CORE_PATH&#39;, dirname(dirname(__FILE__)) . &#39;/core/&#39;);
+{code}
+
+h2. Final Steps
+
+Clear your site cache again, refresh the Resource tree, and click &#39;Preview&#39; on your &quot;Dev Home&quot; document. You should now be showing the page at the following URL:
+
+{quote}[http://dev.modxcms.com/]{quote}
+
+Create a \[\[~135\]\] link to the &quot;Dev Docs&quot; Resource in the &quot;Dev Home&quot; Resource. Reload your page. Note the link properly builds to:
+
+{quote}[http://dev.modxcms.com/documentation.html]{quote}
+
+And you&#39;re done\!
+
+h2. See Also
+
+* [Contexts]
+* Contexts as subfolders (from the forums:&amp;nbsp;[http://modxcms.com/forums/index.php/topic,51346.0.html|http://modxcms.com/forums/index.php/topic,51346.0.html])";}i:3;a:3:{s:2:"id";s:8:"40206358";s:3:"ver";s:1:"5";s:4:"code";s:5043:"This case study will show an example usage of Contexts to create a separate subdomain manageable in a single Revolution install. We&#39;re going to create a subdomain at dev.modxcms.com (of course, not really, but you get the idea).
+
+h2. Creating the Context
+
+First off, go to System \-&gt; Contexts. Then, create a new context. We&#39;ll call it &quot;dev&quot;.
+
+Go ahead and create a &quot;Dev Home&quot; Resource in the Resource tree to the left. Place it in the root of the &quot;dev&quot; context. Also, while you&#39;re at it, create a &quot;Dev Docs&quot; Resource as well with an alias of &quot;documentation&quot;. We&#39;ll use this to test our context links.
+
+Your tree should look something like this:
+
+!subctx1.png!
+
+From there, go ahead and right-click on the &quot;dev&quot; Context in the tree, and click &quot;Edit Context&quot;. From here we&#39;ll see a Context Settings tab. Click on it, and you&#39;ll need to add a few settings:
+
+* *base_url* \- Set this to &quot;/&quot; (no quotes) since we&#39;re making the root of the URL our base.
+* *http_host* \- Set this to &quot;dev.modxcms.com&quot; (or your subdomain name)
+* *site_start*&amp;nbsp;\- Set this to the ID of your &quot;Dev Home&quot; resource.
+* *site_url* \- Set this to &quot;http://dev.modxcms.com/&quot; (or your subdomain url). Don&#39;t forget the trailing slash. Remember this setting is (scheme+http_host+base_url).
+
+You can add other context-specific settings, such as error_page, unauthorized_page, cultureKey, and others if you so choose. All system settings can be overridden by setting them on a context.
+
+
+{note}*Note: LINKING BETWEEN CONTEXTS*
+If you&#39;re going to be *linking back to the &#39;web&#39; context from this context (&#39;dev&#39;)*, you&#39;ll want to *add those same Context Settings (with &#39;web&#39;-specific values, of course) to the &#39;web&#39; context*. This allows MODx to know where to redirect &#39;web&#39; context URLs back to.{note}
+
+After creating the settings, clear your site cache.
+
+h2. Creating the Virtual Host
+
+{note:title=cPanel Users}cPanel will make the necessary changes automatically when you create a new sub domain.  Manually editing the Virtual Hosts is not recommended.{note}
+Now we need to do some Apache work. (If you&#39;re not using Apache, you can at least follow the same idea and customize it to your server.) Go to Apache&#39;s httpd.conf file, and add these lines, changing where necessary for your domain name:
+
+{code}
+NameVirtualHost dev.modxcms.com
+&lt;VirtualHost dev.modxcms.com&gt;
+  ServerAdmin dev@modxcms.com
+  DocumentRoot /home/modxcms.com/public_html/dev
+  ServerName dev.modxcms.com
+  ErrorLog logs/devmodxcms-error_log
+  TransferLog logs/devmodxcms-access_log
+&lt;/VirtualHost&gt;
+{code}
+
+{note}Some Apache installs prefer you to put the IP address of the server in the VirtualHost and NameVirtualHost parameters - this is fine; the important field is the ServerName.{note}
+
+Obviously, if you&#39;re creating a different subdomain than dev.modxcms.com, you&#39;d want to change these values.
+
+Great\! Restart your server (apachectl graceful).
+
+h2. The Subdomain Files
+
+Now we&#39;re going to need to create the actual files to load the subdomain. Go create a &quot;dev/&quot; subdirectory in /home/modxcms.com/public_html/ (or whatever base path your webroot is in).
+
+You&#39;ll need to copy 3 files from your MODx Revolution&#39;s root directory:
+
+* index.php
+* .htaccess
+* config.core.php
+
+Copy those to the dev/ directory.
+
+Now, you&#39;ll need to edit them.
+
+h4. index.php
+
+Edit index.php, and find this line (near the end):
+
+{code}$modx-&gt;initialize(&#39;web&#39;);{code}
+
+Change &#39;web&#39; to &#39;dev&#39;. Save the file and close.
+
+h4. .htaccess
+
+You&#39;ll only need to edit one line here (and maybe not at all). Find this line (near the top):
+
+{code}RewriteBase /{code}
+
+Make sure that&#39;s set to /, not anything else. It should match the *base_url* context setting you set up earlier.
+
+h4. config.core.php
+
+What is really important here is to make sure this line points to your MODX core folder:
+
+{code}
+ define(&#39;MODX_CORE_PATH&#39;, dirname(__FILE__) . &#39;/core/&#39;);
+{code}
+If the main domain is &quot;up one level&quot; on the filesystem, you should be able to use the following:
+
+{code}
+ define(&#39;MODX_CORE_PATH&#39;, dirname(dirname(__FILE__)) . &#39;/core/&#39;);
+{code}
+
+h2. Final Steps
+
+Clear your site cache again, refresh the Resource tree, and click &#39;Preview&#39; on your &quot;Dev Home&quot; document. You should now be showing the page at the following URL:
+
+{quote}[http://dev.modxcms.com/]{quote}
+
+Create a \[\[~135\]\] link to the &quot;Dev Docs&quot; Resource in the &quot;Dev Home&quot; Resource. Reload your page. Note the link properly builds to:
+
+{quote}[http://dev.modxcms.com/documentation.html]{quote}
+
+And you&#39;re done\!
+
+h2. See Also
+
+* [Contexts]
+* Contexts as subfolders (from the forums:&amp;nbsp;[http://modxcms.com/forums/index.php/topic,51346.0.html|http://modxcms.com/forums/index.php/topic,51346.0.html])";}i:4;a:3:{s:2:"id";s:8:"40206356";s:3:"ver";s:1:"4";s:4:"code";s:4975:"This case study will show an example usage of Contexts to create a separate subdomain manageable in a single Revolution install. We&#39;re going to create a subdomain at dev.modxcms.com (of course, not really, but you get the idea).
 
 h2. Creating the Context
 
@@ -104,113 +639,7 @@ And you&#39;re done\!
 h2. See Also
 
 * [Contexts]
-* Contexts as subfolders (from the forums:&amp;nbsp;[http://modxcms.com/forums/index.php/topic,51346.0.html|http://modxcms.com/forums/index.php/topic,51346.0.html])";s:8:"versions";a:4:{i:0;a:3:{s:2:"id";s:8:"18678054";s:3:"ver";s:1:"4";s:4:"code";s:4975:"This case study will show an example usage of Contexts to create a separate subdomain manageable in a single Revolution install. We&#39;re going to create a subdomain at dev.modxcms.com (of course, not really, but you get the idea).
-
-h2. Creating the Context
-
-First off, go to System \-&gt; Contexts. Then, create a new context. We&#39;ll call it &quot;dev&quot;.
-
-Go ahead and create a &quot;Dev Home&quot; Resource in the Resource tree to the left. Place it in the root of the &quot;dev&quot; context. Also, while you&#39;re at it, create a &quot;Dev Docs&quot; Resource as well with an alias of &quot;documentation&quot;. We&#39;ll use this to test our context links.
-
-Your tree should look something like this:
-
-!subctx1.png!
-
-From there, go ahead and right-click on the &quot;dev&quot; Context in the tree, and click &quot;Edit Context&quot;. From here we&#39;ll see a Context Settings tab. Click on it, and you&#39;ll need to add a few settings:
-
-* *site_start* \- Set this to the ID of your &quot;Dev Home&quot; resource.
-* *base_url* \- Set this to &quot;/&quot; (no quotes) since we&#39;re making the root of the URL our base.
-* *http_host* \- Set this to &quot;dev.modxcms.com&quot; (or your subdomain name)
-* *site_url* \- Set this to &quot;http://dev.modxcms.com/&quot; (or your subdomain url). Don&#39;t forget the trailing slash. Remember this setting is (scheme+http_host+base_url).
-
-You can add other context-specific settings, such as error_page, unauthorized_page, and others if you so choose. All system settings can be overridden by setting them on a context.
-
-
-{note}Note: If you&#39;re going to be linking back to the &#39;web&#39; context from this context, you&#39;ll want to add those same Context Settings (with &#39;web&#39;-specific values, of course) to the &#39;web&#39; context. This allows MODx to know where to redirect &#39;web&#39; context URLs back to.{note}
-
-After creating the settings, clear your site cache.
-
-h2. Creating the Virtual Host
-
-{note:title=cPanel Users}cPanel will make the necessary changes automatically when you create a new sub domain.  Manually editing the Virtual Hosts is not recommended.{note}
-Now we need to do some Apache work. (If you&#39;re not using Apache, you can at least follow the same idea and customize it to your server.) Go to Apache&#39;s httpd.conf file, and add these lines, changing where necessary for your domain name:
-
-{code}
-NameVirtualHost dev.modxcms.com
-&lt;VirtualHost dev.modxcms.com&gt;
-  ServerAdmin dev@modxcms.com
-  DocumentRoot /home/modxcms.com/public_html/dev
-  ServerName dev.modxcms.com
-  ErrorLog logs/devmodxcms-error_log
-  TransferLog logs/devmodxcms-access_log
-&lt;/VirtualHost&gt;
-{code}
-
-{note}Some Apache installs prefer you to put the IP address of the server in the VirtualHost and NameVirtualHost parameters - this is fine; the important field is the ServerName.{note}
-
-Obviously, if you&#39;re creating a different subdomain than dev.modxcms.com, you&#39;d want to change these values.
-
-Great\! Restart your server (apachectl graceful).
-
-h2. The Subdomain Files
-
-Now we&#39;re going to need to create the actual files to load the subdomain. Go create a &quot;dev/&quot; subdirectory in /home/modxcms.com/public_html/ (or whatever base path your webroot is in).
-
-You&#39;ll need to copy 3 files from your MODx Revolution&#39;s root directory:
-
-* index.php
-* .htaccess
-* config.core.php
-
-Copy those to the dev/ directory.
-
-Now, you&#39;ll need to edit them.
-
-h4. index.php
-
-Edit index.php, and find this line (near the end):
-
-{code}$modx-&gt;initialize(&#39;web&#39;);{code}
-
-Change &#39;web&#39; to &#39;dev&#39;. Save the file and close.
-
-h4. .htaccess
-
-You&#39;ll only need to edit one line here (and maybe not at all). Find this line (near the top):
-
-{code}RewriteBase /{code}
-
-Make sure that&#39;s set to /, not anything else. It should match the *base_url* context setting you set up earlier.
-
-h4. config.core.php
-
-What is really important here is to make sure this line points to your MODX core folder:
-
-{code}
- define(&#39;MODX_CORE_PATH&#39;, dirname(__FILE__) . &#39;/core/&#39;);
-{code}
-If the main domain is &quot;up one level&quot; on the filesystem, you should be able to use the following:
-
-{code}
- define(&#39;MODX_CORE_PATH&#39;, dirname(dirname(__FILE__)) . &#39;/core/&#39;);
-{code}
-
-h2. Final Steps
-
-Clear your site cache again, refresh the Resource tree, and click &#39;Preview&#39; on your &quot;Dev Home&quot; document. You should now be showing the page at the following URL:
-
-{quote}[http://dev.modxcms.com/]{quote}
-
-Create a \[\[~135\]\] link to the &quot;Dev Docs&quot; Resource in the &quot;Dev Home&quot; Resource. Reload your page. Note the link properly builds to:
-
-{quote}[http://dev.modxcms.com/documentation.html]{quote}
-
-And you&#39;re done\!
-
-h2. See Also
-
-* [Contexts]
-* Contexts as subfolders (from the forums:&amp;nbsp;[http://modxcms.com/forums/index.php/topic,51346.0.html|http://modxcms.com/forums/index.php/topic,51346.0.html])";}i:1;a:3:{s:2:"id";s:8:"37683417";s:3:"ver";s:1:"3";s:4:"code";s:4801:"This case study will show an example usage of Contexts to create a separate subdomain manageable in a single Revolution install. We&#39;re going to create a subdomain at dev.modxcms.com (of course, not really, but you get the idea).
+* Contexts as subfolders (from the forums:&amp;nbsp;[http://modxcms.com/forums/index.php/topic,51346.0.html|http://modxcms.com/forums/index.php/topic,51346.0.html])";}i:5;a:3:{s:2:"id";s:8:"37683417";s:3:"ver";s:1:"3";s:4:"code";s:4801:"This case study will show an example usage of Contexts to create a separate subdomain manageable in a single Revolution install. We&#39;re going to create a subdomain at dev.modxcms.com (of course, not really, but you get the idea).
 
 h2. Creating the Context
 
@@ -315,7 +744,7 @@ And you&#39;re done\!
 h2. See Also
 
 * [Contexts]
-* Contexts as subfolders (from the forums:&amp;nbsp;[http://modxcms.com/forums/index.php/topic,51346.0.html|http://modxcms.com/forums/index.php/topic,51346.0.html])";}i:2;a:3:{s:2:"id";s:8:"35094865";s:3:"ver";s:1:"2";s:4:"code";s:4341:"This case study will show an example usage of Contexts to create a separate subdomain manageable in a single Revolution install. We&#39;re going to create a subdomain at dev.modxcms.com (of course, not really, but you get the idea).
+* Contexts as subfolders (from the forums:&amp;nbsp;[http://modxcms.com/forums/index.php/topic,51346.0.html|http://modxcms.com/forums/index.php/topic,51346.0.html])";}i:6;a:3:{s:2:"id";s:8:"35094865";s:3:"ver";s:1:"2";s:4:"code";s:4341:"This case study will show an example usage of Contexts to create a separate subdomain manageable in a single Revolution install. We&#39;re going to create a subdomain at dev.modxcms.com (of course, not really, but you get the idea).
 
 h2. Creating the Context
 
@@ -406,7 +835,7 @@ And you&#39;re done\!
 h2. See Also
 
 * [Contexts]
-* Contexts as subfolders (from the forums:&amp;nbsp;[http://modxcms.com/forums/index.php/topic,51346.0.html|http://modxcms.com/forums/index.php/topic,51346.0.html])";}i:3;a:3:{s:2:"id";s:8:"33587439";s:3:"ver";s:1:"1";s:4:"code";s:4167:"This case study will show an example usage of Contexts to create a separate subdomain manageable in a single Revolution install. We&#39;re going to create a subdomain at dev.modxcms.com (of course, not really, but you get the idea).
+* Contexts as subfolders (from the forums:&amp;nbsp;[http://modxcms.com/forums/index.php/topic,51346.0.html|http://modxcms.com/forums/index.php/topic,51346.0.html])";}i:7;a:3:{s:2:"id";s:8:"33587439";s:3:"ver";s:1:"1";s:4:"code";s:4167:"This case study will show an example usage of Contexts to create a separate subdomain manageable in a single Revolution install. We&#39;re going to create a subdomain at dev.modxcms.com (of course, not really, but you get the idea).
 
 h2. Creating the Context
 

@@ -1,0 +1,21 @@
+a:5:{s:2:"id";s:8:"40763424";s:4:"info";a:4:{s:6:"Title:";s:27:"From the Command Line (CLI)";s:7:"Author:";s:17:"Everett Griffiths";s:16:"Last Changed by:";s:17:"Everett Griffiths";s:12:"Wiki Markup:";s:42:"[revolution20:From the Command Line (CLI)]";}s:6:"parent";s:8:"18678466";s:6:"source";s:434:"MODX is built on the xPDO framework, and it&#39;s fully object-oriented and you can easily use it from the command line.  Generally all you need to do is to identify the path to the MODX core directory and initialize MODX.
+
+{code}
+define(&#39;MODX_CORE_PATH&#39;, &#39;/some/path/to/your/core/&#39;);
+
+require_once MODX_CORE_PATH . &#39;model/modx/modx.class.php&#39;;
+ 
+$modx= new modX();
+$modx-&gt;initialize(&#39;mgr&#39;);
+
+{code}";s:8:"versions";a:1:{i:0;a:3:{s:2:"id";s:8:"40763424";s:3:"ver";s:1:"1";s:4:"code";s:434:"MODX is built on the xPDO framework, and it&#39;s fully object-oriented and you can easily use it from the command line.  Generally all you need to do is to identify the path to the MODX core directory and initialize MODX.
+
+{code}
+define(&#39;MODX_CORE_PATH&#39;, &#39;/some/path/to/your/core/&#39;);
+
+require_once MODX_CORE_PATH . &#39;model/modx/modx.class.php&#39;;
+ 
+$modx= new modX();
+$modx-&gt;initialize(&#39;mgr&#39;);
+
+{code}";}}}

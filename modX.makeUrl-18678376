@@ -1,4 +1,4 @@
-a:5:{s:2:"id";s:8:"18678376";s:4:"info";a:4:{s:6:"Title:";s:12:"modX.makeUrl";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:27:"[revolution20:modX.makeUrl]";}s:6:"parent";s:8:"38994058";s:6:"source";s:1054:"\\
+a:5:{s:2:"id";s:8:"18678376";s:4:"info";a:4:{s:6:"Title:";s:12:"modX.makeUrl";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:15:"Shaun McCormick";s:12:"Wiki Markup:";s:27:"[revolution20:modX.makeUrl]";}s:6:"parent";s:8:"36634824";s:6:"source";s:1054:"\\
 
 h2. modX::makeUrl
 

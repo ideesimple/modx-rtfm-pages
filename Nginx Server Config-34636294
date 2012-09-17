@@ -1,4 +1,4 @@
-a:5:{s:2:"id";s:8:"34636294";s:4:"info";a:4:{s:6:"Title:";s:19:"Nginx Server Config";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:34:"[revolution20:Nginx Server Config]";}s:6:"parent";s:8:"18678053";s:6:"source";s:941:"Here is an example config for a MODX installation on an nginx server (php-fpm is required for nginx servers). This example enables MODX FURLs as well.
+a:5:{s:2:"id";s:8:"34636294";s:4:"info";a:4:{s:6:"Title:";s:19:"Nginx Server Config";s:7:"Author:";s:15:"Shaun McCormick";s:16:"Last Changed by:";s:12:"Mark Hamstra";s:12:"Wiki Markup:";s:34:"[revolution20:Nginx Server Config]";}s:6:"parent";s:8:"18678119";s:6:"source";s:941:"Here is an example config for a MODX installation on an nginx server (php-fpm is required for nginx servers). This example enables MODX FURLs as well.
 
 {code}
 server {
